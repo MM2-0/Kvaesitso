@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.mm20.launcher2.ui.legacy.view.LauncherCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/websiteCard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="8dp"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:elevation="@dimen/card_elevation">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/calculatorTerm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="@style/TextAppearance.Card.Subtitle"
+            android:textColor="?android:textColorSecondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3 + 4" />
+
+        <TextView
+            android:id="@+id/calculatorSolution"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calculatorTerm"
+            tools:text="= 7" />
+
+        <TextView
+            android:id="@+id/calculatorSolutionHexBinOct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="8dp"
+            android:gravity="start"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/calculatorLabelHexBinOct"
+            app:layout_constraintTop_toTopOf="@+id/calculatorLabelHexBinOct"
+            tools:text="0111\n007\n07" />
+
+        <TextView
+            android:id="@+id/calculatorLabelHexBinOct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:gravity="start"
+            android:text="@string/calculator_bin_oct_hex_label"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/calculatorSolution" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</de.mm20.launcher2.ui.legacy.view.LauncherCardView>

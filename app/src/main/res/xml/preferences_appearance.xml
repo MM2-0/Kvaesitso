@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ListPreference
+        app:defaultValue="2"
+        app:entries="@array/preference_theme_entries"
+        app:entryValues="@array/preference_theme_values"
+        app:key="theme"
+        app:summary="%s"
+        app:title="@string/preference_theme" />
+    <Preference
+        app:key="cards"
+        app:summary="@string/preference_cards_summary"
+        app:title="@string/preference_cards" />
+    <PreferenceCategory app:title="@string/preference_category_icons">
+        <ListPreference
+            app:key="icon_pack"
+            app:persistent="false"
+            app:summary="%s"
+            app:title="@string/preference_icon_pack" />
+        <ListPreference
+            app:defaultValue="1"
+            app:entries="@array/preference_legacy_icon_bg_entries"
+            app:entryValues="@array/preference_legacy_icon_bg_values"
+            app:key="legacy_icon_bg"
+            app:summary="%s"
+            app:title="@string/preference_legacy_icon_bg" />
+        <Preference
+            app:defaultValue="0"
+            app:entries="@array/preference_icon_shape_entries"
+            app:entryValues="@array/preference_icon_shape_values"
+            app:key="icon_shape"
+            app:title="@string/preference_icon_shape" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_animations">
+        <de.mm20.launcher2.ui.preferences.AppStartAnimPreference app:title="@string/preference_app_start_animation" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_searchbar">
+        <ListPreference
+            app:defaultValue="0"
+            app:entries="@array/preference_searchbar_behavior_entries"
+            app:entryValues="@array/preference_searchbar_behavior_values"
+            app:key="search_style"
+            app:summary="%s"
+            app:title="@string/preference_searchbar_behavior" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_wallpaper">
+        <Preference
+            app:key="wallpaper"
+            app:summary="@string/preference_wallpaper_summary"
+            app:title="@string/wallpaper" />
+        <SwitchPreference
+            android:summary="@string/preference_dim_wallpaper_summary"
+            app:key="dim_wallpaper"
+            app:title="@string/preference_dim_wallpaper" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        app:key="system_bars"
+        app:title="@string/preference_category_system_bars">
+        <SwitchPreference
+            app:key="light_status_bar"
+            app:title="@string/preference_light_status_bar" />
+        <SwitchPreference
+            app:key="light_nav_bar"
+            app:title="@string/preference_light_nav_bar" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

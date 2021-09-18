@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="badge_text">#8A000000</color>
+
+    <color name="red">#E53935</color>
+    <color name="pink">#D81B60</color>
+    <color name="purple">#9C27B0</color>
+    <color name="deeppurple">#5E35B1</color>
+    <color name="indigo">#3949AB</color>
+    <color name="blue">#1E88E5</color>
+    <color name="lightblue">#039BE5</color>
+    <color name="cyan">#00ACC1</color>
+    <color name="teal">#00897B</color>
+    <color name="green">#43A047</color>
+    <color name="lightgreen">#7CB342</color>
+    <color name="lime">#C0CA33</color>
+    <color name="yellow">#FDD835</color>
+    <color name="amber">#FFB300</color>
+    <color name="orange">#FB8C00</color>
+    <color name="deeporange">#F4511E</color>
+    <color name="brown">#6D4C41</color>
+    <color name="grey">#757575</color>
+    <color name="bluegrey">#546E7A</color>
+
+    <color name="cardview_background">@color/design_default_color_surface</color>
+    <color name="cardview_background_black">@android:color/white</color>
+    <color name="cardview_background_translucent">#CCFFFFFF</color>
+    <color name="swipe_cardview_background">#E0E0E0</color>
+
+    <color name="text_color_primary_normal">#DE000000</color>
+    <color name="text_color_secondary_normal">#8A000000</color>
+    <color name="text_color_primary_disabled">#64000000</color>
+    <color name="color_divider">#1F000000</color>
+    <color name="icon_color">#000000</color>
+    <color name="bottom_sheet">#FFFFFF</color>
+
+    <color name="swipe_card_icon_color">#DF000000</color>
+    <color name="swipe_card_icon_color_active">#FFFFFF</color>
+
+    <color name="settings_color_accent">@color/indigo</color>
+    <color name="settings_color_primary">#fff</color>
+    <color name="settings_color_primary_dark">#ccc</color>
+    <color name="badge">@color/cardview_dark_background</color>
+
+    <color name="fake_card_resting_color">#ffffff</color>
+    <color name="fake_card_elevated_color">#ffffff</color>
+
+    <color name="calendar_foreground_color">#ffffff</color>
+    <color name="wallpaper_dim">@android:color/transparent</color>
+    <color name="shortcut_icon_background">#f5f5f5</color>
+    <color name="settings_window_background">@color/design_default_color_background</color>
+
+</resources>

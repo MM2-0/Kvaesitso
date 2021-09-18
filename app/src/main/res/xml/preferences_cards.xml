@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SeekBarPreference
+        android:defaultValue="255"
+        android:max="255"
+        android:title="@string/preference_cards_opacity"
+        app:key="card_opacity"
+        app:min="1"
+        app:shouldDisableView="true"
+        app:updatesContinuously="true" />
+    <SeekBarPreference
+        android:defaultValue="8"
+        android:max="24"
+        android:title="@string/preference_cards_corner_radius"
+        app:key="card_radius"
+        app:min="0"
+        app:updatesContinuously="true" />
+    <SeekBarPreference
+        android:defaultValue="0"
+        android:max="4"
+        android:title="@string/preference_cards_stroke_width"
+        app:key="card_stroke_width"
+        app:min="0"
+        app:updatesContinuously="true" />
+
+    <SwitchPreference
+        app:key="blur_cards"
+        android:defaultValue="false"
+        app:summary="@string/preference_blur_cards_summary"
+        app:title="@string/preference_blur_cards" />
+
+    <ListPreference
+        app:key="card_background"
+        android:defaultValue="0"
+        app:summary="%s"
+        app:title="@string/preference_card_background"
+        app:entries="@array/preference_card_background_entries"
+        app:entryValues="@array/preference_card_background_values"
+        />
+
+</PreferenceScreen>

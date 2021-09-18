@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="config_columnCount">4</integer>
+    <integer name="config_toolbarSlots">1</integer>
+</resources>

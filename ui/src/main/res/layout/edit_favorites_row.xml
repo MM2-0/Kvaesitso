@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="48dp">
+
+    <ImageView
+        android:id="@+id/dragHandle"
+        style="?iconStyle"
+        android:padding="12dp"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        app:srcCompat="@drawable/ic_drag_handle" />
+
+    <de.mm20.launcher2.ui.legacy.view.LauncherIconView
+        android:id="@+id/icon"
+        android:padding="4dp"
+        android:layout_width="48dp"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        tools:text="TextView" />
+</LinearLayout>

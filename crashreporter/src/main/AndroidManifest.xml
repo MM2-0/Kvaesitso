@@ -1,0 +1,24 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.mm20.launcher2.crashreporter">
+    <application
+        android:supportsRtl="true">
+
+        <provider
+            android:name="com.balsikandar.crashreporter.CrashReporterInitProvider"
+            android:authorities="${applicationId}.CrashReporterInitProvider"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
+            android:name="com.balsikandar.crashreporter.ui.CrashReporterActivity"
+            android:launchMode="singleTask"
+            android:excludeFromRecents="true"
+            android:taskAffinity="com.balsikandar.android.task"
+            android:theme="@style/CrashReporter.Theme" />
+
+        <activity
+            android:name="com.balsikandar.crashreporter.ui.LogMessageActivity"
+            android:parentActivityName="com.balsikandar.crashreporter.ui.CrashReporterActivity"
+            android:theme="@style/CrashReporter.Theme" />
+    </application>
+</manifest>

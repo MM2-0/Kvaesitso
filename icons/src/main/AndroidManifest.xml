@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.mm20.launcher2.icons">
+
+    <queries>
+        <intent>
+            <action android:name="org.adw.ActivityStarter.THEMES" />
+        </intent>
+        <intent>
+            <action android:name="com.novalauncher.THEME" />
+        </intent>
+    </queries>
+</manifest>

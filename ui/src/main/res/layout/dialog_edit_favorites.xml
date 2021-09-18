@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:nestedScrollingEnabled="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.jmedeisis.draglinearlayout.DragLinearLayout
+            android:id="@+id/itemList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+</merge>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.mm20.launcher2.ui.legacy.view.SwipeCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ElevatedInnerCardViewStyle"
+    android:layout_width="match_parent"
+    android:id="@+id/appCard"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp"
+    android:transitionName="root"
+    app:backgroundOpacity="255">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <de.mm20.launcher2.ui.legacy.view.LauncherIconView
+            android:id="@id/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:elevation="2dp"
+            android:padding="8dp"
+            android:transitionName="icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/appName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.Heading1"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="App name" />
+
+        <TextView
+            android:id="@+id/appInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textAppearance="@style/TextAppearance.Body1"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="@+id/appName"
+            app:layout_constraintTop_toBottomOf="@+id/appName"
+            tools:text="Version 1.0\ncom.app.name" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/appShortcuts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appInfo">
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/barrier2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="appShortcuts,icon"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="330dp" />
+
+        <de.mm20.launcher2.ui.legacy.view.ToolbarView
+            android:id="@+id/appToolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/barrier2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</de.mm20.launcher2.ui.legacy.view.SwipeCardView>

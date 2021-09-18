@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="red">#E57373</color>
+    <color name="pink">#F06292</color>
+    <color name="purple">#BA68C8</color>
+    <color name="deeppurple">#9575CD</color>
+    <color name="indigo">#7986CB</color>
+    <color name="blue">#64B5F6</color>
+    <color name="lightblue">#4FC3F7</color>
+    <color name="cyan">#4DD0E1</color>
+    <color name="teal">#4DB6AC</color>
+    <color name="green">#81C784</color>
+    <color name="lightgreen">#AED581</color>
+    <color name="lime">#DCE775</color>
+    <color name="yellow">#FFF176</color>
+    <color name="amber">#FFD54F</color>
+    <color name="orange">#FFB74D</color>
+    <color name="deeporange">#FF8A65</color>
+    <color name="brown">#A1887F</color>
+    <color name="grey">#E0E0E0</color>
+    <color name="bluegrey">#90A4AE</color>
+
+    <color name="cardview_background">@color/design_dark_default_color_surface</color>
+    <color name="cardview_background_black">@android:color/black</color>
+    <color name="cardview_background_translucent">#CC424242</color>
+    <color name="swipe_cardview_background">#393939</color>
+
+    <color name="text_color_primary_normal">#FFFFFFFF</color>
+    <color name="text_color_secondary_normal">#B3FFFFFF</color>
+    <color name="text_color_primary_disabled">#80FFFFFF</color>
+    <color name="color_divider">#1FFFFFFF</color>
+    <color name="icon_color">#FFFFFF</color>
+    <color name="bottom_sheet">#424242</color>
+
+    <color name="swipe_card_icon_color">#FFFFFF</color>
+    <color name="swipe_card_icon_color_active">#DF000000</color>
+
+    <color name="settings_color_accent">@color/blue</color>
+    <color name="settings_color_primary">#333</color>
+    <color name="settings_color_primary_dark">#222</color>
+    <color name="badge">@color/cardview_light_background</color>
+
+    <color name="fake_card_resting_color">#222222</color>
+    <color name="fake_card_elevated_color">#282828</color>
+
+    <color name="calendar_foreground_color">#DE000000</color>
+    <color name="wallpaper_dim">#7000</color>
+    <color name="settings_window_background">@color/design_dark_default_color_background</color>
+</resources>

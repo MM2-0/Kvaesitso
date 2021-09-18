@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="BaseLauncherTheme.Settings">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="LauncherTheme.IconStyle">
+        <item name="android:alpha">1</item>
+        <item name="android:tint">@color/icon_color</item>
+        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
+    </style>
+
+
+    <style name="CalendarIconStyle">
+        <item name="android:alpha">0.87</item>
+        <item name="android:tint">@color/calendar_foreground_color</item>
+        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
+    </style>
+</resources>

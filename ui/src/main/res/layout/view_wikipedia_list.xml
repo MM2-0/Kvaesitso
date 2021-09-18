@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wikipediaRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:transitionName="cardLayout">
+
+    <de.mm20.launcher2.ui.legacy.view.AspectRationImageView
+        android:id="@+id/wikipediaImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_divider"
+        android:scaleType="centerCrop"
+        app:aspectRatio="0.5625"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/wikipediaTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:textAppearance="@style/TextAppearance.Heading1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wikipediaImage"
+        tools:text="Wikipedia"/>
+
+    <TextView
+        android:id="@+id/wikipediaSubTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/wikipedia_source"
+        android:textAppearance="@style/TextAppearance.Body2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wikipediaTitle"/>
+
+    <TextView
+        android:id="@+id/wikipediaText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="16dp"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="16dp"
+        android:ellipsize="end"
+        android:maxLines="8"
+        android:textAppearance="@style/TextAppearance.Body1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wikipediaSubTitle"
+        tools:text="Wikipedia (/ˌwɪkɪˈpiːdiə/ (About this sound listen), /ˌwɪkiˈpiːdiə/ (About this sound listen) WIK-ih-PEE-dee-ə) is a multilingual, web-based, free encyclopedia based on a model of openly editable content, a wiki. It is the largest and most popular general reference work on the World Wide Web,[3][4][5] and is one of the most popular websites by Alexa rank.[6] It is owned and supported by the Wikimedia Foundation, a non-profit organization which operates on money it receives from donors."/>
+
+    <de.mm20.launcher2.ui.legacy.view.ToolbarView
+        android:id="@+id/wikipediaToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wikipediaText"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

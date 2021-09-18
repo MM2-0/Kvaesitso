@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "1080818269583",
+    "firebase_url": "https://quaesitio-1523049861646.firebaseio.com",
+    "project_id": "quaesitio-1523049861646",
+    "storage_bucket": "quaesitio-1523049861646.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080818269583:android:c37c9bbefdd27e04",
+        "android_client_info": {
+          "package_name": "de.mm20.launcher2.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1080818269583-br291p34djunaf9katvhomj5u5qcvr8c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "de.mm20.launcher2.debug",
+            "certificate_hash": "af1d5f4a72fbaf9fce328142d1ed4a3ea4e77574"
+          }
+        },
+        {
+          "client_id": "1080818269583-4nll59hn87841bivhi9actpijmvpn6r0.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1080818269583-36kh12cv92opc17pa49umltcih0qfh2q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmEgLMLFnwYQviEE05mCg8kD6ik0gcWw4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1080818269583-4nll59hn87841bivhi9actpijmvpn6r0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

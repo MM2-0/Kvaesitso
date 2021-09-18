@@ -1,0 +1,21 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.mm20.launcher2.gservices">
+
+    <application>
+        <activity
+            android:name="de.mm20.launcher2.gservices.GoogleAuthRedirectActivity"
+            android:theme="@style/GoogleSigninTheme"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:path="/google-auth-redirect"
+                    android:scheme="${applicationId}" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="OwncloudLoginTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="colorAccent">#6d8fc0</item>
+        <item name="colorPrimary">#6d8fc0</item>
+        <item name="colorPrimaryDark">@color/settings_color_primary_dark</item>
+    </style>
+</resources>

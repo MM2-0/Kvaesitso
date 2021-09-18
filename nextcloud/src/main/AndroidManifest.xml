@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.mm20.launcher2.nextcloud">
+
+    <application>
+        <activity
+            android:name="de.mm20.launcher2.nextcloud.LoginActivity"
+            android:label="@string/preference_category_services_nextcloud"
+            android:taskAffinity="de.mm20.launcher2.nextcloud"
+            android:theme="@style/NextcloudLoginTheme" />
+    </application>
+
+</manifest>

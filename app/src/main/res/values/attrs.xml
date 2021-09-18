@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PreferencesView">
+        <attr name="preferenceScreen" format="reference" />
+    </declare-styleable>
+</resources>

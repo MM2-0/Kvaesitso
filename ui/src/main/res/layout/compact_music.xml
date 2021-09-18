@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/musicCompactMeta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="108dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/musicCompactTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textColor="@color/text_color_primary" />
+
+        <TextView
+            android:id="@+id/musicCompactArtist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:singleLine="true"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/text_color_secondary" />
+    </LinearLayout>
+
+    <de.mm20.launcher2.view.ElevationImageView
+        android:id="@+id/musicCompactNext"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="8dp"
+        android:clickable="true"
+        android:elevation="@dimen/card_elevation"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:src="@drawable/ic_skip_next_anim" />
+
+    <de.mm20.launcher2.view.ElevationImageView
+        android:id="@+id/musicCompactPlay"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="64dp"
+        android:clickable="true"
+        android:elevation="@dimen/card_elevation"
+        android:focusable="true"
+        android:foreground="?android:selectableItemBackgroundBorderless"
+        android:padding="12dp"
+        android:src="@drawable/ic_pause" />
+</merge>

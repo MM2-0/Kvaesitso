@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance">
+
+    </style>
+    <style name="TextAppearance.Heading1">
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="TextAppearance.Heading2">
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="TextAppearance.Heading3">
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="TextAppearance.Body1">
+        <item name="android:textColor">@color/text_color_primary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+    <style name="TextAppearance.Body2">
+        <item name="android:textColor">@color/text_color_secondary</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+</resources>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+    (1) Name of library
+    (2) Short description
+    (3) Image / Icon URL
+    (4) License name
+    (5) Copyright note
+    (6) License text (as raw resource)
+    (7) Link to library web page / repository
+-->
+<resources>
+    <array name="license_mm20launcher2">
+        <item>@string/app_name</item>
+        <item>@string/preference_about_license</item>
+        <item>@null</item>
+        <item>@string/gpl3_name</item>
+        <item>Copyright (c) 2021 MM20</item>
+        <item>@raw/license_gpl_3</item>
+        <item>https://github.com/MM2-0/Kvaesitso</item>
+    </array>
+
+    <array name="license_kotlin_stdlib">
+        <item>Kotlin Standard Library</item>
+        <item>Kotlin Standard Library</item>
+        <item>
+            https://kotlinlang.org/assets/images/apple-touch-icon-144x144.png
+        </item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://kotlinlang.org/</item>
+    </array>
+
+    <array name="license_android_jetpack">
+        <item>Android Jetpack</item>
+        <item>A collection of Android software components to make it easier to develop great Android
+            apps.
+        </item>
+        <item>
+            https://2.bp.blogspot.com/-2ZMkSo7CnUs/WvMvSK0u9RI/AAAAAAAAFZA/zJOCZ8LUM8ol3hcHYHwVyOpc3iiYaxquACLcBGAs/s1600/Jetpack_logo.png
+        </item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://developer.android.com/topic/libraries/support-library/index.html</item>
+    </array>
+
+    <array name="license_accompanist">
+        <item>Accompanist</item>
+        <item>Accompanist is a group of libraries that aim to supplement Jetpack Compose with
+            features that are commonly required by developers but not yet available.
+        </item>
+        <item>https://raw.githubusercontent.com/google/accompanist/main/docs/header.png</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright 2020 The Android Open Source Project</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://google.github.io/accompanist/</item>
+    </array>
+
+    <array name="license_material_components">
+        <item>Material Components for Android</item>
+        <item>
+            Material Components for Android (MDC-Android) help developers execute Material Design.
+        </item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://material.io/develop/android/</item>
+    </array>
+
+    <array name="license_lottie">
+        <item>Lottie</item>
+        <item>Lottie is a library for Android, iOS, Web, and Windows that parses Adobe After Effects
+            animations exported as json with Bodymovin and renders them natively on mobile and on
+            the web.
+        </item>
+        <item>https://airbnb.io/lottie/images/logo.webp</item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://airbnb.io/lottie/#/</item>
+    </array>
+
+    <array name="license_okhttp">
+        <item>OkHttp</item>
+        <item><![CDATA[An HTTP & HTTP/2 client for Android and Java applications]]></item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright 2019 Square, Inc.</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://square.github.io/okhttp/</item>
+    </array>
+
+    <array name="license_retrofit">
+        <item>Retrofit</item>
+        <item>A type-safe HTTP client for Android and Java</item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright 2013 Square, Inc.</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://square.github.io/retrofit/</item>
+    </array>
+
+    <array name="license_gson">
+        <item>Gson</item>
+        <item>Gson is a Java library that can be used to convert Java Objects into their JSON representation.</item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright 2008 Google Inc.</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/google/gson</item>
+    </array>
+
+    <array name="license_suncalc">
+        <item>commons-suncalc</item>
+        <item>A Java library for calculation of sun and moon positions and phases.</item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/shred/commons-suncalc</item>
+    </array>
+
+    <array name="license_jsoup">
+        <item>Jsoup</item>
+        <item>A Java library for working with real-world HTML</item>
+        <item>@null</item>
+        <item>@string/mit_license_name</item>
+        <item><![CDATA[Copyright (c) 2009-2021 Jonathan Hedley <https://jsoup.org/>]]></item>
+        <item>@raw/license_mit</item>
+        <item>https://jsoup.org/</item>
+    </array>
+
+    <array name="license_textdrawable">
+        <item>TextDrawable</item>
+        <item>A light-weight library providing images with letter/text like the Gmail app</item>
+        <item>https://github.com/amulyakhare/TextDrawable/raw/master/screens/screen6.png</item>
+        <item>@string/mit_license_name</item>
+        <item>Copyright (c) 2014 Amulya Khare</item>
+        <item>@raw/license_mit</item>
+        <item>https://github.com/amulyakhare/TextDrawable</item>
+    </array>
+
+    <array name="license_glide">
+        <item>Glide</item>
+        <item>A fast and efficient open source media management and image loading framework for
+            Android
+        </item>
+        <item>https://raw.githubusercontent.com/bumptech/glide/master/static/glide_logo.png</item>
+        <item>@string/glide_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_glide</item>
+        <item>https://bumptech.github.io/glide/</item>
+    </array>
+
+    <array name="license_glide_transformations">
+        <item>Glide Transformations</item>
+        <item>An Android transformation library providing a variety of image transformations for
+            Glide
+        </item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright (C) 2020 Wasabeef</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/wasabeef/glide-transformations</item>
+    </array>
+
+    <array name="license_materialdialogs">
+        <item>Material Dialogs</item>
+        <item>Easy to use material design dialogs</item>
+        <item>
+            https://raw.githubusercontent.com/afollestad/material-dialogs/master/art/showcase20.jpg
+        </item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/afollestad/material-dialogs</item>
+    </array>
+
+    <array name="license_groupie">
+        <item>Groupie</item>
+        <item>Groupie is a simple, flexible library for complex RecyclerView layouts.</item>
+        <item>@null</item>
+        <item>@string/mit_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_mit</item>
+        <item>https://github.com/lisawray/groupie</item>
+    </array>
+
+    <array name="license_draglinearlayout">
+        <item>DragLinearLayout</item>
+        <item>An Android LinearLayout that supports draggable and swappable child Views</item>
+        <item>@null</item>
+        <item>@string/mit_license_name</item>
+        <item>Copyright (c) 2014 Justas Medeisis</item>
+        <item>@raw/license_mit</item>
+        <item>https://github.com/justasm/DragLinearLayout</item>
+    </array>
+
+    <array name="license_viewpropertyobjectanimator">
+        <item>ViewPropertyValueAnimator</item>
+        <item>Wrapper of the ObjectAnimator that can be used similarly to ViewPropertyAnimator.
+        </item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>Copyright 2015 Bartosz Lipiński</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/blipinsk/ViewPropertyObjectAnimator</item>
+    </array>
+
+    <array name="license_nextcloud_sso">
+        <item>Nextcloud SingleSignOn</item>
+        <item>This library allows you to use accounts as well as the network stack provided by the
+            nextcloud files app.
+        </item>
+        <item>@null</item>
+        <item>@string/gpl3_name</item>
+        <item>@null</item>
+        <item>@raw/license_gpl_3</item>
+        <item>https://github.com/nextcloud/Android-SingleSignOn</item>
+    </array>
+
+    <array name="license_mxparser">
+        <item>mXparser</item>
+        <item>A super easy, rich, fast and highly flexible math expression parser library</item>
+        <item>http://mathparser.org/wp-content/uploads/2017/07/mxparser-logo.png</item>
+        <item>@string/bsd_2clause_name</item>
+        <item>Copyright 2010 - 2020 Mariusz Gromada. All rights reserved.</item>
+        <item>@raw/license_bsd_2clause</item>
+        <item>https://mathparser.org/</item>
+    </array>
+
+    <array name="license_google_auth">
+        <item>Google Auth Library</item>
+        <item>Open source authentication client library for Java.</item>
+        <item>@null</item>
+        <item>@string/bsd_3clause_name</item>
+        <item>
+            Copyright 2014, Google Inc. All rights reserved.</item>
+        <item>@raw/license_bsd_3clause</item>
+        <item>https://github.com/googleapis/google-auth-library-java</item>
+    </array>
+
+    <array name="license_google_apiclient">
+        <item>Google APIs Client Library for Android</item>
+        <item>The Google APIs Client Library for Java is a flexible, efficient, and powerful Java client library for accessing any HTTP-based API on the web, not just Google APIs.</item>
+        <item>@null</item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/googleapis/google-api-java-client</item>
+    </array>
+
+    <array name="license_msgraph">
+        <item>Microsoft Graph Android SDK</item>
+        <item>Deprecated API client for Microsoft Graph APIs</item>
+        <item>@null</item>
+        <item>@string/mit_license_name</item>
+        <item>Copyright (c) 2015 Microsoft Corporation</item>
+        <item>@raw/license_mit</item>
+        <item>https://github.com/microsoftgraph/msgraph-sdk-android</item>
+    </array>
+
+    <array name="license_msal">
+        <item>Microsoft Authentication Library (MSAL) for Android</item>
+        <item>The MSAL library for Android gives your app the ability to use the Microsoft Cloud by
+            supporting Microsoft Azure Active Directory and Microsoft accounts in a converged
+            experience using industry standard OAuth2 and OpenID Connect. The library also supports
+            Azure AD B2C.
+        </item>
+        <item>@null</item>
+        <item>@string/mit_license_name</item>
+        <item>Copyright (c) Microsoft Corporation</item>
+        <item>@raw/license_mit</item>
+        <item>https://github.com/AzureAD/microsoft-authentication-library-for-android</item>
+    </array>
+
+    <array name="license_crashreporter">
+        <item>CrashReporter</item>
+        <item>CrashReporter is a handy tool to capture app crashes and save them in a file.</item>
+        <item>
+            https://github.com/balsikandar/CrashReporter/raw/master/assets/crash_reporter_banner.png
+        </item>
+        <item>@string/apache_license_name</item>
+        <item>"
+            Copyright (C) 2016 Bal Sikandar
+            Copyright (C) 2011 Android Open Source Project
+            "
+        </item>
+        <item>@raw/license_apache_2</item>
+        <item>https://github.com/MindorksOpenSource/CrashReporter</item>
+    </array>
+
+    <array name="license_mdicons">
+        <item>Material Design Icons</item>
+        <item>Beautifully crafted, delightful, and easy to use in your web, Android, and iOS
+            projects
+        </item>
+        <item>https://material.io/tools/icons/static/ic_icons_192px_light.svg</item>
+        <item>@string/apache_license_name</item>
+        <item>@null</item>
+        <item>@raw/license_apache_2</item>
+        <item>https://material.io/icons/</item>
+    </array>
+
+    <string name="mit_license_name" translatable="false">MIT license</string>
+    <string name="bsd_2clause_name" translatable="false">Simplified BSD license</string>
+    <string name="bsd_3clause_name" translatable="false">Modified BSD license</string>
+    <string name="apache_license_name" translatable="false">Apache license 2.0</string>
+    <string name="glide_license_name" translatable="false">Glide license</string>
+    <string name="gpl3_name" translatable="false">GNU General Public License Version 3</string>
+
+</resources>

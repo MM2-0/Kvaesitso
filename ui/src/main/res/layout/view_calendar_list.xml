@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.mm20.launcher2.ui.legacy.view.SwipeCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendarEventCard"
+    style="@style/InnerCardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:transitionName="root">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/calendarLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="1dp"
+            android:textAppearance="@style/TextAppearance.Heading2"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calendarColor"
+            tools:text="Event title" />
+
+        <TextView
+            android:id="@+id/eventDateTime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:paddingBottom="14dp"
+            android:textAppearance="@style/TextAppearance.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calendarColor"
+            app:layout_constraintTop_toTopOf="@+id/guideline4"
+            tools:text="March 16, 17:00–19:00" />
+
+        <View
+            android:id="@+id/calendarColor"
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:background="#ff5500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</de.mm20.launcher2.ui.legacy.view.SwipeCardView>

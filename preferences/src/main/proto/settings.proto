@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+option java_package = "de.mm20.launcher2.preferences";
+option java_multiple_files = true;
+
+message Settings {
+  message AppearanceSettings {
+    enum Theme {
+      Light = 0;
+      Dark = 1;
+      System = 2;
+    }
+    Theme theme = 1;
+    bool light_status_bar = 2;
+    bool light_nav_bar = 3;
+    bool dim_wallpaper = 4;
+    bool app_start_animation = 5;
+  }
+  AppearanceSettings appearance = 1;
+
+  message SearchSettings {
+    bool show_favorites = 1;
+    bool calculator = 2;
+    bool unit_converter = 3;
+    bool files = 4;
+    bool wikipedia = 5;
+    bool wikipedia_mobile_data = 6;
+    bool wikipedia_pictures = 7;
+    bool websites = 8;
+    enum WebsitesProtocol {
+      Https = 0;
+      Http = 1;
+    }
+    WebsitesProtocol websitesProtocol = 9;
+    bool websites_mobile_data = 10;
+    bool activities = 11;
+    bool calendar_events = 12;
+    bool contacts = 13;
+    bool owncloud = 14;
+    bool nextcloud = 15;
+    bool onedrive = 16;
+    bool onedrive_mobile_data = 17;
+    bool gdrive = 18;
+    bool gdrive_mobile_data = 19;
+  }
+  SearchSettings search = 2;
+
+  message BadgeSettings {
+    bool notification_badges = 1;
+    bool cloud_badges = 2;
+    bool suspend_badges = 3;
+    bool profile_badges = 4;
+    bool shortcut_badges = 5;
+  }
+  BadgeSettings badges = 3;
+
+}

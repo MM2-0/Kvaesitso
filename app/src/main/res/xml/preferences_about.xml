@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:key="version"
+        android:title="@string/preference_version" />
+    <PreferenceCategory android:title="@string/preference_category_license">
+        <Preference
+            android:key="license"
+            android:icon="@drawable/ic_pref_about"
+            android:summary="@string/preference_about_license_summary"
+            android:title="@string/preference_about_license">
+
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preference_category_links">
+        <Preference
+            android:icon="@drawable/ic_about_telegram"
+            android:summary="t.me/MM20Launcher"
+            android:title="@string/preference_about_telegram">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://t.me/MM20Launcher" />
+        </Preference>
+        <Preference
+            android:icon="@drawable/ic_about_fdroid"
+            android:summary="github.com/MM2-0/fdroid"
+            android:title="@string/preference_about_fdroid">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://raw.githubusercontent.com/MM2-0/fdroid/master/fdroid/repo" />
+        </Preference>
+        <Preference
+            android:icon="@drawable/ic_about_github"
+            android:summary="github.com/MM2-0/Kvaesitso"
+            android:title="GitHub">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="https://github.com/MM2-0/Kvaesitso" />
+        </Preference>
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/preference_category_debug">
+        <Preference
+            android:key="crash_reporter"
+            android:title="@string/preference_crash_reporter" />
+        <Preference
+            android:key="export_debug"
+            android:title="@string/preference_export_debug" />
+        <Preference
+            android:key="export_databases"
+            android:title="@string/preference_export_databases" />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:key="category_licenses"
+        android:title="@string/preference_category_licenses" />
+</PreferenceScreen>

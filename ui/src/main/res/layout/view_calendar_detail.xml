@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.mm20.launcher2.ui.legacy.view.SwipeCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/calendarEventCard"
+    style="@style/ElevatedInnerCardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:transitionName="root">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/calendarShortcuts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calendarColor"
+            app:layout_constraintTop_toBottomOf="@+id/calendarLabel" />
+
+        <TextView
+            android:id="@+id/calendarLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="16dp"
+            android:textColor="@color/text_color_primary"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/calendarColor"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Event title" />
+
+        <View
+            android:id="@+id/calendarColor"
+            android:layout_width="8dp"
+            android:layout_height="0dp"
+            android:background="#ff5500"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.mm20.launcher2.ui.legacy.view.ToolbarView
+            android:id="@+id/calendarToolbar"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:padding="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/calendarColor"
+            app:layout_constraintTop_toBottomOf="@+id/calendarShortcuts" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</de.mm20.launcher2.ui.legacy.view.SwipeCardView>

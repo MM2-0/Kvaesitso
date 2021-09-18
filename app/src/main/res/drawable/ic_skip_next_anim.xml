@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/ic_skip_next">
+    <target
+        android:name="arrow1"
+        android:animation="@anim/ic_skip_next_arrow1"/>
+    <target
+        android:name="arrow2"
+        android:animation="@anim/ic_skip_next_arrow2"/>
+</animated-vector>

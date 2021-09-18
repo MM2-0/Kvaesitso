@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LauncherCardView">
+        <attr name="baseElevation" format="dimension|reference" />
+        <attr name="backgroundOpacity" format="integer" />
+    </declare-styleable>
+</resources> 

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/delete_log"
+        android:icon="@drawable/ic_menu_delete_white_24dp"
+        android:title="Item"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/share_crash_log"
+        android:icon="@drawable/ic_menu_share_white_24dp"
+        android:title="Item"
+        app:showAsAction="always" />
+</menu>

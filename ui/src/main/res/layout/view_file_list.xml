@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<de.mm20.launcher2.ui.legacy.view.SwipeCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fileCard"
+    style="@style/InnerCardViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="0dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginBottom="8dp"
+    android:transitionName="root">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fileListRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:transitionName="cardLayout">
+
+
+        <TextView
+            android:id="@+id/fileLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="2dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:transitionName="fileLabel"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="filename.txt" />
+
+        <TextView
+            android:id="@+id/fileInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:ellipsize="end"
+            android:textAppearance="@style/TextAppearance.Card.Subtitle"
+            android:transitionName="description"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline"
+            tools:layout_conversion_absoluteHeight="19dp"
+            tools:layout_conversion_absoluteWidth="1dp"
+            tools:text="Plain text" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <de.mm20.launcher2.ui.legacy.view.LauncherIconView
+            android:id="@+id/icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:padding="8dp"
+            android:transitionName="icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</de.mm20.launcher2.ui.legacy.view.SwipeCardView>

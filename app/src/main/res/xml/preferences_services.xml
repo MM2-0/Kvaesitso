@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="@string/preference_category_services_nextcloud">
+        <Preference
+            app:icon="@drawable/ic_account_nextcloud"
+            app:key="nextcloud_signin"
+            app:title="@string/preference_account_checking_status" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_services_owncloud">
+        <Preference
+            app:icon="@drawable/ic_account_owncloud"
+            app:key="owncloud_signin"
+            app:title="@string/preference_account_checking_status" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_services_google">
+        <Preference
+            app:icon="@drawable/ic_account_google"
+            app:key="google_signin"
+            app:title="@string/preference_google_signin"
+            app:summary="@string/preference_account_checking_status" />
+    </PreferenceCategory>
+    <PreferenceCategory app:title="@string/preference_category_services_microsoft">
+        <Preference
+            app:icon="@drawable/ic_account_microsoft"
+            app:key="ms_signin"
+            app:title="@string/preference_ms_signin"
+            app:summary="@string/preference_account_checking_status" />
+    </PreferenceCategory>
+</androidx.preference.PreferenceScreen>

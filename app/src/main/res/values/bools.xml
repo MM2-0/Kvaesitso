@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <bool name="is_dark_theme">false</bool>
+    <bool name="debug">false</bool>
+</resources>
