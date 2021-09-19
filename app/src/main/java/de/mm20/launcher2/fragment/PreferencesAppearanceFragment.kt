@@ -3,6 +3,7 @@ package de.mm20.launcher2.fragment
 import android.Manifest
 import android.app.WallpaperManager
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -109,7 +110,7 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
         shapePreference.setOnPreferenceClickListener {
             val launcherIcon = LauncherIcon(
                     foreground = requireContext().getDrawable(R.mipmap.ic_launcher_foreground)!!,
-                    background = requireContext().getDrawable(R.mipmap.ic_launcher_background)
+                    background = ColorDrawable(requireContext().getColor(R.color.ic_launcher_background))
             )
             val iconShapeList = LinearLayout(requireContext())
             iconShapeList.orientation = LinearLayout.VERTICAL
