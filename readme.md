@@ -1,6 +1,6 @@
 # Kvæsitso
 
-<img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/app/src/release/ic_launcher-playstore.png" width="128">
+<img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/app/src/main/ic_launcher-playstore.png" width="128">
 
 Kvæsitso is a launcher application for Android which replaces the device's default home screen. It
 has been built from scratch, meaning it is not based on the AOSP launcher (like many other third
