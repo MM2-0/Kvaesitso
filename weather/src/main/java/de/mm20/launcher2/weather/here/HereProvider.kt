@@ -1,76 +1,42 @@
 package de.mm20.launcher2.weather.here
 
-import android.Manifest
 import android.content.Context
-import android.location.LocationManager
-import android.util.Log
-import androidx.core.content.edit
+import android.content.SharedPreferences
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.checkPermission
-import de.mm20.launcher2.ktx.getDouble
-import de.mm20.launcher2.ktx.putDouble
-import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.R
-import de.mm20.launcher2.weather.WeatherProvider
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import org.json.JSONException
-import org.json.JSONObject
-import java.io.IOException
-import java.net.URLEncoder
+import de.mm20.launcher2.weather.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HereProvider(val context: Context) : WeatherProvider() {
-    override val supportsAutoLocation = true
-    override val supportsManualLocation = true
-    override var autoLocation: Boolean
-        get() {
-            return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .getBoolean(AUTO_LOCATION, true)
-        }
-        set(value) {
-            context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .edit {
-                    putBoolean(AUTO_LOCATION, value)
-                }
-        }
+class HereProvider(override val context: Context) : LatLonWeatherProvider() {
 
-    override suspend fun fetchNewWeatherData(): List<Forecast>? {
-        val prefs = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+    private val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://weather.ls.hereapi.com/weather/1.0/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
+    private val hereWeatherService by lazy {
+        retrofit.create<HereWeatherApi>()
+    }
+
+    override val preferences: SharedPreferences
+        get() = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+
+
+    override suspend fun loadWeatherData(location: LatLonWeatherLocation): WeatherUpdateResult<LatLonWeatherLocation>? {
+        return loadWeatherData(location.lat, location.lon)
+    }
+
+    override suspend fun loadWeatherData(
+        lat: Double,
+        lon: Double
+    ): WeatherUpdateResult<LatLonWeatherLocation>? {
         val updateTime = System.currentTimeMillis()
-
-        var query: String? = null
-
-        if (autoLocation) {
-            var lat: Double? = null
-            var lon: Double? = null
-            if (context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                val location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                lat = location?.latitude
-                lon = location?.longitude
-                if (lat != null && lon != null) {
-                    prefs.edit {
-                        putDouble(LAST_LAT, lat!!)
-                        putDouble(LAST_LON, lon!!)
-                    }
-                }
-            }
-            if (lat == null || lon == null) {
-                lat = prefs.getDouble(LAST_LAT)
-                lon = prefs.getDouble(LAST_LON)
-            }
-            if (lat != null && lon != null) query = "latitude=$lat&longitude=$lon"
-        }
-        if (!autoLocation || query == null) {
-            val name = prefs.getString(CITY_NAME, null) ?: return null
-            query = "name=$name"
-        }
 
         val lang = Locale.getDefault().language
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT)
@@ -78,40 +44,25 @@ class HereProvider(val context: Context) : WeatherProvider() {
         val forecastList = mutableListOf<Forecast>()
 
         try {
-            val httpClient = OkHttpClient()
+            val apiKey = getApiKey() ?: return null
 
-            val forecastRequest = Request.Builder()
-                .url("https://weather.ls.hereapi.com/weather/1.0/report.json?apiKey=${getApiKey()}&product=forecast_hourly&$query&language=$lang")
-                .get()
-                .build()
+            val response = hereWeatherService.report(
+                apiKey = apiKey,
+                language = lang,
+                latitude = lat,
+                longitude = lon
+            )
 
-            val body = withContext(Dispatchers.IO) {
-                httpClient.newCall(forecastRequest).execute().body?.string()
-            } ?: run {
-                Log.e("MM20", "Here provider: forecast request returned null")
-                return null
-            }
+            val forecastLocation = response.hourlyForecasts?.forecastLocation ?: return null
+            val forecasts = forecastLocation.forecast ?: return null
 
-            val forecastLocation = JSONObject(body)
-                .getJSONObject("hourlyForecasts")
-                .getJSONObject("forecastLocation")
-            val forecasts = forecastLocation.getJSONArray("forecast")
+            val location = forecastLocation.city ?: return null
 
-            val location = forecastLocation.getString("city")
-            val locationLong =
-                "${forecastLocation.getString("city")}, ${forecastLocation.getString("country")}"
 
-            if (autoLocation) {
-                prefs.edit {
-                    putString(LAST_LOCATION, locationLong)
-                }
-            }
-
-            for (i in 0 until forecasts.length()) {
-                val forecast = forecasts.getJSONObject(i)
+            for (forecast in forecasts) {
 
                 val timestamp = try {
-                    dateFormat.parse(forecast.getString("utcTime"))?.time ?: continue
+                    dateFormat.parse(forecast.utcTime ?: continue)?.time ?: continue
                 } catch (e: ParseException) {
                     CrashReporter.logException(e)
                     return null
@@ -121,24 +72,20 @@ class HereProvider(val context: Context) : WeatherProvider() {
                 if (timestamp + 1000 * 60 * 30 < System.currentTimeMillis()) continue
 
                 val condition = when {
-                    !forecast.optString("precipitationDesc")
-                        .isNullOrEmpty() -> forecast.optString("precipitationDesc")
-                    !forecast.optString("skyDescription")
-                        .isNullOrEmpty() -> forecast.optString("skyDescription")
-                    !forecast.optString("temperatureDesc")
-                        .isNullOrEmpty() -> forecast.optString("temperatureDesc")
-                    else -> forecast.optString("description")
+                    !forecast.precipitationDesc.isNullOrEmpty() -> forecast.precipitationDesc
+                    !forecast.skyDescription.isNullOrEmpty() -> forecast.skyDescription
+                    !forecast.temperatureDesc.isNullOrEmpty() -> forecast.temperatureDesc
+                    else -> forecast.description ?: continue
                 }
-                val humidity = forecast.getString("humidity").toIntOrNull() ?: 0
-                val icon = getIcon(forecast.getString("iconName"))
-                val night = forecast.getString("daylight") == "N"
-                val rain = forecast.getString("rainFall").toDoubleOrNull() ?: 0.0
-                val snow = forecast.getString("snowFall").toDoubleOrNull() ?: 0.0
-                val rainPercent = forecast.getString("precipitationProbability").toIntOrNull() ?: 0
-                val temperature = forecast.getString("temperature").toDoubleOrNull()?.plus(273.15)
+                val humidity = forecast.humidity?.toIntOrNull() ?: 0
+                val icon = getIcon(forecast.iconName ?: continue)
+                val night = forecast.daylight == "N"
+                val rain = forecast.rainFall?.toDoubleOrNull() ?: 0.0
+                val rainPercent = forecast.precipitationProbability?.toIntOrNull() ?: 0
+                val temperature = forecast.temperature?.toDoubleOrNull()?.plus(273.15)
                     ?: 0.0
-                val windDir = forecast.getString("windDirection").toIntOrNull() ?: 0
-                val windSpeed = forecast.getString("windSpeed").toDoubleOrNull() ?: 0.0
+                val windDir = forecast.windDirection?.toIntOrNull() ?: 0
+                val windSpeed = forecast.windSpeed?.toDoubleOrNull() ?: 0.0
 
                 forecastList.add(
                     Forecast(
@@ -162,18 +109,22 @@ class HereProvider(val context: Context) : WeatherProvider() {
                 )
             }
 
+            return WeatherUpdateResult(
+                forecasts = forecastList,
+                location = LatLonWeatherLocation(
+                    name = location,
+                    lat = lat,
+                    lon = lon
+                )
+            )
 
-        } catch (e: JSONException) {
+
+        } catch (e: Exception) {
             CrashReporter.logException(e)
             return null
         }
-
-        prefs.edit {
-            putLong(LAST_UPDATE, updateTime)
-        }
-
-        return forecastList
     }
+
 
     private fun getIcon(iconName: String): Int {
         with(Forecast) {
@@ -334,60 +285,27 @@ class HereProvider(val context: Context) : WeatherProvider() {
         return getLastUpdate() + (1000 * 60 * 60) <= System.currentTimeMillis()
     }
 
-    override fun getLastUpdate(): Long {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getLong(LAST_UPDATE, 0)
-    }
-
-    override suspend fun lookupLocation(query: String): List<Pair<Any?, String>> {
-        val urlString =
-            "https://geocoder.ls.hereapi.com/6.2/geocode.json?apiKey=${getApiKey()}&searchtext=$query"
-        val client = OkHttpClient()
-        val request = Request.Builder()
-            .url(urlString)
+    override suspend fun lookupLocation(query: String): List<LatLonWeatherLocation> {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://geocoder.ls.hereapi.com/6.2/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
+        val geocodeService = retrofit.create<HereGeocodeApi>()
         try {
-            val body = withContext(Dispatchers.IO) {
-                val response = client.newCall(request).execute()
-                response.body?.string()
-            } ?: return emptyList()
-            val json = JSONObject(body)
-            val results = json
-                .optJSONObject("Response")
-                ?.optJSONArray("View")
-                ?.optJSONObject(0)
-                ?.optJSONArray("Result") ?: return emptyList()
-            val locations = mutableListOf<Pair<Any?, String>>()
-            for (i in 0 until results.length()) {
-                val result = results.getJSONObject(i)
-                val location = result.optJSONObject("Location") ?: continue
-                val name = location.optJSONObject("Address")?.getString("Label") ?: continue
-                locations.add(URLEncoder.encode(name, "UTF-8") to name)
-            }
-            return locations
-        } catch (e: JSONException) {
-        } catch (e: IOException) {
+            val apiKey = getApiKey() ?: return emptyList()
+            val response = geocodeService.geocode(apiKey, query)
+
+            return response.Response.View?.getOrNull(0)?.Result?.mapNotNull {
+                LatLonWeatherLocation(
+                    name = it.Location?.Address?.Label ?: return@mapNotNull null,
+                    lat = it.Location.DisplayPosition?.Latitude ?: return@mapNotNull null,
+                    lon = it.Location.DisplayPosition.Longitude ?: return@mapNotNull null,
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            CrashReporter.logException(e)
         }
         return emptyList()
-    }
-
-    override fun setLocation(locationId: Any?, locationName: String) {
-        val id = locationId as? String ?: return
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putString(CITY_NAME, id)
-            putString(LAST_LOCATION, locationName)
-        }
-    }
-
-    override fun getLastLocation(): String {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getString(LAST_LOCATION, "")!!
-    }
-
-    override fun resetLastUpdate() {
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putLong(LAST_UPDATE, 0)
-        }
     }
 
     private fun getApiKey(): String? {
@@ -410,11 +328,5 @@ class HereProvider(val context: Context) : WeatherProvider() {
 
     companion object {
         private const val PREFERENCES = "here"
-        private const val LAST_LAT = "last_lat"
-        private const val LAST_LON = "last_lon"
-        private const val LAST_UPDATE = "last_update"
-        private const val CITY_NAME = "city_name"
-        private const val LAST_LOCATION = "last_location"
-        private const val AUTO_LOCATION = "auto_location"
     }
 }

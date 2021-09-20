@@ -2,26 +2,23 @@ package de.mm20.launcher2.weather.metno
 
 import android.Manifest
 import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
 import android.os.Build
 import android.util.Base64
-import android.util.Log
 import androidx.core.content.edit
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.ktx.getDouble
 import de.mm20.launcher2.ktx.putDouble
-import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.R
-import de.mm20.launcher2.weather.WeatherProvider
+import de.mm20.launcher2.weather.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.internal.userAgent
 import org.json.JSONException
 import org.json.JSONObject
 import org.shredzone.commons.suncalc.SunTimes
@@ -31,149 +28,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-class MetNoProvider(val context: Context) : WeatherProvider() {
-    override val supportsAutoLocation: Boolean
-        get() = true
-    override val supportsManualLocation: Boolean
-        get() = Geocoder.isPresent()
-    override var autoLocation: Boolean
-        get() {
-            return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .getBoolean(AUTO_LOCATION, true)
-        }
-        set(value) {
-            context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .edit {
-                    putBoolean(AUTO_LOCATION, value)
-                }
-        }
+class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
 
-    override suspend fun fetchNewWeatherData(): List<Forecast>? {
-        var lat: Double? = null
-        var lon: Double? = null
-        var locationName: String? = null
-        val updateTime = System.currentTimeMillis()
-        val prefs = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-
-        val lastUpdate = prefs.getLong(LAST_UPDATE, 0L)
-        val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
-        val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
-
-        if (autoLocation &&
-            context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-        ) {
-            val lm = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            val location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-            lat = location?.latitude
-            lon = location?.longitude
-            if (Geocoder.isPresent() && lat != null && lon != null) {
-                try {
-                    locationName = Geocoder(context).getFromLocation(lat, lon, 1)
-                        .firstOrNull()
-                        ?.formatToString() ?: "$lat/$lon"
-                    prefs.edit {
-                        putString(LAST_LOCATION_NAME, locationName)
-                        lat?.let { putDouble(LAST_LAT, it) }
-                        lon?.let { putDouble(LAST_LON, it) }
-                    }
-                } catch (e: IOException) {
-                    CrashReporter.logException(e)
-                    return null
-                }
-            }
-        }
-        if (!autoLocation) {
-            if (!prefs.contains(LON) || !prefs.contains(LAT)) return null
-            lat = prefs.getDouble(LAT)
-            lon = prefs.getDouble(LON)
-
-            locationName = prefs.getString(LAST_LOCATION_NAME, null) ?: "$lat/$lon"
-        }
-        if (lat == null || lon == null) {
-            if (!prefs.contains(LAST_LON) || !prefs.contains(LAST_LAT)) return null
-            lat = prefs.getDouble(LAST_LAT)
-            lon = prefs.getDouble(LAST_LON)
-
-            locationName = prefs.getString(LAST_LOCATION_NAME, null) ?: "$lat/$lon"
-        }
-
-        if (lat == null || lon == null || locationName == null) return null
-
-        try {
-            val forecasts = mutableListOf<Forecast>()
-
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
-
-            val httpClient = OkHttpClient()
-
-            val latParam = String.format(Locale.ROOT, "%.4f", lat)
-            val lonParam = String.format(Locale.ROOT, "%.4f", lon)
-
-            val forecastRequest = Request.Builder()
-                .url("https://api.met.no/weatherapi/locationforecast/2.0/?lat=$latParam&lon=$lonParam")
-                .addHeader("User-Agent", getUserAgent() ?: return null)
-                .addHeader("If-Modified-Since", ifModifiedSince)
-                .get()
-                .build()
-
-            val response = httpClient.newCall(forecastRequest).execute()
-            val responseBody = response.body?.string() ?: return null
-
-            val json = JSONObject(responseBody)
-            val properties = json.getJSONObject("properties")
-            val meta = properties.getJSONObject("meta")
-            val updatedAt = dateFormat.parse(meta.getString("updated_at"))?.time
-                ?: System.currentTimeMillis()
-            val timeseries = properties.getJSONArray("timeseries")
-
-            for (i in 0 until timeseries.length()) {
-                val fc = timeseries.getJSONObject(i)
-                val data = fc.getJSONObject("data")
-                val timestamp = dateFormat.parse(fc.getString("time"))?.time ?: continue
-                val details = data.getJSONObject("instant").getJSONObject("details")
-                var hours = 0
-                val nextHours = data.optJSONObject("next_1_hours")?.also { hours = 1 }
-                    ?: data.optJSONObject("next_6_hours")?.also { hours = 6 }
-                    ?: data.optJSONObject("next_12_hours")?.also { hours = 12 }
-                    ?: continue
-                val symbolCode = nextHours.optJSONObject("summary")?.getString("symbol_code")
-                    ?: continue
-                val precipitationAmount =
-                    (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
-                        ?: 0.0) / hours
-                forecasts.add(
-                    Forecast(
-                        timestamp = timestamp,
-                        temperature = details.getDouble("air_temperature") + 273.15,
-                        updateTime = updatedAt,
-                        clouds = details.getDouble("cloud_area_fraction").roundToInt(),
-                        humidity = details.getDouble("relative_humidity"),
-                        windDirection = details.getDouble("wind_from_direction"),
-                        windSpeed = details.getDouble("wind_speed"),
-                        pressure = details.getDouble("air_pressure_at_sea_level"),
-                        location = locationName,
-                        provider = context.getString(R.string.provider_metno),
-                        providerUrl = "https://www.yr.no/",
-                        icon = iconForCode(symbolCode),
-                        condition = conditionForCode(symbolCode),
-                        precipitation = precipitationAmount,
-                        night = isNight(timestamp, lat, lon)
-
-                    )
-                )
-            }
-
-            prefs.edit {
-                putLong(LAST_UPDATE, updateTime)
-            }
-            return forecasts
-        } catch (e: JSONException) {
-            CrashReporter.logException(e)
-        } catch (e: IOException) {
-            CrashReporter.logException(e)
-        }
-        return null
-    }
+    override val preferences: SharedPreferences
+        get() = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
 
     private fun isNight(timestamp: Long, lat: Double, lon: Double): Boolean {
         val sunTimes = SunTimes.compute().on(Date(timestamp)).at(lat, lon).execute()
@@ -199,10 +57,6 @@ class MetNoProvider(val context: Context) : WeatherProvider() {
 
         return !(rise.time < timestamp && timestamp < set.time)
 
-    }
-
-    private fun isSnow(code: String): Boolean {
-        return code.contains("snow")
     }
 
     private fun conditionForCode(code: String): String {
@@ -284,48 +138,6 @@ class MetNoProvider(val context: Context) : WeatherProvider() {
         return getLastUpdate() + (1000 * 60 * 60) <= System.currentTimeMillis()
     }
 
-    override fun getLastUpdate(): Long {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getLong(LAST_UPDATE, 0)
-    }
-
-    override suspend fun lookupLocation(query: String): List<Pair<Any?, String>> {
-        if (!Geocoder.isPresent()) return emptyList()
-        val geocoder = Geocoder(context)
-        val locations =
-            withContext(Dispatchers.IO) {
-                geocoder.getFromLocationName(query, 10)
-            }
-        return locations.mapNotNull {
-            (it.latitude to it.longitude) to it.formatToString()
-        }
-    }
-
-    /**
-     * locationId must be a Pair<Double, Double> with the latitude as first and longitude as second
-     * parameter
-     */
-    override fun setLocation(locationId: Any?, locationName: String) {
-        if (locationId !is Pair<*, *>) return
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putDouble(LAT, locationId.first as Double)
-            putDouble(LON, locationId.second as Double)
-            putString(LAST_LOCATION_NAME, locationName)
-        }
-    }
-
-    override fun getLastLocation(): String {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getString(LAST_LOCATION_NAME, "")!!
-    }
-
-    override fun resetLastUpdate() {
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .edit {
-                putLong(LAST_UPDATE, 0L)
-            }
-    }
-
     private fun getUserAgent(): String? {
         val contactData = getContactInfo() ?: return null
 
@@ -367,15 +179,87 @@ class MetNoProvider(val context: Context) : WeatherProvider() {
         return context.resources.getIdentifier("metno_contact", "string", context.packageName)
     }
 
+    override suspend fun loadWeatherData(location: LatLonWeatherLocation): WeatherUpdateResult<LatLonWeatherLocation>? {
+
+        val lastUpdate = getLastUpdate()
+        val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
+        val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
+        try {
+            val forecasts = mutableListOf<Forecast>()
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
+
+            val httpClient = OkHttpClient()
+
+            val latParam = String.format(Locale.ROOT, "%.4f", location.lat)
+            val lonParam = String.format(Locale.ROOT, "%.4f", location.lon)
+
+            val forecastRequest = Request.Builder()
+                .url("https://api.met.no/weatherapi/locationforecast/2.0/?lat=$latParam&lon=$lonParam")
+                .addHeader("User-Agent", getUserAgent() ?: return null)
+                .addHeader("If-Modified-Since", ifModifiedSince)
+                .get()
+                .build()
+
+            val response = httpClient.newCall(forecastRequest).execute()
+            val responseBody = response.body?.string() ?: return null
+
+            val json = JSONObject(responseBody)
+            val properties = json.getJSONObject("properties")
+            val meta = properties.getJSONObject("meta")
+            val updatedAt = dateFormat.parse(meta.getString("updated_at"))?.time
+                ?: System.currentTimeMillis()
+            val timeseries = properties.getJSONArray("timeseries")
+
+            for (i in 0 until timeseries.length()) {
+                val fc = timeseries.getJSONObject(i)
+                val data = fc.getJSONObject("data")
+                val timestamp = dateFormat.parse(fc.getString("time"))?.time ?: continue
+                val details = data.getJSONObject("instant").getJSONObject("details")
+                var hours = 0
+                val nextHours = data.optJSONObject("next_1_hours")?.also { hours = 1 }
+                    ?: data.optJSONObject("next_6_hours")?.also { hours = 6 }
+                    ?: data.optJSONObject("next_12_hours")?.also { hours = 12 }
+                    ?: continue
+                val symbolCode = nextHours.optJSONObject("summary")?.getString("symbol_code")
+                    ?: continue
+                val precipitationAmount =
+                    (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
+                        ?: 0.0) / hours
+                forecasts.add(
+                    Forecast(
+                        timestamp = timestamp,
+                        temperature = details.getDouble("air_temperature") + 273.15,
+                        updateTime = updatedAt,
+                        clouds = details.getDouble("cloud_area_fraction").roundToInt(),
+                        humidity = details.getDouble("relative_humidity"),
+                        windDirection = details.getDouble("wind_from_direction"),
+                        windSpeed = details.getDouble("wind_speed"),
+                        pressure = details.getDouble("air_pressure_at_sea_level"),
+                        location = location.name,
+                        provider = context.getString(R.string.provider_metno),
+                        providerUrl = "https://www.yr.no/",
+                        icon = iconForCode(symbolCode),
+                        condition = conditionForCode(symbolCode),
+                        precipitation = precipitationAmount,
+                        night = isNight(timestamp, location.lat, location.lon)
+
+                    )
+                )
+            }
+            return WeatherUpdateResult(
+                forecasts = forecasts,
+                location = location
+            )
+        } catch (e: JSONException) {
+            CrashReporter.logException(e)
+        } catch (e: IOException) {
+            CrashReporter.logException(e)
+        }
+        return null
+    }
+
     companion object {
         private const val PREFERENCES = "metno"
-        private const val AUTO_LOCATION = "auto_location"
-        private const val LAST_UPDATE = "last_update"
-        private const val EXPIRES = "expires"
-        private const val LAT = "lat"
-        private const val LON = "lon"
-        private const val LAST_LAT = "last_lat"
-        private const val LAST_LON = "last_lon"
-        private const val LAST_LOCATION_NAME = "last_location_name"
     }
 }

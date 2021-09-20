@@ -13,6 +13,7 @@ import com.afollestad.materialdialogs.list.listItemsSingleChoice
 import de.mm20.launcher2.R
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.WeatherProviders
+import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherProvider
 import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.weather.here.HereProvider
@@ -89,7 +90,7 @@ class PreferencesWeatherFragment : PreferenceFragmentCompat() {
             val provider = WeatherProvider.getInstance(requireContext())
             provider?.autoLocation = autoLocation
             provider?.resetLastUpdate()
-            provider?.setLocation(null, "")
+            provider?.setLocation(null)
             ViewModelProvider(this).get(WeatherViewModel::class.java)
                 .requestUpdate(requireContext())
             updateProviderPreferences()
@@ -105,47 +106,28 @@ class PreferencesWeatherFragment : PreferenceFragmentCompat() {
         val unitsPref = findPreference<Preference>("imperial_units")!!
         val providerPref = findPreference<Preference>("weather_provider")!!
 
-
-
         locationPref.parent?.isVisible = provider != null
         unitsPref.isVisible = provider != null
 
         provider ?: return
 
         providerPref.summary = provider.name
-
-        if (provider.supportsAutoLocation) {
-            autoLocationPref.setSummary(R.string.preference_automatic_location_summary)
-            autoLocationPref.isChecked = provider.autoLocation
-            if (!provider.supportsManualLocation) {
-                autoLocationPref.isEnabled = false
-                autoLocationPref.isChecked = true
-                locationPref.isEnabled = false
-                locationPref.setSummary(R.string.preference_location_disabled_summary)
-            } else {
-                autoLocationPref.isEnabled = true
-                autoLocationPref.isChecked = provider.autoLocation
-                locationPref.isEnabled = true
-                locationPref.summary = provider.getLastLocation()
-            }
-        } else {
-            autoLocationPref.isEnabled = false
-            autoLocationPref.setSummary(R.string.preference_automatic_location_disabled_summary)
-            autoLocationPref.isChecked = false
-        }
+        autoLocationPref.isChecked = provider.autoLocation
+        locationPref.summary =
+            if (provider.autoLocation) provider.getLastLocation()?.name else provider.getLocation()?.name
     }
 
-    private fun onLookupCompleted(results: List<Pair<Any?, String>>) {
+    private fun onLookupCompleted(results: List<WeatherLocation>) {
         MaterialDialog(requireContext())
             .listItems(
-                items = results.map { it.second },
+                items = results.map { it.name },
                 waitForPositiveButton = false
             ) { dialog, index, _ ->
                 val provider = WeatherProvider.getInstance(requireContext())
                     ?: return@listItems dialog.dismiss()
                 provider.resetLastUpdate()
-                provider.setLocation(results[index].first, results[index].second)
-                findPreference<Preference>("location")?.summary = results[index].second
+                provider.setLocation(results[index])
+                findPreference<Preference>("location")?.summary = results[index].name
                 ViewModelProvider(this).get(WeatherViewModel::class.java)
                     .requestUpdate(requireContext())
                 dialog.dismiss()

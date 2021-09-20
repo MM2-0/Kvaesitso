@@ -1,48 +1,34 @@
 package de.mm20.launcher2.weather.openweathermap
 
-import android.Manifest
 import android.content.Context
-import android.location.Location
-import android.location.LocationManager
-import android.util.Log
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.checkPermission
-import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.R
-import de.mm20.launcher2.weather.WeatherProvider
-import retrofit2.HttpException
+import de.mm20.launcher2.weather.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
-import java.lang.Exception
 import java.util.*
 
 
-class OpenWeatherMapProvider(val context: Context) : WeatherProvider() {
+class OpenWeatherMapProvider(override val context: Context) :
+    WeatherProvider<OpenWeatherMapLocation>() {
 
-    val retrofit by lazy {
+    private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
-    val openWeatherMapService by lazy {
+    private val openWeatherMapService by lazy {
         retrofit.create(OpenWeatherMapApi::class.java)
-    }
-
-    override fun resetLastUpdate() {
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putLong(LAST_UPDATE, 0)
-        }
     }
 
     override fun isUpdateRequired(): Boolean {
         return getLastUpdate() + (1000 * 60 * 60) <= System.currentTimeMillis()
     }
 
-    override suspend fun lookupLocation(query: String): List<Pair<Any?, String>> {
+    override suspend fun lookupLocation(query: String): List<OpenWeatherMapLocation> {
         val lang = Locale.getDefault().language
 
         val response = try {
@@ -60,68 +46,37 @@ class OpenWeatherMapProvider(val context: Context) : WeatherProvider() {
         val country = response.sys?.country ?: ""
         val cityId = response.id ?: return emptyList()
         val loc = "$city, $country"
-        return listOf(cityId.toString() to loc)
+        return listOf(
+            OpenWeatherMapLocation(
+                name = loc, id = cityId
+            )
+        )
     }
 
-    override fun setLocation(locationId: Any?, locationName: String) {
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putInt(CITY_ID, locationId as? Int ?: -1)
-            putString(LAST_LOCATION, locationName)
-        }
+    override suspend fun loadWeatherData(location: OpenWeatherMapLocation): WeatherUpdateResult<OpenWeatherMapLocation>? {
+        return fetchWeatherData(location = location)
     }
 
-
-    override var autoLocation: Boolean
-        get() {
-            return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .getBoolean(AUTO_LOCATION, true)
-        }
-        set(value) {
-            context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-                .edit {
-                    putBoolean(AUTO_LOCATION, value)
-                }
-        }
-
-    override val supportsAutoLocation: Boolean = true
-    override val supportsManualLocation: Boolean = true
-
-    override fun getLastUpdate(): Long {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getLong(LAST_UPDATE, 0)
+    override suspend fun loadWeatherData(
+        lat: Double,
+        lon: Double
+    ): WeatherUpdateResult<OpenWeatherMapLocation>? {
+        return fetchWeatherData(lat = lat, lon = lon)
     }
 
-    override fun getLastLocation(): String {
-        return context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getString(LAST_LOCATION, "")!!
-    }
-
-    override suspend fun fetchNewWeatherData(): List<Forecast>? {
-        Log.d("MM20", "Updating weather data… (OpenWeatherMap)")
-        var cityId = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getInt(CITY_ID, -1)
-        val lastCityId = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-            .getInt(LAST_CITY_ID, -1)
-        if (cityId == -1) cityId = lastCityId
-        val lm = context.getSystemService(
-            Context.LOCATION_SERVICE
-        ) as LocationManager
-        var location: Location? = null
-        if (cityId == -1 && !context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            Log.w("MM20", "Location permission is missing")
-            return null
-        }
-        if (context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION) && autoLocation) {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        }
+    private suspend fun fetchWeatherData(
+        lat: Double? = null,
+        lon: Double? = null,
+        location: OpenWeatherMapLocation? = null
+    ): WeatherUpdateResult<OpenWeatherMapLocation>? {
         val lang = Locale.getDefault().language
 
         val currentWeather = try {
             openWeatherMapService.currentWeather(
                 appid = getApiKey() ?: return null,
-                id = cityId.takeIf { it != -1 && location == null },
-                lat = location?.latitude,
-                lon = location?.longitude,
+                id = location?.id?.takeIf { lat == null || lon == null },
+                lat = lat,
+                lon = lon,
                 lang = lang,
             )
         } catch (e: Exception) {
@@ -133,7 +88,7 @@ class OpenWeatherMapProvider(val context: Context) : WeatherProvider() {
 
         val city = currentWeather.name
         val country = currentWeather.sys?.country ?: return null
-        cityId = currentWeather.id ?: return null
+        val cityId = currentWeather.id ?: return null
         val loc = "$city, $country"
 
         val forecasts = try {
@@ -200,19 +155,14 @@ class OpenWeatherMapProvider(val context: Context) : WeatherProvider() {
                 )
             }
         )
-
-        context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE).edit {
-            putInt(CITY_ID, cityId)
-            putInt(LAST_CITY_ID, cityId)
-            putLong(LAST_UPDATE, System.currentTimeMillis())
-            putString(LAST_LOCATION, loc)
-        }
-
-        return forecastList
-
-
+        return WeatherUpdateResult(
+            forecasts = forecastList,
+            location = OpenWeatherMapLocation(
+                name = loc,
+                id = cityId
+            )
+        )
     }
-
 
     private fun getApiKey(): String? {
         val resId = getApiKeyResId()
@@ -258,12 +208,58 @@ class OpenWeatherMapProvider(val context: Context) : WeatherProvider() {
         }
     }
 
+    override val preferences: SharedPreferences
+        get() = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+
+    override fun setLocation(location: WeatherLocation?) {
+        location as OpenWeatherMapLocation?
+        preferences.edit {
+            if (location == null) {
+                remove(CITY_ID)
+                remove(LOCATION)
+            } else {
+                putInt(CITY_ID, location.id)
+                putString(LOCATION, location.name)
+            }
+        }
+    }
+
+    override fun getLocation(): OpenWeatherMapLocation? {
+        val id = preferences.getInt(CITY_ID, -1).takeIf { it != -1 } ?: return null
+        val name = preferences.getString(LOCATION, null) ?: return null
+        return OpenWeatherMapLocation(
+            name = name,
+            id = id,
+        )
+    }
+
+    override fun getLastLocation(): OpenWeatherMapLocation? {
+        val id = preferences.getInt(LAST_CITY_ID, -1).takeIf { it != -1 } ?: return null
+        val name = preferences.getString(LAST_LOCATION, null) ?: return null
+        return OpenWeatherMapLocation(
+            name = name,
+            id = id,
+        )
+    }
+
+    override fun saveLastLocation(location: OpenWeatherMapLocation) {
+        preferences.edit {
+            putString(LAST_LOCATION, location.name)
+            putInt(LAST_CITY_ID, location.id)
+        }
+    }
+
     companion object {
         private const val PREFERENCES = "openweathermap"
         private const val CITY_ID = "city_id"
         private const val LAST_CITY_ID = "last_city_id"
         private const val LAST_UPDATE = "last_update"
+        private const val LOCATION = "location"
         private const val LAST_LOCATION = "last_location"
-        private const val AUTO_LOCATION = "auto_location"
     }
 }
+
+data class OpenWeatherMapLocation(
+    override val name: String,
+    val id: Int
+) : WeatherLocation
