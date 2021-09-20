@@ -1,22 +1,12 @@
 package de.mm20.launcher2.weather.metno
 
-import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.location.LocationManager
 import android.os.Build
 import android.util.Base64
-import androidx.core.content.edit
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.checkPermission
-import de.mm20.launcher2.ktx.formatToString
-import de.mm20.launcher2.ktx.getDouble
-import de.mm20.launcher2.ktx.putDouble
 import de.mm20.launcher2.weather.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException
