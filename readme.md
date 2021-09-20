@@ -75,7 +75,7 @@ If you want to help translating, see the instructions in the `:i18n` module.
 
 ## Links
 
-- Telegram group: https://t.me/MM20Launcher
+- Telegram group: https://t.me/Kvaesitso
 - F-Droid-Repository: https://raw.githubusercontent.com/MM2-0/fdroid/master/fdroid/repo
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
 

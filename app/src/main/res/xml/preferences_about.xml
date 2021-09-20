@@ -15,11 +15,11 @@
     <PreferenceCategory android:title="@string/preference_category_links">
         <Preference
             android:icon="@drawable/ic_about_telegram"
-            android:summary="t.me/MM20Launcher"
+            android:summary="t.me/Kvaesitso"
             android:title="@string/preference_about_telegram">
             <intent
                 android:action="android.intent.action.VIEW"
-                android:data="https://t.me/MM20Launcher" />
+                android:data="https://t.me/Kvaesitso" />
         </Preference>
         <Preference
             android:icon="@drawable/ic_about_fdroid"
