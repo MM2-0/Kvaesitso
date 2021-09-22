@@ -159,7 +159,8 @@ enum class IconShape(override val value: String) : PreferenceEnum {
 enum class WeatherProviders(override val value: String) : PreferenceEnum {
     OPENWEATHERMAP("0"),
     HERE("3"),
-    MET_NO("2");
+    MET_NO("2"),
+    BRIGHT_SKY("4");
 
     companion object {
         fun byValue(value: String): WeatherProviders {

@@ -16,6 +16,7 @@ import de.mm20.launcher2.preferences.WeatherProviders
 import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherProvider
 import de.mm20.launcher2.weather.WeatherViewModel
+import de.mm20.launcher2.weather.brightsky.BrightskyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
@@ -57,6 +58,9 @@ class PreferencesWeatherFragment : PreferenceFragmentCompat() {
         }
         MetNoProvider(context).takeIf { it.isAvailable() }?.let {
             providers.add(WeatherProviders.MET_NO to it.name)
+        }
+        BrightskyProvider(context).takeIf { it.isAvailable() }?.let {
+            providers.add(WeatherProviders.BRIGHT_SKY to it.name)
         }
 
         if (providers.isEmpty()) {

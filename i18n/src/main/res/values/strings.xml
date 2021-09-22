@@ -193,6 +193,7 @@
     <string name="preference_weather_provider">Provider</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
     <string name="provider_here">HERE</string>
     <string name="preference_automatic_location_disabled_summary">Not supported by this provider</string>
     <string name="date_format_long_without_year">EE, MMMM d</string>
@@ -406,6 +407,8 @@
     <string name="weather_cloudy">Cloudy</string>
     <string name="weather_lightrainandthunder">Light rain and thunder</string>
     <string name="weather_snow">Snow</string>
+    <string name="weather_hail">Hail</string>
+    <string name="weather_thunder">Thunderstorm</string>
     <string name="weather_heavysnowshowers">Heavy snow showers</string>
     <string name="weather_heavyrainshowers">Heavy rain showers</string>
     <string name="weather_rainshowersandthunder">Rain showers and thunder</string>

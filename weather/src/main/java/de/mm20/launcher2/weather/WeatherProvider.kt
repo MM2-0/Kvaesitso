@@ -9,6 +9,7 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.WeatherProviders
+import de.mm20.launcher2.weather.brightsky.BrightskyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
@@ -103,6 +104,7 @@ abstract class WeatherProvider<T : WeatherLocation> {
             return when (LauncherPreferences.instance.weatherProvider) {
                 WeatherProviders.OPENWEATHERMAP -> OpenWeatherMapProvider(context)
                 WeatherProviders.HERE -> HereProvider(context)
+                WeatherProviders.BRIGHT_SKY -> BrightskyProvider(context)
                 else -> MetNoProvider(context)
             }.takeIf { it.isAvailable() }
         }

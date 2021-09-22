@@ -154,6 +154,7 @@
     <string name="websearch_dialog_url_error">In dieser URL fehlt der Platzhalter „${1}“</string>
     <string name="preference_weather_provider">Wetterdienst</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (nur Deutschland)</string>
     <string name="preference_automatic_location_disabled_summary">Von diesem Wetterdienst nicht unterstützt</string>
     <string name="date_format_long_without_year">EE, d. MMMM</string>
     <string name="weather_wind_direction_speed">%1$s • %2$s</string>
@@ -253,6 +254,8 @@
     <string name="weather_cloudy">Bedeckt</string>
     <string name="weather_lightrainandthunder">Leichter Regen und Gewitter</string>
     <string name="weather_snow">Schneefall</string>
+    <string name="weather_hail">Hagel</string>
+    <string name="weather_thunder">Gewitter</string>
     <string name="weather_heavysnowshowers">Starke Schneeschauer</string>
     <string name="weather_heavyrainshowers">Starke Regenschauer</string>
     <string name="weather_rainshowersandthunder">Regenschauer und Gewitter</string>
