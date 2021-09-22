@@ -38,7 +38,7 @@ include(":compat")
 dependencyResolutionManagement {
     versionCatalogs {
         create("sdk") {
-            version("minSdk", "23")
+            version("minSdk", "24")
             version("compileSdk", "31")
             version("targetSdk", "31")
         }
