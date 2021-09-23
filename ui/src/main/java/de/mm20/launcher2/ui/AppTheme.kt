@@ -218,7 +218,7 @@ fun LauncherTheme(content: @Composable () -> Unit) {
             surface = colorScheme.neutral1.shade0,
             onSurface = colorScheme.neutral2.shade1000,
             onBackground = colorScheme.neutral2.shade1000,
-            background = colorScheme.neutral1.shade100,
+            background = colorScheme.neutral1.shade50,
             primary = colorScheme.accent1.shade600,
             primaryVariant = colorScheme.accent1.shade700,
             secondary = colorScheme.accent2.shade600,
