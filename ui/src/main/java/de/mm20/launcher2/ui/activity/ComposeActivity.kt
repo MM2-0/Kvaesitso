@@ -19,7 +19,6 @@ import de.mm20.launcher2.ui.LauncherMainScreen
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalColorScheme
-import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
@@ -47,14 +46,18 @@ class ComposeActivity : AppCompatActivity() {
 
             var wallpaperColors by remember { mutableStateOf<WallpaperColors?>(null) }
 
-            LaunchedEffect(null) {
+            DisposableEffect(null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                     val wallpaperManager = WallpaperManager.getInstance(this@ComposeActivity)
-                    wallpaperManager.addOnColorsChangedListener({ colors, which ->
+                    val callback = { colors: android.app.WallpaperColors?, which: Int ->
                         if (colors != null && which or WallpaperManager.FLAG_SYSTEM != 0) {
                             wallpaperColors = WallpaperColors.fromPlatformType(colors)
                         }
-                    }, Handler(Looper.getMainLooper()))
+                    }
+                    wallpaperManager.addOnColorsChangedListener(
+                        callback,
+                        Handler(Looper.getMainLooper())
+                    )
 
                     lifecycleScope.launch {
                         val colors = withContext(Dispatchers.IO) {
@@ -62,7 +65,11 @@ class ComposeActivity : AppCompatActivity() {
                         } ?: return@launch
                         wallpaperColors = WallpaperColors.fromPlatformType(colors)
                     }
+                    return@DisposableEffect onDispose {
+                        wallpaperManager.removeOnColorsChangedListener(callback)
+                    }
                 }
+                onDispose {}
             }
 
             if (windowSize.height <= 0 || windowSize.width <= 0) return@setContent
