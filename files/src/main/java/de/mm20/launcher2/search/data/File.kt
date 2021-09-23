@@ -360,9 +360,7 @@ open class File(
                     metaData.add(R.string.file_meta_app_name to pkgInfo.applicationInfo.loadLabel(context.packageManager).toString())
                     metaData.add(R.string.file_meta_app_pkgname to pkgInfo.packageName)
                     metaData.add(R.string.file_meta_app_version to pkgInfo.versionName)
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        metaData.add(R.string.file_meta_app_min_sdk to pkgInfo.applicationInfo.minSdkVersion.toString())
-                    }
+                    metaData.add(R.string.file_meta_app_min_sdk to pkgInfo.applicationInfo.minSdkVersion.toString())
                 }
             }
             return metaData

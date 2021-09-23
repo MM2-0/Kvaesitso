@@ -29,19 +29,12 @@ class CurrencyConverter(context: Context) : Converter() {
 
     private fun formatName(symbol: String, value: Double): String {
         val text = StringBuilder()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val currency = Currency.getInstance(symbol) ?: return formatNameFallback(symbol)
-            val pluralCount = PluralRules.forLocale(Locale.getDefault()).select(value)
-            text.append(currency.getName(Locale.getDefault(), Currency.PLURAL_LONG_NAME, pluralCount, booleanArrayOf(false)))
-                    .append(" ")
-                    .append(repository.getFlag(symbol))
+        val currency = Currency.getInstance(symbol) ?: return formatNameFallback(symbol)
+        val pluralCount = PluralRules.forLocale(Locale.getDefault()).select(value)
+        text.append(currency.getName(Locale.getDefault(), Currency.PLURAL_LONG_NAME, pluralCount, booleanArrayOf(false)))
+                .append(" ")
+                .append(repository.getFlag(symbol))
 
-        } else {
-            val currency = JCurrency.getInstance(symbol) ?: return formatNameFallback(symbol)
-            text.append(currency.displayName)
-                    .append(" ")
-                    .append(repository.getFlag(symbol))
-        }
         return text.toString()
     }
 

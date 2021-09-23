@@ -61,16 +61,14 @@ object WallpaperBlur {
                                 val out = FileOutputStream(File(context.cacheDir, "wallpaper"))
                                 resource.compress(Bitmap.CompressFormat.PNG, 100, out)
                                 out.close()
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                                    context.getSharedPreferences("wallpaper", Context.MODE_PRIVATE)
-                                        .edit()
-                                        .putInt(
-                                            "last_wallpaper_id", wm.getWallpaperId(
-                                                WallpaperManager.FLAG_SYSTEM
-                                            )
+                                context.getSharedPreferences("wallpaper", Context.MODE_PRIVATE)
+                                    .edit()
+                                    .putInt(
+                                        "last_wallpaper_id", wm.getWallpaperId(
+                                            WallpaperManager.FLAG_SYSTEM
                                         )
-                                        .apply()
-                                }
+                                    )
+                                    .apply()
 
                                 if (LauncherPreferences.instance.blurCards && LauncherPreferences.instance.cardOpacity < 0xFF) {
                                     blurredWallpaper = resource
