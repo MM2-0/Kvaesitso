@@ -58,7 +58,7 @@ fun WidgetColumn(
             .background(
                 Brush.verticalGradient(
                     background to Color.Transparent,
-                    background to MaterialTheme.colors.surface.copy(alpha = 0.8f)
+                    background to MaterialTheme.colors.background
                 )
             )
     ) {

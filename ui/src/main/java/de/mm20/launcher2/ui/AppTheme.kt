@@ -205,7 +205,7 @@ fun LauncherTheme(content: @Composable () -> Unit) {
     val colors = if (isSystemInDarkTheme()) {
         darkColors(
             onSurface = colorScheme.neutral2.shade10,
-            surface = colorScheme.neutral2.shade900,
+            surface = colorScheme.neutral2.shade800,
             onBackground = colorScheme.neutral2.shade10,
             background = colorScheme.neutral2.shade900,
             primary = colorScheme.accent1.shade300,
@@ -218,7 +218,7 @@ fun LauncherTheme(content: @Composable () -> Unit) {
             surface = colorScheme.neutral1.shade0,
             onSurface = colorScheme.neutral2.shade1000,
             onBackground = colorScheme.neutral2.shade1000,
-            background = colorScheme.neutral1.shade0,
+            background = colorScheme.neutral1.shade100,
             primary = colorScheme.accent1.shade600,
             primaryVariant = colorScheme.accent1.shade700,
             secondary = colorScheme.accent2.shade600,

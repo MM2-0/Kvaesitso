@@ -26,7 +26,7 @@ fun SearchColumn(
 
     Box(
         modifier = modifier
-            .background(MaterialTheme.colors.surface.copy(alpha = 0.8f))
+            .background(MaterialTheme.colors.background)
             .fillMaxHeight()
             .statusBarsPadding()
             .navigationBarsWithImePadding()
