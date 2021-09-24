@@ -4,10 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.ContentAlpha
-import androidx.compose.material.LocalContentAlpha
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -26,38 +23,42 @@ fun calculatorItem(): LazyListScope.() -> Unit {
     return {
         calculator?.let {
             item {
-                Column(
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
+                Card(
+                    elevation = 0.dp
                 ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(16.dp)
+                            .fillMaxWidth()
+                    ) {
 
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(it.getBeatifiedTerm())
-                    }
-                    Text(
-                        text = "= ${it.formattedString}",
-                        style = MaterialTheme.typography.h1,
-                        modifier = Modifier.align(Alignment.End),
-                    )
-                    if (it.term.matches(Regex("(0x|0b)?[0-9]+"))) {
+                        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+                            Text(it.getBeatifiedTerm())
+                        }
                         Text(
-                            it.formattedBinaryString,
-                            fontFamily = FontFamily.Monospace,
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .padding(top = 8.dp),
-                        )
-                        Text(
-                            it.formattedHexString,
-                            fontFamily = FontFamily.Monospace,
+                            text = "= ${it.formattedString}",
+                            style = MaterialTheme.typography.h1,
                             modifier = Modifier.align(Alignment.End),
                         )
-                        Text(
-                            it.formattedOctString,
-                            fontFamily = FontFamily.Monospace,
-                            modifier = Modifier.align(Alignment.End),
-                        )
+                        if (it.term.matches(Regex("(0x|0b)?[0-9]+"))) {
+                            Text(
+                                it.formattedBinaryString,
+                                fontFamily = FontFamily.Monospace,
+                                modifier = Modifier
+                                    .align(Alignment.End)
+                                    .padding(top = 8.dp),
+                            )
+                            Text(
+                                it.formattedHexString,
+                                fontFamily = FontFamily.Monospace,
+                                modifier = Modifier.align(Alignment.End),
+                            )
+                            Text(
+                                it.formattedOctString,
+                                fontFamily = FontFamily.Monospace,
+                                modifier = Modifier.align(Alignment.End),
+                            )
+                        }
                     }
                 }
             }
