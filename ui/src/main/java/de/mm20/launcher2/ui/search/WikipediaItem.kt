@@ -28,12 +28,11 @@ fun WikipediaItem(
     initialRepresentation: Representation,
     onRepresentationChange: ((Representation) -> Unit)
 ) {
-    val hPadding = if (initialRepresentation == Representation.Full) 8.dp else 16.dp
     Column(
         modifier = Modifier
     ) {
         Column(
-            modifier = Modifier.padding(start = hPadding, end = hPadding, top = 16.dp)
+            modifier = Modifier.padding(start = 16.dp, end = 24.dp, top = 16.dp)
         ) {
             Text(
                 text = wikipedia.label,
