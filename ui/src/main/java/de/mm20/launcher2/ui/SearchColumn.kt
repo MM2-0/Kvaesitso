@@ -49,7 +49,7 @@ fun SearchColumn(
                     // Search bar space
                     Spacer(
                         modifier = Modifier.requiredHeight(
-                            72.dp
+                            64.dp
                         )
                     )
                 }
