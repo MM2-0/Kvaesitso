@@ -78,8 +78,6 @@ fun WidgetColumn(
                 WidgetCard(widget = widget)
             }
 
-            ColorSchemeTest()
-
             val icon = animatedVectorResource(id = R.drawable.anim_ic_edit_add)
             ExtendedFloatingActionButton(
                 modifier = Modifier
