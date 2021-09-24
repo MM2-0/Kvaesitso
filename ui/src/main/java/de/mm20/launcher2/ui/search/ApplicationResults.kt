@@ -13,6 +13,6 @@ import de.mm20.launcher2.ui.SectionDivider
 fun applicationResults(): LazyListScope.(listState: LazyListState) -> Unit {
     val apps by viewModel<AppViewModel>().applications.observeAsState(emptyList())
     return {
-        LegacySearchableGrid(items = apps, listState = it)
+        SearchableGrid(items = apps, listState = it)
     }
 }

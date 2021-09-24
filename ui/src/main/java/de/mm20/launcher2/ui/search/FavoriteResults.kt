@@ -12,6 +12,6 @@ import de.mm20.launcher2.favorites.FavoritesViewModel
 fun favoriteResults(): LazyListScope.(listState: LazyListState) -> Unit {
     val favorites by viewModel<FavoritesViewModel>().getFavorites(5).observeAsState(emptyList())
     return {
-        LegacySearchableGrid(items = favorites, listState = it)
+        SearchableGrid(items = favorites, listState = it)
     }
 }
