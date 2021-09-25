@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.ui.locals.LocalColorScheme
-import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 
 val lightPalette = lightColors(
     primary = Color(0, 114, 255)
@@ -37,25 +36,51 @@ val Inter = FontFamily(
 
 val typography = Typography(
     h1 = TextStyle(
-        fontSize = 18.sp,
-        fontWeight = FontWeight.ExtraBold,
+        fontSize = 96.sp,
+        fontWeight = FontWeight.Light,
         fontFamily = Inter
     ),
     h2 = TextStyle(
-        fontSize = 15.sp,
-        fontWeight = FontWeight.Bold,
+        fontSize = 60.sp,
+        fontWeight = FontWeight.Light,
         fontFamily = Inter
     ),
     h3 = TextStyle(
-        fontSize = 13.sp,
+        fontSize = 48.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = Inter
+    ),
+    h4 = TextStyle(
+        fontSize = 34.sp,
+        fontWeight = FontWeight.Normal,
+        fontFamily = Inter
+    ),
+    h5 = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Medium,
+        fontFamily = Inter
+    ),
+    h6 = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
         fontFamily = Inter
     ),
     caption = TextStyle(
         fontFamily = Inter,
         fontSize = 13.sp
     ),
+    subtitle1 = TextStyle(
+        fontFamily = Inter,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+    ),
+    subtitle2 = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp,
+    ),
     body1 = TextStyle(
-        fontSize = 13.sp
+        fontSize = 14.sp
     ),
     body2 = TextStyle(
         fontSize = 13.sp

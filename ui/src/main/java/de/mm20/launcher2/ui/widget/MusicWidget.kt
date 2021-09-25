@@ -67,7 +67,7 @@ fun MusicWidget() {
                 ) {
                     Text(
                         text = title ?: "---",
-                        style = MaterialTheme.typography.h1,
+                        style = MaterialTheme.typography.subtitle1,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )

@@ -62,7 +62,7 @@ fun ApplicationItem(
                     Column {
                         Text(
                             text = app.label,
-                            style = MaterialTheme.typography.h1,
+                            style = MaterialTheme.typography.subtitle1,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )

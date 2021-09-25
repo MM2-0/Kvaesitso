@@ -109,7 +109,7 @@ fun AnalogClock(time: Long) {
 
             Text(
                 text = "12",
-                style = MaterialTheme.typography.h1.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 32.sp,
                     lineHeight = 32.sp,
                 ),
@@ -120,7 +120,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "3",
-                style = MaterialTheme.typography.h1.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,
@@ -130,7 +130,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "6",
-                style = MaterialTheme.typography.h1.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,
@@ -140,7 +140,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "9",
-                style = MaterialTheme.typography.h1.copy(
+                style = MaterialTheme.typography.subtitle1.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,

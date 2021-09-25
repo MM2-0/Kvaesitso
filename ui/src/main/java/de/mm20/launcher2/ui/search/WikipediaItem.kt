@@ -36,7 +36,7 @@ fun WikipediaItem(
         ) {
             Text(
                 text = wikipedia.label,
-                style = MaterialTheme.typography.h1,
+                style = MaterialTheme.typography.subtitle1,
             )
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
                 Text(

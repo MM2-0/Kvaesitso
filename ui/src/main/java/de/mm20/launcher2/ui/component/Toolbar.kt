@@ -100,7 +100,10 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                     DropdownMenuItem(
                         onClick = { selectedSubMenu = i },
                     ) {
-                        Text(action.label, modifier = Modifier.weight(1f))
+                        Text(
+                            action.label, modifier = Modifier.weight(1f),
+                            style = MaterialTheme.typography.subtitle2
+                        )
                         Icon(imageVector = Icons.Rounded.ArrowRight, contentDescription = null)
                     }
                 }
@@ -108,7 +111,10 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                     DropdownMenuItem(
                         onClick = { action.onCheckedChange(!action.isChecked) },
                     ) {
-                        Text(action.label)
+                        Text(
+                            action.label,
+                            style = MaterialTheme.typography.subtitle2
+                        )
                     }
                 }
                 is DefaultToolbarAction -> {
@@ -116,7 +122,10 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                         action.action
                         onDismiss()
                     }) {
-                        Text(action.label)
+                        Text(
+                            action.label,
+                            style = MaterialTheme.typography.subtitle2
+                        )
                     }
                 }
             }

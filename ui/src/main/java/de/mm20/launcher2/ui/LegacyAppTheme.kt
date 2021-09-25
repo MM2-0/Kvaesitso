@@ -12,21 +12,42 @@ import androidx.compose.ui.unit.sp
 
 val legacyTypography = Typography(
     h1 = TextStyle(
-        fontSize = 18.sp,
-        fontWeight = FontWeight.Medium,
+        fontSize = 96.sp,
+        fontWeight = FontWeight.Light,
     ),
     h2 = TextStyle(
-        fontSize = 15.sp,
-        fontWeight = FontWeight.Bold,
+        fontSize = 60.sp,
+        fontWeight = FontWeight.Light,
     ),
     h3 = TextStyle(
-        fontSize = 13.sp,
+        fontSize = 48.sp,
+        fontWeight = FontWeight.Normal,
+    ),
+    h4 = TextStyle(
+        fontSize = 34.sp,
+        fontWeight = FontWeight.Normal,
+    ),
+    h5 = TextStyle(
+        fontSize = 24.sp,
+        fontWeight = FontWeight.Medium,
+    ),
+    h6 = TextStyle(
+        fontSize = 20.sp,
+        fontWeight = FontWeight.Bold,
     ),
     caption = TextStyle(
         fontSize = 13.sp
     ),
+    subtitle1 = TextStyle(
+        fontSize = 16.sp,
+        fontWeight = FontWeight.Bold,
+    ),
+    subtitle2 = TextStyle(
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 14.sp,
+    ),
     body1 = TextStyle(
-        fontSize = 13.sp
+        fontSize = 14.sp
     ),
     body2 = TextStyle(
         fontSize = 13.sp
@@ -35,9 +56,9 @@ val legacyTypography = Typography(
 
 @Composable
 fun LegacyLauncherTheme(content: @Composable () -> Unit) {
-   MaterialTheme(
-       typography = legacyTypography,
-       content = content,
-       colors = if(isSystemInDarkTheme()) darkColors() else lightColors()
-   )
+    MaterialTheme(
+        typography = legacyTypography,
+        content = content,
+        colors = if (isSystemInDarkTheme()) darkColors() else lightColors()
+    )
 }

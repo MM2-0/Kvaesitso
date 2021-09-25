@@ -74,7 +74,7 @@ fun FileItem(
                     Column {
                         Text(
                             text = file.label,
-                            style = MaterialTheme.typography.h2,
+                            style = MaterialTheme.typography.subtitle2,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                         )

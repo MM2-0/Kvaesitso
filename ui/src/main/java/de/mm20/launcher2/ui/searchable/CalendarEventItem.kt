@@ -80,7 +80,7 @@ fun CalendarEventItem(
                     ) {
                         Text(
                             text = event.label,
-                            style = MaterialTheme.typography.h2
+                            style = MaterialTheme.typography.subtitle2
                         )
                         AnimatedVisibility(
                             representation == Representation.List

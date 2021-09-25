@@ -37,7 +37,7 @@ fun calculatorItem(): LazyListScope.() -> Unit {
                         }
                         Text(
                             text = "= ${it.formattedString}",
-                            style = MaterialTheme.typography.h1,
+                            style = MaterialTheme.typography.subtitle1,
                             modifier = Modifier.align(Alignment.End),
                         )
                         if (it.term.matches(Regex("(0x|0b)?[0-9]+"))) {

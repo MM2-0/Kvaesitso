@@ -22,7 +22,7 @@ fun ColumnScope.GridItemLabel(
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.body1,
+        style = MaterialTheme.typography.body2,
         softWrap = false,
         modifier = Modifier
             .fillMaxWidth()

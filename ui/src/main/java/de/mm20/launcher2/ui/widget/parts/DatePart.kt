@@ -9,6 +9,6 @@ import de.mm20.launcher2.ui.component.TextClock
 fun DatePart() {
     TextClock(
         formatFlags = DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR,
-        style = MaterialTheme.typography.h2
+        style = MaterialTheme.typography.subtitle1
     )
 }

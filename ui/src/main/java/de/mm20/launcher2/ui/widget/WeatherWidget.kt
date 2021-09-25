@@ -81,7 +81,7 @@ fun WeatherWidget() {
             ) {
                 Text(
                     text = selectedForecast.location,
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Text(
                     text = convertTemperature(
@@ -239,7 +239,7 @@ fun WeatherDaySelector(
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                 Text(
                     text = dateFormat.format(selectedDay.timestamp),
-                    style = MaterialTheme.typography.h2,
+                    style = MaterialTheme.typography.subtitle2,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(start = 16.dp, end = 8.dp)
@@ -279,7 +279,7 @@ fun WeatherDaySelector(
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             Text(
                                 text = dateFormat.format(d.timestamp),
-                                style = MaterialTheme.typography.h2,
+                                style = MaterialTheme.typography.subtitle2,
                                 softWrap = false,
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
@@ -330,7 +330,7 @@ fun WeatherTimeSelector(
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                 Text(
                     text = dateFormat.format(selectedForecast.timestamp),
-                    style = MaterialTheme.typography.h2,
+                    style = MaterialTheme.typography.subtitle2,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
@@ -356,7 +356,7 @@ fun WeatherTimeSelector(
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             Text(
                                 text = dateFormat.format(fc.timestamp),
-                                style = MaterialTheme.typography.h2,
+                                style = MaterialTheme.typography.subtitle2,
                                 softWrap = false,
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)

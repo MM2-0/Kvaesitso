@@ -122,7 +122,7 @@ fun CalendarWidget() {
             if (pinnedEvents.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.calendar_widget_pinned_events),
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.subtitle1
                 )
                 DeprecatedSearchableList(
                     items = pinnedEvents,
@@ -178,7 +178,7 @@ fun DaySelector(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = formatDay(LocalContext.current, selectedDay),
-                    style = MaterialTheme.typography.h1
+                    style = MaterialTheme.typography.subtitle1
                 )
                 Icon(
                     imageVector = Icons.Rounded.ArrowDropDown,
@@ -196,7 +196,10 @@ fun DaySelector(
                         menuExpanded = false
                         onSelectDay(selectedDay)
                     }) {
-                        Text(text = formatDay(LocalContext.current, day))
+                        Text(
+                            text = formatDay(LocalContext.current, day),
+                            style = MaterialTheme.typography.subtitle2
+                        )
                     }
                 }
             }

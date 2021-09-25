@@ -132,7 +132,10 @@ fun SearchBar(
                     DropdownMenuItem(onClick = {
                         navController?.navigate("settings")
                     }) {
-                        Text(stringResource(id = R.string.title_activity_settings))
+                        Text(
+                            stringResource(id = R.string.title_activity_settings),
+                            style = MaterialTheme.typography.subtitle2
+                        )
                     }
                 }
             }
