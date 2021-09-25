@@ -240,6 +240,10 @@ dependencyResolutionManagement {
                 )
             )
 
+            alias("androidx.navigation.compose")
+                .to("androidx.navigation", "navigation-compose")
+                .version("2.4.0-alpha09")
+
             alias("materialcomponents")
                 .to("com.google.android.material", "material")
                 .version("1.5.0-alpha02")

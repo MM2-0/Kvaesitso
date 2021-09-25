@@ -36,7 +36,7 @@ import kotlinx.coroutines.launch
     InternalCoroutinesApi::class
 )
 @Composable
-fun LauncherMainScreen() {
+fun LauncherMainScreen(navController: NavController) {
 
     val systemUiController = rememberSystemUiController()
 

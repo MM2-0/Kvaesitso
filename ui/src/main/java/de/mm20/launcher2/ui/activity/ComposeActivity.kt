@@ -14,12 +14,15 @@ import androidx.compose.ui.geometry.Size
 import androidx.core.view.WindowCompat
 import androidx.core.view.doOnLayout
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.insets.ProvideWindowInsets
-import de.mm20.launcher2.ui.LauncherMainScreen
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalColorScheme
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.screens.LauncherMainScreen
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
 import de.mm20.launcher2.ui.theme.colors.WallpaperColorScheme
@@ -39,6 +42,8 @@ class ComposeActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
+            val navController = rememberNavController()
+
             var windowSize by remember { mutableStateOf(Size(0f, 0f)) }
             findViewById<View>(android.R.id.content).doOnLayout {
                 windowSize = Size(it.width.toFloat(), it.height.toFloat())
@@ -85,7 +90,11 @@ class ComposeActivity : AppCompatActivity() {
                     LocalColorScheme provides colorScheme,
                 ) {
                     LauncherTheme {
-                        LauncherMainScreen()
+                        NavHost(navController = navController, startDestination = "home") {
+                            composable("home") {
+                                LauncherMainScreen(navController)
+                            }
+                        }
                     }
                 }
             }

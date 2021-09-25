@@ -61,6 +61,8 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.animationgraphics)
 
+    implementation(libs.androidx.navigation.compose)
+
     // Legacy dependencies
     implementation(libs.androidx.transition)
     implementation(libs.materialcomponents)
