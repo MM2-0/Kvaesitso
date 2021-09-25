@@ -24,6 +24,7 @@ import de.mm20.launcher2.ui.locals.LocalColorScheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
+import de.mm20.launcher2.ui.screens.settings.SettingsMainScreen
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
 import de.mm20.launcher2.ui.theme.colors.WallpaperColorScheme
@@ -95,6 +96,9 @@ class ComposeActivity : AppCompatActivity() {
                         NavHost(navController = navController, startDestination = "home") {
                             composable("home") {
                                 LauncherMainScreen()
+                            }
+                            composable("settings") {
+                                SettingsMainScreen()
                             }
                         }
                     }
