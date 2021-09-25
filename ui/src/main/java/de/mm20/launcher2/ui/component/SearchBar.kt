@@ -25,6 +25,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 
 /**
@@ -53,7 +54,8 @@ fun SearchBar(
     val pageTransition = (pagerState.currentPage + pagerState.currentPageOffset).coerceIn(0f, 1f)
 
 
-    val elevationTransition = (2 * widgetColumnState.value / LocalWindowSize.current.height).coerceIn(0f, 1f)
+    val elevationTransition =
+        (2 * widgetColumnState.value / LocalWindowSize.current.height).coerceIn(0f, 1f)
 
     Card(
         modifier = modifier
@@ -105,14 +107,34 @@ fun SearchBar(
                     )
                 }
             }
-            IconButton(
-                onClick = {
-                    searchQuery = TextFieldValue()
-                },
-                modifier = Modifier.size(48.dp)
-            ) {
-                val menuClearIcon = animatedVectorResource(R.drawable.anim_ic_menu_clear)
-                Icon(painter = menuClearIcon.painterFor(atEnd = searchQuery.text.isNotEmpty()), null)
+            var showOverflowMenu by remember { mutableStateOf(false) }
+            Box {
+                IconButton(
+                    onClick = {
+                        if (searchQuery.text.isNotEmpty()) {
+                            searchQuery = TextFieldValue()
+                        } else {
+                            showOverflowMenu = true
+                        }
+                    },
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    val menuClearIcon = animatedVectorResource(R.drawable.anim_ic_menu_clear)
+                    Icon(
+                        painter = menuClearIcon.painterFor(atEnd = searchQuery.text.isNotEmpty()),
+                        null
+                    )
+                }
+                val navController = LocalNavController.current
+                DropdownMenu(
+                    expanded = showOverflowMenu,
+                    onDismissRequest = { showOverflowMenu = false }) {
+                    DropdownMenuItem(onClick = {
+                        navController?.navigate("settings")
+                    }) {
+                        Text(stringResource(id = R.string.title_activity_settings))
+                    }
+                }
             }
         }
     }
