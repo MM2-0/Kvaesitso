@@ -18,7 +18,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.zIndex
 import com.google.accompanist.insets.LocalWindowInsets
 import de.mm20.launcher2.search.data.Searchable
-import de.mm20.launcher2.ui.SectionDivider
+import de.mm20.launcher2.ui.component.SectionDivider
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.legacy.search.SearchGridView
 import de.mm20.launcher2.ui.locals.LocalWindowSize

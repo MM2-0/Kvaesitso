@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui
+package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -21,8 +21,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.ui.ClockWidget
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalWindowSize
-import de.mm20.launcher2.ui.component.NavBarSpacer
 import de.mm20.launcher2.ui.widget.WidgetCard
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetViewModel

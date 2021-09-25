@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.calculator.CalculatorViewModel
-import de.mm20.launcher2.ui.SectionDivider
+import de.mm20.launcher2.ui.component.SectionDivider
 
 @Composable
 fun calculatorItem(): LazyListScope.() -> Unit {

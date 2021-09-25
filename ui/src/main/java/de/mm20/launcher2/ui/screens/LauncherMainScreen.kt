@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui
+package de.mm20.launcher2.ui.screens
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -13,12 +13,17 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.ui.component.SearchBar
+import de.mm20.launcher2.ui.component.SearchColumn
+import de.mm20.launcher2.ui.component.WidgetColumn
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.toPixels
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine

@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.ui.SectionDivider
+import de.mm20.launcher2.ui.component.SectionDivider
 import de.mm20.launcher2.wikipedia.WikipediaViewModel
 
 @Composable

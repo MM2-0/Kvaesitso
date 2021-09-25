@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui
+package de.mm20.launcher2.ui.component
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
