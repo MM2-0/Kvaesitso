@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.locals
 import android.appwidget.AppWidgetHost
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Size
+import androidx.navigation.NavController
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.ColorScheme
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
@@ -14,3 +15,5 @@ val LocalAppWidgetHost = compositionLocalOf<AppWidgetHost?>(defaultFactory = { n
 val LocalWallpaperColors = compositionLocalOf<WallpaperColors?> { null }
 
 val LocalColorScheme = compositionLocalOf<ColorScheme> { DefaultColorScheme() }
+
+val LocalNavController = compositionLocalOf<NavController?> { null }

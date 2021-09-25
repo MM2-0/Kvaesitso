@@ -21,6 +21,7 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalColorScheme
+import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
 import de.mm20.launcher2.ui.theme.WallpaperColors
@@ -88,11 +89,12 @@ class ComposeActivity : AppCompatActivity() {
                     LocalAppWidgetHost provides widgetHost,
                     LocalWindowSize provides windowSize,
                     LocalColorScheme provides colorScheme,
+                    LocalNavController provides navController
                 ) {
                     LauncherTheme {
                         NavHost(navController = navController, startDestination = "home") {
                             composable("home") {
-                                LauncherMainScreen(navController)
+                                LauncherMainScreen()
                             }
                         }
                     }
