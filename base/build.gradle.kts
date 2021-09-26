@@ -47,5 +47,6 @@ dependencies {
     implementation(libs.bundles.materialdialogs)
 
     implementation(project(":ktx"))
+    implementation(project(":i18n"))
 
 }

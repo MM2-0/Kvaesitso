@@ -13,6 +13,8 @@ import com.afollestad.materialdialogs.MaterialDialog
 import de.mm20.launcher2.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.helper.DebugInformationDumper
+import de.mm20.launcher2.licenses.AppLicense
+import de.mm20.launcher2.licenses.OpenSourceLicenses
 
 
 class PreferencesAboutFragment : PreferenceFragmentCompat() {
@@ -64,11 +66,10 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
         }
 
         val licenses = findPreference<Preference>("category_licenses") as PreferenceCategory
-        for (l in LICENSES) {
-            val license = resources.obtainTypedArray(l)
+        for (l in OpenSourceLicenses.sortedBy { it.name.lowercase() }) {
             val preference = Preference(activity, null, 0, R.style.Preference_Material)
-            preference.title = license.getString(0)
-            preference.summary = license.getString(1)
+            preference.title = l.name
+            preference.summary = l.description
             preference.onPreferenceClickListener = Preference.OnPreferenceClickListener {
                 parentFragmentManager.beginTransaction()
                     .setCustomAnimations(
@@ -78,12 +79,11 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
                         R.anim.preference_fragment_child_exit
                     )
                     .replace(android.R.id.content,
-                        PreferencesLicenseFragment().apply { library = l })
+                        PreferencesLicenseFragment(l))
                     .addToBackStack(null)
                     .commit()
                 true
             }
-            license.recycle()
             licenses.addPreference(preference)
         }
         findPreference<Preference>("crash_reporter")?.setOnPreferenceClickListener {
@@ -132,7 +132,7 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
                     R.anim.preference_fragment_child_exit
                 )
                 .replace(android.R.id.content,
-                    PreferencesLicenseFragment().apply { library = R.array.license_mm20launcher2 })
+                    PreferencesLicenseFragment(AppLicense.get(requireContext())))
                 .addToBackStack(null)
                 .commit()
             true
@@ -142,35 +142,5 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.preference_screen_about)
-    }
-
-    companion object {
-
-        private val LICENSES = intArrayOf(
-            R.array.license_accompanist,
-            R.array.license_android_jetpack,
-            R.array.license_suncalc,
-            R.array.license_crashreporter,
-            R.array.license_draglinearlayout,
-            R.array.license_glide,
-            R.array.license_glide_transformations,
-            R.array.license_google_apiclient,
-            R.array.license_google_auth,
-            R.array.license_groupie,
-            R.array.license_gson,
-            R.array.license_jsoup,
-            R.array.license_kotlin_stdlib,
-            R.array.license_lottie,
-            R.array.license_mdicons,
-            R.array.license_material_components,
-            R.array.license_materialdialogs,
-            R.array.license_msal,
-            R.array.license_msgraph,
-            R.array.license_mxparser,
-            R.array.license_okhttp,
-            R.array.license_retrofit,
-            R.array.license_textdrawable,
-            R.array.license_viewpropertyobjectanimator
-        )
     }
 }
