@@ -35,12 +35,12 @@ fun Preference(
         Column(
             modifier = Modifier.weight(1f)
         ) {
-            Text(text = title, style = MaterialTheme.typography.body1)
+            Text(text = title, style = MaterialTheme.typography.subtitle2)
             if (summary != null) {
                 Text(
                     text = summary,
-                    style = MaterialTheme.typography.body2,
-                    modifier = Modifier.padding(top = 2.dp)
+                    style = MaterialTheme.typography.body1,
+                    modifier = Modifier.padding(top = 1.dp)
                 )
             }
         }

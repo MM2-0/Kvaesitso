@@ -80,10 +80,10 @@ val typography = Typography(
         fontSize = 14.sp,
     ),
     body1 = TextStyle(
-        fontSize = 14.sp
+        fontSize = 13.sp
     ),
     body2 = TextStyle(
-        fontSize = 13.sp
+        fontSize = 12.sp
     )
 )
 
