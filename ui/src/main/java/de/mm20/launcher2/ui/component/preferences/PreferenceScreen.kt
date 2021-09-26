@@ -18,6 +18,7 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun PreferenceScreen(
     title: String,
+    scaffoldState: ScaffoldState = rememberScaffoldState(),
     content: LazyListScope.() -> Unit
 ) {
     val navController = LocalNavController.current
@@ -28,6 +29,7 @@ fun PreferenceScreen(
         modifier = Modifier.systemBarsPadding()
     ) {
         Scaffold(
+            scaffoldState = scaffoldState,
             topBar = {
                 TopAppBar(
                     backgroundColor = MaterialTheme.colors.surface,
