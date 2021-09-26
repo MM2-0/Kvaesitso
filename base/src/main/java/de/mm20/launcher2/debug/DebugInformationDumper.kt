@@ -1,4 +1,4 @@
-package de.mm20.launcher2.helper
+package de.mm20.launcher2.debug
 
 import android.content.Context
 import android.os.Build

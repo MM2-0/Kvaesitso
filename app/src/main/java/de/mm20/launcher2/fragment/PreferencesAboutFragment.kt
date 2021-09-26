@@ -1,7 +1,6 @@
 package de.mm20.launcher2.fragment
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
@@ -12,7 +11,7 @@ import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
 import de.mm20.launcher2.R
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.helper.DebugInformationDumper
+import de.mm20.launcher2.debug.DebugInformationDumper
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 
