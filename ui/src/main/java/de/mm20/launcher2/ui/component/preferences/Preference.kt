@@ -31,7 +31,7 @@ fun Preference(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .conditional(enabled, Modifier.clickable(onClick = onClick))
+                    .clickable(enabled = enabled, onClick = onClick)
                     .padding(horizontal = 16.dp, vertical = 16.dp),
             ) {
                 Box(
