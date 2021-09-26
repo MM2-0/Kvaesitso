@@ -13,8 +13,8 @@ import de.mm20.launcher2.ui.ktx.conditional
 
 @Composable
 fun Preference(
-    icon: ImageVector?,
     title: String,
+    icon: ImageVector? = null,
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
