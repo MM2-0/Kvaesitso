@@ -7,6 +7,7 @@ import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.icons.NotificationBadge
 
 @Composable
 fun SettingsMainScreen() {
@@ -29,7 +30,7 @@ fun SettingsMainScreen() {
         }
         item {
             Preference(
-                icon = Icons.Rounded.Palette,
+                icon = Icons.Rounded.NotificationBadge,
                 title = stringResource(id = R.string.preference_screen_badges),
                 summary = stringResource(id = R.string.preference_screen_badges_summary)
             )

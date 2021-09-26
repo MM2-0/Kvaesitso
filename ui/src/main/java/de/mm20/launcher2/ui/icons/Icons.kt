@@ -618,3 +618,31 @@ val Icons.Rounded.WeatherFog
             close()
         }
     }
+
+val Icons.Rounded.NotificationBadge
+    get() = materialIcon("Icons.Rounded.Badge") {
+        materialPath {
+            moveTo(11.826172f, 2.0507812f)
+            curveTo(9.3350327f, 2.0955476f, 6.8902426f, 3.0711501f, 5.03125f, 4.8867188f)
+            curveTo(2.0568619f, 7.7916288f, 1.1976573f, 12.247433f, 2.8769531f, 16.050781f)
+            curveTo(4.5562487f, 19.854128f, 8.4275333f, 22.217552f, 12.578125f, 21.976562f)
+            arcTo(1f, 1f, 0f, false, false, 13.517578f, 20.921875f)
+            arcTo(1f, 1f, 0f, false, false, 12.462891f, 19.980469f)
+            curveTo(9.1386756f, 20.173477f, 6.0519814f, 18.28634f, 4.7070312f, 15.240234f)
+            curveTo(3.3620806f, 12.194127f, 4.0474958f, 8.6429527f, 6.4296875f, 6.3164062f)
+            curveTo(8.8118791f, 3.9898597f, 12.379106f, 3.3881285f, 15.392578f, 4.8046875f)
+            curveTo(18.406051f, 6.2212464f, 20.218777f, 9.3531497f, 19.947266f, 12.671875f)
+            arcTo(1f, 1f, 0f, false, false, 20.861328f, 13.748047f)
+            arcTo(1f, 1f, 0f, false, false, 21.941406f, 12.833984f)
+            curveTo(22.11091f, 10.762115f, 21.627235f, 8.7461001f, 20.630859f, 7.0253906f)
+            curveTo(19.634483f, 5.3046802f, 18.125441f, 3.8804465f, 16.244141f, 2.9960938f)
+            curveTo(14.833165f, 2.332829f, 13.320855f, 2.0239214f, 11.826172f, 2.0507812f)
+            close()
+            moveTo(18f, 14f)
+            arcTo(4f, 4f, 0f, false, false, 14f, 18f)
+            arcTo(4f, 4f, 0f, false, false, 18f, 22f)
+            arcTo(4f, 4f, 0f, false, false, 22f, 18f)
+            arcTo(4f, 4f, 0f, false, false, 18f, 14f)
+            close()
+        }
+    }
