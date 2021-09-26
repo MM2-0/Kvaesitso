@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.flowlayout)
+    implementation(libs.accompanist.navigationanimation)
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.activitycompose)

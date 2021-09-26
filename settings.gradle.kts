@@ -134,6 +134,9 @@ dependencyResolutionManagement {
             alias("accompanist.flowlayout")
                 .to("com.google.accompanist", "accompanist-flowlayout")
                 .versionRef("accompanist")
+            alias("accompanist.navigationanimation")
+                .to("com.google.accompanist", "accompanist-navigation-animation")
+                .versionRef("accompanist")
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
