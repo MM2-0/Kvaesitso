@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.component.preferences
 
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 
@@ -22,7 +24,9 @@ fun SwitchPreference(
             onValueChanged(!value)
         },
         controls = {
-            Switch(checked = value, onCheckedChange = onValueChanged)
+            Switch(checked = value, onCheckedChange = onValueChanged, colors = SwitchDefaults.colors(
+                uncheckedThumbColor = MaterialTheme.colors.onSurface
+            ))
         }
     )
 }
