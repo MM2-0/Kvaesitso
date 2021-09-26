@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
@@ -14,6 +15,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.debug.DebugInformationDumper
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
+import kotlinx.coroutines.launch
 
 
 class PreferencesAboutFragment : PreferenceFragmentCompat() {
@@ -77,8 +79,10 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
                         R.anim.preference_fragment_parent_enter,
                         R.anim.preference_fragment_child_exit
                     )
-                    .replace(android.R.id.content,
-                        PreferencesLicenseFragment(l))
+                    .replace(
+                        android.R.id.content,
+                        PreferencesLicenseFragment(l)
+                    )
                     .addToBackStack(null)
                     .commit()
                 true
@@ -90,29 +94,35 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
             true
         }
         findPreference<Preference>("export_debug")?.setOnPreferenceClickListener {
-            Toast.makeText(
-                activity,
-                getString(
-                    R.string.debug_export_information_file,
-                    DebugInformationDumper().dump(requireContext())
-                ),
-                Toast.LENGTH_SHORT
-            ).show()
+            lifecycleScope.launch {
+                val path = DebugInformationDumper().dump(requireContext())
+                Toast.makeText(
+                    activity,
+                    getString(
+                        R.string.debug_export_information_file,
+                        path
+                    ),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             true
         }
         findPreference<Preference>("export_databases")?.setOnPreferenceClickListener {
             MaterialDialog(requireContext()).show {
                 message(res = R.string.debug_export_databases_warning)
                 positiveButton(res = R.string.dialog_continue, click = {
-                    Toast.makeText(
-                        activity,
-                        getString(
-                            R.string.debug_export_information_file,
-                            DebugInformationDumper().exportDatabases(requireContext())
-                        ),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    it.dismiss()
+                    lifecycleScope.launch {
+                        val path = DebugInformationDumper().exportDatabases(requireContext())
+                        Toast.makeText(
+                            activity,
+                            getString(
+                                R.string.debug_export_information_file,
+                                path
+                            ),
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        it.dismiss()
+                    }
                 })
                 negativeButton(res = android.R.string.cancel, click = {
                     it.cancel()
@@ -130,8 +140,10 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
                     R.anim.preference_fragment_parent_enter,
                     R.anim.preference_fragment_child_exit
                 )
-                .replace(android.R.id.content,
-                    PreferencesLicenseFragment(AppLicense.get(requireContext())))
+                .replace(
+                    android.R.id.content,
+                    PreferencesLicenseFragment(AppLicense.get(requireContext()))
+                )
                 .addToBackStack(null)
                 .commit()
             true
