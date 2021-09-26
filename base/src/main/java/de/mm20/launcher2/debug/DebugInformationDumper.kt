@@ -17,15 +17,14 @@ class DebugInformationDumper {
             "kvaesitso-log-${df.format(Date(System.currentTimeMillis()))}"
         )
         withContext(Dispatchers.IO) {
-            val timeout = System.currentTimeMillis() + 5000
             val fos = file.outputStream().writer()
             fos.write("Device: ${Build.DEVICE}\n")
             fos.write("SDK version: ${Build.VERSION.SDK_INT}\n")
             fos.write("====================================\n")
             val input =
-                Runtime.getRuntime().exec("/system/bin/sh -c logcat").inputStream.bufferedReader()
+                Runtime.getRuntime().exec("/system/bin/logcat -d").inputStream.bufferedReader()
             var line = input.readLine()
-            while (line != null && System.currentTimeMillis() < timeout) {
+            while (line != null) {
                 line = input.readLine()
                 fos.write("$line\n")
             }
