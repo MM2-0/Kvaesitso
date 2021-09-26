@@ -58,7 +58,7 @@
     <string name="preference_translucent_cards">Durchscheinende Karten</string>
     <string name="preference_category_debug">Debug</string>
     <string name="preference_export_debug">Debug-Informationen exportieren</string>
-    <string name="debug_export_information_file">Exportiere nach %1$s</string>
+    <string name="debug_export_information_file">Exportiert nach %1$s</string>
     <string name="wikipedia_url">https://de.wikipedia.org</string>
     <string name="wikipedia_source">Aus Wikipedia</string>
     <string name="preference_category_icons">Symbole</string>

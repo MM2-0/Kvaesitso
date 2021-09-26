@@ -91,7 +91,7 @@
     <string name="preference_translucent_cards">Translucent cards</string>
     <string name="preference_category_debug">Debug</string>
     <string name="preference_export_debug">Export debug information</string>
-    <string name="debug_export_information_file">Exporting to %1$s</string>
+    <string name="debug_export_information_file">Exported to %1$s</string>
     <!-- Wikipedia url prefix -->
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <string name="wikipedia_source">From Wikipedia</string>

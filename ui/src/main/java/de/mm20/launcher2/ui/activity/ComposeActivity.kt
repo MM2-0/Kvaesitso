@@ -17,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.accompanist.insets.ProvideWindowInsets
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
@@ -24,6 +25,8 @@ import de.mm20.launcher2.ui.locals.LocalColorScheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
+import de.mm20.launcher2.ui.screens.settings.SettingsAboutScreen
+import de.mm20.launcher2.ui.screens.settings.SettingsLicenseScreen
 import de.mm20.launcher2.ui.screens.settings.SettingsMainScreen
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
@@ -99,6 +102,17 @@ class ComposeActivity : AppCompatActivity() {
                             }
                             composable("settings") {
                                 SettingsMainScreen()
+                            }
+                            composable("settings/about") {
+                                SettingsAboutScreen()
+                            }
+                            composable(
+                                "settings/license?library={libraryName}",
+                                arguments = listOf(navArgument("libraryName") {
+                                    nullable = true
+                                })
+                            ) {
+                                SettingsLicenseScreen(it.arguments?.getString("libraryName"))
                             }
                         }
                     }
