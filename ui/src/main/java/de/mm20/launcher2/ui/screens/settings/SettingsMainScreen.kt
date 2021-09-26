@@ -32,7 +32,10 @@ fun SettingsMainScreen() {
                 Preference(
                     icon = Icons.Rounded.NotificationBadge,
                     title = stringResource(id = R.string.preference_screen_badges),
-                    summary = stringResource(id = R.string.preference_screen_badges_summary)
+                    summary = stringResource(id = R.string.preference_screen_badges_summary),
+                    onClick = {
+                        navController?.navigate("settings/badges")
+                    }
                 )
                 Preference(
                     icon = Icons.Rounded.LightMode,
