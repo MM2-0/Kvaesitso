@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,7 +19,7 @@ fun PreferenceCategory(
 ) {
     Surface(
         elevation = 2.dp,
-        modifier = Modifier.padding(bottom = 4.dp)
+        modifier = Modifier.padding(bottom = 4.dp).fillMaxWidth()
     ) {
         Column {
             if (title != null) {
