@@ -302,3 +302,4 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,android,gradle,linux,macos,windows
 
 */**/output-metadata.json
+.idea/deploymentTargetDropDown.xml
