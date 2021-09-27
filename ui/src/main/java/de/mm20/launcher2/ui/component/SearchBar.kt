@@ -133,7 +133,7 @@ fun SearchBar(
                     expanded = showOverflowMenu,
                     onDismissRequest = { showOverflowMenu = false }) {
                     DropdownMenuItem(onClick = {
-                        showOverflowMenu = falseg
+                        showOverflowMenu = false
                         context.startActivity(
                             Intent.createChooser(
                                 Intent(Intent.ACTION_SET_WALLPAPER),
