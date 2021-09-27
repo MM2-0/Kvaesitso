@@ -4,14 +4,22 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.locals.LocalColorScheme
+import kotlinx.coroutines.flow.map
 
 val lightPalette = lightColors(
     primary = Color(0, 114, 255)
@@ -225,9 +233,17 @@ val Colors.weatherFog: Color
 @Composable
 fun LauncherTheme(content: @Composable () -> Unit) {
 
+    val dataStore = LocalContext.current.dataStore
+
+    val theme by remember {
+        dataStore.data.map { it.appearance.theme }
+    }.collectAsState(initial = Theme.System)
+
+    val darkTheme = theme == Theme.Dark || theme == Theme.System && isSystemInDarkTheme()
+
     val colorScheme = LocalColorScheme.current
 
-    val colors = if (isSystemInDarkTheme()) {
+    val colors = if (darkTheme) {
         darkColors(
             onSurface = colorScheme.neutral2.shade10,
             surface = colorScheme.neutral2.shade800,
