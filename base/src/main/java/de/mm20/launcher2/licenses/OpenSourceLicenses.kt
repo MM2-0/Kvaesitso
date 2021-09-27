@@ -110,7 +110,7 @@ val OpenSourceLicenses = arrayOf(
     ),
     OpenSourceLibrary(
         name = "Groupie",
-        description = "Easy to use material design dialogs",
+        description = "Groupie is a simple, flexible library for complex RecyclerView layouts.",
         licenseName = R.string.mit_license_name,
         licenseText = R.raw.license_mit,
         url = "https://github.com/lisawray/groupie"
