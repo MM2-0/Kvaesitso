@@ -206,10 +206,12 @@ fun WeatherDetailRow(title: String, value: String) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Text(
                 text = title,
-                modifier = Modifier.padding(end = 8.dp)
+                modifier = Modifier.padding(end = 8.dp),
+                style = MaterialTheme.typography.body2,
             )
             Text(
                 text = value,
+                style = MaterialTheme.typography.body2,
             )
         }
     }
