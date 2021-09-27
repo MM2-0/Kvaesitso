@@ -22,7 +22,7 @@ val OpenSourceLicenses = arrayOf(
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
         copyrightNote = "Copyright 2020 The Android Open Source Project",
-        url = "https://developer.android.com/jetpack"
+        url = "https://google.github.io/accompanist/"
     ),
     OpenSourceLibrary(
         name = "Material Components for Android",
