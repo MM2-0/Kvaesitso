@@ -25,10 +25,7 @@ import de.mm20.launcher2.ui.locals.LocalColorScheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
-import de.mm20.launcher2.ui.screens.settings.SettingsAboutScreen
-import de.mm20.launcher2.ui.screens.settings.SettingsBadgesScreen
-import de.mm20.launcher2.ui.screens.settings.SettingsLicenseScreen
-import de.mm20.launcher2.ui.screens.settings.SettingsMainScreen
+import de.mm20.launcher2.ui.screens.settings.*
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
 import de.mm20.launcher2.ui.theme.colors.WallpaperColorScheme
@@ -109,6 +106,9 @@ class ComposeActivity : AppCompatActivity() {
                             }
                             composable("settings/badges") {
                                 SettingsBadgesScreen()
+                            }
+                            composable("settings/appearance") {
+                                SettingsAppearanceScreen()
                             }
                             composable(
                                 "settings/license?library={libraryName}",

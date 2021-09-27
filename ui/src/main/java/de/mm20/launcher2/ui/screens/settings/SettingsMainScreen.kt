@@ -22,7 +22,10 @@ fun SettingsMainScreen() {
                 Preference(
                     icon = Icons.Rounded.Palette,
                     title = stringResource(id = R.string.preference_screen_appearance),
-                    summary = stringResource(id = R.string.preference_screen_appearance_summary)
+                    summary = stringResource(id = R.string.preference_screen_appearance_summary),
+                    onClick = {
+                        navController?.navigate("settings/appearance")
+                    }
                 )
                 Preference(
                     icon = Icons.Rounded.Search,
