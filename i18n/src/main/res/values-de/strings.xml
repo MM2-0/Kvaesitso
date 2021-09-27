@@ -390,6 +390,13 @@
     <string name="preference_card_background_default">Standard (weiß/dunkelgrau)</string>
     <string name="preference_card_background_black">Weiß/schwarz</string>
     <string name="preference_card_background_colored">Farbig (aus Hintergrundbild)</string>
+    <string name="preference_screen_colors">Farbschema</string>
+    <string name="preference_colors_default">Standard</string>
+    <string name="preference_colors_mm20">MM20</string>
+    <string name="preference_colors_wallpaper">Aus Hintergrundbild</string>
+    <string name="preference_colors_mdyou">System / Material You</string>
+    <string name="preference_colors_bw">Schwarz-Weiß</string>
+    <string name="preference_colors_custom">Benutzerdefiniert</string>
 
     <string name="date_today">Heute</string>
     <string name="date_tomorrow">Morgen</string>

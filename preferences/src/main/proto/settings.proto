@@ -11,6 +11,16 @@ message Settings {
       System = 2;
     }
     Theme theme = 1;
+    enum ColorScheme {
+      Default = 0;
+      MM20 = 1;
+      MaterialYou = 2;
+      Wallpaper = 3;
+      BlackAndWhite = 4;
+      Custom = 5;
+    }
+    ColorScheme color_scheme = 6;
+
     bool light_status_bar = 2;
     bool light_nav_bar = 3;
     bool dim_wallpaper = 4;

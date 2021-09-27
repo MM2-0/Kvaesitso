@@ -65,6 +65,13 @@
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
     <string name="preference_theme_black">Black</string>
+    <string name="preference_screen_colors">Color scheme</string>
+    <string name="preference_colors_default">Default</string>
+    <string name="preference_colors_mm20">MM20</string>
+    <string name="preference_colors_wallpaper">From wallpaper</string>
+    <string name="preference_colors_mdyou">System / Material You</string>
+    <string name="preference_colors_bw">Black and White</string>
+    <string name="preference_colors_custom">Custom</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_developer">Developer</string>

@@ -7,8 +7,10 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -16,6 +18,7 @@ import kotlinx.coroutines.launch
 fun SettingsAppearanceScreen() {
     val context = LocalContext.current
     val dataStore = context.dataStore
+    val navController = LocalNavController.current
     val scope = rememberCoroutineScope()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
@@ -41,6 +44,9 @@ fun SettingsAppearanceScreen() {
                         }
                     }
                 )
+                Preference(title = stringResource(id = R.string.preference_screen_colors), onClick = {
+                    navController?.navigate("settings/appearance/colors")
+                })
             }
         }
     }

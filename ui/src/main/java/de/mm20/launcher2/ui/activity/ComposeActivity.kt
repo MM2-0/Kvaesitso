@@ -1,24 +1,24 @@
 package de.mm20.launcher2.ui.activity
 
-import android.app.WallpaperManager
 import android.appwidget.AppWidgetHost
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.doOnLayout
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.insets.ProvideWindowInsets
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalColorScheme
@@ -26,12 +26,9 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
 import de.mm20.launcher2.ui.screens.settings.*
-import de.mm20.launcher2.ui.theme.WallpaperColors
-import de.mm20.launcher2.ui.theme.colors.DefaultColorScheme
-import de.mm20.launcher2.ui.theme.colors.WallpaperColorScheme
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import de.mm20.launcher2.ui.theme.colors.*
+import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
+import kotlinx.coroutines.flow.map
 
 class ComposeActivity : AppCompatActivity() {
 
@@ -46,43 +43,35 @@ class ComposeActivity : AppCompatActivity() {
 
         setContent {
             val navController = rememberNavController()
+            val context = LocalContext.current
 
             var windowSize by remember { mutableStateOf(Size(0f, 0f)) }
             findViewById<View>(android.R.id.content).doOnLayout {
                 windowSize = Size(it.width.toFloat(), it.height.toFloat())
             }
 
-            var wallpaperColors by remember { mutableStateOf<WallpaperColors?>(null) }
-
-            DisposableEffect(null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                    val wallpaperManager = WallpaperManager.getInstance(this@ComposeActivity)
-                    val callback = { colors: android.app.WallpaperColors?, which: Int ->
-                        if (colors != null && which or WallpaperManager.FLAG_SYSTEM != 0) {
-                            wallpaperColors = WallpaperColors.fromPlatformType(colors)
-                        }
-                    }
-                    wallpaperManager.addOnColorsChangedListener(
-                        callback,
-                        Handler(Looper.getMainLooper())
-                    )
-
-                    lifecycleScope.launch {
-                        val colors = withContext(Dispatchers.IO) {
-                            wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
-                        } ?: return@launch
-                        wallpaperColors = WallpaperColors.fromPlatformType(colors)
-                    }
-                    return@DisposableEffect onDispose {
-                        wallpaperManager.removeOnColorsChangedListener(callback)
-                    }
-                }
-                onDispose {}
-            }
-
             if (windowSize.height <= 0 || windowSize.width <= 0) return@setContent
 
-            val colorScheme = wallpaperColors?.let { WallpaperColorScheme(it) } ?: DefaultColorScheme()
+            val colorSchemePreference by remember { dataStore.data.map { it.appearance.colorScheme } }
+                .collectAsState(initial = Settings.AppearanceSettings.ColorScheme.Default)
+
+            val colorScheme = when (colorSchemePreference) {
+                Settings.AppearanceSettings.ColorScheme.MM20 -> MM20ColorScheme()
+                Settings.AppearanceSettings.ColorScheme.Wallpaper -> {
+                    if (isAtLeastApiLevel(Build.VERSION_CODES.O_MR1)) {
+                        val wallpaperColors by wallpaperColorsAsState()
+                        WallpaperColorScheme(wallpaperColors)
+                    } else DefaultColorScheme()
+                }
+                Settings.AppearanceSettings.ColorScheme.MaterialYou -> {
+                    if (isAtLeastApiLevel(Build.VERSION_CODES.S)) {
+                        SystemColorScheme(context)
+                    } else DefaultColorScheme()
+                }
+                Settings.AppearanceSettings.ColorScheme.BlackAndWhite -> BlackWhiteColorScheme()
+                Settings.AppearanceSettings.ColorScheme.Custom -> TODO()
+                else -> DefaultColorScheme()
+            }
 
 
 
@@ -109,6 +98,9 @@ class ComposeActivity : AppCompatActivity() {
                             }
                             composable("settings/appearance") {
                                 SettingsAppearanceScreen()
+                            }
+                            composable("settings/appearance/colors") {
+                                SettingsColorsScreen()
                             }
                             composable(
                                 "settings/license?library={libraryName}",
