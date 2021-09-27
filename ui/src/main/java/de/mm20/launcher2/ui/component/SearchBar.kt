@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import android.content.Intent
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.foundation.ScrollState
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -126,10 +128,26 @@ fun SearchBar(
                     )
                 }
                 val navController = LocalNavController.current
+                val context = LocalContext.current
                 DropdownMenu(
                     expanded = showOverflowMenu,
                     onDismissRequest = { showOverflowMenu = false }) {
                     DropdownMenuItem(onClick = {
+                        showOverflowMenu = falseg
+                        context.startActivity(
+                            Intent.createChooser(
+                                Intent(Intent.ACTION_SET_WALLPAPER),
+                                null
+                            )
+                        )
+                    }) {
+                        Text(
+                            stringResource(id = R.string.wallpaper),
+                            style = MaterialTheme.typography.subtitle2
+                        )
+                    }
+                    DropdownMenuItem(onClick = {
+                        showOverflowMenu = false
                         navController?.navigate("settings")
                     }) {
                         Text(
