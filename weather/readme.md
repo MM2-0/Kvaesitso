@@ -32,25 +32,25 @@ HERE offers 250 000 free API calls per month. Each weather update uses one call.
 3. Go to project details and under JavaScript, create a new API key.
 4. Uncomment the resource `here_key` in config.xml and paste your key as value.
 
-### Meteorologisk institutt
+### Meteorologisk institutt\*
 
 The Norwegian Meteorological Institute offers a free weather API. It has a rate limit of 20
 requests/s. You do not need to register or to provide an API key, however they require an
 identification and contact data to be present in the User Agent header in each request.
-
-It should also be noted that MET Norway only supports weather requests by lat/lon and the responses
-do not include geocoded names. This means a geocoder has to be present in the operating system for
-this provider to fully work (most devices ship a geocoder as part of the Google Play Services). If
-no geocoder is present, manual location mode will not be supported and the weather widget will show
-the lat/lon values instead of a location name.
 
 1. Uncomment `metno_contact` in config.xml. Fill in your contact data (an email address or a website
    where your contact data can be found). This will be used in the User Agent header, which will be
    composed like
    this: `"{app package name}[signature:{app siganture hash}] {@string/metno_contact}"`
 
-### Bright Sky / Deutscher Wetterdienst
+### Bright Sky / Deutscher Wetterdienst\*
 
 Bright Sky is an API that converts the data as published by the Deutscher Wetterdienst in an easier
 to work with JSON format. The API is free to use and requires no additional configuration, however
 it only provides weather data for locations in Germany.
+
+\* This weather provider does not provide any means of geocoding or location lookup. Instead, the
+Android Geocoder API is used to lookup locations (in fixed location mode) and location names (in
+auto location mode). While most devices ship a Geocoder as part of the Google Play service, some
+might not have a Geocoder installed. In these cases, this provider might not work properly (no
+support for fixed locations and lat/lon values will be displayed instead of location names).
