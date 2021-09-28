@@ -73,8 +73,12 @@ class NextcloudApiHelper(val context: Context) {
         }
     }
 
+    fun getLoginIntent(): Intent {
+        return Intent(context, LoginActivity::class.java)
+    }
+
     fun login(activity: Activity) {
-        activity.startActivity(Intent(context, LoginActivity::class.java))
+        activity.startActivity(getLoginIntent())
     }
 
 
