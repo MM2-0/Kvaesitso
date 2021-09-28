@@ -45,12 +45,12 @@ fun SearchBar(
     offScreen: Float,
     onFocus: () -> Unit = {}
 ) {
-    var searchQuery by remember { mutableStateOf(TextFieldValue()) }
+    var searchQuery by remember { mutableStateOf("") }
 
     val viewModel: SearchViewModel = viewModel()
 
     LaunchedEffect(searchQuery) {
-        viewModel.search(searchQuery.text)
+        viewModel.search(searchQuery)
     }
 
     val pageTransition = (pagerState.currentPage + pagerState.currentPageOffset).coerceIn(0f, 1f)
@@ -101,7 +101,7 @@ fun SearchBar(
                             if (it.isFocused) onFocus()
                         }
                 )
-                if (searchQuery.text.isEmpty()) {
+                if (searchQuery.isEmpty()) {
                     BasicText(
                         text = stringResource(id = R.string.edit_text_search_hint),
                         style = textStyle,
@@ -113,8 +113,8 @@ fun SearchBar(
             Box {
                 IconButton(
                     onClick = {
-                        if (searchQuery.text.isNotEmpty()) {
-                            searchQuery = TextFieldValue()
+                        if (searchQuery.isNotEmpty()) {
+                            searchQuery = ""
                         } else {
                             showOverflowMenu = true
                         }
@@ -123,7 +123,7 @@ fun SearchBar(
                 ) {
                     val menuClearIcon = animatedVectorResource(R.drawable.anim_ic_menu_clear)
                     Icon(
-                        painter = menuClearIcon.painterFor(atEnd = searchQuery.text.isNotEmpty()),
+                        painter = menuClearIcon.painterFor(atEnd = searchQuery.isNotEmpty()),
                         null
                     )
                 }
