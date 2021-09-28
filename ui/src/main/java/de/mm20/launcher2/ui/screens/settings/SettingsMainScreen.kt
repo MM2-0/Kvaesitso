@@ -53,7 +53,10 @@ fun SettingsMainScreen() {
                 Preference(
                     icon = Icons.Rounded.AccountBox,
                     title = stringResource(id = R.string.preference_screen_services),
-                    summary = stringResource(id = R.string.preference_screen_services_summary)
+                    summary = stringResource(id = R.string.preference_screen_services_summary),
+                    onClick = {
+                        navController?.navigate("settings/accounts")
+                    }
                 )
                 Preference(
                     icon = Icons.Rounded.Info,

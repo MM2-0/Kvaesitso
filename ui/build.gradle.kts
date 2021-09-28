@@ -117,5 +117,9 @@ dependencies {
     implementation(project(":permissions"))
     implementation(project(":websites"))
     implementation(project(":unitconverter"))
+    implementation(project(":nextcloud"))
+    implementation(project(":g-services"))
+    implementation(project(":ms-services"))
+    implementation(project(":owncloud"))
 
 }

@@ -96,6 +96,9 @@ class ComposeActivity : AppCompatActivity() {
                             composable("settings/badges") {
                                 SettingsBadgesScreen()
                             }
+                            composable("settings/accounts") {
+                                SettingsAccountScreen()
+                            }
                             composable("settings/appearance") {
                                 SettingsAppearanceScreen()
                             }
