@@ -57,8 +57,12 @@ class OwncloudClient(val context: Context) {
         }
     }
 
+    fun getLoginIntent(): Intent {
+        return Intent(context, LoginActivity::class.java)
+    }
+
     fun login(activity: Activity, requestCode: Int) {
-        activity.startActivityForResult(Intent(context, LoginActivity::class.java), requestCode)
+        activity.startActivityForResult(getLoginIntent(), requestCode)
     }
 
 
