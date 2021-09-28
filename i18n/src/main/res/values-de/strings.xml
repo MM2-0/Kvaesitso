@@ -397,6 +397,7 @@
     <string name="preference_colors_mdyou">System / Material You</string>
     <string name="preference_colors_bw">Schwarz-Weiß</string>
     <string name="preference_colors_custom">Benutzerdefiniert</string>
+    <string name="preference_category_custom_colors">Farbschema bearbeiten</string>
 
     <string name="date_today">Heute</string>
     <string name="date_tomorrow">Morgen</string>

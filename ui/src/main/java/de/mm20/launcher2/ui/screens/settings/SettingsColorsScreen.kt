@@ -10,12 +10,14 @@ import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.ColorPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -30,13 +32,14 @@ fun SettingsColorsScreen() {
     val context = LocalContext.current
     val dataStore = context.dataStore
     val scope = rememberCoroutineScope()
+    val customColors by customColorsAsState()
+    val colorScheme by remember {
+        dataStore.data.map {
+            it.appearance.colorScheme
+        }
+    }.collectAsState(initial = ColorSchemeOption.Default)
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_colors)) {
         item {
-            val colorScheme by remember {
-                dataStore.data.map {
-                    it.appearance.colorScheme
-                }
-            }.collectAsState(initial = ColorSchemeOption.Default)
             val schemes = mutableListOf(
                 ColorSchemeItem(
                     ColorSchemeOption.Default,
@@ -73,6 +76,13 @@ fun SettingsColorsScreen() {
                     )
                 )
             }
+            schemes.add(
+                ColorSchemeItem(
+                    ColorSchemeOption.Custom,
+                    CustomColorScheme(customColors),
+                    stringResource(id = R.string.preference_colors_custom)
+                )
+            )
             PreferenceCategory {
                 for (scheme in schemes) {
                     Preference(
@@ -89,6 +99,92 @@ fun SettingsColorsScreen() {
                                             it.appearance.toBuilder().setColorScheme(scheme.value)
                                         )
                                         .build()
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+        }
+        if (colorScheme == ColorSchemeOption.Custom) {
+            item {
+                PreferenceCategory(title = stringResource(R.string.preference_category_custom_colors)) {
+                    ColorPreference(
+                        title = "Neutral1",
+                        value = customColors.neutral1,
+                        onValueChanged = { newValue ->
+                            scope.launch {
+                                dataStore.updateData {
+                                    it.toBuilder().setAppearance(
+                                        it.appearance.toBuilder().setCustomColors(
+                                            it.appearance.customColors.toBuilder()
+                                                .setNeutral1(newValue.toArgb())
+                                        )
+                                    ).build()
+                                }
+                            }
+                        }
+                    )
+                    ColorPreference(
+                        title = "Neutral2",
+                        value = customColors.neutral2,
+                        onValueChanged = { newValue ->
+                            scope.launch {
+                                dataStore.updateData {
+                                    it.toBuilder().setAppearance(
+                                        it.appearance.toBuilder().setCustomColors(
+                                            it.appearance.customColors.toBuilder()
+                                                .setNeutral2(newValue.toArgb())
+                                        )
+                                    ).build()
+                                }
+                            }
+                        }
+                    )
+                    ColorPreference(
+                        title = "Accent1",
+                        value = customColors.accent1,
+                        onValueChanged = { newValue ->
+                            scope.launch {
+                                dataStore.updateData {
+                                    it.toBuilder().setAppearance(
+                                        it.appearance.toBuilder().setCustomColors(
+                                            it.appearance.customColors.toBuilder()
+                                                .setAccent1(newValue.toArgb())
+                                        )
+                                    ).build()
+                                }
+                            }
+                        }
+                    )
+                    ColorPreference(
+                        title = "Accent2",
+                        value = customColors.accent2,
+                        onValueChanged = { newValue ->
+                            scope.launch {
+                                dataStore.updateData {
+                                    it.toBuilder().setAppearance(
+                                        it.appearance.toBuilder().setCustomColors(
+                                            it.appearance.customColors.toBuilder()
+                                                .setAccent2(newValue.toArgb())
+                                        )
+                                    ).build()
+                                }
+                            }
+                        }
+                    )
+                    ColorPreference(
+                        title = "Accent3",
+                        value = customColors.accent3,
+                        onValueChanged = { newValue ->
+                            scope.launch {
+                                dataStore.updateData {
+                                    it.toBuilder().setAppearance(
+                                        it.appearance.toBuilder().setCustomColors(
+                                            it.appearance.customColors.toBuilder()
+                                                .setAccent3(newValue.toArgb())
+                                        )
+                                    ).build()
                                 }
                             }
                         }

@@ -69,7 +69,10 @@ class ComposeActivity : AppCompatActivity() {
                     } else DefaultColorScheme()
                 }
                 Settings.AppearanceSettings.ColorScheme.BlackAndWhite -> BlackWhiteColorScheme()
-                Settings.AppearanceSettings.ColorScheme.Custom -> TODO()
+                Settings.AppearanceSettings.ColorScheme.Custom -> {
+                    val customColors by customColorsAsState()
+                    CustomColorScheme(customColors)
+                }
                 else -> DefaultColorScheme()
             }
 

@@ -21,6 +21,15 @@ message Settings {
     }
     ColorScheme color_scheme = 6;
 
+    message CustomColors {
+      uint32 neutral1 = 1;
+      uint32 neutral2 = 2;
+      uint32 accent1 = 3;
+      uint32 accent2 = 4;
+      uint32 accent3 = 5;
+    }
+    CustomColors custom_colors = 7;
+
     bool light_status_bar = 2;
     bool light_nav_bar = 3;
     bool dim_wallpaper = 4;
