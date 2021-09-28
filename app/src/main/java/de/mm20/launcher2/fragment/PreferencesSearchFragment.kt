@@ -153,7 +153,9 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
     }
 
     private fun googleLogin() {
-        GoogleApiHelper.getInstance(requireContext()).login(requireActivity())
+        lifecycleScope.launch {
+            GoogleApiHelper.getInstance(requireContext()).login(requireActivity())
+        }
     }
 
     private fun setSettingsScreen(fragment: Fragment) {

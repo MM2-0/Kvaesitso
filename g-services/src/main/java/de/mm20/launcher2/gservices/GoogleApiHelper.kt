@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.browser.customtabs.*
 import androidx.core.content.edit
 import com.google.api.client.auth.oauth2.Credential
@@ -17,6 +18,7 @@ import com.google.api.services.drive.Drive
 import com.google.api.services.oauth2.Oauth2
 import de.mm20.launcher2.crashreporter.CrashReporter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import java.io.IOException
 
@@ -119,29 +121,41 @@ class GoogleApiHelper private constructor(private val context: Context) {
             .build()
     }
 
-    fun login(activity: Activity) {
+    private var callback: (() -> Unit)? = null
+
+    suspend fun login(activity: Activity) {
         val authFlow = getAuthFlow() ?: return
 
-        val url = authFlow
-            .newAuthorizationUrl()
-            .setRedirectUri(getRedirectUri())
-            .toString()
-        val themeColor = 0xFF4285f4.toInt()
+        suspendCancellableCoroutine<Unit> {
+            val url = authFlow
+                .newAuthorizationUrl()
+                .setRedirectUri(getRedirectUri())
+                .toString()
+            val themeColor = 0xFF4285f4.toInt()
 
-        val customTabsIntent = CustomTabsIntent
-            .Builder()
-            .setDefaultColorSchemeParams(
-                CustomTabColorSchemeParams.Builder()
-                    .setToolbarColor(themeColor)
-                    .setNavigationBarColor(themeColor)
-                    .build()
-            )
-            .build()
+            val customTabsIntent = CustomTabsIntent
+                .Builder()
+                .setDefaultColorSchemeParams(
+                    CustomTabColorSchemeParams.Builder()
+                        .setToolbarColor(themeColor)
+                        .setNavigationBarColor(themeColor)
+                        .build()
+                )
+                .build()
 
-        callingActivity = activity.javaClass
+            callingActivity = activity.javaClass
+            callback = {
+                it.resumeWith(Result.success(Unit))
+            }
+            it.invokeOnCancellation {
+                callback = null
+                Log.d("MM20", "Google Signin has been canceled")
+            }
 
-        customTabsIntent.intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
-        customTabsIntent.launchUrl(activity, Uri.parse(url))
+            customTabsIntent.intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
+            customTabsIntent.launchUrl(activity, Uri.parse(url))
+
+        }
     }
 
     suspend fun finishAuthFlow(activity: Activity, code: String) {
@@ -168,6 +182,7 @@ class GoogleApiHelper private constructor(private val context: Context) {
         callingActivity = null
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         activity.startActivity(intent)
+        callback?.invoke()
     }
 
     private suspend fun loadAccountName(): String? {

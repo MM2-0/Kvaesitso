@@ -47,7 +47,9 @@ class PreferencesServicesFragment : PreferenceFragmentCompat() {
                 setTitle(R.string.preference_google_signin)
                 setSummary(R.string.preference_google_signin_summary)
                 setOnPreferenceClickListener {
-                    googleApiHelper.login(requireActivity())
+                    lifecycleScope.launch {
+                        googleApiHelper.login(requireActivity())
+                    }
                     true
                 }
             }
