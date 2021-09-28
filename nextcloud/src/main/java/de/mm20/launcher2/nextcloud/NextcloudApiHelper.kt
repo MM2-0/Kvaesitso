@@ -48,24 +48,7 @@ class NextcloudApiHelper(val context: Context) {
                 masterKey,
                 EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-            ).also {
-                if (!it.getBoolean("encrypted", false)) {
-                    val legacyPrefs =
-                        context.getSharedPreferences("nextcloud", Context.MODE_PRIVATE)
-                    val keys = arrayOf("server", "username", "token", "displayname")
-                    it.edit {
-                        for (k in keys) {
-                            putString(k, legacyPrefs.getString(k, null))
-                        }
-                        putBoolean("encrypted", true)
-                    }
-                    legacyPrefs.edit {
-                        for (k in keys) {
-                            putString(k, null)
-                        }
-                    }
-                }
-            }
+            )
         } catch (e: IOException) {
             if (!catchErrors) throw e
             File(context.filesDir, "../shared_prefs/nextcloud.xml").delete()
