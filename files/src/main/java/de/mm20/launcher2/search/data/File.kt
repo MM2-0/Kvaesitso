@@ -367,7 +367,7 @@ open class File(
         }
 
         fun deserialize(context: Context, serialized: String): File? {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) return null
+            if (!PermissionsManager.checkPermission(context, PermissionsManager.EXTERNAL_STORAGE)) return null
             val json = JSONObject(serialized)
             val uri = MediaStore.Files.getContentUri("external")
             val proj = arrayOf(MediaStore.Files.FileColumns._ID,
