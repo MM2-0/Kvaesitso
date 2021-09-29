@@ -43,7 +43,7 @@ dependencyResolutionManagement {
             version("targetSdk", "31")
         }
         create("libs") {
-            version("kotlin", "1.5.21")
+            version("kotlin", "1.5.31")
             version("kotlinx.coroutines", "1.5.1")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
@@ -62,7 +62,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.1.0-alpha04")
+            version("androidx.compose", "1.1.0-alpha05")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -140,14 +140,14 @@ dependencyResolutionManagement {
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
-                .version("1.7.0-alpha01")
+                .version("1.7.0-beta02")
 
             version("androidx.appcompat", "1.4.0-alpha03")
             alias("androidx.appcompat")
                 .to("androidx.appcompat", "appcompat")
                 .versionRef("androidx.appcompat")
 
-            version("androidx.activity", "1.3.0-rc02")
+            version("androidx.activity", "1.4.0-beta01")
             alias("androidx.activity")
                 .to("androidx.activity", "activity")
                 .versionRef("androidx.activity")
@@ -161,11 +161,11 @@ dependencyResolutionManagement {
 
             alias("androidx.work")
                 .to("androidx.work", "work-runtime-ktx")
-                .version("2.7.0-alpha05")
+                .version("2.7.0-rc01")
 
             alias("androidx.browser")
                 .to("androidx.browser", "browser")
-                .version("1.3.0")
+                .version("1.4.0-beta01")
 
             alias("androidx.palette")
                 .to("androidx.palette", "palette")
@@ -215,7 +215,7 @@ dependencyResolutionManagement {
                 .to("androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.4.0-alpha04")
+            version("androidx.room", "2.4.0-alpha05")
             alias("androidx.roomruntime")
                 .to("androidx.room", "room-runtime")
                 .versionRef("androidx.room")
@@ -245,7 +245,7 @@ dependencyResolutionManagement {
 
             alias("androidx.navigation.compose")
                 .to("androidx.navigation", "navigation-compose")
-                .version("2.4.0-alpha09")
+                .version("2.4.0-alpha10")
 
             alias("materialcomponents")
                 .to("com.google.android.material", "material")
