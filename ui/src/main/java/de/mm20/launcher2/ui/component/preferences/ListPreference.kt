@@ -62,7 +62,7 @@ fun <T> ListPreference(
                                         onValueChanged(it.value)
                                         showDialog = false
                                     }
-                                    .padding(horizontal = 24.dp, vertical = 16.dp)
+                                    .padding(horizontal = 24.dp, vertical = 4.dp)
                             ) {
                                 RadioButton(selected = it.value == value, onClick = {
                                     onValueChanged(it.value)
