@@ -55,7 +55,7 @@ fun BinaryClock(time: Long) {
     var hour = date[Calendar.HOUR]
     if (hour == 0) hour = 12
     Row(
-        modifier = Modifier.padding(bottom = 24.dp)
+        modifier = Modifier.padding(vertical = 24.dp)
     ) {
         for (i in 0 until 10) {
             val active = if (i < 4) {
