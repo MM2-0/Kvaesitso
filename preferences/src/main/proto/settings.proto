@@ -34,6 +34,13 @@ message Settings {
     bool light_nav_bar = 3;
     bool dim_wallpaper = 4;
     bool app_start_animation = 5;
+
+    enum ClockStyle {
+      Digital = 0;
+      Analog = 1;
+      Binary = 2;
+    }
+    ClockStyle clock_style = 8;
   }
   AppearanceSettings appearance = 1;
 

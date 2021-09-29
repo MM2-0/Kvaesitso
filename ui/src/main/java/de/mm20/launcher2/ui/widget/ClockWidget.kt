@@ -15,10 +15,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
-import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ClockStyle
+import de.mm20.launcher2.preferences.dataStore
+import de.mm20.launcher2.ui.component.AnalogClock
+import de.mm20.launcher2.ui.component.BinaryClock
 import de.mm20.launcher2.ui.component.DigitalClock
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.widget.parts.DatePart
+import kotlinx.coroutines.flow.map
 
 @Composable
 fun ClockWidget(
@@ -55,6 +60,10 @@ fun ClockWidget(
 fun Clock(transparentBackground: Boolean) {
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
     val context = LocalContext.current
+    val dataStore = context.dataStore
+    val clockStyle by remember { dataStore.data.map { it.appearance.clockStyle } }.collectAsState(
+        initial = ClockStyle.Digital
+    )
 
     DisposableEffect(null) {
         val receiver = object : BroadcastReceiver() {
@@ -72,7 +81,17 @@ fun Clock(transparentBackground: Boolean) {
         }
     }
 
-    DigitalClock(time)
+    when (clockStyle) {
+        ClockStyle.Analog -> {
+            AnalogClock(time = time)
+        }
+        ClockStyle.Binary -> {
+            BinaryClock(time = time)
+        }
+        else -> {
+            DigitalClock(time = time)
+        }
+    }
 }
 
 @Composable

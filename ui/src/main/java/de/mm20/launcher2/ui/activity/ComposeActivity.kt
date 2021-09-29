@@ -108,6 +108,9 @@ class ComposeActivity : AppCompatActivity() {
                             composable("settings/appearance/colors") {
                                 SettingsColorsScreen()
                             }
+                            composable("settings/appearance/clock") {
+                                SettingsClockScreen()
+                            }
                             composable(
                                 "settings/license?library={libraryName}",
                                 arguments = listOf(navArgument("libraryName") {

@@ -44,9 +44,21 @@ fun SettingsAppearanceScreen() {
                         }
                     }
                 )
-                Preference(title = stringResource(id = R.string.preference_screen_colors), onClick = {
-                    navController?.navigate("settings/appearance/colors")
-                })
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_colors),
+                    onClick = {
+                        navController?.navigate("settings/appearance/colors")
+                    })
+            }
+        }
+        item {
+            PreferenceCategory(title = stringResource(id = R.string.preference_category_clock_widget)) {
+                Preference(
+                    title = stringResource(id = R.string.preference_clock_widget_style),
+                    onClick = {
+                        navController?.navigate("settings/appearance/clock")
+                    }
+                )
             }
         }
     }

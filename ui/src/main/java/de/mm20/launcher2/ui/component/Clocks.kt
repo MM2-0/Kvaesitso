@@ -101,7 +101,8 @@ fun AnalogClock(time: Long) {
             .padding(bottom = 24.dp)
             .size(156.dp),
         shape = CircleShape,
-        color = bgColor
+        color = bgColor,
+        elevation = 8.dp
     ) {
         Box(
             modifier = Modifier.fillMaxSize()

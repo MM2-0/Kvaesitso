@@ -451,4 +451,6 @@
     <string name="preference_about_license">This app is free software.</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
     <string name="feature_not_available">This feature is not available in this version of %1$s</string>
+    <string name="preference_category_clock_widget">Clock</string>
+    <string name="preference_clock_widget_style">Clock style</string>
 </resources>
