@@ -6,16 +6,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.*
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.*
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.view.WindowCompat
 import androidx.core.view.doOnLayout
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.dataStore
@@ -34,6 +36,7 @@ class ComposeActivity : AppCompatActivity() {
 
     private lateinit var widgetHost: AppWidgetHost
 
+    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -42,7 +45,7 @@ class ComposeActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val navController = rememberNavController()
+            val navController = rememberAnimatedNavController()
             val context = LocalContext.current
 
             var windowSize by remember { mutableStateOf(Size(0f, 0f)) }
@@ -86,7 +89,14 @@ class ComposeActivity : AppCompatActivity() {
                     LocalNavController provides navController
                 ) {
                     LauncherTheme {
-                        NavHost(navController = navController, startDestination = "home") {
+                        AnimatedNavHost(
+                            navController = navController,
+                            startDestination = "home",
+                            exitTransition = { _, _ -> fadeOut(tween(300, 300)) },
+                            enterTransition = { _, _ -> fadeIn(tween(200)) },
+                            popEnterTransition = { _, _ -> fadeIn(tween(0)) },
+                            popExitTransition = { _, _ -> fadeOut(tween(200)) },
+                        ) {
                             composable("home") {
                                 LauncherMainScreen()
                             }
