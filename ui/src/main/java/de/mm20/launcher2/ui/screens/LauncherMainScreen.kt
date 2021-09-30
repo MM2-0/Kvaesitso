@@ -40,7 +40,7 @@ fun LauncherMainScreen() {
 
     val systemUiController = rememberSystemUiController()
 
-    val pagerState = rememberPagerState(pageCount = 2)
+    val pagerState = rememberPagerState()
     val searchColumnState = rememberLazyListState()
     val widgetColumnState = rememberScrollState()
 
@@ -104,7 +104,8 @@ fun LauncherMainScreen() {
         }
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            count = 2
         ) { page ->
             when (page) {
                 0 -> WidgetColumn(
