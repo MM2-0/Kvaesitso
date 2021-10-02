@@ -343,10 +343,6 @@ dependencyResolutionManagement {
                 .to("com.bartoszlipinski", "viewpropertyobjectanimator")
                 .version("1.5.0")
 
-            alias("nextcloud.signon")
-                .to("com.github.nextcloud", "Android-SingleSignOn")
-                .version("0.5.6")
-
             alias("mathparser")
                 .to("org.mariuszgromada.math", "MathParser.org-mXparser")
                 .version("4.4.2")
