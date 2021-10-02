@@ -116,6 +116,8 @@ dependencies {
     implementation(libs.draglinearlayout)
     implementation(libs.viewpropertyobjectanimator)
 
+    implementation(libs.bundles.koin)
+
     implementation(project(":applications"))
     implementation(project(":appsearch"))
     implementation(project(":badges"))

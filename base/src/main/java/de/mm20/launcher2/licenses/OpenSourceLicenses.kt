@@ -185,4 +185,11 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://material.io/icons/"
     ),
+    OpenSourceLibrary(
+        name = "Koin",
+        description = "A smart Kotlin injection library to keep you focused on your app, not on your tools",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://insert-koin.io/"
+    ),
 )

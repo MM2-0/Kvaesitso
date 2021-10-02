@@ -386,6 +386,20 @@ dependencyResolutionManagement {
             alias("protobuf.javalite")
                 .to("com.google.protobuf", "protobuf-javalite")
                 .versionRef("protobuf")
+
+            version("koin", "3.1.2")
+            alias("koin.android")
+                .to("io.insert-koin", "koin-android")
+                .versionRef("koin")
+            alias("koin.androidviewmodel")
+                .to("io.insert-koin", "koin-android-viewmodel")
+                .versionRef("koin")
+            bundle(
+                "koin", listOf(
+                    "koin.android",
+                    "koin.androidviewmodel"
+                )
+            )
         }
     }
 }
