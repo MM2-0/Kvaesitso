@@ -9,12 +9,15 @@ import de.mm20.launcher2.search.data.Contact
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class ContactRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class ContactRepository(
+    val context: Context,
+    hiddenItemsRepository: HiddenItemsRepository
+) : BaseSearchableRepository() {
 
     val contacts = MediatorLiveData<List<Contact>?>()
 
     private val allContacts = MutableLiveData<List<Contact>?>(emptyList())
-    private val hiddenItemKeys = HiddenItemsRepository.getInstance(context).hiddenItemsKeys
+    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
 
     init {
         contacts.addSource(hiddenItemKeys) { keys ->
@@ -34,14 +37,5 @@ class ContactRepository private constructor(val context: Context) : BaseSearchab
             Contact.search(context, query)
         }
         allContacts.value = results
-    }
-
-    companion object {
-        private lateinit var instance: ContactRepository
-
-        fun getInstance(context: Context): ContactRepository {
-            if (!::instance.isInitialized) instance = ContactRepository(context.applicationContext)
-            return instance
-        }
     }
 }

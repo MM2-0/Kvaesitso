@@ -1,16 +1,40 @@
 package de.mm20.launcher2.icons
 
+import android.content.BroadcastReceiver
 import android.content.Context
-import android.util.Log
+import android.content.Intent
+import android.content.IntentFilter
 import android.util.LruCache
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class IconRepository private constructor(val context: Context) {
+class IconRepository(
+    val context: Context,
+    val iconPackManager: IconPackManager
+) {
+
+    private val appReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            requestIconPackListUpdate()
+        }
+    }
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+
+    init {
+        requestIconPackListUpdate()
+        context.registerReceiver(appReceiver, IntentFilter().apply {
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_MY_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_CHANGED)
+            addDataScheme("package")
+        })
+    }
 
     private val cache = LruCache<String, LauncherIcon>(200)
 
@@ -43,7 +67,7 @@ class IconRepository private constructor(val context: Context) {
 
     fun requestIconPackListUpdate() {
         scope.launch {
-            IconPackManager.getInstance(context).updateIconPacks()
+            iconPackManager.updateIconPacks()
         }
     }
 
@@ -53,15 +77,5 @@ class IconRepository private constructor(val context: Context) {
 
     fun clearCache() {
         cache.evictAll()
-    }
-
-
-    companion object {
-        private lateinit var instance: IconRepository
-
-        fun getInstance(context: Context): IconRepository {
-            if (!::instance.isInitialized) instance = IconRepository(context.applicationContext)
-            return instance
-        }
     }
 }

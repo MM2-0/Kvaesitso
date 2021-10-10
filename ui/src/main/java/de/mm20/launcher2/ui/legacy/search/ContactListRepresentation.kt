@@ -17,8 +17,14 @@ import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.SwipeCardView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class ContactListRepresentation : Representation {
+class ContactListRepresentation : Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+    val badgeProvider: BadgeProvider by inject()
+
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val contact = searchable as Contact
         val context = rootView.context as AppCompatActivity
@@ -26,11 +32,11 @@ class ContactListRepresentation : Representation {
         scene.setEnterAction {
             with(rootView) {
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = BadgeProvider.getInstance(context).getLiveBadge(contact.badgeKey)
+                    badge = badgeProvider.getLiveBadge(contact.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
-                    icon = IconRepository.getInstance(context).getIconIfCached(contact)
+                    icon = iconRepository.getIconIfCached(contact)
                     lifecycleScope.launch {
-                        IconRepository.getInstance(context).getIcon(contact, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(contact, (84 * rootView.dp).toInt()).collect {
                             icon = it
                         }
                     }

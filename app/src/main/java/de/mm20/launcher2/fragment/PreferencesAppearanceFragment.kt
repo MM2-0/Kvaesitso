@@ -29,6 +29,7 @@ import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.Themes
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
 
@@ -74,9 +75,10 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
             true
         }
 
-        val manager = IconPackManager.getInstance(requireContext())
+        val iconPackManager: IconPackManager by inject()
+        val iconRepository: IconRepository by inject()
         lifecycleScope.launch {
-            val packs = manager.getInstalledIconPacks()
+            val packs = iconPackManager.getInstalledIconPacks()
             findPreference<ListPreference>("icon_pack")?.apply {
                 entries = packs.map { it.name }.toMutableList().apply { add(0, "System") }.toTypedArray()
                 entryValues = (-1 until packs.size).map { it.toString() }.toTypedArray()
@@ -86,14 +88,14 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                 } else {
                     isEnabled = true
                     summary = "%s"
-                    value = packs.indexOfFirst { it.packageName == manager.selectedIconPack }.toString()
+                    value = packs.indexOfFirst { it.packageName == iconPackManager.selectedIconPack }.toString()
                 }
                 setOnPreferenceChangeListener { _, newValue ->
                     val index = (newValue as String).toInt()
-                    IconRepository.getInstance(requireContext()).clearCache()
-                    if (index == -1) manager.selectIconPack("")
+                    iconRepository.clearCache()
+                    if (index == -1) iconPackManager.selectIconPack("")
                     else {
-                        manager.selectIconPack(packs[index].packageName)
+                        iconPackManager.selectIconPack(packs[index].packageName)
                     }
                     true
                 }
@@ -101,7 +103,7 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
         }
 
         findPreference<Preference>("legacy_icon_bg")?.setOnPreferenceChangeListener { _, _ ->
-            IconRepository.getInstance(requireContext()).clearCache()
+            iconRepository.clearCache()
             true
         }
 

@@ -29,6 +29,7 @@ import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.theme.divider
+import org.koin.androidx.compose.getViewModel
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
@@ -39,7 +40,7 @@ fun DefaultSwipeActions(
     enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
-    val viewModel: FavoritesViewModel = viewModel()
+    val viewModel: FavoritesViewModel = getViewModel()
 
     val isPinned by viewModel.isPinned(item).observeAsState()
     val isHidden by viewModel.isHidden(item).observeAsState()

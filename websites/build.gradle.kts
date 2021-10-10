@@ -49,6 +49,8 @@ dependencies {
     implementation(libs.textdrawable)
     implementation(libs.jsoup)
 
+    implementation(libs.koin.android)
+
     implementation(project(":preferences"))
     implementation(project(":search"))
     implementation(project(":base"))

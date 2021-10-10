@@ -15,6 +15,7 @@ import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.search.SearchListView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FileView : FrameLayout {
     private val files: LiveData<List<File>?>
@@ -30,7 +31,8 @@ class FileView : FrameLayout {
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val list = findViewById<SearchListView>(R.id.list)
-        files = ViewModelProvider(context as AppCompatActivity).get(FilesViewModel::class.java).files
+        val viewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
+        files = viewModel.files
         files.observe(context as AppCompatActivity, {
             if (it == null) {
                 visibility = View.GONE

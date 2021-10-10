@@ -1,16 +1,14 @@
 package de.mm20.launcher2.music
 
-import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-class MusicViewModel(app: Application) : AndroidViewModel(app) {
-
-    val musicRepository = MusicRepository.getInstance(app)
+class MusicViewModel(
+    val musicRepository: MusicRepository
+) : ViewModel() {
 
     val title: LiveData<String?> = musicRepository.title
     val artist: LiveData<String?> = musicRepository.artist

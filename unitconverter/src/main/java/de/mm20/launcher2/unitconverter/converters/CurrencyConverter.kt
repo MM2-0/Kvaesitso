@@ -3,7 +3,6 @@ package de.mm20.launcher2.unitconverter.converters
 import android.content.Context
 import android.icu.text.PluralRules
 import android.icu.util.Currency
-import android.os.Build
 import de.mm20.launcher2.currencies.CurrencyRepository
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
@@ -13,12 +12,14 @@ import java.text.DecimalFormat
 import java.util.Locale
 import java.util.Currency as JCurrency
 import kotlin.math.abs
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class CurrencyConverter(context: Context) : Converter() {
+class CurrencyConverter(context: Context) : Converter(), KoinComponent {
 
     override val dimension: Dimension = Dimension.Currency
 
-    val repository = CurrencyRepository.getInstance(context)
+    val repository: CurrencyRepository by inject()
 
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")
 

@@ -16,6 +16,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
+import org.koin.androidx.compose.getViewModel
 import kotlin.math.min
 
 @Composable
@@ -162,7 +163,7 @@ data class ToggleToolbarAction(
 
 @Composable
 fun favoritesToolbarAction(item: Searchable): ToggleToolbarAction {
-    val viewModel = viewModel<FavoritesViewModel>()
+    val viewModel: FavoritesViewModel = getViewModel()
     val isPinned by viewModel.isPinned(item).observeAsState(false)
 
     return ToggleToolbarAction(
@@ -183,7 +184,7 @@ fun favoritesToolbarAction(item: Searchable): ToggleToolbarAction {
 
 @Composable
 fun hideToolbarAction(item: Searchable): ToggleToolbarAction {
-    val viewModel = viewModel<FavoritesViewModel>()
+    val viewModel: FavoritesViewModel = getViewModel()
     val isHidden by viewModel.isHidden(item).observeAsState(false)
 
     return ToggleToolbarAction(

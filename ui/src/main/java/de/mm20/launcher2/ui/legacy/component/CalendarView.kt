@@ -16,6 +16,7 @@ import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.legacy.search.SearchListView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CalendarView : FrameLayout {
 
@@ -32,7 +33,8 @@ class CalendarView : FrameLayout {
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val list = findViewById<SearchListView>(R.id.list)
-        calendarEvents = ViewModelProvider(context as AppCompatActivity).get(CalendarViewModel::class.java).calendarEvents
+        val viewModel: CalendarViewModel by (context as AppCompatActivity).viewModel()
+        calendarEvents = viewModel.calendarEvents
         calendarEvents.observe(context as AppCompatActivity, {
             if (it == null) {
                 visibility = View.GONE

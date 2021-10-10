@@ -21,6 +21,7 @@ import de.mm20.launcher2.search.WebsearchViewModel
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import kotlinx.android.synthetic.main.view_websearch.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WebSearchView : FrameLayout {
     constructor(context: Context) : super(context)
@@ -31,7 +32,7 @@ class WebSearchView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.view_websearch, this)
-        val viewModel = ViewModelProvider(context as AppCompatActivity)[WebsearchViewModel::class.java]
+        val viewModel: WebsearchViewModel by (context as AppCompatActivity).viewModel()
         websearches = viewModel.websearches
         websearches.observe(context as AppCompatActivity, Observer {
             updateWebsearches(it)

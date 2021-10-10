@@ -27,6 +27,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.graphics.alpha
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Scene
@@ -52,10 +53,16 @@ import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.concurrent.Executors
 import kotlin.math.roundToInt
 
-class ApplicationDetailRepresentation : Representation {
+class ApplicationDetailRepresentation : Representation, KoinComponent {
+
+    private val iconRepository: IconRepository by inject()
+    private val badgeProvider: BadgeProvider by inject()
 
     override fun getScene(
         rootView: SearchableView,
@@ -71,12 +78,11 @@ class ApplicationDetailRepresentation : Representation {
                 setOnLongClickListener(null)
                 findViewById<TextView>(R.id.appName).text = application.label
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = BadgeProvider.getInstance(context).getLiveBadge(application.badgeKey)
+                    badge = badgeProvider.getLiveBadge(application.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
-                    icon = IconRepository.getInstance(context).getIconIfCached(application)
+                    icon = iconRepository.getIconIfCached(application)
                     lifecycleScope.launch {
-                        IconRepository.getInstance(context)
-                            .getIcon(application, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(application, (84 * rootView.dp).toInt()).collect {
                             icon = it
                         }
                     }
@@ -264,8 +270,7 @@ class ApplicationDetailRepresentation : Representation {
             if (launcherApps.hasShortcutHostPermission()) {
                 val shortcuts = app.shortcuts
 
-                val viewModel =
-                    ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
+                val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
 
                 for (si in shortcuts) {
                     val view = Chip(context)
@@ -292,7 +297,7 @@ class ApplicationDetailRepresentation : Representation {
                     )
                     val isPinned = viewModel.isPinned(si)
 
-                    isPinned.observe(context, Observer {
+                    isPinned.observe(context as LifecycleOwner, Observer {
                         view.isCloseIconVisible = isPinned.value == true
                     })
 

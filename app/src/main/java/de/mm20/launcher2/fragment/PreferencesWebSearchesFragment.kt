@@ -17,7 +17,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.graphics.scale
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
@@ -29,9 +28,9 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import de.mm20.launcher2.R
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.search.WebsearchViewModel
 import de.mm20.launcher2.search.data.Websearch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.io.File
 import java.io.FileOutputStream
 import java.lang.ref.WeakReference
@@ -42,9 +41,7 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
 
     private var sheetIcon: WeakReference<ImageView>? = null
 
-    private val viewModel by lazy {
-        ViewModelProvider(context as AppCompatActivity)[WebsearchViewModel::class.java]
-    }
+    private val viewModel: WebsearchViewModel by viewModel()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         preferenceScreen = preferenceManager.createPreferenceScreen(activity)
@@ -61,19 +58,23 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
             val pref = Preference(context)
             pref.title = search.label
             if (search.icon == null) {
-                val drawable = resources.getDrawable(R.drawable.ic_search, requireActivity().theme).mutate()
+                val drawable =
+                    resources.getDrawable(R.drawable.ic_search, requireActivity().theme).mutate()
                 drawable.setTintMode(PorterDuff.Mode.SRC_ATOP)
                 drawable.setTint(search.color)
                 pref.icon = drawable
             } else {
                 Glide.with(requireContext())
-                        .asDrawable()
-                        .load(search.icon)
-                        .into(object : SimpleTarget<Drawable>() {
-                            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                                pref.icon = resource
-                            }
-                        })
+                    .asDrawable()
+                    .load(search.icon)
+                    .into(object : SimpleTarget<Drawable>() {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
+                            pref.icon = resource
+                        }
+                    })
             }
             pref.setOnPreferenceClickListener {
                 editSearch(search)
@@ -109,23 +110,23 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
                 imageTintList = ColorStateList.valueOf(websearch.color)
             } else {
                 Glide.with(this)
-                        .load(websearch.icon)
-                        .into(this)
+                    .load(websearch.icon)
+                    .into(this)
             }
             sheetIcon = WeakReference(this)
         }
 
         val sheet = MaterialDialog(requireContext(), BottomSheet())
-                .cornerRadius(8f)
-                .customView(view = dialogView)
+            .cornerRadius(8f)
+            .customView(view = dialogView)
 
         val radius = 8 * dialogView.dp
         dialogView.background = GradientDrawable().apply {
             cornerRadii = floatArrayOf(
-                    radius, radius, // top left
-                    radius, radius, // top right
-                    0f, 0f, // bottom left
-                    0f, 0f // bottom right
+                radius, radius, // top left
+                radius, radius, // top right
+                0f, 0f, // bottom left
+                0f, 0f // bottom right
             )
         }
 
@@ -134,30 +135,31 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
 
 
         sheet.noAutoDismiss()
-                .positiveButton(android.R.string.ok) {
-            val newUrl = urlEdit.text.toString()
-            val newName = nameEdit.text.toString()
-            if (!newUrl.contains("\${1}")) {
-                urlEdit.error = getString(R.string.websearch_dialog_url_error)
-                return@positiveButton
+            .positiveButton(android.R.string.ok) {
+                val newUrl = urlEdit.text.toString()
+                val newName = nameEdit.text.toString()
+                if (!newUrl.contains("\${1}")) {
+                    urlEdit.error = getString(R.string.websearch_dialog_url_error)
+                    return@positiveButton
+                }
+                File(requireContext().cacheDir, "websearch-tmp").takeIf { it.exists() }?.let {
+                    websearch.icon?.let { File(it).takeIf { it.exists() }?.delete() }
+                    val newFile =
+                        File(requireContext().filesDir, "websearch-${System.currentTimeMillis()}")
+                    it.copyTo(newFile, true)
+                    it.delete()
+                    newIcon = newFile.absolutePath
+                }
+                if (newIcon == null) {
+                    websearch.icon?.let { File(it).takeIf { it.exists() }?.delete() }
+                }
+                websearch.urlTemplate = newUrl
+                websearch.label = newName
+                websearch.icon = newIcon
+                websearch.color = newColor
+                viewModel.insertWebsearch(websearch)
+                sheet.dismiss()
             }
-            File(requireContext().cacheDir, "websearch-tmp").takeIf { it.exists() }?.let {
-                websearch.icon?.let { File(it).takeIf { it.exists() }?.delete() }
-                val newFile = File(requireContext().filesDir, "websearch-${System.currentTimeMillis()}")
-                it.copyTo(newFile, true)
-                it.delete()
-                newIcon = newFile.absolutePath
-            }
-            if (newIcon == null) {
-                websearch.icon?.let { File(it).takeIf { it.exists() }?.delete() }
-            }
-            websearch.urlTemplate = newUrl
-            websearch.label = newName
-            websearch.icon = newIcon
-            websearch.color = newColor
-            viewModel.insertWebsearch(websearch)
-            sheet.dismiss()
-        }
 
         sheet.negativeButton(android.R.string.cancel) {
             sheet.cancel()
@@ -188,15 +190,16 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
                 }
                 title(R.string.websearch_dialog_choose_icon_color)
                 colorChooser(
-                        colors = context.resources.getIntArray(R.array.color_chooser_presets),
-                        allowCustomArgb = true,
-                        showAlphaSelector = false
+                    colors = context.resources.getIntArray(R.array.color_chooser_presets),
+                    allowCustomArgb = true,
+                    showAlphaSelector = false
                 ) { _, color ->
                     iconView.setImageResource(R.drawable.ic_search)
                     iconView.imageTintList = ColorStateList.valueOf(color)
                     newColor = color
                     newIcon = null
-                    File(requireContext().cacheDir, "websearch-tmp").takeIf { it.exists() }?.delete()
+                    File(requireContext().cacheDir, "websearch-tmp").takeIf { it.exists() }
+                        ?.delete()
                     dismiss()
                 }
             }
@@ -207,7 +210,7 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar
-                ?.setTitle(R.string.preference_search_edit_websearch)
+            ?.setTitle(R.string.preference_search_edit_websearch)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -216,7 +219,8 @@ class PreferencesWebSearchesFragment : PreferenceFragmentCompat() {
         if (requestCode == 24 && resultCode == Activity.RESULT_OK && dataUri != null) {
             val stream = requireActivity().contentResolver.openInputStream(dataUri)
             val icon = BitmapFactory.decodeStream(stream)
-            val scaledIcon = icon.scale((32 * requireContext().dp).toInt(), (32 * requireContext().dp).toInt())
+            val scaledIcon =
+                icon.scale((32 * requireContext().dp).toInt(), (32 * requireContext().dp).toInt())
             val out = FileOutputStream(File(requireContext().cacheDir, "websearch-tmp"))
             scaledIcon.compress(Bitmap.CompressFormat.PNG, 100, out)
             out.close()

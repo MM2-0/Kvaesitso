@@ -19,9 +19,15 @@ import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 @RequiresApi(Build.VERSION_CODES.N_MR1)
-class AppShortcutDetailRepresentation: Representation {
+class AppShortcutDetailRepresentation: Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+    val badgeProvider: BadgeProvider by inject()
+
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val appShortcut = searchable as AppShortcut
         val context = rootView.context as AppCompatActivity
@@ -32,11 +38,11 @@ class AppShortcutDetailRepresentation: Representation {
                 setOnLongClickListener(null)
                 findViewById<TextView>(R.id.appName).text = appShortcut.label
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = BadgeProvider.getInstance(context).getLiveBadge(appShortcut.badgeKey)
+                    badge = badgeProvider.getLiveBadge(appShortcut.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
-                    icon = IconRepository.getInstance(context).getIconIfCached(appShortcut)
+                    icon = iconRepository.getIconIfCached(appShortcut)
                     lifecycleScope.launch {
-                        IconRepository.getInstance(context).getIcon(appShortcut, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(appShortcut, (84 * rootView.dp).toInt()).collect {
                             icon = it
                         }
                     }

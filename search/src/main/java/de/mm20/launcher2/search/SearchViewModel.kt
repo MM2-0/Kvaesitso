@@ -1,16 +1,16 @@
 package de.mm20.launcher2.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 
-class SearchViewModel(app: Application) : AndroidViewModel(app) {
-    private val repository = SearchRepository.getInstance()
+class SearchViewModel(
+    private val searchRepository: SearchRepository
+) : ViewModel() {
 
-    val isSearching: LiveData<Boolean> = repository.isSearching
+    val isSearching: LiveData<Boolean> = searchRepository.isSearching
 
     fun search(query: String) {
-        repository.currentQuery.value = query
+        searchRepository.currentQuery.value = query
     }
 
 }

@@ -1,22 +1,22 @@
 package de.mm20.launcher2.search
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.search.data.Websearch
 
-class WebsearchViewModel(app:Application): AndroidViewModel(app) {
+class WebsearchViewModel(
+    private val websearchRepository: WebsearchRepository
+): ViewModel() {
 
-    private val repository = WebsearchRepository.getInstance(app)
 
     fun insertWebsearch(websearch: Websearch) {
-        return repository.insertWebsearch(websearch)
+        return websearchRepository.insertWebsearch(websearch)
     }
 
     fun deleteWebsearch(websearch: Websearch) {
-        repository.deleteWebsearch(websearch)
+        websearchRepository.deleteWebsearch(websearch)
     }
 
-    val websearches = repository.websearches
-    val allWebsearches = repository.allWebsearches
+    val websearches = websearchRepository.websearches
+    val allWebsearches = websearchRepository.allWebsearches
 
 }

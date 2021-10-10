@@ -42,6 +42,8 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
+    implementation(libs.koin.android)
+
     implementation(project(":search"))
     implementation(project(":base"))
     implementation(project(":icons"))

@@ -7,12 +7,29 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatDelegate
+import de.mm20.launcher2.applications.applicationsModule
+import de.mm20.launcher2.badges.badgesModule
+import de.mm20.launcher2.calculator.calculatorModule
+import de.mm20.launcher2.calendar.calendarModule
+import de.mm20.launcher2.contacts.contactsModule
 import de.mm20.launcher2.debug.Debug
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.favorites.favoritesModule
+import de.mm20.launcher2.files.filesModule
+import de.mm20.launcher2.hiddenitems.hiddenItemsModule
+import de.mm20.launcher2.icons.iconsModule
+import de.mm20.launcher2.music.musicModule
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.Themes
+import de.mm20.launcher2.search.searchModule
 import de.mm20.launcher2.ui.legacy.helper.WallpaperBlur
+import de.mm20.launcher2.unitconverter.unitConverterModule
+import de.mm20.launcher2.websites.websitesModule
+import de.mm20.launcher2.widgets.widgetsModule
+import de.mm20.launcher2.wikipedia.wikipediaModule
 import kotlinx.coroutines.*
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.text.Collator
 import kotlin.coroutines.CoroutineContext
 
@@ -23,29 +40,12 @@ class LauncherApplication : Application(), CoroutineScope {
 
     var blurredWallpaper: Bitmap? = null
 
-
-    private val appReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            IconRepository.getInstance(this@LauncherApplication).requestIconPackListUpdate()
-        }
-    }
-
-
     override fun onCreate() {
         super.onCreate()
         Debug()
         instance = this
         LauncherPreferences.initialize(this)
-        IconRepository.getInstance(this).requestIconPackListUpdate()
 
-        registerReceiver(appReceiver, IntentFilter().apply {
-            addAction(Intent.ACTION_PACKAGE_REPLACED)
-            addAction(Intent.ACTION_PACKAGE_ADDED)
-            addAction(Intent.ACTION_PACKAGE_REMOVED)
-            addAction(Intent.ACTION_MY_PACKAGE_REPLACED)
-            addAction(Intent.ACTION_PACKAGE_CHANGED)
-            addDataScheme("package")
-        })
         val theme = LauncherPreferences.instance.theme
         AppCompatDelegate.setDefaultNightMode(
             when (theme) {
@@ -58,6 +58,30 @@ class LauncherApplication : Application(), CoroutineScope {
         WallpaperBlur.requestBlur(this)
         @Suppress("DEPRECATION") // We need to access the wallpaper directly to blur it
         registerReceiver(WallpaperReceiver(), IntentFilter(Intent.ACTION_WALLPAPER_CHANGED))
+
+        startKoin {
+            androidLogger()
+            androidContext(this@LauncherApplication)
+            modules(
+                listOf(
+                    applicationsModule,
+                    calculatorModule,
+                    badgesModule,
+                    calendarModule,
+                    contactsModule,
+                    favoritesModule,
+                    filesModule,
+                    hiddenItemsModule,
+                    iconsModule,
+                    musicModule,
+                    searchModule,
+                    unitConverterModule,
+                    websitesModule,
+                    widgetsModule,
+                    wikipediaModule
+                )
+            )
+        }
     }
 
     companion object {

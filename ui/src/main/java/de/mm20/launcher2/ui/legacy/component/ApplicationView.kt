@@ -11,6 +11,7 @@ import de.mm20.launcher2.applications.AppViewModel
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.ui.R
 import kotlinx.android.synthetic.main.view_application.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ApplicationView : FrameLayout {
 
@@ -25,7 +26,8 @@ class ApplicationView : FrameLayout {
         layoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         applicationCard.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        applications = ViewModelProvider(context as AppCompatActivity).get(AppViewModel::class.java).applications
+        val viewModel: AppViewModel by (context as AppCompatActivity).viewModel()
+        applications = viewModel.applications
         applications.observe(context as AppCompatActivity, Observer<List<Application>> {
             visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
             applicationGrid.submitItems(it)

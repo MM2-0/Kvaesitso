@@ -1,9 +1,10 @@
 package de.mm20.launcher2.hiddenitems
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 
-class HiddenItemsViewModel(app: Application): AndroidViewModel(app) {
-    val hiddenItemsKeys = HiddenItemsRepository.getInstance(app).hiddenItemsKeys
+class HiddenItemsViewModel(
+    hiddenItemsRepository: HiddenItemsRepository
+): ViewModel() {
+    val hiddenItemsKeys = hiddenItemsRepository.hiddenItemsKeys
 
 }

@@ -27,6 +27,7 @@ import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.widget.WidgetCard
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetViewModel
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class, ExperimentalAnimationGraphicsApi::class
 )
@@ -39,7 +40,7 @@ fun WidgetColumn(
 
     var widgets by remember { mutableStateOf(listOf<Widget>()) }
 
-    val viewModel: WidgetViewModel = viewModel()
+    val viewModel: WidgetViewModel = getViewModel()
 
     var editMode by remember { mutableStateOf(false) }
 

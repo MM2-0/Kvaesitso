@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.media2)
 
+    implementation(libs.koin.android)
+
     implementation(project(":ktx"))
 
 }

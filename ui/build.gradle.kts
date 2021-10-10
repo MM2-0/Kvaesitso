@@ -93,6 +93,9 @@ dependencies {
 
     implementation(libs.jsoup)
 
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidxcompose)
+
     implementation(project(":base"))
     implementation(project(":i18n"))
     implementation(project(":compat"))

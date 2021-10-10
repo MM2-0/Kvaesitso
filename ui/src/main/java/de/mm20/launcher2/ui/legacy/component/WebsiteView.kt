@@ -14,6 +14,7 @@ import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.websites.WebsiteViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WebsiteView : FrameLayout {
 
@@ -30,7 +31,8 @@ class WebsiteView : FrameLayout {
         val card = findViewById<ViewGroup>(R.id.card)
         websiteView.layoutParams = params
         card.addView(websiteView)
-        website = ViewModelProvider(context as AppCompatActivity)[WebsiteViewModel::class.java].website
+        val viewModel: WebsiteViewModel by (context as AppCompatActivity).viewModel()
+        website = viewModel.website
         website.observe(context as AppCompatActivity, Observer {
             visibility = if (it == null) View.GONE else View.VISIBLE
             card.setOnClickListener { _ ->

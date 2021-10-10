@@ -15,6 +15,7 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -31,6 +32,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.unitconverter.UnitConverterViewModel
 import de.mm20.launcher2.unitconverter.UnitValue
 import kotlinx.android.synthetic.main.view_unitconverter.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 import java.util.*
 import kotlin.math.min
@@ -46,7 +48,8 @@ class UnitConverterView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.view_unitconverter, this)
-        unitConverter = ViewModelProvider(context as AppCompatActivity).get(UnitConverterViewModel::class.java).unitConverter
+        val unitConverterViewModel by (context as AppCompatActivity).viewModel<UnitConverterViewModel>()
+        unitConverter = unitConverterViewModel.unitConverter
         unitConverter.observe(context as AppCompatActivity, Observer {
             if (it == null) visibility = View.GONE
             else {

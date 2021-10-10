@@ -8,7 +8,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 
-internal class WidgetRepository(
+class WidgetRepository(
         val context: Context
 ) {
 

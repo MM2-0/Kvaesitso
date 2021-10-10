@@ -22,11 +22,13 @@ import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.music.MusicViewModel
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.widget.MusicWidget
 import de.mm20.launcher2.ui.widget.WeatherWidget
 import kotlinx.android.synthetic.main.compact_music.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MusicWidget : LauncherWidget {
 
@@ -44,7 +46,7 @@ class MusicWidget : LauncherWidget {
     override val name: String
         get() = context.getString(R.string.widget_name_music)
 
-    private val viewModel = ViewModelProvider(context as AppCompatActivity)[MusicViewModel::class.java]
+    private val viewModel: MusicViewModel by (context as AppCompatActivity).viewModel()
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -79,7 +81,7 @@ class MusicWidget : LauncherWidget {
 class MusicCompactView : FrameLayout, CompactView {
 
 
-    private val viewModel = ViewModelProvider(context as AppCompatActivity)[MusicViewModel::class.java]
+    private val viewModel: MusicViewModel by (context as AppCompatActivity).viewModel()
 
     override fun setTranslucent(translucent: Boolean) {
         if (translucent) {

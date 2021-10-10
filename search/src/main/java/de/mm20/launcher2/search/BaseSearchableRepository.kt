@@ -1,13 +1,16 @@
 package de.mm20.launcher2.search
 
 import kotlinx.coroutines.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
 
-abstract class BaseSearchableRepository {
+abstract class BaseSearchableRepository: KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
-    private val searchQuery = SearchRepository.getInstance().currentQuery
+    val searchRepository: SearchRepository by inject()
+    private val searchQuery = searchRepository.currentQuery
 
     init {
         searchQuery.observeForever {
@@ -33,10 +36,10 @@ abstract class BaseSearchableRepository {
             onCancel()
             searchJob?.takeIf { !it.isCompleted || !it.isCancelled }?.cancelAndJoin()
             searchJob = scope.launch {
-                SearchRepository.getInstance().startSearch()
+                searchRepository.startSearch()
                 search(query)
             }.also {
-                it.invokeOnCompletion { SearchRepository.getInstance().endSearch() }
+                it.invokeOnCompletion { searchRepository.endSearch() }
             }
         }
     }

@@ -24,8 +24,14 @@ import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class WebsiteDetailRepresentation : Representation {
+class WebsiteDetailRepresentation : Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+    val badgeProvider: BadgeProvider by inject()
+
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val website = searchable as Website
         val context = rootView.context as AppCompatActivity
@@ -60,11 +66,11 @@ class WebsiteDetailRepresentation : Representation {
                         label.transitionName = null
                         websiteFavIcon.transitionName = "icon"
                         websiteFavIcon.apply {
-                            badge = BadgeProvider.getInstance(context).getLiveBadge(website.badgeKey)
+                            badge = badgeProvider.getLiveBadge(website.badgeKey)
                             shape = LauncherIconView.getDefaultShape(context)
-                            icon = IconRepository.getInstance(context).getIconIfCached(website)
+                            icon = iconRepository.getIconIfCached(website)
                             lifecycleScope.launch {
-                                IconRepository.getInstance(context).getIcon(website, (84 * rootView.dp).toInt()).collect {
+                                iconRepository.getIcon(website, (84 * rootView.dp).toInt()).collect {
                                     icon = it
                                 }
                             }

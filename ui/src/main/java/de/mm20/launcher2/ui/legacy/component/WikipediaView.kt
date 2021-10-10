@@ -14,6 +14,7 @@ import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.wikipedia.WikipediaViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WikipediaView : FrameLayout {
 
@@ -30,7 +31,8 @@ class WikipediaView : FrameLayout {
         val card = findViewById<ViewGroup>(R.id.card)
         websiteView.layoutParams = params
         card.addView(websiteView)
-        wikipedia = ViewModelProvider(context as AppCompatActivity)[WikipediaViewModel::class.java].wikipedia
+        val viewModel: WikipediaViewModel by (context as AppCompatActivity).viewModel()
+        wikipedia = viewModel.wikipedia
         wikipedia.observe(context as AppCompatActivity, Observer {
             visibility = if (it == null) View.GONE else View.VISIBLE
             card.setOnClickListener { _ ->

@@ -158,12 +158,6 @@ open class File(
                 .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
-    override fun serialize(): String {
-        return jsonObjectOf(
-                "id" to id
-        ).toString()
-    }
-
     fun getFileType(context: Context): String {
         if (isDirectory) return context.getString(R.string.file_type_directory)
         val resource = when (mimeType) {
@@ -261,7 +255,7 @@ open class File(
             return results.sortedBy { it }
         }
 
-        private fun getMimetypeByFileExtension(extension: String): String {
+        internal fun getMimetypeByFileExtension(extension: String): String {
             return when (extension) {
                 "apk" -> "application/vnd.android.package-archive"
                 "zip" -> "application/zip"
@@ -287,7 +281,7 @@ open class File(
         }
 
 
-        private fun getMetaData(context: Context, mimeType: String, path: String): List<Pair<Int, String>> {
+        internal fun getMetaData(context: Context, mimeType: String, path: String): List<Pair<Int, String>> {
             val metaData = mutableListOf<Pair<Int, String>>()
             when {
                 mimeType.startsWith("audio/") -> {
@@ -364,38 +358,6 @@ open class File(
                 }
             }
             return metaData
-        }
-
-        fun deserialize(context: Context, serialized: String): File? {
-            if (!PermissionsManager.checkPermission(context, PermissionsManager.EXTERNAL_STORAGE)) return null
-            val json = JSONObject(serialized)
-            val uri = MediaStore.Files.getContentUri("external")
-            val proj = arrayOf(MediaStore.Files.FileColumns._ID,
-                    MediaStore.Files.FileColumns.SIZE,
-                    MediaStore.Files.FileColumns.DATA,
-                    MediaStore.Files.FileColumns.MIME_TYPE)
-            val sel = "${MediaStore.Files.FileColumns._ID} = ?"
-            val selArgs = arrayOf(json.getLong("id").toString())
-            val cursor = context.contentResolver.query(uri, proj, sel, selArgs, null) ?: return null
-            if (cursor.moveToNext()) {
-                val path = cursor.getString(2)
-                if (!JavaIOFile(path).exists()) return null
-                val directory = JavaIOFile(path).isDirectory
-                val id = cursor.getLong(0)
-                val mimeType = cursor.getStringOrNull(3)
-                        ?: if (directory) "inode/directory" else getMimetypeByFileExtension(path.substringAfterLast('.'))
-                val size = cursor.getLong(1)
-                cursor.close()
-                return File(
-                        path = path,
-                        mimeType = mimeType,
-                        size = size,
-                        isDirectory = directory,
-                        id = id,
-                        metaData = getMetaData(context, mimeType, path))
-            }
-            cursor.close()
-            return null
         }
     }
 }

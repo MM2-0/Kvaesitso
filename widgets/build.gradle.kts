@@ -46,6 +46,8 @@ dependencies {
 
     implementation(libs.materialcomponents)
 
+    implementation(libs.koin.android)
+
     implementation(project(":weather"))
     implementation(project(":calendar"))
     implementation(project(":music"))

@@ -13,9 +13,14 @@ import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.music.MusicRepository
 import de.mm20.launcher2.preferences.LauncherPreferences
+import org.koin.android.ext.android.inject
 import java.lang.ref.WeakReference
 
 class NotificationService : NotificationListenerService() {
+
+    private val musicRepository: MusicRepository by inject()
+
+    private val badgeProvider: BadgeProvider by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return Service.START_STICKY
@@ -30,7 +35,7 @@ class NotificationService : NotificationListenerService() {
             if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == n.packageName }) continue
             val token = n.notification.extras[NotificationCompat.EXTRA_MEDIA_SESSION] as? MediaSession.Token
                     ?: continue
-            MusicRepository.getInstance(this).setMediaSession(MediaSessionCompat.Token.fromToken(token))
+            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token))
         }
         if (LauncherPreferences.instance.notificationBadges) {
             generateBadges()
@@ -46,16 +51,16 @@ class NotificationService : NotificationListenerService() {
     }
 
     fun generateBadges() {
-        BadgeProvider.getInstance(this).removeNotificationBadges()
+        badgeProvider.removeNotificationBadges()
         getNotifications().forEach {
             val pkg = it.packageName
-            val badge = BadgeProvider.getInstance(this).getBadge("app://$pkg") ?: Badge()
+            val badge = badgeProvider.getBadge("app://$pkg") ?: Badge()
             badge.number = activeNotifications.filter {
                 it.packageName == pkg
             }.sumBy {
                 it.notification.number
             }
-            BadgeProvider.getInstance(this).setBadge("app://$pkg", badge)
+            badgeProvider.setBadge("app://$pkg", badge)
         }
     }
 
@@ -73,15 +78,15 @@ class NotificationService : NotificationListenerService() {
             if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == sbn.packageName }) return
             val token = sbn.notification.extras[NotificationCompat.EXTRA_MEDIA_SESSION] as? MediaSession.Token
                     ?: return
-            MusicRepository.getInstance(this).setMediaSession(MediaSessionCompat.Token.fromToken(token))
+            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token))
         }
         if (LauncherPreferences.instance.notificationBadges) {
             val pkg = sbn.packageName
-            val badge = BadgeProvider.getInstance(this).getBadge("app://$pkg") ?: Badge()
+            val badge = badgeProvider.getBadge("app://$pkg") ?: Badge()
             badge.number = activeNotifications.filter { it.packageName == pkg }.sumBy {
                 it.notification.number
             }
-            BadgeProvider.getInstance(this).setBadge("app://$pkg", badge)
+            badgeProvider.setBadge("app://$pkg", badge)
         }
     }
 
@@ -91,20 +96,20 @@ class NotificationService : NotificationListenerService() {
         if (LauncherPreferences.instance.notificationBadges) {
             val pkg = sbn.packageName
             if (getNotifications().any { it.packageName == pkg && it.id != sbn.id }) {
-                val badge = BadgeProvider.getInstance(this).getBadge("app://$pkg") ?: Badge()
+                val badge = badgeProvider.getBadge("app://$pkg") ?: Badge()
                 badge.number = activeNotifications.filter { it.packageName == pkg }.sumBy {
                     it.notification.number
                 }
-                BadgeProvider.getInstance(this).setBadge("app://$pkg", badge)
+                badgeProvider.setBadge("app://$pkg", badge)
             } else {
-                BadgeProvider.getInstance(this).removeBadge("app://$pkg")
+                badgeProvider.removeBadge("app://$pkg")
             }
         }
     }
 
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
-        BadgeProvider.getInstance(this).removeNotificationBadges()
+        badgeProvider.removeNotificationBadges()
     }
 
     companion object {

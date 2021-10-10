@@ -16,14 +16,17 @@ import kotlinx.coroutines.withContext
 import java.util.concurrent.Executors
 import kotlin.coroutines.suspendCoroutine
 
-class AppSearchRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class AppSearchRepository(
+    val context: Context,
+    hiddenItemsRepository: HiddenItemsRepository
+    ) : BaseSearchableRepository() {
 
     private var session: GlobalSearchSession? = null
 
     val appSearchResults = MediatorLiveData<List<AppSearchResult>?>()
 
     private val allAppSearchResults = MutableLiveData<List<AppSearchResult>?>(emptyList())
-    private val hiddenItemKeys = HiddenItemsRepository.getInstance(context).hiddenItemsKeys
+    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
 
     init {
         appSearchResults.addSource(hiddenItemKeys) { keys ->
@@ -57,13 +60,4 @@ class AppSearchRepository private constructor(val context: Context) : BaseSearch
         }
         allAppSearchResults.value = results
     }
-
-    companion object {
-        private lateinit var instance: AppSearchRepository
-        fun getInstance(context: Context): AppSearchRepository {
-            if (!::instance.isInitialized) instance = AppSearchRepository(context.applicationContext)
-            return instance
-        }
-    }
-
 }

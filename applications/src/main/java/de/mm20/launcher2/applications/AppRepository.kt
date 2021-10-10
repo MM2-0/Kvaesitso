@@ -25,7 +25,12 @@ import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class AppRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class AppRepository(
+    val context: Context,
+    val iconRepository: IconRepository,
+    hiddenItemsRepository: HiddenItemsRepository,
+    badgeProvider: BadgeProvider
+    ) : BaseSearchableRepository() {
 
     private val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
@@ -34,7 +39,7 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
 
     private val installedApps = MutableLiveData<List<Application>>(emptyList())
     private val installations = MutableLiveData<MutableList<AppInstallation>>(mutableListOf())
-    private val hiddenItemKeys = HiddenItemsRepository.getInstance(context).hiddenItemsKeys
+    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
 
     private val installingPackages = mutableMapOf<Int, String>()
 
@@ -97,14 +102,14 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
             override fun onPackagesSuspended(packageNames: Array<out String>?, user: UserHandle?) {
                 super.onPackagesSuspended(packageNames, user)
                 packageNames?.forEach {
-                    BadgeProvider.getInstance(context).setBadge("app://$it", Badge(iconRes = R.drawable.ic_badge_suspended))
+                    badgeProvider.setBadge("app://$it", Badge(iconRes = R.drawable.ic_badge_suspended))
                 }
             }
 
             override fun onPackagesUnsuspended(packageNames: Array<out String>?, user: UserHandle?) {
                 super.onPackagesUnsuspended(packageNames, user)
                 packageNames?.forEach {
-                    BadgeProvider.getInstance(context).removeBadge("app://$it")
+                    badgeProvider.removeBadge("app://$it")
                 }
             }
 
@@ -117,7 +122,7 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
             override fun onProgressChanged(sessionId: Int, progress: Float) {
                 val session = packageInstaller.getSessionInfo(sessionId) ?: return
                 val pkg = session.appPackageName ?: return
-                BadgeProvider.getInstance(context).updateBadge("app://$pkg", Badge(progress = progress))
+                badgeProvider.updateBadge("app://$pkg", Badge(progress = progress))
             }
 
             override fun onActiveChanged(sessionId: Int, active: Boolean) {
@@ -129,9 +134,9 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
                 val pkg = installingPackages[sessionId]
                 installingPackages.remove(sessionId)
                 val key = "app://$pkg"
-                val badge = BadgeProvider.getInstance(context).getBadge(key)?.apply { progress = null }
+                val badge = badgeProvider.getBadge(key)?.apply { progress = null }
                         ?: Badge()
-                BadgeProvider.getInstance(context).setBadge(key, badge)
+                badgeProvider.setBadge(key, badge)
                 val inst = installations.value ?: return
                 inst.removeAll {
                     it.session.sessionId == sessionId
@@ -144,7 +149,7 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
                 val inst = installations.value ?: mutableListOf()
                 inst.removeAll {
                     if (it.session.sessionId == sessionId) {
-                        IconRepository.getInstance(context).removeIconFromCache(it)
+                        iconRepository.removeIconFromCache(it)
                         true
                     } else false
                 }
@@ -173,7 +178,7 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
     }
 
     private suspend fun updateAppsForDisplay() {
-        val query = SearchRepository.getInstance().currentQuery.value ?: ""
+        val query = searchRepository.currentQuery.value ?: ""
 
         val componentName = ComponentName.unflattenFromString(query)
 
@@ -215,13 +220,5 @@ class AppRepository private constructor(val context: Context) : BaseSearchableRe
         if (packageName == context.packageName) return emptyList()
 
         return profiles.map { p -> launcherApps.getActivityList(packageName, p).mapNotNull { getApplication(it, p) } }.flatten()
-    }
-
-    companion object {
-        private lateinit var instance: AppRepository
-        fun getInstance(context: Context): AppRepository {
-            if (!::instance.isInitialized) instance = AppRepository(context.applicationContext)
-            return instance
-        }
     }
 }

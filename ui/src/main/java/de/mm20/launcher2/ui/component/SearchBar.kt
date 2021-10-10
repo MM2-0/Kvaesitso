@@ -19,16 +19,15 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import org.koin.androidx.compose.getViewModel
 
 /**
  * Search bar
@@ -47,7 +46,7 @@ fun SearchBar(
 ) {
     var searchQuery by remember { mutableStateOf("") }
 
-    val viewModel: SearchViewModel = viewModel()
+    val viewModel: SearchViewModel = getViewModel()
 
     LaunchedEffect(searchQuery) {
         viewModel.search(searchQuery)

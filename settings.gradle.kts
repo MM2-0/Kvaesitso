@@ -391,15 +391,9 @@ dependencyResolutionManagement {
             alias("koin.android")
                 .to("io.insert-koin", "koin-android")
                 .versionRef("koin")
-            alias("koin.androidviewmodel")
-                .to("io.insert-koin", "koin-android-viewmodel")
+            alias("koin.androidxcompose")
+                .to("io.insert-koin", "koin-androidx-compose")
                 .versionRef("koin")
-            bundle(
-                "koin", listOf(
-                    "koin.android",
-                    "koin.androidviewmodel"
-                )
-            )
         }
     }
 }

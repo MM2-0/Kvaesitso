@@ -7,8 +7,11 @@ import android.os.Build
 import android.os.Bundle
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.AppShortcut
+import org.koin.android.ext.android.inject
 
 class AddItemActivity : Activity() {
+
+    val favoritesRepository: FavoritesRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +23,7 @@ class AddItemActivity : Activity() {
                     packageManager.getApplicationInfo(shortcutInfo.`package`, 0)
                             .loadLabel(packageManager).toString())
             if (pinRequest.accept()) {
-                FavoritesRepository.getInstance(this).pinItem(shortcut)
+                favoritesRepository.pinItem(shortcut)
             }
         }
         finish()

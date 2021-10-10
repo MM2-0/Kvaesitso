@@ -11,6 +11,7 @@ import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import kotlinx.android.synthetic.main.view_favorites.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesView : FrameLayout {
 
@@ -23,7 +24,7 @@ class FavoritesView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.view_favorites, this)
-        val viewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
+        val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
         favorites = viewModel.getFavorites(context.resources.getInteger(R.integer.config_columnCount))
         favorites.observe(context as AppCompatActivity, Observer {
             visibility = if (it?.isEmpty() == true) View.GONE else View.VISIBLE

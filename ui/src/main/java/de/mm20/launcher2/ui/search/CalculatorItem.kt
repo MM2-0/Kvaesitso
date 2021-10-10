@@ -16,10 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.calculator.CalculatorViewModel
 import de.mm20.launcher2.ui.component.SectionDivider
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun calculatorItem(): LazyListScope.() -> Unit {
-    val calculator by viewModel<CalculatorViewModel>().calculator.observeAsState()
+    val viewModel: CalculatorViewModel = getViewModel()
+    val calculator by viewModel.calculator.observeAsState()
     return {
         calculator?.let {
             item {

@@ -52,15 +52,6 @@ class Wikipedia(
         return intent.intent
     }
 
-    override fun serialize(): String {
-        val json = JSONObject()
-        json.put("label", label)
-        json.put("text", text)
-        json.put("id", id)
-        json.put("image", image)
-        return json.toString()
-    }
-
     companion object {
 
         fun search(context: Context, query: String, client: OkHttpClient): Wikipedia? {
@@ -120,16 +111,6 @@ class Wikipedia(
                     .getJSONObject(id.toString())
                     .optJSONObject("thumbnail")
                     ?.getString("source")
-        }
-
-        fun deserialize(serialized: String): Wikipedia {
-            val json = JSONObject(serialized)
-            return Wikipedia(
-                    label = json.getString("label"),
-                    text = json.getString("text"),
-                    id = json.getLong("id"),
-                    image = json.optString("image")
-            )
         }
     }
 }

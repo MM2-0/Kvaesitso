@@ -7,6 +7,8 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RotateDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -32,6 +34,7 @@ class ClockDynamicLauncherIcon(
         null
 ) {
 
+
     init {
         foreground.also {
             it.setDrawable(secondLayer, ColorDrawable(0))
@@ -40,8 +43,6 @@ class ClockDynamicLauncherIcon(
             (it.getDrawable(minuteLayer) as? RotateDrawable)?.fromDegrees = 0f
             (it.getDrawable(minuteLayer) as? RotateDrawable)?.toDegrees = 360f
         }
-        DynamicIconController.getInstance(context).registerIcon(this)
-        update(context)
     }
 
     override fun update(context: Context) {

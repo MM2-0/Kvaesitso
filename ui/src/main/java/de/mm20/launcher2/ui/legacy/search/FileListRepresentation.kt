@@ -19,8 +19,14 @@ import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.SwipeCardView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class FileListRepresentation : Representation {
+class FileListRepresentation : Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+    val badgeProvider: BadgeProvider by inject()
+
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val file = searchable as File
         val context = rootView.context as AppCompatActivity
@@ -30,11 +36,11 @@ class FileListRepresentation : Representation {
                 findViewById<TextView>(R.id.fileLabel).text = file.label
                 findViewById<TextView>(R.id.fileInfo).text = getFileType(context, file)
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = BadgeProvider.getInstance(context).getLiveBadge(file.badgeKey)
+                    badge = badgeProvider.getLiveBadge(file.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
-                    icon = IconRepository.getInstance(context).getIconIfCached(file)
+                    icon = iconRepository.getIconIfCached(file)
                     lifecycleScope.launch {
-                        IconRepository.getInstance(context).getIcon(file, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(file, (84 * rootView.dp).toInt()).collect {
                             icon = it
                         }
                     }

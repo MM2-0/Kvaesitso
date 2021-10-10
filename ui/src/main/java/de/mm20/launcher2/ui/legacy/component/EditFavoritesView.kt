@@ -21,10 +21,14 @@ import kotlinx.android.synthetic.main.dialog_edit_favorites.view.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFavoritesView @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
+
+    val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
+
     init {
         View.inflate(context, R.layout.dialog_edit_favorites, this)
         lifecycleScope.launch {
@@ -35,7 +39,6 @@ class EditFavoritesView @JvmOverloads constructor(
     private lateinit var favorites: MutableList<FavoritesItem>
 
     suspend fun initView() {
-        val viewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
         favorites = withContext(Dispatchers.IO) {
             viewModel.getAllFavoriteItems().toMutableList()
         }
@@ -117,7 +120,6 @@ class EditFavoritesView @JvmOverloads constructor(
     }
 
     fun save() {
-        val viewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
         viewModel.saveFavorites(favorites)
     }
 

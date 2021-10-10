@@ -34,25 +34,6 @@ class OwncloudFile(
         }
     }
 
-    override fun serialize(): String {
-        return jsonObjectOf(
-                "id" to id,
-                "label" to label,
-                "path" to path,
-                "mimeType" to mimeType,
-                "size" to size,
-                "isDirectory" to isDirectory,
-                "server" to server
-        ).apply {
-            for ((k, v) in metaData) {
-                put(when (k) {
-                    R.string.file_meta_owner -> "owner"
-                    else -> "other"
-                }, v)
-            }
-        }.toString()
-    }
-
     companion object {
         suspend fun search(context: Context, query: String, owncloudClient: OwncloudClient) : List<OwncloudFile> {
             if (!LauncherPreferences.instance.searchOwncloud) return emptyList()
@@ -71,30 +52,6 @@ class OwncloudFile(
                         metaData = it.owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
                 )
             }
-        }
-
-        fun deserialize(serialized: String): OwncloudFile? {
-            val json = JSONObject(serialized)
-            val id = json.getLong("id")
-            val label = json.getString("label")
-            val path = json.getString("path")
-            val mimeType = json.getString("mimeType")
-            val size = json.getLong("size")
-            val isDirectory = json.getBoolean("isDirectory")
-            val server = json.getString("server")
-            val owner = json.optString("owner").takeIf { it.isNotEmpty() }
-
-            return OwncloudFile(
-                    fileId = id,
-                    label = label,
-                    path = path,
-                    mimeType = mimeType,
-                    size = size,
-                    isDirectory = isDirectory,
-                    server = server,
-                    metaData = owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
-
-            )
         }
 
     }

@@ -28,6 +28,7 @@ import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.pluralResource
 import de.mm20.launcher2.ui.searchable.DeprecatedSearchableList
+import org.koin.androidx.compose.getViewModel
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -35,7 +36,7 @@ import kotlin.math.min
 @Composable
 fun CalendarWidget() {
 
-    val viewModel: CalendarViewModel = viewModel()
+    val viewModel: CalendarViewModel = getViewModel()
     val favViewModel: FavoritesViewModel = viewModel()
 
     val events by viewModel.upcomingCalendarEvents.observeAsState()

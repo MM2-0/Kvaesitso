@@ -2,7 +2,7 @@ package de.mm20.launcher2.search
 
 import androidx.lifecycle.MutableLiveData
 
-class SearchRepository private constructor() {
+class SearchRepository {
 
     val isSearching = MutableLiveData<Boolean>(false)
     val currentQuery = MutableLiveData<String>()
@@ -25,14 +25,6 @@ class SearchRepository private constructor() {
     fun endSearch() {
         synchronized(runningSearches) {
             runningSearches--
-        }
-    }
-
-    companion object {
-        private lateinit var instance: SearchRepository
-        fun getInstance(): SearchRepository {
-            if (!::instance.isInitialized) instance = SearchRepository()
-            return instance
         }
     }
 }

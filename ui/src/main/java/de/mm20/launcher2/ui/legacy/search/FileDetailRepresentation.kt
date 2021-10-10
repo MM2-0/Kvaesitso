@@ -22,9 +22,16 @@ import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.text.DecimalFormat
 
-class FileDetailRepresentation : Representation {
+class FileDetailRepresentation : Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+    val badgeProvider: BadgeProvider by inject()
+
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val file = searchable as File
         val context = rootView.context as AppCompatActivity
@@ -34,11 +41,11 @@ class FileDetailRepresentation : Representation {
                 findViewById<TextView>(R.id.fileLabel).text = file.label
                 findViewById<TextView>(R.id.fileInfo).text = getInfo(context, file)
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = BadgeProvider.getInstance(context).getLiveBadge(file.badgeKey)
+                    badge = badgeProvider.getLiveBadge(file.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
-                    icon = IconRepository.getInstance(context).getIconIfCached(file)
+                    icon = iconRepository.getIconIfCached(file)
                     lifecycleScope.launch {
-                        IconRepository.getInstance(context).getIcon(file, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(file, (84 * rootView.dp).toInt()).collect {
                             icon = it
                         }
                     }
@@ -100,7 +107,7 @@ class FileDetailRepresentation : Representation {
                         "${MediaStore.Files.FileColumns._ID} = ?",
                         arrayOf(file.id.toString()))
                 it.dismiss()
-                val fileViewModel = ViewModelProvider(context as AppCompatActivity)[FilesViewModel::class.java]
+                val fileViewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
                 fileViewModel.removeFile(file)
             }
             negativeButton(android.R.string.no) {

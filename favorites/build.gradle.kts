@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
 
+    implementation(libs.koin.android)
+
     implementation(project(":search"))
     implementation(project(":calendar"))
     implementation(project(":database"))

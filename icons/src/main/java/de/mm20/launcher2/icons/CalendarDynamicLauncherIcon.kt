@@ -30,11 +30,6 @@ class CalendarDynamicLauncherIcon(
         null
 ) {
 
-    init {
-        DynamicIconController.getInstance(context).registerIcon(this)
-        update(context)
-    }
-
     var currentDay = 0
     override fun update(context: Context) {
         val calendar = Calendar.getInstance()

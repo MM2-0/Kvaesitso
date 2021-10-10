@@ -24,7 +24,7 @@ import kotlinx.coroutines.*
 import java.io.File
 import java.util.concurrent.Executors
 
-class MusicRepository private constructor(val context: Context) {
+class MusicRepository(val context: Context) {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -245,12 +245,6 @@ class MusicRepository private constructor(val context: Context) {
     }
 
     companion object {
-        private lateinit var instance: MusicRepository
-
-        fun getInstance(context: Context): MusicRepository {
-            if (!::instance.isInitialized) instance = MusicRepository(context.applicationContext)
-            return instance
-        }
 
         private const val PREFS = "music"
         private const val PREFS_KEY_TITLE = "title"

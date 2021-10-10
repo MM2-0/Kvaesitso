@@ -98,12 +98,4 @@ class CurrencyRepository(val context: Context) {
             AppDatabase.getInstance(context).currencyDao().getLastUpdate(symbol)
         }
     }
-
-    companion object {
-        private lateinit var instance: CurrencyRepository
-        fun getInstance(context: Context): CurrencyRepository {
-            if (!::instance.isInitialized) instance = CurrencyRepository(context.applicationContext)
-            return instance
-        }
-    }
 }

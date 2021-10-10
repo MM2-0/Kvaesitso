@@ -39,7 +39,7 @@ class AppShortcut(
 
 
 
-    private val userSerialNumber: Long = launcherShortcut.userHandle.getSerialNumber(context)
+    internal val userSerialNumber: Long = launcherShortcut.userHandle.getSerialNumber(context)
     private val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
 
     override val key: String
@@ -57,15 +57,6 @@ class AppShortcut(
                 "null"
             }
         }
-
-    override fun serialize(): String {
-        return jsonObjectOf(
-                "packagename" to launcherShortcut.`package`,
-                "id" to launcherShortcut.id,
-                "user" to userSerialNumber,
-        ).toString()
-    }
-
 
     override fun getLaunchIntent(context: Context): Intent? {
         return launcherShortcut.intent
@@ -105,57 +96,5 @@ class AppShortcut(
                 foregroundScale = 1f,
                 autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
         )
-    }
-
-    companion object {
-        fun deserialize(context: Context, serialized: String): AppShortcut? {
-            val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-            if (!launcherApps.hasShortcutHostPermission()) return null
-            else {
-                val json = JSONObject(serialized)
-                val packageName = json.getString("packagename")
-                val id = json.getString("id")
-                val userSerial = json.optLong("user")
-                val query = LauncherApps.ShortcutQuery()
-                query.setPackage(packageName)
-                query.setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
-                query.setShortcutIds(mutableListOf(id))
-                val userManager = context.getSystemService<UserManager>()!!
-                val user = userManager.getUserForSerialNumber(userSerial) ?: Process.myUserHandle()
-                val shortcuts = try {
-                    launcherApps.getShortcuts(query, user)
-                } catch (e: IllegalStateException) {
-                    return null
-                }
-                val pm = context.packageManager
-                val appName = try {
-                    pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString()
-                } catch (e: PackageManager.NameNotFoundException) {
-                    return null
-                }
-                if (shortcuts == null || shortcuts.isEmpty()) return null else {
-                    GlobalScope.launch {
-                        val activity = shortcuts[0].activity
-                        withContext(Dispatchers.IO) {
-                            val icon = try {
-                                context.packageManager.getActivityIcon(activity
-                                        ?: return@withContext)
-                            } catch (e: PackageManager.NameNotFoundException) {
-                                return@withContext
-                            }
-                            val badge = Badge(icon = BadgeDrawable(context, icon))
-                            BadgeProvider.getInstance(context).setBadge("shortcut://${activity.flattenToShortString()}", badge)
-                        }
-                    }
-                    return AppShortcut(
-                            context = context,
-                            launcherShortcut = shortcuts[0],
-                            appName = appName
-                    )
-                }
-            }
-        }
     }
 }

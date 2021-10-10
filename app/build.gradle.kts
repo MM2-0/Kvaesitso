@@ -116,7 +116,7 @@ dependencies {
     implementation(libs.draglinearlayout)
     implementation(libs.viewpropertyobjectanimator)
 
-    implementation(libs.bundles.koin)
+    implementation(libs.koin.android)
 
     implementation(project(":applications"))
     implementation(project(":appsearch"))
@@ -126,6 +126,7 @@ dependencies {
     implementation(project(":calendar"))
     implementation(project(":contacts"))
     implementation(project(":crashreporter"))
+    implementation(project(":currencies"))
     implementation(project(":favorites"))
     implementation(project(":files"))
     implementation(project(":g-services"))

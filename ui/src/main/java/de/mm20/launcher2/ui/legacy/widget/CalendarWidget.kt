@@ -23,6 +23,7 @@ import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import kotlinx.android.synthetic.main.view_calendar_widget.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -119,8 +120,8 @@ class CalendarWidget : LauncherWidget {
             selectedDay = availableDays[i - 1]
         }
 
-        val viewModel = ViewModelProvider(context as AppCompatActivity)[CalendarViewModel::class.java]
-        val favViewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
+        val viewModel: CalendarViewModel by (context as AppCompatActivity).viewModel()
+        val favViewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
         calendarEvents = viewModel.upcomingCalendarEvents
         pinnedCalendarEvents = favViewModel.pinnedCalendarEvents
 

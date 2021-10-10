@@ -12,6 +12,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.calculator.CalculatorViewModel
 import de.mm20.launcher2.search.data.Calculator
 import kotlinx.android.synthetic.main.view_calculator.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.round
 
 class CalculatorView : FrameLayout {
@@ -24,7 +25,8 @@ class CalculatorView : FrameLayout {
 
     init {
         View.inflate(context, R.layout.view_calculator, this)
-        calculator = ViewModelProvider(context as AppCompatActivity).get(CalculatorViewModel::class.java).calculator
+        val viewModel: CalculatorViewModel by (context as AppCompatActivity).viewModel()
+        calculator = viewModel.calculator
         calculator.observe(context as AppCompatActivity, Observer {
             if (it == null) visibility = View.GONE
             else {

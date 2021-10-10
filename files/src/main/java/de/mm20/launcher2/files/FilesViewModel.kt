@@ -1,16 +1,16 @@
 package de.mm20.launcher2.files
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.search.data.File
 
-class FilesViewModel(app: Application): AndroidViewModel(app) {
+class FilesViewModel(
+    private val filesRepository: FilesRepository
+): ViewModel() {
 
 
-    private val repository = FilesRepository.getInstance(app)
-    val files = repository.files
+    val files = filesRepository.files
 
     fun removeFile(file: File) {
-        repository.removeFile(file)
+        filesRepository.removeFile(file)
     }
 }

@@ -11,16 +11,20 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.setPadding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ToolbarView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
     private val slots = context.resources.getInteger(R.integer.config_toolbarSlots)
 
@@ -53,7 +57,8 @@ class ToolbarView : LinearLayout {
                     overflowMenuIcon.isClickable = true
                     overflowMenuIcon.isFocusable = true
                     overflowMenuIcon.setPadding((12 * dp).toInt())
-                    overflowMenuIcon.layoutParams = LayoutParams((48 * dp).toInt(), (48 * dp).toInt())
+                    overflowMenuIcon.layoutParams =
+                        LayoutParams((48 * dp).toInt(), (48 * dp).toInt())
                     overflowMenuIcon.setImageResource(R.drawable.ic_more_vert)
                     removeViewAt(leftActions.size - 1)
                     addView(overflowMenuIcon, leftActions.size - 1)
@@ -88,7 +93,8 @@ class ToolbarView : LinearLayout {
                     overflowMenuIcon.isClickable = true
                     overflowMenuIcon.isFocusable = true
                     overflowMenuIcon.setPadding((12 * dp).toInt())
-                    overflowMenuIcon.layoutParams = LayoutParams((48 * dp).toInt(), (48 * dp).toInt())
+                    overflowMenuIcon.layoutParams =
+                        LayoutParams((48 * dp).toInt(), (48 * dp).toInt())
                     overflowMenuIcon.setImageResource(R.drawable.ic_more_vert)
                     removeViewAt(childCount - 1)
                     addView(overflowMenuIcon)
@@ -147,15 +153,16 @@ class ToolbarView : LinearLayout {
         }
         TooltipCompat.setTooltipText(imageView, action.title)
 
-        val submenu = if (action.subActions.isEmpty()) null else PopupMenu(context, imageView).apply {
-            for ((i, subAction) in action.subActions.withIndex()) {
-                menu.add(0, i, 0, subAction.title)
+        val submenu =
+            if (action.subActions.isEmpty()) null else PopupMenu(context, imageView).apply {
+                for ((i, subAction) in action.subActions.withIndex()) {
+                    menu.add(0, i, 0, subAction.title)
+                }
+                setOnMenuItemClickListener {
+                    action.subActions[it.itemId].clickAction.invoke()
+                    true
+                }
             }
-            setOnMenuItemClickListener {
-                action.subActions[it.itemId].clickAction.invoke()
-                true
-            }
-        }
 
         imageView.setOnClickListener { _ ->
             if (submenu != null) {
@@ -213,13 +220,12 @@ open class ToolbarSubaction(val title: String, var clickAction: (() -> Unit)) {
 
 }
 
-class FavoriteToolbarAction(val context: Context, val item: Searchable)
-    : ToolbarAction(
-        R.drawable.ic_star_outline,
-        context.getString(R.string.favorites_menu_pin)
+class FavoriteToolbarAction(val context: Context, val item: Searchable) : ToolbarAction(
+    R.drawable.ic_star_outline,
+    context.getString(R.string.favorites_menu_pin)
 ) {
 
-    private val viewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
+    private val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
     private val isPinned = viewModel.isPinned(item)
 
     init {
@@ -243,13 +249,12 @@ class FavoriteToolbarAction(val context: Context, val item: Searchable)
     }
 }
 
-class VisibilityToolbarAction(val context: Context, val item: Searchable)
-    : ToolbarAction(
-        R.drawable.ic_visibility,
-        context.getString(R.string.menu_hide)
+class VisibilityToolbarAction(val context: Context, val item: Searchable) : ToolbarAction(
+    R.drawable.ic_visibility,
+    context.getString(R.string.menu_hide)
 ) {
 
-    private val viewModel = ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java]
+    private val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
     private val isHidden = viewModel.isHidden(item)
 
     init {

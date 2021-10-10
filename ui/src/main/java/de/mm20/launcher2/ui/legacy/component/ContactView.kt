@@ -16,6 +16,7 @@ import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.search.SearchListView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContactView : FrameLayout {
     private val contacts: LiveData<List<Contact>?>
@@ -30,7 +31,8 @@ class ContactView : FrameLayout {
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        contacts = ViewModelProvider(context as AppCompatActivity).get(ContactViewModel::class.java).contacts
+        val viewModel: ContactViewModel by (context as AppCompatActivity).viewModel()
+        contacts = viewModel.contacts
         val list = findViewById<SearchListView>(R.id.list)
         contacts.observe(context as AppCompatActivity, {
             if (it == null) {

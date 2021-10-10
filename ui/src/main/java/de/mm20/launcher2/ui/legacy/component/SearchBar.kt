@@ -26,6 +26,7 @@ import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
 import kotlinx.android.synthetic.main.view_search_bar.view.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchBar @JvmOverloads constructor(
         context: Context,
@@ -70,7 +71,9 @@ class SearchBar @JvmOverloads constructor(
 
         })
 
-        ViewModelProvider(context as AppCompatActivity)[SearchViewModel::class.java].isSearching.observe(context, Observer {
+        val viewModel = (context as AppCompatActivity).viewModel<SearchViewModel>().value
+
+        viewModel.isSearching.observe(context, Observer {
             searchProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
 

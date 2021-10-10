@@ -2,6 +2,8 @@ package de.mm20.launcher2.icons
 
 import android.content.Context
 import android.graphics.drawable.Drawable
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 abstract class DynamicLauncherIcon(
         foreground: Drawable,
@@ -18,5 +20,6 @@ abstract class DynamicLauncherIcon(
         backgroundScale,
         autoGenerateBackgroundMode
 ) {
+
     abstract fun update(context: Context)
 }

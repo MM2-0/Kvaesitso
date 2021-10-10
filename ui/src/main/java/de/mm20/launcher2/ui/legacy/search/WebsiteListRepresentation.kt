@@ -10,8 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.transition.Scene
 import com.bumptech.glide.Glide
 import de.mm20.launcher2.badges.BadgeProvider
-import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Searchable
@@ -24,9 +24,20 @@ import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class WebsiteListRepresentation : Representation {
-    override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
+class WebsiteListRepresentation : Representation, KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+
+    val badgeProvider: BadgeProvider by inject()
+
+    override fun getScene(
+        rootView: SearchableView,
+        searchable: Searchable,
+        previousRepresentation: Int?
+    ): Scene {
         val website = searchable as Website
         val context = rootView.context as AppCompatActivity
         val scene = Scene.getSceneForLayout(rootView, R.layout.view_website_list, rootView.context)
@@ -60,11 +71,11 @@ class WebsiteListRepresentation : Representation {
                         label.transitionName = null
                         websiteFavIcon.transitionName = "icon"
                         websiteFavIcon.apply {
-                            badge = BadgeProvider.getInstance(context).getLiveBadge(website.badgeKey)
+                            badge = badgeProvider.getLiveBadge(website.badgeKey)
                             shape = LauncherIconView.getDefaultShape(context)
-                            icon = IconRepository.getInstance(context).getIconIfCached(website)
+                            icon = iconRepository.getIconIfCached(website)
                             lifecycleScope.launch {
-                                IconRepository.getInstance(context).getIcon(website, (84 * rootView.dp).toInt()).collect {
+                                iconRepository.getIcon(website, (84 * rootView.dp).toInt()).collect {
                                     icon = it
                                 }
                             }
@@ -101,7 +112,10 @@ class WebsiteListRepresentation : Representation {
 
     private fun share(context: Context, website: Website) {
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "${website.label}\n\n${website.description}\n\n${website.url}")
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "${website.label}\n\n${website.description}\n\n${website.url}"
+        )
         shareIntent.type = "text/plain"
         context.startActivity(Intent.createChooser(shareIntent, null))
     }

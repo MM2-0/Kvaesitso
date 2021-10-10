@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.bundles.retrofit)
 
+    implementation(libs.koin.android)
+
     implementation(project(":preferences"))
     implementation(project(":search"))
     implementation(project(":base"))

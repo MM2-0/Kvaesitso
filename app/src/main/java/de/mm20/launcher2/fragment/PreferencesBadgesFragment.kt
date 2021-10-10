@@ -1,4 +1,4 @@
-    package de.mm20.launcher2.fragment
+package de.mm20.launcher2.fragment
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -7,32 +7,35 @@ import androidx.preference.PreferenceFragmentCompat
 import de.mm20.launcher2.R
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.notifications.NotificationService
+import org.koin.android.ext.android.inject
 
 class PreferencesBadgesFragment : PreferenceFragmentCompat() {
+
+    private val badgesProvider: BadgeProvider by inject()
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_badges)
         findPreference<Preference>("notification_badges")?.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                de.mm20.launcher2.notifications.NotificationService.getInstance()?.generateBadges()
+                NotificationService.getInstance()?.generateBadges()
             } else {
-                BadgeProvider.getInstance(requireContext()).removeNotificationBadges()
+                badgesProvider.removeNotificationBadges()
             }
             true
         }
         findPreference<Preference>("suspended_badges")?.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                BadgeProvider.getInstance(requireContext()).addSuspendBadges()
+                badgesProvider.addSuspendBadges()
             } else {
-                BadgeProvider.getInstance(requireContext()).removeSuspendBadges()
+                badgesProvider.removeSuspendBadges()
             }
             true
         }
         findPreference<Preference>("cloud_badges")?.setOnPreferenceChangeListener { _, newValue ->
             if (newValue as Boolean) {
-                BadgeProvider.getInstance(requireContext()).addCloudBadges()
+                badgesProvider.addCloudBadges()
             } else {
-                BadgeProvider.getInstance(requireContext()).removeCloudBadges()
+                badgesProvider.removeCloudBadges()
             }
             true
         }
@@ -42,6 +45,6 @@ class PreferencesBadgesFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar
-                ?.setTitle(R.string.preference_screen_badges)
+            ?.setTitle(R.string.preference_screen_badges)
     }
 }

@@ -19,8 +19,11 @@ import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class PreferencesSearchFragment : PreferenceFragmentCompat() {
+
+    private val googleApiHelper: GoogleApiHelper by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

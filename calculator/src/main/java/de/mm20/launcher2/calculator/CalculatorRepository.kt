@@ -6,7 +6,7 @@ import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.Calculator
 import org.mariuszgromada.math.mxparser.Expression
 
-class CalculatorRepository private constructor() : BaseSearchableRepository() {
+class CalculatorRepository : BaseSearchableRepository() {
 
     val calculator = MutableLiveData<Calculator?>()
 
@@ -51,14 +51,5 @@ class CalculatorRepository private constructor() : BaseSearchableRepository() {
             }
         }
         calculator.value = calc
-    }
-
-    companion object {
-        private lateinit var instance: CalculatorRepository
-
-        fun getInstance(): CalculatorRepository {
-            if (!::instance.isInitialized) instance = CalculatorRepository()
-            return instance
-        }
     }
 }

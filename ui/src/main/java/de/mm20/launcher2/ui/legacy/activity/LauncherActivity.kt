@@ -68,6 +68,8 @@ import de.mm20.launcher2.widgets.WidgetType
 import de.mm20.launcher2.widgets.WidgetViewModel
 import kotlinx.android.synthetic.main.activity_launcher.*
 import kotlinx.coroutines.*
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -84,8 +86,9 @@ class LauncherActivity : AppCompatActivity() {
 
     private lateinit var overlayView: ViewGroupOverlay
 
-    private lateinit var searchViewModel: SearchViewModel
-    private lateinit var widgetViewModel: WidgetViewModel
+    private val searchViewModel: SearchViewModel by viewModel()
+    private val widgetViewModel: WidgetViewModel by viewModel()
+    private val favoritesViewModel: FavoritesViewModel by viewModel()
 
     private val preferences = LauncherPreferences.instance
 
@@ -205,8 +208,6 @@ class LauncherActivity : AppCompatActivity() {
 
         overlayView = rootView.overlay
 
-        searchViewModel = ViewModelProvider(this)[SearchViewModel::class.java]
-        widgetViewModel = ViewModelProvider(this)[WidgetViewModel::class.java]
 
 
         scrollContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -302,8 +303,7 @@ class LauncherActivity : AppCompatActivity() {
                             }
                             hiddenItemsGrid.columnCount =
                                 resources.getInteger(R.integer.config_columnCount)
-                            val hiddenItems =
-                                ViewModelProvider(this)[FavoritesViewModel::class.java].hiddenItems
+                            val hiddenItems = favoritesViewModel.hiddenItems
                             hiddenItems.observe(this) {
                                 hiddenItemsGrid.submitItems(it)
                             }
@@ -359,7 +359,9 @@ class LauncherActivity : AppCompatActivity() {
             }
         }
 
-        lifecycle.addObserver(DynamicIconController.getInstance(this))
+        val dynamicIconController: DynamicIconController by inject()
+
+        lifecycle.addObserver(dynamicIconController)
 
         lifecycleScope.launch {
             widgets.addAll(widgetViewModel.getWidgets())
@@ -399,10 +401,9 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun addWidget() {
-        val viewModel = ViewModelProvider(this)[WidgetViewModel::class.java]
         val usedWidgets = widgets.filter { it.type == WidgetType.INTERNAL }.map { it.data }
         val internalWidgets =
-            viewModel.getInternalWidgets().filter { !usedWidgets.contains(it.data) }
+            widgetViewModel.getInternalWidgets().filter { !usedWidgets.contains(it.data) }
         if (internalWidgets.isNotEmpty()) {
             MaterialDialog(this).show {
                 val widgetList =
@@ -652,11 +653,11 @@ class LauncherActivity : AppCompatActivity() {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
             }
             PermissionsManager.CALENDAR -> {
-                ViewModelProvider(this)[WidgetViewModel::class.java].requestCalendarUpdate()
+                widgetViewModel.requestCalendarUpdate()
             }
             PermissionsManager.ALL -> {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
-                ViewModelProvider(this)[WidgetViewModel::class.java].requestCalendarUpdate()
+                widgetViewModel.requestCalendarUpdate()
                 search(searchBar.getSearchQuery())
             }
         }

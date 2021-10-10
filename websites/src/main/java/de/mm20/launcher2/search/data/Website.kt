@@ -39,17 +39,6 @@ class Website(
         val color: Int
 ) : Searchable() {
 
-    override fun serialize(): String {
-        return jsonObjectOf(
-                "label" to label,
-                "url" to url,
-                "description" to description,
-                "image" to image,
-                "favicon" to favicon,
-                "color" to color
-        ).toString()
-    }
-
     override val key = "web://$url"
     override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
         if (favicon.isEmpty()) return null
@@ -158,18 +147,6 @@ class Website(
             } catch (e: MalformedURLException) {
                 ""
             }
-        }
-
-        fun deserialize(serialized: String): Website {
-            val json = JSONObject(serialized)
-            return Website(
-                    label = json.getString("label"),
-                    favicon = json.getString("favicon"),
-                    image = json.getString("image"),
-                    description = json.getString("description"),
-                    url = json.getString("url"),
-                    color = json.getInt("color")
-            )
         }
     }
 }

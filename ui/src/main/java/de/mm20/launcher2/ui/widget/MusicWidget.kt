@@ -21,18 +21,16 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.music.MusicViewModel
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.locals.LocalColorScheme
-import de.mm20.launcher2.ui.orange
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(
     ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class,
@@ -41,7 +39,7 @@ import de.mm20.launcher2.ui.orange
 @Composable
 fun MusicWidget() {
 
-    val viewModel: MusicViewModel = viewModel()
+    val viewModel: MusicViewModel = getViewModel()
 
     val albumArt by viewModel.albumArt.observeAsState()
     val title by viewModel.title.observeAsState()

@@ -12,15 +12,20 @@ import de.mm20.launcher2.ui.R
 import kotlinx.android.synthetic.main.edit_favorites_row.view.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class EditFavoritesRow @JvmOverloads constructor(
         context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, val favoritesItem: FavoritesItem
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : LinearLayout(context, attrs, defStyleAttr), KoinComponent {
+
+    val iconRepository: IconRepository by inject()
+
     init {
         View.inflate(context, R.layout.edit_favorites_row, this)
         label.text = favoritesItem.searchable?.label
         lifecycleScope.launch {
-            IconRepository.getInstance(context).getIcon(favoritesItem.searchable!!, (48*dp).toInt()).collect{
+            iconRepository.getIcon(favoritesItem.searchable!!, (48*dp).toInt()).collect{
                 icon.icon = it
             }
         }

@@ -13,7 +13,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.*
 
-class BadgeProvider private constructor(val context: Context) {
+class BadgeProvider(val context: Context) {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -136,15 +136,6 @@ class BadgeProvider private constructor(val context: Context) {
             if (k.startsWith("shortcut://")) {
                 removeBadge(k)
             }
-        }
-    }
-
-    companion object {
-        private lateinit var instance: BadgeProvider
-
-        fun getInstance(context: Context): BadgeProvider {
-            if (!::instance.isInitialized) instance = BadgeProvider(context.applicationContext)
-            return instance
         }
     }
 }

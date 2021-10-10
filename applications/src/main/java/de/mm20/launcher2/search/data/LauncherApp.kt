@@ -15,6 +15,8 @@ import de.mm20.launcher2.ktx.getSerialNumber
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 /**
  * An [Application] based on an [android.content.pm.LauncherActivityInfo]
@@ -46,9 +48,9 @@ class LauncherApp(
             }
             appShortcuts
         }
-) {
+), KoinComponent {
 
-    private val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)
+    internal val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
     override val badgeKey: String = if (isMainProfile) "app://${`package`}" else "profile://$userSerialNumber"
@@ -56,21 +58,14 @@ class LauncherApp(
     override val key: String
         get() = if (isMainProfile) "app://$`package`:$activity" else "app://$`package`:$activity:${userSerialNumber}"
 
-    override fun serialize(): String {
-        val json = JSONObject()
-        json.put("package", `package`)
-        json.put("activity", activity)
-        json.put("user", userSerialNumber)
-        return json.toString()
-    }
-
     fun getUser(): UserHandle? {
         return launcherActivityInfo.user
     }
 
     override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+        val iconPackManager: IconPackManager by inject()
         return withContext(Dispatchers.IO) {
-            IconPackManager.getInstance(context).getIcon(context, launcherActivityInfo, size)
+            iconPackManager.getIcon(context, launcherActivityInfo, size)
         }
     }
 
@@ -97,20 +92,6 @@ class LauncherApp(
     }
 
     companion object {
-
-        fun deserialize(context: Context, serialized: String): LauncherApp? {
-            val json = JSONObject(serialized)
-            val launcherApps = context.getSystemService<LauncherApps>()!!
-            val userManager = context.getSystemService<UserManager>()!!
-            val userSerial = json.optLong("user")
-            val user = userManager.getUserForSerialNumber(userSerial) ?: Process.myUserHandle()
-            val pkg = json.getString("package")
-            val intent = Intent().also {
-                it.component = ComponentName(pkg, json.getString("activity"))
-            }
-            val launcherActivityInfo = launcherApps.resolveActivity(intent, user) ?: return null
-            return LauncherApp(context, launcherActivityInfo)
-        }
 
         fun getPackageVersionName(context: Context, packageName: String): String? {
             return try {

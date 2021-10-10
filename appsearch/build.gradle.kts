@@ -48,6 +48,8 @@ dependencies {
 
     implementation(libs.guava)
 
+    implementation(libs.koin.android)
+
     implementation(project(":search"))
     implementation(project(":base"))
     implementation(project(":icons"))

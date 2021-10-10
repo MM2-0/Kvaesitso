@@ -10,13 +10,16 @@ import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.ktx.ceilToInt
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.BaseSearchableRepository
+import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 import kotlin.math.max
 import kotlin.math.min
 
-class FavoritesRepository private constructor(private val context: Context) : BaseSearchableRepository() {
+class FavoritesRepository(private val context: Context) : BaseSearchableRepository() {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -30,6 +33,17 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
 
     val pinnedCalendarEvents = MediatorLiveData<List<CalendarEvent>>()
 
+    private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
+        val deserializer: SearchableDeserializer by inject { parametersOf(entity.serializedSearchable) }
+        return FavoritesItem(
+            key = entity.key,
+            searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#")),
+            launchCount = entity.launchCount,
+            pinPosition = entity.pinPosition,
+            hidden = entity.hidden
+        )
+    }
+
     private val reloadFavorites: (String) -> Unit = {
         scope.launch {
             if(!LauncherPreferences.instance.searchShowFavorites) {
@@ -41,7 +55,7 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
                 val dao = AppDatabase.getInstance(context).searchDao()
                 val favItems = pinnedFavorites.value ?: emptyList()
                 favs.addAll(favItems.mapNotNull {
-                    val item = FavoritesItem(context, it)
+                    val item = fromDatabaseEntity(it)
                     if (item.searchable == null) {
                         dao.deleteByKey(item.key)
                     }
@@ -52,7 +66,7 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
                 if(favItems.size < columns) favCount += columns
                 val autoFavs = dao.getAutoFavorites(favCount - favs.size)
                 favs.addAll(autoFavs.mapNotNull {
-                    val item = FavoritesItem(context, it)
+                    val item = fromDatabaseEntity(it)
                     if (item.searchable == null) {
                         dao.deleteByKey(item.key)
                     }
@@ -68,7 +82,7 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
     init {
         val hidden = AppDatabase.getInstance(context).searchDao().getHiddenItems()
         hiddenItems.addSource(hidden) { h ->
-            hiddenItems.value = h.mapNotNull { FavoritesItem(context, it).searchable }
+            hiddenItems.value = h.mapNotNull { fromDatabaseEntity(it).searchable }
         }
         favorites.addSource(pinnedFavorites) {
             reloadFavorites("")
@@ -77,7 +91,7 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
             scope.launch {
                 val dao = AppDatabase.getInstance(context).searchDao()
                 pinnedCalendarEvents.value = it.filter { it.key.startsWith("calendar://") }.mapNotNull {
-                    val item = FavoritesItem(context, it)
+                    val item = fromDatabaseEntity(it)
                     if (item.searchable == null) {
                         withContext(Dispatchers.IO) { dao.deleteByKey(item.key) }
                     }
@@ -187,7 +201,7 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
     suspend fun getAllFavoriteItems(): List<FavoritesItem> {
         return withContext(Dispatchers.IO) {
             AppDatabase.getInstance(context).searchDao().getAllFavoriteItems().mapNotNull {
-                FavoritesItem(context, it).takeIf { it.searchable != null }
+                fromDatabaseEntity(it).takeIf { it.searchable != null }
             }
         }
     }
@@ -208,11 +222,4 @@ class FavoritesRepository private constructor(private val context: Context) : Ba
         return favs
     }
 
-    companion object {
-        private lateinit var instance: FavoritesRepository
-        fun getInstance(context: Context): FavoritesRepository {
-            if (!::instance.isInitialized) instance = FavoritesRepository(context.applicationContext)
-            return instance
-        }
-    }
 }

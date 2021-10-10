@@ -1,7 +1,6 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
-import androidx.core.text.HtmlCompat
 import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.LauncherPreferences
@@ -10,11 +9,9 @@ import de.mm20.launcher2.search.data.Wikipedia
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
-import kotlin.math.min
 
-class WikipediaRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
 
     val wikipedia = MutableLiveData<Wikipedia?>()
 
@@ -84,15 +81,5 @@ class WikipediaRepository private constructor(val context: Context) : BaseSearch
         )
 
         wikipedia.value = wiki
-    }
-
-    companion object {
-        private lateinit var instance: WikipediaRepository
-
-        fun getInstance(context: Context): WikipediaRepository {
-            if (!::instance.isInitialized) instance =
-                WikipediaRepository(context.applicationContext)
-            return instance
-        }
     }
 }

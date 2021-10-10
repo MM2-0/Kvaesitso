@@ -52,15 +52,7 @@ class DynamicIconController(val context: Context): LifecycleObserver {
     }
 
     fun registerIcon(icon: DynamicLauncherIcon) {
+        icon.update(context)
         registeredIcons.add(WeakReference(icon))
-    }
-
-    companion object {
-        private lateinit var instance: DynamicIconController
-
-        fun getInstance(context: Context): DynamicIconController {
-            if(!::instance.isInitialized) instance = DynamicIconController(context.applicationContext)
-            return instance
-        }
     }
 }

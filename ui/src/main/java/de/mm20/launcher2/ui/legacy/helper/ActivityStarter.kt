@@ -18,9 +18,13 @@ import de.mm20.launcher2.preferences.AppStartAnimation
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.lang.ref.WeakReference
 
-object ActivityStarter {
+object ActivityStarter: KoinComponent {
+
+    val favoritesRepository: FavoritesRepository by inject()
 
     private var initialized = false
     private lateinit var overlayView: WeakReference<ViewGroupOverlay>
@@ -141,7 +145,7 @@ object ActivityStarter {
 
         if (item != null) {
             if (item.launch(context, bundle)) {
-                FavoritesRepository.getInstance(context).incrementLaunchCount(item)
+                favoritesRepository.incrementLaunchCount(item)
                 return true
             }
             return false

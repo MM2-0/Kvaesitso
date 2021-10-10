@@ -22,6 +22,7 @@ import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
 class SwipeCardView @JvmOverloads constructor(
@@ -376,10 +377,10 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         ContextCompat.getColor(context, R.color.amber),
         { false }
     ) {
-    val pinned =
-        ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].isPinned(
-            searchable
-        )
+    val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
+
+    private val pinned = viewModel.isPinned(searchable)
+
 
     init {
         pinned.observe(context as LifecycleOwner) {
@@ -391,7 +392,7 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         if (pinned) {
             icon = R.drawable.ic_star_outline
             action = {
-                ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].unpinItem(
+                viewModel.unpinItem(
                     searchable
                 )
                 false
@@ -399,7 +400,7 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         } else {
             icon = R.drawable.ic_star_solid
             action = {
-                ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].pinItem(
+                viewModel.pinItem(
                     searchable
                 )
                 false
@@ -413,10 +414,8 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
     ContextCompat.getColor(context, R.color.blue),
     { false }
 ) {
-    val hidden =
-        ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].isHidden(
-            searchable
-        )
+    val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
+    private val hidden = viewModel.isHidden(searchable)
 
     init {
         hidden.observe(context as LifecycleOwner) {
@@ -428,7 +427,7 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
         if (hidden) {
             icon = R.drawable.ic_visibility
             action = {
-                ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].unhideItem(
+                viewModel.unhideItem(
                     searchable
                 )
                 true
@@ -436,7 +435,7 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
         } else {
             icon = R.drawable.ic_visibility_off
             action = {
-                ViewModelProvider(context as AppCompatActivity)[FavoritesViewModel::class.java].hideItem(
+                viewModel.hideItem(
                     searchable
                 )
                 true

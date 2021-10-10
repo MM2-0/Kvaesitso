@@ -44,6 +44,8 @@ dependencies {
 
     implementation(libs.mathparser)
 
+    implementation(libs.koin.android)
+
     implementation(project(":preferences"))
     implementation(project(":search"))
 

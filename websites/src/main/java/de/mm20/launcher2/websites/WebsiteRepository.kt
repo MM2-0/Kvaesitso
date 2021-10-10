@@ -9,16 +9,16 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-class WebsiteRepository private constructor(val context: Context): BaseSearchableRepository() {
+class WebsiteRepository(val context: Context) : BaseSearchableRepository() {
 
     val website = MutableLiveData<Website?>()
 
     private val httpClient = OkHttpClient
-            .Builder()
-            .connectTimeout(200, TimeUnit.MILLISECONDS)
-            .readTimeout(3000, TimeUnit.MILLISECONDS)
-            .writeTimeout(1000, TimeUnit.MILLISECONDS)
-            .build()
+        .Builder()
+        .connectTimeout(200, TimeUnit.MILLISECONDS)
+        .readTimeout(3000, TimeUnit.MILLISECONDS)
+        .writeTimeout(1000, TimeUnit.MILLISECONDS)
+        .build()
 
     override fun onCancel() {
         super.onCancel()
@@ -39,14 +39,5 @@ class WebsiteRepository private constructor(val context: Context): BaseSearchabl
             Website.search(context, query, httpClient)
         }
         website.value = wiki
-    }
-
-    companion object {
-        private lateinit var instance: WebsiteRepository
-
-        fun getInstance(context: Context): WebsiteRepository {
-            if(!::instance.isInitialized) instance = WebsiteRepository(context.applicationContext)
-            return instance
-        }
     }
 }

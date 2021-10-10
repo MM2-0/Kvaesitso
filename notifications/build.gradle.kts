@@ -43,6 +43,8 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
+    implementation(libs.koin.android)
+
     implementation(project(":music"))
     implementation(project(":preferences"))
     implementation(project(":badges"))

@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class WebsearchRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class WebsearchRepository(val context: Context) : BaseSearchableRepository() {
 
     val websearches = MutableLiveData<List<Websearch>>(emptyList())
 
@@ -50,15 +50,6 @@ class WebsearchRepository private constructor(val context: Context) : BaseSearch
             withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context).searchDao().deleteWebsearch(websearch.toDatabaseEntity())
             }
-        }
-    }
-
-    companion object {
-        private lateinit var instance: WebsearchRepository
-
-        fun getInstance(context: Context): WebsearchRepository {
-            if (!::instance.isInitialized) instance = WebsearchRepository(context.applicationContext)
-            return instance
         }
     }
 }

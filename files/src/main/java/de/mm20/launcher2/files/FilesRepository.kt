@@ -10,12 +10,15 @@ import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.*
 import kotlinx.coroutines.*
 
-class FilesRepository private constructor(val context: Context) : BaseSearchableRepository() {
+class FilesRepository(
+    val context: Context,
+    hiddenItemsRepository: HiddenItemsRepository
+) : BaseSearchableRepository() {
 
     val files = MediatorLiveData<List<File>?>()
 
     private val allFiles = MutableLiveData<List<File>?>(emptyList())
-    private val hiddenItemKeys = HiddenItemsRepository.getInstance(context).hiddenItemsKeys
+    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
 
     private val nextcloudClient by lazy {
         NextcloudApiHelper(context)
@@ -46,10 +49,10 @@ class FilesRepository private constructor(val context: Context) : BaseSearchable
         val cloudFiles = withContext(Dispatchers.IO) {
             delay(300)
             listOf(
-                    async { OneDriveFile.search(context, query) },
-                    async { GDriveFile.search(context, query) },
-                    async { NextcloudFile.search(context, query, nextcloudClient) },
-                    async { OwncloudFile.search(context, query, owncloudClient) }
+                async { OneDriveFile.search(context, query) },
+                async { GDriveFile.search(context, query) },
+                async { NextcloudFile.search(context, query, nextcloudClient) },
+                async { OwncloudFile.search(context, query, owncloudClient) }
             ).awaitAll().flatten()
         }
         yield()
@@ -58,13 +61,5 @@ class FilesRepository private constructor(val context: Context) : BaseSearchable
 
     fun removeFile(file: File) {
         allFiles.value = allFiles.value?.filter { it != file }
-    }
-
-    companion object {
-        private lateinit var instance: FilesRepository
-        fun getInstance(context: Context): FilesRepository {
-            if (!::instance.isInitialized) instance = FilesRepository(context.applicationContext)
-            return instance
-        }
     }
 }

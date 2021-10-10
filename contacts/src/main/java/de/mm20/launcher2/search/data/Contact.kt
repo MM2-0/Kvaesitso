@@ -39,12 +39,6 @@ class Contact(
             return phones.union(emails).joinToString(separator = ", ")
         }
 
-    override fun serialize(): String {
-        return jsonObjectOf(
-                "id" to id
-        ).toString()
-    }
-
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         val iconText = if (firstName.isNotEmpty()) firstName[0].toString() else "" + if (lastName.isNotEmpty()) lastName[0].toString() else ""
         return LauncherIcon(
@@ -96,7 +90,7 @@ class Contact(
             return results.sortedBy { it }
         }
 
-        private fun contactById(context: Context, id: Long, rawIds: Set<Long>): Contact? {
+        internal fun contactById(context: Context, id: Long, rawIds: Set<Long>): Contact? {
             val s = "(" + rawIds.joinToString(separator = " OR ",
                     transform = { "${ContactsContract.Data.RAW_CONTACT_ID} = $it" }) + ")" +
                     " AND (${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE}\"" +
@@ -187,24 +181,5 @@ class Contact(
             )
         }
 
-        fun deserialize(context: Context, serialized: String): Contact? {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) return null
-            val id = JSONObject(serialized).getLong("id")
-            val rawContactsCursor = context.contentResolver.query(
-                    ContactsContract.RawContacts.CONTENT_URI,
-                    arrayOf(ContactsContract.RawContacts._ID),
-                    "${ContactsContract.RawContacts.CONTACT_ID} = ?",
-                    arrayOf(id.toString()),
-                    null
-            ) ?: return null
-            val rawContacts = mutableSetOf<Long>()
-            while (rawContactsCursor.moveToNext()) {
-                rawContacts.add(rawContactsCursor.getLong(0))
-            }
-            rawContactsCursor.close()
-            if (rawContacts.isEmpty()) return null
-
-            return contactById(context, id, rawContacts)
-        }
     }
 }

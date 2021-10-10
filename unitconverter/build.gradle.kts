@@ -42,6 +42,8 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
+    implementation(libs.koin.android)
+
     implementation(project(":preferences"))
     implementation(project(":currencies"))
     implementation(project(":search"))
