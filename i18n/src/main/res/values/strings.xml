@@ -183,9 +183,6 @@
     <string name="preference_search_websearch">Web search shortcuts</string>
     <string name="preference_search_edit_websearch">Edit web searches</string>
     <string name="file_meta_location">Location</string>
-    <string name="preference_blur_cards">Blur effect</string>
-    <string name="preference_blur_cards_summary">Blur wallpaper behind translucent cards</string>
-    <string name="preference_blur_cards_summary_lwp">Not compatible with live wallpapers</string>
     <string name="websearch_google">Google</string>
     <string name="websearch_youtube">YouTube</string>
     <string name="websearch_playstore">Google Play</string>

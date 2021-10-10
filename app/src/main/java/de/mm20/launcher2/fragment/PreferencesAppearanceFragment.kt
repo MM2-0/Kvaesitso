@@ -47,19 +47,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
             requireActivity().recreate()
             true
         }
-        if (WallpaperManager.getInstance(activity).wallpaperInfo != null) {
-            findPreference<Preference>("blur_cards")?.apply {
-                setSummary(R.string.preference_blur_cards_summary_lwp)
-                isEnabled = false
-            }
-        }
-        findPreference<Preference>("blur_cards")?.setOnPreferenceChangeListener { _, newValue ->
-            val newVal = newValue as? Boolean ?: return@setOnPreferenceChangeListener true
-            if (newVal && requireActivity().checkPermission(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
-            }
-            true
-        }
 
         findPreference<Preference>("wallpaper")?.setOnPreferenceClickListener {
             requireContext().startActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))

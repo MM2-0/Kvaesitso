@@ -13,14 +13,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
-        <ImageView
-            android:id="@+id/previewCardBlur"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_margin="16dp"
-            android:scaleType="centerCrop" />
-
         <de.mm20.launcher2.ui.legacy.view.LauncherCardView
             android:id="@+id/previewCard"
             android:layout_width="match_parent"

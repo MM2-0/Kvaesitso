@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-    <de.mm20.launcher2.ui.legacy.view.BlurView
-        android:id="@+id/blurView"
+    <FrameLayout
+        android:id="@+id/dimWallpaper"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -137,9 +137,6 @@
     <string name="preference_search_websearch">Websuchen-Shortcuts</string>
     <string name="preference_search_edit_websearch">Websuchen bearbeiten</string>
     <string name="file_meta_location">Ort</string>
-    <string name="preference_blur_cards">Unschärfeeffekt</string>
-    <string name="preference_blur_cards_summary">Hintergrund hinter Karten unscharf darstellen</string>
-    <string name="preference_blur_cards_summary_lwp">Nicht mit Live-Hintergründen kompatibel</string>
     <string name="websearch_google">Google</string>
     <string name="websearch_youtube">YouTube</string>
     <string name="websearch_playstore">Google Play</string>

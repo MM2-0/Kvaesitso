@@ -59,7 +59,6 @@ import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.component.EditFavoritesView
 import de.mm20.launcher2.ui.legacy.component.WidgetView
-import de.mm20.launcher2.ui.legacy.helper.WallpaperBlur
 import de.mm20.launcher2.ui.legacy.search.SearchGridView
 import de.mm20.launcher2.ui.legacy.widget.LauncherWidget
 import de.mm20.launcher2.weather.WeatherViewModel
@@ -208,7 +207,9 @@ class LauncherActivity : AppCompatActivity() {
 
         overlayView = rootView.overlay
 
-
+        if (LauncherPreferences.instance.dimWallpaper) {
+            dimWallpaper.setBackgroundColor(getColor(R.color.wallpaper_dim))
+        }
 
         scrollContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         searchContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -221,12 +222,6 @@ class LauncherActivity : AppCompatActivity() {
             adjustWidgetSpace()
         }
         initWidgets()
-        if (preferences.blurCards && preferences.cardOpacity < 0xFF) {
-            container.viewTreeObserver.addOnPreDrawListener {
-                blurView.invalidate()
-                true
-            }
-        }
         scrollView.setOnTouchListener(scrollViewOnTouchListener)
         scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             when {
@@ -608,14 +603,6 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (preferences.blurCards && preferences.cardOpacity < 0xFF) {
-            lifecycleScope.launch {
-                val wallpaper = withContext(Dispatchers.IO) {
-                    WallpaperBlur.getCachedBitmap(this@LauncherActivity)
-                }
-                WallpaperBlur.blurredWallpaper = wallpaper
-            }
-        }
         preferences.doOnPreferenceChange("is_light_wallpaper", action = themeListener)
         widgetHost.startListening()
     }
@@ -627,8 +614,6 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        WallpaperBlur.blurredWallpaper?.takeIf { !it.isRecycled }?.recycle()
-        WallpaperBlur.blurredWallpaper = null
         try {
             widgetHost.stopListening()
         } catch (e: NullPointerException) {

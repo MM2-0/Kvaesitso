@@ -24,12 +24,6 @@
         app:min="0"
         app:updatesContinuously="true" />
 
-    <SwitchPreference
-        app:key="blur_cards"
-        android:defaultValue="false"
-        app:summary="@string/preference_blur_cards_summary"
-        app:title="@string/preference_blur_cards" />
-
     <ListPreference
         app:key="card_background"
         android:defaultValue="0"
