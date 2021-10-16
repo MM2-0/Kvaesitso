@@ -62,7 +62,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.1.0-alpha05")
+            version("androidx.compose", "1.1.0-alpha06")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -121,7 +121,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.19.0")
+            version("accompanist", "0.20.0")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
