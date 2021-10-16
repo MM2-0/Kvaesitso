@@ -1,13 +1,16 @@
 package de.mm20.launcher2.badges
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Process
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherPreferences
@@ -102,6 +105,25 @@ class BadgeProvider(val context: Context) {
                         setBadge("app://${app.packageName}", Badge(iconRes = R.drawable.ic_badge_suspended))
                     }
                 }
+            }
+        }
+    }
+
+    fun addAppShortcutBadge(activity: ComponentName){
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val icon = try {
+                    context.packageManager.getActivityIcon(
+                        activity
+                    )
+                } catch (e: PackageManager.NameNotFoundException) {
+                    return@withContext
+                }
+                val badge = Badge(icon = BadgeDrawable(context, icon))
+                setBadge(
+                    "shortcut://${activity.flattenToShortString()}",
+                    badge
+                )
             }
         }
     }

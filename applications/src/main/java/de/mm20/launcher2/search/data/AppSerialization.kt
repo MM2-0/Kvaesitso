@@ -10,16 +10,10 @@ import android.os.Process
 import android.os.UserManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeProvider
-import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -72,13 +66,12 @@ class AppShortcutSerializer : SearchableSerializer {
 }
 
 class AppShortcutDeserializer(
-    val context: Context,
+    val context: Context
 ) : SearchableDeserializer, KoinComponent {
-
-    private val badgeProvider: BadgeProvider by inject()
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     override fun deserialize(serialized: String): Searchable? {
+        val badgeProvider: BadgeProvider by inject()
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return null
         else {
@@ -110,23 +103,11 @@ class AppShortcutDeserializer(
             if (shortcuts == null || shortcuts.isEmpty()) {
                 return null
             } else {
-                GlobalScope.launch {
-                    val activity = shortcuts[0].activity
-                    withContext(Dispatchers.IO) {
-                        val icon = try {
-                            context.packageManager.getActivityIcon(
-                                activity
-                                    ?: return@withContext
-                            )
-                        } catch (e: PackageManager.NameNotFoundException) {
-                            return@withContext
-                        }
-                        val badge = Badge(icon = BadgeDrawable(context, icon))
-                        badgeProvider.setBadge(
-                            "shortcut://${activity.flattenToShortString()}",
-                            badge
-                        )
-                    }
+                val activity = shortcuts[0].activity
+                if (activity != null) {
+                    badgeProvider.addAppShortcutBadge(
+                        activity
+                    )
                 }
                 return AppShortcut(
                     context = context,

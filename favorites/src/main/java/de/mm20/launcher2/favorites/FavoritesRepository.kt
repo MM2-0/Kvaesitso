@@ -14,6 +14,7 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
+import org.koin.core.component.get
 import org.koin.core.component.inject
 import org.koin.core.parameter.parametersOf
 import kotlin.math.max
@@ -34,7 +35,7 @@ class FavoritesRepository(private val context: Context) : BaseSearchableReposito
     val pinnedCalendarEvents = MediatorLiveData<List<CalendarEvent>>()
 
     private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
-        val deserializer: SearchableDeserializer by inject { parametersOf(entity.serializedSearchable) }
+        val deserializer: SearchableDeserializer = get { parametersOf(entity.serializedSearchable) }
         return FavoritesItem(
             key = entity.key,
             searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#")),
