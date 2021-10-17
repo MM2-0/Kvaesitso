@@ -94,11 +94,7 @@ dependencyResolutionManagement {
                 .to("androidx.compose.animation", "animation-graphics")
                 .versionRef("androidx.compose")
 
-
-            alias("androidx.lifecycle.viewmodelcompose")
-                .to("androidx.lifecycle", "lifecycle-viewmodel-compose")
-                .version("1.0.0-alpha07")
-            version("androidx.lifecycle", "2.4.0-alpha02")
+            version("androidx.lifecycle", "2.4.0-rc01")
             alias("androidx.lifecycle.viewmodel")
                 .to("androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
@@ -110,6 +106,9 @@ dependencyResolutionManagement {
                 .versionRef("androidx.lifecycle")
             alias("androidx.lifecycle.runtime")
                 .to("androidx.lifecycle", "lifecycle-runtime-ktx")
+                .versionRef("androidx.lifecycle")
+            alias("androidx.lifecycle.viewmodelcompose")
+                .to("androidx.lifecycle", "lifecycle-viewmodel-compose")
                 .versionRef("androidx.lifecycle")
             bundle(
                 "androidx.lifecycle",
@@ -140,16 +139,16 @@ dependencyResolutionManagement {
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
-                .version("1.7.0-beta02")
+                .version("1.7.0-rc01")
 
-            version("androidx.appcompat", "1.4.0-alpha03")
+            version("androidx.appcompat", "1.4.0-beta01")
             alias("androidx.appcompat")
                 .to("androidx.appcompat", "appcompat")
                 .versionRef("androidx.appcompat")
 
-            version("androidx.activity", "1.4.0-beta01")
+            version("androidx.activity", "1.4.0-rc01")
             alias("androidx.activity")
-                .to("androidx.activity", "activity")
+                .to("androidx.activity", "activity-ktx")
                 .versionRef("androidx.activity")
             alias("androidx.activitycompose")
                 .to("androidx.activity", "activity-compose")
@@ -161,11 +160,11 @@ dependencyResolutionManagement {
 
             alias("androidx.work")
                 .to("androidx.work", "work-runtime-ktx")
-                .version("2.7.0-rc01")
+                .version("2.7.0")
 
             alias("androidx.browser")
                 .to("androidx.browser", "browser")
-                .version("1.4.0-beta01")
+                .version("1.4.0-rc01")
 
             alias("androidx.palette")
                 .to("androidx.palette", "palette")
@@ -185,7 +184,7 @@ dependencyResolutionManagement {
 
             alias("androidx.recyclerview")
                 .to("androidx.recyclerview", "recyclerview")
-                .version("1.2.1")
+                .version("1.3.0-alpha01")
 
             alias("androidx.transition")
                 .to("androidx.transition", "transition")
@@ -197,7 +196,7 @@ dependencyResolutionManagement {
 
             alias("androidx.fragment")
                 .to("androidx.fragment", "fragment-ktx")
-                .version("1.4.0-alpha07")
+                .version("1.4.0-alpha10")
 
             alias("androidx.gridlayout")
                 .to("androidx.gridlayout", "gridlayout")
@@ -215,7 +214,7 @@ dependencyResolutionManagement {
                 .to("androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.4.0-alpha05")
+            version("androidx.room", "2.4.0-beta01")
             alias("androidx.roomruntime")
                 .to("androidx.room", "room-runtime")
                 .versionRef("androidx.room")
