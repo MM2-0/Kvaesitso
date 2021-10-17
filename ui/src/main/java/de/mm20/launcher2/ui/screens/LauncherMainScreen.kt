@@ -19,6 +19,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchColumn
 import de.mm20.launcher2.ui.component.WidgetColumn
@@ -102,6 +103,9 @@ fun LauncherMainScreen() {
                 }
             }
         }
+        NavBarEffects(
+            modifier = Modifier.fillMaxSize()
+        )
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.fillMaxSize(),
