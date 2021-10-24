@@ -233,7 +233,6 @@
     <string name="activity_not_found_searchable">%1$s konnte nicht geöffnet werden</string>
     <string name="preference_calendar_max_events">Anzahl der Termine</string>
     <string name="provider_metno">MET Norway</string>
-
     <string name="weather_sleetshowers">Schneeregenschauer</string>
     <string name="weather_heavysleet">Starker Schneeregen</string>
     <string name="weather_lightrainshowersandthunder">Leichte Regenschauer und Gewitter</string>
@@ -278,10 +277,9 @@
     <string name="weather_snowshowers">Schneeschauer</string>
     <string name="weather_heavyrainandthunder">Starkregen und Gewitter</string>
     <string name="weather_unknown">Unbekannt</string>
-
     <string name="preference_location_disabled_summary">Von diesem Wetterdienst nicht unterstützt</string>
     <string name="preference_category_search_unitconverter">Einheitenrechner</string>
-    <string name="preference_search_unitconverter_summary">Probieren Sie „23 kg“ oder„5 cm >> in“</string>
+    <string name="preference_search_unitconverter_summary">Probieren Sie „23 kg“ oder„5 cm &gt;&gt; in“</string>
     <string name="preference_search_unitconverter">Einheitenrechner aktivieren</string>
     <string name="preference_legacy_icon_bg">Symbol-Hintergrund</string>
     <string name="preference_legacy_icon_bg_none">Keiner</string>
@@ -362,7 +360,6 @@
     <string name="preference_signin_user_nextcloud">Angemeldet als %1$s.</string>
     <string name="login_flow_login">Anmelden</string>
     <string name="nextcloud_login_failed">Anmeldung fehlgeschlagen: Nutzername oder Passwort ungültig</string>
-
     <string name="owncloud_server_url">Owncloud-Server-URL</string>
     <string name="preference_category_services_owncloud">Owncloud</string>
     <string name="owncloud_server_invalid_url">Diese URL verweist auf keine gültige Owncloud-Installation</string>
@@ -395,7 +392,6 @@
     <string name="preference_colors_bw">Schwarz-Weiß</string>
     <string name="preference_colors_custom">Benutzerdefiniert</string>
     <string name="preference_category_custom_colors">Farbschema bearbeiten</string>
-
     <string name="date_today">Heute</string>
     <string name="date_tomorrow">Morgen</string>
     <string name="calendar_widget_pinned_events">Demnächst</string>
@@ -416,4 +412,5 @@
         <item quantity="one">+%1$d laufender Termin aus vergangenen Tagen</item>
         <item quantity="other">+%1$d laufende Termine aus vergangenen Tagen</item>
     </plurals>
+    <string name="weather_wind">Wind:</string>
 </resources>
