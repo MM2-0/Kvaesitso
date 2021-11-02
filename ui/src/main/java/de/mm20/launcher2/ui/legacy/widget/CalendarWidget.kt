@@ -52,7 +52,7 @@ class CalendarWidget : LauncherWidget {
             updateEventList()
         }
 
-    private var availableDays: List<Long> = emptyList()
+    private var availableDays: List<Long> = listOf(0L)
         set(value) {
             if (value.indexOf(selectedDay) == -1) selectedDay = 0L
             field = value
