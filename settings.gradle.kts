@@ -62,7 +62,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.1.0-alpha06")
+            version("androidx.compose", "1.1.0-beta03")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -93,6 +93,12 @@ dependencyResolutionManagement {
             alias("androidx.compose.animationgraphics")
                 .to("androidx.compose.animation", "animation-graphics")
                 .versionRef("androidx.compose")
+            alias("androidx.compose.animationgraphics")
+                .to("androidx.compose.animation", "animation-graphics")
+                .versionRef("androidx.compose")
+            alias("androidx.compose.material3")
+                .to("androidx.compose.material3", "material3")
+                .version("1.0.0-alpha01")
 
             version("androidx.lifecycle", "2.4.0-rc01")
             alias("androidx.lifecycle.viewmodel")
@@ -120,7 +126,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.20.0")
+            version("accompanist", "0.21.0-beta")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
@@ -248,7 +254,7 @@ dependencyResolutionManagement {
 
             alias("materialcomponents")
                 .to("com.google.android.material", "material")
-                .version("1.5.0-alpha02")
+                .version("1.5.0-beta01")
 
             version("lottie", "4.1.0")
             alias("lottie.core")
@@ -386,7 +392,7 @@ dependencyResolutionManagement {
                 .to("com.google.protobuf", "protobuf-javalite")
                 .versionRef("protobuf")
 
-            version("koin", "3.1.2")
+            version("koin", "3.1.4")
             alias("koin.android")
                 .to("io.insert-koin", "koin-android")
                 .versionRef("koin")
