@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.LruCache
+import de.mm20.launcher2.icons.providers.*
+import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +14,8 @@ import kotlinx.coroutines.flow.flow
 
 class IconRepository(
     val context: Context,
-    val iconPackManager: IconPackManager
+    private val iconPackManager: IconPackManager,
+    private val dynamicIconController: DynamicIconController,
 ) {
 
     private val appReceiver = object : BroadcastReceiver() {
@@ -23,6 +26,10 @@ class IconRepository(
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
+    private val cache = LruCache<String, LauncherIcon>(200)
+
+    private var iconProviders: List<IconProvider> = listOf()
+    private lateinit var placeholderProvider: IconProvider
 
     init {
         requestIconPackListUpdate()
@@ -34,9 +41,9 @@ class IconRepository(
             addAction(Intent.ACTION_PACKAGE_CHANGED)
             addDataScheme("package")
         })
+        recreate()
     }
 
-    private val cache = LruCache<String, LauncherIcon>(200)
 
     fun getIcon(searchable: Searchable, size: Int): Flow<LauncherIcon> = flow {
         var icon = cache.get(searchable.key)
@@ -44,12 +51,19 @@ class IconRepository(
             emit(icon)
             return@flow
         }
-        val placeholderIcon = withContext(Dispatchers.IO) {
-            searchable.getPlaceholderIcon(context)
-        }
-        emit(placeholderIcon)
-        icon = withContext(Dispatchers.IO) {
-            searchable.loadIconAsync(context, size)
+
+        icon = placeholderProvider.getIcon(searchable, size)
+        emit(icon)
+
+        for (provider in iconProviders) {
+            val ic = provider.getIcon(searchable, size)
+            if (ic != null) {
+                icon = ic
+                if (icon is DynamicLauncherIcon) {
+                    dynamicIconController.registerIcon(icon)
+                }
+                break
+            }
         }
         if (icon != null) {
             cache.put(searchable.key, icon)
@@ -71,11 +85,20 @@ class IconRepository(
         }
     }
 
-    fun removeIconFromCache(searchable: Searchable) {
-        cache.remove(searchable.key)
-    }
+    fun recreate() {
+        placeholderProvider = PlaceholderIconProvider(context)
+        val providers = mutableListOf<IconProvider>()
 
-    fun clearCache() {
+        if (iconPackManager.selectedIconPack.isNotBlank()) {
+            providers.add(IconPackIconProvider(context, iconPackManager.selectedIconPack))
+        }
+
+        providers.add(GoogleClockIconProvider(context))
+        providers.add(CalendarIconProvider(context))
+        providers.add(SystemIconProvider(context))
+        providers.add(placeholderProvider)
         cache.evictAll()
+
+        iconProviders = providers
     }
 }

@@ -46,7 +46,6 @@ dependencies {
 
     implementation(project(":search"))
     implementation(project(":base"))
-    implementation(project(":icons"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))
     implementation(project(":badges"))

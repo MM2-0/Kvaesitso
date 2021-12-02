@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.palette)
+    implementation(libs.materialcomponents)
 
     implementation(libs.bundles.androidx.lifecycle)
 
@@ -50,6 +51,7 @@ dependencies {
     implementation(project(":ktx"))
     implementation(project(":base"))
     implementation(project(":search"))
+    implementation(project(":applications"))
     implementation(project(":crashreporter"))
 
 }
