@@ -12,6 +12,7 @@ import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
@@ -48,10 +49,12 @@ import com.afollestad.materialdialogs.list.listItems
 import com.jmedeisis.draglinearlayout.DragLinearLayout
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.icons.DynamicIconController
+import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.isBrightColor
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.ColorSchemes
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
@@ -188,6 +191,14 @@ class LauncherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val iconRepository: IconRepository by inject()
+        iconRepository.recreate()
+        recreate()
+
+        when(LauncherPreferences.instance.colorScheme) {
+            ColorSchemes.BLACK -> setTheme(R.style.LauncherTheme_BlackWhiteColors)
+            else -> setTheme(R.style.LauncherTheme_DefaultColors)
+        }
         if (LauncherPreferences.instance.firstRunVersion < 1) {
             ActivityCompat.requestPermissions(
                 this, arrayOf(
@@ -203,7 +214,6 @@ class LauncherActivity : AppCompatActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContentView(R.layout.activity_launcher)
-
 
         overlayView = rootView.overlay
 
