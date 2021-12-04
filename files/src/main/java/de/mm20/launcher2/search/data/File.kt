@@ -1,11 +1,7 @@
 package de.mm20.launcher2.search.data
 
-import android.Manifest
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteQueryBuilder
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.BitmapDrawable
@@ -13,36 +9,33 @@ import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
-import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
-import androidx.core.content.ContentResolverCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.database.getStringOrNull
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.ktx.checkPermission
-import de.mm20.launcher2.ktx.formatToString
-import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
-import org.json.JSONObject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.util.*
 import java.io.File as JavaIOFile
 
 open class File(
-        val id: Long,
-        val path: String,
-        val mimeType: String,
-        val size: Long,
-        val isDirectory: Boolean,
-        val metaData: List<Pair<Int, String>>
+    val id: Long,
+    val path: String,
+    val mimeType: String,
+    val size: Long,
+    val isDirectory: Boolean,
+    val metaData: List<Pair<Int, String>>
 ) : Searchable() {
 
     override val label = path.substringAfterLast('/')
@@ -55,58 +48,77 @@ open class File(
         if (!JavaIOFile(path).exists()) return null
         when {
             mimeType.startsWith("image/") -> {
-                val thumbnail = ThumbnailUtils.extractThumbnail(BitmapFactory.decodeFile(path),
-                        size, size) ?: return null
+                val thumbnail = withContext(Dispatchers.IO) {
+                    ThumbnailUtils.extractThumbnail(
+                        BitmapFactory.decodeFile(path),
+                        size, size
+                    )
+                } ?: return null
+
                 return LauncherIcon(
-                        foreground = BitmapDrawable(context.resources, thumbnail),
-                        autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                    foreground = BitmapDrawable(context.resources, thumbnail),
+                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
                 )
             }
             mimeType.startsWith("video/") -> {
-                val thumbnail = ThumbnailUtilsCompat.createVideoThumbnail(JavaIOFile(path),
-                        Size(size, size)) ?: return null
+                val thumbnail = withContext(Dispatchers.IO) {
+                    ThumbnailUtilsCompat.createVideoThumbnail(
+                        JavaIOFile(path),
+                        Size(size, size)
+                    )
+                } ?: return null
                 return LauncherIcon(
-                        foreground = BitmapDrawable(context.resources, thumbnail),
-                        autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                    foreground = BitmapDrawable(context.resources, thumbnail),
+                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
                 )
             }
             mimeType.startsWith("audio/") -> {
-                val mediaMetadataRetriever = MediaMetadataRetriever()
-                try {
-                    mediaMetadataRetriever.setDataSource(path)
-                    val thumbData = mediaMetadataRetriever.embeddedPicture
-                    if (thumbData != null) {
-                        val thumbnail = ThumbnailUtils.extractThumbnail(
-                                BitmapFactory.decodeByteArray(thumbData, 0, thumbData.size), size, size)
-                        mediaMetadataRetriever.release()
-                        thumbnail ?: return null
-                        return LauncherIcon(
-                                foreground = BitmapDrawable(context.resources, thumbnail),
-                                autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
-                        )
+                val thumbnail = withContext(Dispatchers.IO) {
+                    val mediaMetadataRetriever = MediaMetadataRetriever()
+                    try {
+                        mediaMetadataRetriever.setDataSource(path)
+                        val thumbData = mediaMetadataRetriever.embeddedPicture
+                        if (thumbData != null) {
+                            val thumbnail = ThumbnailUtils.extractThumbnail(
+                                BitmapFactory.decodeByteArray(thumbData, 0, thumbData.size),
+                                size,
+                                size
+                            )
+                            mediaMetadataRetriever.release()
+                            return@withContext thumbnail
+                        }
+                    } catch (e: RuntimeException) {
                     }
-                } catch (e: RuntimeException) {
                     mediaMetadataRetriever.release()
-                    return null
+                    return@withContext null
+
                 }
+                thumbnail ?: return null
+                return LauncherIcon(
+                    foreground = BitmapDrawable(context.resources, thumbnail),
+                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                )
+
             }
             mimeType == "application/vnd.android.package-archive" -> {
                 val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
-                val icon = pkgInfo?.applicationInfo?.loadIcon(context.packageManager) ?: return null
+                val icon = withContext(Dispatchers.IO) {
+                    pkgInfo?.applicationInfo?.loadIcon(context.packageManager)
+                } ?: return null
                 when {
                     Build.VERSION.SDK_INT > Build.VERSION_CODES.O && icon is AdaptiveIconDrawable -> {
                         return LauncherIcon(
-                                foreground = icon.foreground,
-                                background = icon.background,
-                                foregroundScale = 1.5f,
-                                backgroundScale = 1.5f
+                            foreground = icon.foreground,
+                            background = icon.background,
+                            foregroundScale = 1.5f,
+                            backgroundScale = 1.5f
                         )
                     }
                     else -> {
                         return LauncherIcon(
-                                foreground = icon,
-                                foregroundScale = 0.7f,
-                                autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                            foreground = icon,
+                            foregroundScale = 0.7f,
+                            autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
                         )
                     }
                 }
@@ -144,18 +156,20 @@ open class File(
             }
         }
         return LauncherIcon(
-                foreground = context.getDrawable(resId)!!,
-                background = ColorDrawable(ContextCompat.getColor(context, bgColor)),
-                foregroundScale = 0.5f
+            foreground = context.getDrawable(resId)!!,
+            background = ColorDrawable(ContextCompat.getColor(context, bgColor)),
+            foregroundScale = 0.5f
         )
     }
 
     override fun getLaunchIntent(context: Context): Intent? {
-        val uri = FileProvider.getUriForFile(context,
-                context.applicationContext.packageName + ".fileprovider", JavaIOFile(path))
+        val uri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".fileprovider", JavaIOFile(path)
+        )
         return Intent(Intent.ACTION_VIEW)
-                .setDataAndType(uri, mimeType)
-                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            .setDataAndType(uri, mimeType)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
 
     fun getFileType(context: Context): String {
@@ -218,21 +232,28 @@ open class File(
             val results = mutableListOf<File>()
             if (!LauncherPreferences.instance.searchFiles) return results
             if (query.isBlank()) return results
-            if (!PermissionsManager.checkPermission(context, PermissionsManager.EXTERNAL_STORAGE)) return results
-            val uri = MediaStore.Files.getContentUri("external").buildUpon().appendQueryParameter("limit", "10").build()
+            if (!PermissionsManager.checkPermission(
+                    context,
+                    PermissionsManager.EXTERNAL_STORAGE
+                )
+            ) return results
+            val uri = MediaStore.Files.getContentUri("external").buildUpon()
+                .appendQueryParameter("limit", "10").build()
             val projection = arrayOf(
-                    MediaStore.Files.FileColumns.DISPLAY_NAME,
-                    MediaStore.Files.FileColumns._ID,
-                    MediaStore.Files.FileColumns.SIZE,
-                    MediaStore.Files.FileColumns.DATA,
-                    MediaStore.Files.FileColumns.MIME_TYPE)
-            val selection = if (query.length > 3) "${MediaStore.Files.FileColumns.TITLE} LIKE ?" else "${MediaStore.Files.FileColumns.TITLE} = ?"
+                MediaStore.Files.FileColumns.DISPLAY_NAME,
+                MediaStore.Files.FileColumns._ID,
+                MediaStore.Files.FileColumns.SIZE,
+                MediaStore.Files.FileColumns.DATA,
+                MediaStore.Files.FileColumns.MIME_TYPE
+            )
+            val selection =
+                if (query.length > 3) "${MediaStore.Files.FileColumns.TITLE} LIKE ?" else "${MediaStore.Files.FileColumns.TITLE} = ?"
             val selArgs = if (query.length > 3) arrayOf("%$query%") else arrayOf(query)
             val sort = "${MediaStore.Files.FileColumns.DISPLAY_NAME} COLLATE NOCASE ASC"
 
 
             val cursor = context.contentResolver.query(uri, projection, selection, selArgs, sort)
-                    ?: return results
+                ?: return results
             while (cursor.moveToNext()) {
                 if (results.size >= 10) {
                     break
@@ -241,14 +262,19 @@ open class File(
                 if (!JavaIOFile(path).exists()) continue
                 val directory = JavaIOFile(path).isDirectory
                 val mimeType = (cursor.getStringOrNull(4)
-                        ?: if (directory) "inode/directory" else getMimetypeByFileExtension(path.substringAfterLast('.')))
+                    ?: if (directory) "inode/directory" else getMimetypeByFileExtension(
+                        path.substringAfterLast(
+                            '.'
+                        )
+                    ))
                 val file = File(
-                        path = path,
-                        mimeType = mimeType,
-                        size = cursor.getLong(2),
-                        isDirectory = directory,
-                        id = cursor.getLong(1),
-                        metaData = getMetaData(context, mimeType, path))
+                    path = path,
+                    mimeType = mimeType,
+                    size = cursor.getLong(2),
+                    isDirectory = directory,
+                    id = cursor.getLong(1),
+                    metaData = getMetaData(context, mimeType, path)
+                )
                 results.add(file)
             }
             cursor.close()
@@ -281,7 +307,11 @@ open class File(
         }
 
 
-        internal fun getMetaData(context: Context, mimeType: String, path: String): List<Pair<Int, String>> {
+        internal fun getMetaData(
+            context: Context,
+            mimeType: String,
+            path: String
+        ): List<Pair<Int, String>> {
             val metaData = mutableListOf<Pair<Int, String>>()
             when {
                 mimeType.startsWith("audio/") -> {
@@ -289,14 +319,17 @@ open class File(
                     try {
                         retriever.setDataSource(path)
                         arrayOf(
-                                R.string.file_meta_title to MediaMetadataRetriever.METADATA_KEY_TITLE,
-                                R.string.file_meta_artist to MediaMetadataRetriever.METADATA_KEY_ARTIST,
-                                R.string.file_meta_album to MediaMetadataRetriever.METADATA_KEY_ALBUM,
-                                R.string.file_meta_year to MediaMetadataRetriever.METADATA_KEY_YEAR
+                            R.string.file_meta_title to MediaMetadataRetriever.METADATA_KEY_TITLE,
+                            R.string.file_meta_artist to MediaMetadataRetriever.METADATA_KEY_ARTIST,
+                            R.string.file_meta_album to MediaMetadataRetriever.METADATA_KEY_ALBUM,
+                            R.string.file_meta_year to MediaMetadataRetriever.METADATA_KEY_YEAR
                         ).forEach {
-                            retriever.extractMetadata(it.second)?.let { m -> metaData.add(it.first to m) }
+                            retriever.extractMetadata(it.second)
+                                ?.let { m -> metaData.add(it.first to m) }
                         }
-                        val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0
+                        val duration =
+                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                                ?.toLong() ?: 0
                         val d = DateUtils.formatElapsedTime((duration) / 1000)
                         metaData.add(3, R.string.file_meta_duration to d)
                         retriever.release()
@@ -308,16 +341,28 @@ open class File(
                     val retriever = MediaMetadataRetriever()
                     try {
                         retriever.setDataSource(path)
-                        val width = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)?.toLong() ?: 0
-                        val height = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)?.toLong() ?: 0
+                        val width =
+                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
+                                ?.toLong() ?: 0
+                        val height =
+                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
+                                ?.toLong() ?: 0
                         metaData.add(R.string.file_meta_dimensions to "${width}x$height")
-                        val duration = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0
+                        val duration =
+                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                                ?.toLong() ?: 0
                         val d = DateUtils.formatElapsedTime(duration / 1000)
                         metaData.add(R.string.file_meta_duration to d)
-                        val loc = retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
+                        val loc =
+                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
                         if (Geocoder.isPresent() && loc != null) {
-                            val lon = loc.substring(0, loc.lastIndexOfAny(charArrayOf('+', '-'))).toDouble()
-                            val lat = loc.substring(loc.lastIndexOfAny(charArrayOf('+', '-')), loc.indexOf('/')).toDouble()
+                            val lon =
+                                loc.substring(0, loc.lastIndexOfAny(charArrayOf('+', '-')))
+                                    .toDouble()
+                            val lat = loc.substring(
+                                loc.lastIndexOfAny(charArrayOf('+', '-')),
+                                loc.indexOf('/')
+                            ).toDouble()
                             val list = Geocoder(context).getFromLocation(lon, lat, 1)
                             if (list.size > 0) {
                                 metaData.add(R.string.file_meta_location to list[0].formatToString())
@@ -350,8 +395,12 @@ open class File(
                 }
                 mimeType == "application/vnd.android.package-archive" -> {
                     val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
-                            ?: return metaData
-                    metaData.add(R.string.file_meta_app_name to pkgInfo.applicationInfo.loadLabel(context.packageManager).toString())
+                        ?: return metaData
+                    metaData.add(
+                        R.string.file_meta_app_name to pkgInfo.applicationInfo.loadLabel(
+                            context.packageManager
+                        ).toString()
+                    )
                     metaData.add(R.string.file_meta_app_pkgname to pkgInfo.packageName)
                     metaData.add(R.string.file_meta_app_version to pkgInfo.versionName)
                     metaData.add(R.string.file_meta_app_min_sdk to pkgInfo.applicationInfo.minSdkVersion.toString())

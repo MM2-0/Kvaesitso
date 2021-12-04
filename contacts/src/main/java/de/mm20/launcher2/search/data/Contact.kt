@@ -16,6 +16,8 @@ import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class Contact(
     val id: Long,
@@ -43,17 +45,23 @@ class Contact(
         val iconText =
             if (firstName.isNotEmpty()) firstName[0].toString() else "" + if (lastName.isNotEmpty()) lastName[0].toString() else ""
         return LauncherIcon(
-            foreground = TextDrawable(iconText, Color.WHITE, fontSize = 40 * context.sp, typeface = Typeface.DEFAULT_BOLD),
+            foreground = TextDrawable(
+                iconText,
+                Color.WHITE,
+                fontSize = 40 * context.sp,
+                typeface = Typeface.DEFAULT_BOLD
+            ),
             background = ColorDrawable(ContextCompat.getColor(context, R.color.blue))
         )
     }
 
     override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val contentResolver = context.contentResolver
-        val uri = ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return null
-        val bmp = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)
-            ?.asBitmap()
-            ?: return null
+        val bmp = withContext(Dispatchers.IO) {
+            val uri = ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return@withContext null
+            ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)
+                ?.asBitmap()
+        } ?: return null
         return LauncherIcon(
             foreground = bmp.toDrawable(context.resources)
         )

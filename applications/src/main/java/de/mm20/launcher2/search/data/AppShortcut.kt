@@ -81,8 +81,9 @@ class AppShortcut(
 
     override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        val icon = launcherApps.getShortcutIconDrawable(launcherShortcut, context.resources.displayMetrics.densityDpi)
-        icon ?: return null
+        val icon = withContext(Dispatchers.IO) {
+            launcherApps.getShortcutIconDrawable(launcherShortcut, context.resources.displayMetrics.densityDpi)
+        } ?: return null
         if (isAtLeastApiLevel(Build.VERSION_CODES.O) && icon is AdaptiveIconDrawable) {
             return LauncherIcon(
                     foreground = icon.foreground,
