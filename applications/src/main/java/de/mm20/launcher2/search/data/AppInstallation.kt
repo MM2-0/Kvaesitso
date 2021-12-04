@@ -38,7 +38,7 @@ class AppInstallation(
                 foregroundScale = 0.5f)
     }
 
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val icon = session.appIcon ?: return getPlaceholderIcon(context)
         val foreground = BitmapDrawable(context.resources, icon)
         foreground.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {

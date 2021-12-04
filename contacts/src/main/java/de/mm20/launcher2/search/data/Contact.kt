@@ -48,7 +48,7 @@ class Contact(
         )
     }
 
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val contentResolver = context.contentResolver
         val uri = ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return null
         val bmp = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)

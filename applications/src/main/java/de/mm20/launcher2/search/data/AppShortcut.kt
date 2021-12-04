@@ -79,7 +79,7 @@ class AppShortcut(
                 foregroundScale = 0.5f)
     }
 
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = launcherApps.getShortcutIconDrawable(launcherShortcut, context.resources.displayMetrics.densityDpi)
         icon ?: return null

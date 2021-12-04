@@ -41,7 +41,7 @@ class Website(
 ) : Searchable() {
 
     override val key = "web://$url"
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         if (favicon.isEmpty()) return null
         try {
             return withContext(Dispatchers.IO) {

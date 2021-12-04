@@ -51,7 +51,7 @@ open class File(
 
     open val isStoredInCloud = false
 
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         if (!JavaIOFile(path).exists()) return null
         when {
             mimeType.startsWith("image/") -> {

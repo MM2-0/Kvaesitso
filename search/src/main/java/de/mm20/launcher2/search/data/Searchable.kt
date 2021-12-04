@@ -32,7 +32,7 @@ abstract class Searchable : Comparable<Searchable> {
         }
     }
 
-    open suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? = null
+    open suspend fun loadIcon(context: Context, size: Int): LauncherIcon? = null
     abstract fun getPlaceholderIcon(context: Context): LauncherIcon
 
     override fun compareTo(other: Searchable): Int {

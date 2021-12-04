@@ -36,7 +36,7 @@ class GDriveFile(
         }
     }
 
-    override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         return null
     }
 

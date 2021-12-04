@@ -48,7 +48,7 @@ fun ShapedLauncherIcon(
 
     LaunchedEffect(item) {
         icon = withContext(Dispatchers.IO) {
-            item.loadIconAsync(context, iconSize)
+            item.loadIcon(context, iconSize)
         }
     }
 
