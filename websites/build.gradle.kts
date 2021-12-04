@@ -46,7 +46,6 @@ dependencies {
 
     implementation(libs.okhttp)
     implementation(libs.glide)
-    implementation(libs.textdrawable)
     implementation(libs.jsoup)
 
     implementation(libs.koin.android)

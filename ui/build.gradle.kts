@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.androidx.transition)
     implementation(libs.materialcomponents)
     implementation(libs.viewpropertyobjectanimator)
-    implementation(libs.textdrawable)
     implementation(libs.glide)
     implementation(libs.draglinearlayout)
     implementation(libs.lottie.core)

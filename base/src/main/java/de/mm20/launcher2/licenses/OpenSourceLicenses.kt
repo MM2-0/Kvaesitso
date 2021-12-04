@@ -78,14 +78,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://jsoup.org/"
     ),
     OpenSourceLibrary(
-        name = "TextDrawable",
-        description = "A light-weight library providing images with letter/text like the Gmail app",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        copyrightNote = "Copyright (c) 2014 Amulya Khare",
-        url = "https://github.com/amulyakhare/TextDrawable"
-    ),
-    OpenSourceLibrary(
         name = "Glide",
         description = "A fast and efficient open source media management and image loading framework for Android",
         licenseName = R.string.glide_license_name,

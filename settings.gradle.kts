@@ -291,10 +291,6 @@ dependencyResolutionManagement {
                 .to("org.jsoup", "jsoup")
                 .version("1.14.2")
 
-            alias("textdrawable")
-                .to("com.amulyakhare", "com.amulyakhare.textdrawable")
-                .version("1.0.1")
-
             alias("glide")
                 .to("com.github.bumptech.glide", "glide")
                 .version("4.12.0")

@@ -107,7 +107,6 @@ dependencies {
 
     implementation(libs.lottie.core)
 
-    implementation(libs.textdrawable)
 
     implementation(libs.bundles.materialdialogs)
 

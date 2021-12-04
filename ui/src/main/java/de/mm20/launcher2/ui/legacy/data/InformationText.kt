@@ -1,12 +1,12 @@
 package de.mm20.launcher2.ui.legacy.data
 
 import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
-import com.amulyakhare.textdrawable.TextDrawable
+import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.search.data.Searchable
 
 /**
@@ -22,8 +22,7 @@ class InformationText(
 
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         return LauncherIcon(
-                foreground = TextDrawable.builder()
-                        .buildRect("i", Color.WHITE),
+                foreground = TextDrawable("i", fontSize = 40 * context.sp),
                 background = ColorDrawable(ContextCompat.getColor(context, R.color.grey))
         )
     }

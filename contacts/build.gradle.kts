@@ -40,7 +40,6 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
 
-    implementation(libs.textdrawable)
 
     implementation(libs.koin.android)
 
