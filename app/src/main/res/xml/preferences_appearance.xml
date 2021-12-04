@@ -22,6 +22,12 @@
         app:summary="@string/preference_cards_summary"
         app:title="@string/preference_cards" />
     <PreferenceCategory app:title="@string/preference_category_icons">
+        <SwitchPreference
+            app:key="themed_icons"
+            android:defaultValue="false"
+            app:title="@string/preference_themed_icons"
+            app:summary="@string/preference_themed_icons_summary"
+            />
         <ListPreference
             app:key="icon_pack"
             app:persistent="false"

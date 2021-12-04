@@ -95,6 +95,11 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
             true
         }
 
+        findPreference<Preference>("themed_icons")?.setOnPreferenceChangeListener { _, _ ->
+            iconRepository.recreate()
+            true
+        }
+
         val shapePreference = findPreference<Preference>("icon_shape")!!
         shapePreference.summary = getShapeName()
         shapePreference.setOnPreferenceClickListener {

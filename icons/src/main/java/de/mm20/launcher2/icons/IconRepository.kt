@@ -86,13 +86,20 @@ class IconRepository(
     }
 
     fun recreate() {
-        placeholderProvider = PlaceholderIconProvider(context)
+        placeholderProvider = if (LauncherPreferences.instance.themedIcons) {
+            ThemedPlaceholderIconProvider(context)
+        } else {
+            PlaceholderIconProvider(context)
+        }
         val providers = mutableListOf<IconProvider>()
+
+        if (LauncherPreferences.instance.themedIcons) {
+            providers.add(ThemedIconProvider(context))
+        }
 
         if (iconPackManager.selectedIconPack.isNotBlank()) {
             providers.add(IconPackIconProvider(context, iconPackManager.selectedIconPack))
         }
-
         providers.add(GoogleClockIconProvider(context))
         providers.add(CalendarIconProvider(context))
         providers.add(SystemIconProvider(context))

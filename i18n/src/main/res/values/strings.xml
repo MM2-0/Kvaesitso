@@ -203,6 +203,8 @@
     <string name="preference_automatic_location_disabled_summary">Not supported by this provider</string>
     <string name="date_format_long_without_year">EE, MMMM d</string>
     <string name="weather_wind_direction_speed">%1$s • %2$s</string>
+    <string name="preference_themed_icons">Themed icons</string>
+    <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
     <string name="preference_icon_pack">Icon pack</string>
     <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
     <string name="preference_dynamic_icon_bg">Dynamic background</string>

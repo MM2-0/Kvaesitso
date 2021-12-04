@@ -3,38 +3,30 @@ package de.mm20.launcher2.icons
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.LauncherActivityInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
-import android.content.res.Resources
 import android.content.res.XmlResourceParser
 import android.graphics.*
-import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.LayerDrawable
-import android.os.Build
 import android.util.Log
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
-import de.mm20.launcher2.ktx.randomElementOrNull
-import de.mm20.launcher2.preferences.IconShape
-import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.InputStreamReader
-import kotlin.math.roundToInt
+
+private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
+    "com.google.android.apps.nexuslauncher", // Pixel Launcher
+    "app.lawnchair.lawnicons", // Lawnicons
+    "app.lawnchair", // Lawnchair
+    "de.mm20.launcher2.themedicons",
+)
 
 
 class IconPackManager(
-    val context: Context,
-    val dynamicIconController: DynamicIconController
+    val context: Context
 ) {
     var selectedIconPack: String
         get() {
@@ -54,63 +46,12 @@ class IconPackManager(
         selectedIconPack = iconPack
     }
 
-    private fun getCalendarIcon(
-        context: Context,
-        activity: LauncherActivityInfo
-    ): CalendarDynamicLauncherIcon? {
-        val component = ComponentName(activity.applicationInfo.packageName, activity.name)
-        val pm = context.packageManager
-        val ai = try {
-            pm.getActivityInfo(component, PackageManager.GET_META_DATA)
-        } catch (e: PackageManager.NameNotFoundException) {
-            return null
-        }
-        val resources = pm.getResourcesForActivity(component)
-        var arrayId = ai.metaData?.getInt("com.teslacoilsw.launcher.calendarIconArray") ?: 0
-        if (arrayId == 0) arrayId = ai.metaData?.getInt("com.google.android.calendar.dynamic_icons")
-            ?: return null
-        if (arrayId == 0) return null
-        val typedArray = resources.obtainTypedArrayOrNull(arrayId) ?: return null
-        if (typedArray.length() != 31) {
-            typedArray.recycle()
-            return null
-        }
-        val drawableIds = IntArray(31)
-        for (i in 0 until 31) {
-            drawableIds[i] = typedArray.getResourceId(i, 0)
-        }
-        typedArray.recycle()
-        return CalendarDynamicLauncherIcon(
-            context = context,
-            background = ColorDrawable(0),
-            foreground = ColorDrawable(0),
-            foregroundScale = 1.5f,
-            backgroundScale = 1.5f,
-            packageName = component.packageName,
-            drawableIds = drawableIds,
-            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
-        )
-    }
-
-    private fun getScale(): Float {
-        return when (LauncherPreferences.instance.iconShape) {
-            IconShape.CIRCLE, IconShape.PLATFORM_DEFAULT -> 0.7f
-            else -> 0.8f
-
-        }
-    }
-
     suspend fun getInstalledIconPacks(): List<IconPack> {
         return withContext(Dispatchers.IO) {
             AppDatabase.getInstance(context).iconDao().getInstalledIconPacks().map {
                 IconPack(it)
             }
         }
-    }
-
-    companion object {
-        const val GOOGLE_DESK_CLOCK_PACKAGE_NAME = "com.google.android.deskclock"
-        const val GOOGLE_CALENDAR_PACKAGE_NAME = "com.google.android.calendar"
     }
 
     @Synchronized
@@ -143,6 +84,9 @@ class UpdateIconPacksWorker(val context: Context) {
                 continue
             }
         }
+
+        val supportedGrayscaleMapPackages = SUPPORTED_GRAYSCALE_MAP_PROVIDERS
+        supportedGrayscaleMapPackages.forEach { installGrayscaleIconMap(it) }
     }
 
     private fun loadInstalledPacks(context: Context): List<ResolveInfo> {
@@ -294,6 +238,46 @@ class UpdateIconPacksWorker(val context: Context) {
             Log.e("MM20", "Could not install icon pack $pkgName: package not found.")
         } catch (e: XmlPullParserException) {
             CrashReporter.logException(e)
+        }
+    }
+
+    private fun installGrayscaleIconMap(packageName: String) {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        try {
+            val resources = context.packageManager.getResourcesForApplication(packageName)
+            val resId = resources.getIdentifier("grayscale_icon_map", "xml", packageName)
+            if (resId == 0) {
+                iconDao.deleteIcons(packageName)
+                return
+            }
+            val icons = mutableListOf<Icon>()
+            val parser = resources.getXml(resId)
+            loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                if (parser.eventType != XmlPullParser.START_TAG) continue
+                when (parser.name) {
+                    "icon" -> {
+                        val drawable =
+                            parser.getAttributeResourceValue(null, "drawable", 0).toString()
+                        val pkg = parser.getAttributeValue(null, "package")
+                        for (i in 0 until parser.attributeCount) {
+                            Log.d("MM20", "${parser.getAttributeName(0)}")
+                        }
+                        val componentName = ComponentName(pkg, pkg)
+                        val icon = Icon(
+                            drawable = drawable,
+                            componentName = componentName,
+                            iconPack = packageName,
+                            type = "greyscale_icon"
+                        )
+                        icons.add(icon)
+                        Log.d("MM20", "Installed icon ${icon.toString()}")
+                    }
+                }
+            }
+            iconDao.installGrayscaleIconMap(packageName, icons.map { it.toDatabaseEntity() })
+        } catch (e: PackageManager.NameNotFoundException) {
+            iconDao.deleteIcons(packageName)
+            return
         }
     }
 }

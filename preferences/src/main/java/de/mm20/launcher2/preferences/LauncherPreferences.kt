@@ -80,6 +80,7 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
 
     var calendarMaxEvents by StringPreference("calendar_max_events", default = "10")
 
+    var themedIcons by BooleanPreference("themed_icons", default = false)
     var legacyIconBg by StringPreference("legacy_icon_bg", default = "1")
     var blurCards by BooleanPreference("blur_cards", default = false)
     var searchStyle by EnumPreference("search_style", default = SearchStyles.NO_BG)

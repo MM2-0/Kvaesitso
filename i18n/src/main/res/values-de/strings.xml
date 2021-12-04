@@ -413,4 +413,6 @@
         <item quantity="other">+%1$d laufende Termine aus vergangenen Tagen</item>
     </plurals>
     <string name="weather_wind">Wind:</string>
+    <string name="preference_themed_icons">Eingefärbte Symbole</string>
+    <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
 </resources>

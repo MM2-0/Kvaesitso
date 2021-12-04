@@ -3,53 +3,43 @@ package de.mm20.launcher2.icons
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Build
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import java.util.*
 import java.util.concurrent.Executors
 
-class CalendarDynamicLauncherIcon(
-    foreground: Drawable,
-    background: Drawable?,
+class ThemedCalendarDynamicLauncherIcon(
     foregroundScale: Float,
-    backgroundScale: Float,
     val packageName: String,
-    val drawableIds: IntArray,
-    autoGenerateBackgroundMode: Int
+    val foregroundIds: IntArray,
+    val foregroundTint: Int,
+    background: Drawable,
 ) : DynamicLauncherIcon(
-    foreground,
-    background,
-    foregroundScale,
-    backgroundScale,
+    foreground = ColorDrawable(0),
+    background = background,
+    foregroundScale = foregroundScale,
+    backgroundScale = 1f,
         /** Not needed, we already have a background **/
-    autoGenerateBackgroundMode
+    BACKGROUND_WHITE
 ) {
 
     var currentDay = 0
     override fun update(context: Context) {
         val calendar = Calendar.getInstance()
         val day = calendar[Calendar.DAY_OF_MONTH]
-        if (day == currentDay || drawableIds.size < currentDay) return
+        if (day == currentDay || foregroundIds.size < currentDay) return
         val resources = try {
             context.packageManager.getResourcesForApplication(packageName)
         } catch (e: PackageManager.NameNotFoundException) {
             return
         }
         Executors.newSingleThreadExecutor().execute {
-            val currentDayDrawable = resources.getDrawableOrNull(drawableIds[day - 1])
+            val currentDayDrawable = resources.getDrawableOrNull(foregroundIds[day - 1])
                     ?: return@execute
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && currentDayDrawable is AdaptiveIconDrawable) {
-                foreground = currentDayDrawable.foreground
-                background = currentDayDrawable.background
-                foregroundScale = 1.5f
-                backgroundScale = 1.5f
-            } else {
-                foregroundScale = 1f
-                backgroundScale = 1f
-                background = null
-                foreground = currentDayDrawable
-            }
+            currentDayDrawable.setTint(foregroundTint)
+            foreground = currentDayDrawable
         }
         currentDay = day
     }

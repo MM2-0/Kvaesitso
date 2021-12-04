@@ -7,37 +7,33 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RotateDrawable
 import android.os.Build
 import androidx.annotation.RequiresApi
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.util.*
 import kotlin.math.roundToInt
 
 @RequiresApi(Build.VERSION_CODES.O)
 class ClockDynamicLauncherIcon(
-        context: Context,
-        foreground: LayerDrawable,
-        background: Drawable?,
-        foregroundScale: Float,
-        backgroundScale: Float,
-        badgeNumber: Float,
-        val hourLayer: Int,
-        val minuteLayer: Int,
-        val secondLayer: Int
+    foreground: LayerDrawable,
+    background: Drawable?,
+    foregroundScale: Float,
+    backgroundScale: Float,
+    val hourLayer: Int,
+    val minuteLayer: Int,
+    val secondLayer: Int
 ) : DynamicLauncherIcon(
-        foreground,
-        background,
-        foregroundScale,
-        backgroundScale,
+    foreground,
+    background,
+    foregroundScale,
+    backgroundScale,
         /** Not needed, we already have a background **/
-        LauncherIcon.BACKGROUND_WHITE,
-        badgeNumber,
-        null
+    LauncherIcon.BACKGROUND_WHITE
 ) {
 
 
     init {
         foreground.also {
-            it.setDrawable(secondLayer, ColorDrawable(0))
+            try {
+                it.setDrawable(secondLayer, ColorDrawable(0))
+            } catch (e: IndexOutOfBoundsException) {}
             (it.getDrawable(hourLayer) as? RotateDrawable)?.fromDegrees = 0f
             (it.getDrawable(hourLayer) as? RotateDrawable)?.toDegrees = 360f
             (it.getDrawable(minuteLayer) as? RotateDrawable)?.fromDegrees = 0f

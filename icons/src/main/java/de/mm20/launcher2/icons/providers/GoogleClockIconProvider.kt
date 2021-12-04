@@ -8,7 +8,6 @@ import android.graphics.drawable.LayerDrawable
 import android.os.Build
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.icons.ClockDynamicLauncherIcon
-import de.mm20.launcher2.icons.IconPackManager
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.Searchable
@@ -21,7 +20,7 @@ class GoogleClockIconProvider(val context: Context) : IconProvider {
         val pm = context.packageManager
         val appInfo = try {
             pm.getApplicationInfo(
-                IconPackManager.GOOGLE_DESK_CLOCK_PACKAGE_NAME,
+                "com.google.android.deskclock",
                 PackageManager.GET_META_DATA
             )
         } catch (e: PackageManager.NameNotFoundException) {
@@ -44,12 +43,10 @@ class GoogleClockIconProvider(val context: Context) : IconProvider {
         val secondLayer =
             appInfo.metaData.getInt("com.google.android.apps.nexuslauncher.SECOND_LAYER_INDEX")
         return ClockDynamicLauncherIcon(
-            context = context,
-            background = baseIcon.background,
-            backgroundScale = 1.5f,
             foreground = foreground,
+            background = baseIcon.background,
             foregroundScale = 1.5f,
-            badgeNumber = 0f,
+            backgroundScale = 1.5f,
             hourLayer = hourLayer,
             minuteLayer = minuteLayer,
             secondLayer = secondLayer

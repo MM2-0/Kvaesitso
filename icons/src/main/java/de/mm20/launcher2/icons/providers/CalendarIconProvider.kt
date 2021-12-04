@@ -37,9 +37,8 @@ class CalendarIconProvider(val context: Context): IconProvider {
         }
         typedArray.recycle()
         return CalendarDynamicLauncherIcon(
-            context = context,
-            background = ColorDrawable(0),
             foreground = ColorDrawable(0),
+            background = ColorDrawable(0),
             foregroundScale = 1.5f,
             backgroundScale = 1.5f,
             packageName = component.packageName,
