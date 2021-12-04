@@ -4,7 +4,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -39,7 +42,7 @@ fun calculatorItem(): LazyListScope.() -> Unit {
                         }
                         Text(
                             text = "= ${it.formattedString}",
-                            style = MaterialTheme.typography.subtitle1,
+                            style = MaterialTheme.typography.titleLarge,
                             modifier = Modifier.align(Alignment.End),
                         )
                         if (it.term.matches(Regex("(0x|0b)?[0-9]+"))) {

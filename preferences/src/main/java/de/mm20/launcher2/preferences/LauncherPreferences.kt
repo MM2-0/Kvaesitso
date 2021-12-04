@@ -88,7 +88,7 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
     var iconShape by EnumPreference("icon_shape", default = IconShape.PLATFORM_DEFAULT)
     var firstRunVersion by IntPreference("first_run_version", default = 0)
 
-    var cardBackground by EnumPreference("card_background", default = CardBackground.DEFAULT)
+    var colorScheme by EnumPreference("card_background", default = ColorSchemes.DEFAULT)
     var cardOpacity by IntPreference("card_opacity", default = 0xFF)
     var cardStrokeWidth by IntPreference("card_stroke_width", default = 0)
     var cardRadius by IntPreference("card_radius", default = 8)
@@ -169,11 +169,11 @@ enum class WeatherProviders(override val value: String) : PreferenceEnum {
     }
 }
 
-enum class CardBackground(override val value: String) : PreferenceEnum {
+enum class ColorSchemes(override val value: String) : PreferenceEnum {
     DEFAULT("0"),
     BLACK("2");
     companion object {
-        fun byValue(value: String): CardBackground {
+        fun byValue(value: String): ColorSchemes {
             return values().first { it.value == value }
         }
     }

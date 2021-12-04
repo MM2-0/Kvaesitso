@@ -1,11 +1,12 @@
 package de.mm20.launcher2.ui.icons
 
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.Searchable
@@ -31,7 +32,7 @@ fun Searchable.getPlaceholderIcon(): PlaceholderIcon {
 @Composable
 fun Application.getPlaceholderIcon(): PlaceholderIcon {
     return PlaceholderIcon(
-        MaterialTheme.colors.androidGreen,
+        colorResource(id = R.color.android_green),
         Icons.Rounded.Android
     )
 }
@@ -40,19 +41,19 @@ fun Application.getPlaceholderIcon(): PlaceholderIcon {
 fun File.getPlaceholderIcon(): PlaceholderIcon {
     return when {
         isDirectory -> PlaceholderIcon(
-            MaterialTheme.colors.lightBlue,
+            colorResource(id = R.color.lightblue),
             Icons.Rounded.Folder
         )
         mimeType.startsWith("image/") -> PlaceholderIcon(
-            MaterialTheme.colors.teal,
+            colorResource(id = R.color.teal),
             Icons.Rounded.Image
         )
         mimeType.startsWith("audio/") -> PlaceholderIcon(
-            MaterialTheme.colors.orange,
+            colorResource(id = R.color.orange),
             Icons.Rounded.Audiotrack
         )
         mimeType.startsWith("video/") -> PlaceholderIcon(
-            MaterialTheme.colors.purple,
+            colorResource(id = R.color.purple),
             Icons.Rounded.Movie
         )
         /*
@@ -66,7 +67,7 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
         }*/
         else -> when (mimeType) {
             "application/pdf" -> PlaceholderIcon(
-                MaterialTheme.colors.red,
+                colorResource(id = R.color.red),
                 Icons.Rounded.Pdf
             )
             "application/zip",
@@ -78,7 +79,7 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
             "application/x-zip-compressed",
             "application/x-gzip",
             "application/x-bzip2" -> PlaceholderIcon(
-                MaterialTheme.colors.brown,
+                colorResource(id = R.color.brown),
                 Icons.Rounded.Archive
             )
             "application/vnd.oasis.opendocument.text",
@@ -88,7 +89,7 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
             "application/x-iwork-pages-sffpages",
             "application/vnd.apple.pages",
             "application/vnd.google-apps.document" -> PlaceholderIcon(
-                MaterialTheme.colors.blue,
+                colorResource(id = R.color.blue),
                 Icons.Rounded.Notes
             )
             "application/vnd.oasis.opendocument.spreadsheet",
@@ -97,7 +98,7 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
             "application/x-iwork-numbers-sffnumbers",
             "application/vnd.apple.numbers",
             "application/vnd.google-apps.spreadsheet" -> PlaceholderIcon(
-                MaterialTheme.colors.lightGreen,
+                colorResource(id = R.color.lightgreen),
                 Icons.Rounded.BorderAll
             )
             "application/vnd.openxmlformats-officedocument.presentationml.presentation",
@@ -105,11 +106,11 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
             "application/x-iwork-keynote-sffkey",
             "application/vnd.apple.keynote",
             "application/vnd.google-apps.presentation" -> PlaceholderIcon(
-                MaterialTheme.colors.amber,
+                colorResource(id = R.color.amber),
                 Icons.Rounded.Slideshow
             )
             "application/vnd.android.package-archive" -> PlaceholderIcon(
-                MaterialTheme.colors.androidGreen,
+                colorResource(id = R.color.android_green),
                 Icons.Rounded.Android
             )
             "text/x-asm",
@@ -120,24 +121,24 @@ fun File.getPlaceholderIcon(): PlaceholderIcon {
             "text/x-script.perl",
             "text/javascript",
             "application/json" -> PlaceholderIcon(
-                MaterialTheme.colors.pink,
+                colorResource(id = R.color.pink),
                 Icons.Rounded.Code
             )
             "text/xml",
             "text/html" -> PlaceholderIcon(
-                MaterialTheme.colors.deepOrange,
+                colorResource(id = R.color.deeporange),
                 Icons.Rounded.Code
             )
             "application/vnd.google-apps.form" -> PlaceholderIcon(
-                MaterialTheme.colors.deepPurple,
+                colorResource(id = R.color.deeppurple),
                 Icons.Rounded.ViewList
             )
             "application/epub+zip" -> PlaceholderIcon(
-                MaterialTheme.colors.blue,
+                colorResource(id = R.color.blue),
                 Icons.Rounded.Book
             )
             else -> PlaceholderIcon(
-                MaterialTheme.colors.blueGray,
+                colorResource(id = R.color.bluegrey),
                 Icons.Rounded.InsertDriveFile
             )
         }

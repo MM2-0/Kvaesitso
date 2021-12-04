@@ -2,7 +2,9 @@ package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
@@ -103,7 +105,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                     ) {
                         Text(
                             action.label, modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                         Icon(imageVector = Icons.Rounded.ArrowRight, contentDescription = null)
                     }
@@ -114,7 +116,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                     ) {
                         Text(
                             action.label,
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }
@@ -125,7 +127,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                     }) {
                         Text(
                             action.label,
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }

@@ -6,23 +6,15 @@ import android.app.WallpaperManager
 import android.graphics.*
 import android.os.Bundle
 import android.view.View
-import android.view.ViewOutlineProvider
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.doOnNextLayout
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import de.mm20.launcher2.R
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.ktx.translate
-import de.mm20.launcher2.preferences.CardBackground
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.android.synthetic.main.fragment_card_settings.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.File
 import kotlin.math.roundToInt
 
 class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
@@ -68,18 +60,6 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
                     true
                 }
             }
-            findPreference<Preference>("card_background")?.let {
-                it.setOnPreferenceChangeListener { preference, newValue ->
-                    val background = CardBackground.byValue(newValue as String)
-                    var color = when (background) {
-                        CardBackground.BLACK -> context.getColor(R.color.cardview_background_black)
-                        else -> context.getColor(R.color.cardview_background)
-                    }
-                    color = color and ((previewCard.backgroundOpacity shl 24) or 0xFFFFFF)
-                    previewCard.setCardBackgroundColor(color)
-                    true
-                }
-            }
         }
 
         childFragmentManager.beginTransaction()
@@ -88,8 +68,6 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
 
 
     }
-
-    private var blurBitmap: Bitmap? = null
 
     private var animator: Animator? = null
     override fun onStart() {

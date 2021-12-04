@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -53,7 +54,7 @@ fun ColorPreference(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.h6,
+                        style = MaterialTheme.typography.headlineMedium,
                         modifier = Modifier.padding(
                             start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp
                         )
@@ -86,7 +87,6 @@ fun ColorPreference(
 fun ColorPreview(color: Color) {
     Surface(
         modifier = Modifier.size(32.dp),
-        elevation = 0.dp,
         shape = RoundedCornerShape(16.dp),
         color = color
     ) {}

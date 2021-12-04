@@ -7,7 +7,7 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -73,7 +73,7 @@ fun SearchableItem(
 
 
         Card(
-            backgroundColor = MaterialTheme.colors.surface.copy(alpha = cardAlpha),
+            backgroundColor = MaterialTheme.colorScheme.surface.copy(alpha = cardAlpha),
             elevation = cardElevation
         ) {
 

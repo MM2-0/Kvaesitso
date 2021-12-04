@@ -2,8 +2,8 @@ package de.mm20.launcher2.ui.theme.colors
 
 import androidx.compose.ui.graphics.Color
 
-class BlackWhiteColorScheme: ColorScheme() {
-    override val neutral1: ColorSwatch
+class BlackWhiteColorPalette: ColorPalette() {
+    override val neutral: ColorSwatch
         get() = ColorSwatch(
             Color.White,
             Color.White,
@@ -19,12 +19,12 @@ class BlackWhiteColorScheme: ColorScheme() {
             Color.Black,
             Color.Black,
         )
-    override val neutral2: ColorSwatch
-        get() = neutral1
-    override val accent1: ColorSwatch
-        get() = neutral1
-    override val accent2: ColorSwatch
-        get() = neutral1
-    override val accent3: ColorSwatch
-        get() = neutral1
+    override val neutralVariant: ColorSwatch
+        get() = neutral
+    override val primary: ColorSwatch
+        get() = neutral
+    override val secondary: ColorSwatch
+        get() = neutral
+    override val tertiary: ColorSwatch
+        get() = neutral
 }

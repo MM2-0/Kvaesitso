@@ -7,53 +7,59 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
+import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.*
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.icons.IconPackManager
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 /**
  * An [Application] based on an [android.content.pm.LauncherActivityInfo]
  */
 class LauncherApp(
-        context: Context,
-        private val launcherActivityInfo: LauncherActivityInfo
+    context: Context,
+    public val launcherActivityInfo: LauncherActivityInfo
 ) : Application(
-        label = launcherActivityInfo.label.toString(),
-        `package` = launcherActivityInfo.applicationInfo.packageName,
-        activity = launcherActivityInfo.name,
-        flags = launcherActivityInfo.applicationInfo.flags,
-        version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
-        shortcuts = run {
-            val appShortcuts = mutableListOf<AppShortcut>()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                val launcherApps = context.getSystemService<LauncherApps>()!!
-                if (!launcherApps.hasShortcutHostPermission()) return@run appShortcuts
-                val query = LauncherApps.ShortcutQuery()
-                        .setPackage(launcherActivityInfo.applicationInfo.packageName)
-                        .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
-                val shortcuts = try {
-                    launcherApps.getShortcuts(query, launcherActivityInfo.user)
-                } catch (e: IllegalStateException) {
-                    emptyList<ShortcutInfo>()
-                }
-                appShortcuts.addAll(shortcuts?.map { AppShortcut(context, it, launcherActivityInfo.label.toString()) }
-                        ?: emptyList())
+    label = launcherActivityInfo.label.toString(),
+    `package` = launcherActivityInfo.applicationInfo.packageName,
+    activity = launcherActivityInfo.name,
+    flags = launcherActivityInfo.applicationInfo.flags,
+    version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+    shortcuts = run {
+        val appShortcuts = mutableListOf<AppShortcut>()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            val launcherApps = context.getSystemService<LauncherApps>()!!
+            if (!launcherApps.hasShortcutHostPermission()) return@run appShortcuts
+            val query = LauncherApps.ShortcutQuery()
+                .setPackage(launcherActivityInfo.applicationInfo.packageName)
+                .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
+            val shortcuts = try {
+                launcherApps.getShortcuts(query, launcherActivityInfo.user)
+            } catch (e: IllegalStateException) {
+                emptyList<ShortcutInfo>()
             }
-            appShortcuts
+            appShortcuts.addAll(shortcuts?.map {
+                AppShortcut(
+                    context,
+                    it,
+                    launcherActivityInfo.label.toString()
+                )
+            }
+                ?: emptyList())
         }
+        appShortcuts
+    }
 ), KoinComponent {
 
     internal val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)
     private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
-    override val badgeKey: String = if (isMainProfile) "app://${`package`}" else "profile://$userSerialNumber"
+    override val badgeKey: String =
+        if (isMainProfile) "app://${`package`}" else "profile://$userSerialNumber"
 
     override val key: String
         get() = if (isMainProfile) "app://$`package`:$activity" else "app://$`package`:$activity:${userSerialNumber}"
@@ -63,9 +69,31 @@ class LauncherApp(
     }
 
     override suspend fun loadIconAsync(context: Context, size: Int): LauncherIcon? {
-        val iconPackManager: IconPackManager by inject()
-        return withContext(Dispatchers.IO) {
-            iconPackManager.getIcon(context, launcherActivityInfo, size)
+        try {
+            val icon =
+                withContext(Dispatchers.IO) {
+                    launcherActivityInfo.getIcon(context.resources.displayMetrics.densityDpi)
+
+                } ?: return null
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && icon is AdaptiveIconDrawable -> {
+                    return LauncherIcon(
+                        foreground = icon.foreground ?: return null,
+                        background = icon.background,
+                        foregroundScale = 1.5f,
+                        backgroundScale = 1.5f
+                    )
+                }
+                else -> {
+                    return LauncherIcon(
+                        foreground = icon,
+                        foregroundScale = 0.7f,
+                        autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+                    )
+                }
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            return null
         }
     }
 
@@ -79,10 +107,10 @@ class LauncherApp(
         } else {
             try {
                 launcherApps.startMainActivity(
-                        ComponentName(`package`, activity),
-                        launcherActivityInfo.user,
-                        null,
-                        options
+                    ComponentName(`package`, activity),
+                    launcherActivityInfo.user,
+                    null,
+                    options
                 )
             } catch (e: SecurityException) {
                 return false

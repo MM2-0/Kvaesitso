@@ -2,11 +2,9 @@ package de.mm20.launcher2.ui.screens.settings
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.material.SnackbarDuration
-import androidx.compose.material.SnackbarResult
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.rememberScaffoldState
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
@@ -27,15 +25,14 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.launch
 import java.io.File
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsAboutScreen() {
     val context = LocalContext.current
     val navController = LocalNavController.current
-    val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     PreferenceScreen(
         title = stringResource(id = R.string.preference_screen_about),
-        scaffoldState = scaffoldState
     ) {
         item {
             PreferenceCategory {
@@ -109,7 +106,7 @@ fun SettingsAboutScreen() {
                     onClick = {
                         scope.launch {
                             val path = DebugInformationDumper().dump(context)
-                            val result = scaffoldState.snackbarHostState.showSnackbar(
+                            /*val result = scaffoldState.snackbarHostState.showSnackbar(
                                 context.getString(R.string.debug_export_information_file, path),
                                 actionLabel = context.getString(R.string.menu_share),
                                 duration = SnackbarDuration.Long
@@ -125,7 +122,7 @@ fun SettingsAboutScreen() {
                                         )
                                     )
                                 })
-                            }
+                            }*/
                         }
                     }
                 )
@@ -134,7 +131,7 @@ fun SettingsAboutScreen() {
                     onClick = {
                         scope.launch {
                             val path = DebugInformationDumper().exportDatabases(context)
-                            val result = scaffoldState.snackbarHostState.showSnackbar(
+                            /*val result = scaffoldState.snackbarHostState.showSnackbar(
                                 context.getString(R.string.debug_export_information_file, path),
                                 actionLabel = context.getString(R.string.menu_share),
                                 duration = SnackbarDuration.Long
@@ -150,7 +147,7 @@ fun SettingsAboutScreen() {
                                         )
                                     )
                                 })
-                            }
+                            }*/
                         }
                     }
                 )

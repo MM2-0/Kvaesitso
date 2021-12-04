@@ -9,8 +9,8 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.app.NotificationManagerCompat
@@ -59,7 +59,7 @@ class MusicWidget : LauncherWidget {
         composeView.setContent {
             LegacyLauncherTheme {
                 // TODO: Temporary solution until parent widget card is rewritten in Compose
-                CompositionLocalProvider(LocalContentColor provides MaterialTheme.colors.onSurface) {
+                CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     Column {
                         MusicWidget()
                     }

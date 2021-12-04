@@ -2,10 +2,10 @@ package de.mm20.launcher2.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Slider
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -82,7 +82,7 @@ fun ColorPicker(
             Text(
                 "Hex: ",
                 modifier = Modifier.weight(2f),
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.titleMedium
             )
             OutlinedTextField(
                 value = hex,
@@ -114,7 +114,7 @@ private fun SliderRow(
         Text(
             label,
             modifier = Modifier.weight(1f),
-            style = MaterialTheme.typography.subtitle2
+            style = MaterialTheme.typography.titleMedium
         )
         Box(
             modifier = Modifier.weight(7f)

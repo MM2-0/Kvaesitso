@@ -24,13 +24,4 @@
         app:min="0"
         app:updatesContinuously="true" />
 
-    <ListPreference
-        app:key="card_background"
-        android:defaultValue="0"
-        app:summary="%s"
-        app:title="@string/preference_card_background"
-        app:entries="@array/preference_card_background_entries"
-        app:entryValues="@array/preference_card_background_values"
-        />
-
 </PreferenceScreen>

@@ -8,9 +8,9 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -85,7 +85,7 @@ fun ShapedLauncherIcon(
 
     Surface(
         shape = iconShape,
-        elevation = animateDpAsState(if (isPressed) 4.dp else 1.dp).value,
+        shadowElevation = animateDpAsState(if (isPressed) 4.dp else 1.dp).value,
         modifier = modifier
             .requiredSize(size)
     ) {
@@ -94,7 +94,7 @@ fun ShapedLauncherIcon(
                 .requiredSize(size)
                 .background(
                     color = if (icon == null) {
-                        placeholder.color.copy(alpha = 0.4f).compositeOver(MaterialTheme.colors.surface)
+                        placeholder.color.copy(alpha = 0.4f).compositeOver(MaterialTheme.colorScheme.surface)
                     } else {
                         Color.Gray
                     }

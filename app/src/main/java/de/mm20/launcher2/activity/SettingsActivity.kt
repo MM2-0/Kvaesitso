@@ -11,12 +11,18 @@ import de.mm20.launcher2.fragment.PreferencesCalendarFragment
 import de.mm20.launcher2.fragment.PreferencesMainFragment
 import de.mm20.launcher2.fragment.PreferencesServicesFragment
 import de.mm20.launcher2.fragment.PreferencesWeatherFragment
+import de.mm20.launcher2.preferences.ColorSchemes
+import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.legacy.activity.LauncherActivity
 
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        when(LauncherPreferences.instance.colorScheme) {
+            ColorSchemes.BLACK -> setTheme(R.style.SettingsTheme_BlackWhiteColors)
+            else -> setTheme(R.style.SettingsTheme_DefaultColors)
+        }
         if (savedInstanceState == null) {
             val fragment = getStartFragment()
             setupActionBar()
@@ -32,7 +38,6 @@ class SettingsActivity : AppCompatActivity() {
                     .replace(android.R.id.content, fragment)
                     .commit()
         }
-        findViewById<View>(android.R.id.content)?.setBackgroundColor(getColor(R.color.settings_window_background))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

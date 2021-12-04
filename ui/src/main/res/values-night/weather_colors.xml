@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="weather_sun">@color/amber</color>
+    <color name="weather_moon">#E0E0E0</color>
+    <color name="weather_cloud_light_1">#ECEFF1</color>
+    <color name="weather_cloud_light_2">#CFD8DC</color>
+    <color name="weather_cloud_medium_1">#78909C</color>
+    <color name="weather_cloud_medium_2">#607D8B</color>
+    <color name="weather_cloud_dark_1">#546E7A</color>
+    <color name="weather_cloud_dark_2">#455A64</color>
+    <color name="weather_snow">#F5F5F5</color>
+    <color name="weather_rain">@color/blue</color>
+    <color name="weather_hail">#E3F2FD</color>
+    <color name="weather_hot">@color/red</color>
+    <color name="weather_cold">@color/lightblue</color>
+    <color name="weather_wind">#CFD8DC</color>
+    <color name="weather_wind_dark">#78909C</color>
+    <color name="weather_fog">@color/weather_cloud_light_2</color>
+    <color name="weather_lightning_bolt">@color/amber</color>
+</resources>

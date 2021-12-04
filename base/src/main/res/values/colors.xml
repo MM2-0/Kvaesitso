@@ -2,6 +2,7 @@
 <resources>
     <color name="badge_text">#8A000000</color>
 
+    <color name="android_green">#00A55B</color>
     <color name="red">#E53935</color>
     <color name="pink">#D81B60</color>
     <color name="purple">#9C27B0</color>

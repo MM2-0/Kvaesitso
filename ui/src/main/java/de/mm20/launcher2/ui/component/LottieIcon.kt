@@ -4,7 +4,7 @@ package de.mm20.launcher2.ui.component
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material3.LocalContentAlpha
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha

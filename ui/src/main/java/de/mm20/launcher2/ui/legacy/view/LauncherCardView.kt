@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.util.AttributeSet
 import com.google.android.material.card.MaterialCardView
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.preferences.CardBackground
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
 import kotlin.math.roundToInt
@@ -41,12 +40,12 @@ open class LauncherCardView @JvmOverloads constructor(
         }
 
     init {
-        val cardColor = when (LauncherPreferences.instance.cardBackground) {
+        /*val cardColor = when (LauncherPreferences.instance.cardBackground) {
             CardBackground.DEFAULT-> context.getColor(R.color.cardview_background)
             CardBackground.BLACK -> context.getColor(R.color.cardview_background_black)
         }
-        setCardBackgroundColor(cardColor)
-        strokeColor = cardColor
+        setCardBackgroundColor(cardColor)*/
+        strokeColor = cardBackgroundColor.defaultColor
         strokeWidth = (LauncherPreferences.instance.cardStrokeWidth * dp).roundToInt()
         radius = LauncherPreferences.instance.cardRadius * dp
 

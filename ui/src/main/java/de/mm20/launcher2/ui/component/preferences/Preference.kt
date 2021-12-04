@@ -2,7 +2,9 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -39,18 +41,18 @@ fun Preference(
                         modifier = Modifier.padding(start = 4.dp),
                         imageVector = icon,
                         contentDescription = null,
-                        tint = MaterialTheme.colors.primary,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
             Column(
                 modifier = Modifier.weight(1f)
             ) {
-                Text(text = title, style = MaterialTheme.typography.subtitle2)
+                Text(text = title, style = MaterialTheme.typography.titleMedium)
                 if (summary != null) {
                     Text(
                         text = summary,
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(top = 1.dp)
                     )
                 }

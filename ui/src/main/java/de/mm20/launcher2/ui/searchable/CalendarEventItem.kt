@@ -10,7 +10,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Star
@@ -35,7 +36,7 @@ import de.mm20.launcher2.ui.search.Representation
 import de.mm20.launcher2.ui.toPixels
 import java.net.URLEncoder
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CalendarEventItem(
     event: CalendarEvent,
@@ -56,7 +57,7 @@ fun CalendarEventItem(
             elevation = animateDpAsState(if (representation == Representation.Full) 4.dp else 0.dp).value,
             border = BorderStroke(
                 width = animateDpAsState(if (representation == Representation.List) 1.dp else 0.dp).value,
-                color = MaterialTheme.colors.onSurface.copy(alpha = animateFloatAsState(if (representation == Representation.List) 0.18f else 0f).value)
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = animateFloatAsState(if (representation == Representation.List) 0.18f else 0f).value)
             ),
             modifier = modifier
         ) {
@@ -80,14 +81,14 @@ fun CalendarEventItem(
                     ) {
                         Text(
                             text = event.label,
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                         AnimatedVisibility(
                             representation == Representation.List
                         ) {
                             Text(
                                 text = formatEventTime(event = event),
-                                style = MaterialTheme.typography.body1
+                                style = MaterialTheme.typography.bodyMedium
                             )
                         }
                     }

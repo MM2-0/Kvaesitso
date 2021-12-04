@@ -3,6 +3,11 @@
 
     <style name="BaseLauncherTheme.Settings">
         <item name="android:windowLightStatusBar">false</item>
+        <item name="actionBarTheme">@style/ActionBarSettings</item>
+    </style>
+
+    <style name="ActionBarSettings">
+        <item name="titleTextColor">@android:color/white</item>
     </style>
 
     <style name="LauncherTheme.IconStyle">

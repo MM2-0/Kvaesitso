@@ -7,8 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +30,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @OptIn(
-    ExperimentalMaterialApi::class,
     ExperimentalAnimationApi::class,
     ExperimentalPagerApi::class,
     InternalCoroutinesApi::class
@@ -45,7 +43,7 @@ fun LauncherMainScreen() {
     val searchColumnState = rememberLazyListState()
     val widgetColumnState = rememberScrollState()
 
-    val isLightTheme = MaterialTheme.colors.isLight
+    val isLightTheme = androidx.compose.material.MaterialTheme.colors.isLight
 
     val windowHeight = LocalWindowSize.current.height
 

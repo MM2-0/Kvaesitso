@@ -15,11 +15,11 @@ fun ColorSchemeTest() {
 
     Card {
         Column {
-            SwatchRow(swatch = colorScheme.neutral1)
-            SwatchRow(swatch = colorScheme.neutral2)
-            SwatchRow(swatch = colorScheme.accent1)
-            SwatchRow(swatch = colorScheme.accent2)
-            SwatchRow(swatch = colorScheme.accent3)
+            SwatchRow(swatch = colorScheme.neutral)
+            SwatchRow(swatch = colorScheme.neutralVariant)
+            SwatchRow(swatch = colorScheme.primary)
+            SwatchRow(swatch = colorScheme.secondary)
+            SwatchRow(swatch = colorScheme.tertiary)
         }
     }
 }
@@ -31,42 +31,42 @@ fun SwatchRow(swatch: ColorSwatch) {
     ) {
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade0))
+            .background(swatch.shade100))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade10))
+            .background(swatch.shade99))
+        Box(modifier = Modifier
+            .height(24.dp).weight(1f)
+            .background(swatch.shade95))
+        Box(modifier = Modifier
+            .height(24.dp).weight(1f)
+            .background(swatch.shade90))
+        Box(modifier = Modifier
+            .height(24.dp).weight(1f)
+            .background(swatch.shade80))
+        Box(modifier = Modifier
+            .height(24.dp).weight(1f)
+            .background(swatch.shade70))
+        Box(modifier = Modifier
+            .height(24.dp).weight(1f)
+            .background(swatch.shade60))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
             .background(swatch.shade50))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade100))
+            .background(swatch.shade40))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade200))
+            .background(swatch.shade30))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade300))
+            .background(swatch.shade20))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade400))
+            .background(swatch.shade10))
         Box(modifier = Modifier
             .height(24.dp).weight(1f)
-            .background(swatch.shade500))
-        Box(modifier = Modifier
-            .height(24.dp).weight(1f)
-            .background(swatch.shade600))
-        Box(modifier = Modifier
-            .height(24.dp).weight(1f)
-            .background(swatch.shade700))
-        Box(modifier = Modifier
-            .height(24.dp).weight(1f)
-            .background(swatch.shade800))
-        Box(modifier = Modifier
-            .height(24.dp).weight(1f)
-            .background(swatch.shade900))
-        Box(modifier = Modifier
-            .height(24.dp).weight(1f)
-            .background(swatch.shade1000))
+            .background(swatch.shade0))
     }
 }

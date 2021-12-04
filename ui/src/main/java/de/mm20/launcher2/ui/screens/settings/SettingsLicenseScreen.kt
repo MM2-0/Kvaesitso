@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Icon
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.OpenInBrowser
 import androidx.compose.runtime.Composable
@@ -40,11 +40,11 @@ fun SettingsLicenseScreen(libraryName: String? = null) {
                 Column(
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Text(text = library.name, style = MaterialTheme.typography.subtitle1)
+                    Text(text = library.name, style = MaterialTheme.typography.titleMedium)
                     library.description?.let { Text(text = it) }
                 }
                 CompositionLocalProvider(
-                    LocalContentColor provides MaterialTheme.colors.primary
+                    LocalContentColor provides MaterialTheme.colorScheme.primary
                 ) {
                     Row(
                         modifier = Modifier
@@ -61,7 +61,7 @@ fun SettingsLicenseScreen(libraryName: String? = null) {
                         Text(
                             modifier = Modifier.padding(start = 8.dp),
                             text = stringResource(id = R.string.open_webpage),
-                            style = MaterialTheme.typography.button
+                            style = MaterialTheme.typography.labelMedium
                         )
                     }
                 }
@@ -74,7 +74,7 @@ fun SettingsLicenseScreen(libraryName: String? = null) {
                 ) {
                     Text(
                         text = stringResource(id = library.licenseName),
-                        style = MaterialTheme.typography.subtitle2
+                        style = MaterialTheme.typography.titleMedium
                     )
                     library.copyrightNote?.let {
                         Text(

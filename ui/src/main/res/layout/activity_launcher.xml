@@ -126,6 +126,7 @@
                     android:animateLayoutChanges="true"
                     android:clipChildren="false"
                     android:clipToPadding="false"
+                    android:paddingTop="8dp"
                     android:orientation="vertical">
 
                     <de.mm20.launcher2.view.ElevationImageView
@@ -163,10 +164,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginBottom="16dp"
                         android:text="@string/menu_edit_widgets"
-                        android:textColor="@color/text_color_primary"
-                        app:backgroundTint="?colorSurface"
-                        app:icon="@drawable/ic_edit"
-                        app:iconTint="@color/text_color_primary" />
+                        app:icon="@drawable/ic_edit" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -185,10 +183,10 @@
             android:id="@+id/editWidgetToolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?colorSurface"
             android:elevation="4dp"
             android:translationY="-56dp"
             android:visibility="gone"
+            style="@style/Widget.Material3.Toolbar.Surface"
             app:title="@string/menu_edit_widgets" />
     </FrameLayout>
 

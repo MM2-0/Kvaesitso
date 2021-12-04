@@ -1,5 +1,6 @@
 package de.mm20.launcher2.database
 
+import android.content.ComponentName
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.IconEntity
@@ -11,10 +12,10 @@ interface IconDao {
     fun insertAll(icons: List<IconEntity>)
 
     @Query("SELECT drawable FROM Icons WHERE componentName = :componentName AND iconPack = :iconPack")
-    fun getIconName(componentName: String, iconPack: String): String?
+    suspend fun getIconName(componentName: String, iconPack: String): String?
 
     @Query("SELECT * FROM Icons WHERE componentName = :componentName AND iconPack = :iconPack")
-    fun getIcon(componentName: String, iconPack: String): IconEntity?
+    suspend fun getIcon(componentName: String, iconPack: String): IconEntity?
 
     @Query("DELETE FROM Icons WHERE iconPack = :iconPack")
     fun deleteIcons(iconPack: String)
@@ -27,11 +28,17 @@ interface IconDao {
         installIconPack(iconPack)
     }
 
+    @Transaction
+    fun installGrayscaleIconMap(packageName: String, icons: List<IconEntity>) {
+        deleteIcons(packageName)
+        insertAll(icons)
+    }
+
     @Insert
     fun installIconPack(iconPack: IconPackEntity)
 
     @Query("SELECT * FROM IconPack")
-    fun getInstalledIconPacks(): List<IconPackEntity>
+    suspend fun getInstalledIconPacks(): List<IconPackEntity>
 
     @Query("SELECT * FROM IconPack")
     fun getInstalledIconPacksLiveData(): LiveData<List<IconPackEntity>>
@@ -40,10 +47,10 @@ interface IconDao {
     fun deleteIconPack(iconPack: IconPackEntity)
 
     @Query("SELECT * FROM IconPack WHERE packageName = :packageName AND version = :version")
-    fun getPacks(packageName: String, version: String): List<IconPackEntity>
+    suspend fun getPacks(packageName: String, version: String): List<IconPackEntity>
 
     @Transaction
-    fun isInstalled(iconPack: IconPackEntity): Boolean {
+    suspend fun isInstalled(iconPack: IconPackEntity): Boolean {
         return getPacks(iconPack.packageName, iconPack.version).isNotEmpty()
     }
 
@@ -60,14 +67,17 @@ interface IconDao {
     }
 
     @Query("SELECT drawable FROM Icons WHERE iconPack = :pack AND type = 'iconback'")
-    fun getIconBacks(pack: String): List<String>
+    suspend fun getIconBacks(pack: String): List<String>
 
     @Query("SELECT drawable FROM Icons WHERE iconPack = :pack AND type = 'iconupon'")
-    fun getIconUpons(pack: String): List<String>
+    suspend fun getIconUpons(pack: String): List<String>
 
     @Query("SELECT drawable FROM Icons WHERE iconPack = :pack AND type = 'iconmask'")
-    fun getIconMasks(pack: String): List<String>
+    suspend fun getIconMasks(pack: String): List<String>
 
     @Query("SELECT scale FROM IconPack WHERE packageName = :pack")
-    fun getScale(pack: String): Float?
+    suspend fun getScale(pack: String): Float?
+
+    @Query("SELECT * FROM Icons WHERE type = 'greyscale_icon' AND componentName = :componentName")
+    suspend fun getGreyscaleIcon(componentName: String): IconEntity?
 }

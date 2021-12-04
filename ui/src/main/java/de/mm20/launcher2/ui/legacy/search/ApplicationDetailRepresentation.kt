@@ -272,7 +272,10 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
 
                 val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
 
+                var count = 0
                 for (si in shortcuts) {
+                    if (count > 4) break
+                    count++
                     val view = Chip(context)
                     view.text = si.label
 
@@ -281,6 +284,8 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                         si.launcherShortcut,
                         context.resources.displayMetrics.densityDpi
                     )
+
+                    view.chipIconTint = null
 
                     view.chipStrokeWidth = 1 * context.dp
                     view.chipStrokeColor =

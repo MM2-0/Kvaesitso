@@ -8,6 +8,15 @@
         app:key="theme"
         app:summary="%s"
         app:title="@string/preference_theme" />
+
+    <ListPreference
+        app:key="card_background"
+        android:defaultValue="0"
+        app:summary="%s"
+        app:title="@string/preference_screen_colors"
+        app:entries="@array/preference_card_background_entries"
+        app:entryValues="@array/preference_card_background_values"
+        />
     <Preference
         app:key="cards"
         app:summary="@string/preference_cards_summary"

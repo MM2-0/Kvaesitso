@@ -9,7 +9,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -48,7 +48,7 @@ fun WidgetColumn(
         widgets = viewModel.getWidgets()
     }
 
-    val isLightTheme = MaterialTheme.colors.isLight
+    val isLightTheme = androidx.compose.material.MaterialTheme.colors.isLight
 
     val windowHeight = LocalWindowSize.current.height
 
@@ -60,7 +60,7 @@ fun WidgetColumn(
             .background(
                 Brush.verticalGradient(
                     background to Color.Transparent,
-                    background to MaterialTheme.colors.background
+                    background to MaterialTheme.colorScheme.background
                 )
             )
     ) {
@@ -94,7 +94,7 @@ fun WidgetColumn(
                 icon = {
                     Icon(painter = icon.painterFor(atEnd = editMode), contentDescription = null)
                 },
-                backgroundColor = MaterialTheme.colors.surface,
+                containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 onClick = {
                     editMode = !editMode
                 })

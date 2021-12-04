@@ -6,8 +6,8 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,7 +39,7 @@ fun ClockWidget(
         contentAlignment = Alignment.BottomCenter
     ) {
         val contentColor by animateColorAsState(
-            if (transparentBackground) Color.White else MaterialTheme.colors.onSurface
+            if (transparentBackground) Color.White else MaterialTheme.colorScheme.onSurface
         )
 
         CompositionLocalProvider(LocalContentColor provides contentColor) {

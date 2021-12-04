@@ -15,10 +15,8 @@ import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
-import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.BaseSearchableRepository
-import de.mm20.launcher2.search.SearchRepository
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
@@ -27,7 +25,6 @@ import kotlinx.coroutines.withContext
 
 class AppRepository(
     val context: Context,
-    val iconRepository: IconRepository,
     hiddenItemsRepository: HiddenItemsRepository,
     badgeProvider: BadgeProvider
     ) : BaseSearchableRepository() {
@@ -148,10 +145,7 @@ class AppRepository(
             override fun onBadgingChanged(sessionId: Int) {
                 val inst = installations.value ?: mutableListOf()
                 inst.removeAll {
-                    if (it.session.sessionId == sessionId) {
-                        iconRepository.removeIconFromCache(it)
-                        true
-                    } else false
+                    it.session.sessionId == sessionId
                 }
                 onCreated(sessionId)
             }

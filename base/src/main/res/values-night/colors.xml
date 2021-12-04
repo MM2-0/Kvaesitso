@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="android_green">#00DE7A</color>
     <color name="red">#E57373</color>
     <color name="pink">#F06292</color>
     <color name="purple">#BA68C8</color>

@@ -3,7 +3,7 @@ package de.mm20.launcher2.ui.screens.settings
 import android.os.Build
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.RadioButtonChecked
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
@@ -43,17 +43,17 @@ fun SettingsColorsScreen() {
             val schemes = mutableListOf(
                 ColorSchemeItem(
                     ColorSchemeOption.Default,
-                    DefaultColorScheme(),
+                    DefaultColorPalette(),
                     stringResource(id = R.string.preference_colors_default)
                 ),
                 ColorSchemeItem(
                     ColorSchemeOption.MM20,
-                    MM20ColorScheme(),
+                    MM20ColorPalette(),
                     stringResource(id = R.string.preference_colors_mm20)
                 ),
                 ColorSchemeItem(
                     ColorSchemeOption.BlackAndWhite,
-                    BlackWhiteColorScheme(),
+                    BlackWhiteColorPalette(),
                     stringResource(id = R.string.preference_colors_bw)
                 )
             )
@@ -61,7 +61,7 @@ fun SettingsColorsScreen() {
                 schemes.add(
                     ColorSchemeItem(
                         ColorSchemeOption.MaterialYou,
-                        SystemColorScheme(context),
+                        SystemColorPalette(context),
                         stringResource(id = R.string.preference_colors_mdyou)
                     )
                 )
@@ -71,7 +71,7 @@ fun SettingsColorsScreen() {
                 schemes.add(
                     ColorSchemeItem(
                         ColorSchemeOption.Wallpaper,
-                        WallpaperColorScheme(wallpaperColors),
+                        WallpaperColorPalette(wallpaperColors),
                         stringResource(id = R.string.preference_colors_wallpaper)
                     )
                 )
@@ -79,7 +79,7 @@ fun SettingsColorsScreen() {
             schemes.add(
                 ColorSchemeItem(
                     ColorSchemeOption.Custom,
-                    CustomColorScheme(customColors),
+                    CustomColorPalette(customColors),
                     stringResource(id = R.string.preference_colors_custom)
                 )
             )
@@ -89,7 +89,7 @@ fun SettingsColorsScreen() {
                         title = scheme.label,
                         icon = if (colorScheme == scheme.value) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
                         controls = {
-                            ColorSchemePreview(scheme.colorScheme)
+                            ColorSchemePreview(scheme.colorPalette)
                         },
                         onClick = {
                             scope.launch {
@@ -196,13 +196,13 @@ fun SettingsColorsScreen() {
 }
 
 @Composable
-private fun ColorSchemePreview(colorScheme: ColorScheme) {
-    val isDark = !MaterialTheme.colors.isLight
-    val neutral1 = if (isDark) colorScheme.neutral1.shade800 else colorScheme.neutral1.shade100
-    val neutral2 = if (isDark) colorScheme.neutral2.shade800 else colorScheme.neutral2.shade100
-    val accent1 = if (isDark) colorScheme.accent1.shade300 else colorScheme.accent1.shade500
-    val accent2 = if (isDark) colorScheme.accent2.shade300 else colorScheme.accent2.shade500
-    val accent3 = if (isDark) colorScheme.accent3.shade300 else colorScheme.accent3.shade500
+private fun ColorSchemePreview(colorPalette: ColorPalette) {
+    val isDark = !androidx.compose.material.MaterialTheme.colors.isLight
+    val neutral1 = if (isDark) colorPalette.neutral.shade20 else colorPalette.neutral.shade90
+    val neutral2 = if (isDark) colorPalette.neutralVariant.shade20 else colorPalette.neutralVariant.shade90
+    val accent1 = if (isDark) colorPalette.primary.shade70 else colorPalette.primary.shade50
+    val accent2 = if (isDark) colorPalette.secondary.shade70 else colorPalette.secondary.shade50
+    val accent3 = if (isDark) colorPalette.tertiary.shade70 else colorPalette.tertiary.shade50
     Box(
         modifier = Modifier.height(48.dp),
         contentAlignment = Alignment.Center
@@ -250,6 +250,6 @@ private fun ColorSchemePreview(colorScheme: ColorScheme) {
 
 private data class ColorSchemeItem(
     val value: ColorSchemeOption,
-    val colorScheme: ColorScheme,
+    val colorPalette: ColorPalette,
     val label: String,
 )

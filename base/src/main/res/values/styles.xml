@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="BaseLauncherTheme" parent="Theme.MaterialComponents.DayNight">
+    <style name="BaseLauncherTheme" parent="Theme.Material3.DayNight">
         <item name="android:colorPrimary">@color/blue</item>
         <item name="android:colorAccent">@color/blue</item>
         <item name="colorPrimary">@color/blue</item>
@@ -46,28 +46,28 @@
         <item name="android:windowShowWallpaper">true</item>
     </style>
 
-    <style name="AlertDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+    <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
         <item name="dialogCornerRadius">8dp</item>
     </style>
 
-    <style name="AlertDialogButtonStyle" parent="Widget.MaterialComponents.Button.UnelevatedButton">
+    <style name="AlertDialogButtonStyle" parent="Widget.Material3.Button.UnelevatedButton">
         <item name="android:textColor">?colorAccent</item>
         <item name="android:letterSpacing">0</item>
         <item name="android:background">?selectableItemBackground</item>
     </style>
 
-    <style name="CardViewStyle" parent="Widget.MaterialComponents.CardView">
+    <style name="CardViewStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="cardCornerRadius">8dp</item>
     </style>
 
-    <style name="InnerCardViewStyle" parent="Widget.MaterialComponents.CardView">
+    <style name="InnerCardViewStyle" parent="Widget.Material3.CardView.Outlined">
         <item name="cardElevation">0dp</item>
         <item name="strokeWidth">1dp</item>
         <item name="strokeColor">@color/color_divider</item>
     </style>
 
-    <style name="ElevatedInnerCardViewStyle" parent="Widget.MaterialComponents.CardView">
+    <style name="ElevatedInnerCardViewStyle" parent="Widget.Material3.CardView.Elevated">
         <item name="cardElevation">4dp</item>
     </style>
 

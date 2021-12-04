@@ -5,6 +5,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
@@ -94,11 +95,11 @@ fun LazyListScope.NotSoLazySearchableGrid(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
+@OptIn(ExperimentalAnimationApi::class, ExperimentalFoundationApi::class)
 fun LazyListScope.SearchableGrid(
     items: List<Searchable>,
     columns: Int = 5,
-    listState: LazyListState
+    listState: LazyListState,
 ) {
     val rows = (items.size + columns - 1) / columns
 
@@ -109,6 +110,7 @@ fun LazyListScope.SearchableGrid(
         Row(
             modifier = Modifier
                 .requiredHeight(100.dp)
+                .animateItemPlacement()
                 .zIndex(
                     animateFloatAsState(
                         if (focusedItem != -1 && rowIndex == focusedItem / columns) 100f else 0f
@@ -125,7 +127,8 @@ fun LazyListScope.SearchableGrid(
                         hasFocus = itemIndex == focusedItem,
                         requestFocus = {
                             focusedItem = if (it) itemIndex else -1
-                        })
+                        }
+                    )
                 } else {
                     Spacer(Modifier.weight(1f, fill = true))
                 }
@@ -144,7 +147,8 @@ fun RowScope.GridItem(
     column: Int,
     totalColumns: Int,
     hasFocus: Boolean,
-    requestFocus: (Boolean) -> Unit
+    requestFocus: (Boolean) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
     val insets = LocalWindowInsets.current.systemBars
 
@@ -178,7 +182,7 @@ fun RowScope.GridItem(
     val windowSize = LocalWindowSize.current
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .weight(1f, fill = true)
             .fillMaxHeight()
             .zIndex(z)

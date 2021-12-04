@@ -3,8 +3,7 @@ package de.mm20.launcher2.ui.weather
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
@@ -12,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.*
@@ -51,7 +51,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean) {
         else -> return
     }
 
-    val color = if (night) MaterialTheme.colors.weatherMoon else MaterialTheme.colors.weatherSun
+    val color = if (night) colorResource(id = R.color.weather_moon) else colorResource(id = R.color.weather_sun)
 
     val scale = when (icon) {
         WeatherIcon.Clear,
@@ -139,18 +139,18 @@ private fun Cloud1(icon: WeatherIcon) {
         WeatherIcon.Thunderstorm,
         WeatherIcon.ThunderstormWithRain,
         WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> MaterialTheme.colors.weatherCloudDark2
+        WeatherIcon.HeavyThunderstormWithRain -> colorResource(id = R.color.weather_cloud_dark_2)
         WeatherIcon.Showers,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
         WeatherIcon.Cloudy,
-        WeatherIcon.Fog -> MaterialTheme.colors.weatherCloudDark1
+        WeatherIcon.Fog -> colorResource(id = R.color.weather_cloud_dark_1)
         WeatherIcon.Drizzle,
-        WeatherIcon.Snow -> MaterialTheme.colors.weatherCloudMedium2
-        WeatherIcon.MostlyCloudy -> MaterialTheme.colors.weatherCloudLight2
+        WeatherIcon.Snow -> colorResource(id = R.color.weather_cloud_medium_2)
+        WeatherIcon.MostlyCloudy -> colorResource(id = R.color.weather_cloud_light_2)
         WeatherIcon.PartlyCloudy,
-        WeatherIcon.BrokenClouds -> MaterialTheme.colors.weatherCloudLight1
-        else -> MaterialTheme.colors.weatherCloudMedium2
+        WeatherIcon.BrokenClouds -> colorResource(id = R.color.weather_cloud_light_1)
+        else -> colorResource(id = R.color.weather_cloud_medium_2)
     }
 
     Icon(
@@ -218,20 +218,20 @@ private fun Cloud2(icon: WeatherIcon) {
         else -> DpOffset.Zero
     }
     val color = when (icon) {
-        WeatherIcon.BrokenClouds -> MaterialTheme.colors.weatherCloudLight2
+        WeatherIcon.BrokenClouds -> colorResource(id = R.color.weather_cloud_light_2)
         WeatherIcon.Thunderstorm,
         WeatherIcon.ThunderstormWithRain,
         WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> MaterialTheme.colors.weatherCloudMedium2
+        WeatherIcon.HeavyThunderstormWithRain -> colorResource(id = R.color.weather_cloud_medium_2)
         WeatherIcon.Showers,
         WeatherIcon.Drizzle,
         WeatherIcon.Sleet,
         WeatherIcon.Snow,
         WeatherIcon.Hail,
         WeatherIcon.Cloudy,
-        WeatherIcon.Fog -> MaterialTheme.colors.weatherCloudMedium1
-        WeatherIcon.MostlyCloudy -> MaterialTheme.colors.weatherCloudMedium1
-        else -> MaterialTheme.colors.weatherCloudMedium2
+        WeatherIcon.Fog -> colorResource(id = R.color.weather_cloud_medium_1)
+        WeatherIcon.MostlyCloudy -> colorResource(id = R.color.weather_cloud_medium_1)
+        else -> colorResource(id = R.color.weather_cloud_medium_2)
     }
 
     Icon(
@@ -280,14 +280,14 @@ private fun Cloud3(icon: WeatherIcon) {
         WeatherIcon.Thunderstorm,
         WeatherIcon.ThunderstormWithRain,
         WeatherIcon.HeavyThunderstorm,
-        WeatherIcon.HeavyThunderstormWithRain -> MaterialTheme.colors.weatherCloudDark1
+        WeatherIcon.HeavyThunderstormWithRain -> colorResource(id = R.color.weather_cloud_dark_1)
         WeatherIcon.Showers,
         WeatherIcon.Sleet,
         WeatherIcon.Hail,
-        WeatherIcon.Cloudy -> MaterialTheme.colors.weatherCloudMedium2
+        WeatherIcon.Cloudy -> colorResource(id = R.color.weather_cloud_medium_2)
         WeatherIcon.Drizzle,
-        WeatherIcon.Snow -> MaterialTheme.colors.weatherCloudLight2
-        else -> MaterialTheme.colors.weatherCloudMedium2
+        WeatherIcon.Snow -> colorResource(id = R.color.weather_cloud_light_2)
+        else -> colorResource(id = R.color.weather_cloud_medium_2)
     }
 
     Icon(
@@ -309,7 +309,7 @@ private fun Precipitation(icon: WeatherIcon) {
                 .size(32.dp),
             imageVector = Icons.Rounded.WeatherSleetSnow,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherSnow
+            tint = colorResource(id = R.color.weather_snow)
         )
         Icon(
             modifier = Modifier
@@ -317,7 +317,7 @@ private fun Precipitation(icon: WeatherIcon) {
                 .size(32.dp),
             imageVector = Icons.Rounded.WeatherSleetRain,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherRain
+            tint = colorResource(id = R.color.weather_rain)
         )
         return
     }
@@ -344,9 +344,9 @@ private fun Precipitation(icon: WeatherIcon) {
         WeatherIcon.Drizzle,
         WeatherIcon.Showers,
         WeatherIcon.ThunderstormWithRain,
-        WeatherIcon.HeavyThunderstormWithRain -> MaterialTheme.colors.weatherRain
-        WeatherIcon.Hail -> MaterialTheme.colors.weatherHail
-        WeatherIcon.Snow -> MaterialTheme.colors.weatherSnow
+        WeatherIcon.HeavyThunderstormWithRain -> colorResource(id = R.color.weather_rain)
+        WeatherIcon.Hail -> colorResource(id = R.color.weather_hail)
+        WeatherIcon.Snow -> colorResource(id = R.color.weather_snow)
         else -> Color.Unspecified
     }
     Icon(
@@ -367,7 +367,7 @@ private fun HotCold(icon: WeatherIcon) {
                 .size(32.dp),
             imageVector = Icons.Rounded.Thermostat,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherHot
+            tint = colorResource(id = R.color.weather_hot)
         )
     }
     if (icon == WeatherIcon.Cold) {
@@ -376,7 +376,7 @@ private fun HotCold(icon: WeatherIcon) {
                 .size(32.dp),
             imageVector = Icons.Rounded.AcUnit,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherCold
+            tint = colorResource(id = R.color.weather_cold)
         )
     }
 }
@@ -390,7 +390,7 @@ private fun Wind(icon: WeatherIcon) {
                 .size(24.dp),
             imageVector = Icons.Rounded.Air,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherWindDark
+            tint = colorResource(id = R.color.weather_wind_dark)
         )
     }
     if (icon == WeatherIcon.Wind || icon == WeatherIcon.Storm) {
@@ -399,7 +399,7 @@ private fun Wind(icon: WeatherIcon) {
                 .size(if(icon == WeatherIcon.Wind) 32.dp else 24.dp),
             imageVector = Icons.Rounded.Air,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherWind
+            tint = colorResource(id = R.color.weather_wind)
         )
     }
 }
@@ -417,7 +417,7 @@ private fun Fog(icon: WeatherIcon) {
             .offset(x = 3.dp, y = 4.dp),
         imageVector = Icons.Rounded.WeatherFog,
         contentDescription = null,
-        tint = MaterialTheme.colors.weatherFog
+        tint = colorResource(id = R.color.weather_fog)
     )
 }
 
@@ -440,7 +440,7 @@ private fun LightningBolts(icon: WeatherIcon) {
             .offset(x = if (isHeavy) 4.dp else 1.dp, y = 6.dp),
         imageVector = Icons.Rounded.Bolt,
         contentDescription = null,
-        tint = MaterialTheme.colors.weatherBolt
+        tint = colorResource(id = R.color.weather_lightning_bolt)
     )
 
     if  (icon == WeatherIcon.HeavyThunderstorm || icon == WeatherIcon.HeavyThunderstormWithRain) {
@@ -450,7 +450,7 @@ private fun LightningBolts(icon: WeatherIcon) {
                 .offset(x = -3.dp, y = 6.dp),
             imageVector = Icons.Rounded.Bolt,
             contentDescription = null,
-            tint = MaterialTheme.colors.weatherBolt
+            tint = colorResource(id = R.color.weather_lightning_bolt)
         )
     }
 }

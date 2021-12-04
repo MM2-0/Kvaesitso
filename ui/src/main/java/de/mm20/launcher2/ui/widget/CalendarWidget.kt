@@ -7,7 +7,9 @@ import android.widget.FrameLayout
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.*
@@ -123,7 +125,7 @@ fun CalendarWidget() {
             if (pinnedEvents.isNotEmpty()) {
                 Text(
                     text = stringResource(id = R.string.calendar_widget_pinned_events),
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleLarge
                 )
                 DeprecatedSearchableList(
                     items = pinnedEvents,
@@ -179,7 +181,7 @@ fun DaySelector(
                     modifier = Modifier
                         .wrapContentWidth(),
                     text = formatDay(LocalContext.current, selectedDay),
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleLarge
                 )
                 Icon(
                     imageVector = Icons.Rounded.ArrowDropDown,
@@ -199,7 +201,7 @@ fun DaySelector(
                     }) {
                         Text(
                             text = formatDay(LocalContext.current, day),
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }
@@ -245,7 +247,7 @@ object CalendarWidgetShim {
         composeView.id = FrameLayout.generateViewId()
         composeView.setContent {
             LauncherTheme {
-                CompositionLocalProvider(LocalContentColor provides MaterialTheme.colors.onSurface) {
+                CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     Column {
                         CalendarWidget()
                     }

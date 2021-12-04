@@ -5,14 +5,14 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.core.graphics.ColorUtils
 import de.mm20.launcher2.ui.theme.WallpaperColors
 
-class WallpaperColorScheme(
+class WallpaperColorPalette(
     wallpaperColors: WallpaperColors
-) : ColorScheme() {
-    override val neutral1: ColorSwatch
-    override val neutral2: ColorSwatch
-    override val accent1: ColorSwatch
-    override val accent2: ColorSwatch
-    override val accent3: ColorSwatch
+) : ColorPalette() {
+    override val neutral: ColorSwatch
+    override val neutralVariant: ColorSwatch
+    override val primary: ColorSwatch
+    override val secondary: ColorSwatch
+    override val tertiary: ColorSwatch
 
     init {
         val primary = wallpaperColors.primary
@@ -35,11 +35,11 @@ class WallpaperColorScheme(
             ?: primary
 
 
-        neutral1 = colorSwatch(neutral)
-        neutral2 = neutral1
-        accent1 = colorSwatch(acc1)
-        accent2 = colorSwatch(acc2)
-        accent3 = neutral1
+        this.neutral = colorSwatch(neutral)
+        neutralVariant = this.neutral
+        this.primary = colorSwatch(acc1)
+        this.secondary = colorSwatch(acc2)
+        this.tertiary = this.neutral
     }
 
     private fun isBrown(color: Color): Boolean {

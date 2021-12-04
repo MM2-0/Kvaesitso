@@ -1,21 +1,26 @@
 package de.mm20.launcher2.fragment
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.snackbar.Snackbar
 import de.mm20.launcher2.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.debug.DebugInformationDumper
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import kotlinx.coroutines.launch
+import java.io.File
 
 
 class PreferencesAboutFragment : PreferenceFragmentCompat() {
@@ -96,14 +101,27 @@ class PreferencesAboutFragment : PreferenceFragmentCompat() {
         findPreference<Preference>("export_debug")?.setOnPreferenceClickListener {
             lifecycleScope.launch {
                 val path = DebugInformationDumper().dump(requireContext())
-                Toast.makeText(
-                    activity,
+                Snackbar.make(
+                    requireView(),
                     getString(
                         R.string.debug_export_information_file,
                         path
                     ),
-                    Toast.LENGTH_SHORT
-                ).show()
+                    Snackbar.LENGTH_LONG
+                )
+                    .setAction(R.string.menu_share) {
+                        val context = requireContext()
+                        context.tryStartActivity(Intent(Intent.ACTION_SEND).apply {
+                            type = "text/plain"
+                            putExtra(
+                                Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                                    context,
+                                    context.applicationContext.packageName + ".fileprovider",
+                                    File(path)
+                                )
+                            )
+                        })
+                    }.show()
             }
             true
         }

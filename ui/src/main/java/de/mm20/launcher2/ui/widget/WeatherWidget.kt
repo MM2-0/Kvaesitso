@@ -4,28 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
-import android.view.View
-import android.widget.FrameLayout
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
@@ -34,10 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.ui.LauncherTheme
-import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.legacyTypography
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
@@ -81,7 +75,7 @@ fun WeatherWidget() {
             ) {
                 Text(
                     text = selectedForecast.location,
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.titleMedium
                 )
                 Text(
                     text = convertTemperature(
@@ -96,7 +90,7 @@ fun WeatherWidget() {
                 )
                 Text(
                     text = selectedForecast.condition,
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.bodySmall
                 )
 
                 Row(
@@ -107,7 +101,7 @@ fun WeatherWidget() {
                         .padding(vertical = 12.dp)
                 ) {
                     CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details))
+                        Text(text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details), style = MaterialTheme.typography.bodySmall)
                     }
                 }
 
@@ -146,7 +140,7 @@ fun WeatherWidget() {
                 Spacer(modifier = Modifier.weight(1f))
                 Surface(
                     shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
-                    color = MaterialTheme.colors.onSurface.copy(alpha = 0.12f),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                     modifier = Modifier.align(Alignment.End)
 
                 ) {
@@ -207,11 +201,11 @@ fun WeatherDetailRow(title: String, value: String) {
             Text(
                 text = title,
                 modifier = Modifier.padding(end = 8.dp),
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodySmall,
             )
             Text(
                 text = value,
-                style = MaterialTheme.typography.body2,
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }
@@ -241,7 +235,7 @@ fun WeatherDaySelector(
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                 Text(
                     text = dateFormat.format(selectedDay.timestamp),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.labelSmall,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(start = 16.dp, end = 8.dp)
@@ -253,7 +247,7 @@ fun WeatherDaySelector(
                             selectedDay.minTemp
                         )
                     }° / ${convertTemperature(imperialUnits, selectedDay.maxTemp)}°",
-                    style = MaterialTheme.typography.body2,
+                    style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
                 Icon(
@@ -281,7 +275,7 @@ fun WeatherDaySelector(
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             Text(
                                 text = dateFormat.format(d.timestamp),
-                                style = MaterialTheme.typography.subtitle2,
+                                style = MaterialTheme.typography.labelSmall,
                                 softWrap = false,
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
@@ -296,7 +290,7 @@ fun WeatherDaySelector(
                                     )
                                 }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
                                 softWrap = false,
-                                style = MaterialTheme.typography.body2,
+                                style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
@@ -332,7 +326,7 @@ fun WeatherTimeSelector(
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                 Text(
                     text = dateFormat.format(selectedForecast.timestamp),
-                    style = MaterialTheme.typography.subtitle2,
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
             }
@@ -358,7 +352,7 @@ fun WeatherTimeSelector(
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             Text(
                                 text = dateFormat.format(fc.timestamp),
-                                style = MaterialTheme.typography.subtitle2,
+                                style = MaterialTheme.typography.titleSmall,
                                 softWrap = false,
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
@@ -370,7 +364,7 @@ fun WeatherTimeSelector(
                             Text(
                                 text = "${convertTemperature(imperialUnits, fc.temperature)}°",
                                 softWrap = false,
-                                style = MaterialTheme.typography.body2,
+                                style = MaterialTheme.typography.bodySmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }

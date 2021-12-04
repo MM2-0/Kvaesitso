@@ -5,10 +5,10 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,7 +37,7 @@ fun DigitalClock(time: Long) {
     Text(
         modifier = Modifier.padding(4.dp),
         text = format.format(time),
-        style = MaterialTheme.typography.h1.copy(
+        style = MaterialTheme.typography.displayLarge.copy(
             fontSize = 100.sp,
             fontWeight = FontWeight.Black,
             textAlign = TextAlign.Center,
@@ -86,12 +86,12 @@ fun AnalogClock(time: Long) {
     date.timeInMillis = time
     val minute = date[Calendar.MINUTE]
     val hour = date[Calendar.HOUR]
-    val dark = !MaterialTheme.colors.isLight
+    val dark = true//!MaterialTheme.colors.isLight
     val cs = LocalColorScheme.current
-    val bgColor = if (dark) cs.accent1.shade800 else cs.accent1.shade200
-    val hourColor = if (dark) cs.accent1.shade300 else cs.accent1.shade600
-    val minuteColor = if (dark) cs.accent1.shade200 else cs.accent1.shade700
-    val textColor = if (dark) cs.accent1.shade500 else cs.accent1.shade400
+    val bgColor = if (dark) cs.primary.shade20 else cs.primary.shade80
+    val hourColor = if (dark) cs.primary.shade70 else cs.primary.shade40
+    val minuteColor = if (dark) cs.primary.shade80 else cs.primary.shade30
+    val textColor = if (dark) cs.primary.shade50 else cs.primary.shade60
 
     val hourAngle = 30f * hour + 0.5f * minute
     val minuteAngle = 6f * minute
@@ -102,7 +102,7 @@ fun AnalogClock(time: Long) {
             .size(156.dp),
         shape = CircleShape,
         color = bgColor,
-        elevation = 8.dp
+        shadowElevation = 8.dp
     ) {
         Box(
             modifier = Modifier.fillMaxSize()
@@ -110,7 +110,7 @@ fun AnalogClock(time: Long) {
 
             Text(
                 text = "12",
-                style = MaterialTheme.typography.subtitle1.copy(
+                style = MaterialTheme.typography.headlineMedium.copy(
                     fontSize = 32.sp,
                     lineHeight = 32.sp,
                 ),
@@ -121,7 +121,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "3",
-                style = MaterialTheme.typography.subtitle1.copy(
+                style = MaterialTheme.typography.headlineMedium.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,
@@ -131,7 +131,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "6",
-                style = MaterialTheme.typography.subtitle1.copy(
+                style = MaterialTheme.typography.headlineMedium.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,
@@ -141,7 +141,7 @@ fun AnalogClock(time: Long) {
             )
             Text(
                 text = "9",
-                style = MaterialTheme.typography.subtitle1.copy(
+                style = MaterialTheme.typography.headlineMedium.copy(
                     fontSize = 32.sp
                 ),
                 color = textColor,

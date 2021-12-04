@@ -8,8 +8,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -142,7 +148,7 @@ fun SearchBar(
                     }) {
                         Text(
                             stringResource(id = R.string.wallpaper),
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                     DropdownMenuItem(onClick = {
@@ -151,7 +157,7 @@ fun SearchBar(
                     }) {
                         Text(
                             stringResource(id = R.string.title_activity_settings),
-                            style = MaterialTheme.typography.subtitle2
+                            style = MaterialTheme.typography.titleMedium
                         )
                     }
                 }

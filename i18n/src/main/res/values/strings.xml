@@ -379,7 +379,7 @@
     <string name="disclaimer_currency_converter">"Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information."</string>
     <string name="unit_converter_show_all">Show all</string>
     <string name="preference_card_background">Background</string>
-    <string name="preference_card_background_default">Default (white/dark gray)</string>
+    <string name="preference_card_background_default">Default</string>
     <string name="preference_card_background_black">White/black</string>
     <string name="preference_card_background_colored">Colored (from wallpaper)</string>
 

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CrashReporter.Theme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="colorAccent">@color/blue</item>
-        <item name="colorPrimary">@color/settings_color_primary</item>
-        <item name="colorPrimaryDark">@color/settings_color_primary_dark</item>
+    <style name="CrashReporter.Theme" parent="SettingsTheme.DefaultColors">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="SettingsTheme.DefaultColors" parent="DefaultColors">
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="SettingsTheme.BlackWhiteColors" parent="BlackWhiteColors">
+        <item name="android:statusBarColor">?colorSurface</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

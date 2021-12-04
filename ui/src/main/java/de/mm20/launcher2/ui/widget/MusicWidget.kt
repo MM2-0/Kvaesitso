@@ -7,10 +7,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.SkipNext
@@ -65,20 +65,20 @@ fun MusicWidget() {
                 ) {
                     Text(
                         text = title ?: "---",
-                        style = MaterialTheme.typography.subtitle1,
+                        style = MaterialTheme.typography.titleMedium,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = artist ?: "---",
                         modifier = Modifier.padding(vertical = 2.dp),
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
                         text = album ?: "---",
-                        style = MaterialTheme.typography.body1,
+                        style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -131,7 +131,7 @@ fun MusicWidget() {
                     .conditional(
                         albumArt == null,
                         Modifier.background(
-                            LocalColorScheme.current.accent1.shade200
+                            LocalColorScheme.current.primary.shade80
                         )
                     ),
                 contentAlignment = Alignment.Center
@@ -149,7 +149,7 @@ fun MusicWidget() {
                     Icon(
                         imageVector = Icons.Rounded.MusicNote,
                         contentDescription = null,
-                        tint = LocalColorScheme.current.accent1.shade600,
+                        tint = LocalColorScheme.current.primary.shade40,
                         modifier = Modifier.size(56.dp)
                     )
                 }

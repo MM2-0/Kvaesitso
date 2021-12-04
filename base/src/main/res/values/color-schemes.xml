@@ -1,0 +1,61 @@
+<resources>
+    <style name="DefaultColors" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">#006689</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryContainer">#BFE8FF</item>
+        <item name="colorOnPrimaryContainer">#001E2C</item>
+        <item name="colorPrimaryInverse">#72D1FF</item>
+        <item name="colorSecondary">#496800</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorSecondaryContainer">#BDF542</item>
+        <item name="colorOnSecondaryContainer">#131F00</item>
+        <item name="colorTertiary">#7D5700</item>
+        <item name="colorOnTertiary">@android:color/white</item>
+        <item name="colorTertiaryContainer">#FFDEA4</item>
+        <item name="colorOnTertiaryContainer">#281900</item>
+        <item name="colorError">#BA1B1B</item>
+        <item name="colorOnError">@android:color/white</item>
+        <item name="colorErrorContainer">#FFDAD4</item>
+        <item name="colorOnErrorContainer">#410001</item>
+        <item name="colorOutline">#71787D</item>
+        <item name="android:colorBackground">#FBFCFE</item>
+        <item name="colorOnBackground">#191C1E</item>
+        <item name="colorSurface">#FBFCFE</item>
+        <item name="colorOnSurface">#191C1E</item>
+        <item name="colorSurfaceVariant">#DCE3E9</item>
+        <item name="colorOnSurfaceVariant">#41484D</item>
+        <item name="colorSurfaceInverse">#2E3133</item>
+        <item name="colorOnSurfaceInverse">#F0F1F3</item>
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+
+    <style name="BlackWhiteColors" parent="Theme.Material3.DayNight">
+        <item name="colorPrimary">@android:color/black</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorPrimaryContainer">@android:color/white</item>
+        <item name="colorOnPrimaryContainer">@android:color/black</item>
+        <item name="colorPrimaryInverse">@android:color/white</item>
+        <item name="colorSecondary">@android:color/black</item>
+        <item name="colorOnSecondary">@android:color/white</item>
+        <item name="colorSecondaryContainer">@android:color/white</item>
+        <item name="colorOnSecondaryContainer">@android:color/black</item>
+        <item name="colorTertiary">@android:color/black</item>
+        <item name="colorOnTertiary">@android:color/white</item>
+        <item name="colorTertiaryContainer">@android:color/white</item>
+        <item name="colorOnTertiaryContainer">@android:color/black</item>
+        <item name="colorError">@android:color/white</item>
+        <item name="colorOnError">@android:color/black</item>
+        <item name="colorErrorContainer">@android:color/white</item>
+        <item name="colorOnErrorContainer">@android:color/black</item>
+        <item name="colorOutline">@android:color/black</item>
+        <item name="android:colorBackground">@android:color/white</item>
+        <item name="colorOnBackground">@android:color/black</item>
+        <item name="colorSurface">@android:color/white</item>
+        <item name="colorOnSurface">@android:color/black</item>
+        <item name="colorSurfaceVariant">@android:color/white</item>
+        <item name="colorOnSurfaceVariant">@android:color/black</item>
+        <item name="colorSurfaceInverse">@android:color/black</item>
+        <item name="colorOnSurfaceInverse">@android:color/white</item>
+        <item name="elevationOverlayEnabled">false</item>
+    </style>
+</resources>

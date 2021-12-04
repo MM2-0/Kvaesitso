@@ -7,8 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material.Divider
-import androidx.compose.material.LocalContentColor
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
@@ -26,7 +26,7 @@ fun SearchColumn(
 
     Box(
         modifier = modifier
-            .background(MaterialTheme.colors.background)
+            .background(MaterialTheme.colorScheme.background)
             .fillMaxHeight()
             .statusBarsPadding()
             .navigationBarsWithImePadding()
@@ -39,7 +39,7 @@ fun SearchColumn(
         val wikipedia = wikipediaResult()
 
 
-        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colors.onSurface) {
+        CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
             LazyColumn(
                 contentPadding = PaddingValues(8.dp),
                 state = listState

@@ -9,16 +9,16 @@ import androidx.compose.ui.platform.LocalContext
 import de.mm20.launcher2.preferences.dataStore
 import kotlinx.coroutines.flow.map
 
-class CustomColorScheme(val colors: CustomColors) : ColorScheme() {
-    override val neutral1: ColorSwatch
+class CustomColorPalette(val colors: CustomColors) : ColorPalette() {
+    override val neutral: ColorSwatch
         get() = colorSwatch(colors.neutral1)
-    override val neutral2: ColorSwatch
+    override val neutralVariant: ColorSwatch
         get() = colorSwatch(colors.neutral2)
-    override val accent1: ColorSwatch
+    override val primary: ColorSwatch
         get() = colorSwatch(colors.accent1)
-    override val accent2: ColorSwatch
+    override val secondary: ColorSwatch
         get() = colorSwatch(colors.accent2)
-    override val accent3: ColorSwatch
+    override val tertiary: ColorSwatch
         get() = colorSwatch(colors.accent3)
 
 }

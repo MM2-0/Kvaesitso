@@ -3,8 +3,8 @@ package de.mm20.launcher2.ui.search
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +22,7 @@ fun ColumnScope.GridItemLabel(
         maxLines = 1,
         overflow = TextOverflow.Ellipsis,
         textAlign = TextAlign.Center,
-        style = MaterialTheme.typography.body2,
+        style = MaterialTheme.typography.bodySmall,
         softWrap = false,
         modifier = Modifier
             .fillMaxWidth()

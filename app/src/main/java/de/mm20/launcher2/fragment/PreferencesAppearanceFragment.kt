@@ -1,7 +1,5 @@
 package de.mm20.launcher2.fragment
 
-import android.Manifest
-import android.app.WallpaperManager
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -11,7 +9,6 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -23,7 +20,6 @@ import de.mm20.launcher2.R
 import de.mm20.launcher2.icons.IconPackManager
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.Themes
@@ -44,6 +40,11 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                 Themes.AUTO -> AppCompatDelegate.MODE_NIGHT_AUTO
                 else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             })
+            requireActivity().recreate()
+            true
+        }
+
+        findPreference<Preference>("card_background")?.setOnPreferenceChangeListener { _, newValue ->
             requireActivity().recreate()
             true
         }
@@ -79,18 +80,18 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                 }
                 setOnPreferenceChangeListener { _, newValue ->
                     val index = (newValue as String).toInt()
-                    iconRepository.clearCache()
                     if (index == -1) iconPackManager.selectIconPack("")
                     else {
                         iconPackManager.selectIconPack(packs[index].packageName)
                     }
+                    iconRepository.recreate()
                     true
                 }
             }
         }
 
         findPreference<Preference>("legacy_icon_bg")?.setOnPreferenceChangeListener { _, _ ->
-            iconRepository.clearCache()
+            iconRepository.recreate()
             true
         }
 

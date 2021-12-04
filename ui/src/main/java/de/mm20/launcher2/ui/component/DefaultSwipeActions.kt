@@ -13,6 +13,8 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarBorder
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -24,7 +26,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
@@ -45,7 +46,7 @@ fun DefaultSwipeActions(
     val isPinned by viewModel.isPinned(item).observeAsState()
     val isHidden by viewModel.isHidden(item).observeAsState()
 
-    val state = rememberSwipeableState(
+    val state = androidx.compose.material.rememberSwipeableState(
         SwipeAction.Default,
         confirmStateChange = {
             if (it == SwipeAction.Favorites) {
@@ -96,7 +97,7 @@ fun DefaultSwipeActions(
                     modifier = Modifier.matchParentSize()
                 ) {
                     Card(
-                        backgroundColor = MaterialTheme.colors.onSurface.copy(alpha = ContentAlpha.divider),
+                        backgroundColor = MaterialTheme.colorScheme.onSurface.copy(alpha = ContentAlpha.divider),
                         modifier = Modifier.fillMaxSize(),
                         elevation = 0.dp
                     ) {
@@ -132,7 +133,7 @@ fun DefaultSwipeActions(
                                         Icons.Rounded.VisibilityOff
                                     }
                                 },
-                                tint = animateColorAsState(if (isDismissing) MaterialTheme.colors.onPrimary else MaterialTheme.colors.onSurface).value,
+                                tint = animateColorAsState(if (isDismissing) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurface).value,
                                 modifier = Modifier
                                     .padding(horizontal = 16.dp)
                                     .scale(animateFloatAsState(if (isDismissing) 1.2f else 1f).value),

@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.os.Build
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +26,7 @@ fun PlatformWidget(widget: Widget) {
     }
 
     val height = widget.height.dp.toPixels().toInt()
-    val isLightTheme = MaterialTheme.colors.isLight
+    val isLightTheme = androidx.compose.material.MaterialTheme.colors.isLight
 
     AndroidView(
         factory = {
