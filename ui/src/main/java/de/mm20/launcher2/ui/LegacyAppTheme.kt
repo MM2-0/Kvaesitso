@@ -1,11 +1,20 @@
 package de.mm20.launcher2.ui
 
+import android.util.TypedValue
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.*
+import androidx.compose.material.darkColors
+import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Typography
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.compose.material.MaterialTheme as Material2Theme
 
 val legacyTypography = Typography(
     displayLarge = TextStyle(
@@ -70,11 +79,39 @@ val legacyTypography = Typography(
     ),
 )
 
+
 @Composable
 fun LegacyLauncherTheme(content: @Composable () -> Unit) {
+    val theme = LocalContext.current.theme
+
+    val colorSurface = TypedValue()
+    theme.resolveAttribute(R.attr.colorSurface, colorSurface, true)
+    val colorSurfaceVariant = TypedValue()
+    theme.resolveAttribute(R.attr.colorSurfaceVariant, colorSurfaceVariant, true)
+
+    val colorPrimary = TypedValue()
+    theme.resolveAttribute(R.attr.colorPrimary, colorSurfaceVariant, true)
+
+
     MaterialTheme(
         typography = legacyTypography,
-        content = content,
-        colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
-    )
+        colorScheme = if (isSystemInDarkTheme()) darkColorScheme(
+            surface = Color(colorSurface.data),
+            primary = Color(colorSurface.data),
+        ) else lightColorScheme(
+            surface = Color(colorSurface.data),
+            primary = Color(colorSurface.data),
+        )
+    ) {
+        Material2Theme(
+            colors = if (isSystemInDarkTheme()) darkColors(
+                surface = Color(colorSurface.data),
+                primary = Color(colorSurface.data),
+            ) else lightColors(
+                surface = Color(colorSurface.data),
+                primary = Color(colorSurface.data),
+            ),
+            content = content
+        )
+    }
 }
