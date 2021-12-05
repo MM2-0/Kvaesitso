@@ -54,6 +54,7 @@ class WebSearchView : FrameLayout {
                             }
 
                         })
+                chip.chipIconTint = null
             } else {
                 chip.chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_search)
                 chip.chipIconTint = ColorStateList.valueOf(search.color)
