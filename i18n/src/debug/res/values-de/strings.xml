@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Kvæsitso Debug</string>
+    <string name="shortcut_compose_activity">Compose Activity</string>
 </resources>

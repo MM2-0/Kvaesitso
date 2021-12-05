@@ -1,0 +1,13 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:shortcutId="composeactivity"
+        android:enabled="true"
+        android:icon="@drawable/ic_experimental_feature"
+        android:shortcutShortLabel="@string/shortcut_compose_activity"
+        android:shortcutLongLabel="@string/shortcut_compose_activity">
+        <intent
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="de.mm20.launcher2.debug"
+            android:targetClass="de.mm20.launcher2.ui.activity.ComposeActivity" />
+    </shortcut>
+</shortcuts>
