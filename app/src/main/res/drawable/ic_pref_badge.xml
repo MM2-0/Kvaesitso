@@ -10,11 +10,11 @@
         android:scaleY="0.75">
         <path
             android:fillAlpha="1"
-            android:fillColor="?android:colorAccent"
+            android:fillColor="?colorPrimary"
             android:pathData="M12,2A10,10 0,0 0,2 12A10,10 0,0 0,12 22A10,10 0,0 0,14.5879 21.6465A5,5 0,0 1,13.3711 19.8809A8,8 0,0 1,12 20A8,8 0,0 1,4 12A8,8 0,0 1,12 4A8,8 0,0 1,20 12A8,8 0,0 1,19.873 13.3672A5,5 0,0 1,21.6543 14.5938A10,10 0,0 0,22 12A10,10 0,0 0,12 2z" />
         <path
             android:fillAlpha="1"
-            android:fillColor="?android:colorAccent"
+            android:fillColor="?colorPrimary"
             android:pathData="M18,18m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0" />
     </group>
 </vector>
