@@ -10,11 +10,13 @@ import android.content.pm.LauncherApps
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.VectorDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
 import android.os.Build
@@ -29,7 +31,6 @@ import androidx.core.content.getSystemService
 import androidx.core.graphics.alpha
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Scene
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
@@ -238,7 +239,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
             if (!NotificationCompat.isGroupSummary(it.notification)) {
                 val view = Chip(context)
                 view.text = title
-                view.chipIcon = getNotificationChipIcon(context, it.notification)
+                view.chipIcon = createShortcutDrawable(getNotificationChipIcon(context, it.notification))
                 view.chipStrokeWidth = 1 * context.dp
                 view.chipStrokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
                 view.chipBackgroundColor =
@@ -270,7 +271,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
             if (launcherApps.hasShortcutHostPermission()) {
                 val shortcuts = app.shortcuts
 
-                val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
+                val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
 
                 var count = 0
                 for (si in shortcuts) {
@@ -279,11 +280,12 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                     val view = Chip(context)
                     view.text = si.label
 
-
-                    view.chipIcon = launcherApps.getShortcutBadgedIconDrawable(
+                    view.chipIcon = createShortcutDrawable(launcherApps.getShortcutBadgedIconDrawable(
                         si.launcherShortcut,
                         context.resources.displayMetrics.densityDpi
-                    )
+                    ))
+
+                    view.chipIconSize = 24 * context.dp
 
                     view.chipIconTint = null
 
@@ -326,6 +328,19 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                 }
             }
         }
+    }
+
+    private fun createShortcutDrawable(drawable: Drawable?): Drawable {
+        val bgShape = ShapeDrawable(OvalShape()).apply {
+            paint.color = 0xFFF5F5F5.toInt()
+        }
+        if (drawable == null) return bgShape
+        return LayerDrawable(
+            arrayOf(
+                bgShape,
+                drawable
+            )
+        )
     }
 
     private fun getNotificationChipIcon(context: Context, notification: Notification): Drawable? {
