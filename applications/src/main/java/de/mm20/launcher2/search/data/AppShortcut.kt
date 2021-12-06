@@ -74,7 +74,7 @@ class AppShortcut(
 
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         return LauncherIcon(
-                foreground = ContextCompat.getDrawable(context, R.drawable.ic_app_placeholder)!!,
+                foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
                 background = ColorDrawable(ContextCompat.getColor(context, R.color.green)),
                 foregroundScale = 0.5f)
     }
