@@ -131,7 +131,7 @@ fun MusicWidget() {
                     .conditional(
                         albumArt == null,
                         Modifier.background(
-                            LocalColorScheme.current.primary.shade80
+                            MaterialTheme.colorScheme.primaryContainer,
                         )
                     ),
                 contentAlignment = Alignment.Center
@@ -149,7 +149,7 @@ fun MusicWidget() {
                     Icon(
                         imageVector = Icons.Rounded.MusicNote,
                         contentDescription = null,
-                        tint = LocalColorScheme.current.primary.shade40,
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
                         modifier = Modifier.size(56.dp)
                     )
                 }

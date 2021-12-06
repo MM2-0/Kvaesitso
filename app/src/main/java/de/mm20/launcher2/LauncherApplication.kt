@@ -26,6 +26,7 @@ import kotlinx.coroutines.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 import java.text.Collator
 import kotlin.coroutines.CoroutineContext
 
@@ -50,7 +51,7 @@ class LauncherApplication : Application(), CoroutineScope {
         )
 
         startKoin {
-            androidLogger()
+            androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
             androidContext(this@LauncherApplication)
             modules(
                 listOf(
