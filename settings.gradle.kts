@@ -43,8 +43,8 @@ dependencyResolutionManagement {
             version("targetSdk", "31")
         }
         create("libs") {
-            version("kotlin", "1.5.31")
-            version("kotlinx.coroutines", "1.5.1")
+            version("kotlin", "1.6.0")
+            version("kotlinx.coroutines", "1.5.2")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
                 .versionRef("kotlin")
@@ -62,7 +62,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.1.0-beta03")
+            version("androidx.compose", "1.1.0-beta04")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -100,7 +100,7 @@ dependencyResolutionManagement {
                 .to("androidx.compose.material3", "material3")
                 .version("1.0.0-alpha01")
 
-            version("androidx.lifecycle", "2.4.0-rc01")
+            version("androidx.lifecycle", "2.4.0")
             alias("androidx.lifecycle.viewmodel")
                 .to("androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
@@ -126,7 +126,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.21.0-beta")
+            version("accompanist", "0.21.4-beta")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
@@ -145,14 +145,14 @@ dependencyResolutionManagement {
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
-                .version("1.7.0-rc01")
+                .version("1.7.0")
 
-            version("androidx.appcompat", "1.4.0-beta01")
+            version("androidx.appcompat", "1.4.0")
             alias("androidx.appcompat")
                 .to("androidx.appcompat", "appcompat")
                 .versionRef("androidx.appcompat")
 
-            version("androidx.activity", "1.4.0-rc01")
+            version("androidx.activity", "1.4.0")
             alias("androidx.activity")
                 .to("androidx.activity", "activity-ktx")
                 .versionRef("androidx.activity")
@@ -162,15 +162,15 @@ dependencyResolutionManagement {
 
             alias("androidx.preference")
                 .to("androidx.preference", "preference-ktx")
-                .version("1.1.1")
+                .version("1.2.0-beta01")
 
             alias("androidx.work")
                 .to("androidx.work", "work-runtime-ktx")
-                .version("2.7.0")
+                .version("2.7.1")
 
             alias("androidx.browser")
                 .to("androidx.browser", "browser")
-                .version("1.4.0-rc01")
+                .version("1.4.0")
 
             alias("androidx.palette")
                 .to("androidx.palette", "palette")
@@ -182,7 +182,7 @@ dependencyResolutionManagement {
 
             alias("androidx.constraintlayout")
                 .to("androidx.constraintlayout", "constraintlayout")
-                .version("2.1.0")
+                .version("2.1.2")
 
             alias("androidx.cardview")
                 .to("androidx.cardview", "cardview")
@@ -202,7 +202,7 @@ dependencyResolutionManagement {
 
             alias("androidx.fragment")
                 .to("androidx.fragment", "fragment-ktx")
-                .version("1.4.0-alpha10")
+                .version("1.4.0")
 
             alias("androidx.gridlayout")
                 .to("androidx.gridlayout", "gridlayout")
@@ -220,7 +220,7 @@ dependencyResolutionManagement {
                 .to("androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.4.0-beta02")
+            version("androidx.room", "2.4.0-rc01")
             alias("androidx.roomruntime")
                 .to("androidx.room", "room-runtime")
                 .versionRef("androidx.room")
@@ -231,7 +231,7 @@ dependencyResolutionManagement {
                 .to("androidx.room", "room-ktx")
                 .versionRef("androidx.room")
 
-            version("androidx.appsearch", "1.0.0-alpha03")
+            version("androidx.appsearch", "1.0.0-alpha04")
             alias("androidx.appsearch")
                 .to("androidx.appsearch", "appsearch")
                 .versionRef("androidx.appsearch")
@@ -250,13 +250,13 @@ dependencyResolutionManagement {
 
             alias("androidx.navigation.compose")
                 .to("androidx.navigation", "navigation-compose")
-                .version("2.4.0-alpha10")
+                .version("2.4.0-beta02")
 
             alias("materialcomponents")
                 .to("com.google.android.material", "material")
-                .version("1.5.0-beta01")
+                .version("1.6.0-alpha01")
 
-            version("lottie", "4.1.0")
+            version("lottie", "4.2.2")
             alias("lottie.core")
                 .to("com.airbnb.android", "lottie")
                 .versionRef("lottie")
@@ -265,12 +265,13 @@ dependencyResolutionManagement {
                 .to("com.squareup.okhttp3", "okhttp")
                 .version("4.9.1")
 
+            version("retrofit", "2.9.0")
             alias("retrofit.core")
                 .to("com.squareup.retrofit2", "retrofit")
-                .version("2.9.0")
+                .versionRef("retrofit")
             alias("retrofit.gson")
                 .to("com.squareup.retrofit2", "converter-gson")
-                .version("2.9.0")
+                .versionRef("retrofit")
             bundle(
                 "retrofit",
                 listOf(
@@ -289,7 +290,7 @@ dependencyResolutionManagement {
 
             alias("jsoup")
                 .to("org.jsoup", "jsoup")
-                .version("1.14.2")
+                .version("1.14.3")
 
             alias("glide")
                 .to("com.github.bumptech.glide", "glide")
