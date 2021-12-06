@@ -235,7 +235,7 @@ fun WeatherDaySelector(
             CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                 Text(
                     text = dateFormat.format(selectedDay.timestamp),
-                    style = MaterialTheme.typography.labelSmall,
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .padding(start = 16.dp, end = 8.dp)
@@ -247,7 +247,7 @@ fun WeatherDaySelector(
                             selectedDay.minTemp
                         )
                     }° / ${convertTemperature(imperialUnits, selectedDay.maxTemp)}°",
-                    style = MaterialTheme.typography.bodySmall,
+                    style = MaterialTheme.typography.titleSmall,
                     modifier = Modifier.align(Alignment.CenterVertically)
                 )
                 Icon(
@@ -275,7 +275,7 @@ fun WeatherDaySelector(
                         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
                             Text(
                                 text = dateFormat.format(d.timestamp),
-                                style = MaterialTheme.typography.labelSmall,
+                                style = MaterialTheme.typography.titleSmall,
                                 softWrap = false,
                                 modifier = Modifier
                                     .align(Alignment.CenterVertically)
@@ -290,7 +290,7 @@ fun WeatherDaySelector(
                                     )
                                 }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
                                 softWrap = false,
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
@@ -364,7 +364,7 @@ fun WeatherTimeSelector(
                             Text(
                                 text = "${convertTemperature(imperialUnits, fc.temperature)}°",
                                 softWrap = false,
-                                style = MaterialTheme.typography.bodySmall,
+                                style = MaterialTheme.typography.titleSmall,
                                 modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
