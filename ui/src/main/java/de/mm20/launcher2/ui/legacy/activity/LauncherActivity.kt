@@ -193,7 +193,6 @@ class LauncherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val iconRepository: IconRepository by inject()
         iconRepository.recreate()
-        recreate()
 
         when(LauncherPreferences.instance.colorScheme) {
             ColorSchemes.BLACK -> setTheme(R.style.LauncherTheme_BlackWhiteColors)
