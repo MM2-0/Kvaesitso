@@ -31,8 +31,8 @@ class ThemedIconProvider(
             context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES != 0
 
         val bgAttr =
-            if (isDarkMode) R.attr.colorOnPrimaryContainer else R.attr.colorPrimaryContainer
-        val fgAttr = if (isDarkMode) R.attr.colorOnSurfaceInverse else R.attr.colorOnSurfaceVariant
+            if (isDarkMode) R.attr.colorOnSurfaceInverse else R.attr.colorPrimaryContainer
+        val fgAttr = if (isDarkMode) R.attr.colorOnPrimaryContainer else R.attr.colorOnSurfaceVariant
         bgColor = theme.resolveAttribute(bgAttr, typedValue, true).let {
             typedValue.data
         }
