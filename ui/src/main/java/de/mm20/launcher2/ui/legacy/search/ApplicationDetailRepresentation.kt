@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.legacy.search
 
 import android.app.Notification
+import android.app.PendingIntent
 import android.app.ProgressDialog
 import android.content.ComponentName
 import android.content.Context
@@ -10,13 +11,11 @@ import android.content.pm.LauncherApps
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.VectorDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
 import android.os.Build
@@ -239,7 +238,8 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
             if (!NotificationCompat.isGroupSummary(it.notification)) {
                 val view = Chip(context)
                 view.text = title
-                view.chipIcon = createShortcutDrawable(getNotificationChipIcon(context, it.notification))
+                view.chipIcon =
+                    createShortcutDrawable(getNotificationChipIcon(context, it.notification))
                 view.chipStrokeWidth = 1 * context.dp
                 view.chipStrokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
                 view.chipBackgroundColor =
@@ -255,7 +255,10 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                 view.isCloseIconVisible = it.isClearable
 
                 view.setOnClickListener { _ ->
-                    it.notification.contentIntent?.send()
+                    try {
+                        it.notification.contentIntent?.send()
+                    } catch (e: PendingIntent.CanceledException) {
+                    }
                 }
                 view.setOnCloseIconClickListener { _ ->
                     ns.cancelNotification(it.key)
@@ -280,10 +283,12 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                     val view = Chip(context)
                     view.text = si.label
 
-                    view.chipIcon = createShortcutDrawable(launcherApps.getShortcutBadgedIconDrawable(
-                        si.launcherShortcut,
-                        context.resources.displayMetrics.densityDpi
-                    ))
+                    view.chipIcon = createShortcutDrawable(
+                        launcherApps.getShortcutBadgedIconDrawable(
+                            si.launcherShortcut,
+                            context.resources.displayMetrics.densityDpi
+                        )
+                    )
 
                     view.chipIconSize = 24 * context.dp
 
