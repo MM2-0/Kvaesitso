@@ -119,6 +119,13 @@ class AppRepository(
             override fun onProgressChanged(sessionId: Int, progress: Float) {
                 val session = packageInstaller.getSessionInfo(sessionId) ?: return
                 val pkg = session.appPackageName ?: return
+                if (!installingPackages.containsKey(sessionId)) {
+                    val key = "app://$pkg"
+                    val badge = badgeProvider.getBadge(key)?.also { it.progress = null }
+                        ?: Badge()
+                    badgeProvider.setBadge(key, badge)
+                    return
+                }
                 badgeProvider.updateBadge("app://$pkg", Badge(progress = progress))
             }
 
