@@ -259,9 +259,6 @@ class UpdateIconPacksWorker(val context: Context) {
                         val drawable =
                             parser.getAttributeResourceValue(null, "drawable", 0).toString()
                         val pkg = parser.getAttributeValue(null, "package")
-                        for (i in 0 until parser.attributeCount) {
-                            Log.d("MM20", "${parser.getAttributeName(0)}")
-                        }
                         val componentName = ComponentName(pkg, pkg)
                         val icon = Icon(
                             drawable = drawable,
@@ -270,7 +267,6 @@ class UpdateIconPacksWorker(val context: Context) {
                             type = "greyscale_icon"
                         )
                         icons.add(icon)
-                        Log.d("MM20", "Installed icon ${icon.toString()}")
                     }
                 }
             }
