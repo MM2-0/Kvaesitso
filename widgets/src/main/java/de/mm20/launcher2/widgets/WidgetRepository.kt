@@ -20,7 +20,9 @@ class WidgetRepository(
 
     fun getInternalWidgets(): List<Widget> {
         return listOf(
-                Widget(WidgetType.INTERNAL, "weather", -1, context.getString(R.string.widget_name_weather))
+                Widget(WidgetType.INTERNAL, "weather", -1, context.getString(R.string.widget_name_weather)),
+                Widget(WidgetType.INTERNAL, "music", -1, context.getString(R.string.widget_name_music)),
+                Widget(WidgetType.INTERNAL, "calendar", -1, context.getString(R.string.widget_name_calendar)),
         )
     }
 
