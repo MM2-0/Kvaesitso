@@ -227,7 +227,7 @@ class LauncherActivity : AppCompatActivity() {
         val params = widgetSpacer.layoutParams as LinearLayout.LayoutParams
         params.topMargin = Point().also { windowManager.defaultDisplay.getSize(it) }.y
         widgetSpacer.layoutParams = params
-        container.doOnNextLayout {
+        container.doOnLayout {
             adjustWidgetSpace()
         }
         initWidgets()
@@ -749,32 +749,35 @@ class LauncherActivity : AppCompatActivity() {
             MotionEvent.ACTION_MOVE -> {
                 when {
                     scrollView.scrollY == 0 -> {
-                        if (container.translationY >= searchBar.height) {
-                            return@onTouch false
-                        }
                         if (event.historySize > 0) {
                             val dY = event.y - event.getHistoricalY(0)
                             val newTransY = 0.4f * dY + container.translationY
-                            if (newTransY > 0) {
+                            if (newTransY > 0 && newTransY < searchBar.height) {
                                 container.translationY = newTransY
                                 searchBar.show()
-                            } else {
+                            } else if (newTransY <= 0) {
                                 container.translationY = 0f
+                            } else {
+                                container.translationY = searchBar.height.toFloat()
                             }
 
                             if (container.translationY == 0f) return@onTouch false
                         }
                     }
                     scrollView.scrollY == scrollContainer.height - scrollView.height && searchVisibility -> {
-                        if (container.translationY <= -searchBar.height) {
-                            return@onTouch false
-                        }
                         if (event.historySize > 0) {
                             val dY = event.y - event.getHistoricalY(0)
                             val newTransY = 0.4f * dY + container.translationY
-                            container.translationY =
-                                if (newTransY <= 0) newTransY
-                                else 0f
+
+                            if (newTransY <= 0 && newTransY > -searchBar.height) {
+                                container.translationY = newTransY
+                                searchBar.show()
+                            } else if (newTransY > 0) {
+                                container.translationY = 0f
+                            } else {
+                                container.translationY = -searchBar.height.toFloat()
+                            }
+
                             if (container.translationY == 0f) return@onTouch false
                         }
                     }
@@ -783,7 +786,7 @@ class LauncherActivity : AppCompatActivity() {
                 true
             }
             MotionEvent.ACTION_UP -> {
-                if (container.translationY >= searchBar.height) toggleSearch()
+                if (container.translationY >= searchBar.height * 0.6) toggleSearch()
                 if (container.translationY <= -searchBar.height) hideSearch()
                 container.animate().translationY(0f).setDuration(200).start()
                 if (!searchVisibility && scrollView.scrollY == 0) searchBar.hide()
