@@ -23,5 +23,5 @@ fun LazyListScope.SearchableList(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun LazyItemScope.ListItem(item: Searchable) {
-    SearchableItem(item = item, modifier = Modifier.animateItemPlacement())
+    SearchableItem(item = item, modifier = Modifier/*.animateItemPlacement()*/)
 }

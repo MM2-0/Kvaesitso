@@ -110,7 +110,7 @@ fun LazyListScope.SearchableGrid(
         Row(
             modifier = Modifier
                 .requiredHeight(100.dp)
-                .animateItemPlacement()
+                //.animateItemPlacement()
                 .zIndex(
                     animateFloatAsState(
                         if (focusedItem != -1 && rowIndex == focusedItem / columns) 100f else 0f
