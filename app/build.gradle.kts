@@ -109,8 +109,6 @@ dependencies {
 
     implementation(libs.bundles.materialdialogs)
 
-    implementation(libs.bundles.groupie)
-
     implementation(libs.draglinearlayout)
     implementation(libs.viewpropertyobjectanimator)
 

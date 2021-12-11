@@ -321,21 +321,6 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("groupie", "2.8.0")
-            alias("groupie.core")
-                .to("com.xwray", "groupie")
-                .versionRef("groupie")
-            alias("groupie.ktx")
-                .to("com.xwray", "groupie-kotlin-android-extensions")
-                .versionRef("groupie")
-            bundle(
-                "groupie",
-                listOf(
-                    "groupie.core",
-                    "groupie.ktx"
-                )
-            )
-
             alias("draglinearlayout")
                 .to("com.jmedeisis", "draglinearlayout")
                 .version("1.1.0")

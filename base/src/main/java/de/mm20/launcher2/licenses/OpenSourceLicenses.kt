@@ -101,13 +101,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/afollestad/material-dialogs"
     ),
     OpenSourceLibrary(
-        name = "Groupie",
-        description = "Groupie is a simple, flexible library for complex RecyclerView layouts.",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        url = "https://github.com/lisawray/groupie"
-    ),
-    OpenSourceLibrary(
         name = "DragLinearLayout",
         description = "An Android LinearLayout that supports draggable and swappable child Views",
         licenseName = R.string.mit_license_name,

@@ -71,7 +71,6 @@ dependencies {
     implementation(libs.glide)
     implementation(libs.draglinearlayout)
     implementation(libs.lottie.core)
-    implementation(libs.bundles.groupie)
     implementation(libs.glidetransformations)
 
     implementation(libs.accompanist.insets)

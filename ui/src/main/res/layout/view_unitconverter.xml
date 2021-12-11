@@ -10,89 +10,9 @@
     android:clipToPadding="false"
     android:elevation="@dimen/card_elevation">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/composeView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="4dp"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/unitConverterInput"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="13 kilometers" />
-
-        <TextView
-            android:id="@+id/unitConverterInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:paddingTop="4dp"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="10sp"
-            android:textStyle="italic"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/showAllButton"
-            tools:text="European Central Bank (24.04.2020)" />
-
-        <!--<TextView
-            android:id="@+id/unitConverterValues"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/unitConverterIcon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unitConverterInput"
-            tools:text="0.013 kilometers (km)\n130 centimeters (cm)\n1300 millimeters (mm)\n 13.1234 yards (yd)"/>
-
-        <ImageView
-            android:id="@+id/unitConverterIcon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars"/>-->
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/unitConverterValues"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:nestedScrollingEnabled="false"
-            android:orientation="vertical"
-            android:overScrollMode="never"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unitConverterInput" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/showAllButton"
-            android:visibility="gone"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/unit_converter_show_all"
-            android:paddingBottom="4dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
-            android:textColor="?android:textColorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/unitConverterValues" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content"/>
 
 </de.mm20.launcher2.ui.legacy.view.LauncherCardView>
