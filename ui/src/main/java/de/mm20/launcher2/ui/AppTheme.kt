@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
@@ -23,62 +24,71 @@ import de.mm20.launcher2.ui.theme.colors.toDarkColorScheme
 import de.mm20.launcher2.ui.theme.colors.toLightColorScheme
 import kotlinx.coroutines.flow.map
 
-val Inter = FontFamily(
-    Font(R.font.inter_thin, FontWeight.Thin),
-    Font(R.font.inter_extralight, FontWeight.ExtraLight),
-    Font(R.font.inter_light, FontWeight.Light),
-    Font(R.font.inter_regular),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold),
-    Font(R.font.inter_extrabold, FontWeight.ExtraBold),
-    Font(R.font.inter_black, FontWeight.Black),
+val Poppins = FontFamily(
+    Font(R.font.poppins100, FontWeight.Thin, FontStyle.Normal),
+    Font(R.font.poppins100i, FontWeight.Thin, FontStyle.Italic),
+    Font(R.font.poppins200, FontWeight.ExtraLight, FontStyle.Normal),
+    Font(R.font.poppins200i, FontWeight.ExtraLight, FontStyle.Italic),
+    Font(R.font.poppins300, FontWeight.Light, FontStyle.Normal),
+    Font(R.font.poppins300i, FontWeight.Light, FontStyle.Italic),
+    Font(R.font.poppins400, FontWeight.Normal, FontStyle.Normal),
+    Font(R.font.poppins400i, FontWeight.Normal, FontStyle.Italic),
+    Font(R.font.poppins500, FontWeight.Medium, FontStyle.Normal),
+    Font(R.font.poppins500i, FontWeight.Medium, FontStyle.Italic),
+    Font(R.font.poppins600, FontWeight.SemiBold, FontStyle.Normal),
+    Font(R.font.poppins600i, FontWeight.SemiBold, FontStyle.Italic),
+    Font(R.font.poppins700, FontWeight.Bold, FontStyle.Normal),
+    Font(R.font.poppins700i, FontWeight.Bold, FontStyle.Italic),
+    Font(R.font.poppins800, FontWeight.ExtraBold, FontStyle.Normal),
+    Font(R.font.poppins800i, FontWeight.ExtraBold, FontStyle.Italic),
+    Font(R.font.poppins900, FontWeight.Black, FontStyle.Normal),
+    Font(R.font.poppins900i, FontWeight.Black, FontStyle.Italic),
 )
 
 
 val typography = Typography(
     displayLarge = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 57.sp,
         fontWeight = FontWeight.Normal,
     ),
     displayMedium = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 45.sp,
         fontWeight = FontWeight.Normal,
     ),
     displaySmall = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 36.sp,
         fontWeight = FontWeight.Normal,
     ),
     headlineLarge = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 32.sp,
         fontWeight = FontWeight.Normal,
     ),
     headlineMedium = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 28.sp,
         fontWeight = FontWeight.Normal,
     ),
     headlineSmall = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 24.sp,
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.SemiBold,
     ),
     titleLarge = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 22.sp,
         fontWeight = FontWeight.Normal,
     ),
     titleMedium = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
     ),
     titleSmall = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
     ),
@@ -95,17 +105,17 @@ val typography = Typography(
         fontWeight = FontWeight.Normal,
     ),
     labelLarge = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 14.sp,
         fontWeight = FontWeight.Medium,
     ),
     labelMedium = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 12.sp,
         fontWeight = FontWeight.Medium,
     ),
     labelSmall = TextStyle(
-        fontFamily = Inter,
+        fontFamily = Poppins,
         fontSize = 11.sp,
         fontWeight = FontWeight.Medium,
     ),
