@@ -33,14 +33,12 @@ class CurrencyConverter(context: Context) : Converter(), KoinComponent {
         val currency = Currency.getInstance(symbol) ?: return formatNameFallback(symbol)
         val pluralCount = PluralRules.forLocale(Locale.getDefault()).select(value)
         text.append(currency.getName(Locale.getDefault(), Currency.PLURAL_LONG_NAME, pluralCount, booleanArrayOf(false)))
-                .append(" ")
-                .append(repository.getFlag(symbol))
 
         return text.toString()
     }
 
     private fun formatNameFallback(symbol: String): String {
-        return "$symbol ${repository.getFlag(symbol)}"
+        return symbol
     }
 
     private fun formatValue(symbol: String, value: Double): String {
