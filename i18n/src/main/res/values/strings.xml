@@ -378,7 +378,7 @@
     <string name="preference_cards_stroke_width">Stroke width</string>
     <string name="preference_cards_opacity">Opacity</string>
     <string name="disclaimer">Disclaimer</string>
-    <string name="disclaimer_currency_converter">"Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information."</string>
+    <string name="disclaimer_currency_converter">"Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.\n\nLast update: %1$s"</string>
     <string name="unit_converter_show_all">Show all</string>
     <string name="preference_card_background">Background</string>
     <string name="preference_card_background_default">Default</string>

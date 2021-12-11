@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.search
 
+import android.icu.text.DateFormat
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -14,9 +16,12 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.unitconverter.Dimension
+import java.util.*
 
 @Composable
 fun UnitConverterItem(
@@ -89,14 +94,52 @@ fun UnitConverterItem(
             }
 
         }
-        if (!showAll && unitConverter.values.size > 5) {
-            TextButton(
-                onClick = { showAll = true },
+        Row(
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Row(
                 modifier = Modifier
-                    .align(Alignment.End)
-                    .padding(horizontal = 12.dp)
+                    .weight(1f)
+                    .padding(horizontal = 16.dp, vertical = 8.dp)
             ) {
-                Text(text = stringResource(id = R.string.unit_converter_show_all))
+                var showDisclaimer by remember { mutableStateOf(false) }
+                (unitConverter as? CurrencyUnitConverter)?.let {
+                    val df = DateFormat.getDateInstance(DateFormat.SHORT)
+                    Text(
+                        text = "${df.format(Date(it.updateTimestamp))} • ",
+                        style = MaterialTheme.typography.labelSmall,
+                    )
+                    Text(
+                        text = stringResource(id = R.string.disclaimer),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.clickable {
+                            showDisclaimer = true
+                        }
+                    )
+                    if (showDisclaimer) {
+                            AlertDialog(
+                                onDismissRequest = { showDisclaimer = false },
+                                confirmButton = {
+                                    TextButton(onClick = { showDisclaimer = false }) {
+                                        Text(text = stringResource(id = R.string.close))
+                                    }
+                                },
+                                title = {  Text(stringResource(id = R.string.disclaimer)) },
+                                text = {  Text(stringResource(id = R.string.disclaimer_currency_converter, df.format(Date(it.updateTimestamp)))) }
+                            )
+                    }
+                }
+            }
+            if (!showAll && unitConverter.values.size > 5) {
+                TextButton(
+                    onClick = { showAll = true },
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp)
+                ) {
+                    Text(text = stringResource(id = R.string.unit_converter_show_all))
+                }
             }
         }
     }

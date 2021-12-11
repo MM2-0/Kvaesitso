@@ -378,7 +378,7 @@
     <string name="preference_cards_stroke_width">Rahmenstärke</string>
     <string name="preference_cards_opacity">Deckkraft</string>
     <string name="disclaimer">Haftungsausschluss</string>
-    <string name="disclaimer_currency_converter">Wechselkurse so wie sie einmal täglich von der Europäischen Zentralbank herausgegeben werden. Alle Angaben sind ohne Gewähr. Es wird keine Haftung für die hier dargestellten Informationen übernommen.</string>
+    <string name="disclaimer_currency_converter">Wechselkurse so wie sie einmal täglich von der Europäischen Zentralbank herausgegeben werden. Alle Angaben sind ohne Gewähr. Es wird keine Haftung für die hier dargestellten Informationen übernommen.\n\nLetzte Aktualisierung: %1$s</string>
     <string name="unit_converter_show_all">Alle anzeigen</string>
     <string name="preference_card_background">Hintergrund</string>
     <string name="preference_card_background_default">Standard</string>
