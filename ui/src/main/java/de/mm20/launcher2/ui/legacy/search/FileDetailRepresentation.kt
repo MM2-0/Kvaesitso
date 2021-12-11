@@ -6,7 +6,6 @@ import android.provider.MediaStore
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProvider
 import androidx.transition.Scene
 import com.afollestad.materialdialogs.MaterialDialog
 import de.mm20.launcher2.ui.R
@@ -20,7 +19,7 @@ import de.mm20.launcher2.search.data.GDriveFile
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
@@ -45,7 +44,7 @@ class FileDetailRepresentation : Representation, KoinComponent {
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(file)
                     lifecycleScope.launch {
-                        iconRepository.getIcon(file, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(file, (84 * rootView.dp).toInt()).collectLatest {
                             icon = it
                         }
                     }

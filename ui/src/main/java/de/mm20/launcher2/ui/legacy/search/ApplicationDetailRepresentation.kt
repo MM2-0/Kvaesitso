@@ -52,6 +52,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
@@ -82,7 +83,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(application)
                     lifecycleScope.launch {
-                        iconRepository.getIcon(application, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(application, (84 * rootView.dp).toInt()).collectLatest {
                             icon = it
                         }
                     }

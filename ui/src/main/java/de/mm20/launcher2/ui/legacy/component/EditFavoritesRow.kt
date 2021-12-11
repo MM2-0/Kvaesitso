@@ -10,13 +10,16 @@ import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.ui.databinding.EditFavoritesRowBinding
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class EditFavoritesRow @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0, val favoritesItem: FavoritesItem
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+    val favoritesItem: FavoritesItem
 ) : LinearLayout(context, attrs, defStyleAttr), KoinComponent {
 
     val iconRepository: IconRepository by inject()
@@ -26,7 +29,7 @@ class EditFavoritesRow @JvmOverloads constructor(
     init {
         binding.label.text = favoritesItem.searchable?.label
         lifecycleScope.launch {
-            iconRepository.getIcon(favoritesItem.searchable!!, (48*dp).toInt()).collect{
+            iconRepository.getIcon(favoritesItem.searchable!!, (48 * dp).toInt()).collectLatest {
                 binding.icon.icon = it
             }
         }

@@ -12,7 +12,7 @@ import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -54,7 +54,7 @@ class BasicGridRepresentation : Representation, KoinComponent {
                     }
                     icon = iconRepository.getIconIfCached(searchable)
                     lifecycleScope.launch {
-                        iconRepository.getIcon(searchable, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(searchable, (84 * rootView.dp).toInt()).collectLatest {
                             icon = it
                         }
                     }

@@ -17,7 +17,7 @@ import de.mm20.launcher2.ui.legacy.view.FavoriteToolbarAction
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -42,7 +42,7 @@ class AppShortcutDetailRepresentation: Representation, KoinComponent {
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(appShortcut)
                     lifecycleScope.launch {
-                        iconRepository.getIcon(appShortcut, (84 * rootView.dp).toInt()).collect {
+                        iconRepository.getIcon(appShortcut, (84 * rootView.dp).toInt()).collectLatest {
                             icon = it
                         }
                     }
