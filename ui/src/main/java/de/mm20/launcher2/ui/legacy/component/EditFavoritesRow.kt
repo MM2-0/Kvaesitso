@@ -2,14 +2,14 @@ package de.mm20.launcher2.ui.legacy.component
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import de.mm20.launcher2.favorites.FavoritesItem
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.ui.R
-import kotlinx.android.synthetic.main.edit_favorites_row.view.*
+import de.mm20.launcher2.ui.databinding.EditFavoritesRowBinding
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -21,17 +21,18 @@ class EditFavoritesRow @JvmOverloads constructor(
 
     val iconRepository: IconRepository by inject()
 
+    private val binding = EditFavoritesRowBinding.inflate(LayoutInflater.from(context), this, false)
+
     init {
-        View.inflate(context, R.layout.edit_favorites_row, this)
-        label.text = favoritesItem.searchable?.label
+        binding.label.text = favoritesItem.searchable?.label
         lifecycleScope.launch {
             iconRepository.getIcon(favoritesItem.searchable!!, (48*dp).toInt()).collect{
-                icon.icon = it
+                binding.icon.icon = it
             }
         }
     }
 
     fun getDragHandle(): View {
-        return dragHandle
+        return binding.dragHandle
     }
 }

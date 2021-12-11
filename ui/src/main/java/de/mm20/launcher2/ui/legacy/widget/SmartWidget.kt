@@ -13,54 +13,44 @@ import android.provider.CalendarContract
 import android.text.format.DateFormat
 import android.util.AttributeSet
 import android.util.TypedValue
-import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextClock
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import de.mm20.launcher2.badges.BadgeProvider
-import de.mm20.launcher2.favorites.FavoritesViewModel
-import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.legacy.fragment.SearchableBottomSheet
+import de.mm20.launcher2.ui.databinding.ViewDateTimeBinding
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
-import de.mm20.launcher2.ui.legacy.view.LauncherIconView
-import kotlinx.android.synthetic.main.view_date_time.view.*
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 import java.util.*
 
 class SmartWidget : LauncherCardView {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
+    private val binding = ViewDateTimeBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        View.inflate(context, R.layout.view_date_time, this)
         clipToPadding = false
         clipChildren = false
         layoutTransition = LayoutTransition()
 
-        dateTimeTimeView.format12Hour = "hh:mm"
-        dateTimeTimeView.format24Hour = "HH:mm"
+        binding.dateTimeTimeView.format12Hour = "hh:mm"
+        binding.dateTimeTimeView.format24Hour = "HH:mm"
 
 
-        dateTimeTimeView.setOnClickListener {
+        binding.dateTimeTimeView.setOnClickListener {
             try {
                 val intent = Intent(AlarmClock.ACTION_SHOW_ALARMS)
                 ActivityStarter.start(context, this, intent = intent)
@@ -75,12 +65,12 @@ class SmartWidget : LauncherCardView {
 
     private val translucentDisableRunnable = Runnable@{
         if (translucent) return@Runnable
-        dateTimeTimeView.setShadowLayer(0f, 0f, 0f, 0)
+        binding.dateTimeTimeView.setShadowLayer(0f, 0f, 0f, 0)
         val textColor = ContextCompat.getColorStateList(context, R.color.text_color_primary)
         val dividerColor = ContextCompat.getColor(context, R.color.color_divider)
-        dateTimeTimeView.setTextColor(textColor)
-        bottomPadding.setBackgroundColor(dividerColor)
-        bottomPadding.elevation = 0f
+        binding.dateTimeTimeView.setTextColor(textColor)
+        binding.bottomPadding.setBackgroundColor(dividerColor)
+        binding.bottomPadding.elevation = 0f
         compactView?.setTranslucent(false)
     }
 
@@ -90,10 +80,10 @@ class SmartWidget : LauncherCardView {
         val shadowY = resources.getDimension(R.dimen.elevation_shadow_1dp_y)
         val shadowR = resources.getDimension(R.dimen.elevation_shadow_1dp_radius)
         val shadowC = Color.argb(66, 0, 0, 0)
-        dateTimeTimeView.setTextColor(textColor)
-        dateTimeTimeView.setShadowLayer(shadowR, 0f, shadowY, shadowC)
-        bottomPadding.setBackgroundColor(textColor)
-        bottomPadding.elevation = 1f
+        binding.dateTimeTimeView.setTextColor(textColor)
+        binding.dateTimeTimeView.setShadowLayer(shadowR, 0f, shadowY, shadowC)
+        binding.bottomPadding.setBackgroundColor(textColor)
+        binding.bottomPadding.elevation = 1f
         compactView?.setTranslucent(true)
     }
 
@@ -106,12 +96,12 @@ class SmartWidget : LauncherCardView {
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
-                            ObjectAnimator.ofInt(this@SmartWidget, "backgroundOpacity", 0).apply {
-                                interpolator = AccelerateInterpolator(3f)
-                            },
-                            ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", -elevation).apply {
-                                interpolator = DecelerateInterpolator(3f)
-                            }
+                        ObjectAnimator.ofInt(this@SmartWidget, "backgroundOpacity", 0).apply {
+                            interpolator = AccelerateInterpolator(3f)
+                        },
+                        ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", -elevation).apply {
+                            interpolator = DecelerateInterpolator(3f)
+                        }
                     )
                 }.start()
 
@@ -121,12 +111,16 @@ class SmartWidget : LauncherCardView {
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
-                            ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", 0f).apply {
-                                interpolator = AccelerateInterpolator(3f)
-                            },
-                            ObjectAnimator.ofInt(this@SmartWidget, "backgroundOpacity", LauncherPreferences.instance.cardOpacity).apply {
-                                interpolator = DecelerateInterpolator(3f)
-                            }
+                        ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", 0f).apply {
+                            interpolator = AccelerateInterpolator(3f)
+                        },
+                        ObjectAnimator.ofInt(
+                            this@SmartWidget,
+                            "backgroundOpacity",
+                            LauncherPreferences.instance.cardOpacity
+                        ).apply {
+                            interpolator = DecelerateInterpolator(3f)
+                        }
                     )
                 }.start()
 
@@ -137,7 +131,7 @@ class SmartWidget : LauncherCardView {
 
     var compactView: CompactView? = getDefaultCompactView()
         set(value) {
-            smartWidgetContainer.removeView(field as? View)
+            binding.smartWidgetContainer.removeView(field as? View)
             if (value == null) {
                 field = getDefaultCompactView()
             } else {
@@ -145,7 +139,7 @@ class SmartWidget : LauncherCardView {
             }
             (field as? View)?.let {
                 it.layoutParams = getCompactViewLayoutParams()
-                smartWidgetContainer.addView(it)
+                binding.smartWidgetContainer.addView(it)
             }
             field?.setTranslucent(translucent)
         }
@@ -155,8 +149,10 @@ class SmartWidget : LauncherCardView {
     }
 
     private fun getCompactViewLayoutParams(): RelativeLayout.LayoutParams {
-        val params = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT,
-                RelativeLayout.LayoutParams.WRAP_CONTENT)
+        val params = RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
+            RelativeLayout.LayoutParams.WRAP_CONTENT
+        )
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
         params.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE)
         params.addRule(RelativeLayout.START_OF, R.id.smartWidgetDivider)
@@ -186,7 +182,11 @@ class DateCompactView : TextClock, CompactView {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
     init {
         isClickable = true
@@ -201,18 +201,23 @@ class DateCompactView : TextClock, CompactView {
             builder.appendPath("time")
             ContentUris.appendId(builder, startMillis)
             val intent = Intent(Intent.ACTION_VIEW)
-                    .setData(builder.build())
+                .setData(builder.build())
             ActivityStarter.start(context, this, intent = intent)
         }
         val dayFormat = DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMMMdyyyy")
         val dayOfWeekFormat = DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEEE")
-        val dateFormat = context.getString(R.string.date_format_clock_widget, dayOfWeekFormat, dayFormat)
+        val dateFormat =
+            context.getString(R.string.date_format_clock_widget, dayOfWeekFormat, dayFormat)
 
         format12Hour = dateFormat
         format24Hour = dateFormat
 
         val outValue = TypedValue()
-        context.theme.resolveAttribute(android.R.attr.selectableItemBackgroundBorderless, outValue, true)
+        context.theme.resolveAttribute(
+            android.R.attr.selectableItemBackgroundBorderless,
+            outValue,
+            true
+        )
         foreground = context.getDrawable(outValue.resourceId)
     }
 }

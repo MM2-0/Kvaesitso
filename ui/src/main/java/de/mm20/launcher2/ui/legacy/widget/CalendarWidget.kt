@@ -7,12 +7,12 @@ import android.content.Intent
 import android.provider.CalendarContract
 import android.text.format.DateUtils
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
 import de.mm20.launcher2.calendar.CalendarViewModel
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.legacy.helper.ActivityStarter
@@ -22,7 +22,7 @@ import de.mm20.launcher2.ui.legacy.data.InformationText
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
-import kotlinx.android.synthetic.main.view_calendar_widget.view.*
+import de.mm20.launcher2.ui.databinding.ViewCalendarWidgetBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.math.max
@@ -48,7 +48,7 @@ class CalendarWidget : LauncherWidget {
     private var selectedDay = 0L
         set(value) {
             field = value
-            calendarDate.text = formatDay(value)
+            binding.calendarDate.text = formatDay(value)
             updateEventList()
         }
 
@@ -73,19 +73,20 @@ class CalendarWidget : LauncherWidget {
         }
     }
 
+    private val binding = ViewCalendarWidgetBinding.inflate(LayoutInflater.from(context), this, true)
+
 
     init {
         clipToPadding = false
         clipChildren = false
-        View.inflate(context, R.layout.view_calendar_widget, this)
-        calendarNewEvent.setOnClickListener {
+        binding.calendarNewEvent.setOnClickListener {
             val intent = Intent(Intent.ACTION_EDIT)
             intent.data = CalendarContract.Events.CONTENT_URI
             ActivityStarter.start(context, this, intent = intent)
         }
 
-        calendarDate.setOnClickListener {
-            val menu = PopupMenu(context, calendarDate)
+        binding.calendarDate.setOnClickListener {
+            val menu = PopupMenu(context, binding.calendarDate)
             for (d in availableDays) {
                 menu.menu.add(
                         Menu.NONE,
@@ -101,21 +102,21 @@ class CalendarWidget : LauncherWidget {
             menu.show()
         }
 
-        calendarOpenApp.setOnClickListener {
+        binding.calendarOpenApp.setOnClickListener {
             val startMillis = System.currentTimeMillis()
             val builder = CalendarContract.CONTENT_URI.buildUpon()
             builder.appendPath("time")
             ContentUris.appendId(builder, startMillis)
             val intent = Intent(Intent.ACTION_VIEW)
                     .setData(builder.build())
-            ActivityStarter.start(context, calendarWidgetRoot, intent = intent)
+            ActivityStarter.start(context, binding.calendarWidgetRoot, intent = intent)
         }
 
-        calendarDateNext.setOnClickListener {
+        binding.calendarDateNext.setOnClickListener {
             val i = min(availableDays.lastIndex - 1, availableDays.indexOf(selectedDay))
             selectedDay = availableDays[i + 1]
         }
-        calendarDatePrev.setOnClickListener {
+        binding.calendarDatePrev.setOnClickListener {
             val i = max(1, availableDays.indexOf(selectedDay))
             selectedDay = availableDays[i - 1]
         }
@@ -127,7 +128,7 @@ class CalendarWidget : LauncherWidget {
 
         calendarEvents.observe(context as AppCompatActivity, {
             if (!PermissionsManager.checkPermission(context, PermissionsManager.CALENDAR)) {
-                calendarWidgetList.submitItems(listOf(
+                binding.calendarWidgetList.submitItems(listOf(
                         MissingPermission(
                                 context.getString(R.string.permission_calendar_widget),
                                 PermissionsManager.CALENDAR
@@ -145,21 +146,21 @@ class CalendarWidget : LauncherWidget {
         })
         pinnedCalendarEvents.observe(context as AppCompatActivity) {
             val today = getToday()
-            calendarWidgetPinnedList.submitItems(it.filter {
+            binding.calendarWidgetPinnedList.submitItems(it.filter {
                 it.endTime > System.currentTimeMillis() &&
                         (it.startTime + zoneOffset) / (1000 * 60 * 60 * 24) != today &&
                         (it.endTime + zoneOffset) / (1000 * 60 * 60 * 24) != today
             }.sortedBy { it.startTime })
             if (it.isEmpty()) {
-                calendarWidgetPinnedList.visibility = View.GONE
-                calendarUpcomingEventsTitle.visibility = View.GONE
+                binding.calendarWidgetPinnedList.visibility = View.GONE
+                binding.calendarUpcomingEventsTitle.visibility = View.GONE
             } else {
-                calendarWidgetPinnedList.visibility = View.VISIBLE
-                calendarUpcomingEventsTitle.visibility = View.VISIBLE
+                binding.calendarWidgetPinnedList.visibility = View.VISIBLE
+                binding.calendarUpcomingEventsTitle.visibility = View.VISIBLE
             }
         }
 
-        calendarWidgetRoot.layoutTransition = LayoutTransition().apply {
+        binding.calendarWidgetRoot.layoutTransition = LayoutTransition().apply {
             enableTransitionType(LayoutTransition.CHANGING)
         }
     }
@@ -190,7 +191,7 @@ class CalendarWidget : LauncherWidget {
             }
         }
 
-        calendarWidgetList.submitItems(events)
+        binding.calendarWidgetList.submitItems(events)
     }
 
 

@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.legacy.component
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -10,14 +11,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateMargins
 import androidx.core.widget.TextViewCompat
-import androidx.lifecycle.ViewModelProvider
 import de.mm20.launcher2.favorites.FavoritesItem
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.ktx.setPadding
 import de.mm20.launcher2.ui.R
-import kotlinx.android.synthetic.main.dialog_edit_favorites.view.*
+import de.mm20.launcher2.ui.databinding.DialogEditFavoritesBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,6 +28,8 @@ class EditFavoritesView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs) {
 
     val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
+
+    private val binding = DialogEditFavoritesBinding.inflate(LayoutInflater.from(context), this)
 
     init {
         View.inflate(context, R.layout.dialog_edit_favorites, this)
@@ -42,45 +44,45 @@ class EditFavoritesView @JvmOverloads constructor(
         favorites = withContext(Dispatchers.IO) {
             viewModel.getAllFavoriteItems().toMutableList()
         }
-        progressBar.visibility = View.GONE
-        itemList.addView(getLabel(R.string.edit_favorites_dialog_stage0))
+        binding.progressBar.visibility = View.GONE
+        binding.itemList.addView(getLabel(R.string.edit_favorites_dialog_stage0))
 
-        itemList.setContainerScrollView(scrollView)
+        binding.itemList.setContainerScrollView(binding.scrollView)
 
         var stage = 0
         for (favorite in favorites) {
             if (favorite.pinPosition <= 1 && stage == 0) {
                 getLabel(R.string.edit_favorites_dialog_stage1).let {
                     it.tag = "stage1"
-                    itemList.addDragView(it, it.getChildAt(1))
+                    binding.itemList.addDragView(it, it.getChildAt(1))
                 }
                 stage++
             }
             if (favorite.pinPosition == 0 && stage == 1) {
                 getLabel(R.string.edit_favorites_dialog_stage2).let {
                     it.tag = "stage2"
-                    itemList.addDragView(it, it.getChildAt(1))
+                    binding.itemList.addDragView(it, it.getChildAt(1))
                 }
                 stage++
             }
             val view = EditFavoritesRow(context, favoritesItem = favorite)
-            itemList.addDragView(view, view.getDragHandle())
+            binding.itemList.addDragView(view, view.getDragHandle())
         }
         if (stage == 0) {
             getLabel(R.string.edit_favorites_dialog_stage1).let {
                 it.tag = "stage1"
-                itemList.addDragView(it, it.getChildAt(1))
+                binding.itemList.addDragView(it, it.getChildAt(1))
             }
             stage++
         }
         if (stage == 1) {
             getLabel(R.string.edit_favorites_dialog_stage2).let {
                 it.tag = "stage2"
-                itemList.addDragView(it, it.getChildAt(1))
+                binding.itemList.addDragView(it, it.getChildAt(1))
             }
         }
 
-        itemList.setOnViewSwapListener { firstView, firstPosition, secondView, secondPosition ->
+        binding.itemList.setOnViewSwapListener { firstView, firstPosition, secondView, secondPosition ->
             if (firstView is EditFavoritesRow && secondView is EditFavoritesRow) {
                 val firstItem = firstView.favoritesItem
                 val secondItem = secondView.favoritesItem

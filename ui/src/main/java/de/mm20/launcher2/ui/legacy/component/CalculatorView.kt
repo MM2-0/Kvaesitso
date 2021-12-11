@@ -2,16 +2,16 @@ package de.mm20.launcher2.ui.legacy.component
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.calculator.CalculatorViewModel
 import de.mm20.launcher2.search.data.Calculator
-import kotlinx.android.synthetic.main.view_calculator.view.*
+import de.mm20.launcher2.ui.databinding.ViewCalculatorBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.round
 
@@ -23,8 +23,9 @@ class CalculatorView : FrameLayout {
 
     private val calculator: LiveData<Calculator?>
 
+    private val binding = ViewCalculatorBinding.inflate(LayoutInflater.from(context), this, true)
+
     init {
-        View.inflate(context, R.layout.view_calculator, this)
         val viewModel: CalculatorViewModel by (context as AppCompatActivity).viewModel()
         calculator = viewModel.calculator
         calculator.observe(context as AppCompatActivity, Observer {
@@ -39,19 +40,19 @@ class CalculatorView : FrameLayout {
 
     private fun bind(calc: Calculator) {
 
-        calculatorTerm.text = beautifyTerm(calc.term)
-        calculatorSolution.text = context.getString(R.string.calculator_solution, calc.formattedString)
+        binding.calculatorTerm.text = beautifyTerm(calc.term)
+        binding.calculatorSolution.text = context.getString(R.string.calculator_solution, calc.formattedString)
         if (calc.solution == round(calc.solution) && calc.term.matches(Regex("[0-9]+"))) {
             val binHexOct = StringBuilder()
             binHexOct.append(calc.formattedBinaryString).append("\n")
                     .append(calc.formattedOctString).append("\n")
                     .append(calc.formattedHexString)
-            calculatorSolutionHexBinOct.text = binHexOct.toString()
-            calculatorSolutionHexBinOct.visibility = View.VISIBLE
-            calculatorLabelHexBinOct.visibility = View.VISIBLE
+            binding.calculatorSolutionHexBinOct.text = binHexOct.toString()
+            binding.calculatorSolutionHexBinOct.visibility = View.VISIBLE
+            binding.calculatorLabelHexBinOct.visibility = View.VISIBLE
         } else {
-            calculatorSolutionHexBinOct.visibility = GONE
-            calculatorLabelHexBinOct.visibility = GONE
+            binding.calculatorSolutionHexBinOct.visibility = GONE
+            binding.calculatorLabelHexBinOct.visibility = GONE
         }
     }
 

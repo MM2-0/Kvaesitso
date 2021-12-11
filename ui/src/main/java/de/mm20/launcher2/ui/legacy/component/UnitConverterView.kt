@@ -7,6 +7,7 @@ import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
@@ -14,8 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.afollestad.materialdialogs.MaterialDialog
@@ -29,9 +28,9 @@ import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.databinding.ViewUnitconverterBinding
 import de.mm20.launcher2.unitconverter.UnitConverterViewModel
 import de.mm20.launcher2.unitconverter.UnitValue
-import kotlinx.android.synthetic.main.view_unitconverter.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.DateFormat
 import java.util.*
@@ -46,8 +45,9 @@ class UnitConverterView : FrameLayout {
     private val unitConverter: LiveData<UnitConverter?>
     private val adapter: GroupAdapter<GroupieViewHolder>
 
+    private val binding = ViewUnitconverterBinding.inflate(LayoutInflater.from(context), this, true)
+
     init {
-        View.inflate(context, R.layout.view_unitconverter, this)
         val unitConverterViewModel by (context as AppCompatActivity).viewModel<UnitConverterViewModel>()
         unitConverter = unitConverterViewModel.unitConverter
         unitConverter.observe(context as AppCompatActivity, Observer {
@@ -58,7 +58,7 @@ class UnitConverterView : FrameLayout {
             }
         })
         adapter = GroupAdapter()
-        unitConverterValues.also {
+        binding.unitConverterValues.also {
             it.adapter = adapter
             it.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
@@ -67,7 +67,7 @@ class UnitConverterView : FrameLayout {
 
     private fun bind(converter: UnitConverter) {
         val title = converter.inputValue.formattedValue + " " + converter.inputValue.formattedName
-        unitConverterInput.text = title
+        binding.unitConverterInput.text = title
 
         /*val sb = StringBuilder()
         for (unit in converter.values) {
@@ -99,16 +99,16 @@ class UnitConverterView : FrameLayout {
         }
 
         if (converter.values.size > 5) {
-            showAllButton.visibility = View.VISIBLE
-            showAllButton.setOnClickListener {
+            binding.showAllButton.visibility = View.VISIBLE
+            binding.showAllButton.setOnClickListener {
                 section.addAll(converter.values.subList( 5, converter.values.size).map {
                     ValueItem(it, maxValueLength * 8f * sp)
                 })
-                showAllButton.visibility = View.GONE
-                showAllButton.setOnClickListener(null)
+                binding.showAllButton.visibility = View.GONE
+                binding.showAllButton.setOnClickListener(null)
             }
         } else {
-            showAllButton.visibility = View.GONE
+            binding.showAllButton.visibility = View.GONE
         }
 
 
@@ -141,13 +141,13 @@ class UnitConverterView : FrameLayout {
                         }
                     }, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-            unitConverterInfo.apply {
+            binding.unitConverterInfo.apply {
                 text = infoText
                 visibility = View.VISIBLE
                 movementMethod = LinkMovementMethod.getInstance()
             }
         } else {
-            unitConverterInfo.visibility = View.GONE
+            binding.unitConverterInfo.visibility = View.GONE
         }
 
     }

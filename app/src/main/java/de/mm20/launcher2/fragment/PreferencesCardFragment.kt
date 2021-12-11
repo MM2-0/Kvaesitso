@@ -14,7 +14,7 @@ import androidx.preference.PreferenceFragmentCompat
 import de.mm20.launcher2.R
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.preferences.LauncherPreferences
-import kotlinx.android.synthetic.main.fragment_card_settings.*
+import de.mm20.launcher2.ui.legacy.view.LauncherCardView
 import kotlin.math.roundToInt
 
 class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
@@ -23,12 +23,9 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val previewCard = view.findViewById<LauncherCardView>(R.id.previewCard)
         previewCard.strokeOpacity = 0xFF
 
-        val context = requireContext()
-
-
-        val previewCard = previewCard
         val prefFragment = PreferenesCardInnerFragment()
 
         prefFragment.onPreferencesReady = {

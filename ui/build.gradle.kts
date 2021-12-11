@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("kotlin-android-extensions")
 }
 
 android {
@@ -36,6 +35,7 @@ android {
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose = true
+        viewBinding = true
     }
 
     composeOptions {

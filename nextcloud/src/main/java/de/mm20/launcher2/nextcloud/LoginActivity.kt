@@ -2,36 +2,40 @@ package de.mm20.launcher2.nextcloud
 
 import android.app.Activity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import kotlinx.android.synthetic.main.activity_nextcloud_login.*
+import de.mm20.launcher2.nextcloud.databinding.ActivityNextcloudLoginBinding
 import kotlinx.coroutines.*
 
 class LoginActivity : AppCompatActivity() {
 
     private val nextcloudClient = NextcloudApiHelper(this)
 
+    private lateinit var binding: ActivityNextcloudLoginBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nextcloud_login)
-        nextButton.setOnClickListener {
-            serverUrlInputLayout.error = null
+        binding = ActivityNextcloudLoginBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding.root)
+        binding.nextButton.setOnClickListener {
+            binding.serverUrlInputLayout.error = null
             lifecycleScope.launch {
-                var url = serverUrlInput.text.toString()
+                var url = binding.serverUrlInput.text.toString()
                 if (!(url.startsWith("http://") || url.startsWith("https://"))) {
                     url = "https://$url"
                 }
                 if (url.isBlank()) {
-                    serverUrlInputLayout.error = getString(R.string.next_cloud_server_url_empty)
+                    binding.serverUrlInputLayout.error = getString(R.string.next_cloud_server_url_empty)
                     return@launch
                 }
                 if (nextcloudClient.checkNextcloudInstallation(url)) {
                     openLoginPage(url)
                 } else {
-                    serverUrlInputLayout.error = getString(R.string.next_cloud_server_invalid_url)
+                    binding.serverUrlInputLayout.error = getString(R.string.next_cloud_server_invalid_url)
                 }
             }
         }

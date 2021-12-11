@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
@@ -20,7 +20,7 @@ import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.WebsearchViewModel
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
-import kotlinx.android.synthetic.main.view_websearch.view.*
+import de.mm20.launcher2.ui.databinding.ViewWebsearchBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WebSearchView : FrameLayout {
@@ -29,6 +29,8 @@ class WebSearchView : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
 
     private val websearches: LiveData<List<Websearch>>
+
+    private val binding = ViewWebsearchBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
         View.inflate(context, R.layout.view_websearch, this)
@@ -41,7 +43,7 @@ class WebSearchView : FrameLayout {
 
     private fun updateWebsearches(websearches: List<Websearch>) {
         visibility = if (websearches.isEmpty()) View.GONE else View.VISIBLE
-        webSearchList.removeAllViews()
+        binding.webSearchList.removeAllViews()
         for (search in websearches) {
             val chip = Chip(context)
             chip.text = search.label
@@ -68,7 +70,7 @@ class WebSearchView : FrameLayout {
                 ActivityStarter.start(context, chip, intent = search.getLaunchIntent())
             }
 
-            webSearchList.addView(chip)
+            binding.webSearchList.addView(chip)
         }
     }
 

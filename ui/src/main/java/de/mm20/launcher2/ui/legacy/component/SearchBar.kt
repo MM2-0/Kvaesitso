@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -15,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import de.mm20.launcher2.ktx.dp
@@ -24,8 +24,8 @@ import de.mm20.launcher2.preferences.SearchStyles
 import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.databinding.ViewSearchBarBinding
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
-import kotlinx.android.synthetic.main.view_search_bar.view.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchBar @JvmOverloads constructor(
@@ -43,13 +43,14 @@ class SearchBar @JvmOverloads constructor(
         repeatMode = LottieDrawable.REVERSE
     }
 
+    private val binding = ViewSearchBarBinding.inflate(LayoutInflater.from(context), this)
+
     init {
-        View.inflate(context, R.layout.view_search_bar, this)
-        overflowMenu.setImageDrawable(rightDrawable)
-        searchEdit.addTextChangedListener(object : TextWatcher {
+        binding.overflowMenu.setImageDrawable(rightDrawable)
+        binding.searchEdit.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                val text = searchEdit.text.toString()
-                onSearchQueryChanged?.invoke(searchEdit.text.toString())
+                val text = binding.searchEdit.text.toString()
+                onSearchQueryChanged?.invoke(binding.searchEdit.text.toString())
                 if (text.isEmpty()) {
                     if (rightDrawable.frame > rightDrawable.minFrame.toInt()) {
                         rightDrawable.speed = -1f
@@ -74,10 +75,10 @@ class SearchBar @JvmOverloads constructor(
         val viewModel = (context as AppCompatActivity).viewModel<SearchViewModel>().value
 
         viewModel.isSearching.observe(context, Observer {
-            searchProgressBar.visibility = if (it) View.VISIBLE else View.GONE
+            binding.searchProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
 
-        overflowMenu.setOnClickListener {
+        binding.overflowMenu.setOnClickListener {
             if (getSearchQuery().isEmpty()) onRightIconClick?.invoke(it)
             else (setSearchQuery(""))
         }
@@ -90,22 +91,22 @@ class SearchBar @JvmOverloads constructor(
     }
 
     fun setRightIcon(iconRes: Int) {
-        overflowMenu.setImageResource(iconRes)
+        binding.overflowMenu.setImageResource(iconRes)
     }
 
     var onSearchQueryChanged: ((String) -> Unit)? = null
     var onRightIconClick: ((View) -> Unit)? = null
 
     override fun setOnTouchListener(l: OnTouchListener?) {
-        searchEdit.setOnTouchListener(l)
+        binding.searchEdit.setOnTouchListener(l)
     }
 
     fun setSearchQuery(text: String) {
-        searchEdit.setText(text)
+        binding.searchEdit.setText(text)
     }
 
     fun getSearchQuery(): String {
-        return searchEdit.text.toString()
+        return binding.searchEdit.text.toString()
     }
 
     /**
@@ -168,7 +169,7 @@ class SearchBar @JvmOverloads constructor(
     }
 
     fun getWebSearchView(): View {
-        return webSearchView
+        return binding.webSearchView
     }
 
     private fun getHideAnimator(): AnimatorSet {
@@ -180,7 +181,7 @@ class SearchBar @JvmOverloads constructor(
                 val shadowY = resources.getDimension(R.dimen.elevation_shadow_1dp_y)
                 val shadowR = resources.getDimension(R.dimen.elevation_shadow_1dp_radius)
                 val shadowC = Color.argb(66, 0, 0, 0)
-                searchEdit.setShadowLayer(shadowR, 0f, shadowY, shadowC)
+                binding.searchEdit.setShadowLayer(shadowR, 0f, shadowY, shadowC)
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
@@ -191,13 +192,13 @@ class SearchBar @JvmOverloads constructor(
                                 interpolator = DecelerateInterpolator(3f)
                                 duration = 150
                             },
-                            ObjectAnimator.ofArgb(searchEdit, "hintTextColor", searchEdit.hintTextColors.defaultColor, Color.WHITE),
-                            ObjectAnimator.ofArgb(searchIcon, "colorFilter", iconColor, Color.WHITE),
-                            ObjectAnimator.ofArgb(overflowMenu, "colorFilter", iconColor, Color.WHITE),
-                            ObjectAnimator.ofFloat(searchIcon, "alpha", 1f),
-                            ObjectAnimator.ofFloat(overflowMenu, "alpha", 1f),
-                            ObjectAnimator.ofFloat(searchIcon, "elevation", cardElevation),
-                            ObjectAnimator.ofFloat(overflowMenu, "elevation", cardElevation)
+                            ObjectAnimator.ofArgb(binding.searchEdit, "hintTextColor", binding.searchEdit.hintTextColors.defaultColor, Color.WHITE),
+                            ObjectAnimator.ofArgb(binding.searchIcon, "colorFilter", iconColor, Color.WHITE),
+                            ObjectAnimator.ofArgb(binding.overflowMenu, "colorFilter", iconColor, Color.WHITE),
+                            ObjectAnimator.ofFloat(binding.searchIcon, "alpha", 1f),
+                            ObjectAnimator.ofFloat(binding.overflowMenu, "alpha", 1f),
+                            ObjectAnimator.ofFloat(binding.searchIcon, "elevation", cardElevation),
+                            ObjectAnimator.ofFloat(binding.overflowMenu, "elevation", cardElevation)
                     )
                 }
             }
@@ -226,7 +227,7 @@ class SearchBar @JvmOverloads constructor(
                 val iconAlpha = iconAttrs.getFloat(0, 0f)
                 iconAttrs.recycle()
                 val iconColor = ContextCompat.getColor(context, R.color.icon_color)
-                searchEdit.setShadowLayer(0f, 0f, 0f, 0)
+                binding.searchEdit.setShadowLayer(0f, 0f, 0f, 0)
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
@@ -236,13 +237,13 @@ class SearchBar @JvmOverloads constructor(
                             ObjectAnimator.ofInt(this@SearchBar, "backgroundOpacity", LauncherPreferences.instance.cardOpacity).apply {
                                 interpolator = DecelerateInterpolator(3f)
                             },
-                            ObjectAnimator.ofArgb(searchEdit, "hintTextColor", Color.WHITE, hint),
-                            ObjectAnimator.ofArgb(searchIcon, "colorFilter", Color.WHITE, iconColor),
-                            ObjectAnimator.ofArgb(overflowMenu, "colorFilter", Color.WHITE, iconColor),
-                            ObjectAnimator.ofFloat(searchIcon, "alpha", iconAlpha),
-                            ObjectAnimator.ofFloat(overflowMenu, "alpha", iconAlpha),
-                            ObjectAnimator.ofFloat(searchIcon, "elevation", 0f),
-                            ObjectAnimator.ofFloat(overflowMenu, "elevation", 0f)
+                            ObjectAnimator.ofArgb(binding.searchEdit, "hintTextColor", Color.WHITE, hint),
+                            ObjectAnimator.ofArgb(binding.searchIcon, "colorFilter", Color.WHITE, iconColor),
+                            ObjectAnimator.ofArgb(binding.overflowMenu, "colorFilter", Color.WHITE, iconColor),
+                            ObjectAnimator.ofFloat(binding.searchIcon, "alpha", iconAlpha),
+                            ObjectAnimator.ofFloat(binding.overflowMenu, "alpha", iconAlpha),
+                            ObjectAnimator.ofFloat(binding.searchIcon, "elevation", 0f),
+                            ObjectAnimator.ofFloat(binding.overflowMenu, "elevation", 0f)
                     )
                 }
             }

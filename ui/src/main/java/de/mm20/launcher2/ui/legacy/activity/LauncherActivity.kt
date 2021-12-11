@@ -12,19 +12,15 @@ import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.util.TypedValue
-import android.view.MotionEvent
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
-import android.view.ViewGroupOverlay
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -60,6 +56,7 @@ import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.legacy.component.EditFavoritesView
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.ui.legacy.search.SearchGridView
@@ -68,7 +65,6 @@ import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
 import de.mm20.launcher2.widgets.WidgetViewModel
-import kotlinx.android.synthetic.main.activity_launcher.*
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -98,23 +94,23 @@ class LauncherActivity : AppCompatActivity() {
         set(value) {
             field = value
             if (value) {
-                widgetSpacer.visibility = View.GONE
-                smartWidget.visibility = View.GONE
-                searchBar.setRightIcon(R.drawable.ic_done)
-                scrollView.setOnTouchListener(null)
-                for (v in widgetList.iterator()) {
+                binding.widgetSpacer.visibility = View.GONE
+                binding.smartWidget.visibility = View.GONE
+                binding.searchBar.setRightIcon(R.drawable.ic_done)
+                binding.scrollView.setOnTouchListener(null)
+                for (v in binding.widgetList.iterator()) {
                     if (v is WidgetView) {
                         v.editMode = true
                         v.onResizeModeChange = {
-                            OneShotLayoutTransition.run(widgetList)
-                            OneShotLayoutTransition.run(widgetContainer)
+                            OneShotLayoutTransition.run(binding.widgetList)
+                            OneShotLayoutTransition.run(binding.widgetContainer)
                         }
                     }
                 }
-                OneShotLayoutTransition.run(widgetList)
-                OneShotLayoutTransition.run(widgetContainer)
-                OneShotLayoutTransition.run(scrollContainer)
-                fabEditWidget.apply {
+                OneShotLayoutTransition.run(binding.widgetList)
+                OneShotLayoutTransition.run(binding.widgetContainer)
+                OneShotLayoutTransition.run(binding.scrollContainer)
+                binding.fabEditWidget.apply {
                     setIconResource(R.drawable.ic_add)
                     setText(R.string.widget_add_widget)
                     setOnClickListener {
@@ -133,31 +129,31 @@ class LauncherActivity : AppCompatActivity() {
                     val insetsController = WindowInsetsControllerCompat(window, window.decorView)
                     insetsController.isAppearanceLightStatusBars = true
                 }
-                searchBar.visibility = View.INVISIBLE
-                editWidgetToolbar
+                binding.searchBar.visibility = View.INVISIBLE
+                binding.editWidgetToolbar
                     .animate()
                     .translationY(0f)
                     .alpha(1f)
                     .withStartAction {
-                        editWidgetToolbar.visibility = View.VISIBLE
+                        binding.editWidgetToolbar.visibility = View.VISIBLE
                     }
                     .start()
             } else {
                 widgetViewModel.saveWidgets(widgets)
-                widgetSpacer.visibility = View.VISIBLE
-                widgetList.layoutTransition = ChangingLayoutTransition()
-                widgetContainer.layoutTransition = ChangingLayoutTransition()
-                scrollContainer.layoutTransition = ChangingLayoutTransition()
-                searchBar.setRightIcon(R.drawable.ic_more_vert)
-                scrollView.setOnTouchListener(scrollViewOnTouchListener)
-                smartWidget.visibility = View.VISIBLE
-                for (v in widgetList.iterator()) {
+                binding.widgetSpacer.visibility = View.VISIBLE
+                binding.widgetList.layoutTransition = ChangingLayoutTransition()
+                binding.widgetContainer.layoutTransition = ChangingLayoutTransition()
+                binding.scrollContainer.layoutTransition = ChangingLayoutTransition()
+                binding.searchBar.setRightIcon(R.drawable.ic_more_vert)
+                binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
+                binding.smartWidget.visibility = View.VISIBLE
+                for (v in binding.widgetList.iterator()) {
                     if (v is WidgetView) {
                         v.editMode = false
                         v.layoutTransition = ChangingLayoutTransition()
                     }
                 }
-                fabEditWidget.apply {
+                binding.fabEditWidget.apply {
                     setIconResource(R.drawable.ic_edit)
                     setText(R.string.menu_edit_widgets)
                     setOnClickListener {
@@ -168,13 +164,13 @@ class LauncherActivity : AppCompatActivity() {
 
                 updateSystemBarAppearance()
 
-                searchBar.visibility = View.VISIBLE
-                editWidgetToolbar
+                binding.searchBar.visibility = View.VISIBLE
+                binding.editWidgetToolbar
                     .animate()
-                    .translationY(-editWidgetToolbar.height.toFloat())
+                    .translationY(-binding.editWidgetToolbar.height.toFloat())
                     .alpha(0f)
                     .withEndAction {
-                        editWidgetToolbar.visibility = View.GONE
+                        binding.editWidgetToolbar.visibility = View.GONE
                     }
                     .start()
             }
@@ -188,6 +184,8 @@ class LauncherActivity : AppCompatActivity() {
         insetsController.isAppearanceLightStatusBars =
             allowLightSystemBars && preferences.lightStatusBar
     }
+    
+    private lateinit var binding: ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -212,64 +210,65 @@ class LauncherActivity : AppCompatActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        setContentView(R.layout.activity_launcher)
+        binding = ActivityLauncherBinding.inflate(LayoutInflater.from(this))
+        setContentView(binding.root)
 
-        overlayView = rootView.overlay
+        overlayView = binding.rootView.overlay
 
         if (LauncherPreferences.instance.dimWallpaper) {
-            dimWallpaper.setBackgroundColor(getColor(R.color.wallpaper_dim))
+            binding.dimWallpaper.setBackgroundColor(getColor(R.color.wallpaper_dim))
         }
 
-        scrollContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        searchContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        widgetContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.scrollContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.searchContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.widgetContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        val params = widgetSpacer.layoutParams as LinearLayout.LayoutParams
+        val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
         params.topMargin = Point().also { windowManager.defaultDisplay.getSize(it) }.y
-        widgetSpacer.layoutParams = params
-        container.doOnLayout {
+        binding.widgetSpacer.layoutParams = params
+        binding.container.doOnLayout {
             adjustWidgetSpace()
         }
         initWidgets()
-        scrollView.setOnTouchListener(scrollViewOnTouchListener)
-        scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
+        binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
+        binding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             when {
                 /* Hide searchbar*/
-                scrollY > oldScrollY && ((searchVisibility && scrollY > searchBar.height) || widgetEditMode ||
-                        scrollY > widgetSpacer.height + searchBar.height
-                        + (widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin) -> {
-                    var newTransY = searchBar.translationY - scrollY + oldScrollY
-                    if (newTransY < -searchBar.height.toFloat() * 1.5f) {
-                        newTransY = -searchBar.height.toFloat() * 1.5f
+                scrollY > oldScrollY && ((searchVisibility && scrollY > binding.searchBar.height) || widgetEditMode ||
+                        scrollY > binding.widgetSpacer.height + binding.searchBar.height
+                        + (binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin) -> {
+                    var newTransY = binding.searchBar.translationY - scrollY + oldScrollY
+                    if (newTransY < -binding.searchBar.height.toFloat() * 1.5f) {
+                        newTransY = -binding.searchBar.height.toFloat() * 1.5f
                     }
-                    searchBar.translationY = newTransY
+                    binding.searchBar.translationY = newTransY
                 }
                 /* Show searchbar*/
                 scrollY < oldScrollY -> {
-                    var newTransY = searchBar.translationY - scrollY + oldScrollY
+                    var newTransY = binding.searchBar.translationY - scrollY + oldScrollY
                     if (newTransY > 0f) {
                         newTransY = 0f
                     }
-                    searchBar.translationY = newTransY
+                    binding.searchBar.translationY = newTransY
                 }
             }
             if (scrollY > 0 && (searchVisibility || widgetEditMode ||
-                        scrollY > widgetSpacer.height
-                        + (widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin)
+                        scrollY > binding.widgetSpacer.height
+                        + (binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin)
             ) {
-                searchBar.raise()
-            } else searchBar.drop()
+                binding.searchBar.raise()
+            } else binding.searchBar.drop()
             if (scrollY == 0) {
-                smartWidget.translucent = true
-                if (!searchVisibility) searchBar.hide()
+                binding.smartWidget.translucent = true
+                if (!searchVisibility) binding.searchBar.hide()
             } else {
-                smartWidget.translucent = false
-                searchBar.show()
+                binding.smartWidget.translucent = false
+                binding.searchBar.show()
             }
 
         }
 
-        searchBar.onRightIconClick = onRightIconClick@{
+        binding.searchBar.onRightIconClick = onRightIconClick@{
             if (widgetEditMode) widgetEditMode = false
             else {
                 val menu = PopupMenu(this, it)
@@ -339,21 +338,21 @@ class LauncherActivity : AppCompatActivity() {
                 menu.show()
             }
         }
-        searchBar.setOnTouchListener { _, _ ->
+        binding.searchBar.setOnTouchListener { _, _ ->
             if (!searchVisibility) showSearch()
             false
         }
 
-        searchBar.onSearchQueryChanged = {
+        binding.searchBar.onSearchQueryChanged = {
             search(it)
         }
-        widgetList.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
+        binding.widgetList.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        fabEditWidget.setOnClickListener {
+        binding.fabEditWidget.setOnClickListener {
             widgetEditMode = true
         }
 
-        editWidgetToolbar.apply {
+        binding.editWidgetToolbar.apply {
             navigationIcon =
                 ContextCompat.getDrawable(this@LauncherActivity, R.drawable.ic_done)?.apply {
                     setTint(ContextCompat.getColor(this@LauncherActivity, R.color.icon_color))
@@ -376,7 +375,7 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun initWidgets() {
         widgetHost = AppWidgetHost(applicationContext, 0xacab)
-        widgetList.removeAllViews()
+        binding.widgetList.removeAllViews()
         val params = LinearLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
         params.topMargin = (8 * dp).roundToInt()
         for (w in widgets) {
@@ -384,21 +383,21 @@ class LauncherActivity : AppCompatActivity() {
             view.layoutTransition = ChangingLayoutTransition()
             view.layoutParams = params
             if (view.setWidget(w, widgetHost)) {
-                widgetList.addDragView(view, view.getDragHandle())
+                binding.widgetList.addDragView(view, view.getDragHandle())
                 view.onRemove = {
-                    OneShotLayoutTransition.run(widgetList)
-                    OneShotLayoutTransition.run(widgetContainer)
-                    widgetList.removeDragView(view)
+                    OneShotLayoutTransition.run(binding.widgetList)
+                    OneShotLayoutTransition.run(binding.widgetContainer)
+                    binding.widgetList.removeDragView(view)
                     removeWidget(view.widget)
                 }
                 view.onResizeModeChange = {
-                    OneShotLayoutTransition.run(widgetList)
-                    OneShotLayoutTransition.run(widgetContainer)
+                    OneShotLayoutTransition.run(binding.widgetList)
+                    OneShotLayoutTransition.run(binding.widgetContainer)
                 }
             }
         }
 
-        widgetList.setOnViewSwapListener { _, firstPosition, _, secondPosition ->
+        binding.widgetList.setOnViewSwapListener { _, firstPosition, _, secondPosition ->
             Collections.swap(widgets, firstPosition, secondPosition)
         }
         updateWidgets()
@@ -463,35 +462,35 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun adjustWidgetSpace() {
-        val firstWidget = smartWidget
+        val firstWidget = binding.smartWidget
         if (firstWidget == null) {
-            val m = scrollContainer.paddingTop
-            val params = widgetSpacer.layoutParams as LinearLayout.LayoutParams
+            val m = binding.scrollContainer.paddingTop
+            val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
             params.topMargin =
-                scrollView.height - m - widgetContainer.paddingTop - widgetSpacer.height
-            widgetSpacer.layoutParams = params
+                binding.scrollView.height - m - binding.widgetContainer.paddingTop - binding.widgetSpacer.height
+            binding.widgetSpacer.layoutParams = params
             return
         }
-        val m = scrollContainer.paddingTop +
+        val m = binding.scrollContainer.paddingTop +
                 (firstWidget.layoutParams as LinearLayout.LayoutParams).run { topMargin + bottomMargin }
-        val params = widgetSpacer.layoutParams as LinearLayout.LayoutParams
+        val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
         params.topMargin =
-            scrollView.height - firstWidget.measuredHeight - m - widgetContainer.paddingTop - widgetSpacer.height
-        widgetSpacer.layoutParams = params
+            binding.scrollView.height - firstWidget.measuredHeight - m - binding.widgetContainer.paddingTop - binding.widgetSpacer.height
+        binding.widgetSpacer.layoutParams = params
     }
 
 
     private fun search(text: String) {
         searchViewModel.search(text)
-        if (webSearchViewSpacer.tag != "measured" || webSearchViewSpacer.height == 0) {
-            val webSearchView = searchBar.getWebSearchView()
+        if (binding.webSearchViewSpacer.tag != "measured" || binding.webSearchViewSpacer.height == 0) {
+            val webSearchView = binding.searchBar.getWebSearchView()
             webSearchView.doOnNextLayout {
-                webSearchViewSpacer.layoutParams = webSearchViewSpacer.layoutParams
+                binding.webSearchViewSpacer.layoutParams = binding.webSearchViewSpacer.layoutParams
                     .apply { height = webSearchView.height }
-                webSearchViewSpacer.tag = "measured"
+                binding.webSearchViewSpacer.tag = "measured"
             }
         }
-        webSearchViewSpacer.visibility = if (text.isBlank()) View.GONE else View.VISIBLE
+        binding.webSearchViewSpacer.visibility = if (text.isBlank()) View.GONE else View.VISIBLE
     }
 
     private fun toggleSearch() {
@@ -508,40 +507,40 @@ class LauncherActivity : AppCompatActivity() {
         val set = AnimatorSet()
         set.duration = 300
         set.doOnEnd {
-            searchContainer.visibility = View.GONE
-            widgetContainer.visibility = View.VISIBLE
+            binding.searchContainer.visibility = View.GONE
+            binding.widgetContainer.visibility = View.VISIBLE
         }
         set.playTogether(
-            ObjectAnimator.ofFloat(widgetContainer, "translationY", 0f),
-            ObjectAnimator.ofInt(scrollView, "scrollY", 0),
+            ObjectAnimator.ofFloat(binding.widgetContainer, "translationY", 0f),
+            ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0),
             ObjectAnimator.ofFloat(
-                searchContainer, "translationY", 0f,
-                if (scrollView.scrollY > searchContainer.height / 2f) -searchContainer.height.toFloat() else scrollView.height.toFloat()
+                binding.searchContainer, "translationY", 0f,
+                if (binding.scrollView.scrollY > binding.searchContainer.height / 2f) -binding.searchContainer.height.toFloat() else binding.scrollView.height.toFloat()
             )
         )
         set.start()
-        scrollView.scrollTo(0, 0)
-        searchBar.hide()
-        if (!searchBar.getSearchQuery().isEmpty()) searchBar.setSearchQuery("")
+        binding.scrollView.scrollTo(0, 0)
+        binding.searchBar.hide()
+        if (!binding.searchBar.getSearchQuery().isEmpty()) binding.searchBar.setSearchQuery("")
         (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
-            .hideSoftInputFromWindow(searchBar.windowToken, 0)
+            .hideSoftInputFromWindow(binding.searchBar.windowToken, 0)
     }
 
     private fun showSearch() {
 
         searchVisibility = true
-        searchBar.show()
-        searchContainer.visibility = View.VISIBLE
-        widgetContainer.visibility = View.GONE
+        binding.searchBar.show()
+        binding.searchContainer.visibility = View.VISIBLE
+        binding.widgetContainer.visibility = View.GONE
         val set = AnimatorSet()
         set.duration = 300
         set.doOnEnd {
             search("")
         }
         set.playTogether(
-            ObjectAnimator.ofFloat(widgetContainer, "translationY", scrollView.height.toFloat()),
-            ObjectAnimator.ofInt(scrollView, "scrollY", 0),
-            ObjectAnimator.ofFloat(searchContainer, "translationY", scrollView.height.toFloat(), 0f)
+            ObjectAnimator.ofFloat(binding.widgetContainer, "translationY", binding.scrollView.height.toFloat()),
+            ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0),
+            ObjectAnimator.ofFloat(binding.searchContainer, "translationY", binding.scrollView.height.toFloat(), 0f)
         )
         set.start()
     }
@@ -549,7 +548,7 @@ class LauncherActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (widgetEditMode) widgetEditMode = false
         if (searchVisibility) hideSearch()
-        else ObjectAnimator.ofInt(scrollView, "scrollY", 0).setDuration(200).start()
+        else ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0).setDuration(200).start()
 
 
     }
@@ -557,17 +556,17 @@ class LauncherActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         ActivityStarter.resume()
-        ActivityStarter.create(rootView)
-        activityStartOverlay.visibility = View.INVISIBLE
+        ActivityStarter.create(binding.rootView)
+        binding.activityStartOverlay.visibility = View.INVISIBLE
 
         val widgetViewModel by viewModels<WidgetViewModel>()
         widgetViewModel.requestCalendarUpdate()
-        search(searchBar.getSearchQuery())
+        search(binding.searchBar.getSearchQuery())
         updateWidgets()
 
         updateSystemBarAppearance()
 
-        container.doOnNextLayout {
+        binding.container.doOnNextLayout {
             WallpaperManager.getInstance(this).setWallpaperOffsets(it.windowToken, 0.5f, 0.5f)
         }
 
@@ -641,7 +640,7 @@ class LauncherActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        search(searchBar.getSearchQuery())
+        search(binding.searchBar.getSearchQuery())
         when (requestCode) {
             PermissionsManager.LOCATION -> {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
@@ -652,7 +651,7 @@ class LauncherActivity : AppCompatActivity() {
             PermissionsManager.ALL -> {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
                 widgetViewModel.requestCalendarUpdate()
-                search(searchBar.getSearchQuery())
+                search(binding.searchBar.getSearchQuery())
             }
         }
     }
@@ -661,7 +660,7 @@ class LauncherActivity : AppCompatActivity() {
         var topWidget: LauncherWidget? = null
         var topWidgetRanking = 0
         var topWidgetView: WidgetView? = null
-        for (widget in widgetList.iterator()) {
+        for (widget in binding.widgetList.iterator()) {
             if (widget is WidgetView) {
                 widget.update()
                 if (topWidgetRanking < widget.widgetView?.compactViewRanking ?: 0) {
@@ -675,11 +674,11 @@ class LauncherActivity : AppCompatActivity() {
         compactView?.update()
         compactView?.goToParent = {
             ObjectAnimator.ofFloat(
-                scrollView, "scrollY", topWidgetView?.top?.toFloat()
+                binding.scrollView, "scrollY", topWidgetView?.top?.toFloat()
                     ?: 0f
             ).start()
         }
-        smartWidget.compactView = compactView
+        binding.smartWidget.compactView = compactView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -727,16 +726,16 @@ class LauncherActivity : AppCompatActivity() {
             if (view.setWidget(widget, widgetHost)) {
                 view.editMode = true
 
-                widgetList.addDragView(view, view.getDragHandle())
+                binding.widgetList.addDragView(view, view.getDragHandle())
                 view.onRemove = {
-                    OneShotLayoutTransition.run(widgetList)
-                    OneShotLayoutTransition.run(widgetContainer)
-                    widgetList.removeDragView(view)
+                    OneShotLayoutTransition.run(binding.widgetList)
+                    OneShotLayoutTransition.run(binding.widgetContainer)
+                    binding.widgetList.removeDragView(view)
                     removeWidget(view.widget)
                 }
                 view.onResizeModeChange = {
-                    OneShotLayoutTransition.run(widgetList)
-                    OneShotLayoutTransition.run(widgetContainer)
+                    OneShotLayoutTransition.run(binding.widgetList)
+                    OneShotLayoutTransition.run(binding.widgetContainer)
                 }
                 widgets.add(widget)
             }
@@ -748,37 +747,37 @@ class LauncherActivity : AppCompatActivity() {
             MotionEvent.ACTION_DOWN -> true
             MotionEvent.ACTION_MOVE -> {
                 when {
-                    scrollView.scrollY == 0 -> {
+                    binding.scrollView.scrollY == 0 -> {
                         if (event.historySize > 0) {
                             val dY = event.y - event.getHistoricalY(0)
-                            val newTransY = 0.4f * dY + container.translationY
-                            if (newTransY > 0 && newTransY < searchBar.height) {
-                                container.translationY = newTransY
-                                searchBar.show()
+                            val newTransY = 0.4f * dY + binding.container.translationY
+                            if (newTransY > 0 && newTransY < binding.searchBar.height) {
+                                binding.container.translationY = newTransY
+                                binding.searchBar.show()
                             } else if (newTransY <= 0) {
-                                container.translationY = 0f
+                                binding.container.translationY = 0f
                             } else {
-                                container.translationY = searchBar.height.toFloat()
+                                binding.container.translationY = binding.searchBar.height.toFloat()
                             }
 
-                            if (container.translationY == 0f) return@onTouch false
+                            if (binding.container.translationY == 0f) return@onTouch false
                         }
                     }
-                    scrollView.scrollY == scrollContainer.height - scrollView.height && searchVisibility -> {
+                    binding.scrollView.scrollY == binding.scrollContainer.height - binding.scrollView.height && searchVisibility -> {
                         if (event.historySize > 0) {
                             val dY = event.y - event.getHistoricalY(0)
-                            val newTransY = 0.4f * dY + container.translationY
+                            val newTransY = 0.4f * dY + binding.container.translationY
 
-                            if (newTransY <= 0 && newTransY > -searchBar.height) {
-                                container.translationY = newTransY
-                                searchBar.show()
+                            if (newTransY <= 0 && newTransY > -binding.searchBar.height) {
+                                binding.container.translationY = newTransY
+                                binding.searchBar.show()
                             } else if (newTransY > 0) {
-                                container.translationY = 0f
+                                binding.container.translationY = 0f
                             } else {
-                                container.translationY = -searchBar.height.toFloat()
+                                binding.container.translationY = -binding.searchBar.height.toFloat()
                             }
 
-                            if (container.translationY == 0f) return@onTouch false
+                            if (binding.container.translationY == 0f) return@onTouch false
                         }
                     }
                     else -> return@onTouch false
@@ -786,10 +785,10 @@ class LauncherActivity : AppCompatActivity() {
                 true
             }
             MotionEvent.ACTION_UP -> {
-                if (container.translationY >= searchBar.height * 0.6) toggleSearch()
-                if (container.translationY <= -searchBar.height) hideSearch()
-                container.animate().translationY(0f).setDuration(200).start()
-                if (!searchVisibility && scrollView.scrollY == 0) searchBar.hide()
+                if (binding.container.translationY >= binding.searchBar.height * 0.6) toggleSearch()
+                if (binding.container.translationY <= -binding.searchBar.height) hideSearch()
+                binding.container.animate().translationY(0f).setDuration(200).start()
+                if (!searchVisibility && binding.scrollView.scrollY == 0) binding.searchBar.hide()
                 false
             }
             else -> false
