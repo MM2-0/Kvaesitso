@@ -42,7 +42,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.materialcomponents)
+    implementation(libs.materialcomponents.core)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.securitycrypto)

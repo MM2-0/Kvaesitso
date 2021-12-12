@@ -92,7 +92,7 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.media2)
-    implementation(libs.materialcomponents)
+    implementation(libs.materialcomponents.core)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.gridlayout)
 

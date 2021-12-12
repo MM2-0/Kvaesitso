@@ -43,8 +43,6 @@ dependencies {
 
     implementation(libs.bundles.androidx.lifecycle)
 
-    implementation(libs.materialcomponents)
-
     implementation(libs.koin.android)
 
     implementation(project(":weather"))

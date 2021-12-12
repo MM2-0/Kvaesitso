@@ -39,7 +39,7 @@ dependencies {
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.materialcomponents)
+    implementation(libs.materialcomponents.core)
 
     implementation(libs.androidx.palette)
 

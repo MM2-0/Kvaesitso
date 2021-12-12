@@ -37,7 +37,7 @@ android {
 dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.appcompat)
-    implementation(libs.materialcomponents)
+    implementation(libs.materialcomponents.core)
     implementation(libs.androidx.recyclerview)
 
 

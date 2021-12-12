@@ -66,7 +66,11 @@ dependencies {
 
     // Legacy dependencies
     implementation(libs.androidx.transition)
-    implementation(libs.materialcomponents)
+
+    implementation(libs.materialcomponents.core)
+    implementation(libs.materialcomponents.composethemeadapter)
+    implementation(libs.materialcomponents.composethemeadapter3)
+
     implementation(libs.viewpropertyobjectanimator)
     implementation(libs.glide)
     implementation(libs.draglinearlayout)

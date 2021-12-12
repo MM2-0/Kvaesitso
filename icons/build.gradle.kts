@@ -39,7 +39,6 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.palette)
-    implementation(libs.materialcomponents)
 
     implementation(libs.bundles.androidx.lifecycle)
 

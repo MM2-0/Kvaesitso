@@ -252,9 +252,15 @@ dependencyResolutionManagement {
                 .to("androidx.navigation", "navigation-compose")
                 .version("2.4.0-alpha10")
 
-            alias("materialcomponents")
+            alias("materialcomponents.core")
                 .to("com.google.android.material", "material")
                 .version("1.5.0-beta01")
+            alias("materialcomponents.composethemeadapter3")
+                .to("com.google.android.material", "compose-theme-adapter-3")
+                .version("1.0.1")
+            alias("materialcomponents.composethemeadapter")
+                .to("com.google.android.material", "compose-theme-adapter")
+                .version("1.1.1")
 
             version("lottie", "4.1.0")
             alias("lottie.core")
