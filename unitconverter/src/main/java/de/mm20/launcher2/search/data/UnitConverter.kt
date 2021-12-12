@@ -1,7 +1,6 @@
 package de.mm20.launcher2.search.data
 
 import android.content.Context
-import android.os.Bundle
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.unitconverter.Dimension
 import de.mm20.launcher2.unitconverter.UnitValue
@@ -32,7 +31,7 @@ open class UnitConverter(
             val converters = listOf(
                     lazy { MassConverter(context) },
                     lazy { LengthConverter(context) },
-                    lazy { CurrencyConverter(context) },
+                    lazy { CurrencyConverter() },
                     lazy { DataConverter(context) },
                     lazy { TimeConverter(context) },
                     lazy { VelocityConverter(context) },

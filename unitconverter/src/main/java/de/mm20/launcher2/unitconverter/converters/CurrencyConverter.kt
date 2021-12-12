@@ -15,11 +15,11 @@ import kotlin.math.abs
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class CurrencyConverter(context: Context) : Converter(), KoinComponent {
+class CurrencyConverter : Converter, KoinComponent {
 
     override val dimension: Dimension = Dimension.Currency
 
-    val repository: CurrencyRepository by inject()
+    private val repository: CurrencyRepository by inject()
 
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")
 

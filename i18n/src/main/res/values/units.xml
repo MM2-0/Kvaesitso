@@ -264,4 +264,21 @@
         <item quantity="one">short ton</item>
         <item quantity="other">short tons</item>
     </plurals>
+
+    <!-- UNITS OF TEMPERATURE -->
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">degree celsius</item>
+        <item quantity="other">degrees celsius</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">degree fahrenheit</item>
+        <item quantity="other">degrees fahrenheit</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">K</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">kelvin</item>
+        <item quantity="other">kelvins</item>
+    </plurals>
 </resources>
