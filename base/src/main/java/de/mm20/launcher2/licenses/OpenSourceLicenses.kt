@@ -177,4 +177,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://insert-koin.io/"
     ),
+    OpenSourceLibrary(
+        name = "Poppins",
+        description = "A geometric sans serif typeface",
+        copyrightNote = "Copyright 2020 The Poppins Project Authors",
+        licenseName = R.string.open_font_license_name,
+        licenseText = R.raw.license_ofl,
+        url = "https://github.com/itfoundry/poppins"
+    ),
 )
