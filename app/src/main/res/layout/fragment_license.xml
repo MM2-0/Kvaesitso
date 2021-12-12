@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,23 +13,24 @@
             android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="8dp" />
+            android:textAppearance="?textAppearanceBodyMedium"
+            android:padding="16dp" />
 
         <TextView
             android:id="@+id/website"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clickable="true"
-            android:drawableStart="@drawable/ic_open_in_browser"
-            android:drawablePadding="4dp"
-            android:drawableTint="?colorAccent"
+            app:drawableStartCompat="@drawable/ic_open_in_browser"
+            android:drawablePadding="8dp"
+            app:drawableTint="?colorPrimary"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
             android:gravity="center_vertical"
             android:padding="16dp"
             android:text="@string/open_webpage"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
-            android:textColor="?android:colorAccent" />
+            android:textAppearance="?textAppearanceLabelLarge"
+            android:textColor="?colorPrimary" />
 
         <TextView
             android:id="@+id/licenseTitle"
@@ -37,18 +39,21 @@
             android:padding="16dp"
             android:textAllCaps="true"
             android:textSize="14sp"
+            android:textAppearance="?textAppearanceTitleSmall"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/licenseCopyright"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyMedium"
             android:padding="16dp"/>
 
         <TextView
             android:id="@+id/licenseText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAppearance="?textAppearanceBodyMedium"
             android:padding="16dp" />
     </LinearLayout>
 </ScrollView>

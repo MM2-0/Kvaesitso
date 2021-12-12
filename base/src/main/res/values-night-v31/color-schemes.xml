@@ -1,5 +1,5 @@
 <resources>
-    <style name="DefaultColors" parent="Theme.Material3.DayNight">
+    <style name="DefaultColors" parent="BaseTheme">
         <item name="colorPrimary">@android:color/system_accent1_200</item>
         <item name="colorOnPrimary">@android:color/system_accent1_800</item>
         <item name="colorPrimaryContainer">@android:color/system_accent1_700</item>
@@ -21,7 +21,7 @@
         <item name="android:colorBackground">@android:color/system_neutral1_900</item>
         <item name="colorOnBackground">@android:color/system_neutral1_100</item>
         <item name="colorSurface">@android:color/system_neutral1_900</item>
-        <item name="colorOnSurface">@android:color/system_neutral1_200</item>
+        <item name="colorOnSurface">@android:color/system_neutral1_100</item>
         <item name="colorSurfaceVariant">@android:color/system_neutral2_700</item>
         <item name="colorOnSurfaceVariant">@android:color/system_neutral2_200</item>
         <item name="colorSurfaceInverse">@android:color/system_neutral1_100</item>

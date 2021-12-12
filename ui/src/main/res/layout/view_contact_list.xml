@@ -27,13 +27,12 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="2dp"
-            android:fontFamily="sans-serif-medium"
             android:maxLines="1"
-            android:textColor="@color/text_color_primary"
             android:transitionName="contactLabel"
             app:layout_constraintBottom_toTopOf="@+id/guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon"
+            android:textAppearance="?textAppearanceTitleSmall"
             tools:text="Ulick N. Owen" />
 
 
@@ -46,6 +45,7 @@
             android:layout_marginEnd="8dp"
             android:ellipsize="end"
             android:singleLine="true"
+            android:textAppearance="?textAppearanceBodySmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="@+id/guideline2"

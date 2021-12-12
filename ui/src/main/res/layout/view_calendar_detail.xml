@@ -36,12 +36,10 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="14dp"
             android:layout_marginEnd="16dp"
-            android:textColor="@color/text_color_primary"
-            android:textSize="13sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/calendarColor"
             app:layout_constraintTop_toTopOf="parent"
+            android:textAppearance="?textAppearanceTitleMedium"
             tools:text="Event title" />
 
         <View

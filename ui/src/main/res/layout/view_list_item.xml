@@ -3,14 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center_vertical"
     android:drawablePadding="12dp"
     android:padding="12dp"
     tools:text="12:00"
     android:gravity="center_vertical"
-    android:drawableTint="@color/text_color_primary"
+    app:drawableTint="@color/text_color_primary"
     android:foreground="?selectableItemBackground"
     tools:drawableStart="@drawable/ic_time"
-    android:textAppearance="@style/TextAppearance.Body1">
+    android:textAppearance="?textAppearanceBodyMedium">
 
 </TextView>

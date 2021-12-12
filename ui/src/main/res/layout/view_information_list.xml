@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="12dp"
-            android:textAppearance="@style/TextAppearance.Body2"
+            android:textAppearance="?textAppearanceBodySmall"
             app:layout_constraintBottom_toTopOf="@+id/guideline4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/calendarColor"

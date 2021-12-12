@@ -79,7 +79,7 @@
             android:layout_margin="16dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textAppearance="?textAppearanceTitleLarge"
             android:visibility="gone"/>
 
         <de.mm20.launcher2.ui.legacy.view.WidgetResizeDragView

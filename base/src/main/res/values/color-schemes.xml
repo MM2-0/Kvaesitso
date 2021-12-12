@@ -1,5 +1,5 @@
 <resources>
-    <style name="DefaultColors" parent="Theme.Material3.DayNight">
+    <style name="DefaultColors" parent="BaseTheme">
         <item name="colorPrimary">#006689</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorPrimaryContainer">#BFE8FF</item>
@@ -29,7 +29,7 @@
         <item name="elevationOverlayEnabled">false</item>
     </style>
 
-    <style name="BlackWhiteColors" parent="Theme.Material3.DayNight">
+    <style name="BlackWhiteColors" parent="BaseTheme">
         <item name="colorPrimary">@android:color/black</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorPrimaryContainer">@android:color/white</item>

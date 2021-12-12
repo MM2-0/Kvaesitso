@@ -28,8 +28,7 @@
         android:hint="@string/websearch_dialog_name_hint"
         android:maxLines="1"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Title"
-        android:textFontWeight="600"
+        android:textAppearance="?textAppearanceHeadlineSmall"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -64,7 +63,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/websearch_dialog_url_description"
-        android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+        android:textAppearance="?textAppearanceLabelSmall"
         app:layout_constraintEnd_toEndOf="@+id/websearchUrl"
         app:layout_constraintStart_toStartOf="@+id/websearchUrl"
         app:layout_constraintTop_toBottomOf="@+id/websearchUrl" />

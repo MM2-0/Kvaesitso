@@ -21,6 +21,6 @@
         android:layout_gravity="center|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textAppearance="?textAppearanceTitleLarge"
         android:text="@string/easter_egg_text" />
 </FrameLayout>

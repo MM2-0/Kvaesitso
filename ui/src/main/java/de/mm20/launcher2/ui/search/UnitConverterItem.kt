@@ -81,9 +81,6 @@ fun UnitConverterItem(
             Column {
                 for ((i, unit) in unitConverter.values.withIndex()) {
                     if (!showAll && i >= 5) break
-                    val text = AnnotatedString.Builder().apply {
-                        append(" ${unit.formattedName} (${unit.symbol})")
-                    }.toAnnotatedString()
                     Text(
                         text = "${unit.formattedName} (${unit.symbol})",
                         style = MaterialTheme.typography.bodyMedium,

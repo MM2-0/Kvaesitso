@@ -25,8 +25,8 @@
             android:layout_gravity="center"
 
             android:clickable="true"
-            android:drawableEnd="@drawable/ic_arrow_drop_down"
-            android:drawableTint="@color/text_color_primary"
+            app:drawableEndCompat="@drawable/ic_arrow_drop_down"
+            app:drawableTint="@color/text_color_primary"
             android:ellipsize="end"
             android:focusable="true"
             android:foreground="?selectableItemBackgroundBorderless"
@@ -34,7 +34,7 @@
             android:maxLines="1"
             android:text="@string/date_today"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Heading1" />
+            android:textAppearance="?textAppearanceTitleMedium" />
     </FrameLayout>
 
     <ImageView
@@ -112,7 +112,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:text="@string/calendar_widget_pinned_events"
-        android:textAppearance="@style/TextAppearance.Heading1"
+        android:textAppearance="?textAppearanceTitleMedium"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

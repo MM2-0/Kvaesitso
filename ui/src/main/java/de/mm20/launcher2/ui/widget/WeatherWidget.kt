@@ -9,10 +9,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ContentAlpha
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material3.*
@@ -100,9 +98,10 @@ fun WeatherWidget() {
                         })
                         .padding(vertical = 12.dp)
                 ) {
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                        Text(text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details), style = MaterialTheme.typography.bodySmall)
-                    }
+                    Text(
+                        text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details),
+                        style = MaterialTheme.typography.bodySmall
+                    )
                 }
 
                 AnimatedVisibility(visible = detailsExpanded) {
@@ -144,29 +143,27 @@ fun WeatherWidget() {
                     modifier = Modifier.align(Alignment.End)
 
                 ) {
-                    CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
 
-                        Text(
-                            text = "${selectedForecast.provider} (${
-                                formatTime(
-                                    LocalContext.current,
-                                    selectedForecast.updateTime
-                                )
-                            })",
-                            style = TextStyle(
-                                fontSize = 10.sp
-                            ),
-                            modifier = Modifier
-                                .clickable(onClick = {
-                                    val intent = Intent(Intent.ACTION_VIEW).apply {
-                                        data = Uri.parse(selectedForecast.providerUrl)
-                                            ?: return@clickable
-                                    }
-                                    context.tryStartActivity(intent)
-                                })
-                                .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
-                        )
-                    }
+                    Text(
+                        text = "${selectedForecast.provider} (${
+                            formatTime(
+                                LocalContext.current,
+                                selectedForecast.updateTime
+                            )
+                        })",
+                        style = TextStyle(
+                            fontSize = 10.sp
+                        ),
+                        modifier = Modifier
+                            .clickable(onClick = {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    data = Uri.parse(selectedForecast.providerUrl)
+                                        ?: return@clickable
+                                }
+                                context.tryStartActivity(intent)
+                            })
+                            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
+                    )
                 }
             }
         }
@@ -197,17 +194,15 @@ fun WeatherWidget() {
 @Composable
 fun WeatherDetailRow(title: String, value: String) {
     Row {
-        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-            Text(
-                text = title,
-                modifier = Modifier.padding(end = 8.dp),
-                style = MaterialTheme.typography.bodySmall,
-            )
-            Text(
-                text = value,
-                style = MaterialTheme.typography.bodySmall,
-            )
-        }
+        Text(
+            text = title,
+            modifier = Modifier.padding(end = 8.dp),
+            style = MaterialTheme.typography.bodySmall,
+        )
+        Text(
+            text = value,
+            style = MaterialTheme.typography.bodySmall,
+        )
     }
 }
 
@@ -232,29 +227,27 @@ fun WeatherDaySelector(
             horizontalArrangement = Arrangement.Start
         ) {
             WeatherIcon(icon = weatherIconById(selectedDay.icon))
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                Text(
-                    text = dateFormat.format(selectedDay.timestamp),
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .padding(start = 16.dp, end = 8.dp)
-                )
-                Text(
-                    text = "${
-                        convertTemperature(
-                            imperialUnits,
-                            selectedDay.minTemp
-                        )
-                    }° / ${convertTemperature(imperialUnits, selectedDay.maxTemp)}°",
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-                Icon(
-                    imageVector = Icons.Rounded.ArrowDropDown,
-                    contentDescription = null
-                )
-            }
+            Text(
+                text = dateFormat.format(selectedDay.timestamp),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
+                    .padding(start = 16.dp, end = 8.dp)
+            )
+            Text(
+                text = "${
+                    convertTemperature(
+                        imperialUnits,
+                        selectedDay.minTemp
+                    )
+                }° / ${convertTemperature(imperialUnits, selectedDay.maxTemp)}°",
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+            Icon(
+                imageVector = Icons.Rounded.ArrowDropDown,
+                contentDescription = null
+            )
         }
         DropdownMenu(
             expanded = menuExpanded.value,
@@ -272,28 +265,26 @@ fun WeatherDaySelector(
                 ) {
                     Row {
                         WeatherIcon(icon = weatherIconById(d.icon))
-                        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                            Text(
-                                text = dateFormat.format(d.timestamp),
-                                style = MaterialTheme.typography.titleSmall,
-                                softWrap = false,
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = 16.dp, end = 8.dp)
-                                    .weight(1f)
-                            )
-                            Text(
-                                text = "${
-                                    convertTemperature(
-                                        imperialUnits,
-                                        d.minTemp
-                                    )
-                                }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
-                                softWrap = false,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-                        }
+                        Text(
+                            text = dateFormat.format(d.timestamp),
+                            style = MaterialTheme.typography.titleSmall,
+                            softWrap = false,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 16.dp, end = 8.dp)
+                                .weight(1f)
+                        )
+                        Text(
+                            text = "${
+                                convertTemperature(
+                                    imperialUnits,
+                                    d.minTemp
+                                )
+                            }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
+                            softWrap = false,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
                     }
                 }
             }
@@ -323,13 +314,11 @@ fun WeatherTimeSelector(
                 })
                 .padding(16.dp)
         ) {
-            CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                Text(
-                    text = dateFormat.format(selectedForecast.timestamp),
-                    style = MaterialTheme.typography.titleSmall,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }
+            Text(
+                text = dateFormat.format(selectedForecast.timestamp),
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
             Icon(
                 imageVector = Icons.Rounded.ArrowDropDown,
                 contentDescription = null
@@ -349,25 +338,21 @@ fun WeatherTimeSelector(
                 }) {
                     Row {
                         WeatherIcon(icon = weatherIconById(fc.icon), night = fc.night)
-                        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.high) {
-                            Text(
-                                text = dateFormat.format(fc.timestamp),
-                                style = MaterialTheme.typography.titleSmall,
-                                softWrap = false,
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = 16.dp, end = 8.dp)
-                                    .weight(1f)
-                            )
-                        }
-                        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
-                            Text(
-                                text = "${convertTemperature(imperialUnits, fc.temperature)}°",
-                                softWrap = false,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-                        }
+                        Text(
+                            text = dateFormat.format(fc.timestamp),
+                            style = MaterialTheme.typography.titleSmall,
+                            softWrap = false,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .padding(start = 16.dp, end = 8.dp)
+                                .weight(1f)
+                        )
+                        Text(
+                            text = "${convertTemperature(imperialUnits, fc.temperature)}°",
+                            softWrap = false,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        )
                     }
                 }
             }
