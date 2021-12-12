@@ -3,6 +3,7 @@ package de.mm20.launcher2.unitconverter.converters
 import android.content.Context
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.ConverterUtils
+import de.mm20.launcher2.unitconverter.MeasureUnit
 import de.mm20.launcher2.unitconverter.UnitValue
 
 /**
@@ -40,6 +41,6 @@ abstract class SimpleFactorConverter: Converter {
 
 data class MeasureUnitWithFactor(
     val factor: Double,
-    val symbol: String,
-    val nameResource: Int
-)
+    override val symbol: String,
+    override val nameResource: Int
+): MeasureUnit

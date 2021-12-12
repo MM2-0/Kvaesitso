@@ -35,7 +35,8 @@ open class UnitConverter(
                     lazy { DataConverter(context) },
                     lazy { TimeConverter(context) },
                     lazy { VelocityConverter(context) },
-                    lazy { AreaConverter(context) }
+                    lazy { AreaConverter(context) },
+                    lazy { TemperatureConverter(context) }
             )
             for (conv in converters) {
                 val converter = conv.value
