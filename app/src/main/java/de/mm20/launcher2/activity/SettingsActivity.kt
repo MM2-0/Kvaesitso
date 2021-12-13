@@ -26,19 +26,7 @@ class SettingsActivity : AppCompatActivity() {
                     .beginTransaction()
                     .add(android.R.id.content, fragment)
                     .commit()
-        } else if (!savedInstanceState.getBoolean("theme_change")) {
-            val fragment = getStartFragment()
-            setupActionBar()
-            supportFragmentManager
-                    .beginTransaction()
-                    .replace(android.R.id.content, fragment)
-                    .commit()
         }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("theme_change", true)
     }
 
     private fun getStartFragment(): Fragment {
