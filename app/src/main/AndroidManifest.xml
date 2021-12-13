@@ -37,7 +37,7 @@
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/LauncherTheme.DefaultColors"
+        android:theme="@style/LauncherTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
 
@@ -51,7 +51,7 @@
             android:parentActivityName=".ui.legacy.activity.LauncherActivity"
             android:screenOrientation="portrait"
             android:taskAffinity="de.mm20.launcher2.settings"
-            android:theme="@style/SettingsTheme.DefaultColors">
+            android:theme="@style/SettingsTheme">
             <intent-filter>
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
                 <category android:name="android.intent.category.DEFAULT" />

@@ -21,31 +21,6 @@
         <item name="alertDialogTheme">@style/AlertDialogTheme</item>
     </style>
 
-    <!-- Main theme. -->
-    <style name="LauncherTheme" parent="BaseLauncherTheme">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowShowWallpaper">true</item>
-        <item name="android:colorPrimaryDark">#0000</item>
-        <item name="android:statusBarColor">#00000000</item>
-        <item name="android:navigationBarColor">#00000000</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:enforceStatusBarContrast">false</item>
-        <item name="android:enforceNavigationBarContrast">false</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="SettingsTheme" parent="BaseLauncherTheme.Settings">
-        <item name="android:colorAccent">@color/blue</item>
-        <item name="colorAccent">@color/blue</item>
-        <item name="colorPrimary">@color/settings_color_primary</item>
-        <item name="colorPrimaryDark">@color/settings_color_primary_dark</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowShowWallpaper">true</item>
-    </style>
-
     <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.Dialog.Alert">
         <item name="buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
         <item name="dialogCornerRadius">8dp</item>
@@ -94,10 +69,6 @@
 
     <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textColor">@color/chip_textcolor</item>
-    </style>
-
-    <style name="BaseLauncherTheme.Settings">
-        <item name="android:windowLightStatusBar">true</item>
     </style>
 
     <style name="LauncherTheme.IconStyle">

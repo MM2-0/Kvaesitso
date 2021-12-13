@@ -50,7 +50,6 @@ import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.isBrightColor
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.ColorSchemes
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
@@ -59,6 +58,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.legacy.component.EditFavoritesView
 import de.mm20.launcher2.ui.legacy.component.WidgetView
+import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 import de.mm20.launcher2.ui.legacy.search.SearchGridView
 import de.mm20.launcher2.ui.legacy.widget.LauncherWidget
 import de.mm20.launcher2.weather.WeatherViewModel
@@ -191,11 +191,8 @@ class LauncherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         val iconRepository: IconRepository by inject()
         iconRepository.recreate()
+        ThemeHelper.applyTheme(theme)
 
-        when(LauncherPreferences.instance.colorScheme) {
-            ColorSchemes.BLACK -> setTheme(R.style.LauncherTheme_BlackWhiteColors)
-            else -> setTheme(R.style.LauncherTheme_DefaultColors)
-        }
         if (LauncherPreferences.instance.firstRunVersion < 1) {
             ActivityCompat.requestPermissions(
                 this, arrayOf(

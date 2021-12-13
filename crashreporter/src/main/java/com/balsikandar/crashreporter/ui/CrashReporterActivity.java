@@ -48,6 +48,7 @@ public class CrashReporterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getTheme().applyStyle(R.style.DefaultColors, true);
         setContentView(R.layout.crash_reporter_activity);
 
         Toolbar toolbar = findViewById(R.id.toolbar);

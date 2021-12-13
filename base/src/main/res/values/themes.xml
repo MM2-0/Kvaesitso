@@ -19,32 +19,12 @@
     </style>
 
 
-    <style name="SettingsTheme.DefaultColors" parent="DefaultColors">
+    <style name="SettingsTheme" parent="BaseTheme">
         <item name="android:statusBarColor">?colorSurface</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
-    <style name="SettingsTheme.BlackWhiteColors" parent="BlackWhiteColors">
-        <item name="android:statusBarColor">?colorSurface</item>
-        <item name="android:windowLightStatusBar">true</item>
-    </style>
-
-    <style name="LauncherTheme.DefaultColors" parent="DefaultColors">
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:windowShowWallpaper">true</item>
-        <item name="android:colorPrimaryDark">#0000</item>
-        <item name="android:statusBarColor">#00000000</item>
-        <item name="android:navigationBarColor">#00000000</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:windowTranslucentStatus">false</item>
-        <item name="android:windowTranslucentNavigation">false</item>
-        <item name="android:enforceStatusBarContrast">false</item>
-        <item name="android:enforceNavigationBarContrast">false</item>
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
-    <style name="LauncherTheme.BlackWhiteColors" parent="BlackWhiteColors">
+    <style name="LauncherTheme" parent="BaseTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:colorPrimaryDark">#0000</item>

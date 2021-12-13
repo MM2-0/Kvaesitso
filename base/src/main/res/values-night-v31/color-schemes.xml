@@ -1,5 +1,5 @@
 <resources>
-    <style name="DefaultColors" parent="BaseTheme">
+    <style name="DefaultColors">
         <item name="colorPrimary">@android:color/system_accent1_200</item>
         <item name="colorOnPrimary">@android:color/system_accent1_800</item>
         <item name="colorPrimaryContainer">@android:color/system_accent1_700</item>

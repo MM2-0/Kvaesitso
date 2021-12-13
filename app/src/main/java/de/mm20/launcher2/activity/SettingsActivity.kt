@@ -3,26 +3,22 @@ package de.mm20.launcher2.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import de.mm20.launcher2.R
 import de.mm20.launcher2.fragment.PreferencesCalendarFragment
 import de.mm20.launcher2.fragment.PreferencesMainFragment
 import de.mm20.launcher2.fragment.PreferencesServicesFragment
 import de.mm20.launcher2.fragment.PreferencesWeatherFragment
-import de.mm20.launcher2.preferences.ColorSchemes
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.legacy.activity.LauncherActivity
+import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        when(LauncherPreferences.instance.colorScheme) {
-            ColorSchemes.BLACK -> setTheme(R.style.SettingsTheme_BlackWhiteColors)
-            else -> setTheme(R.style.SettingsTheme_DefaultColors)
-        }
+
+        ThemeHelper.applyTheme(theme)
+
         if (savedInstanceState == null) {
             val fragment = getStartFragment()
             setupActionBar()
