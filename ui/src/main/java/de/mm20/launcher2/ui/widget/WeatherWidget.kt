@@ -80,11 +80,7 @@ fun WeatherWidget() {
                         imperialUnits = imperialUnits,
                         temp = selectedForecast.temperature
                     ).toString() + "°",
-                    style = TextStyle(
-                        fontSize = 36.sp,
-                        fontWeight = FontWeight.Light,
-                        color = colorResource(id = R.color.text_color_primary)
-                    ),
+                    style = MaterialTheme.typography.headlineLarge,
                 )
                 Text(
                     text = selectedForecast.condition,
@@ -100,7 +96,8 @@ fun WeatherWidget() {
                 ) {
                     Text(
                         text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details),
-                        style = MaterialTheme.typography.bodySmall
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
 
