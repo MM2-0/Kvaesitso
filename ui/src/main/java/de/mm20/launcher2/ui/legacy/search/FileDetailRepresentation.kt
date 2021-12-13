@@ -72,11 +72,10 @@ class FileDetailRepresentation : Representation, KoinComponent {
         val favAction = FavoriteToolbarAction(context, file)
         toolbar.addAction(favAction, ToolbarView.PLACEMENT_END)
 
-        val jFile = java.io.File(file.path)
-        if (jFile.canWrite() && jFile.parentFile.canWrite()) {
+        if (file.isDeletable) {
             val deleteAction = ToolbarAction(R.drawable.ic_delete, context.getString(R.string.menu_delete))
             deleteAction.clickAction = {
-                delete(context, file, jFile)
+                delete(context, file)
             }
             toolbar.addAction(deleteAction, ToolbarView.PLACEMENT_END)
         }
@@ -93,21 +92,16 @@ class FileDetailRepresentation : Representation, KoinComponent {
         }
     }
 
-    private fun delete(context: Context, file: File, jFile: java.io.File) {
+    private fun delete(context: Context, file: File) {
         MaterialDialog(context).show {
             message(text = context.getString(
                     if (file.isDirectory) R.string.alert_delete_directory
                     else R.string.alert_delete_file,
                     file.path))
             positiveButton(android.R.string.yes) {
-                Thread { jFile.deleteRecursively() }.start()
-                context.contentResolver.delete(
-                        MediaStore.Files.getContentUri("external"),
-                        "${MediaStore.Files.FileColumns._ID} = ?",
-                        arrayOf(file.id.toString()))
-                it.dismiss()
                 val fileViewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
-                fileViewModel.removeFile(file)
+                it.dismiss()
+                fileViewModel.deleteFile(file)
             }
             negativeButton(android.R.string.no) {
                 it.dismiss()

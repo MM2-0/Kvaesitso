@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
 import de.mm20.launcher2.files.FilesViewModel
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.File

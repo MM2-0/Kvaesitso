@@ -44,8 +44,8 @@ val favoritesModule = module {
         if (searchable is NextcloudFile) {
             return@factory NextcloudFileSerializer()
         }
-        if (searchable is File) {
-            return@factory FileSerializer()
+        if (searchable is LocalFile) {
+            return@factory LocalFileSerializer()
         }
         if (searchable is Website) {
             return@factory WebsiteSerializer()
@@ -83,7 +83,7 @@ val favoritesModule = module {
             return@factory OwncloudFileDeserializer()
         }
         if (type == "file") {
-            return@factory FileDeserializer(androidContext())
+            return@factory LocalFileDeserializer(androidContext())
         }
         if (type == "website") {
             return@factory WebsiteDeserializer()

@@ -10,7 +10,7 @@ class FilesViewModel(
 
     val files = filesRepository.files
 
-    fun removeFile(file: File) {
-        filesRepository.removeFile(file)
+    fun deleteFile(file: File) {
+        filesRepository.deleteFile(file)
     }
 }

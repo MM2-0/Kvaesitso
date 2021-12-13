@@ -10,9 +10,9 @@ import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.*
 import org.json.JSONObject
 
-class FileSerializer : SearchableSerializer {
+class LocalFileSerializer : SearchableSerializer {
     override fun serialize(searchable: Searchable): String {
-        searchable as File
+        searchable as LocalFile
         return jsonObjectOf(
             "id" to searchable.id
         ).toString()
@@ -22,7 +22,7 @@ class FileSerializer : SearchableSerializer {
         get() = "file"
 }
 
-class FileDeserializer(
+class LocalFileDeserializer(
     val context: Context
 ) : SearchableDeserializer {
     override fun deserialize(serialized: String): Searchable? {
@@ -48,20 +48,20 @@ class FileDeserializer(
             val directory = java.io.File(path).isDirectory
             val id = cursor.getLong(0)
             val mimeType = cursor.getStringOrNull(3)
-                ?: if (directory) "inode/directory" else File.getMimetypeByFileExtension(
+                ?: if (directory) "inode/directory" else LocalFile.getMimetypeByFileExtension(
                     path.substringAfterLast(
                         '.'
                     )
                 )
             val size = cursor.getLong(1)
             cursor.close()
-            return File(
+            return LocalFile(
                 path = path,
                 mimeType = mimeType,
                 size = size,
                 isDirectory = directory,
                 id = id,
-                metaData = File.getMetaData(context, mimeType, path)
+                metaData = LocalFile.getMetaData(context, mimeType, path)
             )
         }
         cursor.close()

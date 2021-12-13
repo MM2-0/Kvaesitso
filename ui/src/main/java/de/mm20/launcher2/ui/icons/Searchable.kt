@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.icons
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable

@@ -15,6 +15,8 @@ class FilesRepository(
     hiddenItemsRepository: HiddenItemsRepository
 ) : BaseSearchableRepository() {
 
+    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+
     val files = MediatorLiveData<List<File>?>()
 
     private val allFiles = MutableLiveData<List<File>?>(emptyList())
@@ -42,7 +44,7 @@ class FilesRepository(
             return
         }
         val localFiles = withContext(Dispatchers.IO) {
-            File.search(context, query).sorted().toMutableList()
+            LocalFile.search(context, query).sorted().toMutableList()
         }
         allFiles.value = localFiles
 
@@ -59,7 +61,12 @@ class FilesRepository(
         allFiles.value = localFiles + cloudFiles
     }
 
-    fun removeFile(file: File) {
-        allFiles.value = allFiles.value?.filter { it != file }
+    fun deleteFile(file: File) {
+        if (file.isDeletable) {
+            scope.launch {
+                file.delete(context)
+                allFiles.value = allFiles.value?.filter { it != file }
+            }
+        }
     }
 }
