@@ -91,7 +91,7 @@ fun MusicWidget() {
                 ) {
                     IconButton(
                         onClick = {
-                            viewModel.next()
+                            viewModel.previous()
                         }) {
                         Icon(
                             imageVector = Icons.Rounded.SkipPrevious,
