@@ -2,7 +2,7 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/smartWidgetContainer"
+    android:id="@+id/clockWidgetContainer"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
@@ -10,7 +10,7 @@
     android:clipToPadding="false">
 
     <FrameLayout
-        android:id="@+id/smartWidgetDivider"
+        android:id="@+id/clockWidgetDivider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

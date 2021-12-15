@@ -137,8 +137,8 @@
                         android:src="@drawable/ic_arrow_up"
                         android:tint="#fff" />
 
-                    <de.mm20.launcher2.ui.legacy.widget.SmartWidget
-                        android:id="@+id/smartWidget"
+                    <de.mm20.launcher2.ui.legacy.widget.ClockWidget
+                        android:id="@+id/clockWidget"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp" />

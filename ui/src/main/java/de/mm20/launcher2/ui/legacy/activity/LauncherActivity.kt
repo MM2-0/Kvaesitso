@@ -95,7 +95,7 @@ class LauncherActivity : AppCompatActivity() {
             field = value
             if (value) {
                 binding.widgetSpacer.visibility = View.GONE
-                binding.smartWidget.visibility = View.GONE
+                binding.clockWidget.visibility = View.GONE
                 binding.searchBar.setRightIcon(R.drawable.ic_done)
                 binding.scrollView.setOnTouchListener(null)
                 for (v in binding.widgetList.iterator()) {
@@ -146,7 +146,7 @@ class LauncherActivity : AppCompatActivity() {
                 binding.scrollContainer.layoutTransition = ChangingLayoutTransition()
                 binding.searchBar.setRightIcon(R.drawable.ic_more_vert)
                 binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
-                binding.smartWidget.visibility = View.VISIBLE
+                binding.clockWidget.visibility = View.VISIBLE
                 for (v in binding.widgetList.iterator()) {
                     if (v is WidgetView) {
                         v.editMode = false
@@ -256,10 +256,10 @@ class LauncherActivity : AppCompatActivity() {
                 binding.searchBar.raise()
             } else binding.searchBar.drop()
             if (scrollY == 0) {
-                binding.smartWidget.translucent = true
+                binding.clockWidget.translucent = true
                 if (!searchVisibility) binding.searchBar.hide()
             } else {
-                binding.smartWidget.translucent = false
+                binding.clockWidget.translucent = false
                 binding.searchBar.show()
             }
 
@@ -459,7 +459,7 @@ class LauncherActivity : AppCompatActivity() {
     }
 
     private fun adjustWidgetSpace() {
-        val firstWidget = binding.smartWidget
+        val firstWidget = binding.clockWidget
         if (firstWidget == null) {
             val m = binding.scrollContainer.paddingTop
             val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
@@ -675,7 +675,7 @@ class LauncherActivity : AppCompatActivity() {
                     ?: 0f
             ).start()
         }
-        binding.smartWidget.compactView = compactView
+        binding.clockWidget.compactView = compactView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

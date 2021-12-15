@@ -29,7 +29,7 @@ import de.mm20.launcher2.ui.databinding.ViewDateTimeBinding
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
 import java.util.*
 
-class SmartWidget : LauncherCardView {
+class ClockWidget : LauncherCardView {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -96,10 +96,10 @@ class SmartWidget : LauncherCardView {
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
-                        ObjectAnimator.ofInt(this@SmartWidget, "backgroundOpacity", 0).apply {
+                        ObjectAnimator.ofInt(this@ClockWidget, "backgroundOpacity", 0).apply {
                             interpolator = AccelerateInterpolator(3f)
                         },
-                        ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", -elevation).apply {
+                        ObjectAnimator.ofFloat(this@ClockWidget, "translationZ", -elevation).apply {
                             interpolator = DecelerateInterpolator(3f)
                         }
                     )
@@ -111,11 +111,11 @@ class SmartWidget : LauncherCardView {
                 AnimatorSet().apply {
                     duration = 200
                     playTogether(
-                        ObjectAnimator.ofFloat(this@SmartWidget, "translationZ", 0f).apply {
+                        ObjectAnimator.ofFloat(this@ClockWidget, "translationZ", 0f).apply {
                             interpolator = AccelerateInterpolator(3f)
                         },
                         ObjectAnimator.ofInt(
-                            this@SmartWidget,
+                            this@ClockWidget,
                             "backgroundOpacity",
                             LauncherPreferences.instance.cardOpacity
                         ).apply {
@@ -131,7 +131,7 @@ class SmartWidget : LauncherCardView {
 
     var compactView: CompactView? = getDefaultCompactView()
         set(value) {
-            binding.smartWidgetContainer.removeView(field as? View)
+            binding.clockWidgetContainer.removeView(field as? View)
             if (value == null) {
                 field = getDefaultCompactView()
             } else {
@@ -139,7 +139,7 @@ class SmartWidget : LauncherCardView {
             }
             (field as? View)?.let {
                 it.layoutParams = getCompactViewLayoutParams()
-                binding.smartWidgetContainer.addView(it)
+                binding.clockWidgetContainer.addView(it)
             }
             field?.setTranslucent(translucent)
         }
@@ -155,7 +155,7 @@ class SmartWidget : LauncherCardView {
         )
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE)
         params.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE)
-        params.addRule(RelativeLayout.START_OF, R.id.smartWidgetDivider)
+        params.addRule(RelativeLayout.START_OF, R.id.clockWidgetDivider)
         params.marginStart = (16 * dp).toInt()
         params.marginEnd = (16 * dp).toInt()
         return params
