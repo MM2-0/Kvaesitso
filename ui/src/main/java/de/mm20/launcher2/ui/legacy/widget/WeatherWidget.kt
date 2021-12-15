@@ -49,15 +49,3 @@ class WeatherWidget : LauncherWidget {
 }
 
 
-class WeatherCompactView(context: Context) : FrameLayout(context), CompactView {
-    override var goToParent: (() -> Unit)? = null
-
-    init {
-        View.inflate(context, R.layout.compact_weather, this)
-    }
-
-    override fun setTranslucent(translucent: Boolean) {
-
-    }
-
-}

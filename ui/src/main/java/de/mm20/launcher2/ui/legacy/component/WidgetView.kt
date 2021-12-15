@@ -44,7 +44,6 @@ class WidgetView : LauncherCardView {
                 val widget = binding.widgetWrapper[2] as LauncherWidget
                 widget.visibility = View.VISIBLE
                 binding.widgetName.visibility = View.GONE
-                visibility = if (widget.show) View.VISIBLE else View.GONE
                 layoutTransition = ChangingLayoutTransition()
                 widgetView?.layoutTransition = ChangingLayoutTransition()
                 binding.widgetWrapper.layoutTransition = ChangingLayoutTransition()
@@ -111,7 +110,6 @@ class WidgetView : LauncherCardView {
             binding.widgetResizeDragHandle.resizeView = widgetView
             binding.widgetWrapper.addView(widgetView, 2)
             binding.widgetName.text = widgetView?.name
-            visibility = if (widgetView?.show == true) View.VISIBLE else View.GONE
         } else {
             widgetView = ExternalWidget(context, widget, widgetHost)
             binding.widgetResizeDragHandle.resizeView = widgetView
@@ -121,10 +119,6 @@ class WidgetView : LauncherCardView {
             binding.widgetWrapper.addView(widgetView, 2)
             binding.widgetName.text = widgetView?.name
             binding.widgetActionResize.visibility = View.VISIBLE
-            visibility = if (widgetView?.show == true) View.VISIBLE else View.GONE
-        }
-        widgetView?.onVisibilityChanged = {
-            visibility = if (it) View.VISIBLE else View.GONE
         }
         widgetView?.layoutTransition = LayoutTransition().apply {
             enableTransitionType(LayoutTransition.CHANGING)

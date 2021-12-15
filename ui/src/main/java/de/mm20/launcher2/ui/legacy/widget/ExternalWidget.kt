@@ -27,7 +27,6 @@ class ExternalWidget(
     init {
         val id = widget.data.toInt()
         widgetInfo = AppWidgetManager.getInstance(context.applicationContext).getAppWidgetInfo(id)
-        show = widgetInfo != null
         val widgetView = host.createView(context.applicationContext, id, widgetInfo)
                 ?: View(context)
         if (widgetView is AppWidgetHostView && widgetView.childCount > 0) {

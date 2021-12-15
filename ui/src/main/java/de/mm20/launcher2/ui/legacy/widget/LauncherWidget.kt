@@ -18,12 +18,5 @@ abstract class LauncherWidget : FrameLayout {
     }
     abstract val canResize: Boolean
     abstract val name: String
-    var show: Boolean = true
-        set(value) {
-            onVisibilityChanged?.invoke(value)
-            field = value
-        }
-
-    var onVisibilityChanged: ((Boolean) -> Unit)? = null
 
 }
