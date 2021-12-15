@@ -14,6 +14,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -47,6 +48,7 @@ import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.isBrightColor
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -60,7 +62,6 @@ import de.mm20.launcher2.ui.legacy.component.EditFavoritesView
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 import de.mm20.launcher2.ui.legacy.search.SearchGridView
-import de.mm20.launcher2.ui.legacy.widget.LauncherWidget
 import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
@@ -78,6 +79,10 @@ class LauncherActivity : AppCompatActivity() {
      * True if the search result list is visible
      */
     private var searchVisibility = false
+    set(value) {
+        field = value
+        windowBackgroundBlur = value
+    }
 
     private lateinit var widgetHost: AppWidgetHost
     private val widgets = mutableListOf<Widget>()
@@ -89,6 +94,23 @@ class LauncherActivity : AppCompatActivity() {
     private val favoritesViewModel: FavoritesViewModel by viewModel()
 
     private val preferences = LauncherPreferences.instance
+
+    private var windowBackgroundBlur: Boolean = false
+    set(value) {
+        if(field == value) return
+        field = value
+        if (!isAtLeastApiLevel(31)) return
+        Log.d("MM20", field.toString())
+        window.attributes = window.attributes.also {
+            if (value) {
+                it.blurBehindRadius = (32 * dp).toInt()
+                it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
+            } else {
+                it.blurBehindRadius = (32 * dp).toInt()
+                it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+            }
+        }
+    }
 
     private var widgetEditMode = false
         set(value) {
@@ -184,7 +206,7 @@ class LauncherActivity : AppCompatActivity() {
         insetsController.isAppearanceLightStatusBars =
             allowLightSystemBars && preferences.lightStatusBar
     }
-    
+
     private lateinit var binding: ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -257,10 +279,16 @@ class LauncherActivity : AppCompatActivity() {
             } else binding.searchBar.drop()
             if (scrollY == 0) {
                 binding.clockWidget.transparentBackground = true
-                if (!searchVisibility) binding.searchBar.hide()
+                if (!searchVisibility) {
+                    binding.searchBar.hide()
+                    windowBackgroundBlur = false
+                }
             } else {
                 binding.clockWidget.transparentBackground = false
                 binding.searchBar.show()
+                if (!searchVisibility) {
+                    windowBackgroundBlur = true
+                }
             }
 
         }
@@ -275,7 +303,10 @@ class LauncherActivity : AppCompatActivity() {
                         R.id.menu_item_settings -> {
                             finish()
                             startActivity(Intent().also {
-                                it.component = ComponentName(packageName, "de.mm20.launcher2.activity.SettingsActivity")
+                                it.component = ComponentName(
+                                    packageName,
+                                    "de.mm20.launcher2.activity.SettingsActivity"
+                                )
                                 it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                             })
                         }
@@ -534,9 +565,18 @@ class LauncherActivity : AppCompatActivity() {
             search("")
         }
         set.playTogether(
-            ObjectAnimator.ofFloat(binding.widgetContainer, "translationY", binding.scrollView.height.toFloat()),
+            ObjectAnimator.ofFloat(
+                binding.widgetContainer,
+                "translationY",
+                binding.scrollView.height.toFloat()
+            ),
             ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0),
-            ObjectAnimator.ofFloat(binding.searchContainer, "translationY", binding.scrollView.height.toFloat(), 0f)
+            ObjectAnimator.ofFloat(
+                binding.searchContainer,
+                "translationY",
+                binding.scrollView.height.toFloat(),
+                0f
+            )
         )
         set.start()
     }
