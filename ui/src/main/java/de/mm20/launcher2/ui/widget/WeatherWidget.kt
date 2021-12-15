@@ -13,6 +13,7 @@ import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -49,15 +50,19 @@ fun WeatherWidget() {
     var selectedForecastIndex by remember { mutableStateOf(0) }
     var detailsExpanded by remember { mutableStateOf(false) }
 
-    if (weatherData.isEmpty()) return
 
-    if (weatherData.size <= selectedDayIndex) {
+    if (weatherData.isNotEmpty() && weatherData.size <= selectedDayIndex) {
         selectedDayIndex = 0
         return
     }
 
-    if (weatherData[selectedDayIndex].hourlyForecasts.size <= selectedForecastIndex) {
+    if (weatherData.isNotEmpty() && weatherData[selectedDayIndex].hourlyForecasts.size <= selectedForecastIndex) {
         selectedForecastIndex = 0
+        return
+    }
+
+    if (weatherData.isEmpty()) {
+        NoData()
         return
     }
 
@@ -439,5 +444,27 @@ private fun weatherIconById(id: Int): WeatherIcon {
         Forecast.WIND -> WeatherIcon.Wind
         Forecast.BROKEN_CLOUDS -> WeatherIcon.BrokenClouds
         else -> WeatherIcon.None
+    }
+}
+
+@Composable
+fun NoData() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(imageVector = Icons.Rounded.LightMode,
+            contentDescription = "",
+            modifier = Modifier
+                .padding(24.dp)
+                .size(32.dp),
+            tint = MaterialTheme.colorScheme.secondary
+        )
+        Text(
+            text = stringResource(id = R.string.weather_no_data),
+            style = MaterialTheme.typography.bodySmall
+        )
     }
 }
