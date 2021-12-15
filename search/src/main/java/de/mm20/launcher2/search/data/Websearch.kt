@@ -37,8 +37,7 @@ class Websearch(
         if(query == null) return null
         val intent = Intent(Intent.ACTION_VIEW)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val encodedQuery = URLEncoder.encode(query, "utf8")
-        val url = urlTemplate.replace("\${1}", encodedQuery)
+        val url = urlTemplate.replace("\${1}", query)
         intent.data = Uri.parse(url)
         return intent
     }
