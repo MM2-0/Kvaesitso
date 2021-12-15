@@ -397,7 +397,6 @@ class LauncherActivity : AppCompatActivity() {
         binding.widgetList.setOnViewSwapListener { _, firstPosition, _, secondPosition ->
             Collections.swap(widgets, firstPosition, secondPosition)
         }
-        updateWidgets()
     }
 
     private fun addWidget() {
@@ -559,7 +558,6 @@ class LauncherActivity : AppCompatActivity() {
         val widgetViewModel by viewModels<WidgetViewModel>()
         widgetViewModel.requestCalendarUpdate()
         search(binding.searchBar.getSearchQuery())
-        updateWidgets()
 
         updateSystemBarAppearance()
 
@@ -649,17 +647,6 @@ class LauncherActivity : AppCompatActivity() {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
                 widgetViewModel.requestCalendarUpdate()
                 search(binding.searchBar.getSearchQuery())
-            }
-        }
-    }
-
-    private fun updateWidgets() {
-        var topWidget: LauncherWidget? = null
-        var topWidgetRanking = 0
-        var topWidgetView: WidgetView? = null
-        for (widget in binding.widgetList.iterator()) {
-            if (widget is WidgetView) {
-                widget.update()
             }
         }
     }

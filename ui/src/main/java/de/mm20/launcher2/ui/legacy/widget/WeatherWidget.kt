@@ -16,19 +16,8 @@ import de.mm20.launcher2.ui.widget.WeatherWidget
 class WeatherWidget : LauncherWidget {
 
 
-    override fun update() {
-    }
-
     override val canResize: Boolean
         get() = false
-    override val settingsFragment: String?
-        get() = "weather"
-    override val compactView: CompactView?
-        get() = WeatherCompactView(context)
-    override val compactViewRanking: Int
-        get() = -1
-    override val hasSettings = true
-
     override val name: String
         get() = resources.getString(R.string.widget_name_weather)
 

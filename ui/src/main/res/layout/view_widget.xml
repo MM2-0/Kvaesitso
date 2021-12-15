@@ -44,20 +44,6 @@
                 android:src="@drawable/ic_widget_resize"/>
 
             <ImageView
-                android:id="@+id/widgetActionSettings"
-                style="?iconStyle"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="56dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:foreground="?selectableItemBackgroundBorderless"
-                android:padding="12dp"
-                android:src="@drawable/ic_settings"/>
-
-            <ImageView
                 android:id="@+id/widgetActionRemove"
                 style="?iconStyle"
                 android:layout_width="48dp"

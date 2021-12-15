@@ -95,7 +95,6 @@ class WidgetView : LauncherCardView {
 
         TooltipCompat.setTooltipText(binding.widgetActionResize, context.getString(R.string.widget_action_adjust_height))
         TooltipCompat.setTooltipText(binding.widgetActionRemove, context.getString(R.string.widget_action_remove))
-        TooltipCompat.setTooltipText(binding.widgetActionSettings, context.getString(R.string.widget_action_settings))
     }
 
     var onResizeModeChange: ((Boolean) -> Unit)? = null
@@ -109,18 +108,10 @@ class WidgetView : LauncherCardView {
                 else -> return false
             }
             binding.widgetActionResize.visibility = View.GONE
-            binding.widgetActionSettings.visibility = if (widgetView?.hasSettings == true) View.VISIBLE else View.GONE
             binding.widgetResizeDragHandle.resizeView = widgetView
             binding.widgetWrapper.addView(widgetView, 2)
             binding.widgetName.text = widgetView?.name
             visibility = if (widgetView?.show == true) View.VISIBLE else View.GONE
-            binding.widgetActionSettings.setOnClickListener {
-                widgetView?.openSettings()
-                /*(context as? Activity)?.finish()
-                context.startActivity(Intent(context, SettingsActivity::class.java).apply {
-                    putExtra(SettingsActivity.FRAGMENT, widgetView?.settingsFragment)
-                })*/
-            }
         } else {
             widgetView = ExternalWidget(context, widget, widgetHost)
             binding.widgetResizeDragHandle.resizeView = widgetView
@@ -130,7 +121,6 @@ class WidgetView : LauncherCardView {
             binding.widgetWrapper.addView(widgetView, 2)
             binding.widgetName.text = widgetView?.name
             binding.widgetActionResize.visibility = View.VISIBLE
-            binding.widgetActionSettings.visibility = View.GONE
             visibility = if (widgetView?.show == true) View.VISIBLE else View.GONE
         }
         widgetView?.onVisibilityChanged = {
@@ -145,12 +135,6 @@ class WidgetView : LauncherCardView {
 
     fun getDragHandle(): View {
         return binding.widgetDragHandle
-    }
-
-    fun update() {
-        val widget = binding.widgetWrapper[2] as? LauncherWidget ?: return
-        widget.update()
-        visibility = if (widget.show) View.VISIBLE else View.GONE
     }
 
 }

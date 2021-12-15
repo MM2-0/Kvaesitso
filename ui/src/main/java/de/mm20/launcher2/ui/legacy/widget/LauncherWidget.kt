@@ -16,16 +16,6 @@ abstract class LauncherWidget : FrameLayout {
             enableTransitionType(LayoutTransition.CHANGING)
         }
     }
-
-    abstract fun update()
-    fun updateCompactView() {
-        compactView?.update()
-    }
-
-    abstract val compactViewRanking: Int
-    abstract val compactView: CompactView?
-    abstract val settingsFragment: String?
-    open val hasSettings = false
     abstract val canResize: Boolean
     abstract val name: String
     var show: Boolean = true
@@ -36,8 +26,4 @@ abstract class LauncherWidget : FrameLayout {
 
     var onVisibilityChanged: ((Boolean) -> Unit)? = null
 
-    open fun startResize() {}
-    open fun endResize() {}
-
-    open fun openSettings() {}
 }

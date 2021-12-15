@@ -28,15 +28,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MusicWidget : LauncherWidget {
 
-    override val compactViewRanking: Int
-        get() = if (viewModel.hasActiveSession) 1 else -1
-
-    override val compactView: CompactView?
-        get() {
-            return MusicCompactView(context)
-        }
-    override val settingsFragment: String?
-        get() = null
     override val canResize: Boolean
         get() = false
     override val name: String
@@ -63,10 +54,6 @@ class MusicWidget : LauncherWidget {
             }
         }
         addView(composeView)
-    }
-
-
-    override fun update() {
     }
 
     companion object {

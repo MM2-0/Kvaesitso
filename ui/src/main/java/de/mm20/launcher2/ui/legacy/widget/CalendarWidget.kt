@@ -32,14 +32,6 @@ class CalendarWidget : LauncherWidget {
 
     override val canResize: Boolean
         get() = false
-    override val settingsFragment: String?
-        get() = "calendar"
-    override val compactView: CompactView?
-        get() = null
-    override val compactViewRanking: Int
-        get() {
-            return -1
-        }
 
     private val calendarEvents: LiveData<List<CalendarEvent>>
     private val pinnedCalendarEvents: LiveData<List<CalendarEvent>>
@@ -61,9 +53,6 @@ class CalendarWidget : LauncherWidget {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
-
-    override fun update() {
-    }
 
     private fun formatDay(day: Long): String {
         return when (day) {

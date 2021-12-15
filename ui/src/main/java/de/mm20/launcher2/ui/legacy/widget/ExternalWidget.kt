@@ -50,14 +50,6 @@ class ExternalWidget(
         if (view is ListView || view is ScrollView) view.isNestedScrollingEnabled = true
     }
 
-    override fun update() {}
-
-    override val compactViewRanking: Int
-        get() = -1
-    override val compactView: CompactView?
-        get() = null
-    override val settingsFragment: String?
-        get() = null
     override val canResize: Boolean
         get() = true
     override val name: String
