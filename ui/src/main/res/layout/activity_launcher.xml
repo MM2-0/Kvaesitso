@@ -129,13 +129,10 @@
                     android:paddingTop="8dp"
                     android:orientation="vertical">
 
-                    <de.mm20.launcher2.view.ElevationImageView
+                    <Space
                         android:id="@+id/widgetSpacer"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:elevation="@dimen/card_elevation"
-                        android:src="@drawable/ic_arrow_up"
-                        android:tint="#fff" />
+                        android:layout_height="wrap_content" />
 
                     <de.mm20.launcher2.ui.legacy.widget.ClockWidget
                         android:id="@+id/clockWidget"

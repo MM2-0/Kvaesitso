@@ -256,10 +256,10 @@ class LauncherActivity : AppCompatActivity() {
                 binding.searchBar.raise()
             } else binding.searchBar.drop()
             if (scrollY == 0) {
-                binding.clockWidget.translucent = true
+                binding.clockWidget.transparentBackground = true
                 if (!searchVisibility) binding.searchBar.hide()
             } else {
-                binding.clockWidget.translucent = false
+                binding.clockWidget.transparentBackground = false
                 binding.searchBar.show()
             }
 
@@ -660,22 +660,8 @@ class LauncherActivity : AppCompatActivity() {
         for (widget in binding.widgetList.iterator()) {
             if (widget is WidgetView) {
                 widget.update()
-                if (topWidgetRanking < widget.widgetView?.compactViewRanking ?: 0) {
-                    topWidget = widget.widgetView
-                    topWidgetRanking = widget.widgetView?.compactViewRanking ?: 0
-                    topWidgetView = widget
-                }
             }
         }
-        val compactView = topWidget?.compactView
-        compactView?.update()
-        compactView?.goToParent = {
-            ObjectAnimator.ofFloat(
-                binding.scrollView, "scrollY", topWidgetView?.top?.toFloat()
-                    ?: 0f
-            ).start()
-        }
-        binding.clockWidget.compactView = compactView
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
