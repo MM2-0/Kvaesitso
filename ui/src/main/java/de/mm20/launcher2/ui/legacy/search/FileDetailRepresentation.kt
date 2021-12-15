@@ -2,12 +2,11 @@ package de.mm20.launcher2.ui.legacy.search
 
 import android.content.Context
 import android.content.Intent
-import android.provider.MediaStore
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.transition.Scene
-import com.afollestad.materialdialogs.MaterialDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.files.FilesViewModel
@@ -93,20 +92,20 @@ class FileDetailRepresentation : Representation, KoinComponent {
     }
 
     private fun delete(context: Context, file: File) {
-        MaterialDialog(context).show {
-            message(text = context.getString(
-                    if (file.isDirectory) R.string.alert_delete_directory
-                    else R.string.alert_delete_file,
-                    file.path))
-            positiveButton(android.R.string.yes) {
+        MaterialAlertDialogBuilder(context)
+            .setMessage(context.getString(
+                if (file.isDirectory) R.string.alert_delete_directory
+                else R.string.alert_delete_file,
+                file.path))
+            .setPositiveButton(android.R.string.ok) {dialog, _ ->
                 val fileViewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
-                it.dismiss()
+                dialog.dismiss()
                 fileViewModel.deleteFile(file)
             }
-            negativeButton(android.R.string.no) {
-                it.dismiss()
+            .setNegativeButton(android.R.string.cancel) {dialog, _ ->
+                dialog.dismiss()
             }
-        }
+            .show()
     }
 
     private fun share(context: Context, fileDetail: File) {
