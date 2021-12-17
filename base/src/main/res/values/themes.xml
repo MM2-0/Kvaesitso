@@ -16,6 +16,7 @@
         <item name="textAppearanceLabelLarge">@style/Typography.Label.Large</item>
         <item name="textAppearanceLabelMedium">@style/Typography.Label.Medium</item>
         <item name="textAppearanceLabelSmall">@style/Typography.Label.Small</item>
+        <item name="popupMenuStyle">@style/PopupMenu</item>
     </style>
 
 

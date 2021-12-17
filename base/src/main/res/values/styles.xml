@@ -19,4 +19,8 @@
         <item name="android:foreground">?selectableItemBackgroundBorderless</item>
     </style>
 
+    <style name="PopupMenu" parent="Widget.Material3.PopupMenu">
+        <item name="overlapAnchor">true</item>
+    </style>
+
 </resources>
