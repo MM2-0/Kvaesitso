@@ -3,6 +3,8 @@ package de.mm20.launcher2.ui.component
 import android.content.Intent
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.BasicText
@@ -126,9 +128,9 @@ fun SearchBar(
                     },
                     modifier = Modifier.size(48.dp)
                 ) {
-                    val menuClearIcon = animatedVectorResource(R.drawable.anim_ic_menu_clear)
+                    val menuClearIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
                     Icon(
-                        painter = menuClearIcon.painterFor(atEnd = searchQuery.isNotEmpty()),
+                        painter = rememberAnimatedVectorPainter(menuClearIcon, atEnd = searchQuery.isNotEmpty()),
                         null
                     )
                 }

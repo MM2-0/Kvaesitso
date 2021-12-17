@@ -62,7 +62,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.1.0-beta04")
+            version("androidx.compose", "1.1.0-rc01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -89,9 +89,6 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.animation")
                 .to("androidx.compose.animation", "animation")
-                .versionRef("androidx.compose")
-            alias("androidx.compose.animationgraphics")
-                .to("androidx.compose.animation", "animation-graphics")
                 .versionRef("androidx.compose")
             alias("androidx.compose.animationgraphics")
                 .to("androidx.compose.animation", "animation-graphics")
@@ -126,7 +123,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.21.0-beta")
+            version("accompanist", "0.21.5-rc")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")

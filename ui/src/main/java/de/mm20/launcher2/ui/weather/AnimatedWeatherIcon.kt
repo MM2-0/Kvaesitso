@@ -6,6 +6,8 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
@@ -64,7 +66,7 @@ fun AnimatedWeatherIcon(
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun SunMoon(icon: WeatherIcon, night: Boolean) {
-    val sunMoonIcon = animatedVectorResource(R.drawable.anim_weather_sun_moon)
+    val sunMoonIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_weather_sun_moon)
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIcon")
 
     val color by animateColorAsState(
@@ -92,7 +94,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean) {
     }
 
     Icon(
-        sunMoonIcon.painterFor(atEnd = night),
+        rememberAnimatedVectorPainter(sunMoonIcon, atEnd = night),
         null,
         modifier = Modifier
             .size(32.dp)

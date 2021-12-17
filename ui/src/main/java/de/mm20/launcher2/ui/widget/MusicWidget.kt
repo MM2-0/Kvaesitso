@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.widget
 
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -96,10 +98,10 @@ fun MusicWidget() {
                         null
                     )
                 }
-                val playPauseIcon = animatedVectorResource(R.drawable.anim_ic_play_pause)
+                val playPauseIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
                 IconButton(onClick = { viewModel.togglePause() }) {
                     Icon(
-                        painter = playPauseIcon.painterFor(atEnd = playbackState == PlaybackState.Playing),
+                        painter = rememberAnimatedVectorPainter(playPauseIcon, atEnd = playbackState == PlaybackState.Playing),
                         contentDescription = ""
                     )
                 }

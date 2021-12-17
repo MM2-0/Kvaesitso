@@ -5,6 +5,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
+import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
+import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -80,7 +82,7 @@ fun WidgetColumn(
                 WidgetCard(widget = widget)
             }
 
-            val icon = animatedVectorResource(id = R.drawable.anim_ic_edit_add)
+            val icon = AnimatedImageVector.animatedVectorResource(id = R.drawable.anim_ic_edit_add)
             ExtendedFloatingActionButton(
                 modifier = Modifier
                     .padding(16.dp)
@@ -92,7 +94,7 @@ fun WidgetColumn(
                     )
                 },
                 icon = {
-                    Icon(painter = icon.painterFor(atEnd = editMode), contentDescription = null)
+                    Icon(painter = rememberAnimatedVectorPainter(icon, atEnd = editMode), contentDescription = null)
                 },
                 containerColor = MaterialTheme.colorScheme.tertiaryContainer,
                 onClick = {

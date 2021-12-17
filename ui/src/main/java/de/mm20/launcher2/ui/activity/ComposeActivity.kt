@@ -92,10 +92,10 @@ class ComposeActivity : AppCompatActivity() {
                         AnimatedNavHost(
                             navController = navController,
                             startDestination = "home",
-                            exitTransition = { _, _ -> fadeOut(tween(300, 300)) },
-                            enterTransition = { _, _ -> fadeIn(tween(200)) },
-                            popEnterTransition = { _, _ -> fadeIn(tween(0)) },
-                            popExitTransition = { _, _ -> fadeOut(tween(200)) },
+                            exitTransition = { fadeOut(tween(300, 300)) },
+                            enterTransition = { fadeIn(tween(200)) },
+                            popEnterTransition = { fadeIn(tween(0)) },
+                            popExitTransition = { fadeOut(tween(200)) },
                         ) {
                             composable("home") {
                                 LauncherMainScreen()
