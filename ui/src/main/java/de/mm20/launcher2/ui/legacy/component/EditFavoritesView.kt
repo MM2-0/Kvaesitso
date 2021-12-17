@@ -8,9 +8,11 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateMargins
 import androidx.core.widget.TextViewCompat
+import com.google.android.material.textview.MaterialTextView
 import de.mm20.launcher2.favorites.FavoritesItem
 import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.ktx.dp
@@ -18,6 +20,8 @@ import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.ktx.setPadding
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.DialogEditFavoritesBinding
+import de.mm20.launcher2.ui.databinding.EditFavoritesRowBinding
+import de.mm20.launcher2.ui.databinding.EditFavoritesTitleBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -125,20 +129,9 @@ class EditFavoritesView @JvmOverloads constructor(
     }
 
     private fun getLabel(@StringRes label: Int): FrameLayout {
-        return FrameLayout(context).also {
-            it.addView(TextView(context).also {
-                TextViewCompat.setTextAppearance(it, R.style.TextAppearance_EditFavorites)
-                it.setText(label)
-                it.setPadding((8 * dp).toInt(), (4 * dp).toInt())
-                it.layoutParams = MarginLayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT).also {
-                    it.updateMargins(top = (2 * dp).toInt())
-                }
-                it.setBackgroundColor(ContextCompat.getColor(context, R.color.color_divider))
-            })
-            it.addView(View(context).also {
-                it.visibility = View.GONE
-            })
-        }
+        return EditFavoritesTitleBinding.inflate(LayoutInflater.from(context)).also {
+            it.text.setText(label)
+        }.root
 
     }
 }

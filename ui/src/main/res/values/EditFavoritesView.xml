@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="TextAppearance_EditFavorites">
-        <item name="android:color">@color/text_color_primary</item>
-        <item name="android:fontFamily">sans-serif-medium</item>
-        <item name="android:textAllCaps">true</item>
-    </style>
-</resources>
