@@ -18,6 +18,7 @@
             android:shadowColor="#000"
             android:shadowDx="1"
             android:shadowDy="1"
+            android:textAppearance="?textAppearanceBodyLarge"
             app:layout_constraintEnd_toStartOf="@+id/overflowMenu"
             app:layout_constraintStart_toEndOf="@+id/searchIcon"
             app:layout_constraintTop_toTopOf="parent" />
