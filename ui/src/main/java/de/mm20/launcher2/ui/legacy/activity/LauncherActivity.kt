@@ -100,7 +100,6 @@ class LauncherActivity : AppCompatActivity() {
         if(field == value) return
         field = value
         if (!isAtLeastApiLevel(31)) return
-        Log.d("MM20", field.toString())
         window.attributes = window.attributes.also {
             if (value) {
                 it.blurBehindRadius = (16 * dp).toInt()
