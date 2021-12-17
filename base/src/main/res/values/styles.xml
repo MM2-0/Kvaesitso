@@ -1,41 +1,4 @@
 <resources>
-
-    <style name="BaseLauncherTheme" parent="Theme.Material3.DayNight">
-        <item name="android:colorPrimary">@color/blue</item>
-        <item name="android:colorAccent">@color/blue</item>
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorAccent">@color/blue</item>
-        <item name="titleTextColor">#DE000000</item>
-        <item name="popupMenuStyle">@style/LauncherTheme.PopupMenu</item>
-        <item name="android:popupMenuStyle">@style/LauncherTheme.PopupMenu</item>
-        <item name="iconStyle">@style/LauncherTheme.IconStyle</item>
-        <item name="cardBackground">@color/cardview_background</item>
-        <item name="android:textColorPrimary">@color/text_color_primary</item>
-        <item name="android:textColorSecondary">@color/text_color_secondary</item>
-        <item name="android:textColorHint">@color/text_color_primary_disabled</item>
-        <item name="materialCardViewStyle">@style/CardViewStyle</item>
-        <item name="bottomSheetStyle">@style/Widget.Design.BottomSheet.Modal</item>
-        <item name="md_corner_radius">8dp</item>
-        <item name="md_color_button_text">?colorAccent</item>
-        <item name="md_button_selector">?selectableItemBackground</item>
-        <item name="alertDialogTheme">@style/AlertDialogTheme</item>
-    </style>
-
-    <style name="AlertDialogTheme" parent="ThemeOverlay.Material3.Dialog.Alert">
-        <item name="buttonBarButtonStyle">@style/AlertDialogButtonStyle</item>
-        <item name="dialogCornerRadius">8dp</item>
-    </style>
-
-    <style name="AlertDialogButtonStyle" parent="Widget.Material3.Button.UnelevatedButton">
-        <item name="android:textColor">?colorAccent</item>
-        <item name="android:letterSpacing">0</item>
-        <item name="android:background">?selectableItemBackground</item>
-    </style>
-
-    <style name="CardViewStyle" parent="Widget.Material3.CardView.Elevated">
-        <item name="cardCornerRadius">8dp</item>
-    </style>
-
     <style name="InnerCardViewStyle" parent="Widget.Material3.CardView.Outlined">
         <item name="cardElevation">0dp</item>
         <item name="strokeWidth">1dp</item>
@@ -46,27 +9,6 @@
         <item name="cardElevation">4dp</item>
     </style>
 
-    <style name="LauncherTheme.Translucent">
-        <item name="cardBackground">@color/cardview_background_translucent</item>
-    </style>
-
-    <style name="LauncherTheme.Black">
-        <item name="cardBackground">@android:color/black</item>
-    </style>
-
-    <style name="LauncherTheme.Translucent.Black">
-        <item name="cardBackground">#CC000000</item>
-    </style>
-
-    <style name="LauncherTheme.PopupMenu" parent="@style/Widget.AppCompat.Light.PopupMenu">
-        <item name="overlapAnchor">true</item>
-    </style>
-
-    <style name="TextAppearance.Card.Subtitle" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?android:textColorSecondary</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
     <style name="ChipTextAppearance" parent="TextAppearance.MaterialComponents.Chip">
         <item name="android:textColor">@color/chip_textcolor</item>
     </style>
@@ -74,18 +16,6 @@
     <style name="LauncherTheme.IconStyle">
         <item name="android:alpha">0.87</item>
         <item name="android:tint">@color/icon_color</item>
-        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="LauncherTheme.IconStyleDark">
-        <item name="android:alpha">1.0</item>
-        <item name="android:tint">@android:color/white</item>
-        <item name="android:foreground">?selectableItemBackgroundBorderless</item>
-    </style>
-
-    <style name="CalendarIconStyle">
-        <item name="android:alpha">1.0</item>
-        <item name="android:tint">@color/calendar_foreground_color</item>
         <item name="android:foreground">?selectableItemBackgroundBorderless</item>
     </style>
 
