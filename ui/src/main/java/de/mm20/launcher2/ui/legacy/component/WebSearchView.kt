@@ -33,7 +33,6 @@ class WebSearchView : FrameLayout {
     private val binding = ViewWebsearchBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        View.inflate(context, R.layout.view_websearch, this)
         val viewModel: WebsearchViewModel by (context as AppCompatActivity).viewModel()
         websearches = viewModel.websearches
         websearches.observe(context as AppCompatActivity, Observer {

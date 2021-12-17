@@ -32,7 +32,6 @@ class EditFavoritesView @JvmOverloads constructor(
     private val binding = DialogEditFavoritesBinding.inflate(LayoutInflater.from(context), this)
 
     init {
-        View.inflate(context, R.layout.dialog_edit_favorites, this)
         lifecycleScope.launch {
             initView()
         }
