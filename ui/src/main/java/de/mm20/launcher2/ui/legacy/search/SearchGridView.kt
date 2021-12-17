@@ -12,6 +12,7 @@ import de.mm20.launcher2.ktx.ceilToInt
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.legacy.helper.ActivityStarterCallback
+import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
@@ -40,21 +41,22 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
 
     @ObsoleteCoroutinesApi
     private val updateActor = lifecycleScope
-            .actor<List<Searchable>>(Dispatchers.Main, capacity = Channel.CONFLATED) {
-                for (newItems in channel) {
-                    val oldItems = currentItems
-                    val diffResult = withContext(Dispatchers.Default) {
-                        SearchDiffUtil.calculateDiff(oldItems, newItems)
-                    }
-                    currentItems = newItems
-                    applyDiff(diffResult)
+        .actor<List<Searchable>>(Dispatchers.Main, capacity = Channel.CONFLATED) {
+            for (newItems in channel) {
+                val oldItems = currentItems
+                val diffResult = withContext(Dispatchers.Default) {
+                    SearchDiffUtil.calculateDiff(oldItems, newItems)
                 }
+                currentItems = newItems
+                applyDiff(diffResult)
             }
+        }
 
     @ObsoleteCoroutinesApi
     fun submitItems(items: List<Searchable>?) {
         if (items == null) return
-        if (items.getOrNull(expandedItem)?.key != currentItems.getOrNull(expandedItem)?.key) expandedItem = -1
+        if (items.getOrNull(expandedItem)?.key != currentItems.getOrNull(expandedItem)?.key) expandedItem =
+            -1
         lifecycleScope.launch {
             updateActor.send(items)
         }
@@ -79,10 +81,14 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
 
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes) {
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    ) {
         attrs?.let {
-            val ta = context.theme.obtainStyledAttributes(it, R.styleable.SearchGridView, 0, defStyleRes)
-            columnCount = ta.getInt(R.styleable.SearchGridView_columnCount, 1)
+            val ta =
+                context.theme.obtainStyledAttributes(it, R.styleable.SearchGridView, 0, defStyleRes)
             rowHeight = ta.getDimensionPixelSize(R.styleable.SearchGridView_rowHeight, -1)
             ta.recycle()
         }
@@ -93,11 +99,16 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
         ActivityStarter.registerCallback(this)
     }
 
+    init {
+        columnCount = LauncherPreferences.instance.gridColumnCount.takeIf { it > 1 }
+            ?: context.resources.getInteger(R.integer.config_columnCount)
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         val widthSpec = MeasureSpec.makeMeasureSpec(
-                (MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight) / columnCount,
-                MeasureSpec.EXACTLY
+            (MeasureSpec.getSize(widthMeasureSpec) - paddingLeft - paddingRight) / columnCount,
+            MeasureSpec.EXACTLY
         )
         val heightSpec = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED)
 
@@ -118,7 +129,10 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
 
         val width = when (MeasureSpec.getMode(widthMeasureSpec)) {
             MeasureSpec.EXACTLY -> MeasureSpec.getSize(widthMeasureSpec)
-            MeasureSpec.AT_MOST -> min(colWidth * columnCount + paddingLeft + paddingRight, MeasureSpec.getSize(widthMeasureSpec))
+            MeasureSpec.AT_MOST -> min(
+                colWidth * columnCount + paddingLeft + paddingRight,
+                MeasureSpec.getSize(widthMeasureSpec)
+            )
             MeasureSpec.UNSPECIFIED -> colWidth * columnCount + paddingLeft + paddingRight
             else -> colWidth * columnCount
         }
@@ -127,13 +141,16 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
         val visibleChildCount = children.count { it.visibility != View.GONE }
         val rowCount = (visibleChildCount / columnCount.toFloat()).ceilToInt()
         var height = rowHeight * rowCount + (getChildAt(expandedItem)?.measuredHeight
-                ?: 0) + paddingTop + paddingBottom
+            ?: 0) + paddingTop + paddingBottom
 
         if (expandedItem == childCount - 1 && (childCount % columnCount == 1) || expandedItem != -1 && columnCount == 1) {
             height -= rowHeight
         }
 
-        setMeasuredDimension(View.resolveSize(width, widthMeasureSpec), View.resolveSize(height, heightMeasureSpec))
+        setMeasuredDimension(
+            View.resolveSize(width, widthMeasureSpec),
+            View.resolveSize(height, heightMeasureSpec)
+        )
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
@@ -190,7 +207,8 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
             postponedDiffs.push(diff)
             return
         }
-        val representation = if (columnCount == 1) SearchableView.REPRESENTATION_LIST else SearchableView.REPRESENTATION_GRID
+        val representation =
+            if (columnCount == 1) SearchableView.REPRESENTATION_LIST else SearchableView.REPRESENTATION_GRID
         while (diff.isNotEmpty()) {
             val action = diff.poll() ?: continue
             if (action.action == DiffAction.ACTION_INSERT) {
@@ -241,7 +259,10 @@ class QueueUpdateCallback : ListUpdateCallback {
 
     override fun onRemoved(position: Int, count: Int) {
         for (i in 1..count) {
-            operations += DiffAction(action = DiffAction.ACTION_DELETE, position = position + (count - i))
+            operations += DiffAction(
+                action = DiffAction.ACTION_DELETE,
+                position = position + (count - i)
+            )
         }
     }
 

@@ -332,8 +332,6 @@ class LauncherActivity : AppCompatActivity() {
                             ).apply {
                                 setMargins((8 * dp).toInt())
                             }
-                            hiddenItemsGrid.columnCount =
-                                resources.getInteger(R.integer.config_columnCount)
                             val hiddenItems = favoritesViewModel.hiddenItems
                             hiddenItems.observe(this) {
                                 hiddenItemsGrid.submitItems(it)

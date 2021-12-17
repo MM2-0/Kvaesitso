@@ -10,24 +10,32 @@
         app:title="@string/preference_theme" />
 
     <ListPreference
-        app:key="card_background"
         android:defaultValue="0"
-        app:summary="%s"
-        app:title="@string/preference_screen_colors"
         app:entries="@array/preference_card_background_entries"
         app:entryValues="@array/preference_card_background_values"
-        />
+        app:key="card_background"
+        app:summary="%s"
+        app:title="@string/preference_screen_colors" />
     <Preference
         app:key="cards"
         app:summary="@string/preference_cards_summary"
         app:title="@string/preference_cards" />
+
+    <PreferenceCategory app:title="@string/preference_category_grid">
+        <SeekBarPreference
+            app:key="grid_column_count"
+            app:title="@string/preference_grid_column_count"
+            app:min="3"
+            android:max="8"
+            app:defaultValue="@integer/config_columnCount"
+            app:showSeekBarValue="true" />
+    </PreferenceCategory>
     <PreferenceCategory app:title="@string/preference_category_icons">
         <SwitchPreference
-            app:key="themed_icons"
             android:defaultValue="false"
-            app:title="@string/preference_themed_icons"
+            app:key="themed_icons"
             app:summary="@string/preference_themed_icons_summary"
-            />
+            app:title="@string/preference_themed_icons" />
         <ListPreference
             app:key="icon_pack"
             app:persistent="false"

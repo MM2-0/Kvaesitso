@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import de.mm20.launcher2.favorites.FavoritesViewModel
+import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewFavoritesBinding
@@ -27,7 +28,7 @@ class FavoritesView : FrameLayout {
 
     init {
         val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
-        favorites = viewModel.getFavorites(context.resources.getInteger(R.integer.config_columnCount))
+        favorites = viewModel.getFavorites(LauncherPreferences.instance.gridColumnCount)
         favorites.observe(context as AppCompatActivity, Observer {
             visibility = if (it?.isEmpty() == true) View.GONE else View.VISIBLE
             binding.favoritesGrid.submitItems(it)

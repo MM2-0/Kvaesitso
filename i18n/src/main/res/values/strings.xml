@@ -454,4 +454,7 @@
     <string name="feature_not_available">This feature is not available in this version of %1$s</string>
     <string name="preference_category_clock_widget">Clock</string>
     <string name="preference_clock_widget_style">Clock style</string>
+
+    <string name="preference_category_grid">Grid</string>
+    <string name="preference_grid_column_count">Number of columns</string>
 </resources>

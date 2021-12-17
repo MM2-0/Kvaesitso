@@ -66,6 +66,7 @@ dependencies {
 
     implementation(project(":ktx"))
     implementation(project(":i18n"))
+    implementation(project(":base"))
     implementation(project(":crashreporter"))
 
 }

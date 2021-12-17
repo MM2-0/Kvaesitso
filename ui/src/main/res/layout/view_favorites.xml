@@ -16,6 +16,5 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:padding="8dp"
-        app:columnCount="@integer/config_columnCount" />
+        android:padding="8dp" />
 </de.mm20.launcher2.ui.legacy.view.LauncherCardView>

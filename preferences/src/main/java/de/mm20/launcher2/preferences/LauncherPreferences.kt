@@ -106,6 +106,8 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
 
     var easterEggEnabled by BooleanPreference("easter_egg", default = false)
 
+    var gridColumnCount by IntPreference("grid_column_count", default = context.resources.getInteger(R.integer.config_columnCount))
+
 
     fun doOnPreferenceChange(vararg keys: String, action: (String) -> Unit) {
         preferences.registerOnSharedPreferenceChangeListener { _, key ->
