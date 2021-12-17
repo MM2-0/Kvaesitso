@@ -24,7 +24,7 @@ class EditFavoritesRow @JvmOverloads constructor(
 
     val iconRepository: IconRepository by inject()
 
-    private val binding = EditFavoritesRowBinding.inflate(LayoutInflater.from(context), this, false)
+    private val binding = EditFavoritesRowBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
         binding.label.text = favoritesItem.searchable?.label
