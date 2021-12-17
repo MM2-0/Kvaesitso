@@ -103,10 +103,10 @@ class LauncherActivity : AppCompatActivity() {
         Log.d("MM20", field.toString())
         window.attributes = window.attributes.also {
             if (value) {
-                it.blurBehindRadius = (32 * dp).toInt()
+                it.blurBehindRadius = (16 * dp).toInt()
                 it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
             } else {
-                it.blurBehindRadius = (32 * dp).toInt()
+                it.blurBehindRadius = 0
                 it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
             }
         }
