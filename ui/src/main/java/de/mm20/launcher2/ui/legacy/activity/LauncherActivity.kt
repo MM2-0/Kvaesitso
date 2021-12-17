@@ -768,7 +768,9 @@ class LauncherActivity : AppCompatActivity() {
                                 binding.container.translationY = 0f
                             } else {
                                 binding.container.translationY = binding.searchBar.height.toFloat()
+
                             }
+                            windowBackgroundBlur = searchVisibility || newTransY > 0.6 * binding.searchBar.height
 
                             if (binding.container.translationY == 0f) return@onTouch false
                         }
