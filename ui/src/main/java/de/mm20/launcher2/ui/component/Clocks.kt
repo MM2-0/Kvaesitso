@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.component
 import android.text.format.DateFormat
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.LocalContentColor
@@ -14,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.rotate
@@ -35,14 +37,14 @@ fun DigitalClock(time: Long) {
         Locale.getDefault()
     )
     Text(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.offset(y = 16.dp),
         text = format.format(time),
         style = MaterialTheme.typography.displayLarge.copy(
             fontSize = 100.sp,
             fontWeight = FontWeight.Black,
             textAlign = TextAlign.Center,
             lineHeight = 0.8.em,
-            letterSpacing = -0.1.em
+            letterSpacing = -0.1.em,
         )
     )
 }

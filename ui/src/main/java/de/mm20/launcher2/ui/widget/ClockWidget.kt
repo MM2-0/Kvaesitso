@@ -4,14 +4,16 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.provider.AlarmClock
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -21,7 +23,6 @@ import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.component.AnalogClock
 import de.mm20.launcher2.ui.component.BinaryClock
 import de.mm20.launcher2.ui.component.DigitalClock
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.widget.parts.DatePart
 import kotlinx.coroutines.flow.map
@@ -81,15 +82,26 @@ fun Clock(transparentBackground: Boolean) {
         }
     }
 
-    when (clockStyle) {
-        ClockStyle.Analog -> {
-            AnalogClock(time = time)
+    Box(
+        modifier = Modifier.clickable(
+            indication = null,
+            interactionSource = remember { MutableInteractionSource() }
+        ) {
+            context.startActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            })
         }
-        ClockStyle.Binary -> {
-            BinaryClock(time = time)
-        }
-        else -> {
-            DigitalClock(time = time)
+    ) {
+        when (clockStyle) {
+            ClockStyle.Analog -> {
+                AnalogClock(time = time)
+            }
+            ClockStyle.Binary -> {
+                BinaryClock(time = time)
+            }
+            else -> {
+                DigitalClock(time = time)
+            }
         }
     }
 }
