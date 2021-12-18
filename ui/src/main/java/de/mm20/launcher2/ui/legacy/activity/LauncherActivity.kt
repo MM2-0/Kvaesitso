@@ -102,7 +102,7 @@ class LauncherActivity : AppCompatActivity() {
         if (!isAtLeastApiLevel(31)) return
         window.attributes = window.attributes.also {
             if (value) {
-                it.blurBehindRadius = (16 * dp).toInt()
+                it.blurBehindRadius = (32 * dp).toInt()
                 it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
             } else {
                 it.blurBehindRadius = 0
