@@ -135,7 +135,10 @@ fun UnitConverterItem(
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
                 ) {
-                    Text(text = stringResource(id = R.string.unit_converter_show_all))
+                    Text(
+                        text = stringResource(id = R.string.unit_converter_show_all),
+                        style = MaterialTheme.typography.labelLarge
+                    )
                 }
             }
         }
