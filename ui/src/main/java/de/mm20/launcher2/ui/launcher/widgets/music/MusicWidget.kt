@@ -21,26 +21,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.music.MusicViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.conditional
-import org.koin.androidx.compose.getViewModel
+import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidgetVM
 
 @OptIn(
-    ExperimentalFoundationApi::class, ExperimentalComposeUiApi::class,
+    ExperimentalFoundationApi::class,
     ExperimentalAnimationGraphicsApi::class
 )
 @Composable
 fun MusicWidget() {
 
-    val viewModel: MusicViewModel = getViewModel()
+    val viewModel: MusicWidgetVM = viewModel()
 
     val albumArt by viewModel.albumArt.observeAsState()
     val title by viewModel.title.observeAsState()
@@ -91,7 +90,7 @@ fun MusicWidget() {
             ) {
                 IconButton(
                     onClick = {
-                        viewModel.previous()
+                        viewModel.onPreviousClick()
                     }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipPrevious,
@@ -99,14 +98,14 @@ fun MusicWidget() {
                     )
                 }
                 val playPauseIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-                IconButton(onClick = { viewModel.togglePause() }) {
+                IconButton(onClick = { viewModel.onPlayClick() }) {
                     Icon(
                         painter = rememberAnimatedVectorPainter(playPauseIcon, atEnd = playbackState == PlaybackState.Playing),
                         contentDescription = ""
                     )
                 }
                 IconButton(onClick = {
-                    viewModel.next()
+                    viewModel.onNextClick()
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipNext,
@@ -120,12 +119,10 @@ fun MusicWidget() {
                 .size(144.dp)
                 .combinedClickable(
                     onClick = {
-                        viewModel
-                            .getLaunchIntent(context)
-                            .send()
+                        viewModel.onAlbumArtClick()
                     },
                     onLongClick = {
-                        viewModel.openPlayerChooser(context)
+                        viewModel.onAlbumArtLongClick(context)
                     }
                 )
                 .conditional(

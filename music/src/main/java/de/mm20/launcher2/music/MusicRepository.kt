@@ -6,33 +6,30 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
-import android.net.Uri
 import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.edit
 import androidx.core.graphics.scale
-import androidx.lifecycle.MutableLiveData
 import androidx.media2.common.MediaItem
 import androidx.media2.common.MediaMetadata
 import androidx.media2.common.SessionPlayer
 import androidx.media2.session.MediaController
 import androidx.media2.session.SessionCommandGroup
-import de.mm20.launcher2.ktx.asBitmap
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
 import java.io.File
-import java.io.FileNotFoundException
 import java.util.concurrent.Executors
 
 class MusicRepository(val context: Context) {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
-    val playbackState = MutableLiveData<PlaybackState>()
-    val title = MutableLiveData<String?>()
-    val artist = MutableLiveData<String?>()
-    val album = MutableLiveData<String?>()
-    val albumArt = MutableLiveData<Bitmap?>()
+    val playbackState = MutableStateFlow(PlaybackState.Stopped)
+    val title = MutableStateFlow<String?>(null)
+    val artist = MutableStateFlow<String?>(null)
+    val album = MutableStateFlow<String?>(null)
+    val albumArt = MutableStateFlow<Bitmap?>(null)
 
     private var lastPlayer: String? = null
         set(value) {
@@ -57,7 +54,7 @@ class MusicRepository(val context: Context) {
     private var mediaController: MediaController? = null
         set(value) {
             if (value == null) {
-                playbackState.postValue(PlaybackState.Stopped)
+                playbackState.value = PlaybackState.Stopped
             }
             field = value
         }
@@ -120,9 +117,9 @@ class MusicRepository(val context: Context) {
         val album = metadata.getString(MediaMetadata.METADATA_KEY_ALBUM)
 
         lastPlayer = mediaController?.connectedToken?.packageName ?: lastPlayer
-        this@MusicRepository.title.postValue(title)
-        this@MusicRepository.artist.postValue(artist)
-        this@MusicRepository.album.postValue(album)
+        this@MusicRepository.title.value = title
+        this@MusicRepository.artist.value = artist
+        this@MusicRepository.album.value = album
 
         scope.launch {
             withContext(Dispatchers.IO) {
@@ -131,7 +128,7 @@ class MusicRepository(val context: Context) {
                     putString(PREFS_KEY_ALBUM_ART, if (albumArt == null) "null" else "notnull")
                 }
                 if (albumArt == null) {
-                    this@MusicRepository.albumArt.postValue(null)
+                    this@MusicRepository.albumArt.value = null
                     return@withContext
                 }
                 val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
@@ -140,7 +137,7 @@ class MusicRepository(val context: Context) {
                 val outStream = file.outputStream()
                 scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
                 outStream.close()
-                this@MusicRepository.albumArt.postValue(scaledBitmap)
+                this@MusicRepository.albumArt.value = scaledBitmap
             }
         }
 
@@ -157,7 +154,7 @@ class MusicRepository(val context: Context) {
             SessionPlayer.PLAYER_STATE_PAUSED -> PlaybackState.Paused
             else -> PlaybackState.Stopped
         }
-        this@MusicRepository.playbackState.postValue(playbackState)
+        this.playbackState.value = playbackState
     }
 
     val hasActiveSession: Boolean = mediaController?.isConnected != null
@@ -228,7 +225,7 @@ class MusicRepository(val context: Context) {
         if (playbackState.value != PlaybackState.Playing) play() else pause()
     }
 
-    fun getLaunchIntent(context: Context): PendingIntent {
+    fun getLaunchIntent(): PendingIntent {
         mediaController?.sessionActivity?.let {
             return it
         }

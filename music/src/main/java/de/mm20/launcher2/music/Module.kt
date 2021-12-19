@@ -6,5 +6,4 @@ import org.koin.dsl.module
 
 val musicModule = module {
     single { MusicRepository(androidContext()) }
-    viewModel { MusicViewModel(get()) }
 }
