@@ -21,19 +21,19 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
     val albumArt: LiveData<Bitmap?> = musicRepository.albumArt.asLiveData()
     val playbackState: LiveData<PlaybackState> = musicRepository.playbackState.asLiveData()
 
-    fun onPreviousClick() {
+    fun skipPrevious() {
         musicRepository.previous()
     }
 
-    fun onNextClick() {
+    fun skipNext() {
         musicRepository.next()
     }
 
-    fun onPlayClick() {
+    fun togglePause() {
         musicRepository.togglePause()
     }
 
-    fun onAlbumArtClick() {
+    fun openPlayer() {
         try {
             musicRepository.getLaunchIntent().send()
         } catch (e: PendingIntent.CanceledException) {
@@ -41,7 +41,7 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
         }
     }
 
-    fun onAlbumArtLongClick(context: Context) {
+    fun openPlayerSelector(context: Context) {
         musicRepository.openPlayerChooser(context)
     }
 }

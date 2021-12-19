@@ -90,7 +90,7 @@ fun MusicWidget() {
             ) {
                 IconButton(
                     onClick = {
-                        viewModel.onPreviousClick()
+                        viewModel.skipPrevious()
                     }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipPrevious,
@@ -98,14 +98,14 @@ fun MusicWidget() {
                     )
                 }
                 val playPauseIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-                IconButton(onClick = { viewModel.onPlayClick() }) {
+                IconButton(onClick = { viewModel.togglePause() }) {
                     Icon(
                         painter = rememberAnimatedVectorPainter(playPauseIcon, atEnd = playbackState == PlaybackState.Playing),
                         contentDescription = ""
                     )
                 }
                 IconButton(onClick = {
-                    viewModel.onNextClick()
+                    viewModel.skipNext()
                 }) {
                     Icon(
                         imageVector = Icons.Rounded.SkipNext,
@@ -119,10 +119,10 @@ fun MusicWidget() {
                 .size(144.dp)
                 .combinedClickable(
                     onClick = {
-                        viewModel.onAlbumArtClick()
+                        viewModel.openPlayer()
                     },
                     onLongClick = {
-                        viewModel.onAlbumArtLongClick(context)
+                        viewModel.openPlayerSelector(context)
                     }
                 )
                 .conditional(
