@@ -26,7 +26,7 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
-        versionName = "1.2.2"
+        versionName = "1.3.0"
         multiDexEnabled = true
     }
     buildTypes {
