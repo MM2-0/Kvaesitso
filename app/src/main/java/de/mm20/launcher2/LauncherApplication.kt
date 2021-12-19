@@ -1,8 +1,6 @@
 package de.mm20.launcher2
 
 import android.app.Application
-import android.content.IntentFilter
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatDelegate
 import de.mm20.launcher2.applications.applicationsModule
 import de.mm20.launcher2.badges.badgesModule
@@ -22,6 +20,7 @@ import de.mm20.launcher2.unitconverter.unitConverterModule
 import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
+import de.mm20.launcher2.database.databaseModule
 import kotlinx.coroutines.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -60,6 +59,7 @@ class LauncherApplication : Application(), CoroutineScope {
                     badgesModule,
                     calendarModule,
                     contactsModule,
+                    databaseModule,
                     favoritesModule,
                     filesModule,
                     hiddenItemsModule,
