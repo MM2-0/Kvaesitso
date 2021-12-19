@@ -487,14 +487,6 @@ class LauncherActivity : AppCompatActivity() {
 
     private fun adjustWidgetSpace() {
         val firstWidget = binding.clockWidget
-        if (firstWidget == null) {
-            val m = binding.scrollContainer.paddingTop
-            val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
-            params.topMargin =
-                binding.scrollView.height - m - binding.widgetContainer.paddingTop - binding.widgetSpacer.height
-            binding.widgetSpacer.layoutParams = params
-            return
-        }
         val m = binding.scrollContainer.paddingTop +
                 (firstWidget.layoutParams as LinearLayout.LayoutParams).run { topMargin + bottomMargin }
         val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
@@ -664,6 +656,7 @@ class LauncherActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         onBackPressed()
+        adjustWidgetSpace()
     }
 
     override fun onRequestPermissionsResult(
