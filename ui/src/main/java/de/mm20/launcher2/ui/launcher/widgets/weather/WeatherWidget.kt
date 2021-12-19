@@ -20,10 +20,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,11 +29,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidgetWM
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.WeatherViewModel
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -44,151 +42,149 @@ import kotlin.math.roundToInt
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WeatherWidget() {
-    val viewModel: WeatherViewModel = viewModel()
-    val weatherData by viewModel.forecasts.observeAsState(initial = emptyList())
-    var selectedDayIndex by remember { mutableStateOf(0) }
-    var selectedForecastIndex by remember { mutableStateOf(0) }
-    var detailsExpanded by remember { mutableStateOf(false) }
+    val viewModel: WeatherWidgetWM = viewModel()
 
+    val selectedForecast by viewModel.currentForecast.observeAsState()
 
-    if (weatherData.isNotEmpty() && weatherData.size <= selectedDayIndex) {
-        selectedDayIndex = 0
-        return
-    }
+    val imperialUnits by viewModel.imperialUnits.observeAsState(false)
 
-    if (weatherData.isNotEmpty() && weatherData[selectedDayIndex].hourlyForecasts.size <= selectedForecastIndex) {
-        selectedForecastIndex = 0
-        return
-    }
-
-    if (weatherData.isEmpty()) {
+    val forecast = selectedForecast ?: run {
         NoData()
         return
     }
 
-    val selectedForecast = weatherData[selectedDayIndex].hourlyForecasts[selectedForecastIndex]
-    val imperialUnits = LauncherPreferences.instance.imperialUnits
-
     Column {
-        Row {
-            Column(
-                modifier = Modifier
-                    .padding(start = 16.dp, top = 16.dp)
-                    .weight(1f)
-            ) {
-                Text(
-                    text = selectedForecast.location,
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = convertTemperature(
-                        imperialUnits = imperialUnits,
-                        temp = selectedForecast.temperature
-                    ).toString() + "°",
-                    style = MaterialTheme.typography.headlineLarge,
-                )
-                Text(
-                    text = selectedForecast.condition,
-                    style = MaterialTheme.typography.bodySmall
-                )
+        CurrentWeather(forecast, imperialUnits)
 
-                Row(
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            detailsExpanded = !detailsExpanded
-                        })
-                        .padding(vertical = 12.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details),
-                        style = MaterialTheme.typography.labelMedium,
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
-
-                AnimatedVisibility(visible = detailsExpanded) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        WeatherDetailRow(
-                            title = stringResource(id = R.string.weather_humidity),
-                            value = "${selectedForecast.humidity.roundToInt()} %"
-                        )
-                        WeatherDetailRow(
-                            title = stringResource(id = R.string.weather_wind),
-                            value = formatWindSpeed(imperialUnits, selectedForecast)
-                        )
-                        val precipitation = formatPrecipitation(imperialUnits, selectedForecast)
-                        if (precipitation != null) {
-                            WeatherDetailRow(
-                                title = stringResource(id = R.string.weather_precipitation),
-                                value = precipitation
-                            )
-                        }
-                    }
-                }
-            }
-            Column(
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.End
-            ) {
-                val context = LocalContext.current
-                AnimatedWeatherIcon(
-                    modifier = Modifier.padding(all = 16.dp),
-                    icon = weatherIconById(selectedForecast.icon),
-                    night = selectedForecast.night
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Surface(
-                    shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
-                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-                    modifier = Modifier.align(Alignment.End)
-
-                ) {
-
-                    Text(
-                        text = "${selectedForecast.provider} (${
-                            formatTime(
-                                LocalContext.current,
-                                selectedForecast.updateTime
-                            )
-                        })",
-                        style = TextStyle(
-                            fontSize = 10.sp
-                        ),
-                        modifier = Modifier
-                            .clickable(onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW).apply {
-                                    data = Uri.parse(selectedForecast.providerUrl)
-                                        ?: return@clickable
-                                }
-                                context.tryStartActivity(intent)
-                            })
-                            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
-                    )
-                }
-            }
-        }
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            WeatherDaySelector(
-                days = weatherData,
-                selectedDay = weatherData[selectedDayIndex],
-                onDaySelected = {
-                    selectedDayIndex = it
-                    selectedForecastIndex = 0
-                },
-                modifier = Modifier.weight(1f)
-            )
+            val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
+            val selectedDayForecast by viewModel.currentDailyForecast.observeAsState()
+            selectedDayForecast?.let {
+                WeatherDaySelector(
+                    days = dailyForecasts,
+                    selectedDay = it,
+                    onDaySelected = {
+                        viewModel.selectDay(it)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
+            }
+            val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
             WeatherTimeSelector(
-                forecasts = weatherData[selectedDayIndex].hourlyForecasts,
-                selectedForecast = selectedForecast,
+                forecasts = currentDayForecasts,
+                selectedForecast = forecast,
+                imperialUnits = imperialUnits,
                 onTimeSelected = {
-                    selectedForecastIndex = it
+                    viewModel.selectForecast(it)
                 }
             )
+        }
+    }
+}
+
+@Composable
+fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
+    var detailsExpanded by remember { mutableStateOf(false) }
+    Row {
+        Column(
+            modifier = Modifier
+                .padding(start = 16.dp, top = 16.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = forecast.location,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = convertTemperature(
+                    imperialUnits = imperialUnits,
+                    temp = forecast.temperature
+                ).toString() + "°",
+                style = MaterialTheme.typography.headlineLarge,
+            )
+            Text(
+                text = forecast.condition,
+                style = MaterialTheme.typography.bodySmall
+            )
+
+            Row(
+                modifier = Modifier
+                    .clickable(onClick = {
+                        detailsExpanded = !detailsExpanded
+                    })
+                    .padding(vertical = 12.dp)
+            ) {
+                Text(
+                    text = stringResource(id = if (detailsExpanded) R.string.weather_widget_hide_details else R.string.weather_widget_show_details),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            AnimatedVisibility(visible = detailsExpanded) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    WeatherDetailRow(
+                        title = stringResource(id = R.string.weather_humidity),
+                        value = "${forecast.humidity.roundToInt()} %"
+                    )
+                    WeatherDetailRow(
+                        title = stringResource(id = R.string.weather_wind),
+                        value = formatWindSpeed(imperialUnits, forecast)
+                    )
+                    val precipitation = formatPrecipitation(imperialUnits, forecast)
+                    if (precipitation != null) {
+                        WeatherDetailRow(
+                            title = stringResource(id = R.string.weather_precipitation),
+                            value = precipitation
+                        )
+                    }
+                }
+            }
+        }
+        Column(
+            verticalArrangement = Arrangement.SpaceBetween,
+            horizontalAlignment = Alignment.End
+        ) {
+            val context = LocalContext.current
+            AnimatedWeatherIcon(
+                modifier = Modifier.padding(all = 16.dp),
+                icon = weatherIconById(forecast.icon),
+                night = forecast.night
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Surface(
+                shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
+                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                modifier = Modifier.align(Alignment.End)
+
+            ) {
+
+                Text(
+                    text = "${forecast.provider} (${
+                        formatTime(
+                            LocalContext.current,
+                            forecast.updateTime
+                        )
+                    })",
+                    style = TextStyle(
+                        fontSize = 10.sp
+                    ),
+                    modifier = Modifier
+                        .clickable(onClick = {
+                            val intent = Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse(forecast.providerUrl)
+                                    ?: return@clickable
+                            }
+                            context.tryStartActivity(intent)
+                        })
+                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
+                )
+            }
         }
     }
 }
@@ -299,12 +295,12 @@ fun WeatherTimeSelector(
     modifier: Modifier = Modifier,
     forecasts: List<Forecast>,
     selectedForecast: Forecast,
+    imperialUnits: Boolean,
     onTimeSelected: (Int) -> Unit
 ) {
     val menuExpanded = remember { mutableStateOf(false) }
 
     val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
-    val imperialUnits = LauncherPreferences.instance.imperialUnits
 
     Row(
         modifier = modifier
@@ -455,7 +451,8 @@ fun NoData() {
             .wrapContentHeight(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(imageVector = Icons.Rounded.LightMode,
+        Icon(
+            imageVector = Icons.Rounded.LightMode,
             contentDescription = "",
             modifier = Modifier
                 .padding(24.dp)

@@ -42,8 +42,8 @@ dependencies {
     implementation(libs.androidx.work)
     implementation(libs.okhttp)
     implementation(libs.bundles.retrofit)
-
     implementation(libs.suncalc)
+    implementation(libs.koin.android)
 
     implementation(project(":database"))
     implementation(project(":ktx"))

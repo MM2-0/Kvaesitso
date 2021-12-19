@@ -21,6 +21,7 @@ import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.database.databaseModule
+import de.mm20.launcher2.weather.weatherModule
 import kotlinx.coroutines.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -67,6 +68,7 @@ class LauncherApplication : Application(), CoroutineScope {
                     musicModule,
                     searchModule,
                     unitConverterModule,
+                    weatherModule,
                     websitesModule,
                     widgetsModule,
                     wikipediaModule
