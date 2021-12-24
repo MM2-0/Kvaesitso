@@ -115,7 +115,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":applications"))
-    implementation(project(":appsearch"))
     implementation(project(":badges"))
     implementation(project(":base"))
     implementation(project(":calculator"))

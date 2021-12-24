@@ -386,5 +386,4 @@ dependencyResolutionManagement {
         }
     }
 }
-include(":appsearch")
 include(":notifications")
