@@ -29,26 +29,20 @@ import kotlinx.coroutines.flow.map
 
 @Composable
 fun ClockWidget(
-    modifier: Modifier = Modifier,
-    transparentBackground: Boolean
+    modifier: Modifier = Modifier
 ) {
-    val windowHeight = LocalWindowSize.current.height
-    val insets = LocalWindowInsets.current
     Box(
         modifier = Modifier
             .fillMaxWidth(),
         contentAlignment = Alignment.BottomCenter
     ) {
-        val contentColor by animateColorAsState(
-            if (transparentBackground) Color.White else MaterialTheme.colorScheme.onSurface
-        )
 
-        CompositionLocalProvider(LocalContentColor provides contentColor) {
+        CompositionLocalProvider(LocalContentColor provides Color.White) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.height(IntrinsicSize.Min)
             ) {
-                Clock(transparentBackground)
+                Clock()
 
                 DynamicZone()
             }
@@ -58,7 +52,7 @@ fun ClockWidget(
 }
 
 @Composable
-fun Clock(transparentBackground: Boolean) {
+fun Clock() {
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
     val context = LocalContext.current
     val dataStore = context.dataStore

@@ -72,7 +72,7 @@ fun WidgetColumn(
                 .verticalScroll(scrollState)
                 .navigationBarsPadding()
         ) {
-            ClockWidget(transparentBackground = background > 0.75f)
+            ClockWidget()
 
             AnimatedVisibility(visible = scrollState.value == 0) {
                 NavBarSpacer()

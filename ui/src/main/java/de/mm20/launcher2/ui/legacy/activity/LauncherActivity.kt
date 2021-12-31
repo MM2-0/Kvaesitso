@@ -274,13 +274,11 @@ class LauncherActivity : AppCompatActivity() {
                 binding.searchBar.raise()
             } else binding.searchBar.drop()
             if (scrollY == 0) {
-                binding.clockWidget.transparentBackground = true
                 if (!searchVisibility) {
                     binding.searchBar.hide()
                     windowBackgroundBlur = false
                 }
             } else {
-                binding.clockWidget.transparentBackground = false
                 binding.searchBar.show()
                 if (!searchVisibility) {
                     windowBackgroundBlur = true
