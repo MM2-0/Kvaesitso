@@ -1,16 +1,13 @@
 package de.mm20.launcher2.calendar
 
 import android.content.Context
-import android.util.Log
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.CalendarEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 
 interface CalendarRepository {
@@ -74,7 +71,6 @@ class CalendarRepositoryImpl(
         }
 
         merge(unselectedCalendars, hideAlldayEvents, hiddenItems).collectLatest {
-            Log.d("MM20", "Calendar event flow has been created")
             val now = System.currentTimeMillis()
             val end = now + 14 * 24 * 60 * 60 * 1000L
             val events = withContext(Dispatchers.IO) {
