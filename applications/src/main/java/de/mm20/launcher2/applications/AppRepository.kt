@@ -204,9 +204,7 @@ class AppRepositoryImpl(
 
     override fun search(query: String): Flow<List<Application>> = channelFlow {
 
-        combine(installedApps, hiddenItems, installations) {_, _, _ ->
-            null
-        }.collectLatest {
+        merge(installedApps, hiddenItems, installations).collectLatest {
             withContext(Dispatchers.IO) {
                 val appResults = mutableListOf<Application>()
                 if (query.isEmpty()) {
