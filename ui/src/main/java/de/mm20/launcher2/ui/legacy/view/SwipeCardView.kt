@@ -14,15 +14,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.card.MaterialCardView
-import de.mm20.launcher2.favorites.FavoritesViewModel
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.abs
 
 class SwipeCardView @JvmOverloads constructor(
@@ -376,10 +378,12 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         R.drawable.ic_star_solid,
         ContextCompat.getColor(context, R.color.amber),
         { false }
-    ) {
-    val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
+    ), KoinComponent {
 
-    private val pinned = viewModel.isPinned(searchable)
+    private val repository: FavoritesRepository by inject()
+
+    private val pinned = repository.isPinned(searchable)
+        .asLiveData((context as AppCompatActivity).lifecycleScope.coroutineContext)
 
 
     init {
@@ -392,7 +396,7 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         if (pinned) {
             icon = R.drawable.ic_star_outline
             action = {
-                viewModel.unpinItem(
+                repository.unpinItem(
                     searchable
                 )
                 false
@@ -400,7 +404,7 @@ class FavoriteSwipeAction(val context: Context, val searchable: Searchable) :
         } else {
             icon = R.drawable.ic_star_solid
             action = {
-                viewModel.pinItem(
+                repository.pinItem(
                     searchable
                 )
                 false
@@ -413,9 +417,12 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
     R.drawable.ic_visibility_off,
     ContextCompat.getColor(context, R.color.blue),
     { false }
-) {
-    val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
-    private val hidden = viewModel.isHidden(searchable)
+), KoinComponent {
+
+    private val repository: FavoritesRepository by inject()
+
+    private val hidden = repository.isPinned(searchable)
+        .asLiveData((context as AppCompatActivity).lifecycleScope.coroutineContext)
 
     init {
         hidden.observe(context as LifecycleOwner) {
@@ -427,7 +434,7 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
         if (hidden) {
             icon = R.drawable.ic_visibility
             action = {
-                viewModel.unhideItem(
+                repository.unhideItem(
                     searchable
                 )
                 true
@@ -435,7 +442,7 @@ class HideSwipeAction(val context: Context, val searchable: Searchable) : SwipeC
         } else {
             icon = R.drawable.ic_visibility_off
             action = {
-                viewModel.hideItem(
+                repository.hideItem(
                     searchable
                 )
                 true

@@ -6,12 +6,12 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
-import de.mm20.launcher2.applications.AppViewModel
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.ui.databinding.ViewApplicationBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 
 class ApplicationView : FrameLayout {
 
@@ -27,8 +27,8 @@ class ApplicationView : FrameLayout {
         layoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.applicationCard.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        val viewModel: AppViewModel by (context as AppCompatActivity).viewModel()
-        applications = viewModel.applications
+        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        applications = viewModel.appResults
         applications.observe(context as AppCompatActivity, Observer<List<Application>> {
             visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
             binding.applicationGrid.submitItems(it)

@@ -22,9 +22,4 @@ class SearchRepository {
         }
     }
 
-    fun endSearch() {
-        synchronized(runningSearches) {
-            runningSearches--
-        }
-    }
 }

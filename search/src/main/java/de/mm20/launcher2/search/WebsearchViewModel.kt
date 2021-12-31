@@ -1,6 +1,7 @@
 package de.mm20.launcher2.search
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.search.data.Websearch
 
 class WebsearchViewModel(
@@ -16,7 +17,6 @@ class WebsearchViewModel(
         websearchRepository.deleteWebsearch(websearch)
     }
 
-    val websearches = websearchRepository.websearches
-    val allWebsearches = websearchRepository.allWebsearches
+    val allWebsearches = websearchRepository.getWebsearches().asLiveData()
 
 }

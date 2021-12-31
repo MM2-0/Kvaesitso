@@ -2,14 +2,12 @@ package de.mm20.launcher2.widgets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.calendar.CalendarRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class WidgetViewModel(
-    private val widgetRepository: WidgetRepository,
-    private val calendarRepository: CalendarRepository
+    private val widgetRepository: WidgetRepository
 ) : ViewModel() {
 
 
@@ -29,7 +27,4 @@ class WidgetViewModel(
         return widgetRepository.getInternalWidgets()
     }
 
-    fun requestCalendarUpdate() {
-        calendarRepository.requestCalendarUpdate()
-    }
 }

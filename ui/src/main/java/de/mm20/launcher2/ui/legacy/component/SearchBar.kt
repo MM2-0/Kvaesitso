@@ -12,21 +12,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.postDelayed
-import androidx.lifecycle.Observer
 import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.LottieDrawable
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.SearchStyles
-import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewSearchBarBinding
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchBar @JvmOverloads constructor(
         context: Context,
@@ -70,12 +66,6 @@ class SearchBar @JvmOverloads constructor(
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-        })
-
-        val viewModel = (context as AppCompatActivity).viewModel<SearchViewModel>().value
-
-        viewModel.isSearching.observe(context, Observer {
-            binding.searchProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         })
 
         binding.overflowMenu.setOnClickListener {

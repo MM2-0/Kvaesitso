@@ -1,19 +1,23 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.Wikipedia
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
+interface WikipediaRepository {
+    fun search(query: String): Flow<Wikipedia?>
+}
 
-    val wikipedia = MutableLiveData<Wikipedia?>()
+class WikipediaRepositoryImpl(
+    private val context: Context
+): WikipediaRepository {
 
     private val httpClient by lazy {
         OkHttpClient
@@ -24,7 +28,7 @@ class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
             .build()
     }
 
-    val retrofit by lazy {
+    private val retrofit by lazy {
         Retrofit.Builder()
             .client(httpClient)
             .baseUrl(context.getString(R.string.wikipedia_url))
@@ -36,9 +40,9 @@ class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
         retrofit.create(WikipediaApi::class.java)
     }
 
-    override fun onCancel() {
-        super.onCancel()
 
+    override fun search(query: String): Flow<Wikipedia?> = channelFlow {
+        send(null)
         httpClient.dispatcher.run {
             runningCalls().forEach {
                 it.cancel()
@@ -47,20 +51,17 @@ class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
                 it.cancel()
             }
         }
-    }
 
-    override suspend fun search(query: String) {
-        wikipedia.value = null
-        if (query.isBlank()) return
+        if (query.isBlank()) return@channelFlow
 
         val result = try {
             wikipediaService.search(query)
         } catch (e: Exception) {
             CrashReporter.logException(e)
-            return
+            return@channelFlow
         }
 
-        val page = result.query?.pages?.values?.toList()?.getOrNull(0) ?: return
+        val page = result.query?.pages?.values?.toList()?.getOrNull(0) ?: return@channelFlow
 
         val image = if (LauncherPreferences.instance.searchWikipediaPictures) {
             val width = context.resources.displayMetrics.widthPixels / 2
@@ -68,7 +69,7 @@ class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
                 wikipediaService.getPageImage(page.pageid, width)
             } catch (e: Exception) {
                 CrashReporter.logException(e)
-                return
+                return@channelFlow
             }
             imageResult.query?.pages?.values?.toList()?.getOrNull(0)?.thumbnail?.source
         } else null
@@ -79,7 +80,7 @@ class WikipediaRepository(val context: Context) : BaseSearchableRepository() {
             text = page.extract,
             image = image
         )
-
-        wikipedia.value = wiki
+        send(wiki)
     }
+
 }

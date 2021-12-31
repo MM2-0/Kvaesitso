@@ -6,16 +6,18 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.annotation.DrawableRes
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.setPadding
-import androidx.lifecycle.Observer
-import de.mm20.launcher2.favorites.FavoritesViewModel
+import androidx.lifecycle.*
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class ToolbarView : LinearLayout {
     constructor(context: Context) : super(context)
@@ -223,27 +225,37 @@ open class ToolbarSubaction(val title: String, var clickAction: (() -> Unit)) {
 class FavoriteToolbarAction(val context: Context, val item: Searchable) : ToolbarAction(
     R.drawable.ic_star_outline,
     context.getString(R.string.favorites_menu_pin)
-) {
+), KoinComponent {
 
-    private val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
-    private val isPinned = viewModel.isPinned(item)
-
-    init {
-        isPinned.observe(context as AppCompatActivity, Observer {
-            it ?: return@Observer
-            if (it) {
+    private val repository: FavoritesRepository by inject()
+    private var isPinned = false
+        set(value) {
+            field = value
+            if (value) {
                 title = context.getString(R.string.favorites_menu_unpin)
                 icon = R.drawable.ic_star_solid
             } else {
                 title = context.getString(R.string.favorites_menu_pin)
                 icon = R.drawable.ic_star_outline
             }
-        })
+        }
+
+    init {
         clickAction = {
-            if (isPinned.value == true) {
-                viewModel.unpinItem(item)
+            if (isPinned) {
+                repository.unpinItem(item)
             } else {
-                viewModel.pinItem(item)
+                repository.pinItem(item)
+            }
+        }
+
+        (context as LifecycleOwner).apply {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    repository.isPinned(item).collectLatest {
+                        isPinned = it
+                    }
+                }
             }
         }
     }
@@ -252,27 +264,40 @@ class FavoriteToolbarAction(val context: Context, val item: Searchable) : Toolba
 class VisibilityToolbarAction(val context: Context, val item: Searchable) : ToolbarAction(
     R.drawable.ic_visibility,
     context.getString(R.string.menu_hide)
-) {
+), KoinComponent {
 
-    private val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
-    private val isHidden = viewModel.isHidden(item)
-
-    init {
-        isHidden.observe(context as AppCompatActivity, Observer {
-            if (it) {
+    private val repository: FavoritesRepository by inject()
+    private var isHidden = false
+        set(value) {
+            field = value
+            if (value) {
                 title = context.getString(R.string.menu_unhide)
                 icon = R.drawable.ic_visibility
             } else {
                 title = context.getString(R.string.menu_hide)
                 icon = R.drawable.ic_visibility_off
             }
-        })
+        }
+
+    init {
         clickAction = {
-            if (isHidden.value == true) {
-                viewModel.unhideItem(item)
+            if (isHidden) {
+                repository.unhideItem(item)
             } else {
-                viewModel.hideItem(item)
+                repository.hideItem(item)
+            }
+        }
+
+        (context as LifecycleOwner).apply {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    repository.isHidden(item).collectLatest {
+                        isHidden = it
+                    }
+                }
             }
         }
     }
+
+
 }

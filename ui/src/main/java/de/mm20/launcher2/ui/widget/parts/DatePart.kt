@@ -9,9 +9,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.calendar.CalendarViewModel
 import de.mm20.launcher2.ui.component.TextClock
-import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun DatePart() {

@@ -1,44 +1,80 @@
 package de.mm20.launcher2.calendar
 
 import android.content.Context
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import android.util.Log
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.CalendarEvent
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.withContext
 
-class CalendarRepository(
-    val context: Context,
+interface CalendarRepository {
+    fun search(query: String): Flow<List<CalendarEvent>>
+
+    fun getUpcomingEvents(): Flow<List<CalendarEvent>>
+}
+
+class CalendarRepositoryImpl(
+    private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository
-) : BaseSearchableRepository() {
+) : CalendarRepository {
 
-    val calendarEvents = MediatorLiveData<List<CalendarEvent>?>()
-    val upcomingCalendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
+    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
 
-    private val allEvents = MutableLiveData<List<CalendarEvent>?>(emptyList())
-    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
-
-    init {
-        calendarEvents.addSource(hiddenItemKeys) { keys ->
-            calendarEvents.value = allEvents.value?.filter { !keys.contains(it.key) }
+    override fun search(query: String): Flow<List<CalendarEvent>> = channelFlow {
+        if (query.isBlank()) {
+            send(emptyList())
+            return@channelFlow
         }
-        calendarEvents.addSource(allEvents) { e ->
-            calendarEvents.value = e?.filter { hiddenItemKeys.value?.contains(it.key) != true }
+        val events = withContext(Dispatchers.IO) {
+            val now = System.currentTimeMillis()
+            CalendarEvent.search(
+                context,
+                query,
+                intervalStart = now,
+                intervalEnd = now + 14 * 24 * 60 * 60 * 1000L,
+            )
         }
-        hiddenItemKeys.observeForever {
-            requestCalendarUpdate()
+
+        hiddenItems.collectLatest { hiddenItems ->
+            val calendarResults = withContext(Dispatchers.IO) {
+                events.filter { !hiddenItems.contains(it.key) }
+            }
+            send(calendarResults)
         }
 
     }
 
-    fun requestCalendarUpdate() {
-        launch {
-            val unselectedCalendars = LauncherPreferences.instance.unselectedCalendars
-            val hideAlldayEvents = LauncherPreferences.instance.calendarHideAllday
+    override fun getUpcomingEvents(): Flow<List<CalendarEvent>> = channelFlow {
+        val unselectedCalendars = callbackFlow {
+            val unregister =
+                LauncherPreferences.instance.doOnPreferenceChange("unselected_calendars") {
+                    trySendBlocking(LauncherPreferences.instance.unselectedCalendars)
+                }
+            trySendBlocking(LauncherPreferences.instance.unselectedCalendars)
+            awaitClose {
+                unregister()
+            }
+        }
 
+        val hideAlldayEvents = callbackFlow {
+            val unregister =
+                LauncherPreferences.instance.doOnPreferenceChange("calendar_hide_allday") {
+                    trySendBlocking(LauncherPreferences.instance.calendarHideAllday)
+                }
+            trySendBlocking(LauncherPreferences.instance.calendarHideAllday)
+            awaitClose {
+                unregister()
+            }
+        }
+
+        merge(unselectedCalendars, hideAlldayEvents, hiddenItems).collectLatest {
+            Log.d("MM20", "Calendar event flow has been created")
             val now = System.currentTimeMillis()
             val end = now + 14 * 24 * 60 * 60 * 1000L
             val events = withContext(Dispatchers.IO) {
@@ -48,28 +84,20 @@ class CalendarRepository(
                     intervalStart = now,
                     intervalEnd = end,
                     limit = 700,
-                    hideAllDayEvents = hideAlldayEvents,
-                    unselectedCalendars = unselectedCalendars,
-                    hiddenEvents = hiddenItemKeys.value?.mapNotNull {
-                        if (it.startsWith("calendar")) it.substringAfterLast("/").toLong()
-                        else null
-                    } ?: emptyList()
-                )
+                    hideAllDayEvents = LauncherPreferences.instance.calendarHideAllday,
+                    unselectedCalendars = LauncherPreferences.instance.unselectedCalendars
+                ).filter {
+                    !hiddenItems.value.contains(it.key)
+                }
             }
-            upcomingCalendarEvents.value = events
+            send(events)
         }
     }
 
-    override suspend fun search(query: String) {
-        if (query.isBlank()) {
-            allEvents.value = null
-            return
+    var unselectedCalendars: List<Long>
+        get() = LauncherPreferences.instance.unselectedCalendars
+        set(value) {
+            LauncherPreferences.instance.unselectedCalendars = value
         }
-        val startTime = System.currentTimeMillis()
-        val endTime = System.currentTimeMillis() + 365L * 24 * 60 * 60 * 1000
-        val events = withContext(Dispatchers.IO) {
-            CalendarEvent.search(context, query, startTime, endTime)
-        }
-        allEvents.value = events
-    }
+
 }

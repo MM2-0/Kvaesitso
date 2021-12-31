@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
@@ -17,24 +18,27 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.chip.Chip
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.legacy.helper.ActivityStarter
-import de.mm20.launcher2.search.WebsearchViewModel
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewWebsearchBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 
 class WebSearchView : FrameLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
     private val websearches: LiveData<List<Websearch>>
 
     private val binding = ViewWebsearchBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        val viewModel: WebsearchViewModel by (context as AppCompatActivity).viewModel()
-        websearches = viewModel.websearches
+        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        websearches = viewModel.websearchResults
         websearches.observe(context as AppCompatActivity, Observer {
             updateWebsearches(it)
         })
@@ -48,13 +52,16 @@ class WebSearchView : FrameLayout {
             chip.text = search.label
             if (search.icon != null) {
                 Glide.with(context)
-                        .load(search.icon)
-                        .into(object : SimpleTarget<Drawable>() {
-                            override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {
-                                chip.chipIcon = resource
-                            }
+                    .load(search.icon)
+                    .into(object : SimpleTarget<Drawable>() {
+                        override fun onResourceReady(
+                            resource: Drawable,
+                            transition: Transition<in Drawable>?
+                        ) {
+                            chip.chipIcon = resource
+                        }
 
-                        })
+                    })
                 chip.chipIconTint = null
             } else {
                 chip.chipIcon = ContextCompat.getDrawable(context, R.drawable.ic_search)
@@ -63,7 +70,8 @@ class WebSearchView : FrameLayout {
             }
             chip.chipStrokeWidth = 1 * dp
             chip.chipStrokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
-            chip.chipBackgroundColor = ContextCompat.getColorStateList(context, R.color.chip_background)
+            chip.chipBackgroundColor =
+                ContextCompat.getColorStateList(context, R.color.chip_background)
             chip.setTextAppearanceResource(R.style.ChipTextAppearance)
             chip.setOnClickListener {
                 ActivityStarter.start(context, chip, intent = search.getLaunchIntent())

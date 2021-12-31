@@ -5,6 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val contactsModule = module {
-    single { ContactRepository(androidContext(), get()) }
-    viewModel { ContactViewModel(get()) }
+    single<ContactRepository> { ContactRepositoryImpl(androidContext(), get()) }
 }

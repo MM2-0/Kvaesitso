@@ -14,7 +14,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Point
-import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
@@ -23,7 +22,6 @@ import android.view.*
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.inputmethod.InputMethodManager
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -44,7 +42,6 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.afollestad.materialdialogs.list.listItems
 import com.jmedeisis.draglinearlayout.DragLinearLayout
-import de.mm20.launcher2.favorites.FavoritesViewModel
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
@@ -53,15 +50,15 @@ import de.mm20.launcher2.ktx.isBrightColor
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.search.SearchViewModel
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
-import de.mm20.launcher2.ui.legacy.component.EditFavoritesView
+import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
+import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
-import de.mm20.launcher2.ui.legacy.search.SearchGridView
 import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
@@ -79,37 +76,37 @@ class LauncherActivity : AppCompatActivity() {
      * True if the search result list is visible
      */
     private var searchVisibility = false
-    set(value) {
-        field = value
-        windowBackgroundBlur = value
-    }
+        set(value) {
+            field = value
+            windowBackgroundBlur = value
+        }
 
     private lateinit var widgetHost: AppWidgetHost
     private val widgets = mutableListOf<Widget>()
 
     private lateinit var overlayView: ViewGroupOverlay
 
-    private val searchViewModel: SearchViewModel by viewModel()
     private val widgetViewModel: WidgetViewModel by viewModel()
-    private val favoritesViewModel: FavoritesViewModel by viewModel()
+
+    private val searchViewModel: SearchViewModel by viewModels()
 
     private val preferences = LauncherPreferences.instance
 
     private var windowBackgroundBlur: Boolean = false
-    set(value) {
-        if(field == value) return
-        field = value
-        if (!isAtLeastApiLevel(31)) return
-        window.attributes = window.attributes.also {
-            if (value) {
-                it.blurBehindRadius = (32 * dp).toInt()
-                it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
-            } else {
-                it.blurBehindRadius = 0
-                it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+        set(value) {
+            if (field == value) return
+            field = value
+            if (!isAtLeastApiLevel(31)) return
+            window.attributes = window.attributes.also {
+                if (value) {
+                    it.blurBehindRadius = (32 * dp).toInt()
+                    it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
+                } else {
+                    it.blurBehindRadius = 0
+                    it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+                }
             }
         }
-    }
 
     private var widgetEditMode = false
         set(value) {
@@ -318,28 +315,11 @@ class LauncherActivity : AppCompatActivity() {
                             )
                         }
                         R.id.menu_item_hidden -> {
-                            val layout = NestedScrollView(this)
-                            layout.clipChildren = false
-                            layout.layoutParams = ViewGroup.LayoutParams(
-                                MATCH_PARENT,
-                                WRAP_CONTENT
-                            )
-                            val hiddenItemsGrid = SearchGridView(this)
-                            hiddenItemsGrid.layoutParams = FrameLayout.LayoutParams(
-                                MATCH_PARENT,
-                                WRAP_CONTENT
-                            ).apply {
-                                setMargins((8 * dp).toInt())
-                            }
-                            val hiddenItems = favoritesViewModel.hiddenItems
-                            hiddenItems.observe(this) {
-                                hiddenItemsGrid.submitItems(it)
-                            }
-                            layout.addView(hiddenItemsGrid)
+                            val view = HiddenItemsView(this)
                             MaterialDialog(this, BottomSheet(LayoutMode.MATCH_PARENT))
                                 .show {
                                     title(R.string.menu_hidden_items)
-                                    customView(view = layout)
+                                    customView(view = view)
                                     negativeButton(R.string.close) { dismiss() }
                                 }
                             //hiddenAppsActivated = true
@@ -584,8 +564,6 @@ class LauncherActivity : AppCompatActivity() {
         ActivityStarter.create(binding.rootView)
         binding.activityStartOverlay.visibility = View.INVISIBLE
 
-        val widgetViewModel by viewModels<WidgetViewModel>()
-        widgetViewModel.requestCalendarUpdate()
         search(binding.searchBar.getSearchQuery())
 
         updateSystemBarAppearance()
@@ -670,12 +648,8 @@ class LauncherActivity : AppCompatActivity() {
             PermissionsManager.LOCATION -> {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
             }
-            PermissionsManager.CALENDAR -> {
-                widgetViewModel.requestCalendarUpdate()
-            }
             PermissionsManager.ALL -> {
                 ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
-                widgetViewModel.requestCalendarUpdate()
                 search(binding.searchBar.getSearchQuery())
             }
         }
@@ -760,7 +734,8 @@ class LauncherActivity : AppCompatActivity() {
                                 binding.container.translationY = binding.searchBar.height.toFloat()
 
                             }
-                            windowBackgroundBlur = searchVisibility || newTransY > 0.6 * binding.searchBar.height
+                            windowBackgroundBlur =
+                                searchVisibility || newTransY > 0.6 * binding.searchBar.height
 
                             if (binding.container.translationY == 0f) return@onTouch false
                         }

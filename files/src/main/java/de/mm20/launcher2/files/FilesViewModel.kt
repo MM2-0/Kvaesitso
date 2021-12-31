@@ -1,16 +1,16 @@
 package de.mm20.launcher2.files
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.search.data.File
+import kotlinx.coroutines.launch
 
 class FilesViewModel(
-    private val filesRepository: FilesRepository
+    private val filesRepository: FileRepository
 ): ViewModel() {
-
-
-    val files = filesRepository.files
-
     fun deleteFile(file: File) {
-        filesRepository.deleteFile(file)
+        viewModelScope.launch {
+            filesRepository.deleteFile(file)
+        }
     }
 }

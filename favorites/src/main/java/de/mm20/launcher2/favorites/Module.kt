@@ -91,7 +91,5 @@ val favoritesModule = module {
         return@factory NullDeserializer()
     }
 
-    single { FavoritesRepository(androidContext()) }
-
-    viewModel { FavoritesViewModel(get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(androidContext(), get()) }
 }

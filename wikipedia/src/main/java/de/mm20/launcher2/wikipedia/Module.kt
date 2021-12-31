@@ -5,6 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val wikipediaModule = module {
-    single { WikipediaRepository(androidContext()) }
-    viewModel { WikipediaViewModel(get()) }
+    single<WikipediaRepository> { WikipediaRepositoryImpl(androidContext()) }
 }

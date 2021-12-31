@@ -1,17 +1,19 @@
 package de.mm20.launcher2.websites
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
-import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.Website
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
-class WebsiteRepository(val context: Context) : BaseSearchableRepository() {
+interface WebsiteRepository {
+    fun search(query: String): Flow<Website?>
+}
 
-    val website = MutableLiveData<Website?>()
+class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository {
 
     private val httpClient = OkHttpClient
         .Builder()
@@ -20,8 +22,8 @@ class WebsiteRepository(val context: Context) : BaseSearchableRepository() {
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
         .build()
 
-    override fun onCancel() {
-        super.onCancel()
+    override fun search(query: String): Flow<Website?> = channelFlow {
+        send(null)
         httpClient.dispatcher.run {
             runningCalls().forEach {
                 it.cancel()
@@ -30,14 +32,10 @@ class WebsiteRepository(val context: Context) : BaseSearchableRepository() {
                 it.cancel()
             }
         }
-    }
-
-    override suspend fun search(query: String) {
-        website.value = null
-        if (query.isBlank()) return
-        val wiki = withContext(Dispatchers.IO) {
+        if (query.isBlank()) return@channelFlow
+        val website = withContext(Dispatchers.IO) {
             Website.search(context, query, httpClient)
         }
-        website.value = wiki
+        send(website)
     }
 }

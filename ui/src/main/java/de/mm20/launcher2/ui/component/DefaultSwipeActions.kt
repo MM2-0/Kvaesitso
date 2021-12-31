@@ -16,8 +16,8 @@ import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
@@ -26,11 +26,11 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.favorites.FavoritesViewModel
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.theme.divider
-import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.inject
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class, ExperimentalAnimationApi::class)
@@ -41,19 +41,19 @@ fun DefaultSwipeActions(
     enabled: Boolean = true,
     content: @Composable RowScope.() -> Unit
 ) {
-    val viewModel: FavoritesViewModel = getViewModel()
+    val repository: FavoritesRepository by inject()
 
-    val isPinned by viewModel.isPinned(item).observeAsState()
-    val isHidden by viewModel.isHidden(item).observeAsState()
+    val isPinned by repository.isPinned(item).collectAsState(false)
+    val isHidden by repository.isHidden(item).collectAsState(false)
 
     val state = androidx.compose.material.rememberSwipeableState(
         SwipeAction.Default,
         confirmStateChange = {
             if (it == SwipeAction.Favorites) {
                 if (isPinned == true) {
-                    viewModel.unpinItem(item)
+                    repository.unpinItem(item)
                 } else {
-                    viewModel.pinItem(item)
+                    repository.pinItem(item)
                 }
             }
             false

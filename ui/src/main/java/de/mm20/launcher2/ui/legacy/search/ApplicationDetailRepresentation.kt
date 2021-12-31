@@ -28,14 +28,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import androidx.core.graphics.alpha
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import androidx.transition.Scene
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.favorites.FavoritesViewModel
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.castToOrNull
 import de.mm20.launcher2.ktx.dp
@@ -51,10 +50,8 @@ import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.Executors
@@ -83,9 +80,10 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(application)
                     lifecycleScope.launch {
-                        iconRepository.getIcon(application, (84 * rootView.dp).toInt()).collectLatest {
-                            icon = it
-                        }
+                        iconRepository.getIcon(application, (84 * rootView.dp).toInt())
+                            .collectLatest {
+                                icon = it
+                            }
                     }
                 }
                 findViewById<SwipeCardView>(R.id.appCard).also {
@@ -275,7 +273,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
             if (launcherApps.hasShortcutHostPermission()) {
                 val shortcuts = app.shortcuts
 
-                val viewModel: FavoritesViewModel by (context as AppCompatActivity).viewModel()
+                val repository: FavoritesRepository by inject()
 
                 var count = 0
                 for (si in shortcuts) {
@@ -308,7 +306,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                             R.color.text_color_primary
                         )
                     )
-                    val isPinned = viewModel.isPinned(si)
+                    val isPinned = repository.isPinned(si).asLiveData()
 
                     isPinned.observe(context as LifecycleOwner, Observer {
                         view.isCloseIconVisible = isPinned.value == true
@@ -320,14 +318,14 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                     }
                     view.setOnLongClickListener {
                         if (isPinned.value == true) {
-                            viewModel.unpinItem(si)
+                            repository.unpinItem(si)
                         } else {
-                            viewModel.pinItem(si)
+                            repository.pinItem(si)
                         }
                         true
                     }
                     view.setOnCloseIconClickListener {
-                        viewModel.unpinItem(si)
+                        repository.unpinItem(si)
                         view.isCloseIconVisible = false
                     }
                     appShortcuts.addView(view)

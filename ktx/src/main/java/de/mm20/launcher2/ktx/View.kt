@@ -19,6 +19,9 @@ fun View.asViewGroup(): ViewGroup? {
 val View.lifecycleScope
 get() = (context as LifecycleOwner).lifecycleScope
 
+val View.lifecycleOwner
+    get() = (context as LifecycleOwner)
+
 fun View.setPadding(vertical: Int, horizontal: Int) {
     setPadding(vertical, horizontal, vertical, horizontal)
 }

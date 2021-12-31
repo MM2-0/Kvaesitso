@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 
@@ -109,9 +110,13 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
     var gridColumnCount by IntPreference("grid_column_count", default = context.resources.getInteger(R.integer.config_columnCount))
 
 
-    fun doOnPreferenceChange(vararg keys: String, action: (String) -> Unit) {
-        preferences.registerOnSharedPreferenceChangeListener { _, key ->
+    fun doOnPreferenceChange(vararg keys: String, action: (String) -> Unit): () -> Unit {
+        val listener =  { _: SharedPreferences, key: String ->
             if (keys.contains(key)) action(key)
+        }
+        preferences.registerOnSharedPreferenceChangeListener(listener)
+        return {
+            preferences.unregisterOnSharedPreferenceChangeListener(listener)
         }
     }
 

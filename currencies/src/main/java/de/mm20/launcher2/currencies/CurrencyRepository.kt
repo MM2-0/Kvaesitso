@@ -13,7 +13,7 @@ class CurrencyRepository(val context: Context) {
     init {
         val currencyWorker = PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 60, TimeUnit.MINUTES)
                 .build()
-        WorkManager.getInstance().enqueueUniquePeriodicWork("ExchangeRates",
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork("ExchangeRates",
                 ExistingPeriodicWorkPolicy.REPLACE, currencyWorker)
     }
 

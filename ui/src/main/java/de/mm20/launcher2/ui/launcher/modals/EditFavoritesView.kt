@@ -1,37 +1,28 @@
-package de.mm20.launcher2.ui.legacy.component
+package de.mm20.launcher2.ui.launcher.modals
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContextCompat
-import androidx.core.view.updateMargins
-import androidx.core.widget.TextViewCompat
-import com.google.android.material.textview.MaterialTextView
 import de.mm20.launcher2.favorites.FavoritesItem
-import de.mm20.launcher2.favorites.FavoritesViewModel
-import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.ktx.setPadding
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.DialogEditFavoritesBinding
-import de.mm20.launcher2.ui.databinding.EditFavoritesRowBinding
 import de.mm20.launcher2.ui.databinding.EditFavoritesTitleBinding
+import de.mm20.launcher2.ui.legacy.component.EditFavoritesRow
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class EditFavoritesView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null
+    context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
 
-    val viewModel : FavoritesViewModel by (context as AppCompatActivity).viewModel()
+    val viewModel: EditFavoritesVM by (context as AppCompatActivity).viewModels()
 
     private val binding = DialogEditFavoritesBinding.inflate(LayoutInflater.from(context), this)
 
@@ -45,7 +36,7 @@ class EditFavoritesView @JvmOverloads constructor(
 
     suspend fun initView() {
         favorites = withContext(Dispatchers.IO) {
-            viewModel.getAllFavoriteItems().toMutableList()
+            viewModel.getFavorites().toMutableList()
         }
         binding.progressBar.visibility = View.GONE
         binding.itemList.addView(getLabel(R.string.edit_favorites_dialog_stage0))

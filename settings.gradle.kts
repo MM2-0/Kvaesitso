@@ -62,6 +62,10 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
+            alias("desugar")
+                .to("com.android.tools", "desugar_jdk_libs")
+                .version("1.1.5")
+
             version("androidx.compose", "1.1.0-rc01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")

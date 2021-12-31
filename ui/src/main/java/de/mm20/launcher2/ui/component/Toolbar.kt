@@ -14,11 +14,11 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.favorites.FavoritesViewModel
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import org.koin.androidx.compose.getViewModel
+import org.koin.androidx.compose.inject
 import kotlin.math.min
 
 @Composable
@@ -165,8 +165,8 @@ data class ToggleToolbarAction(
 
 @Composable
 fun favoritesToolbarAction(item: Searchable): ToggleToolbarAction {
-    val viewModel: FavoritesViewModel = getViewModel()
-    val isPinned by viewModel.isPinned(item).observeAsState(false)
+    val viewModel: FavoritesRepository by inject()
+    val isPinned by viewModel.isPinned(item).collectAsState(false)
 
     return ToggleToolbarAction(
         label = stringResource(
@@ -186,8 +186,8 @@ fun favoritesToolbarAction(item: Searchable): ToggleToolbarAction {
 
 @Composable
 fun hideToolbarAction(item: Searchable): ToggleToolbarAction {
-    val viewModel: FavoritesViewModel = getViewModel()
-    val isHidden by viewModel.isHidden(item).observeAsState(false)
+    val viewModel: FavoritesRepository by inject()
+    val isHidden by viewModel.isHidden(item).collectAsState(false)
 
     return ToggleToolbarAction(
         label = stringResource(

@@ -5,6 +5,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val hiddenItemsModule = module {
-    single { HiddenItemsRepository(androidContext()) }
+    single { HiddenItemsRepository(androidContext(), get()) }
     viewModel { HiddenItemsViewModel(get()) }
 }

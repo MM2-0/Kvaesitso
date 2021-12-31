@@ -1,41 +1,35 @@
 package de.mm20.launcher2.contacts
 
 import android.content.Context
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
-import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.Contact
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.withContext
 
-class ContactRepository(
-    val context: Context,
+interface ContactRepository {
+    fun search(query: String): Flow<List<Contact>>
+}
+
+class ContactRepositoryImpl(
+    private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository
-) : BaseSearchableRepository() {
+) : ContactRepository {
 
-    val contacts = MediatorLiveData<List<Contact>?>()
+    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
 
-    private val allContacts = MutableLiveData<List<Contact>?>(emptyList())
-    private val hiddenItemKeys = hiddenItemsRepository.hiddenItemsKeys
-
-    init {
-        contacts.addSource(hiddenItemKeys) { keys ->
-            contacts.value = allContacts.value?.filter { !keys.contains(it.key) }
-        }
-        contacts.addSource(allContacts) { c ->
-            contacts.value = c?.filter { hiddenItemKeys.value?.contains(it.key) != true }
-        }
-    }
-
-    override suspend fun search(query: String) {
-        if (query.isBlank()) {
-            allContacts.value = null
-            return
-        }
-        val results = withContext(Dispatchers.IO) {
+    override fun search(query: String): Flow<List<Contact>> = channelFlow {
+        val contacts = withContext(Dispatchers.IO) {
             Contact.search(context, query)
         }
-        allContacts.value = results
+        hiddenItems.collectLatest { hiddenItems ->
+            val contactResults = withContext(Dispatchers.IO) {
+                contacts.filter { !hiddenItems.contains(it.key) }
+            }
+            send(contactResults)
+        }
     }
 }

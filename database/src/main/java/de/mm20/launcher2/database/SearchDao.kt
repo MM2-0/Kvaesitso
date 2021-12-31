@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchDao {
@@ -18,7 +19,10 @@ interface SearchDao {
     fun insertSkipExisting(items: FavoritesItemEntity)
 
     @Query("SELECT * FROM Searchable WHERE pinned > 0 ORDER BY pinned DESC, launchCount DESC")
-    fun getFavorites() : LiveData<List<FavoritesItemEntity>>
+    fun getFavorites(): Flow<List<FavoritesItemEntity>>
+
+    @Query("SELECT * FROM Searchable WHERE pinned > 0 AND `key` LIKE 'calendar://%' ORDER BY pinned DESC, launchCount DESC")
+    fun getPinnedCalendarEvents(): Flow<List<FavoritesItemEntity>>
 
 
     @Query("SELECT COUNT(key) as count FROM Searchable WHERE pinned = 1;")
@@ -44,14 +48,14 @@ interface SearchDao {
     fun unpinFavorite(key: String)
 
     @Query("DELETE FROM Searchable WHERE `key` = :key")
-    fun deleteByKey(key: String)
+    suspend fun deleteByKey(key: String)
 
     @Query("UPDATE Searchable SET pinned = 0 WHERE `key` = :key")
     fun unpinApp(key: String)
 
 
     @Query("SELECT pinned FROM Searchable WHERE `key` = :key UNION SELECT 0 as pinned ORDER BY pinned DESC LIMIT 1")
-    fun isPinned(key: String): LiveData<Boolean>
+    fun isPinned(key: String): Flow<Boolean>
 
 
     @Query("UPDATE Searchable SET hidden = 1, pinned = 0 WHERE `key` = :key")
@@ -67,19 +71,16 @@ interface SearchDao {
     fun unhideItem(key: String)
 
     @Query("SELECT hidden FROM Searchable WHERE `key` = :key UNION SELECT 0 as hidden ORDER BY hidden DESC LIMIT 1")
-    fun isHidden(key: String): LiveData<Boolean>
+    fun isHidden(key: String): Flow<Boolean>
 
     @Query("SELECT `key` FROM SEARCHABLE WHERE hidden = 1")
-    fun getHiddenItemKeys(): LiveData<List<String>>
+    fun getHiddenItemKeys(): Flow<List<String>>
 
     @Query("SELECT * FROM SEARCHABLE WHERE hidden = 1")
-    fun getHiddenItems(): LiveData<List<FavoritesItemEntity>>
+    fun getHiddenItems(): Flow<List<FavoritesItemEntity>>
 
     @Query("SELECT * FROM Websearch ORDER BY label ASC")
-    fun getWebSearches(): List<WebsearchEntity>
-
-    @Query("SELECT * FROM Websearch ORDER BY label ASC")
-    fun getWebSearchesLiveData(): LiveData<List<WebsearchEntity>>
+    fun getWebSearches(): Flow<List<WebsearchEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertWebsearch(websearch: WebsearchEntity)

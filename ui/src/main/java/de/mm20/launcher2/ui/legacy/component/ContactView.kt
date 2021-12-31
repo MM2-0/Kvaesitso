@@ -6,24 +6,28 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.SearchView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
-import de.mm20.launcher2.contacts.ContactViewModel
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.legacy.search.SearchListView
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ContactView : FrameLayout {
     private val contacts: LiveData<List<Contact>?>
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
     init {
         View.inflate(context, R.layout.view_search_category_list, this)
@@ -31,22 +35,28 @@ class ContactView : FrameLayout {
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        val viewModel: ContactViewModel by (context as AppCompatActivity).viewModel()
-        contacts = viewModel.contacts
+        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        contacts = viewModel.contactResults
         val list = findViewById<SearchListView>(R.id.list)
         contacts.observe(context as AppCompatActivity, {
             if (it == null) {
                 visibility = View.GONE
                 return@observe
             }
-            if (it.isEmpty() && LauncherPreferences.instance.searchContacts && !PermissionsManager.checkPermission(context, PermissionsManager.CONTACTS)) {
+            if (it.isEmpty() && LauncherPreferences.instance.searchContacts && !PermissionsManager.checkPermission(
+                    context,
+                    PermissionsManager.CONTACTS
+                )
+            ) {
                 visibility = View.VISIBLE
-                list.submitItems(listOf(
+                list.submitItems(
+                    listOf(
                         MissingPermission(
-                                context.getString(R.string.permission_contact_search),
-                                PermissionsManager.CONTACTS
+                            context.getString(R.string.permission_contact_search),
+                            PermissionsManager.CONTACTS
                         )
-                ))
+                    )
+                )
                 return@observe
             }
             visibility = if (it.isEmpty()) View.GONE else View.VISIBLE

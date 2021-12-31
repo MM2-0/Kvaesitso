@@ -1,40 +1,42 @@
 package de.mm20.launcher2.calculator
 
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.search.BaseSearchableRepository
 import de.mm20.launcher2.search.data.Calculator
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
 import org.mariuszgromada.math.mxparser.Expression
 
-class CalculatorRepository : BaseSearchableRepository() {
+interface CalculatorRepository {
+    fun search(query: String): Flow<Calculator?>
+}
 
-    val calculator = MutableLiveData<Calculator?>()
+class CalculatorRepositoryImpl : CalculatorRepository {
 
-    override suspend fun search(query: String) {
+    override fun search(query: String): Flow<Calculator?> = channelFlow {
         if (query.isBlank()) {
-            calculator.value = null
-            return
+            send(null)
+            return@channelFlow
         }
-        if (!LauncherPreferences.instance.searchCalculator) return
+        if (!LauncherPreferences.instance.searchCalculator) return@channelFlow
         val calc = when {
             query.matches(Regex("0x[0-9a-fA-F]+")) -> {
                 val solution = query.substring(2).toIntOrNull(16) ?: run {
-                    calculator.value = null
-                    return
+                    send(null)
+                    return@channelFlow
                 }
                 Calculator(term = query, solution = solution.toDouble())
             }
             query.matches(Regex("0b[01]+")) -> {
                 val solution = query.substring(2).toIntOrNull(2) ?: run {
-                    calculator.value = null
-                    return
+                    send(null)
+                    return@channelFlow
                 }
                 Calculator(term = query, solution = solution.toDouble())
             }
             query.matches(Regex("0[0-7]+")) -> {
                 val solution = query.substring(1).toIntOrNull(8) ?: run {
-                    calculator.value = null
-                    return
+                    send(null)
+                    return@channelFlow
                 }
                 Calculator(term = query, solution = solution.toDouble())
             }
@@ -50,6 +52,6 @@ class CalculatorRepository : BaseSearchableRepository() {
                 }
             }
         }
-        calculator.value = calc
+        send(calc)
     }
 }

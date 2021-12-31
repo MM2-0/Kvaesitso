@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.LocalContentColor
@@ -17,9 +18,8 @@ import androidx.lifecycle.Observer
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.databinding.ViewUnitconverterBinding
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.search.UnitConverterItem
-import de.mm20.launcher2.unitconverter.UnitConverterViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class UnitConverterView : FrameLayout {
 
@@ -36,8 +36,8 @@ class UnitConverterView : FrameLayout {
     private val binding = ViewUnitconverterBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        val unitConverterViewModel by (context as AppCompatActivity).viewModel<UnitConverterViewModel>()
-        unitConverter = unitConverterViewModel.unitConverter
+        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        unitConverter = viewModel.unitConverterResult
         unitConverter.observe(context as AppCompatActivity, Observer {
             if (it == null) visibility = View.GONE
             else {

@@ -1,54 +1,56 @@
 package de.mm20.launcher2.search
 
-import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.search.data.Websearch
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 
-class WebsearchRepository(val context: Context) : BaseSearchableRepository() {
+interface WebsearchRepository {
+    fun search(query: String): Flow<List<Websearch>>
 
-    val websearches = MutableLiveData<List<Websearch>>(emptyList())
+    fun getWebsearches(): Flow<List<Websearch>>
 
-    val allWebsearches = MediatorLiveData<List<Websearch>>()
+    fun insertWebsearch(websearch: Websearch)
+    fun deleteWebsearch(websearch: Websearch)
+}
 
-    init {
-        val databaseWebsearches = AppDatabase.getInstance(context).searchDao().getWebSearchesLiveData()
-        allWebsearches.addSource(databaseWebsearches) {
-            allWebsearches.value = it.map { Websearch(it) }
-        }
-    }
+class WebsearchRepositoryImpl(
+    private val database: AppDatabase
+) : WebsearchRepository {
 
-    override suspend fun search(query: String) {
+    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+
+    override fun search(query: String): Flow<List<Websearch>> = channelFlow {
         if (query.isEmpty()) {
-            websearches.value = emptyList()
-            return
+            send(emptyList())
+            return@channelFlow
         }
-        val searches = withContext(Dispatchers.IO) {
-            AppDatabase.getInstance(context).searchDao().getWebSearches().map {
-                Websearch(it, query)
+        withContext(Dispatchers.IO) {
+            database.searchDao().getWebSearches().map {
+                it.map { Websearch(it, query) }
             }
-        }
-        websearches.value = searches
-    }
-
-    fun insertWebsearch(websearch: Websearch) {
-        launch {
-            withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).searchDao().insertWebsearch(websearch.toDatabaseEntity())
-            }
+        }.collectLatest {
+            send(it)
         }
     }
 
-    fun deleteWebsearch(websearch: Websearch) {
-        launch {
+    override fun getWebsearches(): Flow<List<Websearch>> =
+        database.searchDao().getWebSearches().map {
+            it.map { Websearch(it) }
+        }
+
+    override fun insertWebsearch(websearch: Websearch) {
+        scope.launch {
             withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).searchDao().deleteWebsearch(websearch.toDatabaseEntity())
+                database.searchDao().insertWebsearch(websearch.toDatabaseEntity())
+            }
+        }
+    }
+
+    override fun deleteWebsearch(websearch: Websearch) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                database.searchDao().deleteWebsearch(websearch.toDatabaseEntity())
             }
         }
     }

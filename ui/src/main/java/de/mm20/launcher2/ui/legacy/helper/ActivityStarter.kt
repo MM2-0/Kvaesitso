@@ -22,7 +22,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.lang.ref.WeakReference
 
-object ActivityStarter: KoinComponent {
+object ActivityStarter : KoinComponent {
 
     val favoritesRepository: FavoritesRepository by inject()
 
@@ -46,13 +46,20 @@ object ActivityStarter: KoinComponent {
         initialized = true
     }
 
-    fun start(context: Context, transitionView: View, item: Searchable? = null, intent: Intent? = null, pendingIntent: PendingIntent? = null): Boolean {
+    fun start(
+        context: Context,
+        transitionView: View,
+        item: Searchable? = null,
+        intent: Intent? = null,
+        pendingIntent: PendingIntent? = null
+    ): Boolean {
         if (!initialized) throw IllegalStateException("Item starter has not been initialized properly.")
 
         if (!startActivity(context, item, intent, pendingIntent, transitionView)) return false
 
         if (animationStyle == AppStartAnimation.SLIDE_BOTTOM || animationStyle == AppStartAnimation.FADE ||
-                animationStyle == AppStartAnimation.M) {
+            animationStyle == AppStartAnimation.M
+        ) {
             return true
         }
 
@@ -80,28 +87,28 @@ object ActivityStarter: KoinComponent {
 
         AnimatorSet().apply {
             playTogether(
-                    ViewPropertyObjectAnimator.animate(background)
-                            .scaleX(1f)
-                            .scaleY(1f)
-                            .translationX(0f)
-                            .translationY(0f)
-                            .setDuration(200)
-                            .setInterpolator(AccelerateInterpolator(0.8f))
-                            .get(),
-                    ViewPropertyObjectAnimator.animate(transitionView)
-                            .scaleX(scale)
-                            .scaleY(scale)
-                            .alpha(0f)
-                            .translationX(x)
-                            .translationY(y)
-                            .setDuration(200)
-                            .setInterpolator(AccelerateInterpolator(0.8f))
-                            .get(),
-                    ViewPropertyObjectAnimator.animate(searchView)
-                            .scaleX(0.8f)
-                            .scaleY(0.8f)
-                            .alpha(0f)
-                            .get()
+                ViewPropertyObjectAnimator.animate(background)
+                    .scaleX(1f)
+                    .scaleY(1f)
+                    .translationX(0f)
+                    .translationY(0f)
+                    .setDuration(200)
+                    .setInterpolator(AccelerateInterpolator(0.8f))
+                    .get(),
+                ViewPropertyObjectAnimator.animate(transitionView)
+                    .scaleX(scale)
+                    .scaleY(scale)
+                    .alpha(0f)
+                    .translationX(x)
+                    .translationY(y)
+                    .setDuration(200)
+                    .setInterpolator(AccelerateInterpolator(0.8f))
+                    .get(),
+                ViewPropertyObjectAnimator.animate(searchView)
+                    .scaleX(0.8f)
+                    .scaleY(0.8f)
+                    .alpha(0f)
+                    .get()
             )
         }.start()
         onResumeCallback = {
@@ -127,10 +134,17 @@ object ActivityStarter: KoinComponent {
 
     private var onResumeCallback: (() -> Unit)? = null
 
-    private fun startActivity(context: Context, item: Searchable? = null, intent: Intent? = null, pendingIntent: PendingIntent? = null, sourceView: View): Boolean {
+    private fun startActivity(
+        context: Context,
+        item: Searchable? = null,
+        intent: Intent? = null,
+        pendingIntent: PendingIntent? = null,
+        sourceView: View
+    ): Boolean {
         val pos = intArrayOf(0, 0)
         sourceView.getLocationOnScreen(pos)
-        val sourceBounds = Rect(pos[0], pos[1], pos[0] + sourceView.width, pos[1] + sourceView.height)
+        val sourceBounds =
+            Rect(pos[0], pos[1], pos[0] + sourceView.width, pos[1] + sourceView.height)
 
         val bundle = getActivityOptions(context, sourceView, sourceBounds)?.toBundle()
 
@@ -145,7 +159,7 @@ object ActivityStarter: KoinComponent {
 
         if (item != null) {
             if (item.launch(context, bundle)) {
-                favoritesRepository.incrementLaunchCount(item)
+                favoritesRepository.incrementLaunchCounter(item)
                 return true
             }
             return false
@@ -162,12 +176,36 @@ object ActivityStarter: KoinComponent {
         }
     }
 
-    private fun getActivityOptions(context: Context, sourceView: View, sourceBounds: Rect?): ActivityOptionsCompat? {
+    private fun getActivityOptions(
+        context: Context,
+        sourceView: View,
+        sourceBounds: Rect?
+    ): ActivityOptionsCompat? {
         return when (animationStyle) {
-            AppStartAnimation.FADE -> ActivityOptionsCompat.makeCustomAnimation(context, R.anim.activity_start_fade_enter, R.anim.activity_start_fade_exit)
-            AppStartAnimation.SLIDE_BOTTOM -> ActivityOptionsCompat.makeCustomAnimation(context, R.anim.activity_start_slide_bottom_enter, R.anim.activity_start_slide_bottom_exit)
-            AppStartAnimation.M -> sourceBounds?.let { ActivityOptionsCompat.makeClipRevealAnimation(sourceView, 0, 0, sourceView.width, sourceView.height) }
-            else -> ActivityOptionsCompat.makeCustomAnimation(context, R.anim.activity_start_splash2_enter, R.anim.activity_start_splash2_exit)
+            AppStartAnimation.FADE -> ActivityOptionsCompat.makeCustomAnimation(
+                context,
+                R.anim.activity_start_fade_enter,
+                R.anim.activity_start_fade_exit
+            )
+            AppStartAnimation.SLIDE_BOTTOM -> ActivityOptionsCompat.makeCustomAnimation(
+                context,
+                R.anim.activity_start_slide_bottom_enter,
+                R.anim.activity_start_slide_bottom_exit
+            )
+            AppStartAnimation.M -> sourceBounds?.let {
+                ActivityOptionsCompat.makeClipRevealAnimation(
+                    sourceView,
+                    0,
+                    0,
+                    sourceView.width,
+                    sourceView.height
+                )
+            }
+            else -> ActivityOptionsCompat.makeCustomAnimation(
+                context,
+                R.anim.activity_start_splash2_enter,
+                R.anim.activity_start_splash2_exit
+            )
         }
     }
 

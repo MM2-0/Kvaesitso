@@ -7,13 +7,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.component.SectionDivider
-import de.mm20.launcher2.wikipedia.WikipediaViewModel
-import org.koin.androidx.compose.getViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import org.koin.androidx.compose.viewModel
 
 @Composable
 fun wikipediaResult(): LazyListScope.() -> Unit {
-    val viewModel: WikipediaViewModel = getViewModel()
-    val wikipedia by viewModel.wikipedia.observeAsState()
+    val viewModel: SearchViewModel by viewModel()
+    val wikipedia by viewModel.wikipediaResult.observeAsState()
     return {
         wikipedia?.let {
             item {
