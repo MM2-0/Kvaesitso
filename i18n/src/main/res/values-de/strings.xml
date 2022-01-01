@@ -416,6 +416,7 @@
     <string name="preference_themed_icons">Eingefärbte Symbole</string>
     <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
     <string name="weather_no_data">Keine Wetterdaten verfügbar.</string>
+    <string name="weather_location_not_found">Dieser Standort konnte nicht gefunden werden.</string>
 
     <string name="preference_category_grid">Raster</string>
     <string name="preference_grid_column_count">Spaltenanzahl</string>

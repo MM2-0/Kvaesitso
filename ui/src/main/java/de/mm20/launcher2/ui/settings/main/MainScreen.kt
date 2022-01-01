@@ -46,7 +46,10 @@ fun MainScreen() {
                     Preference(
                         icon = Icons.Rounded.LightMode,
                         title = stringResource(id = R.string.preference_screen_weather),
-                        summary = stringResource(id = R.string.preference_screen_weather_summary)
+                        summary = stringResource(id = R.string.preference_screen_weather_summary),
+                        onClick = {
+                            navController?.navigate("settings/weather")
+                        }
                     )
                     Preference(
                         icon = Icons.Rounded.Today,

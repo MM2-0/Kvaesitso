@@ -80,4 +80,16 @@ message Settings {
   }
   BadgeSettings badges = 3;
 
+  message WeatherSettings {
+    enum WeatherProvider {
+      MetNo = 0;
+      OpenWeatherMap = 1;
+      Here = 2;
+      BrightSky = 3;
+    }
+    WeatherProvider provider = 1;
+    bool imperial_units = 2;
+  }
+  WeatherSettings weather = 4;
+
 }

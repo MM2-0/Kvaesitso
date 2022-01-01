@@ -27,6 +27,7 @@ import de.mm20.launcher2.ui.settings.about.AboutScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainScreen
+import de.mm20.launcher2.ui.settings.weather.WeatherScreen
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -81,6 +82,9 @@ class SettingsActivity : AppCompatActivity() {
                         }
                         composable("settings/appearance") {
                             AppearanceScreen()
+                        }
+                        composable("settings/weather") {
+                            WeatherScreen()
                         }
                         composable("settings/about") {
                             AboutScreen()

@@ -446,6 +446,7 @@
     <string name="weather_humidity">Humidity:</string>
     <string name="weather_wind">Wind:</string>
     <string name="weather_no_data">No weather data available.</string>
+    <string name="weather_location_not_found">This location could not be found.</string>
 
     <string name="weather_precipitation">Precipitation:</string>
     <string name="preference_category_license">License</string>
