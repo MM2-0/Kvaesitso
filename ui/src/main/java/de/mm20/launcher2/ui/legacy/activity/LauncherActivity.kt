@@ -59,6 +59,7 @@ import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
 import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
+import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
@@ -295,14 +296,7 @@ class LauncherActivity : AppCompatActivity() {
                 menu.setOnMenuItemClickListener { item ->
                     when (item.itemId) {
                         R.id.menu_item_settings -> {
-                            finish()
-                            startActivity(Intent().also {
-                                it.component = ComponentName(
-                                    packageName,
-                                    "de.mm20.launcher2.activity.SettingsActivity"
-                                )
-                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                            })
+                            startActivity(Intent(this, SettingsActivity::class.java))
                         }
                         R.id.menu_item_wallpaper -> {
                             startActivity(
@@ -334,6 +328,16 @@ class LauncherActivity : AppCompatActivity() {
                                     view.save()
                                 }
                             }
+                        }
+                        R.id.menu_item_settings_old -> {
+                            finish()
+                            startActivity(Intent().also {
+                                it.component = ComponentName(
+                                    packageName,
+                                    "de.mm20.launcher2.activity.SettingsActivity"
+                                )
+                                it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                            })
                         }
                     }
                     true

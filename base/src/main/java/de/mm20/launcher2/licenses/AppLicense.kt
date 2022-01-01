@@ -11,7 +11,7 @@ object AppLicense {
             copyrightNote = "Copyright (C) 2021 MM2-0",
             licenseName = R.string.gpl3_name,
             licenseText = R.raw.license_gpl_3,
-            url = "https://github.com/Kvaesitso"
+            url = "https://github.com/MM2-0/Kvaesitso"
         )
     }
 }

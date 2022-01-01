@@ -4,7 +4,9 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.dataStore
 
-val Context.dataStore: DataStore<Settings> by dataStore(
+typealias LauncherDataStore = DataStore<Settings>
+
+val Context.dataStore: LauncherDataStore by dataStore(
     fileName = "settings.pb",
     serializer = SettingsSerializer
 )

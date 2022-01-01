@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.preference)
     api(libs.androidx.datastore)
     api(libs.protobuf.javalite)
+    implementation(libs.koin.android)
 
     implementation(project(":ktx"))
     implementation(project(":i18n"))

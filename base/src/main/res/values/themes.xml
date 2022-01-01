@@ -29,6 +29,12 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+    <style name="SettingsTheme.NoActionBar" parent="BaseTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:statusBarColor">?colorSurface</item>
+    </style>
+
     <style name="LauncherTheme" parent="BaseTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>

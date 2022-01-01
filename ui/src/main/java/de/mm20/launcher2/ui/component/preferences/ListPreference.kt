@@ -1,12 +1,17 @@
 package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Card
-import androidx.compose.material.RadioButton
-import androidx.compose.material3.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,8 +41,10 @@ fun <T> ListPreference(
     )
     if (showDialog) {
         Dialog(onDismissRequest = { showDialog = false }) {
-            Card(
-                elevation = 16.dp,
+            Surface(
+                tonalElevation = 16.dp,
+                shadowElevation = 16.dp,
+                shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
@@ -47,13 +54,15 @@ fun <T> ListPreference(
                 ) {
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.padding(
                             start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp
                         )
                     )
                     LazyColumn(
-                        modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
                     ) {
                         items(items) {
                             Row(
@@ -64,7 +73,7 @@ fun <T> ListPreference(
                                         onValueChanged(it.value)
                                         showDialog = false
                                     }
-                                    .padding(horizontal = 24.dp, vertical = 4.dp)
+                                    .padding(start = 16.dp, top = 4.dp, bottom = 4.dp, end = 24.dp)
                             ) {
                                 RadioButton(selected = it.value == value, onClick = {
                                     onValueChanged(it.value)
