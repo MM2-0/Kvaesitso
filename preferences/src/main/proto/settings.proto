@@ -4,6 +4,7 @@ option java_package = "de.mm20.launcher2.preferences";
 option java_multiple_files = true;
 
 message Settings {
+  uint32 version = 1;
   message AppearanceSettings {
     enum Theme {
       Light = 0;
@@ -42,7 +43,7 @@ message Settings {
     }
     ClockStyle clock_style = 8;
   }
-  AppearanceSettings appearance = 1;
+  AppearanceSettings appearance = 2;
 
   message SearchSettings {
     bool show_favorites = 1;
@@ -69,7 +70,7 @@ message Settings {
     bool gdrive = 18;
     bool gdrive_mobile_data = 19;
   }
-  SearchSettings search = 2;
+  SearchSettings search = 3;
 
   message BadgeSettings {
     bool notification_badges = 1;
@@ -78,7 +79,7 @@ message Settings {
     bool profile_badges = 4;
     bool shortcut_badges = 5;
   }
-  BadgeSettings badges = 3;
+  BadgeSettings badges = 4;
 
   message WeatherSettings {
     enum WeatherProvider {
@@ -90,6 +91,6 @@ message Settings {
     WeatherProvider provider = 1;
     bool imperial_units = 2;
   }
-  WeatherSettings weather = 4;
+  WeatherSettings weather = 5;
 
 }
