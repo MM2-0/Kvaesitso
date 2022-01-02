@@ -19,7 +19,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.LocalWindowInsets
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ClockStyle
-import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.component.AnalogClock
 import de.mm20.launcher2.ui.component.BinaryClock
 import de.mm20.launcher2.ui.component.DigitalClock
@@ -55,10 +54,7 @@ fun ClockWidget(
 fun Clock() {
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
     val context = LocalContext.current
-    val dataStore = context.dataStore
-    val clockStyle by remember { dataStore.data.map { it.appearance.clockStyle } }.collectAsState(
-        initial = ClockStyle.Digital
-    )
+    val clockStyle = ClockStyle.Digital
 
     DisposableEffect(null) {
         val receiver = object : BroadcastReceiver() {

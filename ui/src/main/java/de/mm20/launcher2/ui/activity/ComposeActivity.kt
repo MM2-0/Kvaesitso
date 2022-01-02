@@ -20,7 +20,6 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalColorScheme
@@ -28,6 +27,7 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
 import de.mm20.launcher2.ui.screens.settings.*
+import de.mm20.launcher2.ui.settings.appearance.AppearanceScreen
 import de.mm20.launcher2.ui.theme.colors.*
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlinx.coroutines.flow.map
@@ -55,8 +55,7 @@ class ComposeActivity : AppCompatActivity() {
 
             if (windowSize.height <= 0 || windowSize.width <= 0) return@setContent
 
-            val colorSchemePreference by remember { dataStore.data.map { it.appearance.colorScheme } }
-                .collectAsState(initial = Settings.AppearanceSettings.ColorScheme.Default)
+            val colorSchemePreference = Settings.AppearanceSettings.ColorScheme.Default
 
             val colorScheme = when (colorSchemePreference) {
                 Settings.AppearanceSettings.ColorScheme.MM20 -> MM20ColorPalette()
@@ -72,10 +71,6 @@ class ComposeActivity : AppCompatActivity() {
                     } else DefaultColorPalette()
                 }
                 Settings.AppearanceSettings.ColorScheme.BlackAndWhite -> BlackWhiteColorPalette()
-                Settings.AppearanceSettings.ColorScheme.Custom -> {
-                    val customColors by customColorsAsState()
-                    CustomColorPalette(customColors)
-                }
                 else -> DefaultColorPalette()
             }
 
@@ -113,13 +108,7 @@ class ComposeActivity : AppCompatActivity() {
                                 SettingsAccountScreen()
                             }
                             composable("settings/appearance") {
-                                SettingsAppearanceScreen()
-                            }
-                            composable("settings/appearance/colors") {
-                                SettingsColorsScreen()
-                            }
-                            composable("settings/appearance/clock") {
-                                SettingsClockScreen()
+                                AppearanceScreen()
                             }
                             composable(
                                 "settings/license?library={libraryName}",

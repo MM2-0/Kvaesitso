@@ -10,7 +10,7 @@ import de.mm20.launcher2.preferences.migrations.FactorySettingsMigration
 
 typealias LauncherDataStore = DataStore<Settings>
 
-val Context.dataStore: LauncherDataStore by dataStore(
+internal val Context.dataStore: LauncherDataStore by dataStore(
     fileName = "settings.pb",
     serializer = SettingsSerializer,
     produceMigrations = {

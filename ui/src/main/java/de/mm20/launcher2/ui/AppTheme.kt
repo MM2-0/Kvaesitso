@@ -3,14 +3,9 @@ package de.mm20.launcher2.ui
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -18,11 +13,9 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
-import de.mm20.launcher2.preferences.dataStore
 import de.mm20.launcher2.ui.locals.LocalColorScheme
 import de.mm20.launcher2.ui.theme.colors.toDarkColorScheme
 import de.mm20.launcher2.ui.theme.colors.toLightColorScheme
-import kotlinx.coroutines.flow.map
 
 val Poppins = FontFamily(
     Font(R.font.poppins100, FontWeight.Thin, FontStyle.Normal),
@@ -124,11 +117,7 @@ val typography = Typography(
 @Composable
 fun LauncherTheme(content: @Composable () -> Unit) {
 
-    val dataStore = LocalContext.current.dataStore
-
-    val theme by remember {
-        dataStore.data.map { it.appearance.theme }
-    }.collectAsState(initial = Theme.System)
+    val theme = Theme.System
 
     val darkTheme = theme == Theme.Dark || theme == Theme.System && isSystemInDarkTheme()
 
