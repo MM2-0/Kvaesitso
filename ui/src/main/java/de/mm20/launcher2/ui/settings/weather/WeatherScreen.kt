@@ -139,7 +139,9 @@ fun LocationPreference(
                     )
                     var query by remember { mutableStateOf("") }
                     OutlinedTextField(
-                        value = query, onValueChange = {
+                        singleLine = true,
+                        value = query,
+                        onValueChange = {
                             query = it
                             onLocationSearch(it)
                         }, modifier = Modifier
