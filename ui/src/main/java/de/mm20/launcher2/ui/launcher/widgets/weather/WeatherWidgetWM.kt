@@ -1,11 +1,13 @@
 package de.mm20.launcher2.ui.launcher.widgets.weather
 
 import androidx.lifecycle.*
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -13,6 +15,8 @@ import kotlin.math.min
 
 class WeatherWidgetWM : ViewModel(), KoinComponent {
     private val weatherRepository: WeatherRepository by inject()
+
+    private val dataStore: LauncherDataStore by inject()
 
     private var selectedDayIndex = 0
         set(value) {
@@ -55,7 +59,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
     val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
     val currentDailyForecast = MutableLiveData<DailyForecast>(null)
 
-    val imperialUnits = MutableLiveData(LauncherPreferences.instance.imperialUnits)
+    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)
