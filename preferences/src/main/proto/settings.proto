@@ -14,72 +14,11 @@ message Settings {
     Theme theme = 1;
     enum ColorScheme {
       Default = 0;
-      MM20 = 1;
-      MaterialYou = 2;
-      Wallpaper = 3;
-      BlackAndWhite = 4;
-      Custom = 5;
+      BlackAndWhite = 1;
     }
     ColorScheme color_scheme = 6;
-
-    message CustomColors {
-      uint32 neutral1 = 1;
-      uint32 neutral2 = 2;
-      uint32 accent1 = 3;
-      uint32 accent2 = 4;
-      uint32 accent3 = 5;
-    }
-    CustomColors custom_colors = 7;
-
-    bool light_status_bar = 2;
-    bool light_nav_bar = 3;
-    bool dim_wallpaper = 4;
-    bool app_start_animation = 5;
-
-    enum ClockStyle {
-      Digital = 0;
-      Analog = 1;
-      Binary = 2;
-    }
-    ClockStyle clock_style = 8;
   }
   AppearanceSettings appearance = 2;
-
-  message SearchSettings {
-    bool show_favorites = 1;
-    bool calculator = 2;
-    bool unit_converter = 3;
-    bool files = 4;
-    bool wikipedia = 5;
-    bool wikipedia_mobile_data = 6;
-    bool wikipedia_pictures = 7;
-    bool websites = 8;
-    enum WebsitesProtocol {
-      Https = 0;
-      Http = 1;
-    }
-    WebsitesProtocol websitesProtocol = 9;
-    bool websites_mobile_data = 10;
-    bool activities = 11;
-    bool calendar_events = 12;
-    bool contacts = 13;
-    bool owncloud = 14;
-    bool nextcloud = 15;
-    bool onedrive = 16;
-    bool onedrive_mobile_data = 17;
-    bool gdrive = 18;
-    bool gdrive_mobile_data = 19;
-  }
-  SearchSettings search = 3;
-
-  message BadgeSettings {
-    bool notification_badges = 1;
-    bool cloud_badges = 2;
-    bool suspend_badges = 3;
-    bool profile_badges = 4;
-    bool shortcut_badges = 5;
-  }
-  BadgeSettings badges = 4;
 
   message WeatherSettings {
     enum WeatherProvider {

@@ -58,18 +58,6 @@ class ComposeActivity : AppCompatActivity() {
             val colorSchemePreference = Settings.AppearanceSettings.ColorScheme.Default
 
             val colorScheme = when (colorSchemePreference) {
-                Settings.AppearanceSettings.ColorScheme.MM20 -> MM20ColorPalette()
-                Settings.AppearanceSettings.ColorScheme.Wallpaper -> {
-                    if (isAtLeastApiLevel(Build.VERSION_CODES.O_MR1)) {
-                        val wallpaperColors by wallpaperColorsAsState()
-                        WallpaperColorPalette(wallpaperColors)
-                    } else DefaultColorPalette()
-                }
-                Settings.AppearanceSettings.ColorScheme.MaterialYou -> {
-                    if (isAtLeastApiLevel(Build.VERSION_CODES.S)) {
-                        SystemColorPalette(context)
-                    } else DefaultColorPalette()
-                }
                 Settings.AppearanceSettings.ColorScheme.BlackAndWhite -> BlackWhiteColorPalette()
                 else -> DefaultColorPalette()
             }

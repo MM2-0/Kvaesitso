@@ -5,26 +5,18 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.provider.AlarmClock
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.LocalWindowInsets
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ClockStyle
-import de.mm20.launcher2.ui.component.AnalogClock
-import de.mm20.launcher2.ui.component.BinaryClock
 import de.mm20.launcher2.ui.component.DigitalClock
-import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.widget.parts.DatePart
-import kotlinx.coroutines.flow.map
 
 @Composable
 fun ClockWidget(
@@ -54,7 +46,6 @@ fun ClockWidget(
 fun Clock() {
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
     val context = LocalContext.current
-    val clockStyle = ClockStyle.Digital
 
     DisposableEffect(null) {
         val receiver = object : BroadcastReceiver() {
@@ -82,17 +73,7 @@ fun Clock() {
             })
         }
     ) {
-        when (clockStyle) {
-            ClockStyle.Analog -> {
-                AnalogClock(time = time)
-            }
-            ClockStyle.Binary -> {
-                BinaryClock(time = time)
-            }
-            else -> {
-                DigitalClock(time = time)
-            }
-        }
+        DigitalClock(time = time)
     }
 }
 
