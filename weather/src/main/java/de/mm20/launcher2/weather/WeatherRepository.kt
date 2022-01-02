@@ -2,23 +2,95 @@ package de.mm20.launcher2.weather
 
 import android.content.Context
 import android.util.Log
+import androidx.datastore.dataStore
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.WeatherSettings
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.component.inject
+import org.koin.core.parameter.parametersOf
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class WeatherRepository(
-    val context: Context,
-    val database: AppDatabase,
-) {
+interface WeatherRepository {
+    val forecasts: Flow<List<DailyForecast>>
 
-    val forecasts = database.weatherDao().getForecasts()
-        .map { it.map { Forecast(it) } }
-        .map {
-            groupForecastsPerDay(it)
+    suspend fun lookupLocation(query: String): List<WeatherLocation>
+
+    val lastLocation: Flow<WeatherLocation?>
+    val location: Flow<WeatherLocation?>
+    val autoLocation: Flow<Boolean>
+
+    fun setLocation(location: WeatherLocation)
+    fun setAutoLocation(autoLocation: Boolean)
+    fun setLastLocation(lastLocation: WeatherLocation?)
+
+    fun selectProvider(provider: WeatherSettings.WeatherProvider)
+
+    val selectedProvider: Flow<WeatherSettings.WeatherProvider>
+}
+
+class WeatherRepositoryImpl(
+    private val context: Context,
+    private val database: AppDatabase,
+    private val dataStore: LauncherDataStore,
+) : WeatherRepository, KoinComponent {
+
+    private val scope = CoroutineScope(Dispatchers.Main + Job())
+
+    private var provider: WeatherProvider<out WeatherLocation>
+
+    override val selectedProvider = dataStore.data.map { it.weather.provider }
+
+    override val forecasts: Flow<List<DailyForecast>>
+        get() = database.weatherDao().getForecasts()
+            .map { it.map { Forecast(it) } }
+            .map {
+                groupForecastsPerDay(it)
+            }
+
+    override val lastLocation = MutableStateFlow<WeatherLocation?>(null)
+    override val location = MutableStateFlow<WeatherLocation?>(null)
+    override val autoLocation = MutableStateFlow(false)
+
+    override fun setLocation(location: WeatherLocation) {
+        provider.setLocation(location)
+        this.location.value = location
+        provider.resetLastUpdate()
+        requestUpdate()
+    }
+
+    override fun setAutoLocation(autoLocation: Boolean) {
+        provider.autoLocation = autoLocation
+        this.autoLocation.value = autoLocation
+        provider.resetLastUpdate()
+        requestUpdate()
+    }
+
+    override fun setLastLocation(lastLocation: WeatherLocation?) {
+        this.lastLocation.value = lastLocation
+    }
+
+    override suspend fun lookupLocation(query: String): List<WeatherLocation> {
+        return provider.lookupLocation(query)
+    }
+
+    override fun selectProvider(provider: WeatherSettings.WeatherProvider) {
+        scope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setWeather(
+                        it.weather.toBuilder()
+                            .setProvider(provider)
+                    )
+                    .build()
+            }
         }
+    }
 
     init {
         val weatherRequest =
@@ -28,6 +100,28 @@ class WeatherRepository(
             "weather",
             ExistingPeriodicWorkPolicy.KEEP, weatherRequest
         )
+
+        provider = runBlocking {
+            val selectedProvider = selectedProvider.first()
+            get { parametersOf(selectedProvider) }
+        }
+
+        scope.launch {
+            var providerSetting: WeatherSettings.WeatherProvider? = null
+            selectedProvider.collectLatest {
+                if (it != providerSetting) {
+                    providerSetting = it
+                    provider = get { parametersOf(it) }
+                    location.value = provider.getLocation()
+                    lastLocation.value = provider.getLastLocation()
+                    autoLocation.value = provider.autoLocation
+                    provider.resetLastUpdate()
+                    requestUpdate()
+                }
+            }
+        }
+
+        requestUpdate()
     }
 
     private fun groupForecastsPerDay(forecasts: List<Forecast>): List<DailyForecast> {
@@ -71,30 +165,36 @@ class WeatherRepository(
     }
 
 
-    fun requestUpdate(context: Context) {
-        val provider = WeatherProvider.getInstance(context) ?: return
-        if (provider.isUpdateRequired()) {
-            val weatherRequest = OneTimeWorkRequest.Builder(WeatherUpdateWorker::class.java)
-                .addTag("weather")
-                .build()
-            WorkManager.getInstance(context).enqueue(weatherRequest)
-        } else {
-            Log.d("MM20", "No weather update required")
-        }
+    private fun requestUpdate() {
+        val weatherRequest = OneTimeWorkRequest.Builder(WeatherUpdateWorker::class.java)
+            .addTag("weather")
+            .build()
+        WorkManager.getInstance(context).enqueue(weatherRequest)
     }
 }
 
 class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
-    CoroutineWorker(context, params) {
+    CoroutineWorker(context, params), KoinComponent {
+    val repository: WeatherRepository by inject()
+
     override suspend fun doWork(): Result {
-        val provider = WeatherProvider.getInstance(context) ?: return Result.failure()
-        if (!provider.isAvailable()) return Result.failure()
-        if (!provider.isUpdateRequired()) return Result.failure()
+        Log.d("MM20", "Requesting weather data")
+        val providerPref = repository.selectedProvider.first()
+        val provider: WeatherProvider<out WeatherLocation> = get { parametersOf(providerPref) }
+        if (!provider.isAvailable()) {
+            Log.d("MM20", "Weather provider is not available")
+            return Result.failure()
+        }
+        if (!provider.isUpdateRequired()) {
+            Log.d("MM20", "No weather update required")
+            return Result.failure()
+        }
         val weatherData = provider.fetchNewWeatherData()
         return if (weatherData == null) {
             Log.d("MM20", "Weather update failed")
             Result.retry()
         } else {
+            repository.setLastLocation(provider.getLastLocation())
             Log.d("MM20", "Weather update succeeded")
             AppDatabase.getInstance(applicationContext).weatherDao()
                 .replaceAll(weatherData.map { it.toDatabaseEntity() })

@@ -16,6 +16,5 @@ class WeatherViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun requestUpdate(context: Context) {
-        repository.requestUpdate(context)
     }
 }

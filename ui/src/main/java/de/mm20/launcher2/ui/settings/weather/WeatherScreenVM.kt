@@ -1,39 +1,24 @@
 package de.mm20.launcher2.ui.settings.weather
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.WeatherSettings
 import de.mm20.launcher2.weather.WeatherLocation
-import de.mm20.launcher2.weather.WeatherProvider
-import de.mm20.launcher2.weather.brightsky.BrightskyProvider
-import de.mm20.launcher2.weather.here.HereProvider
-import de.mm20.launcher2.weather.metno.MetNoProvider
-import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
+import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
 
-class WeatherScreenVM(private val context: Application) : AndroidViewModel(context), KoinComponent {
-    val dataStore: LauncherDataStore by inject()
-
-    val weatherProvider = MutableLiveData<WeatherSettings.WeatherProvider?>(null)
-    fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setWeather(it.weather.toBuilder().setProvider(provider))
-                    .build()
-            }
-        }
-    }
+class WeatherScreenVM : ViewModel(), KoinComponent {
+    private val repository: WeatherRepository by inject()
+    private val dataStore: LauncherDataStore by inject()
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
     fun setImperialUnits(imperialUnits: Boolean) {
@@ -46,30 +31,23 @@ class WeatherScreenVM(private val context: Application) : AndroidViewModel(conte
         }
     }
 
-    private var provider: WeatherProvider<out WeatherLocation>? = null
-        set(value) {
-            field = value
-            if (value != null) {
-                val autoLocation = value.autoLocation
-                this.autoLocation.postValue(autoLocation)
-                location.postValue(if (autoLocation) value.getLastLocation() else value.getLocation())
-            }
-        }
+    val weatherProvider = repository.selectedProvider.asLiveData()
+    fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
+        repository.selectProvider(provider)
+    }
 
-    val autoLocation = MutableLiveData(false)
+    val autoLocation = repository.autoLocation.asLiveData()
     fun setAutoLocation(autoLocation: Boolean) {
-        provider?.autoLocation = autoLocation
-        location.postValue(if (autoLocation) provider?.getLastLocation() else provider?.getLocation())
-        this.autoLocation.postValue(autoLocation)
+        repository.setAutoLocation(autoLocation)
     }
 
     val location = MutableLiveData<WeatherLocation?>(null)
     fun setLocation(location: WeatherLocation) {
-        provider?.setLocation(location)
-        this.location.postValue(location)
+        locationResults.postValue(emptyList())
+        repository.setLocation(location)
     }
 
-    private var debounceSearchJob : Job? = null
+    private var debounceSearchJob: Job? = null
     suspend fun searchLocation(query: String) {
         debounceSearchJob?.cancelAndJoin()
         if (query.isBlank()) {
@@ -80,11 +58,8 @@ class WeatherScreenVM(private val context: Application) : AndroidViewModel(conte
         withContext(coroutineContext) {
             debounceSearchJob = launch {
                 delay(1000)
-                Log.d("MM20", "Searching for $query")
-                val provider = provider ?: return@launch
                 isSearchingLocation.value = true
-                val results = provider
-                locationResults.value = results.lookupLocation(query)
+                locationResults.value = repository.lookupLocation(query)
                 isSearchingLocation.value = false
             }
         }
@@ -95,14 +70,14 @@ class WeatherScreenVM(private val context: Application) : AndroidViewModel(conte
 
     init {
         viewModelScope.launch {
-            dataStore.data.map { it.weather.provider }.collectLatest {
-                weatherProvider.postValue(it)
-                provider = when (it) {
-                    WeatherSettings.WeatherProvider.OpenWeatherMap -> OpenWeatherMapProvider(context)
-                    WeatherSettings.WeatherProvider.Here -> HereProvider(context)
-                    WeatherSettings.WeatherProvider.BrightSky -> BrightskyProvider(context)
-                    else -> MetNoProvider(context)
-                }
+            val autoLocation = repository.autoLocation
+            val location = repository.location
+            val lastLocation = repository.lastLocation
+            combine(autoLocation, lastLocation, location) { autoLoc, lastLoc, loc ->
+                if (autoLoc) lastLoc
+                else loc
+            }.collectLatest {
+                this@WeatherScreenVM.location.postValue(it)
             }
         }
     }
