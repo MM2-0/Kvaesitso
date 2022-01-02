@@ -110,18 +110,21 @@ class WeatherRepositoryImpl(
             var providerSetting: WeatherSettings.WeatherProvider? = null
             selectedProvider.collectLatest {
                 if (it != providerSetting) {
-                    providerSetting = it
                     provider = get { parametersOf(it) }
                     location.value = provider.getLocation()
                     lastLocation.value = provider.getLastLocation()
                     autoLocation.value = provider.autoLocation
-                    provider.resetLastUpdate()
-                    requestUpdate()
+
+                    // Force weather data update but only if provider has changed; not during
+                    // initialization
+                    if (providerSetting != null) {
+                        provider.resetLastUpdate()
+                        requestUpdate()
+                    }
+                    providerSetting = it
                 }
             }
         }
-
-        requestUpdate()
     }
 
     private fun groupForecastsPerDay(forecasts: List<Forecast>): List<DailyForecast> {
@@ -175,7 +178,7 @@ class WeatherRepositoryImpl(
 
 class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params), KoinComponent {
-    val repository: WeatherRepository by inject()
+        val repository: WeatherRepository by inject()
 
     override suspend fun doWork(): Result {
         Log.d("MM20", "Requesting weather data")
