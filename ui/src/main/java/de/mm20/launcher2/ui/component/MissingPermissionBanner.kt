@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 
@@ -24,8 +25,10 @@ fun MissingPermissionBanner(
 ) {
     Surface(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.primaryContainer,
-        shape = RoundedCornerShape(8.dp)
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        shape = RoundedCornerShape(8.dp),
+        shadowElevation = 2.dp,
+        tonalElevation = 2.dp
     ) {
         Column {
             Row(
@@ -43,7 +46,7 @@ fun MissingPermissionBanner(
                         .weight(1f)
                         .padding(vertical = 16.dp)
                         .padding(end = 16.dp),
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
                 )
             }
             Row(
