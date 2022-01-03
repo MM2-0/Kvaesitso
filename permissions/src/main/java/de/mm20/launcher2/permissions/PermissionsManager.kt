@@ -144,14 +144,16 @@ class PermissionsManagerImpl(
         }
     }
 
-    private val calendarPermissions = arrayOf(Manifest.permission.READ_CALENDAR)
-    private val locationPermissions = arrayOf(
-        Manifest.permission.ACCESS_COARSE_LOCATION,
-        Manifest.permission.ACCESS_FINE_LOCATION
-    )
-    private val contactPermissions = arrayOf(Manifest.permission.READ_CONTACTS)
-    private val externalStoragePermissions = arrayOf(
-        Manifest.permission.READ_EXTERNAL_STORAGE,
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
+    companion object {
+        private val calendarPermissions = arrayOf(Manifest.permission.READ_CALENDAR)
+        private val locationPermissions = arrayOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+        private val contactPermissions = arrayOf(Manifest.permission.READ_CONTACTS)
+        private val externalStoragePermissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+    }
 }
