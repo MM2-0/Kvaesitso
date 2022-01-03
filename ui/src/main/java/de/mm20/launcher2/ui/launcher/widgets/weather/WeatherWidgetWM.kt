@@ -21,6 +21,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
     private var selectedDayIndex = 0
         set(value) {
             field = min(value, forecasts.lastIndex)
+            if (field < 0) return
             selectedForecastIndex = min(
                 selectedForecastIndex,
                 forecasts[value].hourlyForecasts.lastIndex
@@ -32,6 +33,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private var selectedForecastIndex = 0
     set(value) {
+        if (selectedDayIndex < 0) return
         field = min(value, forecasts[selectedDayIndex].hourlyForecasts.lastIndex)
         currentForecast.postValue(getCurrentlySelectedForecast())
     }
