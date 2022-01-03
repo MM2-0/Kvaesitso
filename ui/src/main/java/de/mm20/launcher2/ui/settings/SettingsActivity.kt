@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -20,16 +19,15 @@ import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
+import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalNavController
-import de.mm20.launcher2.ui.screens.settings.SettingsLicenseScreen
 import de.mm20.launcher2.ui.settings.about.AboutScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainScreen
 import de.mm20.launcher2.ui.settings.weather.WeatherScreen
 
-class SettingsActivity : AppCompatActivity() {
+class SettingsActivity : BaseActivity() {
 
     private val viewModel: SettingsActivityVM by viewModels()
 

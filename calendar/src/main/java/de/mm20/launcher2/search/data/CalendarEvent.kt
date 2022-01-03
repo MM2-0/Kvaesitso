@@ -94,7 +94,7 @@ class CalendarEvent(
             val results = mutableListOf<CalendarEvent>()
             if (!query.isEmpty() && query.length < 3) return results
             if (!LauncherPreferences.instance.searchCalendars) return listOf()
-            if (!permissionsManager.checkPermission(PermissionGroup.Calendar)) {
+            if (!permissionsManager.checkPermissionOnce(PermissionGroup.Calendar)) {
                 return emptyList()
             }
             val builder = CalendarContract.Instances.CONTENT_URI.buildUpon()

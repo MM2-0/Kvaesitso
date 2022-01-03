@@ -81,7 +81,7 @@ class Contact(
                 return mutableListOf()
             }
             val permissionsManager: PermissionsManager = get()
-            if (!permissionsManager.checkPermission(PermissionGroup.Contacts)) {
+            if (!permissionsManager.checkPermissionOnce(PermissionGroup.Contacts)) {
                 return mutableListOf()
             }
             val proj = arrayOf(

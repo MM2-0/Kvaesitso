@@ -45,7 +45,7 @@ class FileView : FrameLayout, KoinComponent {
                 visibility = View.GONE
                 return@observe
             }
-            if (it.isEmpty() && !permissionsManager.checkPermission(
+            if (it.isEmpty() && !permissionsManager.checkPermissionOnce(
                     PermissionGroup.ExternalStorage
                 )
             ) {

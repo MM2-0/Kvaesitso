@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.legacy.activity
 
-import android.Manifest
 import android.animation.AnimatorSet
 import android.animation.LayoutTransition
 import android.animation.ObjectAnimator
@@ -25,15 +24,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.animation.doOnEnd
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.*
 import androidx.core.widget.NestedScrollView
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
@@ -48,11 +44,11 @@ import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.isBrightColor
 import de.mm20.launcher2.legacy.helper.ActivityStarter
-import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
@@ -60,7 +56,6 @@ import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 import de.mm20.launcher2.ui.settings.SettingsActivity
-import de.mm20.launcher2.weather.WeatherViewModel
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
 import de.mm20.launcher2.widgets.WidgetViewModel
@@ -71,7 +66,7 @@ import java.util.*
 import kotlin.math.roundToInt
 
 
-class LauncherActivity : AppCompatActivity() {
+class LauncherActivity : BaseActivity() {
 
     /**
      * True if the search result list is visible

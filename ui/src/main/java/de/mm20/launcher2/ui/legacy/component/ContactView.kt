@@ -6,7 +6,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
@@ -47,7 +46,7 @@ class ContactView : FrameLayout, KoinComponent {
                 visibility = View.GONE
                 return@observe
             }
-            if (it.isEmpty() && LauncherPreferences.instance.searchContacts && !permissionsManager.checkPermission(
+            if (it.isEmpty() && LauncherPreferences.instance.searchContacts && !permissionsManager.checkPermissionOnce(
                     PermissionGroup.Contacts
                 )
             ) {

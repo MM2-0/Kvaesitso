@@ -30,7 +30,7 @@ class LocalFileDeserializer(
 ) : SearchableDeserializer, KoinComponent {
     override fun deserialize(serialized: String): Searchable? {
         val permissionsManager: PermissionsManager = get()
-        if (!permissionsManager.checkPermission(
+        if (!permissionsManager.checkPermissionOnce(
                 PermissionGroup.ExternalStorage
             )
         ) return null

@@ -47,7 +47,7 @@ class CalendarView : FrameLayout, KoinComponent {
                 visibility = View.GONE
                 return@observe
             }
-            if (it.isEmpty() && LauncherPreferences.instance.searchCalendars && !permissionsManager.checkPermission(
+            if (it.isEmpty() && LauncherPreferences.instance.searchCalendars && !permissionsManager.checkPermissionOnce(
                     PermissionGroup.Calendar
                 )
             ) {

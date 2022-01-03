@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
@@ -13,7 +12,6 @@ import android.os.Build
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.database.getStringOrNull
 import androidx.exifinterface.media.ExifInterface
@@ -170,7 +168,7 @@ open class LocalFile(
             if (!LauncherPreferences.instance.searchFiles) return results
             if (query.isBlank()) return results
             val permissionsManager: PermissionsManager = get()
-            if (!permissionsManager.checkPermission(
+            if (!permissionsManager.checkPermissionOnce(
                     PermissionGroup.ExternalStorage
                 )
             ) return results
