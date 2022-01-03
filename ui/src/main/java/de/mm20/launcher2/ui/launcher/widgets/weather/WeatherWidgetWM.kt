@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.launcher.widgets.weather
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.weather.DailyForecast
@@ -16,12 +19,17 @@ import kotlin.math.min
 class WeatherWidgetWM : ViewModel(), KoinComponent {
     private val weatherRepository: WeatherRepository by inject()
 
+    private val permissionsManager: PermissionsManager by inject()
+
     private val dataStore: LauncherDataStore by inject()
 
     private var selectedDayIndex = 0
         set(value) {
             field = min(value, forecasts.lastIndex)
-            if (field < 0) return
+            if (field < 0) {
+                currentForecast.postValue(null)
+                return
+            }
             selectedForecastIndex = min(
                 selectedForecastIndex,
                 forecasts[value].hourlyForecasts.lastIndex
@@ -33,7 +41,10 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private var selectedForecastIndex = 0
     set(value) {
-        if (selectedDayIndex < 0) return
+        if (selectedDayIndex < 0)  {
+            currentForecast.postValue(null)
+            return
+        }
         field = min(value, forecasts[selectedDayIndex].hourlyForecasts.lastIndex)
         currentForecast.postValue(getCurrentlySelectedForecast())
     }
@@ -60,6 +71,12 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
     val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
     val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
     val currentDailyForecast = MutableLiveData<DailyForecast>(null)
+
+    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
+    fun requestLocationPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Location)
+    }
+    val autoLocation = weatherRepository.autoLocation.asLiveData()
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
 

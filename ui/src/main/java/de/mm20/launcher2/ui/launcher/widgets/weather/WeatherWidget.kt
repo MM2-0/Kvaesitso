@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
@@ -28,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
@@ -42,11 +44,23 @@ import kotlin.math.roundToInt
 fun WeatherWidget() {
     val viewModel: WeatherWidgetWM = viewModel()
 
+    val context = LocalContext.current
+
     val selectedForecast by viewModel.currentForecast.observeAsState()
 
     val imperialUnits by viewModel.imperialUnits.observeAsState(false)
 
     val forecast = selectedForecast ?: run {
+        val hasPermission by viewModel.hasLocationPermission.observeAsState()
+        val autoLocation by viewModel.autoLocation.observeAsState()
+        AnimatedVisibility(hasPermission == false && autoLocation == true) {
+            MissingPermissionBanner(
+                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                text = stringResource(id = R.string.missing_permission_auto_location),
+                onClick = {
+                    viewModel.requestLocationPermission(context as AppCompatActivity)
+                })
+        }
         NoData()
         return
     }
