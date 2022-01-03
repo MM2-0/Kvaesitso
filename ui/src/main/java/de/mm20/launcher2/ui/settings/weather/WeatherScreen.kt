@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.WeatherSettings.WeatherProvider
+import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -106,6 +107,18 @@ fun WeatherScreen() {
                     enabled = !autoLocation,
                     isSearching = isSearching,
                 )
+            }
+        }
+        if (BuildConfig.DEBUG) {
+            item {
+                PreferenceCategory(stringResource(R.string.preference_category_debug)) {
+                    Preference(
+                        "Clear weather data",
+                        summary = "Remove weather data from database",
+                        onClick = {
+                            viewModel.clearWeatherData()
+                    })
+                }
             }
         }
     }

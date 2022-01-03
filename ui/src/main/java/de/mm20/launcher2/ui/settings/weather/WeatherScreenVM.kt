@@ -92,4 +92,8 @@ class WeatherScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    fun clearWeatherData() {
+        repository.clearForecasts()
+    }
+
 }

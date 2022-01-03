@@ -32,6 +32,8 @@ interface WeatherRepository {
     fun selectProvider(provider: WeatherSettings.WeatherProvider)
 
     val selectedProvider: Flow<WeatherSettings.WeatherProvider>
+
+    fun clearForecasts()
 }
 
 class WeatherRepositoryImpl(
@@ -173,6 +175,14 @@ class WeatherRepositoryImpl(
             .addTag("weather")
             .build()
         WorkManager.getInstance(context).enqueue(weatherRequest)
+    }
+
+    override fun clearForecasts() {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                database.weatherDao().deleteAll()
+            }
+        }
     }
 }
 
