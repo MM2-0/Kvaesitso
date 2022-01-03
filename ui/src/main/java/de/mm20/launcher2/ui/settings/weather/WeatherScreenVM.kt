@@ -1,9 +1,12 @@
 package de.mm20.launcher2.ui.settings.weather
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.WeatherSettings
 import de.mm20.launcher2.weather.WeatherLocation
@@ -19,6 +22,7 @@ import kotlin.coroutines.coroutineContext
 class WeatherScreenVM : ViewModel(), KoinComponent {
     private val repository: WeatherRepository by inject()
     private val dataStore: LauncherDataStore by inject()
+    private val permissionsManager: PermissionsManager by inject()
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
     fun setImperialUnits(imperialUnits: Boolean) {
@@ -63,6 +67,12 @@ class WeatherScreenVM : ViewModel(), KoinComponent {
                 isSearchingLocation.value = false
             }
         }
+    }
+
+    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
+
+    fun requestLocationPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.Location)
     }
 
     val isSearchingLocation = MutableLiveData(false)

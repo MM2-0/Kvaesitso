@@ -458,4 +458,7 @@
 
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_column_count">Number of columns</string>
+
+    <string name="grant_permission">Grant</string>
+    <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
 </resources>

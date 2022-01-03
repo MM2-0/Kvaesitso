@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.weather
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,12 +20,14 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.WeatherSettings.WeatherProvider
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.weather.WeatherLocation
 import kotlinx.coroutines.launch
@@ -31,6 +35,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun WeatherScreen() {
     val viewModel: WeatherScreenVM = viewModel()
+    val context = LocalContext.current
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_weather)) {
         item {
@@ -62,6 +67,16 @@ fun WeatherScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_location)) {
+                val hasPermission by viewModel.hasLocationPermission.observeAsState()
+                AnimatedVisibility(hasPermission == false) {
+                    MissingPermissionBanner(
+                        text = stringResource(R.string.missing_permission_auto_location),
+                        onClick = {
+                            viewModel.requestLocationPermission(context as AppCompatActivity)
+                        },
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
                 val autoLocation by viewModel.autoLocation.observeAsState(false)
                 SwitchPreference(
                     title = stringResource(R.string.preference_automatic_location),
@@ -181,7 +196,9 @@ fun LocationPreference(
                     }
                     TextButton(
                         onClick = { showDialog = false },
-                        modifier = Modifier.align(Alignment.End).padding(24.dp)
+                        modifier = Modifier
+                            .align(Alignment.End)
+                            .padding(24.dp)
                     ) {
                         Text(
                             text = stringResource(R.string.close),

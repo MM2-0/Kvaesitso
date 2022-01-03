@@ -11,7 +11,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.R
 
 @Composable
 fun MissingPermissionBanner(
@@ -53,7 +55,7 @@ fun MissingPermissionBanner(
                 TextButton(
                     modifier = Modifier.padding(start = 8.dp),
                     onClick = onClick) {
-                    Text("Grant", style = MaterialTheme.typography.labelLarge)
+                    Text(stringResource(R.string.grant_permission), style = MaterialTheme.typography.labelLarge)
                 }
 
             }
