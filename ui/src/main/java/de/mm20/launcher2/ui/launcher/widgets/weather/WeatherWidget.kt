@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.weather.WeatherIcon
@@ -50,16 +51,32 @@ fun WeatherWidget() {
 
     val imperialUnits by viewModel.imperialUnits.observeAsState(false)
 
+    var showLocationDialog by remember { mutableStateOf(false) }
+
+    if (showLocationDialog) {
+        WeatherLocationSearchDialog(onDismissRequest = { showLocationDialog = false })
+    }
+
     val forecast = selectedForecast ?: run {
         val hasPermission by viewModel.hasLocationPermission.observeAsState()
         val autoLocation by viewModel.autoLocation.observeAsState()
         AnimatedVisibility(hasPermission == false && autoLocation == true) {
             MissingPermissionBanner(
-                modifier = Modifier.padding(horizontal = 16.dp).padding(top = 16.dp),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .padding(top = 16.dp),
                 text = stringResource(id = R.string.missing_permission_auto_location),
                 onClick = {
                     viewModel.requestLocationPermission(context as AppCompatActivity)
-                })
+                },
+                secondaryAction = {
+                    TextButton(onClick = {
+                        showLocationDialog = true
+                    }) {
+                        Text(stringResource(R.string.weather_widget_set_location), style = MaterialTheme.typography.labelLarge)
+                    }
+                }
+            )
         }
         NoData()
         return

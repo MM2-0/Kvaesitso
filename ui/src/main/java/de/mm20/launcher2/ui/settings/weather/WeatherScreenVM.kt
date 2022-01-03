@@ -46,28 +46,6 @@ class WeatherScreenVM : ViewModel(), KoinComponent {
     }
 
     val location = MutableLiveData<WeatherLocation?>(null)
-    fun setLocation(location: WeatherLocation) {
-        locationResults.postValue(emptyList())
-        repository.setLocation(location)
-    }
-
-    private var debounceSearchJob: Job? = null
-    suspend fun searchLocation(query: String) {
-        debounceSearchJob?.cancelAndJoin()
-        if (query.isBlank()) {
-            locationResults.value = emptyList()
-            isSearchingLocation.value = false
-            return
-        }
-        withContext(coroutineContext) {
-            debounceSearchJob = launch {
-                delay(1000)
-                isSearchingLocation.value = true
-                locationResults.value = repository.lookupLocation(query)
-                isSearchingLocation.value = false
-            }
-        }
-    }
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
 
@@ -75,8 +53,6 @@ class WeatherScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Location)
     }
 
-    val isSearchingLocation = MutableLiveData(false)
-    val locationResults = MutableLiveData<List<WeatherLocation>>(emptyList())
 
     init {
         viewModelScope.launch {
