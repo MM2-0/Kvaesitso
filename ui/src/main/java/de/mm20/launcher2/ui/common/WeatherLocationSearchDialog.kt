@@ -85,6 +85,7 @@ fun WeatherLocationSearchDialog(
                             Text(
                                 text = it.name,
                                 modifier = Modifier
+                                    .fillMaxWidth()
                                     .clickable {
                                         viewModel.setLocation(it)
                                         onDismissRequest()
