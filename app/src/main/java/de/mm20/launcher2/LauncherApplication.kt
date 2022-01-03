@@ -21,6 +21,7 @@ import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.database.databaseModule
+import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.weather.weatherModule
 import kotlinx.coroutines.*
@@ -67,6 +68,7 @@ class LauncherApplication : Application(), CoroutineScope {
                     hiddenItemsModule,
                     iconsModule,
                     musicModule,
+                    permissionsModule,
                     preferencesModule,
                     searchModule,
                     unitConverterModule,
@@ -86,10 +88,4 @@ class LauncherApplication : Application(), CoroutineScope {
         }
     }
 
-}
-
-object PermissionRequests {
-    const val CALENDAR = 309
-    const val LOCATION = 410
-    const val ALL = 666
 }

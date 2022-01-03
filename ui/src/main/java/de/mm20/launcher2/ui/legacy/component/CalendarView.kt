@@ -9,6 +9,7 @@ import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.CalendarEvent
@@ -16,8 +17,10 @@ import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.SearchViewModel
 import de.mm20.launcher2.ui.legacy.search.SearchListView
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
-class CalendarView : FrameLayout {
+class CalendarView : FrameLayout, KoinComponent {
 
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
@@ -30,6 +33,7 @@ class CalendarView : FrameLayout {
     private val calendarEvents: LiveData<List<CalendarEvent>?>
 
     init {
+        val permissionsManager: PermissionsManager = get()
         View.inflate(context, R.layout.view_search_category_list, this)
         layoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
@@ -43,9 +47,8 @@ class CalendarView : FrameLayout {
                 visibility = View.GONE
                 return@observe
             }
-            if (it.isEmpty() && LauncherPreferences.instance.searchCalendars && !PermissionsManager.checkPermission(
-                    context,
-                    PermissionsManager.CALENDAR
+            if (it.isEmpty() && LauncherPreferences.instance.searchCalendars && !permissionsManager.checkPermission(
+                    PermissionGroup.Calendar
                 )
             ) {
                 visibility = View.VISIBLE
@@ -53,7 +56,7 @@ class CalendarView : FrameLayout {
                     listOf(
                         MissingPermission(
                             context.getString(R.string.permission_calendar_search),
-                            PermissionsManager.CALENDAR
+                            PermissionGroup.Calendar
                         )
                     )
                 )

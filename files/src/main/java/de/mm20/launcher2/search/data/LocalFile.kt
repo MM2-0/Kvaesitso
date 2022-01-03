@@ -21,10 +21,13 @@ import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import java.io.IOException
 import java.util.*
 import java.io.File as JavaIOFile
@@ -161,14 +164,14 @@ open class LocalFile(
 
 
 
-    companion object {
+    companion object: KoinComponent {
         fun search(context: Context, query: String): List<LocalFile> {
             val results = mutableListOf<LocalFile>()
             if (!LauncherPreferences.instance.searchFiles) return results
             if (query.isBlank()) return results
-            if (!PermissionsManager.checkPermission(
-                    context,
-                    PermissionsManager.EXTERNAL_STORAGE
+            val permissionsManager: PermissionsManager = get()
+            if (!permissionsManager.checkPermission(
+                    PermissionGroup.ExternalStorage
                 )
             ) return results
             val uri = MediaStore.Files.getContentUri("external").buildUpon()

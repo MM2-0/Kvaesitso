@@ -39,6 +39,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
 
+    implementation(libs.koin.android)
+
     implementation(project(":ktx"))
     implementation(project(":base"))
     implementation(project(":icons"))

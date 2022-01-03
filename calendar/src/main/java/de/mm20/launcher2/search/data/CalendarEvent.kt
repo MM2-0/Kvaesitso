@@ -20,8 +20,11 @@ import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -76,7 +79,7 @@ class CalendarEvent(
         return null
     }
 
-    companion object {
+    companion object: KoinComponent {
         fun search(
             context: Context,
             query: String,
@@ -87,10 +90,11 @@ class CalendarEvent(
             unselectedCalendars: List<Long> = emptyList(),
             hiddenEvents: List<Long> = emptyList()
         ): List<CalendarEvent> {
+            val permissionsManager: PermissionsManager = get()
             val results = mutableListOf<CalendarEvent>()
             if (!query.isEmpty() && query.length < 3) return results
             if (!LauncherPreferences.instance.searchCalendars) return listOf()
-            if (!PermissionsManager.checkPermission(context, PermissionsManager.CALENDAR)) {
+            if (!permissionsManager.checkPermission(PermissionGroup.Calendar)) {
                 return emptyList()
             }
             val builder = CalendarContract.Instances.CONTENT_URI.buildUpon()

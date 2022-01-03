@@ -4,11 +4,14 @@ import android.content.Context
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.*
 import org.json.JSONObject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 class LocalFileSerializer : SearchableSerializer {
     override fun serialize(searchable: Searchable): String {
@@ -24,11 +27,11 @@ class LocalFileSerializer : SearchableSerializer {
 
 class LocalFileDeserializer(
     val context: Context
-) : SearchableDeserializer {
+) : SearchableDeserializer, KoinComponent {
     override fun deserialize(serialized: String): Searchable? {
-        if (!PermissionsManager.checkPermission(
-                context,
-                PermissionsManager.EXTERNAL_STORAGE
+        val permissionsManager: PermissionsManager = get()
+        if (!permissionsManager.checkPermission(
+                PermissionGroup.ExternalStorage
             )
         ) return null
         val json = JSONObject(serialized)

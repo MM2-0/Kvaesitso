@@ -14,10 +14,13 @@ import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.sp
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 
 class Contact(
     val id: Long,
@@ -71,13 +74,14 @@ class Contact(
         return null
     }
 
-    companion object {
+    companion object: KoinComponent {
         fun search(context: Context, query: String): List<Contact> {
             if (query.length < 3) return mutableListOf()
             if (!LauncherPreferences.instance.searchContacts) {
                 return mutableListOf()
             }
-            if (!PermissionsManager.checkPermission(context, PermissionsManager.CONTACTS)) {
+            val permissionsManager: PermissionsManager = get()
+            if (!permissionsManager.checkPermission(PermissionGroup.Contacts)) {
                 return mutableListOf()
             }
             val proj = arrayOf(

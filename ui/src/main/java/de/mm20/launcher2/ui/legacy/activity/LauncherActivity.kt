@@ -213,14 +213,6 @@ class LauncherActivity : AppCompatActivity() {
         ThemeHelper.applyTheme(theme)
 
         if (LauncherPreferences.instance.firstRunVersion < 1) {
-            ActivityCompat.requestPermissions(
-                this, arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ), PermissionsManager.ALL
-            )
             LauncherPreferences.instance.firstRunVersion = 1
         }
 
@@ -646,15 +638,6 @@ class LauncherActivity : AppCompatActivity() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         search(binding.searchBar.getSearchQuery())
-        when (requestCode) {
-            PermissionsManager.LOCATION -> {
-                ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
-            }
-            PermissionsManager.ALL -> {
-                ViewModelProvider(this).get(WeatherViewModel::class.java).requestUpdate(this)
-                search(binding.searchBar.getSearchQuery())
-            }
-        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
