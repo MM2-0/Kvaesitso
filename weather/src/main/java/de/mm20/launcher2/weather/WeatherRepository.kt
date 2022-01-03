@@ -5,6 +5,8 @@ import android.util.Log
 import androidx.datastore.dataStore
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.WeatherSettings
 import kotlinx.coroutines.*
@@ -45,6 +47,10 @@ class WeatherRepositoryImpl(
     private val scope = CoroutineScope(Dispatchers.Main + Job())
 
     private var provider: WeatherProvider<out WeatherLocation>
+
+    private val permissionsManager: PermissionsManager by inject()
+
+    private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
     override val selectedProvider = dataStore.data.map { it.weather.provider }
 
@@ -125,6 +131,9 @@ class WeatherRepositoryImpl(
                     }
                     providerSetting = it
                 }
+            }
+            hasLocationPermission.collectLatest {
+                if(it) requestUpdate()
             }
         }
     }

@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":ktx"))
     implementation(project(":crashreporter"))
     implementation(project(":preferences"))
+    implementation(project(":permissions"))
     implementation(project(":i18n"))
 
 }
