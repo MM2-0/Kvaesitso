@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidgetWM
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
@@ -69,7 +68,8 @@ fun WeatherWidget() {
                     onDaySelected = {
                         viewModel.selectDay(it)
                     },
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    imperialUnits = imperialUnits
                 )
             }
             val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
@@ -209,10 +209,10 @@ fun WeatherDaySelector(
     modifier: Modifier = Modifier,
     days: List<DailyForecast>,
     selectedDay: DailyForecast,
-    onDaySelected: (Int) -> Unit
+    onDaySelected: (Int) -> Unit,
+    imperialUnits: Boolean
 ) {
     val menuExpanded = remember { mutableStateOf(false) }
-    val imperialUnits = LauncherPreferences.instance.imperialUnits
     val dateFormat = SimpleDateFormat("EEE")
     Row(modifier = modifier) {
         Row(
