@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.legacy.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.LocalContentColor
@@ -11,7 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.widget.WeatherWidget
+import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 
 class WeatherWidget : LauncherWidget {
 

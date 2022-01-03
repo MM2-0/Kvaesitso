@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.widget
+package de.mm20.launcher2.ui.launcher.widgets.weather
 
 import android.content.Context
 import android.content.Intent
@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidgetWM
 import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
