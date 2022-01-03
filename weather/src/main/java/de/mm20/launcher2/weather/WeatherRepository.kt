@@ -190,6 +190,7 @@ class WeatherRepositoryImpl(
         scope.launch {
             withContext(Dispatchers.IO) {
                 database.weatherDao().deleteAll()
+                provider.resetLastUpdate()
             }
         }
     }
