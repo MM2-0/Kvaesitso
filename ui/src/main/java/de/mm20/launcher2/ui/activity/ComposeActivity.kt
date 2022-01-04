@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.activity
 
 import android.appwidget.AppWidgetHost
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.compose.setContent
@@ -18,7 +17,6 @@ import com.google.accompanist.insets.ProvideWindowInsets
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalAppWidgetHost
@@ -27,10 +25,8 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.screens.LauncherMainScreen
 import de.mm20.launcher2.ui.screens.settings.*
-import de.mm20.launcher2.ui.settings.appearance.AppearanceScreen
+import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.theme.colors.*
-import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
-import kotlinx.coroutines.flow.map
 
 class ComposeActivity : AppCompatActivity() {
 
@@ -96,7 +92,7 @@ class ComposeActivity : AppCompatActivity() {
                                 SettingsAccountScreen()
                             }
                             composable("settings/appearance") {
-                                AppearanceScreen()
+                                AppearanceSettingsScreen()
                             }
                             composable(
                                 "settings/license?library={libraryName}",

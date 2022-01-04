@@ -21,8 +21,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun AboutScreen() {
-    val viewModel: AboutScreenVM = viewModel()
+fun AboutSettingsScreen() {
+    val viewModel: AboutSettingsScreenVM = viewModel()
     val navController = LocalNavController.current
     val context = LocalContext.current
     PreferenceScreen(title = stringResource(R.string.preference_screen_about)) {

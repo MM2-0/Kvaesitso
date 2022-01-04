@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.weather
+package de.mm20.launcher2.ui.settings.weatherwidget
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -19,8 +19,8 @@ import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.weather.WeatherLocation
 
 @Composable
-fun WeatherScreen() {
-    val viewModel: WeatherScreenVM = viewModel()
+fun WeatherWidgetSettingsScreen() {
+    val viewModel: WeatherWidgetSettingsScreenVM = viewModel()
     val context = LocalContext.current
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_weather)) {

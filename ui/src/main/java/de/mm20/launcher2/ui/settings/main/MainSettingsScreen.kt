@@ -14,7 +14,7 @@ import de.mm20.launcher2.ui.icons.NotificationBadge
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
-fun MainScreen() {
+fun MainSettingsScreen() {
     val navController = LocalNavController.current
     PreferenceScreen(
         title = stringResource(R.string.settings),

@@ -4,19 +4,16 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
-import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
-fun AppearanceScreen() {
-    val viewModel: AppearanceScreenVM = viewModel()
+fun AppearanceSettingsScreen() {
+    val viewModel: AppearanceSettingsScreenVM = viewModel()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {

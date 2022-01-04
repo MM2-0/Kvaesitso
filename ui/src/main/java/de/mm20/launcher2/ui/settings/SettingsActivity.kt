@@ -21,11 +21,11 @@ import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalNavController
-import de.mm20.launcher2.ui.settings.about.AboutScreen
-import de.mm20.launcher2.ui.settings.appearance.AppearanceScreen
+import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
+import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
-import de.mm20.launcher2.ui.settings.main.MainScreen
-import de.mm20.launcher2.ui.settings.weather.WeatherScreen
+import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
+import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 
 class SettingsActivity : BaseActivity() {
 
@@ -76,16 +76,16 @@ class SettingsActivity : BaseActivity() {
                         popExitTransition = { fadeOut(tween(200)) },
                     ) {
                         composable("settings") {
-                            MainScreen()
+                            MainSettingsScreen()
                         }
                         composable("settings/appearance") {
-                            AppearanceScreen()
+                            AppearanceSettingsScreen()
                         }
                         composable("settings/weather") {
-                            WeatherScreen()
+                            WeatherWidgetSettingsScreen()
                         }
                         composable("settings/about") {
-                            AboutScreen()
+                            AboutSettingsScreen()
                         }
                         composable(
                             "settings/license?library={libraryName}",

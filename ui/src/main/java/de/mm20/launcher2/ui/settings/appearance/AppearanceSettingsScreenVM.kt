@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AppearanceScreenVM : ViewModel(), KoinComponent {
+class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
     val theme = dataStore.data.map { it.appearance.theme }.asLiveData()

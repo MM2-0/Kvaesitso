@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.weather
+package de.mm20.launcher2.ui.settings.weatherwidget
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
@@ -17,9 +17,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.coroutines.coroutineContext
 
-class WeatherScreenVM : ViewModel(), KoinComponent {
+class WeatherWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val repository: WeatherRepository by inject()
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
@@ -63,7 +62,7 @@ class WeatherScreenVM : ViewModel(), KoinComponent {
                 if (autoLoc) lastLoc
                 else loc
             }.collectLatest {
-                this@WeatherScreenVM.location.postValue(it)
+                this@WeatherWidgetSettingsScreenVM.location.postValue(it)
             }
         }
     }
