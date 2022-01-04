@@ -177,7 +177,6 @@
     <string name="preference_category_system_bars">Systemleisten</string>
     <string name="preference_light_status_bar">Dunkle Statusleisten-Symbole</string>
     <string name="preference_light_nav_bar">Dunkle Navigationsleisten-Symbole</string>
-    <string name="notification_permission_activity_not_found">Bitte aktivieren Sie den Benachrichtigungszugriff für diese App (wird benötigt um die Musik-Wiedergabe zu steuern)</string>
     <string name="widget_name_music">Musik</string>
     <string name="contacts_menu_open_externally">In Kontakte-App anzeigen</string>
     <string name="favorites_menu_pin">An Favoriten anheften</string>

@@ -561,19 +561,6 @@ class LauncherActivity : BaseActivity() {
             WallpaperManager.getInstance(this).setWallpaperOffsets(it.windowToken, 0.5f, 0.5f)
         }
 
-        if (!LauncherPreferences.instance.hasRequestedNotificationPermission && !hasNotificationListenerPermission()) {
-            try {
-                startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
-            } catch (e: ActivityNotFoundException) {
-                Toast.makeText(
-                    this,
-                    R.string.notification_permission_activity_not_found,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-            LauncherPreferences.instance.hasRequestedNotificationPermission = true
-        }
-
 
         //getSystemService(Context.INPUT_METHOD_SERVICE)
         //        .castTo<InputMethodManager>()

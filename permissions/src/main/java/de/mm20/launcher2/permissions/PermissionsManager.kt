@@ -1,6 +1,7 @@
 package de.mm20.launcher2.permissions
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -8,8 +9,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.flow.Flow
@@ -32,13 +37,20 @@ interface PermissionsManager {
     )
 
     fun hasPermission(permissionGroup: PermissionGroup): Flow<Boolean>
+
+    /**
+     * Special function for the Notification listener to report its status.
+     * May not be called by anything else.
+     */
+    fun reportNotificationListenerState(running: Boolean)
 }
 
 enum class PermissionGroup {
     Calendar,
     Location,
     Contacts,
-    ExternalStorage
+    ExternalStorage,
+    Notifications,
 }
 
 class PermissionsManagerImpl(
@@ -57,6 +69,7 @@ class PermissionsManagerImpl(
     private val locationPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Location)
     )
+    private val notificationsPermissionState = MutableStateFlow(false)
 
     override fun requestPermission(activity: AppCompatActivity, permissionGroup: PermissionGroup) {
         when (permissionGroup) {
@@ -96,6 +109,13 @@ class PermissionsManagerImpl(
                     )
                 }
             }
+            PermissionGroup.Notifications -> {
+                try {
+                    activity.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
+            }
         }
     }
 
@@ -117,6 +137,9 @@ class PermissionsManagerImpl(
                     externalStoragePermissions.all { context.checkPermission(it) }
                 }
             }
+            PermissionGroup.Notifications -> {
+                notificationsPermissionState.value
+            }
         }
     }
 
@@ -126,6 +149,7 @@ class PermissionsManagerImpl(
             PermissionGroup.Location -> locationPermissionState
             PermissionGroup.Contacts -> contactsPermissionState
             PermissionGroup.ExternalStorage -> externalStoragePermissionState
+            PermissionGroup.Notifications -> notificationsPermissionState
         }
     }
 
@@ -141,7 +165,12 @@ class PermissionsManagerImpl(
             PermissionGroup.Location -> locationPermissionState.value = granted
             PermissionGroup.Contacts -> contactsPermissionState.value = granted
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
+            PermissionGroup.Notifications -> notificationsPermissionState.value = granted
         }
+    }
+
+    override fun reportNotificationListenerState(running: Boolean) {
+        notificationsPermissionState.value = running
     }
 
     companion object {

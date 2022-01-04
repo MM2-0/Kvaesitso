@@ -45,4 +45,5 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":icons"))
     implementation(project(":search"))
+    implementation(project(":crashreporter"))
 }

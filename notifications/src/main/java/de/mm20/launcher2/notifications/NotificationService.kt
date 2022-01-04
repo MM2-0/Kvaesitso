@@ -8,10 +8,12 @@ import android.media.session.MediaSession
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.support.v4.media.session.MediaSessionCompat
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.music.MusicRepository
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
 import org.koin.android.ext.android.inject
 import java.lang.ref.WeakReference
@@ -21,6 +23,7 @@ class NotificationService : NotificationListenerService() {
     private val musicRepository: MusicRepository by inject()
 
     private val badgeProvider: BadgeProvider by inject()
+    private val permissionsManager: PermissionsManager by inject()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         return Service.START_STICKY
@@ -28,6 +31,8 @@ class NotificationService : NotificationListenerService() {
 
     override fun onListenerConnected() {
         super.onListenerConnected()
+        Log.d("MM20", "Notification listener connected")
+        permissionsManager.reportNotificationListenerState(true)
         instance = WeakReference(this)
         val notifications = getNotifications().sortedByDescending { it.postTime }
         for (n in notifications) {
@@ -110,6 +115,8 @@ class NotificationService : NotificationListenerService() {
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
         badgeProvider.removeNotificationBadges()
+        permissionsManager.reportNotificationListenerState(false)
+        Log.d("MM20", "Notification listener disconnected")
     }
 
     companion object {

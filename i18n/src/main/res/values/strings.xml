@@ -222,7 +222,6 @@
     <string name="preference_category_system_bars">System bars</string>
     <string name="preference_light_status_bar">Dark status bar icons</string>
     <string name="preference_light_nav_bar">Dark navigation bar icons</string>
-    <string name="notification_permission_activity_not_found">Please grant notification listener permission for this app (required to control music playback)</string>
     <string name="widget_name_music">Music</string>
     <string name="contacts_menu_open_externally">Open in contacts app</string>
     <string name="favorites_menu_pin">Pin to favorites</string>
