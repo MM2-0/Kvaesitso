@@ -36,6 +36,14 @@ fun MainSettingsScreen() {
                         summary = stringResource(id = R.string.preference_screen_search_summary)
                     )
                     Preference(
+                        icon = Icons.Rounded.Widgets,
+                        title = stringResource(id = R.string.preference_screen_widgets),
+                        summary = stringResource(id = R.string.preference_screen_widgets_summary),
+                        onClick = {
+                            navController?.navigate("settings/widgets")
+                        }
+                    )
+                    Preference(
                         icon = Icons.Rounded.NotificationBadge,
                         title = stringResource(id = R.string.preference_screen_badges),
                         summary = stringResource(id = R.string.preference_screen_badges_summary),
@@ -44,24 +52,19 @@ fun MainSettingsScreen() {
                         }
                     )
                     Preference(
-                        icon = Icons.Rounded.LightMode,
-                        title = stringResource(id = R.string.preference_screen_weather),
-                        summary = stringResource(id = R.string.preference_screen_weather_summary),
-                        onClick = {
-                            navController?.navigate("settings/weather")
-                        }
-                    )
-                    Preference(
-                        icon = Icons.Rounded.Today,
-                        title = stringResource(id = R.string.preference_screen_calendar),
-                        summary = stringResource(id = R.string.preference_screen_calendar_summary)
-                    )
-                    Preference(
                         icon = Icons.Rounded.AccountBox,
                         title = stringResource(id = R.string.preference_screen_services),
                         summary = stringResource(id = R.string.preference_screen_services_summary),
                         onClick = {
                             navController?.navigate("settings/accounts")
+                        }
+                    )
+                    Preference(
+                        icon = Icons.Rounded.BugReport,
+                        title = stringResource(id = R.string.preference_screen_debug),
+                        summary = stringResource(id = R.string.preference_screen_debug_summary),
+                        onClick = {
+                            navController?.navigate("settings/debug")
                         }
                     )
                     Preference(

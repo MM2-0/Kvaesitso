@@ -108,7 +108,7 @@ class PreferencesCalendarFragment : PreferenceFragmentCompat() {
 
     override fun onResume() {
         super.onResume()
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.preference_screen_calendar)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.preference_screen_calendarwidget)
         hasCalendarPermission = requireActivity().checkPermission(Manifest.permission.READ_CALENDAR)
                 && requireActivity().checkPermission(Manifest.permission.WRITE_CALENDAR)
     }

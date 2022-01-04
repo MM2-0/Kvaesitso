@@ -23,7 +23,7 @@ fun WeatherWidgetSettingsScreen() {
     val viewModel: WeatherWidgetSettingsScreenVM = viewModel()
     val context = LocalContext.current
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_weather)) {
+    PreferenceScreen(title = stringResource(R.string.preference_screen_weatherwidget)) {
         item {
             PreferenceCategory {
                 val weatherProvider by viewModel.weatherProvider.observeAsState()

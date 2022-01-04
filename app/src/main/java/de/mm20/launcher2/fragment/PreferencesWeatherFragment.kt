@@ -146,7 +146,7 @@ class PreferencesWeatherFragment : PreferenceFragmentCompat() {
     override fun onResume() {
         super.onResume()
 
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.preference_screen_weather)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.preference_screen_weatherwidget)
     }
 
 }

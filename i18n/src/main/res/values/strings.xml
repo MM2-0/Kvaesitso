@@ -83,7 +83,6 @@
     <string name="preference_screen_about_summary">Version, Developer, Open source licenses</string>
     <string name="preference_screen_appearance_summary">Theme, Icons, Search bar, System bars</string>
     <string name="preference_screen_weather_summary">Provider, Units, location</string>
-    <string name="preference_screen_weather">Weather</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
@@ -210,7 +209,7 @@
     <string name="preference_dynamic_icon_bg">Dynamic background</string>
     <string name="preference_dynamic_icon_bg_summary">Adjust background color to icon</string>
     <string name="preference_category_widget">Widget</string>
-    <string name="preference_screen_calendar">Calendar</string>
+    <string name="preference_screen_calendarwidget">Calendar</string>
     <string name="preference_screen_calendar_summary">Calendars, Widget settings</string>
     <string name="preference_calendar_calendars">Calendars</string>
     <string name="preference_permission_denied">Permission denied</string>
@@ -342,7 +341,6 @@
     <string name="storage_onedrive">OneDrive</string>
     <string name="preference_about_telegram">Telegram group</string>
     <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Enable or disable plugins</string>
     <string name="preference_plugins_installed">Installed plugins</string>
@@ -462,4 +460,15 @@
     <string name="grant_permission">Grant</string>
     <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
     <string name="weather_widget_set_location">Set location</string>
+
+    <string name="preference_screen_debug">Debug</string>
+    <string name="preference_screen_debug_summary">Troubleshooting tools</string>
+
+    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_screen_widgets_summary">Configure widgets</string>
+
+    <string name="preference_screen_weatherwidget">Weather</string>
+
+    <string name="preference_crash_reporter">Crash reporter</string>
+    <string name="preference_crash_reporter_summary">Error and crash reports</string>
 </resources>

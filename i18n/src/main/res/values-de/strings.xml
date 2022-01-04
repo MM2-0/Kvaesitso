@@ -42,7 +42,6 @@
     <string name="preference_screen_about_summary">Version, Entwickler, Open-Source-Lizenzen</string>
     <string name="preference_screen_appearance_summary">Design, Symbole, Suchleiste, Systemleisten</string>
     <string name="preference_screen_weather_summary">Provider, Einheiten, Standort</string>
-    <string name="preference_screen_weather">Wetter</string>
     <string name="preference_category_location">Standort</string>
     <string name="preference_automatic_location">Automatischer Standort</string>
     <string name="preference_automatic_location_summary">GPS und Ortungsdienste verwenden, um Standort automatisch zu ermitteln</string>
@@ -160,7 +159,7 @@
     <string name="preference_dynamic_icon_bg">Dynamischer Hintergrund</string>
     <string name="preference_dynamic_icon_bg_summary">Hintergrundfarbe an Symbol anpassen</string>
     <string name="preference_category_widget">Widget</string>
-    <string name="preference_screen_calendar">Kalender</string>
+    <string name="preference_screen_calendarwidget">Kalender</string>
     <string name="preference_screen_calendar_summary">Kalender, Widgets</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_permission_denied">Berechtigung fehlt</string>
@@ -343,7 +342,6 @@
     <string name="storage_onedrive">OneDrive</string>
     <string name="preference_about_telegram">Telegram-Gruppe</string>
     <string name="preference_about_fdroid">F-Droid-Repository</string>
-    <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_screen_plugins">Plug-Ins</string>
     <string name="preference_screen_plugins_summary">Plug-Ins aktivieren oder deaktivieren</string>
     <string name="preference_plugins_installed">Installierte Plug-Ins</string>
@@ -424,4 +422,15 @@
     <string name="grant_permission">Gewähren</string>
     <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
+
+    <string name="preference_screen_debug">Debug</string>
+    <string name="preference_screen_debug_summary">Werkzeuge zur Fehlerbehebung</string>
+
+    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_screen_widgets_summary">Widgets konfigurieren</string>
+
+    <string name="preference_screen_weatherwidget">Wetter</string>
+
+    <string name="preference_crash_reporter">Crash-Reporter</string>
+    <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
 </resources>

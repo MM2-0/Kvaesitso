@@ -42,12 +42,12 @@ fun SettingsMainScreen() {
                 )
                 Preference(
                     icon = Icons.Rounded.LightMode,
-                    title = stringResource(id = R.string.preference_screen_weather),
+                    title = stringResource(id = R.string.preference_screen_weatherwidget),
                     summary = stringResource(id = R.string.preference_screen_weather_summary)
                 )
                 Preference(
                     icon = Icons.Rounded.Today,
-                    title = stringResource(id = R.string.preference_screen_calendar),
+                    title = stringResource(id = R.string.preference_screen_calendarwidget),
                     summary = stringResource(id = R.string.preference_screen_calendar_summary)
                 )
                 Preference(

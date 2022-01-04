@@ -23,9 +23,11 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
+import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 
 class SettingsActivity : BaseActivity() {
 
@@ -81,11 +83,17 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/appearance") {
                             AppearanceSettingsScreen()
                         }
-                        composable("settings/weather") {
+                        composable("settings/widgets") {
+                            WidgetsSettingsScreen()
+                        }
+                        composable("settings/widgets/weather") {
                             WeatherWidgetSettingsScreen()
                         }
                         composable("settings/about") {
                             AboutSettingsScreen()
+                        }
+                        composable("settings/debug") {
+                            DebugSettingsScreen()
                         }
                         composable(
                             "settings/license?library={libraryName}",

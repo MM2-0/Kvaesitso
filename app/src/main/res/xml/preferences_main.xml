@@ -19,12 +19,12 @@
         app:icon="@drawable/ic_pref_weather"
         app:key="screen_weather"
         app:summary="@string/preference_screen_weather_summary"
-        app:title="@string/preference_screen_weather" />
+        app:title="@string/preference_screen_weatherwidget" />
     <Preference
         app:icon="@drawable/ic_pref_calendar"
         app:key="screen_calendar"
         app:summary="@string/preference_screen_calendar_summary"
-        app:title="@string/preference_screen_calendar" />
+        app:title="@string/preference_screen_calendarwidget" />
     <Preference
         app:icon="@drawable/ic_pref_account"
         app:key="screen_services"
