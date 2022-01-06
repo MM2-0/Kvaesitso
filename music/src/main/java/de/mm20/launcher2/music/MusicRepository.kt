@@ -7,7 +7,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
 import android.support.v4.media.session.MediaSessionCompat
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.edit
 import androidx.core.graphics.scale
@@ -16,39 +15,96 @@ import androidx.media2.common.MediaMetadata
 import androidx.media2.common.SessionPlayer
 import androidx.media2.session.MediaController
 import androidx.media2.session.SessionCommandGroup
+import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.sync.Semaphore
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.io.File
 import java.util.concurrent.Executors
 
-class MusicRepository(val context: Context) {
+interface MusicRepository {
+    val playbackState: Flow<PlaybackState>
+    val title: Flow<String?>
+    val artist: Flow<String?>
+    val album: Flow<String?>
+    val albumArt: Flow<Bitmap?>
+
+    fun setMediaSession(token: MediaSessionCompat.Token, packageName: String)
+
+    fun next()
+    fun previous()
+    fun pause()
+    fun play()
+    fun togglePause()
+    fun openPlayer(): PendingIntent?
+
+    fun openPlayerChooser(context: Context)
+
+    fun resetPlayer()
+}
+
+class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val dataStore: LauncherDataStore by inject()
 
-    val playbackState = MutableStateFlow(PlaybackState.Stopped)
-    val title = MutableStateFlow<String?>(null)
-    val artist = MutableStateFlow<String?>(null)
-    val album = MutableStateFlow<String?>(null)
-    val albumArt = MutableStateFlow<Bitmap?>(null)
+    override val playbackState = MutableStateFlow(PlaybackState.Stopped)
+    override val title = MutableStateFlow<String?>(null)
+    override val artist = MutableStateFlow<String?>(null)
+    override val album = MutableStateFlow<String?>(null)
+    override val albumArt = MutableStateFlow<Bitmap?>(null)
 
     private var lastPlayer: String? = null
-        set(value) {
-            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
-                putString(PREFS_KEY_LAST_PLAYER, value)
-            }
-            field = value
-        }
 
     private var lastToken: String? = null
 
-    fun setMediaSession(token: MediaSessionCompat.Token) {
+    private val semaphore = Semaphore(permits = 1)
+
+    override fun setMediaSession(token: MediaSessionCompat.Token, packageName: String) {
         if (token.toString() == lastToken.toString()) return
-        mediaController?.close()
-        mediaController = MediaController.Builder(context)
-            .setSessionCompatToken(token)
-            .setControllerCallback(Executors.newSingleThreadExecutor(), mediaSessionCallback)
-            .build()
-        lastToken = token.toString()
+
+        scope.launch {
+            val filterMusicApps = dataStore.data.map { it.musicWidget.filterSources }.first()
+            if (filterMusicApps) {
+                val intent =
+                    Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
+                if (context.packageManager.queryIntentActivities(intent, 0)
+                        .none { it.activityInfo.packageName == packageName }
+                ) {
+                    return@launch
+                }
+            }
+
+            semaphore.acquire()
+            mediaController?.close()
+            val appName = context.packageManager.getPackageInfo(
+                packageName,
+                0
+            ).applicationInfo.loadLabel(context.packageManager)
+            mediaController = MediaController.Builder(context)
+                .setSessionCompatToken(token)
+                .setControllerCallback(
+                    Executors.newSingleThreadExecutor(),
+                    mediaSessionCallback
+                )
+                .build()
+
+            setMetadata(
+                title = context.getString(R.string.music_widget_default_title, appName),
+                artist = null,
+                album = null,
+                albumArt = null,
+                packageName
+            )
+            lastToken = token.toString()
+            semaphore.release()
+
+        }
     }
 
     private var mediaController: MediaController? = null
@@ -65,99 +121,58 @@ class MusicRepository(val context: Context) {
             allowedCommands: SessionCommandGroup
         ) {
             super.onConnected(controller, allowedCommands)
-            updateMetadata()
-            updateState()
+            if (!controller.isConnected) return
+            updateMetadata(controller.currentMediaItem, controller.connectedToken?.packageName)
+            updateState(controller.playerState)
         }
 
         override fun onCurrentMediaItemChanged(controller: MediaController, item: MediaItem?) {
             super.onCurrentMediaItemChanged(controller, item)
-            updateMetadata()
+            if (!controller.isConnected) return
+            updateMetadata(item, controller.connectedToken?.packageName)
         }
 
         override fun onPlayerStateChanged(controller: MediaController, state: Int) {
             super.onPlayerStateChanged(controller, state)
-            updateState()
-        }
-
-        override fun onPlaybackInfoChanged(
-            controller: MediaController,
-            info: MediaController.PlaybackInfo
-        ) {
-            super.onPlaybackInfoChanged(controller, info)
-            Log.d("MM20", "CurrentPosition" + controller.currentPosition.toString())
+            if (!controller.isConnected) return
+            updateState(state)
         }
 
         override fun onDisconnected(controller: MediaController) {
             super.onDisconnected(controller)
             mediaController = null
         }
-
-        /*override fun onMetadataChanged(metadata: MediaController?) {
-            super.onMetadataChanged(metadata)
-            updateState()
-        }
-
-        override fun onSessionDestroyed() {
-            super.onSessionDestroyed()
-            mediaController = null
-            hasActiveSession.value = false
-            playbackState.value = PlaybackState.Stopped
-        }*/
     }
 
-    private fun updateMetadata() {
-        val metadata = mediaController?.currentMediaItem?.metadata ?: return
+    private fun updateMetadata(mediaItem: MediaItem?, playerPackage: String?) {
+        val metadata = mediaItem?.metadata ?: return
         val title = metadata.getString(MediaMetadata.METADATA_KEY_DISPLAY_TITLE)
-            ?: metadata.getString(MediaMetadata.METADATA_KEY_TITLE)
-        val artist = metadata.getString(MediaMetadata.METADATA_KEY_ARTIST)
+            ?: metadata.getString(MediaMetadata.METADATA_KEY_TITLE) ?: return
+        val artist = metadata.getString(MediaMetadata.METADATA_KEY_DISPLAY_SUBTITLE)
+            ?: metadata.getString(MediaMetadata.METADATA_KEY_ARTIST)
             ?: metadata.getString(MediaMetadata.METADATA_KEY_COMPOSER)
             ?: metadata.getString(MediaMetadata.METADATA_KEY_AUTHOR)
             ?: metadata.getString(MediaMetadata.METADATA_KEY_WRITER)
             ?: return
         val album = metadata.getString(MediaMetadata.METADATA_KEY_ALBUM)
+        val albumArt = metadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
 
-        lastPlayer = mediaController?.connectedToken?.packageName ?: lastPlayer
-        this@MusicRepository.title.value = title
-        this@MusicRepository.artist.value = artist
-        this@MusicRepository.album.value = album
+        // Hack for Spotify sending inconsistent metadata updates
+        if (playerPackage == "com.spotify.music" && album == null) return
 
         scope.launch {
-            withContext(Dispatchers.IO) {
-                val albumArt = metadata.getBitmap(MediaMetadata.METADATA_KEY_ALBUM_ART)
-                context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
-                    putString(PREFS_KEY_ALBUM_ART, if (albumArt == null) "null" else "notnull")
-                }
-                if (albumArt == null) {
-                    this@MusicRepository.albumArt.value = null
-                    return@withContext
-                }
-                val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
-                val scaledBitmap = albumArt.scale(size, size)
-                val file = File(context.cacheDir, "album_art")
-                val outStream = file.outputStream()
-                scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
-                outStream.close()
-                this@MusicRepository.albumArt.value = scaledBitmap
-            }
-        }
-
-        context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
-            putString(PREFS_KEY_TITLE, title)
-            putString(PREFS_KEY_ARTIST, artist)
-            putString(PREFS_KEY_ALBUM, album)
+            setMetadata(title, artist, album, albumArt, playerPackage)
         }
     }
 
-    private fun updateState() {
-        val playbackState = when (mediaController?.playerState) {
+    private fun updateState(playerState: Int) {
+        val playbackState = when (playerState) {
             SessionPlayer.PLAYER_STATE_PLAYING -> PlaybackState.Playing
             SessionPlayer.PLAYER_STATE_PAUSED -> PlaybackState.Paused
             else -> PlaybackState.Stopped
         }
         this.playbackState.value = playbackState
     }
-
-    val hasActiveSession: Boolean = mediaController?.isConnected != null
 
     init {
         loadLastPlaybackMetadata()
@@ -176,12 +191,12 @@ class MusicRepository(val context: Context) {
             val albumArt = withContext(Dispatchers.IO) {
                 BitmapFactory.decodeFile(File(context.cacheDir, "album_art").absolutePath)
             }
-            this@MusicRepository.albumArt.value = albumArt
+            this@MusicRepositoryImpl.albumArt.value = albumArt
         }
         playbackState.value = PlaybackState.Stopped
     }
 
-    fun previous() {
+    override fun previous() {
         if (mediaController?.skipToPreviousPlaylistItem()?.get() == null) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val downEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PREVIOUS)
@@ -191,7 +206,7 @@ class MusicRepository(val context: Context) {
         }
     }
 
-    fun next() {
+    override fun next() {
         if (mediaController?.skipToNextPlaylistItem()?.get() == null) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val downEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_NEXT)
@@ -201,7 +216,7 @@ class MusicRepository(val context: Context) {
         }
     }
 
-    fun play() {
+    override fun play() {
         if (mediaController?.play()?.get() == null) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val downEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PLAY)
@@ -211,7 +226,7 @@ class MusicRepository(val context: Context) {
         }
     }
 
-    fun pause() {
+    override fun pause() {
         if (mediaController?.pause()?.get() == null) {
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val downEvent = KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_MEDIA_PAUSE)
@@ -221,18 +236,24 @@ class MusicRepository(val context: Context) {
         }
     }
 
-    fun togglePause() {
+    override fun togglePause() {
         if (playbackState.value != PlaybackState.Playing) play() else pause()
     }
 
-    fun getLaunchIntent(): PendingIntent {
+    override fun openPlayer(): PendingIntent? {
         mediaController?.sessionActivity?.let {
             return it
         }
-        val intent = Intent(Intent.ACTION_MAIN)
-            .setPackage(lastPlayer)
-            .addCategory(Intent.CATEGORY_APP_MUSIC)
-            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+
+        val intent = lastPlayer?.let {
+            context.packageManager.getLaunchIntentForPackage(it)?.apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+        } ?: return null
+
+        if (context.packageManager.resolveActivity(intent, 0) == null) {
+            return null
+        }
 
         return PendingIntent.getActivity(
             context,
@@ -242,7 +263,7 @@ class MusicRepository(val context: Context) {
         )
     }
 
-    fun openPlayerChooser(context: Context) {
+    override fun openPlayerChooser(context: Context) {
         context.startActivity(
             Intent.createChooser(
                 Intent(Intent.ACTION_MAIN)
@@ -253,6 +274,51 @@ class MusicRepository(val context: Context) {
                 null
             )
         )
+    }
+
+    private suspend fun setMetadata(
+        title: String?,
+        artist: String?,
+        album: String?,
+        albumArt: Bitmap?,
+        playerPackage: String?
+    ) {
+        withContext(Dispatchers.IO) {
+            if (albumArt == null) {
+                this@MusicRepositoryImpl.albumArt.value = null
+            } else {
+                val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
+                val scaledBitmap = albumArt.scale(size, size)
+                val file = File(context.cacheDir, "album_art")
+                val outStream = file.outputStream()
+                scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
+                outStream.close()
+                this@MusicRepositoryImpl.albumArt.value = scaledBitmap
+
+            }
+
+            context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
+                putString(PREFS_KEY_TITLE, title)
+                putString(PREFS_KEY_ARTIST, artist)
+                putString(PREFS_KEY_ALBUM, album)
+                putString(PREFS_KEY_LAST_PLAYER, playerPackage)
+                putString(PREFS_KEY_ALBUM_ART, if (albumArt == null) "null" else "notnull")
+            }
+
+
+            lastPlayer = playerPackage ?: lastPlayer
+            this@MusicRepositoryImpl.title.value = title
+            this@MusicRepositoryImpl.artist.value = artist
+            this@MusicRepositoryImpl.album.value = album
+        }
+    }
+
+    override fun resetPlayer() {
+        scope.launch {
+            mediaController?.close()
+            mediaController = null
+            setMetadata(null, null, null, null, null)
+        }
     }
 
     companion object {

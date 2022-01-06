@@ -34,13 +34,13 @@ class NotificationService : NotificationListenerService() {
         Log.d("MM20", "Notification listener connected")
         permissionsManager.reportNotificationListenerState(true)
         instance = WeakReference(this)
-        val notifications = getNotifications().sortedByDescending { it.postTime }
+        val notifications = getNotifications().sortedBy { it.postTime }
         for (n in notifications) {
-            val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
-            if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == n.packageName }) continue
+            /*val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
+            if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == n.packageName }) continue*/
             val token = n.notification.extras[NotificationCompat.EXTRA_MEDIA_SESSION] as? MediaSession.Token
                     ?: continue
-            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token))
+            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token), n.packageName)
         }
         if (LauncherPreferences.instance.notificationBadges) {
             generateBadges()
@@ -79,11 +79,11 @@ class NotificationService : NotificationListenerService() {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         if (sbn.notification.category == Notification.CATEGORY_TRANSPORT || sbn.notification.category == Notification.CATEGORY_SERVICE) {
-            val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
-            if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == sbn.packageName }) return
+            /*val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
+            if (packageManager.queryIntentActivities(intent, 0).none { it.activityInfo.packageName == sbn.packageName }) return*/
             val token = sbn.notification.extras[NotificationCompat.EXTRA_MEDIA_SESSION] as? MediaSession.Token
                     ?: return
-            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token))
+            musicRepository.setMediaSession(MediaSessionCompat.Token.fromToken(token), sbn.packageName)
         }
         if (LauncherPreferences.instance.notificationBadges) {
             val pkg = sbn.packageName

@@ -32,4 +32,9 @@ message Settings {
   }
   WeatherSettings weather = 5;
 
+  message MusicWidgetSettings {
+    bool filter_sources = 1;
+  }
+  MusicWidgetSettings music_widget = 6;
+
 }

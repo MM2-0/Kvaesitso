@@ -43,5 +43,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":ktx"))
+    implementation(project(":preferences"))
 
 }

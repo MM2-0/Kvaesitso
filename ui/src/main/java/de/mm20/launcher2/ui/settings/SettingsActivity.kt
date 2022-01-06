@@ -26,6 +26,7 @@ import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
+import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 
@@ -88,6 +89,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/widgets/weather") {
                             WeatherWidgetSettingsScreen()
+                        }
+                        composable("settings/widgets/music") {
+                            MusicWidgetSettingsScreen()
                         }
                         composable("settings/about") {
                             AboutSettingsScreen()

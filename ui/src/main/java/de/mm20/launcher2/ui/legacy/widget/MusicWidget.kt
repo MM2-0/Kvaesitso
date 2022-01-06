@@ -10,7 +10,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.platform.ComposeView
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.widget.MusicWidget
+import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 
 class MusicWidget : LauncherWidget {
 

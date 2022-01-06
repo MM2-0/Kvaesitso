@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.settings.widgets
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Audiotrack
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.runtime.Composable
@@ -20,6 +21,13 @@ fun WidgetsSettingsScreen() {
                 icon = Icons.Rounded.LightMode,
                 onClick = {
                     navController?.navigate("settings/widgets/weather")
+                }
+            )
+            Preference(
+                title = stringResource(R.string.preference_screen_musicwidget),
+                icon = Icons.Rounded.Audiotrack,
+                onClick = {
+                    navController?.navigate("settings/widgets/music")
                 }
             )
             Preference(

@@ -16,5 +16,10 @@ fun createFactorySettings(context: Context): Settings {
             .setImperialUnits(context.resources.getBoolean(R.bool.default_imperialUnits))
             .build()
         )
+        .setMusicWidget(Settings.MusicWidgetSettings
+            .newBuilder()
+            .setFilterSources(true)
+            .build()
+        )
         .build()
 }

@@ -419,7 +419,8 @@
     <string name="preference_grid_column_count">Spaltenanzahl</string>
 
     <string name="grant_permission">Gewähren</string>
-    <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
+    <string name="missing_permission_auto_location">Standortzugriff wird benötigt um den Standort automatisch zu ermitteln</string>
+    <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt um Medienwiedergabe zu steuern</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
 
     <string name="preference_screen_debug">Debug</string>
@@ -429,7 +430,14 @@
     <string name="preference_screen_widgets_summary">Widgets konfigurieren</string>
 
     <string name="preference_screen_weatherwidget">Wetter</string>
+    <string name="preference_screen_musicwidget">Musik</string>
 
     <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
+
+    <string name="preference_music_filter_sources">Auf Musik-Apps begrenzen</string>
+    <string name="preference_music_filter_sources_summary">Mediensitzungen von Apps ignorieren, die keine Musik-Apps sind</string>
+
+    <string name="music_widget_default_title">%1$s spielt Medien</string>
+    <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
 </resources>
