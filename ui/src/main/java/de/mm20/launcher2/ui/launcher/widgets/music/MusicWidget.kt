@@ -26,6 +26,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -163,7 +164,8 @@ fun MusicWidget() {
                                 bitmap = it.asImageBitmap(),
                                 modifier = Modifier
                                     .fillMaxSize(),
-                                contentDescription = null
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop
                             )
                         }
                     } else {

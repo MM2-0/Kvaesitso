@@ -287,8 +287,13 @@ class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent
             if (albumArt == null) {
                 this@MusicRepositoryImpl.albumArt.value = null
             } else {
-                val size = context.resources.getDimensionPixelSize(R.dimen.album_art_size)
-                val scaledBitmap = albumArt.scale(size, size)
+                val size = context.resources.getDimension(R.dimen.album_art_size)
+                val (scaledW, scaledH) = if (albumArt.width > albumArt.height) {
+                    size * albumArt.width / albumArt.height to size
+                } else {
+                    size to size * albumArt.height / albumArt.width
+                }
+                val scaledBitmap = albumArt.scale(scaledW.toInt(), scaledH.toInt())
                 val file = File(context.cacheDir, "album_art")
                 val outStream = file.outputStream()
                 scaledBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)
