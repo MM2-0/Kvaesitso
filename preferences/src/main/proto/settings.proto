@@ -37,4 +37,19 @@ message Settings {
   }
   MusicWidgetSettings music_widget = 6;
 
+  message ClockWidgetSettings {
+    enum ClockWidgetLayout {
+      Vertical = 0;
+      Horizontal = 1;
+    }
+    ClockWidgetLayout layout = 1;
+    enum ClockStyle {
+      DigitalClock1 = 0;
+      DigitalClock2 = 1;
+      BinaryClock = 2;
+    }
+    ClockStyle clock_style = 2;
+  }
+  ClockWidgetSettings clock_widget = 7;
+
 }

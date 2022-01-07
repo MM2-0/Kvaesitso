@@ -21,5 +21,11 @@ fun createFactorySettings(context: Context): Settings {
             .setFilterSources(true)
             .build()
         )
+        .setClockWidget(Settings.ClockWidgetSettings
+            .newBuilder()
+            .setLayout(Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical)
+            .setClockStyle(Settings.ClockWidgetSettings.ClockStyle.DigitalClock1)
+            .build()
+        )
         .build()
 }

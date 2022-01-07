@@ -404,7 +404,6 @@
     <string name="preference_about_license_summary">Lizenziert unter der GNU General Public License 3.0</string>
     <string name="feature_not_available">Diese Funktion ist in dieser Version von %1$s nicht verfügbar.</string>
     <string name="preference_category_clock_widget">Uhr</string>
-    <string name="preference_clock_widget_style">Uhrenstil</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d laufender Termin aus vergangenen Tagen</item>
         <item quantity="other">+%1$d laufende Termine aus vergangenen Tagen</item>
@@ -431,6 +430,13 @@
 
     <string name="preference_screen_weatherwidget">Wetter</string>
     <string name="preference_screen_musicwidget">Musik</string>
+
+    <string name="preference_screen_clockwidget">Uhr</string>
+    <string name="preference_clockwidget_layout">Layout</string>
+    <string name="preference_clockwidget_layout_vertical">Vertikal</string>
+    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clock_widget_style">Stil</string>
+    <string name="preference_clock_widget_style_summary">Uhr auswählen</string>
 
     <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>

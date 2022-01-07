@@ -108,7 +108,6 @@ class LauncherActivity : BaseActivity() {
         set(value) {
             field = value
             if (value) {
-                binding.widgetSpacer.visibility = View.GONE
                 binding.clockWidget.visibility = View.GONE
                 binding.searchBar.setRightIcon(R.drawable.ic_done)
                 binding.scrollView.setOnTouchListener(null)
@@ -154,7 +153,6 @@ class LauncherActivity : BaseActivity() {
                     .start()
             } else {
                 widgetViewModel.saveWidgets(widgets)
-                binding.widgetSpacer.visibility = View.VISIBLE
                 binding.widgetList.layoutTransition = ChangingLayoutTransition()
                 binding.widgetContainer.layoutTransition = ChangingLayoutTransition()
                 binding.scrollContainer.layoutTransition = ChangingLayoutTransition()
@@ -226,9 +224,9 @@ class LauncherActivity : BaseActivity() {
         binding.searchContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.widgetContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
-        params.topMargin = Point().also { windowManager.defaultDisplay.getSize(it) }.y
-        binding.widgetSpacer.layoutParams = params
+        val params = binding.clockWidget.layoutParams
+        params.height = Point().also { windowManager.defaultDisplay.getSize(it) }.y
+        binding.clockWidget.layoutParams = params
         binding.container.doOnLayout {
             adjustWidgetSpace()
         }
@@ -237,9 +235,7 @@ class LauncherActivity : BaseActivity() {
         binding.scrollView.setOnScrollChangeListener { _: NestedScrollView?, _: Int, scrollY: Int, _: Int, oldScrollY: Int ->
             when {
                 /* Hide searchbar*/
-                scrollY > oldScrollY && ((searchVisibility && scrollY > binding.searchBar.height) || widgetEditMode ||
-                        scrollY > binding.widgetSpacer.height + binding.searchBar.height
-                        + (binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin) -> {
+                scrollY > oldScrollY && ((scrollY > binding.searchBar.height) || widgetEditMode) -> {
                     var newTransY = binding.searchBar.translationY - scrollY + oldScrollY
                     if (newTransY < -binding.searchBar.height.toFloat() * 1.5f) {
                         newTransY = -binding.searchBar.height.toFloat() * 1.5f
@@ -255,9 +251,7 @@ class LauncherActivity : BaseActivity() {
                     binding.searchBar.translationY = newTransY
                 }
             }
-            if (scrollY > 0 && (searchVisibility || widgetEditMode ||
-                        scrollY > binding.widgetSpacer.height
-                        + (binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams).topMargin)
+            if (scrollY > 0 && (searchVisibility || widgetEditMode)
             ) {
                 binding.searchBar.raise()
             } else binding.searchBar.drop()
@@ -455,13 +449,10 @@ class LauncherActivity : BaseActivity() {
     }
 
     private fun adjustWidgetSpace() {
-        val firstWidget = binding.clockWidget
-        val m = binding.scrollContainer.paddingTop +
-                (firstWidget.layoutParams as LinearLayout.LayoutParams).run { topMargin + bottomMargin }
-        val params = binding.widgetSpacer.layoutParams as LinearLayout.LayoutParams
-        params.topMargin =
-            binding.scrollView.height - firstWidget.measuredHeight - m - binding.widgetContainer.paddingTop - binding.widgetSpacer.height
-        binding.widgetSpacer.layoutParams = params
+        val height = binding.scrollView.height - binding.searchBar.height - 8 * dp
+        binding.clockWidget.layoutParams = binding.clockWidget.layoutParams.also {
+            it.height = height.toInt()
+        }
     }
 
 

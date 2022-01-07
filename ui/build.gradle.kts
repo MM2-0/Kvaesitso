@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager)
+    implementation(libs.accompanist.pagerindicators)
     implementation(libs.accompanist.flowlayout)
     implementation(libs.accompanist.navigationanimation)
 

@@ -451,7 +451,6 @@
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
     <string name="feature_not_available">This feature is not available in this version of %1$s</string>
     <string name="preference_category_clock_widget">Clock</string>
-    <string name="preference_clock_widget_style">Clock style</string>
 
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_column_count">Number of columns</string>
@@ -469,6 +468,13 @@
 
     <string name="preference_screen_weatherwidget">Weather</string>
     <string name="preference_screen_musicwidget">Music</string>
+
+    <string name="preference_screen_clockwidget">Clock</string>
+    <string name="preference_clockwidget_layout">Layout</string>
+    <string name="preference_clockwidget_layout_vertical">Vertical</string>
+    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clock_widget_style">Style</string>
+    <string name="preference_clock_widget_style_summary">Select a clock</string>
 
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>

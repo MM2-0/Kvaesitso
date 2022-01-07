@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.widgets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Audiotrack
 import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -16,6 +17,13 @@ fun WidgetsSettingsScreen() {
     val navController = LocalNavController.current
     PreferenceScreen(title = stringResource(R.string.preference_screen_widgets)) {
         item {
+            Preference(
+                title = stringResource(R.string.preference_screen_clockwidget),
+                icon = Icons.Rounded.Schedule,
+                onClick = {
+                    navController?.navigate("settings/widgets/clock")
+                }
+            )
             Preference(
                 title = stringResource(R.string.preference_screen_weatherwidget),
                 icon = Icons.Rounded.LightMode,

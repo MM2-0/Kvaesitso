@@ -30,7 +30,7 @@ class ClockWidget : FrameLayout {
         addView(composeView)
 
         composeView.layoutParams =
-            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
+            LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
 
         composeView.setContent {
