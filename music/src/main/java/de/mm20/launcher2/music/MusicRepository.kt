@@ -17,10 +17,7 @@ import androidx.media2.session.MediaController
 import androidx.media2.session.SessionCommandGroup
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.sync.Semaphore
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -70,40 +67,36 @@ class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent
 
         scope.launch {
             val filterMusicApps = dataStore.data.map { it.musicWidget.filterSources }.first()
-            if (filterMusicApps) {
-                val intent =
-                    Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
-                if (context.packageManager.queryIntentActivities(intent, 0)
-                        .none { it.activityInfo.packageName == packageName }
-                ) {
-                    return@launch
-                }
+            if (filterMusicApps && !isMusicApp(packageName)) {
+                return@launch
             }
 
-            semaphore.acquire()
-            mediaController?.close()
-            val appName = context.packageManager.getPackageInfo(
-                packageName,
-                0
-            ).applicationInfo.loadLabel(context.packageManager)
-            mediaController = MediaController.Builder(context)
-                .setSessionCompatToken(token)
-                .setControllerCallback(
-                    Executors.newSingleThreadExecutor(),
-                    mediaSessionCallback
+            try {
+                semaphore.acquire()
+                mediaController?.close()
+                val appName = context.packageManager.getPackageInfo(
+                    packageName,
+                    0
+                ).applicationInfo.loadLabel(context.packageManager)
+                mediaController = MediaController.Builder(context)
+                    .setSessionCompatToken(token)
+                    .setControllerCallback(
+                        Executors.newSingleThreadExecutor(),
+                        mediaSessionCallback
+                    )
+                    .build()
+
+                setMetadata(
+                    title = context.getString(R.string.music_widget_default_title, appName),
+                    artist = null,
+                    album = null,
+                    albumArt = null,
+                    packageName
                 )
-                .build()
-
-            setMetadata(
-                title = context.getString(R.string.music_widget_default_title, appName),
-                artist = null,
-                album = null,
-                albumArt = null,
-                packageName
-            )
-            lastToken = token.toString()
-            semaphore.release()
-
+                lastToken = token.toString()
+            } finally {
+                semaphore.release()
+            }
         }
     }
 
@@ -274,6 +267,14 @@ class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent
                 null
             )
         )
+    }
+
+    private suspend fun isMusicApp(packageName: String): Boolean {
+        val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
+        return withContext(Dispatchers.IO) {
+            context.packageManager.queryIntentActivities(intent, 0)
+                .none { it.activityInfo.packageName == packageName }
+        }
     }
 
     private suspend fun setMetadata(
