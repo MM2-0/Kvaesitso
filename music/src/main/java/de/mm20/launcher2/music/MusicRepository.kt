@@ -271,7 +271,7 @@ class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent
 
     private suspend fun isMusicApp(packageName: String): Boolean {
         val intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
-        return withContext(Dispatchers.IO) {
+        return !withContext(Dispatchers.IO) {
             context.packageManager.queryIntentActivities(intent, 0)
                 .none { it.activityInfo.packageName == packageName }
         }
