@@ -478,6 +478,7 @@
 
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
+    <string name="preference_export_log">Export log file</string>
 
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>

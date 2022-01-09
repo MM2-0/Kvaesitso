@@ -440,6 +440,7 @@
 
     <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
+    <string name="preference_export_log">Log-Datei exportieren</string>
 
     <string name="preference_music_filter_sources">Auf Musik-Apps begrenzen</string>
     <string name="preference_music_filter_sources_summary">Mediensitzungen von Apps ignorieren, die keine Musik-Apps sind</string>
