@@ -21,6 +21,10 @@ fun createFactorySettings(context: Context): Settings {
             .setFilterSources(true)
             .build()
         )
+        .setCalendarWidget(Settings.CalendarWidgetSettings
+            .newBuilder()
+            .setHideAlldayEvents(false)
+        )
         .setClockWidget(Settings.ClockWidgetSettings
             .newBuilder()
             .setLayout(Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical)

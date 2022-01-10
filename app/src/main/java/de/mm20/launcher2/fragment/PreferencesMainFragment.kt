@@ -34,10 +34,6 @@ class PreferencesMainFragment : PreferenceFragmentCompat() {
             setSettingsScreen(PreferencesSearchFragment())
             true
         }
-        findPreference<Preference>("screen_calendar")?.setOnPreferenceClickListener {
-            setSettingsScreen(PreferencesCalendarFragment())
-            true
-        }
         findPreference<Preference>("screen_badges")?.setOnPreferenceClickListener {
             setSettingsScreen(PreferencesBadgesFragment())
             true

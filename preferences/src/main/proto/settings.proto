@@ -103,4 +103,10 @@ message Settings {
   }
   WebSearchSettings web_search = 16;
 
+  message CalendarWidgetSettings {
+    bool hide_allday_events = 1;
+    repeated int64 exclude_calendars = 2;
+  }
+  CalendarWidgetSettings calendar_widget = 17;
+
 }

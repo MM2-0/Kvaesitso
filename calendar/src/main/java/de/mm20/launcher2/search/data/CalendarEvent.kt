@@ -79,41 +79,7 @@ class CalendarEvent(
         return null
     }
 
-    companion object: KoinComponent {
-
-        fun getCalendars(context: Context): List<UserCalendar> {
-            val calendars = mutableListOf<UserCalendar>()
-            val uri = CalendarContract.Calendars.CONTENT_URI
-            val proj = arrayOf(
-                CalendarContract.Calendars._ID,
-                CalendarContract.Calendars.NAME,
-                CalendarContract.Calendars.ACCOUNT_NAME,
-                CalendarContract.Calendars.CALENDAR_COLOR,
-                CalendarContract.Calendars.VISIBLE,
-                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
-            )
-            if (!context.checkPermission(Manifest.permission.READ_CALENDAR)) return calendars
-            val cursor = context.contentResolver.query(uri, proj, null, null, null)
-                ?: return emptyList()
-            while (cursor.moveToNext()) {
-                try {
-                    calendars.add(
-                        UserCalendar(
-                            id = cursor.getLong(0),
-                            name = cursor.getString(5) ?: cursor.getString(1) ?: "",
-                            owner = cursor.getString(2),
-                            color = cursor.getInt(3)
-                        )
-                    )
-                } catch (e: NullPointerException) {
-                    continue
-                }
-            }
-            cursor.close()
-            calendars.sortBy { it.owner }
-            return calendars
-        }
-
+    companion object {
         fun getDisplayColor(context: Context, color: Int): Int {
             val hsl = FloatArray(3).let {
                 ColorUtils.RGBToHSL(color.red, color.green, color.blue, it)

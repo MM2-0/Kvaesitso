@@ -23,6 +23,7 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
@@ -97,6 +98,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/widgets/music") {
                             MusicWidgetSettingsScreen()
+                        }
+                        composable("settings/widgets/calendar") {
+                            CalendarWidgetSettingsScreen()
                         }
                         composable("settings/widgets/clock") {
                             ClockWidgetSettingsScreen()

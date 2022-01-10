@@ -148,15 +148,8 @@
     <string name="preference_dynamic_icon_bg">Dynamischer Hintergrund</string>
     <string name="preference_dynamic_icon_bg_summary">Hintergrundfarbe an Symbol anpassen</string>
     <string name="preference_category_widget">Widget</string>
-    <string name="preference_screen_calendarwidget">Kalender</string>
     <string name="preference_screen_calendar_summary">Kalender, Widgets</string>
-    <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_permission_denied">Berechtigung fehlt</string>
-    <string name="preference_calendar_hide_allday">Ganztägige Termine ausblenden</string>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="one">%1$d Kalender ausgewählt</item>
-        <item quantity="other">%1$d Kalender ausgewählt</item>
-    </plurals>
     <string name="date_format_clock_widget">%1$s\n%2$s</string>
     <string name="menu_edit_widgets">Widgets bearbeiten</string>
     <string name="widget_name_weather">Wetter</string>
@@ -431,6 +424,14 @@
 
     <string name="preference_music_filter_sources">Auf Musik-Apps begrenzen</string>
     <string name="preference_music_filter_sources_summary">Mediensitzungen von Apps ignorieren, die keine Musik-Apps sind</string>
+
+    <string name="preference_screen_calendarwidget">Kalender</string>
+    <string name="preference_calendar_calendars">Kalender</string>
+    <string name="preference_calendar_hide_allday">Ganztägige Termine ausblenden</string>
+    <plurals name="preference_calendar_calendars_summary">
+        <item quantity="one">%1$d Kalender ausgewählt</item>
+        <item quantity="other">%1$d Kalender ausgewählt</item>
+    </plurals>
 
     <string name="preference_screen_search">Suche</string>
     <string name="preference_screen_search_summary">Konfigurieren was durchsucht werden soll</string>

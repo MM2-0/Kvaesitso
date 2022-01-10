@@ -40,7 +40,10 @@ fun WidgetsSettingsScreen() {
             )
             Preference(
                 title = stringResource(R.string.preference_screen_calendarwidget),
-                icon = Icons.Rounded.Today
+                icon = Icons.Rounded.Today,
+                onClick = {
+                    navController?.navigate("settings/widgets/calendar")
+                }
             )
         }
     }

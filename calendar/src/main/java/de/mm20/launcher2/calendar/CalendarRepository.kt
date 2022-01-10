@@ -1,22 +1,21 @@
 package de.mm20.launcher2.calendar
 
+import android.Manifest
 import android.content.ContentUris
 import android.content.Context
 import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
+import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.UserCalendar
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.component.inject
 import java.util.*
 
@@ -24,6 +23,8 @@ interface CalendarRepository {
     fun search(query: String): Flow<List<CalendarEvent>>
 
     fun getUpcomingEvents(): Flow<List<CalendarEvent>>
+
+    suspend fun getCalendars(): List<UserCalendar>
 }
 
 class CalendarRepositoryImpl(
@@ -155,55 +156,59 @@ class CalendarRepositoryImpl(
     }
 
     override fun getUpcomingEvents(): Flow<List<CalendarEvent>> = channelFlow {
-        val unselectedCalendars = callbackFlow {
-            val unregister =
-                LauncherPreferences.instance.doOnPreferenceChange("unselected_calendars") {
-                    trySendBlocking(LauncherPreferences.instance.unselectedCalendars)
-                }
-            trySendBlocking(LauncherPreferences.instance.unselectedCalendars)
-            awaitClose {
-                unregister()
-            }
-        }
-
-        val hideAlldayEvents = callbackFlow {
-            val unregister =
-                LauncherPreferences.instance.doOnPreferenceChange("calendar_hide_allday") {
-                    trySendBlocking(LauncherPreferences.instance.calendarHideAllday)
-                }
-            trySendBlocking(LauncherPreferences.instance.calendarHideAllday)
-            awaitClose {
-                unregister()
-            }
-        }
-
-        hideAlldayEvents.collectLatest { hideAllday ->
-            unselectedCalendars.collectLatest { unselected ->
-                hiddenItems.collectLatest { hidden ->
-                    val now = System.currentTimeMillis()
-                    val end = now + 14 * 24 * 60 * 60 * 1000L
-                    val events = withContext(Dispatchers.IO) {
-                        queryCalendarEvents(
-                            query = "",
-                            intervalStart = now,
-                            intervalEnd = end,
-                            limit = 700,
-                            excludeAllDayEvents = hideAllday,
-                            excludeCalendars = unselected
-                        ).filter {
-                            !hiddenItems.value.contains(it.key)
-                        }
+        dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
+            hiddenItems.collectLatest { hidden ->
+                val now = System.currentTimeMillis()
+                val end = now + 14 * 24 * 60 * 60 * 1000L
+                val events = withContext(Dispatchers.IO) {
+                    queryCalendarEvents(
+                        query = "",
+                        intervalStart = now,
+                        intervalEnd = end,
+                        limit = 700,
+                        excludeAllDayEvents = settings.hideAlldayEvents,
+                        excludeCalendars = settings.excludeCalendarsList
+                    ).filter {
+                        !hiddenItems.value.contains(it.key)
                     }
-                    send(events)
                 }
+                send(events)
             }
         }
     }
 
-    var unselectedCalendars: List<Long>
-        get() = LauncherPreferences.instance.unselectedCalendars
-        set(value) {
-            LauncherPreferences.instance.unselectedCalendars = value
+    override suspend fun getCalendars(): List<UserCalendar> {
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Calendar)) return emptyList()
+        return withContext(Dispatchers.IO) {
+            val calendars = mutableListOf<UserCalendar>()
+            val uri = CalendarContract.Calendars.CONTENT_URI
+            val proj = arrayOf(
+                CalendarContract.Calendars._ID,
+                CalendarContract.Calendars.NAME,
+                CalendarContract.Calendars.ACCOUNT_NAME,
+                CalendarContract.Calendars.CALENDAR_COLOR,
+                CalendarContract.Calendars.VISIBLE,
+                CalendarContract.Calendars.CALENDAR_DISPLAY_NAME,
+            )
+            val cursor = context.contentResolver.query(uri, proj, null, null, null)
+                ?: return@withContext emptyList()
+            while (cursor.moveToNext()) {
+                try {
+                    calendars.add(
+                        UserCalendar(
+                            id = cursor.getLong(0),
+                            name = cursor.getString(5) ?: cursor.getString(1) ?: "",
+                            owner = cursor.getString(2),
+                            color = cursor.getInt(3)
+                        )
+                    )
+                } catch (e: NullPointerException) {
+                    continue
+                }
+            }
+            cursor.close()
+            calendars.sortBy { it.owner }
+            return@withContext calendars
         }
-
+    }
 }

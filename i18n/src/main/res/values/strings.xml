@@ -196,11 +196,8 @@
     <string name="preference_dynamic_icon_bg">Dynamic background</string>
     <string name="preference_dynamic_icon_bg_summary">Adjust background color to icon</string>
     <string name="preference_category_widget">Widget</string>
-    <string name="preference_screen_calendarwidget">Calendar</string>
     <string name="preference_screen_calendar_summary">Calendars, Widget settings</string>
-    <string name="preference_calendar_calendars">Calendars</string>
     <string name="preference_permission_denied">Permission denied</string>
-    <string name="preference_calendar_hide_allday">Hide all-day events</string>
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
@@ -237,10 +234,6 @@
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Drawing</string>
     <string name="file_type_form">Form</string>
-    <plurals name="preference_calendar_calendars_summary">
-        <item quantity="one">%1$d calendar selected</item>
-        <item quantity="other">%1$d calendars selected</item>
-    </plurals>
     <string name="menu_hide">Hide</string>
     <string name="menu_unhide">Don\'t hide</string>
     <string name="menu_hidden_items">Hidden items</string>
@@ -487,6 +480,14 @@
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
+
+    <string name="preference_screen_calendarwidget">Calendar</string>
+    <string name="preference_calendar_calendars">Calendars</string>
+    <string name="preference_calendar_hide_allday">Hide all-day events</string>
+    <plurals name="preference_calendar_calendars_summary">
+        <item quantity="one">%1$d calendar selected</item>
+        <item quantity="other">%1$d calendars selected</item>
+    </plurals>
 
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
