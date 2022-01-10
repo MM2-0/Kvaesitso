@@ -147,8 +147,6 @@
     <string name="file_meta_app_pkgname">Package name</string>
     <string name="file_meta_app_min_sdk">Min SDK version</string>
     <string name="preference_screen_services">Services</string>
-    <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Search categories</string>
     <string name="preference_theme_auto">Auto (by time of day)</string>
     <string name="preference_theme_system">Follow system</string>
     <string name="preference_category_search_favorites">Favorites</string>
@@ -157,29 +155,18 @@
     <string name="preference_search_auto_add_favorites">Frequently used items</string>
     <string name="preference_search_auto_add_favorites_summary">Automatically add frequently used items to favorites</string>
     <string name="preference_category_search_files">Files</string>
-    <string name="preference_search_files">File search</string>
-    <string name="preference_search_files_summary">Search folders, documents, photos and other kinds of file on this device</string>
     <string name="preference_category_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia">Search Wikipedia</string>
     <string name="preference_search_mobile_data">Allow mobile data usage</string>
     <string name="preference_search_mobile_data_summary">Additional fees may apply</string>
     <string name="preference_category_search_websites">Websites</string>
-    <string name="preference_search_websites">Search for websites</string>
-    <string name="preference_search_websites_summary">Try \'wikipedia.org\'</string>
     <string name="preference_search_websites_protocol">Default web protocol</string>
     <string name="preference_search_websites_protocol_summary">Default protocol for websites, if not given. You can explicate protocol by adding https:// or http:// in front of your search term</string>
     <string name="websites_protocol_http">HTTP (unencrypted)</string>
     <string name="websites_protocol_https">HTTPS (encrypted)</string>
-    <string name="preference_search_calculator">Enable calculator</string>
-    <string name="preference_search_calculator_summary">Try \'4*2+9\'</string>
     <string name="preference_category_search_unitconverter">Unit converter</string>
-    <string name="preference_search_unitconverter_summary">Try \'23 kg\' or \'5 cm >> in\'</string>
-    <string name="preference_search_unitconverter">Enable unit converter</string>
     <string name="preference_category_search_calculator">Calculator</string>
     <string name="preference_search_activities_summary">Try \'%1$s\'</string>
     <string name="preference_category_search_websearch">Web search</string>
-    <string name="preference_search_websearch_summary">Show shortcuts to several web search engines</string>
-    <string name="preference_search_websearch">Web search shortcuts</string>
     <string name="preference_search_edit_websearch">Edit web searches</string>
     <string name="file_meta_location">Location</string>
     <string name="websearch_google">Google</string>
@@ -237,9 +224,7 @@
     <string name="menu_contact_postal">Location</string>
     <string name="contact_multiple_postals">%1$d postal addresses</string>
     <string name="preference_category_search_calendar">Calendar</string>
-    <string name="preference_search_calendar">Search calendar events</string>
     <string name="preference_category_search_contacts">Contacts</string>
-    <string name="preference_search_contacts">Search contacts</string>
     <string name="menu_app_info">App info</string>
     <string name="preference_screen_services_summary">Manage connected accounts and services</string>
     <string name="preference_category_services_google">Google</string>
@@ -458,6 +443,8 @@
     <string name="grant_permission">Grant</string>
     <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
+    <string name="missing_permission_contact_search">Contact permission is required to search contacts</string>
+    <string name="missing_permission_calendar_search">Calendar permission is required to search contacts</string>
     <string name="weather_widget_set_location">Set location</string>
 
     <string name="preference_screen_debug">Debug</string>
@@ -479,6 +466,27 @@
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_export_log">Export log file</string>
+
+    <string name="preference_screen_search">Search</string>
+    <string name="preference_screen_search_summary">Configure what should be searched</string>
+    <string name="preference_search_favorites">Favorites</string>
+    <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
+    <string name="preference_search_files">Files</string>
+    <string name="preference_search_files_summary">Search local files and cloud files</string>
+    <string name="preference_search_contacts">Contacts</string>
+    <string name="preference_search_contacts_summary">Search contacts on this device</string>
+    <string name="preference_search_calendar">Calendar</string>
+    <string name="preference_search_calendar_summary">Search upcoming calendar events</string>
+    <string name="preference_search_calculator">Calculator</string>
+    <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
+    <string name="preference_search_unitconverter">Unit converter</string>
+    <string name="preference_search_unitconverter_summary">Usage: "1.5 kg" or "4 cm >> in"</string>
+    <string name="preference_search_wikipedia">Wikipedia</string>
+    <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
+    <string name="preference_search_websites">Websites</string>
+    <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
+    <string name="preference_search_websearch">Web search</string>
+    <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
 
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>

@@ -45,4 +45,5 @@ dependencies {
 
     implementation(project(":base"))
     implementation(project(":database"))
+    implementation(project(":preferences"))
 }

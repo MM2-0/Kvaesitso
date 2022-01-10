@@ -74,38 +74,7 @@ class Contact(
         return null
     }
 
-    companion object: KoinComponent {
-        fun search(context: Context, query: String): List<Contact> {
-            if (query.length < 3) return mutableListOf()
-            if (!LauncherPreferences.instance.searchContacts) {
-                return mutableListOf()
-            }
-            val permissionsManager: PermissionsManager = get()
-            if (!permissionsManager.checkPermissionOnce(PermissionGroup.Contacts)) {
-                return mutableListOf()
-            }
-            val proj = arrayOf(
-                ContactsContract.RawContacts.CONTACT_ID,
-                ContactsContract.RawContacts._ID
-            )
-            val sel = "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ?"
-            val selArgs = arrayOf("%$query%")
-            val cursor = context.contentResolver.query(
-                ContactsContract.RawContacts.CONTENT_URI, proj, sel, selArgs, null
-            ) ?: return mutableListOf()
-            //Maps raw contact ids to contact ids
-            val contactMap = mutableMapOf<Long, MutableSet<Long>>()
-            while (cursor.moveToNext()) {
-                contactMap.getOrPut(cursor.getLong(0)) { mutableSetOf() }.add(cursor.getLong(1))
-            }
-            cursor.close()
-            val results = mutableListOf<Contact>()
-            for ((id, rawIds) in contactMap) {
-                contactById(context, id, rawIds)?.let { results.add(it) }
-            }
-            return results.sortedBy { it }
-        }
-
+    companion object {
         internal fun contactById(context: Context, id: Long, rawIds: Set<Long>): Contact? {
             val s = "(" + rawIds.joinToString(separator = " OR ",
                 transform = { "${ContactsContract.Data.RAW_CONTACT_ID} = $it" }) + ")" +

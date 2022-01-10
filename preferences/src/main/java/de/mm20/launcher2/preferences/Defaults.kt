@@ -27,5 +27,46 @@ fun createFactorySettings(context: Context): Settings {
             .setClockStyle(Settings.ClockWidgetSettings.ClockStyle.DigitalClock1)
             .build()
         )
+        .setFavorites(Settings.FavoritesSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
+        .setFileSearch(Settings.FilesSearchSettings
+            .newBuilder()
+            .setLocalFiles(true)
+            .setNextcloud(false)
+            .setGdrive(false)
+            .setOnedrive(false)
+            .setNextcloud(false)
+        )
+        .setContactsSearch(Settings.ContactsSearchSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
+        .setCalendarSearch(Settings.CalendarSearchSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
+        .setCalculatorSearch(Settings.CalculatorSearchSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
+        .setUnitConverterSearch(Settings.UnitConverterSearchSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
+        .setWikipediaSearch(Settings.WikipediaSearchSettings
+            .newBuilder()
+            .setEnabled(false)
+            .setCustomUrl(null)
+        )
+        .setWebsiteSearch(Settings.WebsiteSearchSettings
+            .newBuilder()
+            .setEnabled(false)
+        )
+        .setWebSearch(Settings.WebSearchSettings
+            .newBuilder()
+            .setEnabled(true)
+        )
         .build()
 }

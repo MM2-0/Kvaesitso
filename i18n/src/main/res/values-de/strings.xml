@@ -106,34 +106,23 @@
     <string name="file_meta_app_pkgname">Paketname</string>
     <string name="file_meta_app_min_sdk">Min-SDK-Version</string>
     <string name="preference_screen_services">Dienste</string>
-    <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Suchkategorien</string>
     <string name="preference_category_search_favorites">Favoriten</string>
     <string name="preference_search_show_favorites">Favoriten anzeigen</string>
     <string name="preference_search_show_favorites_summary">Favoritenliste über allen Apps anzeigen</string>
     <string name="preference_search_auto_add_favorites">Häufig genutze Elemente</string>
     <string name="preference_search_auto_add_favorites_summary">Häufig genutzte Elemente automatisch in den Favoriten anzeigen</string>
     <string name="preference_category_search_files">Dateien</string>
-    <string name="preference_search_files">Dateisuche</string>
-    <string name="preference_search_files_summary">Ordner, Dokumente, Fotos und andere Dateitypen auf diesem Gerät durchsuchen</string>
     <string name="preference_category_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia">Wikipedia durchsuchen</string>
     <string name="preference_search_mobile_data">Mobile Daten verwenden</string>
     <string name="preference_search_mobile_data_summary">Zusätzliche Kosten können anfallen</string>
     <string name="preference_category_search_websites">Webseiten</string>
-    <string name="preference_search_websites">Nach Webseiten suchen</string>
-    <string name="preference_search_websites_summary">Probieren Sie „wikipedia.org“</string>
     <string name="preference_search_websites_protocol">Standard Web-Protokoll</string>
     <string name="preference_search_websites_protocol_summary">Standard-Protokoll, um Webseiten zu suchen, wenn nicht angegeben. Stellen Sie https:// oder http:// vor Ihre Suchanfrage, um das Protokoll explizit festzulegen</string>
     <string name="websites_protocol_http">HTTP (unverschlüsselt)</string>
     <string name="websites_protocol_https">HTTPS (verschlüsselt)</string>
     <string name="preference_category_search_calculator">Taschenrechner</string>
-    <string name="preference_search_calculator_summary">Probieren Sie „4*2+9“</string>
-    <string name="preference_search_calculator">Taschenrechner aktivieren</string>
     <string name="preference_search_activities_summary">Probieren Sie „%1$s“</string>
     <string name="preference_category_search_websearch">Websuche</string>
-    <string name="preference_search_websearch_summary">Shortcuts zu verschiedenen Websuch-Engines anzeigen</string>
-    <string name="preference_search_websearch">Websuchen-Shortcuts</string>
     <string name="preference_search_edit_websearch">Websuchen bearbeiten</string>
     <string name="file_meta_location">Ort</string>
     <string name="websearch_google">Google</string>
@@ -192,9 +181,7 @@
     <string name="menu_contact_postal">Ort</string>
     <string name="contact_multiple_postals">%1$d Postadressen</string>
     <string name="preference_category_search_calendar">Kalender</string>
-    <string name="preference_search_calendar">Kalendersuche aktivieren</string>
     <string name="preference_category_search_contacts">Kontakte</string>
-    <string name="preference_search_contacts">Kontakte durchsuchen</string>
     <string name="menu_app_info">App-Info</string>
     <string name="preference_screen_services_summary">Verbundene Accounts und Dienste verwalten</string>
     <string name="preference_category_services_google">Google</string>
@@ -277,8 +264,6 @@
     <string name="weather_unknown">Unbekannt</string>
     <string name="preference_location_disabled_summary">Von diesem Wetterdienst nicht unterstützt</string>
     <string name="preference_category_search_unitconverter">Einheitenrechner</string>
-    <string name="preference_search_unitconverter_summary">Probieren Sie „23 kg“ oder„5 cm &gt;&gt; in“</string>
-    <string name="preference_search_unitconverter">Einheitenrechner aktivieren</string>
     <string name="preference_legacy_icon_bg">Symbol-Hintergrund</string>
     <string name="preference_legacy_icon_bg_none">Keiner</string>
     <string name="preference_legacy_icon_bg_color">Dynamisch</string>
@@ -418,8 +403,10 @@
     <string name="preference_grid_column_count">Spaltenanzahl</string>
 
     <string name="grant_permission">Gewähren</string>
-    <string name="missing_permission_auto_location">Standortzugriff wird benötigt um den Standort automatisch zu ermitteln</string>
-    <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt um Medienwiedergabe zu steuern</string>
+    <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
+    <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt, um Medienwiedergabe zu steuern</string>
+    <string name="missing_permission_contact_search">Kontakteberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
+    <string name="missing_permission_calendar_search">Kalenderberechtigung ist erforderlich, um Kalender durchsuchen zu können</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
 
     <string name="preference_screen_debug">Debug</string>
@@ -444,6 +431,27 @@
 
     <string name="preference_music_filter_sources">Auf Musik-Apps begrenzen</string>
     <string name="preference_music_filter_sources_summary">Mediensitzungen von Apps ignorieren, die keine Musik-Apps sind</string>
+
+    <string name="preference_screen_search">Suche</string>
+    <string name="preference_screen_search_summary">Konfigurieren was durchsucht werden soll</string>
+    <string name="preference_search_favorites">Favoriten</string>
+    <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
+    <string name="preference_search_files">Dateien</string>
+    <string name="preference_search_files_summary">Lokale Dateien und Cloud-Dateien durchsuchen</string>
+    <string name="preference_search_contacts">Kontakte</string>
+    <string name="preference_search_contacts_summary">Kontakte auf diesem Gerät durchsuchen</string>
+    <string name="preference_search_calendar">Kalender</string>
+    <string name="preference_search_calendar_summary">Anstehende Termine durchsuchen</string>
+    <string name="preference_search_calculator">Taschenrechner</string>
+    <string name="preference_search_calculator_summary">Mathematische Terme auswerten</string>
+    <string name="preference_search_unitconverter">Einheitenrechner</string>
+    <string name="preference_search_unitconverter_summary">Benutzung: „1,5 kg“ oder „4 cm >> in“</string>
+    <string name="preference_search_wikipedia">Wikipedia</string>
+    <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
+    <string name="preference_search_websites">Webseiten</string>
+    <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen wenn die Suchanfrage eine URL ist</string>
+    <string name="preference_search_websearch">Websuchen</string>
+    <string name="preference_search_websearch_summary">Shortcuts zu verschiedenen Websuch-Engines anzeigen</string>
 
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>

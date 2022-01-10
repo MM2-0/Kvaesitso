@@ -1,9 +1,12 @@
 package de.mm20.launcher2.search
 
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Websearch
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 interface WebsearchRepository {
     fun search(query: String): Flow<List<Websearch>>
@@ -16,7 +19,9 @@ interface WebsearchRepository {
 
 class WebsearchRepositoryImpl(
     private val database: AppDatabase
-) : WebsearchRepository {
+) : WebsearchRepository, KoinComponent {
+
+    private val dataStore: LauncherDataStore by inject()
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
 
@@ -25,12 +30,18 @@ class WebsearchRepositoryImpl(
             send(emptyList())
             return@channelFlow
         }
-        withContext(Dispatchers.IO) {
-            database.searchDao().getWebSearches().map {
-                it.map { Websearch(it, query) }
+        dataStore.data.map { it.webSearch.enabled }.collectLatest {
+            if (it) {
+                withContext(Dispatchers.IO) {
+                    database.searchDao().getWebSearches().map {
+                        it.map { Websearch(it, query) }
+                    }
+                }.collectLatest {
+                    send(it)
+                }
+            } else {
+                send(emptyList())
             }
-        }.collectLatest {
-            send(it)
         }
     }
 

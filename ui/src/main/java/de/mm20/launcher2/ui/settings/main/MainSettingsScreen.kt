@@ -33,7 +33,10 @@ fun MainSettingsScreen() {
                     Preference(
                         icon = Icons.Rounded.Search,
                         title = stringResource(id = R.string.preference_screen_search),
-                        summary = stringResource(id = R.string.preference_screen_search_summary)
+                        summary = stringResource(id = R.string.preference_screen_search_summary),
+                        onClick = {
+                            navController?.navigate("settings/search")
+                        }
                     )
                     Preference(
                         icon = Icons.Rounded.Widgets,

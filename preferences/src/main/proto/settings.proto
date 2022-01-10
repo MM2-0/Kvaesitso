@@ -52,4 +52,55 @@ message Settings {
   }
   ClockWidgetSettings clock_widget = 7;
 
+  message FavoritesSettings {
+    bool enabled = 1;
+  }
+  FavoritesSettings favorites = 8;
+
+  message FilesSearchSettings {
+    bool local_files = 1;
+    bool gdrive = 2;
+    bool onedrive = 3;
+    bool nextcloud = 4;
+    bool owncloud = 5;
+  }
+  FilesSearchSettings file_search = 9;
+
+  message ContactsSearchSettings {
+    bool enabled = 1;
+  }
+  ContactsSearchSettings contacts_search = 10;
+
+  message CalendarSearchSettings {
+    bool enabled = 1;
+  }
+  CalendarSearchSettings calendar_search = 11;
+
+  message CalculatorSearchSettings {
+    bool enabled = 1;
+  }
+  CalculatorSearchSettings calculator_search = 12;
+
+  message UnitConverterSearchSettings {
+    bool enabled = 1;
+  }
+  UnitConverterSearchSettings unit_converter_search = 13;
+
+  message WikipediaSearchSettings {
+    bool enabled = 1;
+    bool images = 2;
+    string custom_url = 3;
+  }
+  WikipediaSearchSettings wikipedia_search = 14;
+
+  message WebsiteSearchSettings {
+    bool enabled = 1;
+  }
+  WebsiteSearchSettings website_search = 15;
+
+  message WebSearchSettings {
+    bool enabled = 1;
+  }
+  WebSearchSettings web_search = 16;
+
 }
