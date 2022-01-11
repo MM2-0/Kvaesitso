@@ -68,7 +68,7 @@ val favoritesModule = module {
             return@factory ContactDeserializer(androidContext())
         }
         if (type == "wikipedia") {
-            return@factory WikipediaDeserializer()
+            return@factory WikipediaDeserializer(androidContext())
         }
         if (type == "gdrive") {
             return@factory GDriveFileDeserializer()

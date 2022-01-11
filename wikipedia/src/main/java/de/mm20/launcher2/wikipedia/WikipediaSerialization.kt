@@ -1,5 +1,6 @@
 package de.mm20.launcher2.wikipedia
 
+import android.content.Context
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.Searchable
@@ -14,6 +15,7 @@ class WikipediaSerializer : SearchableSerializer {
         json.put("text", searchable.text)
         json.put("id", searchable.id)
         json.put("image", searchable.image)
+        json.put("wikipedia_url", searchable.wikipediaUrl)
         return json.toString()
     }
 
@@ -21,14 +23,15 @@ class WikipediaSerializer : SearchableSerializer {
         get() = "wikipedia"
 }
 
-class WikipediaDeserializer : SearchableDeserializer {
+class WikipediaDeserializer(val context: Context) : SearchableDeserializer {
     override fun deserialize(serialized: String): Searchable? {
         val json = JSONObject(serialized)
         return Wikipedia(
             label = json.getString("label"),
             text = json.getString("text"),
             id = json.getLong("id"),
-            image = json.optString("image")
+            image = json.optString("image"),
+            wikipediaUrl = json.optString("wikipedia_url").takeIf { !it.isNullOrBlank() } ?: return null,
         )
     }
 }

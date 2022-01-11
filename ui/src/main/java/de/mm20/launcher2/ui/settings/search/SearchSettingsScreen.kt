@@ -17,12 +17,15 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.icons.Wikipedia
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
 fun SearchSettingsScreen() {
 
     val viewModel: SearchSettingsScreenVM = viewModel()
     val context = LocalContext.current
+
+    val navController = LocalNavController.current
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
@@ -116,6 +119,9 @@ fun SearchSettingsScreen() {
                     switchValue = wikipedia == true,
                     onSwitchChanged = {
                         viewModel.setWikipedia(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/wikipedia")
                     }
                 )
 

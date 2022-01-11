@@ -62,6 +62,7 @@ fun createFactorySettings(context: Context): Settings {
         .setWikipediaSearch(Settings.WikipediaSearchSettings
             .newBuilder()
             .setEnabled(false)
+            .setImages(false)
             .setCustomUrl(null)
         )
         .setWebsiteSearch(Settings.WebsiteSearchSettings

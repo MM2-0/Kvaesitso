@@ -32,6 +32,7 @@ import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
+import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 
 class SettingsActivity : BaseActivity() {
 
@@ -89,6 +90,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search") {
                             SearchSettingsScreen()
+                        }
+                        composable("settings/search/wikipedia") {
+                            WikipediaSettingsScreen()
                         }
                         composable("settings/widgets") {
                             WidgetsSettingsScreen()

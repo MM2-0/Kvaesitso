@@ -492,6 +492,8 @@
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
 
+    <string name="preference_wikipedia_customurl">Wikipedia URL</string>
+
     <string name="music_widget_default_title">%1$s is playing media</string>
 
     <string name="music_widget_no_data">No media has been played yet</string>
