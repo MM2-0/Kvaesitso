@@ -43,7 +43,7 @@ dependencyResolutionManagement {
             version("targetSdk", "31")
         }
         create("libs") {
-            version("kotlin", "1.6.0")
+            version("kotlin", "1.6.10")
             version("kotlinx.coroutines", "1.6.0-RC2")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
@@ -66,7 +66,7 @@ dependencyResolutionManagement {
                 .to("com.android.tools", "desugar_jdk_libs")
                 .version("1.1.5")
 
-            version("androidx.compose", "1.1.0-rc01")
+            version("androidx.compose", "1.2.0-alpha01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -99,7 +99,7 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-alpha02")
+                .version("1.0.0-alpha03")
 
             version("androidx.lifecycle", "2.4.0-rc01")
             alias("androidx.lifecycle.viewmodel")

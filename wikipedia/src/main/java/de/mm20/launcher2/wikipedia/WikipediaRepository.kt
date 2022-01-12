@@ -41,21 +41,21 @@ class WikipediaRepositoryImpl(
                 .map { it.wikipediaSearch.customUrl }
                 .distinctUntilChanged()
                 .collectLatest {
-                    retrofit = Retrofit.Builder()
-                        .client(httpClient)
-                        .baseUrl(it.takeIf { !it.isNullOrBlank() }
-                            ?: context.getString(R.string.wikipedia_url))
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-                    wikipediaService = retrofit.create(WikipediaApi::class.java)
+                    try { retrofit = Retrofit.Builder()
+                            .client(httpClient)
+                            .baseUrl(it.takeIf { !it.isNullOrBlank() }
+                                ?: context.getString(R.string.wikipedia_url))
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+                        wikipediaService = retrofit.create(WikipediaApi::class.java)
+                    } catch (e: IllegalArgumentException) {
+                        CrashReporter.logException(e)
+                    }
                 }
         }
     }
 
     private lateinit var wikipediaService: WikipediaApi
-    /*by lazy {
-        retrofit.create(WikipediaApi::class.java)
-    }*/
 
 
     override fun search(query: String): Flow<Wikipedia?> = channelFlow {
