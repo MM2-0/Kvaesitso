@@ -2,13 +2,16 @@ package de.mm20.launcher2.weather
 
 import android.content.Context
 import android.util.Log
-import androidx.datastore.dataStore
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.WeatherSettings
+import de.mm20.launcher2.weather.brightsky.BrightskyProvider
+import de.mm20.launcher2.weather.here.HereProvider
+import de.mm20.launcher2.weather.metno.MetNoProvider
+import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
@@ -30,6 +33,8 @@ interface WeatherRepository {
     fun setLocation(location: WeatherLocation)
     fun setAutoLocation(autoLocation: Boolean)
     fun setLastLocation(lastLocation: WeatherLocation?)
+
+    fun getAvailableProviders(): List<WeatherSettings.WeatherProvider>
 
     fun selectProvider(provider: WeatherSettings.WeatherProvider)
 
@@ -133,7 +138,7 @@ class WeatherRepositoryImpl(
                 }
             }
             hasLocationPermission.collectLatest {
-                if(it) requestUpdate()
+                if (it) requestUpdate()
             }
         }
     }
@@ -194,11 +199,28 @@ class WeatherRepositoryImpl(
             }
         }
     }
+
+    override fun getAvailableProviders(): List<WeatherSettings.WeatherProvider> {
+        val providers = mutableListOf<WeatherSettings.WeatherProvider>()
+        if (BrightskyProvider(context).isAvailable()) {
+            providers.add(WeatherSettings.WeatherProvider.BrightSky)
+        }
+        if (OpenWeatherMapProvider(context).isAvailable()) {
+            providers.add(WeatherSettings.WeatherProvider.OpenWeatherMap)
+        }
+        if (MetNoProvider(context).isAvailable()) {
+            providers.add(WeatherSettings.WeatherProvider.MetNo)
+        }
+        if (HereProvider(context).isAvailable()) {
+            providers.add(WeatherSettings.WeatherProvider.Here)
+        }
+        return providers
+    }
 }
 
 class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params), KoinComponent {
-        val repository: WeatherRepository by inject()
+    val repository: WeatherRepository by inject()
 
     override suspend fun doWork(): Result {
         Log.d("MM20", "Requesting weather data")

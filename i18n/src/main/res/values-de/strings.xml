@@ -453,6 +453,8 @@
     <string name="preference_search_websites_summary">Vorschau einer Webseite anzeigen wenn die Suchanfrage eine URL ist</string>
     <string name="preference_search_websearch">Websuchen</string>
     <string name="preference_search_websearch_summary">Shortcuts zu verschiedenen Websuch-Engines anzeigen</string>
+    <string name="preference_screen_buildinfo">Build-Information</string>
+    <string name="preference_screen_buildinfo_summary">Weitere Informationen über diesen Build dieser App</string>
 
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
 

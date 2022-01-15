@@ -41,6 +41,13 @@ fun AboutSettingsScreen() {
                     title = stringResource(R.string.preference_version),
                     summary = appVersion
                 )
+                Preference(
+                    title = stringResource(R.string.preference_screen_buildinfo),
+                    summary = stringResource(R.string.preference_screen_buildinfo_summary),
+                    onClick = {
+                        navController?.navigate("settings/about/buildinfo")
+                    }
+                )
             }
         }
         item {

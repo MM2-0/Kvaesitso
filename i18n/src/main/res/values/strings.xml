@@ -489,6 +489,9 @@
         <item quantity="other">%1$d calendars selected</item>
     </plurals>
 
+    <string name="preference_screen_buildinfo">Build information</string>
+    <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
+
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
 
