@@ -141,25 +141,26 @@ class MusicRepositoryImpl(
             allowedCommands: SessionCommandGroup
         ) {
             super.onConnected(controller, allowedCommands)
-            if (!controller.isConnected) return
+            if (controller != mediaController) return
             updateMetadata(controller.currentMediaItem, controller.connectedToken?.packageName)
             updateState(controller.playerState)
         }
 
         override fun onCurrentMediaItemChanged(controller: MediaController, item: MediaItem?) {
             super.onCurrentMediaItemChanged(controller, item)
-            if (!controller.isConnected) return
+            if (controller != mediaController) return
             updateMetadata(item, controller.connectedToken?.packageName)
         }
 
         override fun onPlayerStateChanged(controller: MediaController, state: Int) {
             super.onPlayerStateChanged(controller, state)
-            if (!controller.isConnected) return
+            if (controller != mediaController) return
             updateState(state)
         }
 
         override fun onDisconnected(controller: MediaController) {
             super.onDisconnected(controller)
+            if (controller != mediaController) return
             mediaController = null
         }
     }
