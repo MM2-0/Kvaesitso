@@ -25,6 +25,5 @@ class BuildInfoSettingsScreenVM : ViewModel(), KoinComponent {
         "Weather providers: HERE" to availableWeatherProviders.contains(WeatherProvider.Here),
         "Weather providers: Met No" to availableWeatherProviders.contains(WeatherProvider.MetNo),
         "Weather providers: OpenWeatherMap" to availableWeatherProviders.contains(WeatherProvider.OpenWeatherMap),
-        "Weather providers: BrightSky" to availableWeatherProviders.contains(WeatherProvider.BrightSky),
     )
 }
