@@ -3,11 +3,12 @@ package de.mm20.launcher2.search.data
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
-import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Process
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
@@ -18,18 +19,16 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import java.lang.IllegalStateException
 
 @RequiresApi(Build.VERSION_CODES.N_MR1)
 class AppShortcut(
-        context: Context,
-        val launcherShortcut: ShortcutInfo,
-        val appName: String
+    context: Context,
+    val launcherShortcut: ShortcutInfo,
+    val appName: String
 ) : Searchable() {
 
     override val label: String
         get() = launcherShortcut.shortLabel?.toString() ?: ""
-
 
 
     internal val userSerialNumber: Long = launcherShortcut.userHandle.getSerialNumber(context)
@@ -44,11 +43,7 @@ class AppShortcut(
 
     override val badgeKey: String
         get() {
-            return if (LauncherPreferences.instance.shortcutBadges) {
-                if (isMainProfile) "shortcut://${launcherShortcut.activity?.flattenToShortString()}" else "profile://$userSerialNumber"
-            } else {
-                "null"
-            }
+            return if (isMainProfile) "shortcut://${launcherShortcut.activity?.flattenToShortString()}" else "profile://$userSerialNumber"
         }
 
     override fun getLaunchIntent(context: Context): Intent? {
@@ -67,28 +62,32 @@ class AppShortcut(
 
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         return LauncherIcon(
-                foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-                background = ColorDrawable(ContextCompat.getColor(context, R.color.green)),
-                foregroundScale = 0.5f)
+            foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+            background = ColorDrawable(ContextCompat.getColor(context, R.color.green)),
+            foregroundScale = 0.5f
+        )
     }
 
     override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
-            launcherApps.getShortcutIconDrawable(launcherShortcut, context.resources.displayMetrics.densityDpi)
+            launcherApps.getShortcutIconDrawable(
+                launcherShortcut,
+                context.resources.displayMetrics.densityDpi
+            )
         } ?: return null
         if (isAtLeastApiLevel(Build.VERSION_CODES.O) && icon is AdaptiveIconDrawable) {
             return LauncherIcon(
-                    foreground = icon.foreground,
-                    background = icon.background,
-                    foregroundScale = 1.5f,
-                    backgroundScale = 1.5f
+                foreground = icon.foreground,
+                background = icon.background,
+                foregroundScale = 1.5f,
+                backgroundScale = 1.5f
             )
         }
         return LauncherIcon(
-                foreground = icon,
-                foregroundScale = 1f,
-                autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+            foreground = icon,
+            foregroundScale = 1f,
+            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
         )
     }
 }
