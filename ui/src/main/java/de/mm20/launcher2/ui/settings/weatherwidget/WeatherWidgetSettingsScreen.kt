@@ -29,12 +29,15 @@ fun WeatherWidgetSettingsScreen() {
                 val weatherProvider by viewModel.weatherProvider.observeAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_weather_provider),
-                    items = listOf(
-                        stringResource(R.string.provider_metno) to WeatherProvider.MetNo,
-                        stringResource(R.string.provider_openweathermap) to WeatherProvider.OpenWeatherMap,
-                        stringResource(R.string.provider_here) to WeatherProvider.Here,
-                        stringResource(R.string.provider_brightsky) to WeatherProvider.BrightSky,
-                    ),
+                    items = viewModel.availableProviders.map {
+                        when (it) {
+                            WeatherProvider.MetNo -> stringResource(R.string.provider_metno)
+                            WeatherProvider.OpenWeatherMap -> stringResource(R.string.provider_openweathermap)
+                            WeatherProvider.Here -> stringResource(R.string.provider_here)
+                            WeatherProvider.BrightSky -> stringResource(R.string.provider_brightsky)
+                            else -> "Unknown provider"
+                        } to it
+                    },
                     onValueChanged = {
                         if (it != null) viewModel.setWeatherProvider(it)
                     },

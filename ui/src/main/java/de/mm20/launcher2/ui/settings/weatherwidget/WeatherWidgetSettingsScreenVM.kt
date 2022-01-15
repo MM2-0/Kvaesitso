@@ -23,6 +23,8 @@ class WeatherWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
 
+    val availableProviders = repository.getAvailableProviders()
+
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
     fun setImperialUnits(imperialUnits: Boolean) {
         viewModelScope.launch {
