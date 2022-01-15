@@ -31,6 +31,7 @@ import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
+import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
@@ -112,6 +113,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/badges") {
                             BadgeSettingsScreen()
+                        }
+                        composable("settings/accounts") {
+                            AccountsSettingsScreen()
                         }
                         composable("settings/about") {
                             AboutSettingsScreen()

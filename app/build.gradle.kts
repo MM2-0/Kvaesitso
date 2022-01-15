@@ -114,6 +114,7 @@ dependencies {
 
     implementation(libs.koin.android)
 
+    implementation(project(":accounts"))
     implementation(project(":applications"))
     implementation(project(":badges"))
     implementation(project(":base"))

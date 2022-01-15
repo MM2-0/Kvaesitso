@@ -13,6 +13,7 @@ import com.microsoft.identity.client.AuthenticationCallback
 import com.microsoft.identity.client.IAuthenticationResult
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication
 import com.microsoft.identity.client.PublicClientApplication
+import com.microsoft.identity.client.exception.MsalClientException
 import com.microsoft.identity.client.exception.MsalException
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.LauncherPreferences
@@ -76,7 +77,6 @@ class MicrosoftGraphApiHelper(val context: Context) {
             clientApplication.signIn(context, "", SCOPES, object : AuthenticationCallback {
                 override fun onSuccess(authenticationResult: IAuthenticationResult?) {
                     accessToken = authenticationResult?.accessToken
-                    LauncherPreferences.instance.searchOneDrive = true
                     it.resume(authenticationResult)
                 }
 
@@ -96,11 +96,16 @@ class MicrosoftGraphApiHelper(val context: Context) {
 
     suspend fun logout() {
         accessToken = null
-        LauncherPreferences.instance.searchOneDrive = false
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
             putString(PREF_ACCOUNT_NAME, null)
         }
-        withContext(Dispatchers.IO) { getClientApplication()?.signOut() }
+        withContext(Dispatchers.IO) {
+            try {
+                getClientApplication()?.signOut()
+            } catch (e: MsalClientException) {
+                CrashReporter.logException(e)
+            }
+        }
     }
 
     suspend fun getUser(): MsUser? {

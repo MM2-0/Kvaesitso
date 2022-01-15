@@ -394,3 +394,4 @@ dependencyResolutionManagement {
     }
 }
 include(":notifications")
+include(":accounts")

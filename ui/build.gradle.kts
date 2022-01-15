@@ -132,5 +132,6 @@ dependencies {
     implementation(project(":g-services"))
     implementation(project(":ms-services"))
     implementation(project(":owncloud"))
+    implementation(project(":accounts"))
 
 }

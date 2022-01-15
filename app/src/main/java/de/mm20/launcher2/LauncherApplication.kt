@@ -2,6 +2,7 @@ package de.mm20.launcher2
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import de.mm20.launcher2.accounts.accountsModule
 import de.mm20.launcher2.applications.applicationsModule
 import de.mm20.launcher2.badges.badgesModule
 import de.mm20.launcher2.calculator.calculatorModule
@@ -58,6 +59,7 @@ class LauncherApplication : Application(), CoroutineScope {
             androidContext(this@LauncherApplication)
             modules(
                 listOf(
+                    accountsModule,
                     applicationsModule,
                     calculatorModule,
                     badgesModule,
