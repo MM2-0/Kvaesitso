@@ -156,23 +156,30 @@ class CalendarRepositoryImpl(
     }
 
     override fun getUpcomingEvents(): Flow<List<CalendarEvent>> = channelFlow {
-        dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
-            hiddenItems.collectLatest { hidden ->
-                val now = System.currentTimeMillis()
-                val end = now + 14 * 24 * 60 * 60 * 1000L
-                val events = withContext(Dispatchers.IO) {
-                    queryCalendarEvents(
-                        query = "",
-                        intervalStart = now,
-                        intervalEnd = end,
-                        limit = 700,
-                        excludeAllDayEvents = settings.hideAlldayEvents,
-                        excludeCalendars = settings.excludeCalendarsList
-                    ).filter {
-                        !hiddenItems.value.contains(it.key)
+        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        hasPermission.collectLatest {
+            if (it) {
+                dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
+                    hiddenItems.collectLatest { hidden ->
+                        val now = System.currentTimeMillis()
+                        val end = now + 14 * 24 * 60 * 60 * 1000L
+                        val events = withContext(Dispatchers.IO) {
+                            queryCalendarEvents(
+                                query = "",
+                                intervalStart = now,
+                                intervalEnd = end,
+                                limit = 700,
+                                excludeAllDayEvents = settings.hideAlldayEvents,
+                                excludeCalendars = settings.excludeCalendarsList
+                            ).filter {
+                                !hiddenItems.value.contains(it.key)
+                            }
+                        }
+                        send(events)
                     }
                 }
-                send(events)
+            } else {
+                send(emptyList())
             }
         }
     }
