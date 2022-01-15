@@ -50,7 +50,9 @@ fun PreferenceWithSwitch(
             enabled = enabled,
             onCheckedChange = onSwitchChanged,
             colors = SwitchDefaults.colors(
-                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = MaterialTheme.colorScheme.primary
             )
         )
     }

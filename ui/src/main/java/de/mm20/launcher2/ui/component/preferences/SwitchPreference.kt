@@ -25,7 +25,9 @@ fun SwitchPreference(
         },
         controls = {
             Switch(checked = value, onCheckedChange = onValueChanged, colors = SwitchDefaults.colors(
-                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = MaterialTheme.colorScheme.primary
             ))
         }
     )
