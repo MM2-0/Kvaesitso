@@ -460,4 +460,6 @@
 
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
+
+    <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
 </resources>

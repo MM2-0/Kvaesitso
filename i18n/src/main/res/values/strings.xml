@@ -437,7 +437,8 @@
     <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
     <string name="missing_permission_music_widget">Notification access is required to control media playback</string>
     <string name="missing_permission_contact_search">Contact permission is required to search contacts</string>
-    <string name="missing_permission_calendar_search">Calendar permission is required to search contacts</string>
+    <string name="missing_permission_calendar_search">Calendar permission is required to search calendar</string>
+    <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
     <string name="weather_widget_set_location">Set location</string>
 
     <string name="preference_screen_debug">Debug</string>
@@ -469,7 +470,7 @@
     <string name="preference_search_contacts">Contacts</string>
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
-    <string name="preference_search_calendar_summary">Search upcoming calendar events</string>
+    <string name="preference_search_calendar_summary">Search upcoming appointments</string>
     <string name="preference_search_calculator">Calculator</string>
     <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
     <string name="preference_search_unitconverter">Unit converter</string>
