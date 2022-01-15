@@ -5,19 +5,22 @@ import android.content.Intent
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.badges.BadgeProvider
+import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.files.FilesViewModel
-import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.GDriveFile
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -27,10 +30,16 @@ import java.text.DecimalFormat
 
 class FileDetailRepresentation : Representation, KoinComponent {
 
-    val iconRepository: IconRepository by inject()
-    val badgeProvider: BadgeProvider by inject()
+    private val iconRepository: IconRepository by inject()
+    private val badgeRepository: BadgeRepository by inject()
 
-    override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
+    private var job: Job? = null
+
+    override fun getScene(
+        rootView: SearchableView,
+        searchable: Searchable,
+        previousRepresentation: Int?
+    ): Scene {
         val file = searchable as File
         val context = rootView.context as AppCompatActivity
         val scene = Scene.getSceneForLayout(rootView, R.layout.view_file_detail, rootView.context)
@@ -39,12 +48,21 @@ class FileDetailRepresentation : Representation, KoinComponent {
                 findViewById<TextView>(R.id.fileLabel).text = file.label
                 findViewById<TextView>(R.id.fileInfo).text = getInfo(context, file)
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = badgeProvider.getLiveBadge(file.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(file)
-                    lifecycleScope.launch {
-                        iconRepository.getIcon(file, (84 * rootView.dp).toInt()).collectLatest {
-                            icon = it
+                    job = rootView.scope.launch {
+                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            launch {
+                                iconRepository.getIcon(searchable, (84 * rootView.dp).toInt())
+                                    .collectLatest {
+                                        icon = it
+                                    }
+                            }
+                            launch {
+                                badgeRepository.getBadge(searchable.badgeKey).collectLatest {
+                                    badge = it
+                                }
+                            }
                         }
                     }
                 }
@@ -55,6 +73,9 @@ class FileDetailRepresentation : Representation, KoinComponent {
                 setupMenu(rootView, findViewById(R.id.fileToolbar), file)
             }
         }
+        scene.setExitAction {
+            job?.cancel()
+        }
         return scene
     }
 
@@ -62,7 +83,8 @@ class FileDetailRepresentation : Representation, KoinComponent {
         val context = toolbar.context
         toolbar.clear()
 
-        val backAction = ToolbarAction(R.drawable.ic_arrow_back, context.getString(R.string.menu_back))
+        val backAction =
+            ToolbarAction(R.drawable.ic_arrow_back, context.getString(R.string.menu_back))
         backAction.clickAction = {
             rootView.back()
         }
@@ -72,7 +94,8 @@ class FileDetailRepresentation : Representation, KoinComponent {
         toolbar.addAction(favAction, ToolbarView.PLACEMENT_END)
 
         if (file.isDeletable) {
-            val deleteAction = ToolbarAction(R.drawable.ic_delete, context.getString(R.string.menu_delete))
+            val deleteAction =
+                ToolbarAction(R.drawable.ic_delete, context.getString(R.string.menu_delete))
             deleteAction.clickAction = {
                 delete(context, file)
             }
@@ -83,7 +106,8 @@ class FileDetailRepresentation : Representation, KoinComponent {
         toolbar.addAction(hideAction, ToolbarView.PLACEMENT_END)
 
         if (file !is GDriveFile) {
-            val shareAction = ToolbarAction(R.drawable.ic_share, context.getString(R.string.menu_share))
+            val shareAction =
+                ToolbarAction(R.drawable.ic_share, context.getString(R.string.menu_share))
             shareAction.clickAction = {
                 share(context, file)
             }
@@ -93,16 +117,19 @@ class FileDetailRepresentation : Representation, KoinComponent {
 
     private fun delete(context: Context, file: File) {
         MaterialAlertDialogBuilder(context)
-            .setMessage(context.getString(
-                if (file.isDirectory) R.string.alert_delete_directory
-                else R.string.alert_delete_file,
-                file.path))
-            .setPositiveButton(android.R.string.ok) {dialog, _ ->
+            .setMessage(
+                context.getString(
+                    if (file.isDirectory) R.string.alert_delete_directory
+                    else R.string.alert_delete_file,
+                    file.path
+                )
+            )
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
                 val fileViewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
                 dialog.dismiss()
                 fileViewModel.deleteFile(file)
             }
-            .setNegativeButton(android.R.string.cancel) {dialog, _ ->
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
@@ -111,9 +138,11 @@ class FileDetailRepresentation : Representation, KoinComponent {
     private fun share(context: Context, fileDetail: File) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        val uri = FileProvider.getUriForFile(context,
-                context.applicationContext.packageName + ".fileprovider",
-                java.io.File(fileDetail.path))
+        val uri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".fileprovider",
+            java.io.File(fileDetail.path)
+        )
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         shareIntent.type = fileDetail.mimeType
         context.startActivity(Intent.createChooser(shareIntent, null))
@@ -122,17 +151,35 @@ class FileDetailRepresentation : Representation, KoinComponent {
     private fun getInfo(context: Context, file: File): String {
         val sb = StringBuilder()
 
-        sb.append(context.getString(R.string.file_meta_data_entry, context.getString(R.string.file_meta_type), file.mimeType))
+        sb.append(
+            context.getString(
+                R.string.file_meta_data_entry,
+                context.getString(R.string.file_meta_type),
+                file.mimeType
+            )
+        )
 
         for ((k, v) in file.metaData) {
             sb.append("\n")
-                    .append(context.getString(R.string.file_meta_data_entry, context.getString(k), v))
+                .append(context.getString(R.string.file_meta_data_entry, context.getString(k), v))
         }
         if (!file.isDirectory) {
-            sb.append("\n").append(context.getString(R.string.file_meta_data_entry, context.getString(R.string.file_meta_size), formatFileSize(file.size)))
+            sb.append("\n").append(
+                context.getString(
+                    R.string.file_meta_data_entry,
+                    context.getString(R.string.file_meta_size),
+                    formatFileSize(file.size)
+                )
+            )
         }
         if (file.path.isNotEmpty()) {
-            sb.append("\n").append(context.getString(R.string.file_meta_data_entry, context.getString(R.string.file_meta_path), file.path))
+            sb.append("\n").append(
+                context.getString(
+                    R.string.file_meta_data_entry,
+                    context.getString(R.string.file_meta_path),
+                    file.path
+                )
+            )
         }
         return sb.toString()
     }

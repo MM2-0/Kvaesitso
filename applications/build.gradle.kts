@@ -47,7 +47,6 @@ dependencies {
     implementation(project(":base"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))
-    implementation(project(":badges"))
     implementation(project(":hiddenitems"))
     implementation(project(":compat"))
 

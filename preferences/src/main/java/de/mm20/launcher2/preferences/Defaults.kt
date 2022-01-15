@@ -63,7 +63,7 @@ fun createFactorySettings(context: Context): Settings {
             .newBuilder()
             .setEnabled(false)
             .setImages(false)
-            .setCustomUrl(null)
+            .setCustomUrl("")
         )
         .setWebsiteSearch(Settings.WebsiteSearchSettings
             .newBuilder()
@@ -72,6 +72,13 @@ fun createFactorySettings(context: Context): Settings {
         .setWebSearch(Settings.WebSearchSettings
             .newBuilder()
             .setEnabled(true)
+        )
+        .setBadges(Settings.BadgeSettings
+            .newBuilder()
+            .setNotifications(true)
+            .setCloudFiles(true)
+            .setShortcuts(true)
+            .setSuspendedApps(true)
         )
         .build()
 }

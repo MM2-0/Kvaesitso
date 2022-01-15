@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":ktx"))
+    implementation(project(":applications"))
+    implementation(project(":notifications"))
     implementation(project(":preferences"))
     implementation(project(":base"))
 

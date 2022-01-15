@@ -59,6 +59,18 @@
             tools:text="Version 1.0\ncom.app.name" />
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/notifications"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:chipSpacingVertical="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/icon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appInfo"/>
+
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/appShortcuts"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -67,9 +79,7 @@
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@+id/icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appInfo">
-
-        </com.google.android.material.chip.ChipGroup>
+            app:layout_constraintTop_toBottomOf="@+id/notifications"/>
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrier2"

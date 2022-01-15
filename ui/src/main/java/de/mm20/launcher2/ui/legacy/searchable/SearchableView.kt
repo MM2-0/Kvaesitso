@@ -13,6 +13,10 @@ import de.mm20.launcher2.ui.legacy.search.*
 import de.mm20.launcher2.ui.legacy.transition.LauncherCards
 import de.mm20.launcher2.ui.legacy.transition.LauncherIconViewTransition
 import de.mm20.launcher2.ui.legacy.view.AspectRationImageView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 
 @SuppressLint("ViewConstructor")
 open class SearchableView(context: Context, representation: Int) : FrameLayout(context) {
@@ -25,6 +29,8 @@ open class SearchableView(context: Context, representation: Int) : FrameLayout(c
 
 
     private var defaultRepresentation = representation
+
+    val scope = CoroutineScope(Job() + Dispatchers.Main)
 
     var representation = representation
         set(value) {
@@ -107,8 +113,11 @@ open class SearchableView(context: Context, representation: Int) : FrameLayout(c
 
     private fun applyScene(scene: Scene) {
         val transition = TransitionSet().apply {
-            addTransition(ChangeBounds().setInterpolator(DecelerateInterpolator()).excludeTarget(
-                AspectRationImageView::class.java, true))
+            addTransition(
+                ChangeBounds().setInterpolator(DecelerateInterpolator()).excludeTarget(
+                    AspectRationImageView::class.java, true
+                )
+            )
             addTransition(LauncherIconViewTransition())
             addTransition(TextResize())
             addTransition(LauncherCards())
@@ -132,12 +141,21 @@ open class SearchableView(context: Context, representation: Int) : FrameLayout(c
         return defaultRepresentation != REPRESENTATION_FULL
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        scope.cancel()
+    }
+
     companion object {
         const val REPRESENTATION_GRID = 0
         const val REPRESENTATION_LIST = 1
         const val REPRESENTATION_FULL = 2
 
-        fun getView(context: Context, searchable: Searchable?, representation: Int): SearchableView {
+        fun getView(
+            context: Context,
+            searchable: Searchable?,
+            representation: Int
+        ): SearchableView {
             return SearchableView(context, representation)
         }
     }

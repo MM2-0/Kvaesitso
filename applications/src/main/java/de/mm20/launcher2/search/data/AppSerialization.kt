@@ -10,13 +10,11 @@ import android.os.Process
 import android.os.UserManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 class LauncherAppSerializer : SearchableSerializer {
     override fun serialize(searchable: Searchable): String {
@@ -71,7 +69,6 @@ class AppShortcutDeserializer(
 
     @RequiresApi(Build.VERSION_CODES.N_MR1)
     override fun deserialize(serialized: String): Searchable? {
-        val badgeProvider: BadgeProvider by inject()
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return null
         else {
@@ -104,11 +101,6 @@ class AppShortcutDeserializer(
                 return null
             } else {
                 val activity = shortcuts[0].activity
-                if (activity != null) {
-                    badgeProvider.addAppShortcutBadge(
-                        activity
-                    )
-                }
                 return AppShortcut(
                     context = context,
                     launcherShortcut = shortcuts[0],

@@ -2,11 +2,14 @@ package de.mm20.launcher2.ui.legacy.search
 
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
+import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.Searchable
@@ -15,6 +18,7 @@ import de.mm20.launcher2.ui.legacy.view.FavoriteSwipeAction
 import de.mm20.launcher2.ui.legacy.view.HideSwipeAction
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.SwipeCardView
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -22,8 +26,10 @@ import org.koin.core.component.inject
 
 class ContactListRepresentation : Representation, KoinComponent {
 
-    val iconRepository: IconRepository by inject()
-    val badgeProvider: BadgeProvider by inject()
+    private val iconRepository: IconRepository by inject()
+    private val badgeRepository: BadgeRepository by inject()
+
+    private var job: Job? = null
 
     override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
         val contact = searchable as Contact
@@ -32,12 +38,21 @@ class ContactListRepresentation : Representation, KoinComponent {
         scene.setEnterAction {
             with(rootView) {
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = badgeProvider.getLiveBadge(contact.badgeKey)
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(contact)
-                    lifecycleScope.launch {
-                        iconRepository.getIcon(contact, (84 * rootView.dp).toInt()).collectLatest {
-                            icon = it
+                    job = rootView.scope.launch {
+                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                            launch {
+                                iconRepository.getIcon(searchable, (84 * rootView.dp).toInt())
+                                    .collectLatest {
+                                        icon = it
+                                    }
+                            }
+                            launch {
+                                badgeRepository.getBadge(searchable.badgeKey).collectLatest {
+                                    badge = it
+                                }
+                            }
                         }
                     }
                 }
@@ -59,6 +74,9 @@ class ContactListRepresentation : Representation, KoinComponent {
                         .start()
 
             }
+        }
+        scene.setExitAction {
+            job?.cancel()
         }
         return scene
     }

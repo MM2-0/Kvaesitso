@@ -21,6 +21,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Handler
 import android.os.Process
+import android.service.notification.StatusBarNotification
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
@@ -32,15 +33,13 @@ import androidx.lifecycle.*
 import androidx.transition.Scene
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import de.mm20.launcher2.badges.BadgeProvider
+import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.castToOrNull
-import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.ktx.getBadgeIcon
-import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.ktx.*
 import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.notifications.NotificationService
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
@@ -50,8 +49,9 @@ import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.Executors
@@ -60,7 +60,10 @@ import kotlin.math.roundToInt
 class ApplicationDetailRepresentation : Representation, KoinComponent {
 
     private val iconRepository: IconRepository by inject()
-    private val badgeProvider: BadgeProvider by inject()
+    private val badgeRepository: BadgeRepository by inject()
+    private val notificationRepository: NotificationRepository by inject()
+
+    private var job: Job? = null
 
     override fun getScene(
         rootView: SearchableView,
@@ -75,15 +78,35 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                 setOnClickListener(null)
                 setOnLongClickListener(null)
                 findViewById<TextView>(R.id.appName).text = application.label
-                findViewById<LauncherIconView>(R.id.icon).apply {
-                    badge = badgeProvider.getLiveBadge(application.badgeKey)
+                val iconView = findViewById<LauncherIconView>(R.id.icon).apply {
                     shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(application)
-                    lifecycleScope.launch {
-                        iconRepository.getIcon(application, (84 * rootView.dp).toInt())
-                            .collectLatest {
-                                icon = it
+                }
+
+                val notificationView = findViewById<ChipGroup>(R.id.notifications)
+                notificationView.layoutTransition = ChangingLayoutTransition()
+
+                job = rootView.scope.launch {
+                    rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        launch {
+                            iconRepository.getIcon(application, (84 * rootView.dp).toInt())
+                                .collectLatest {
+                                    iconView.icon = it
+                                }
+                        }
+                        launch {
+                            badgeRepository.getBadge(application.badgeKey).collectLatest {
+                                iconView.badge = it
                             }
+                        }
+                        launch {
+                            notificationRepository
+                                .notifications
+                                .map { it.filter { it.packageName == application.`package` } }
+                                .collectLatest {
+                                    updateNotifications(notificationView, it)
+                                }
+                        }
                     }
                 }
                 findViewById<SwipeCardView>(R.id.appCard).also {
@@ -142,7 +165,57 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
             }
         }
 
+        scene.setExitAction {
+            job?.cancel()
+        }
+
         return scene
+    }
+
+    private fun updateNotifications(chipGroup: ChipGroup, notifications: List<StatusBarNotification>) {
+        val context = chipGroup.context
+        chipGroup.removeAllViews()
+        notifications.forEach {
+            var title = it.notification.tickerText
+            if (title.isNullOrBlank()) {
+                title = it.notification.extras.getCharSequence(Notification.EXTRA_TITLE)
+            }
+            if (title.isNullOrBlank()) {
+                title = it.notification.extras.getCharSequence(Notification.EXTRA_TEXT)
+            }
+            if (title == null) title = ""
+            if (!NotificationCompat.isGroupSummary(it.notification)) {
+                val view = Chip(context)
+                view.text = title
+                view.chipIcon =
+                    createShortcutDrawable(getNotificationChipIcon(context, it.notification))
+                view.chipStrokeWidth = 1 * context.dp
+                view.chipStrokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
+                view.chipBackgroundColor =
+                    ContextCompat.getColorStateList(context, R.color.chip_background)
+                view.setTextAppearanceResource(R.style.ChipTextAppearance)
+                view.closeIconTint = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_color_secondary
+                    )
+                )
+
+                view.isCloseIconVisible = it.isClearable
+
+                view.setOnClickListener { _ ->
+                    try {
+                        it.notification.contentIntent?.send()
+                    } catch (e: PendingIntent.CanceledException) {
+                    }
+                }
+                view.setOnCloseIconClickListener { _ ->
+                    notificationRepository.cancelNotification(it)
+                }
+                chipGroup.addView(view)
+            }
+
+        }
     }
 
     private fun setupToolbar(rootView: SearchableView, toolbar: ToolbarView, app: Application) {
@@ -222,51 +295,6 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
 
     private fun setupShortcuts(appShortcuts: ChipGroup, app: Application) {
         val context = appShortcuts.context
-        appShortcuts.removeAllViews()
-        val ns = NotificationService.getInstance()
-        val notifications = ns?.getNotifications(app.`package`)
-        notifications?.forEach {
-            var title = it.notification.tickerText
-            if (title.isNullOrBlank()) {
-                title = it.notification.extras.getCharSequence(Notification.EXTRA_TITLE)
-            }
-            if (title.isNullOrBlank()) {
-                title = it.notification.extras.getCharSequence(Notification.EXTRA_TEXT)
-            }
-            if (title == null) title = ""
-            if (!NotificationCompat.isGroupSummary(it.notification)) {
-                val view = Chip(context)
-                view.text = title
-                view.chipIcon =
-                    createShortcutDrawable(getNotificationChipIcon(context, it.notification))
-                view.chipStrokeWidth = 1 * context.dp
-                view.chipStrokeColor = ContextCompat.getColorStateList(context, R.color.chip_stroke)
-                view.chipBackgroundColor =
-                    ContextCompat.getColorStateList(context, R.color.chip_background)
-                view.setTextAppearanceResource(R.style.ChipTextAppearance)
-                view.closeIconTint = ColorStateList.valueOf(
-                    ContextCompat.getColor(
-                        context,
-                        R.color.text_color_secondary
-                    )
-                )
-
-                view.isCloseIconVisible = it.isClearable
-
-                view.setOnClickListener { _ ->
-                    try {
-                        it.notification.contentIntent?.send()
-                    } catch (e: PendingIntent.CanceledException) {
-                    }
-                }
-                view.setOnCloseIconClickListener { _ ->
-                    ns.cancelNotification(it.key)
-                    appShortcuts.removeView(view)
-                }
-                appShortcuts.addView(view)
-            }
-
-        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             val launcherApps =
                 context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps

@@ -7,6 +7,7 @@ import android.graphics.*
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
@@ -14,23 +15,34 @@ import android.view.ViewConfiguration
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.repeatOnLifecycle
 import com.bartoszlipinski.viewpropertyobjectanimator.ViewPropertyObjectAnimator
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.toRectF
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.lifecycleOwner
+import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.helper.BitmapHolder
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.lang.Math.pow
+import java.lang.Runnable
 import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.roundToInt
 
-class LauncherIconView : View {
+class LauncherIconView : View, KoinComponent {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
@@ -71,16 +83,11 @@ class LauncherIconView : View {
             invalidate()
         }
 
-    var badge: LiveData<Badge>? = null
+    var badge: Badge? = null
         set(value) {
             field = value
-            value?.observe(context as AppCompatActivity, badgeObserver)
             invalidate()
         }
-
-    private val badgeObserver = Observer<Badge> {
-        invalidate()
-    }
 
     private val iconObserver: (LauncherIcon) -> Unit = {
         foregroundScale = it.foregroundScale
@@ -341,12 +348,10 @@ class LauncherIconView : View {
         badgeRect.right = drawRect.right.toFloat()
         badgeRect.bottom = drawRect.bottom.toFloat()
 
-        val badge = badge?.value ?: return
+        val badge = badge ?: return
         val badgeNumber = badge.number
         val badgeProgress = badge.progress
         val badgeIcon = badge.icon ?: badge.iconRes?.let { ContextCompat.getDrawable(context, it) }
-
-        if (badgeNumber == null && badgeProgress == null && badgeIcon == null) return
 
         badgePaint.color = icon?.badgeColor ?: 0
         canvas.drawOval(badgeRect, badgeShadowPaint)

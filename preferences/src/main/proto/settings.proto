@@ -109,4 +109,12 @@ message Settings {
   }
   CalendarWidgetSettings calendar_widget = 17;
 
+  message BadgeSettings {
+    bool notifications = 1;
+    bool suspended_apps = 2;
+    bool cloud_files = 3;
+    bool shortcuts = 4;
+  }
+  BadgeSettings badges = 18;
+
 }

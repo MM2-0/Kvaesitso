@@ -7,12 +7,13 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
 import com.bumptech.glide.Glide
-import de.mm20.launcher2.badges.BadgeProvider
-import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.search.data.Website
@@ -22,7 +23,7 @@ import de.mm20.launcher2.ui.legacy.view.FavoriteToolbarAction
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -30,13 +31,18 @@ import org.koin.core.component.inject
 
 class WebsiteDetailRepresentation : Representation, KoinComponent {
 
-    val iconRepository: IconRepository by inject()
-    val badgeProvider: BadgeProvider by inject()
+    private val iconRepository: IconRepository by inject()
+    private var job: Job? = null
 
-    override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
+    override fun getScene(
+        rootView: SearchableView,
+        searchable: Searchable,
+        previousRepresentation: Int?
+    ): Scene {
         val website = searchable as Website
         val context = rootView.context as AppCompatActivity
-        val scene = Scene.getSceneForLayout(rootView, R.layout.view_website_detail, rootView.context)
+        val scene =
+            Scene.getSceneForLayout(rootView, R.layout.view_website_detail, rootView.context)
         scene.setEnterAction {
             with(rootView) {
                 if (!hasBack()) {
@@ -67,12 +73,14 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
                         label.transitionName = null
                         websiteFavIcon.transitionName = "icon"
                         websiteFavIcon.apply {
-                            badge = badgeProvider.getLiveBadge(website.badgeKey)
                             shape = LauncherIconView.getDefaultShape(context)
                             icon = iconRepository.getIconIfCached(website)
-                            lifecycleScope.launch {
-                                iconRepository.getIcon(website, (84 * rootView.dp).toInt()).collectLatest {
-                                    icon = it
+                            job = rootView.scope.launch {
+                                rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                    iconRepository.getIcon(website, (84 * rootView.dp).toInt())
+                                        .collectLatest {
+                                            icon = it
+                                        }
                                 }
                             }
                         }
@@ -89,6 +97,10 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
                 setupMenu(rootView, toolbar, website)
             }
         }
+
+        scene.setExitAction {
+            job?.cancel()
+        }
         return scene
     }
 
@@ -97,7 +109,8 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
         toolbar.clear()
 
         if (rootView.hasBack()) {
-            val backAction = ToolbarAction(R.drawable.ic_arrow_back, context.getString(R.string.menu_back))
+            val backAction =
+                ToolbarAction(R.drawable.ic_arrow_back, context.getString(R.string.menu_back))
             backAction.clickAction = {
                 rootView.back()
             }
@@ -115,7 +128,10 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
 
     private fun share(context: Context, website: Website) {
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "${website.label}\n\n${website.description}\n\n${website.url}")
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "${website.label}\n\n${website.description}\n\n${website.url}"
+        )
         shareIntent.type = "text/plain"
         context.startActivity(Intent.createChooser(shareIntent, null))
     }

@@ -1,13 +1,16 @@
 package de.mm20.launcher2.music
 
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.media.AudioManager
+import android.media.session.MediaSession
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
+import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.graphics.scale
 import androidx.media2.common.MediaItem
@@ -15,6 +18,7 @@ import androidx.media2.common.MediaMetadata
 import androidx.media2.common.SessionPlayer
 import androidx.media2.session.MediaController
 import androidx.media2.session.SessionCommandGroup
+import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -31,8 +35,6 @@ interface MusicRepository {
     val album: Flow<String?>
     val albumArt: Flow<Bitmap?>
 
-    fun setMediaSession(token: MediaSessionCompat.Token, packageName: String)
-
     fun next()
     fun previous()
     fun pause()
@@ -45,7 +47,10 @@ interface MusicRepository {
     fun resetPlayer()
 }
 
-class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent {
+class MusicRepositoryImpl(
+    private val context: Context,
+    private val notificationRepository: NotificationRepository
+) : MusicRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Main)
     private val dataStore: LauncherDataStore by inject()
@@ -62,7 +67,29 @@ class MusicRepositoryImpl(val context: Context) : MusicRepository, KoinComponent
 
     private val semaphore = Semaphore(permits = 1)
 
-    override fun setMediaSession(token: MediaSessionCompat.Token, packageName: String) {
+    init {
+        scope.launch {
+            notificationRepository.notifications
+                .mapNotNull {
+                    it
+                        .sortedByDescending { it.postTime }
+                        .find {
+                            it.notification.category == Notification.CATEGORY_TRANSPORT || it.notification.category == Notification.CATEGORY_SERVICE
+                        }
+                }
+                .collectLatest {
+                    val token =
+                        it.notification.extras[NotificationCompat.EXTRA_MEDIA_SESSION] as? MediaSession.Token
+                            ?: return@collectLatest
+                    setMediaSession(
+                        MediaSessionCompat.Token.fromToken(token),
+                        it.packageName
+                    )
+                }
+        }
+    }
+
+    private fun setMediaSession(token: MediaSessionCompat.Token, packageName: String) {
         if (token.toString() == lastToken.toString()) return
 
         scope.launch {

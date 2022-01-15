@@ -12,19 +12,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.applications.R
-import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.badges.BadgeProvider
-import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import java.lang.IllegalStateException
 
 @RequiresApi(Build.VERSION_CODES.N_MR1)

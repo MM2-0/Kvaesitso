@@ -9,9 +9,8 @@ import android.content.pm.PackageInstaller
 import android.content.pm.ShortcutInfo
 import android.os.Process
 import android.os.UserHandle
+import android.os.UserManager
 import android.util.Log
-import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.badges.BadgeProvider
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.AppInstallation
@@ -23,12 +22,12 @@ import kotlinx.coroutines.withContext
 
 interface AppRepository {
     fun search(query: String): Flow<List<Application>>
+    fun getSuspendedPackages(): Flow<List<String>>
 }
 
 class AppRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository,
-    private val badgeProvider: BadgeProvider
 ) : AppRepository {
 
     private val launcherApps =
@@ -37,6 +36,7 @@ class AppRepositoryImpl(
     private val installedApps = MutableStateFlow<List<Application>>(emptyList())
     private val installations = MutableStateFlow<MutableList<AppInstallation>>(mutableListOf())
     private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
+    private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
 
 
     private val profiles: List<UserHandle> =
@@ -101,12 +101,8 @@ class AppRepositoryImpl(
 
             override fun onPackagesSuspended(packageNames: Array<out String>?, user: UserHandle?) {
                 super.onPackagesSuspended(packageNames, user)
-                packageNames?.forEach {
-                    badgeProvider.setBadge(
-                        "app://$it",
-                        Badge(iconRes = R.drawable.ic_badge_suspended)
-                    )
-                }
+                packageNames ?: return
+                suspendedPackages.value = suspendedPackages.value + packageNames
             }
 
             override fun onPackagesUnsuspended(
@@ -114,9 +110,8 @@ class AppRepositoryImpl(
                 user: UserHandle?
             ) {
                 super.onPackagesUnsuspended(packageNames, user)
-                packageNames?.forEach {
-                    badgeProvider.removeBadge("app://$it")
-                }
+                packageNames ?: return
+                suspendedPackages.value = suspendedPackages.value.filter { packageNames.contains(it) }
             }
 
         })
@@ -130,15 +125,6 @@ class AppRepositoryImpl(
         packageInstaller.registerSessionCallback(object : PackageInstaller.SessionCallback() {
             override fun onProgressChanged(sessionId: Int, progress: Float) {
                 val session = packageInstaller.getSessionInfo(sessionId) ?: return
-                val pkg = session.appPackageName ?: return
-                if (!installingPackages.containsKey(sessionId)) {
-                    val key = "app://$pkg"
-                    val badge = badgeProvider.getBadge(key)?.also { it.progress = null }
-                        ?: Badge()
-                    badgeProvider.setBadge(key, badge)
-                    return
-                }
-                badgeProvider.updateBadge("app://$pkg", Badge(progress = progress))
             }
 
             override fun onActiveChanged(sessionId: Int, active: Boolean) {
@@ -149,10 +135,6 @@ class AppRepositoryImpl(
             override fun onFinished(sessionId: Int, success: Boolean) {
                 val pkg = installingPackages[sessionId]
                 installingPackages.remove(sessionId)
-                val key = "app://$pkg"
-                val badge = badgeProvider.getBadge(key)?.apply { progress = null }
-                    ?: Badge()
-                badgeProvider.setBadge(key, badge)
                 val inst = installations.value
                 inst.removeAll {
                     it.session.sessionId == sessionId
@@ -172,7 +154,7 @@ class AppRepositoryImpl(
             override fun onCreated(sessionId: Int) {
                 val session = packageInstaller.getSessionInfo(sessionId) ?: return
                 installingPackages[sessionId] = session.appPackageName ?: return
-                if (installedApps.value?.any { it.`package` == session.appPackageName } == true) return
+                if (installedApps.value.any { it.`package` == session.appPackageName }) return
                 if (session.appLabel.isNullOrBlank() || !session.isActive) return
                 val appInstallation = AppInstallation(session)
                 val inst = installations.value ?: mutableListOf()
@@ -180,6 +162,11 @@ class AppRepositoryImpl(
                 installations.value = inst
             }
         })
+    }
+
+
+    override fun getSuspendedPackages(): Flow<List<String>> {
+        return suspendedPackages
     }
 
     private fun getApplications(packageName: String): List<Application> {

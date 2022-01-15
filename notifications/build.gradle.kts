@@ -44,9 +44,7 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(project(":music"))
     implementation(project(":preferences"))
-    implementation(project(":badges"))
     implementation(project(":permissions"))
 
 }
