@@ -7,12 +7,6 @@ import android.location.LocationManager
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.checkPermission
-import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.preferences.WeatherProviders
-import de.mm20.launcher2.weather.brightsky.BrightskyProvider
-import de.mm20.launcher2.weather.here.HereProvider
-import de.mm20.launcher2.weather.metno.MetNoProvider
-import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
 
 abstract class WeatherProvider<T : WeatherLocation> {
 
@@ -99,15 +93,6 @@ abstract class WeatherProvider<T : WeatherLocation> {
     }
 
     companion object {
-
-        fun getInstance(context: Context): WeatherProvider<out WeatherLocation>? {
-            return when (LauncherPreferences.instance.weatherProvider) {
-                WeatherProviders.OPENWEATHERMAP -> OpenWeatherMapProvider(context)
-                WeatherProviders.HERE -> HereProvider(context)
-                WeatherProviders.BRIGHT_SKY -> BrightskyProvider(context)
-                else -> MetNoProvider(context)
-            }.takeIf { it.isAvailable() }
-        }
 
         private const val LAST_UPDATE = "last_update"
         private const val AUTO_LOCATION = "auto_location"

@@ -18,24 +18,12 @@ class PreferencesMainFragment : PreferenceFragmentCompat() {
             setSettingsScreen(PreferencesAppearanceFragment())
             true
         }
-        findPreference<Preference>("screen_about")?.setOnPreferenceClickListener {
-            setSettingsScreen(PreferencesAboutFragment())
-            true
-        }
-        findPreference<Preference>("screen_weather")?.setOnPreferenceClickListener {
-            setSettingsScreen(PreferencesWeatherFragment())
-            true
-        }
         findPreference<Preference>("screen_services")?.setOnPreferenceClickListener {
             setSettingsScreen(PreferencesServicesFragment())
             true
         }
         findPreference<Preference>("screen_search")?.setOnPreferenceClickListener {
             setSettingsScreen(PreferencesSearchFragment())
-            true
-        }
-        findPreference<Preference>("screen_badges")?.setOnPreferenceClickListener {
-            setSettingsScreen(PreferencesBadgesFragment())
             true
         }
     }

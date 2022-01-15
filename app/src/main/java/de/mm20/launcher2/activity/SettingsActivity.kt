@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import de.mm20.launcher2.fragment.PreferencesMainFragment
 import de.mm20.launcher2.fragment.PreferencesServicesFragment
-import de.mm20.launcher2.fragment.PreferencesWeatherFragment
 import de.mm20.launcher2.ui.legacy.activity.LauncherActivity
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 
@@ -30,7 +29,6 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun getStartFragment(): Fragment {
         return when (intent.extras?.getString(FRAGMENT, "")) {
-            FRAGMENT_WEATHER -> PreferencesWeatherFragment()
             FRAGMENT_SERVICES -> PreferencesServicesFragment()
             else -> PreferencesMainFragment()
         }
