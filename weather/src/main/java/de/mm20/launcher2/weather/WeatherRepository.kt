@@ -49,7 +49,7 @@ class WeatherRepositoryImpl(
     private val dataStore: LauncherDataStore,
 ) : WeatherRepository, KoinComponent {
 
-    private val scope = CoroutineScope(Dispatchers.Main + Job())
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private var provider: WeatherProvider<out WeatherLocation>
 

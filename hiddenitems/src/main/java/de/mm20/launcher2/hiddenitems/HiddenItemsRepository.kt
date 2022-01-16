@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
  */
 class HiddenItemsRepository(val context: Context, database: AppDatabase) {
 
-    val scope = CoroutineScope(Job() + Dispatchers.Main)
+    val scope = CoroutineScope(Job() + Dispatchers.Default)
     val hiddenItemsKeys = MutableStateFlow<List<String>>(emptyList())
 
     init {

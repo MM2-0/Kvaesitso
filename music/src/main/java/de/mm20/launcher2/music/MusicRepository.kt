@@ -52,7 +52,7 @@ class MusicRepositoryImpl(
     private val notificationRepository: NotificationRepository
 ) : MusicRepository, KoinComponent {
 
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
     private val dataStore: LauncherDataStore by inject()
 
     override val playbackState = MutableStateFlow(PlaybackState.Stopped)

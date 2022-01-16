@@ -22,7 +22,7 @@ class WikipediaRepositoryImpl(
     private val context: Context
 ) : WikipediaRepository, KoinComponent {
 
-    private val scope = CoroutineScope(Dispatchers.Main + Job())
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val dataStore: LauncherDataStore by inject()
 

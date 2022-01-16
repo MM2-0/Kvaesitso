@@ -24,7 +24,7 @@ class IconRepository(
         }
     }
 
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val cache = LruCache<String, LauncherIcon>(200)
 

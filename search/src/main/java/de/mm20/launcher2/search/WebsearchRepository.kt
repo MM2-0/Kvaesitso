@@ -23,7 +23,7 @@ class WebsearchRepositoryImpl(
 
     private val dataStore: LauncherDataStore by inject()
 
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     override fun search(query: String): Flow<List<Websearch>> = channelFlow {
         if (query.isEmpty()) {

@@ -36,7 +36,7 @@ class FavoritesRepositoryImpl(
     private val database: AppDatabase
 ) : FavoritesRepository, KoinComponent {
 
-    private val scope = CoroutineScope(Dispatchers.Main + Job())
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     override fun getFavorites(): Flow<List<Searchable>> = channelFlow {
 

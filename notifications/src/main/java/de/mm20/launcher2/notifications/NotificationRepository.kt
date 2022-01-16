@@ -32,7 +32,7 @@ interface NotificationRepository {
 }
 
 internal class NotificationRepositoryImpl() : NotificationRepository {
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
     override val notifications: MutableStateFlow<List<StatusBarNotification>> = MutableStateFlow(
         emptyList()
     )

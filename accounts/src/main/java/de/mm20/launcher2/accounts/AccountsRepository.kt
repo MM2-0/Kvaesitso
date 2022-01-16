@@ -28,7 +28,7 @@ interface AccountsRepository {
 internal class AccountsRepositoryImpl(
     private val context: Context
 ) : AccountsRepository {
-    private val scope = CoroutineScope(Job() + Dispatchers.Main)
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val googleApiHelper = GoogleApiHelper.getInstance(context)
     private val msGraphApiHelper = MicrosoftGraphApiHelper.getInstance(context)

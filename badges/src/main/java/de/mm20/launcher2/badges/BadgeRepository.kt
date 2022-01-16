@@ -20,7 +20,7 @@ interface BadgeRepository {
 internal class BadgeRepositoryImpl(private val context: Context) : BadgeRepository, KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
-    private val scope = CoroutineScope(Dispatchers.Main + Job())
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val badgeProviders = MutableStateFlow<List<BadgeProvider>>(emptyList())
 
