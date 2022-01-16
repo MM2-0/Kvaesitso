@@ -43,7 +43,7 @@ interface WeatherRepository {
     fun clearForecasts()
 }
 
-class WeatherRepositoryImpl(
+internal class WeatherRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
     private val dataStore: LauncherDataStore,

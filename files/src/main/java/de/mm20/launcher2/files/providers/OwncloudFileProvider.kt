@@ -1,15 +1,13 @@
 package de.mm20.launcher2.files.providers
 
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.helper.NetworkUtils
 import de.mm20.launcher2.owncloud.OwncloudClient
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.OwncloudFile
 
 internal class OwncloudFileProvider(
     private val owncloudClient: OwncloudClient
-): FileProvider {
+) : FileProvider {
     override suspend fun search(query: String): List<File> {
         if (query.length < 4) return emptyList()
         val server = owncloudClient.getServer() ?: return emptyList()

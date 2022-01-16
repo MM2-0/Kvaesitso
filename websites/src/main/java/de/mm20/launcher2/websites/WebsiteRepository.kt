@@ -28,7 +28,7 @@ interface WebsiteRepository {
     fun search(query: String): Flow<Website?>
 }
 
-class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, KoinComponent {
+internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
 

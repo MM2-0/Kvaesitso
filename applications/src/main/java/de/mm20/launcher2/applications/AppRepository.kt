@@ -25,7 +25,7 @@ interface AppRepository {
     fun getSuspendedPackages(): Flow<List<String>>
 }
 
-class AppRepositoryImpl(
+internal class AppRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository,
 ) : AppRepository {

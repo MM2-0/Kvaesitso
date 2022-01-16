@@ -17,7 +17,7 @@ interface ContactRepository {
     fun search(query: String): Flow<List<Contact>>
 }
 
-class ContactRepositoryImpl(
+internal class ContactRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository
 ) : ContactRepository, KoinComponent {

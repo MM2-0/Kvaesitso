@@ -17,7 +17,7 @@ interface WebsearchRepository {
     fun deleteWebsearch(websearch: Websearch)
 }
 
-class WebsearchRepositoryImpl(
+internal class WebsearchRepositoryImpl(
     private val database: AppDatabase
 ) : WebsearchRepository, KoinComponent {
 

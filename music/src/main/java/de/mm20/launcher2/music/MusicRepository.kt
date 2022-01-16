@@ -47,7 +47,7 @@ interface MusicRepository {
     fun resetPlayer()
 }
 
-class MusicRepositoryImpl(
+internal class MusicRepositoryImpl(
     private val context: Context,
     private val notificationRepository: NotificationRepository
 ) : MusicRepository, KoinComponent {

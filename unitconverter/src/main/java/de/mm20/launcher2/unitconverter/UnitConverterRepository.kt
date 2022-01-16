@@ -16,7 +16,7 @@ interface UnitConverterRepository {
     fun search(query:String): Flow<UnitConverter?>
 }
 
-class UnitConverterRepositoryImpl(val context: Context) : UnitConverterRepository, KoinComponent {
+internal class UnitConverterRepositoryImpl(val context: Context) : UnitConverterRepository, KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
     val unitConverter = MutableLiveData<UnitConverter?>()

@@ -27,7 +27,7 @@ interface CalendarRepository {
     suspend fun getCalendars(): List<UserCalendar>
 }
 
-class CalendarRepositoryImpl(
+internal class CalendarRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository
 ) : CalendarRepository, KoinComponent {

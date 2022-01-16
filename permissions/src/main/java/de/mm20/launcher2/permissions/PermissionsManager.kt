@@ -55,7 +55,7 @@ enum class PermissionGroup {
     Notifications,
 }
 
-class PermissionsManagerImpl(
+internal class PermissionsManagerImpl(
     private val context: Context
 ) : PermissionsManager {
 

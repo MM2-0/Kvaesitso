@@ -31,7 +31,7 @@ interface FavoritesRepository {
     fun getHiddenItems(): Flow<List<Searchable>>
 }
 
-class FavoritesRepositoryImpl(
+internal class FavoritesRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase
 ) : FavoritesRepository, KoinComponent {

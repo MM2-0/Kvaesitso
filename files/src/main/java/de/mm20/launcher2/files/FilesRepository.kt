@@ -19,7 +19,7 @@ interface FileRepository {
     suspend fun deleteFile(file: File)
 }
 
-class FileRepositoryImpl(
+internal class FileRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository,
     private val dataStore: LauncherDataStore

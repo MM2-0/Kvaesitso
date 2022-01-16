@@ -4,16 +4,16 @@ import android.content.Context
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.msservices.DriveItem
 import de.mm20.launcher2.msservices.MicrosoftGraphApiHelper
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.OneDriveFile
 
 internal class OneDriveFileProvider(
     private val context: Context
-): FileProvider {
+) : FileProvider {
     override suspend fun search(query: String): List<File> {
         if (query.length < 4) return emptyList()
-        val driveItems = MicrosoftGraphApiHelper.getInstance(context).queryOneDriveFiles(query) ?: return emptyList()
+        val driveItems = MicrosoftGraphApiHelper.getInstance(context).queryOneDriveFiles(query)
+            ?: return emptyList()
         val files = mutableListOf<OneDriveFile>()
         for (driveItem in driveItems) {
             files += OneDriveFile(

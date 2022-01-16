@@ -18,7 +18,7 @@ interface WikipediaRepository {
     fun search(query: String): Flow<Wikipedia?>
 }
 
-class WikipediaRepositoryImpl(
+internal class WikipediaRepositoryImpl(
     private val context: Context
 ) : WikipediaRepository, KoinComponent {
 
