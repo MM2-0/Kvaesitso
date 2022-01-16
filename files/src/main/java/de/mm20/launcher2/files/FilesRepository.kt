@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.*
 
 interface FileRepository {
     fun search(query: String): Flow<List<File>>
-    suspend fun deleteFile(file: File)
+    fun deleteFile(file: File)
 }
 
 internal class FileRepositoryImpl(
@@ -89,34 +89,13 @@ internal class FileRepositoryImpl(
                 }
             }
         }
-
-        /*hiddenItems.collectLatest { hiddenItems ->
-            val files = mutableListOf<File>()
-
-            val localFiles = withContext(Dispatchers.IO) {
-                LocalFile.search(context, query).sorted().filter { !hiddenItems.contains(it.key) }
-            }
-            files.addAll(localFiles)
-            send(localFiles)
-
-            val cloudFiles = withContext(Dispatchers.IO) {
-                delay(300)
-                listOf(
-                    async { OneDriveFile.search(context, query) },
-                    async { GDriveFile.search(context, query) },
-                    async { NextcloudFile.search(context, query, nextcloudClient) },
-                    async { OwncloudFile.search(context, query, owncloudClient) }
-                ).awaitAll().flatten()
-            }
-            yield()
-            files.addAll(cloudFiles.filter { !hiddenItems.contains(it.key) })
-            send(files)
-        }*/
     }
 
-    override suspend fun deleteFile(file: File) {
-        if (file.isDeletable) {
-            file.delete(context)
+    override fun deleteFile(file: File) {
+        scope.launch {
+            if (file.isDeletable) {
+                file.delete(context)
+            }
         }
     }
 }

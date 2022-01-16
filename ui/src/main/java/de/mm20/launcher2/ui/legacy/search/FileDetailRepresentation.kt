@@ -10,7 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import de.mm20.launcher2.badges.BadgeRepository
-import de.mm20.launcher2.files.FilesViewModel
+import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
@@ -23,8 +23,8 @@ import de.mm20.launcher2.ui.legacy.view.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
 import org.koin.core.component.inject
 import java.text.DecimalFormat
 
@@ -125,14 +125,18 @@ class FileDetailRepresentation : Representation, KoinComponent {
                 )
             )
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
-                val fileViewModel: FilesViewModel by (context as AppCompatActivity).viewModel()
                 dialog.dismiss()
-                fileViewModel.deleteFile(file)
+                deleteFile(file)
             }
             .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun deleteFile(file: File) {
+        val fileRepository: FileRepository = get()
+        fileRepository.deleteFile(file)
     }
 
     private fun share(context: Context, fileDetail: File) {
