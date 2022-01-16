@@ -2,10 +2,9 @@ package de.mm20.launcher2.ui.base
 
 import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.permissions.PermissionsManager
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.android.ext.android.inject
 
-abstract class BaseActivity : AppCompatActivity(), KoinComponent {
+abstract class BaseActivity : AppCompatActivity() {
     private val permissionsManager: PermissionsManager by inject()
 
     override fun onRequestPermissionsResult(
@@ -15,5 +14,10 @@ abstract class BaseActivity : AppCompatActivity(), KoinComponent {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         permissionsManager.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        permissionsManager.onResume()
     }
 }

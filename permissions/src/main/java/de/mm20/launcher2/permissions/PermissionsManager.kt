@@ -9,14 +9,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.app.NotificationManagerCompat
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -35,6 +33,10 @@ interface PermissionsManager {
         permissions: Array<out String>,
         grantResults: IntArray
     )
+
+    fun onResume() {
+
+    }
 
     fun hasPermission(permissionGroup: PermissionGroup): Flow<Boolean>
 
@@ -57,6 +59,8 @@ class PermissionsManagerImpl(
     private val context: Context
 ) : PermissionsManager {
 
+    private val pendingPermissionRequests = mutableSetOf<PermissionGroup>()
+
     private val calendarPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Calendar)
     )
@@ -71,25 +75,25 @@ class PermissionsManagerImpl(
     )
     private val notificationsPermissionState = MutableStateFlow(false)
 
-    override fun requestPermission(activity: AppCompatActivity, permissionGroup: PermissionGroup) {
+    override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
         when (permissionGroup) {
             PermissionGroup.Calendar -> {
                 ActivityCompat.requestPermissions(
-                    activity,
+                    context,
                     calendarPermissions,
                     permissionGroup.ordinal
                 )
             }
             PermissionGroup.Location -> {
                 ActivityCompat.requestPermissions(
-                    activity,
+                    context,
                     locationPermissions,
                     permissionGroup.ordinal
                 )
             }
             PermissionGroup.Contacts -> {
                 ActivityCompat.requestPermissions(
-                    activity,
+                    context,
                     contactPermissions,
                     permissionGroup.ordinal
                 )
@@ -98,12 +102,13 @@ class PermissionsManagerImpl(
                 if (isAtLeastApiLevel(Build.VERSION_CODES.R)) {
                     val intent =
                         Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION).also {
-                            it.data = Uri.parse("package:${activity.packageName}")
+                            it.data = Uri.parse("package:${context.packageName}")
                         }
-                    activity.startActivity(intent)
+                    context.tryStartActivity(intent)
+                    pendingPermissionRequests.add(PermissionGroup.ExternalStorage)
                 } else {
                     ActivityCompat.requestPermissions(
-                        activity,
+                        context,
                         externalStoragePermissions,
                         permissionGroup.ordinal
                     )
@@ -111,7 +116,7 @@ class PermissionsManagerImpl(
             }
             PermissionGroup.Notifications -> {
                 try {
-                    activity.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
+                    context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
                 } catch (e: ActivityNotFoundException) {
                     CrashReporter.logException(e)
                 }
@@ -166,6 +171,20 @@ class PermissionsManagerImpl(
             PermissionGroup.Contacts -> contactsPermissionState.value = granted
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
+        }
+    }
+
+    override fun onResume() {
+        val iterator = pendingPermissionRequests.iterator()
+        while (iterator.hasNext()) {
+            when (iterator.next()) {
+                PermissionGroup.ExternalStorage -> {
+                    externalStoragePermissionState.value =
+                        checkPermissionOnce(PermissionGroup.ExternalStorage)
+                }
+                else -> {}
+            }
+            iterator.remove()
         }
     }
 

@@ -163,59 +163,6 @@ open class LocalFile(
 
 
     companion object: KoinComponent {
-        fun search(context: Context, query: String): List<LocalFile> {
-            val results = mutableListOf<LocalFile>()
-            if (!LauncherPreferences.instance.searchFiles) return results
-            if (query.isBlank()) return results
-            val permissionsManager: PermissionsManager = get()
-            if (!permissionsManager.checkPermissionOnce(
-                    PermissionGroup.ExternalStorage
-                )
-            ) return results
-            val uri = MediaStore.Files.getContentUri("external").buildUpon()
-                .appendQueryParameter("limit", "10").build()
-            val projection = arrayOf(
-                MediaStore.Files.FileColumns.DISPLAY_NAME,
-                MediaStore.Files.FileColumns._ID,
-                MediaStore.Files.FileColumns.SIZE,
-                MediaStore.Files.FileColumns.DATA,
-                MediaStore.Files.FileColumns.MIME_TYPE
-            )
-            val selection =
-                if (query.length > 3) "${MediaStore.Files.FileColumns.TITLE} LIKE ?" else "${MediaStore.Files.FileColumns.TITLE} = ?"
-            val selArgs = if (query.length > 3) arrayOf("%$query%") else arrayOf(query)
-            val sort = "${MediaStore.Files.FileColumns.DISPLAY_NAME} COLLATE NOCASE ASC"
-
-
-            val cursor = context.contentResolver.query(uri, projection, selection, selArgs, sort)
-                ?: return results
-            while (cursor.moveToNext()) {
-                if (results.size >= 10) {
-                    break
-                }
-                val path = cursor.getString(3)
-                if (!JavaIOFile(path).exists()) continue
-                val directory = JavaIOFile(path).isDirectory
-                val mimeType = (cursor.getStringOrNull(4)
-                    ?: if (directory) "inode/directory" else getMimetypeByFileExtension(
-                        path.substringAfterLast(
-                            '.'
-                        )
-                    ))
-                val file = LocalFile(
-                    path = path,
-                    mimeType = mimeType,
-                    size = cursor.getLong(2),
-                    isDirectory = directory,
-                    id = cursor.getLong(1),
-                    metaData = getMetaData(context, mimeType, path)
-                )
-                results.add(file)
-            }
-            cursor.close()
-            return results.sortedBy { it }
-        }
-
         internal fun getMimetypeByFileExtension(extension: String): String {
             return when (extension) {
                 "apk" -> "application/vnd.android.package-archive"

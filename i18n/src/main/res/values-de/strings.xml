@@ -181,9 +181,6 @@
     <string name="preference_signin_user">Angemeldet als %1$s</string>
     <string name="preference_signin_logout">Abmelden</string>
     <string name="file_meta_owner">Eigentümer</string>
-    <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_summary_not_logged_in">Sie sind im Moment nicht angemeldet</string>
-    <string name="preference_search_gdrive_summary">%1$ss Dateien auf Google Drive durchsuchen</string>
     <string name="file_type_drawing">Zeichnung</string>
     <string name="file_type_ebook">E-Book</string>
     <string name="file_type_form">Formular</string>
@@ -311,10 +308,6 @@
     <string name="preference_nextcloud_signin">Bei Nextcloud anmelden</string>
     <string name="preference_nextcloud_signin_summary">Anmelden, um Ihren Nextcloud-Server durchsuchen zu können</string>
     <string name="preference_account_checking_status">Status wird abgerufen…</string>
-    <string name="preference_search_onedrive">OneDrive durchsuchen</string>
-    <string name="preference_search_onedrive_summary">%1$ss Dateien auf OneDrive durchsuchen</string>
-    <string name="preference_search_nextcloud">Nextcloud durchsuchen</string>
-    <string name="preference_search_nextcloud_summary">%1$ss Dateien durchsuchen</string>
     <string name="storage_google_drive">Google Drive</string>
     <string name="storage_onedrive">OneDrive</string>
     <string name="preference_about_telegram">Telegram-Gruppe</string>
@@ -346,7 +339,6 @@
     <string name="preference_owncloud_signin_summary">Anmelden, um Ihren Owncloud-Server durchsuchen zu können</string>
     <string name="owncloud_username_empty">Nutzername darf nicht leer sein</string>
     <string name="owncloud_password_empty">Passwort darf nicht leer sein</string>
-    <string name="preference_search_owncloud">Owncloud durchsuchen</string>
     <string name="preference_cards_summary">Erscheinungsbild von Karten anpassen</string>
     <string name="preference_cards">Karten</string>
     <string name="preference_cards_corner_radius">Eckradius</string>
@@ -455,6 +447,16 @@
     <string name="preference_search_websearch_summary">Shortcuts zu verschiedenen Websuch-Engines anzeigen</string>
     <string name="preference_screen_buildinfo">Build-Information</string>
     <string name="preference_screen_buildinfo_summary">Weitere Informationen über diesen Build dieser App</string>
+    <string name="preference_search_localfiles">Lokale Dateien</string>
+    <string name="preference_search_localfiles_summary">Dokumente, Fotos und andere Dateien auf diesem Gerät durchsuchen</string>
+    <string name="preference_search_owncloud">Owncloud</string>
+    <string name="preference_search_onedrive">OneDrive</string>
+    <string name="preference_search_onedrive_summary">%1$ss Dateien auf OneDrive durchsuchen</string>
+    <string name="preference_search_nextcloud">Nextcloud</string>
+    <string name="preference_search_cloud_summary">%1$ss Dateien durchsuchen</string>
+    <string name="preference_search_gdrive">Google Drive</string>
+    <string name="preference_summary_not_logged_in">Sie sind im Moment nicht angemeldet</string>
+    <string name="preference_search_gdrive_summary">%1$ss Dateien auf Google Drive durchsuchen</string>
 
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
 
@@ -462,4 +464,12 @@
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
 
     <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
+    <string name="missing_permission_file_search">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_file_search_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+
+    <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
+    <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
+    <string name="no_account_microsoft">Sie haben noch kein Microsoft-Konto verbunden</string>
+    <string name="no_account_google">Sie haben noch kein Google-Konto verbunden</string>
+    <string name="connect_account">Konto verbinden</string>
 </resources>

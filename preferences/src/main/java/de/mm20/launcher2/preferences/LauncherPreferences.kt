@@ -58,11 +58,6 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
     var searchActivities by BooleanPreference("search_activities", default = true)
     var searchCalendars by BooleanPreference("search_calendars", default = true)
     var searchContacts by BooleanPreference("search_contacts", default = true)
-    var searchOwncloud by BooleanPreference("search_owncloud", default = false)
-    var searchNextcloud by BooleanPreference("search_nextcloud", default = false)
-    var searchOneDrive by BooleanPreference("search_onedrive", default = false)
-    var searchGDrive by BooleanPreference("search_gdrive", default = false)
-    var searchGDriveMobileData by BooleanPreference("search_gdrive_mobile_data", default = false)
 
     var profileBadges by BooleanPreference("profile_badges", default = true)
 

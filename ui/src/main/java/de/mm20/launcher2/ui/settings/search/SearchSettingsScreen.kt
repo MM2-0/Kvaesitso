@@ -44,7 +44,10 @@ fun SearchSettingsScreen() {
                 Preference(
                     title = stringResource(R.string.preference_search_files),
                     summary = stringResource(R.string.preference_search_files_summary),
-                    icon = Icons.Rounded.Description
+                    icon = Icons.Rounded.Description,
+                    onClick = {
+                        navController?.navigate("settings/search/files")
+                    }
                 )
 
                 val hasContactsPermission by viewModel.hasContactsPermission.observeAsState()

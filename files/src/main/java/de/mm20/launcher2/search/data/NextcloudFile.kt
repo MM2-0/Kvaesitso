@@ -31,26 +31,4 @@ class NextcloudFile(
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
-
-    companion object {
-        suspend fun search(context: Context, query: String, nextcloudClient: NextcloudApiHelper) : List<NextcloudFile> {
-            if (!LauncherPreferences.instance.searchNextcloud) return emptyList()
-            if (query.length < 4) return emptyList()
-            val server = nextcloudClient.getServer() ?: return emptyList()
-            if (NetworkUtils.isOffline(context, LauncherPreferences.instance.searchGDriveMobileData)) return emptyList()
-            return nextcloudClient.files.search(query).map {
-                NextcloudFile(
-                        fileId = it.id,
-                        label = it.name,
-                        path = server + it.url,
-                        mimeType = it.mimeType,
-                        size = it.size,
-                        isDirectory = it.isDirectory,
-                        server = server,
-                        metaData = it.owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
-                )
-            }
-        }
-
-    }
 }

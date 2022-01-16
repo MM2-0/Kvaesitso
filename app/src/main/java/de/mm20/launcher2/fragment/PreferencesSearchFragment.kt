@@ -111,7 +111,6 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
             val user = client.getLoggedInUser()
             if (user == null) {
                 nextcloudPref.setSummary(R.string.preference_summary_not_logged_in)
-                LauncherPreferences.instance.searchNextcloud = false
                 nextcloudPref.setOnPreferenceChangeListener { _, value ->
                     if (value as Boolean) {
                         lifecycleScope.launch launch2@{
@@ -122,7 +121,7 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
                 }
             } else {
                 nextcloudPref.summary = context?.getString(
-                    R.string.preference_search_nextcloud_summary,
+                    R.string.preference_search_cloud_summary,
                     user.displayName
                 )
             }
@@ -136,7 +135,6 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
             val user = client.getLoggedInUser()
             if (user == null) {
                 owncloudPref.setSummary(R.string.preference_summary_not_logged_in)
-                LauncherPreferences.instance.searchOwncloud = false
                 owncloudPref.setOnPreferenceChangeListener { _, value ->
                     if (value as Boolean) {
                         lifecycleScope.launch launch2@{
@@ -148,7 +146,7 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
                 }
             } else {
                 owncloudPref.summary = context?.getString(
-                    R.string.preference_search_nextcloud_summary,
+                    R.string.preference_search_cloud_summary,
                     user.displayName,
                 )
             }
