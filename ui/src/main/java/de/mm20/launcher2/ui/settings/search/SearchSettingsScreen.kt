@@ -65,10 +65,11 @@ fun SearchSettingsScreen() {
                     title = stringResource(R.string.preference_search_contacts),
                     summary = stringResource(R.string.preference_search_contacts_summary),
                     icon = Icons.Rounded.Person,
-                    value = contacts == true,
+                    value = contacts == true && hasContactsPermission == true,
                     onValueChanged = {
                         viewModel.setContacts(it)
-                    }
+                    },
+                    enabled = hasContactsPermission == true
                 )
 
                 val hasCalendarPermission by viewModel.hasCalendarPermission.observeAsState()
@@ -86,10 +87,11 @@ fun SearchSettingsScreen() {
                     title = stringResource(R.string.preference_search_calendar),
                     summary = stringResource(R.string.preference_search_calendar_summary),
                     icon = Icons.Rounded.Today,
-                    value = calendar == true,
+                    value = calendar == true && hasCalendarPermission == true,
                     onValueChanged = {
                         viewModel.setCalendar(it)
-                    }
+                    },
+                    enabled = hasCalendarPermission == true
                 )
 
                 val calculator by viewModel.calculator.observeAsState()
