@@ -30,7 +30,7 @@ class FavoritesView : FrameLayout {
         }
 
         hide.observe(context as AppCompatActivity) {
-            visibility = if(it == true) View.GONE else View.VISIBLE
+            visibility = if(it == true || favorites.value?.isEmpty() == true) View.GONE else View.VISIBLE
         }
         
         layoutTransition = LayoutTransition().apply { enableTransitionType(LayoutTransition.CHANGING) }
