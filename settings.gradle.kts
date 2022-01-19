@@ -38,7 +38,7 @@ include(":compat")
 dependencyResolutionManagement {
     versionCatalogs {
         create("sdk") {
-            version("minSdk", "24")
+            version("minSdk", "26")
             version("compileSdk", "31")
             version("targetSdk", "31")
         }
@@ -61,10 +61,6 @@ dependencyResolutionManagement {
                 "kotlin",
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
-
-            alias("desugar")
-                .to("com.android.tools", "desugar_jdk_libs")
-                .version("1.1.5")
 
             version("androidx.compose", "1.2.0-alpha01")
             alias("androidx.compose.runtime")
