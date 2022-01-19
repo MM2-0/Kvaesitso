@@ -285,6 +285,14 @@ dependencyResolutionManagement {
                 )
             )
 
+            version("coil", "1.4.0")
+            alias("coil.core")
+                .to("io.coil-kt", "coil")
+                .versionRef("coil")
+            alias("coil.compose")
+                .to("io.coil-kt", "coil-compose")
+                .versionRef("coil")
+
             alias("leakcanary")
                 .to("com.squareup.leakcanary", "leakcanary-android")
                 .version("2.7")

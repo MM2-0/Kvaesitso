@@ -185,4 +185,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_ofl,
         url = "https://github.com/itfoundry/poppins"
     ),
+    OpenSourceLibrary(
+        name = "Coil",
+        description = "An image loading library for Android backed by Kotlin Coroutines",
+        copyrightNote = "Copyright 2021 Coil Contributors",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://coil-kt.github.io/coil/"
+    ),
 )
