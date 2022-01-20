@@ -181,6 +181,8 @@
     <string name="websearch_dialog_url_hint">URL</string>
     <string name="websearch_dialog_url_description">\'${1}\' will be replaced by the actual search term.</string>
     <string name="websearch_dialog_url_error">The placeholder \'${1}\' is missing in this URL</string>
+    <string name="websearch_dialog_replace_icon">Replace icon</string>
+    <string name="websearch_dialog_delete_icon">Delete icon</string>
     <string name="preference_weather_provider">Provider</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
@@ -505,6 +507,9 @@
     <string name="music_widget_default_title">%1$s is playing media</string>
 
     <string name="music_widget_no_data">No media has been played yet</string>
+
+    <string name="websearch_dialog_create_title">Add web search</string>
+    <string name="websearch_dialog_edit_title">Edit web search</string>
 
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>

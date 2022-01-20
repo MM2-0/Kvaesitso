@@ -35,6 +35,7 @@ import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
+import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 
@@ -100,6 +101,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search/files") {
                             FileSearchSettingsScreen()
+                        }
+                        composable("settings/search/websearch") {
+                            WebSearchSettingsScreen()
                         }
                         composable("settings/widgets") {
                             WidgetsSettingsScreen()

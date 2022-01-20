@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun Preference(
     title: String,
-    icon: ImageVector? = null,
+    icon: @Composable (() -> Unit),
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
@@ -30,17 +30,12 @@ fun Preference(
             .alpha(if (enabled) 1f else 0.38f),
     ) {
         Box(
-            modifier = Modifier.width(56.dp),
+            modifier = Modifier
+                .width(56.dp)
+                .padding(start = 4.dp),
             contentAlignment = Alignment.CenterStart
         ) {
-            if (icon != null) {
-                Icon(
-                    modifier = Modifier.padding(start = 4.dp),
-                    imageVector = icon,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-            }
+            icon()
         }
         Column(
             modifier = Modifier.weight(1f)
@@ -62,4 +57,26 @@ fun Preference(
             }
         }
     }
+}
+
+@Composable
+fun Preference(
+    title: String,
+    icon: ImageVector? = null,
+    summary: String? = null,
+    onClick: () -> Unit = {},
+    controls: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true
+) {
+    Preference(
+        title, icon = {
+            if (icon != null) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+            }
+        }, summary, onClick, controls, enabled
+    )
 }

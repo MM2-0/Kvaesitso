@@ -24,8 +24,6 @@ android {
         }
     }
     compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
@@ -50,8 +48,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(libs.desugar)
-
     implementation(libs.bundles.kotlin)
 
     implementation(libs.androidx.compose.runtime)
@@ -67,6 +63,8 @@ dependencies {
     implementation(libs.androidx.compose.animationgraphics)
 
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.composecolorpicker)
 
     // Legacy dependencies
     implementation(libs.androidx.transition)
@@ -103,6 +101,9 @@ dependencies {
 
     implementation(libs.koin.android)
     implementation(libs.koin.androidxcompose)
+
+    implementation(libs.coil.core)
+    implementation(libs.coil.compose)
 
     implementation(project(":base"))
     implementation(project(":i18n"))

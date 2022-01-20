@@ -54,10 +54,6 @@ class PreferencesSearchFragment : PreferenceFragmentCompat() {
             }
             true
         }
-        findPreference<Preference>("search_edit_websearch")?.setOnPreferenceClickListener {
-            setSettingsScreen(PreferencesWebSearchesFragment())
-            true
-        }
     }
 
     private suspend fun updateGoogleDrive() {

@@ -137,6 +137,8 @@
     <string name="websearch_dialog_url_hint">URL</string>
     <string name="websearch_dialog_url_description">„${1}“ wird durch den eigentlichen Suchbegriff ersetzt.</string>
     <string name="websearch_dialog_url_error">In dieser URL fehlt der Platzhalter „${1}“</string>
+    <string name="websearch_dialog_replace_icon">Symbol ersetzen</string>
+    <string name="websearch_dialog_delete_icon">Symbol löschen</string>
     <string name="preference_weather_provider">Wetterdienst</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (nur Deutschland)</string>
@@ -466,6 +468,9 @@
     <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
     <string name="missing_permission_file_search">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
     <string name="missing_permission_file_search_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+
+    <string name="websearch_dialog_create_title">Websuche hinzufügen</string>
+    <string name="websearch_dialog_edit_title">Websuche bearbeiten</string>
 
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>

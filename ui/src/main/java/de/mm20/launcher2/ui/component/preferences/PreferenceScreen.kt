@@ -22,6 +22,7 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun PreferenceScreen(
     title: String,
+    floatingActionButton: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
     val navController = LocalNavController.current
@@ -34,6 +35,7 @@ fun PreferenceScreen(
         modifier = Modifier.systemBarsPadding()
     ) {
         Scaffold(
+            floatingActionButton = floatingActionButton,
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {

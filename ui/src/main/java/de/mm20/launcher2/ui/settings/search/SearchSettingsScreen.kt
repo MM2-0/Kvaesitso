@@ -149,6 +149,9 @@ fun SearchSettingsScreen() {
                     switchValue = webSearch == true,
                     onSwitchChanged = {
                         viewModel.setWebSearch(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/websearch")
                     }
                 )
             }
