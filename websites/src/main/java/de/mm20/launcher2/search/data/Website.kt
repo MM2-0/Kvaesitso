@@ -8,7 +8,8 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import androidx.core.graphics.drawable.toBitmap
 import androidx.palette.graphics.Palette
-import com.bumptech.glide.Glide
+import coil.imageLoader
+import coil.request.ImageRequest
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.sp
@@ -30,24 +31,24 @@ class Website(
     override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
         if (favicon.isEmpty()) return null
         try {
-            return withContext(Dispatchers.IO) {
-                val icon = Glide.with(context)
-                    .asDrawable()
-                    .load(favicon)
-                    .submit()
-                    .get()
-                val color = if (color != 0) color else {
+            val request = ImageRequest.Builder(context)
+                .data(favicon)
+                .size(size)
+                .build()
+            val icon = context.imageLoader.execute(request).drawable ?: return null
+            val color = if (color != 0) color else {
+                withContext(Dispatchers.Default) {
                     Palette
                         .from(icon.toBitmap())
                         .generate()
                         .getLightMutedColor(Color.WHITE)
                 }
-                LauncherIcon(
-                    foreground = icon,
-                    background = ColorDrawable(color),
-                    foregroundScale = 0.7f
-                )
             }
+            return LauncherIcon(
+                foreground = icon,
+                background = ColorDrawable(color),
+                foregroundScale = 0.7f
+            )
         } catch (e: ExecutionException) {
             return null
         }

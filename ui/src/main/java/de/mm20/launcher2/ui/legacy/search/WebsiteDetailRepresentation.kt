@@ -10,7 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
-import com.bumptech.glide.Glide
+import coil.load
+import coil.size.Scale
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
@@ -61,7 +62,7 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
                     website.image.isNotBlank() -> {
                         websiteImage.visibility = View.VISIBLE
                         websiteFavIcon.visibility = FrameLayout.GONE
-                        Glide.with(context).load(website.image).into(websiteImage)
+                        websiteImage.load(website.image)
                         websiteImage.transitionName = "icon"
                         label.transitionName = "label"
                         websiteFavIcon.transitionName = null

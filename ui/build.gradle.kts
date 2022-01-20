@@ -74,10 +74,8 @@ dependencies {
     implementation(libs.materialcomponents.composethemeadapter3)
 
     implementation(libs.viewpropertyobjectanimator)
-    implementation(libs.glide)
     implementation(libs.draglinearlayout)
     implementation(libs.lottie.core)
-    implementation(libs.glidetransformations)
 
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)

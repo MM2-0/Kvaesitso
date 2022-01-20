@@ -289,6 +289,9 @@ dependencyResolutionManagement {
             alias("coil.core")
                 .to("io.coil-kt", "coil")
                 .versionRef("coil")
+            alias("coil.svg")
+                .to("io.coil-kt", "coil-svg")
+                .versionRef("coil")
             alias("coil.compose")
                 .to("io.coil-kt", "coil-compose")
                 .versionRef("coil")
@@ -308,14 +311,6 @@ dependencyResolutionManagement {
             alias("jsoup")
                 .to("org.jsoup", "jsoup")
                 .version("1.14.2")
-
-            alias("glide")
-                .to("com.github.bumptech.glide", "glide")
-                .version("4.12.0")
-
-            alias("glidetransformations")
-                .to("jp.wasabeef", "glide-transformations")
-                .version("4.3.0")
 
             version("materialdialogs", "3.3.0")
             alias("materialdialogs.core")

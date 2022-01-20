@@ -44,10 +44,11 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.okhttp)
-    implementation(libs.glide)
     implementation(libs.jsoup)
 
     implementation(libs.koin.android)
+
+    implementation(libs.coil.core)
 
     implementation(project(":preferences"))
     implementation(project(":search"))

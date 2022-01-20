@@ -2,6 +2,9 @@ package de.mm20.launcher2
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.SvgDecoder
 import de.mm20.launcher2.accounts.accountsModule
 import de.mm20.launcher2.applications.applicationsModule
 import de.mm20.launcher2.badges.badgesModule
@@ -34,7 +37,7 @@ import org.koin.core.logger.Level
 import java.text.Collator
 import kotlin.coroutines.CoroutineContext
 
-class LauncherApplication : Application(), CoroutineScope {
+class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + SupervisorJob()
@@ -83,6 +86,16 @@ class LauncherApplication : Application(), CoroutineScope {
                 )
             )
         }
+    }
+
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(applicationContext)
+            .componentRegistry {
+                add(SvgDecoder(applicationContext))
+            }
+            .crossfade(true)
+            .crossfade(200)
+            .build()
     }
 
     companion object {

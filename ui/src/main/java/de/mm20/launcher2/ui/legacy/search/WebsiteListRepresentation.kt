@@ -10,12 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
-import com.bumptech.glide.Glide
+import coil.load
 import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.search.data.Website
@@ -26,7 +25,6 @@ import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -66,7 +64,8 @@ class WebsiteListRepresentation : Representation, KoinComponent {
                     website.image.isNotBlank() -> {
                         websiteImage.visibility = View.VISIBLE
                         websiteFavIcon.visibility = FrameLayout.GONE
-                        Glide.with(context).load(website.image).into(websiteImage)
+                        websiteImage.load(website.image)
+                        websiteImage.load(website.image)
                         websiteImage.transitionName = "icon"
                         label.transitionName = "label"
                         websiteFavIcon.transitionName = null

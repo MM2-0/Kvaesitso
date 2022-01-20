@@ -7,7 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.transition.Scene
-import com.bumptech.glide.Glide
+import coil.load
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
@@ -35,7 +35,7 @@ class WikipediaDetailRepresentation : Representation {
                             it.scaleType = ImageView.ScaleType.CENTER_CROP
                         }
                         it.visibility = View.VISIBLE
-                        Glide.with(context).load(wikipedia.image).into(it)
+                        it.load(wikipedia.image)
                     }
                 }
                 val toolbar = findViewById<ToolbarView>(R.id.wikipediaToolbar)

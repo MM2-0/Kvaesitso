@@ -7,7 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.transition.Scene
-import com.bumptech.glide.Glide
+import coil.load
+import coil.size.Scale
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
@@ -17,13 +18,19 @@ import de.mm20.launcher2.ui.legacy.view.ToolbarAction
 import de.mm20.launcher2.ui.legacy.view.ToolbarView
 
 class WikipediaListRepresentation : Representation {
-    override fun getScene(rootView: SearchableView, searchable: Searchable, previousRepresentation: Int?): Scene {
+    override fun getScene(
+        rootView: SearchableView,
+        searchable: Searchable,
+        previousRepresentation: Int?
+    ): Scene {
         val wikipedia = searchable as Wikipedia
-        val scene = Scene.getSceneForLayout(rootView, R.layout.view_wikipedia_list, rootView.context)
+        val scene =
+            Scene.getSceneForLayout(rootView, R.layout.view_wikipedia_list, rootView.context)
         scene.setEnterAction {
             with(rootView) {
                 findViewById<TextView>(R.id.wikipediaTitle).text = wikipedia.label
-                findViewById<TextView>(R.id.wikipediaText).text = HtmlCompat.fromHtml(wikipedia.text, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                findViewById<TextView>(R.id.wikipediaText).text =
+                    HtmlCompat.fromHtml(wikipedia.text, HtmlCompat.FROM_HTML_MODE_LEGACY)
                 findViewById<ImageView>(R.id.wikipediaImage).also {
                     if (wikipedia.image.isNullOrBlank()) {
                         it.visibility = View.GONE
@@ -35,7 +42,7 @@ class WikipediaListRepresentation : Representation {
                             it.scaleType = ImageView.ScaleType.CENTER_CROP
                         }
                         it.visibility = View.VISIBLE
-                        Glide.with(context).load(wikipedia.image).into(it)
+                        it.load(wikipedia.image)
                     }
                 }
                 val toolbar = findViewById<ToolbarView>(R.id.wikipediaToolbar)
@@ -62,9 +69,11 @@ class WikipediaListRepresentation : Representation {
     private fun share(context: Context, wikipedia: Wikipedia) {
         val text = wikipedia.text.toString()
         val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "${wikipedia.label}\n\n" +
-                "${text.substring(0, 200)}…\n\n" +
-                "${context.getString(R.string.wikipedia_url)}/wiki?curid=${wikipedia.id}")
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT, "${wikipedia.label}\n\n" +
+                    "${text.substring(0, 200)}…\n\n" +
+                    "${context.getString(R.string.wikipedia_url)}/wiki?curid=${wikipedia.id}"
+        )
         shareIntent.type = "text/plain"
         context.startActivity(Intent.createChooser(shareIntent, null))
     }

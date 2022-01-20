@@ -6,7 +6,6 @@
     android:id="@+id/wikipediaRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clipChildren="false"
     android:transitionName="cardLayout">
 
     <de.mm20.launcher2.ui.legacy.view.AspectRationImageView
@@ -14,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_divider"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
         app:aspectRatio="0.5625"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,7 +4,6 @@
     <string name="bsd_2clause_name" translatable="false">Simplified BSD license</string>
     <string name="bsd_3clause_name" translatable="false">Modified BSD license</string>
     <string name="apache_license_name" translatable="false">Apache license 2.0</string>
-    <string name="glide_license_name" translatable="false">Glide license</string>
     <string name="gpl3_name" translatable="false">GNU General Public License Version 3</string>
     <string name="open_font_license_name" translatable="false">SIL OPEN FONT LICENSE</string>
 </resources>

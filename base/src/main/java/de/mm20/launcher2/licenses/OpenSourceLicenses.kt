@@ -78,13 +78,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://jsoup.org/"
     ),
     OpenSourceLibrary(
-        name = "Glide",
-        description = "A fast and efficient open source media management and image loading framework for Android",
-        licenseName = R.string.glide_license_name,
-        licenseText = R.raw.license_glide,
-        url = "https://bumptech.github.io/glide/"
-    ),
-    OpenSourceLibrary(
         name = "Glide Transformations",
         description = "An Android transformation library providing a variety of image transformations for Glide",
         licenseName = R.string.apache_license_name,

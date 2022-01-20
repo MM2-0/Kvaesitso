@@ -101,8 +101,8 @@ dependencies {
     implementation(libs.androidx.work)
     implementation(libs.androidx.multidex)
 
-    implementation(libs.glide)
-    implementation(libs.glidetransformations)
+    implementation(libs.coil.core)
+    implementation(libs.coil.svg)
 
     implementation(libs.lottie.core)
 
