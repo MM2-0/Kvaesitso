@@ -35,4 +35,15 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val columnCount = dataStore.data.map { it.grid.columnCount }.asLiveData()
+    fun setColumnCount(columnCount: Int) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setGrid(it.grid.toBuilder().setColumnCount(columnCount))
+                    .build()
+            }
+        }
+    }
 }

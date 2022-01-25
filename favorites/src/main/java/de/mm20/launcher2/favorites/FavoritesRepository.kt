@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.ktx.ceilToInt
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
@@ -33,7 +34,8 @@ interface FavoritesRepository {
 
 internal class FavoritesRepositoryImpl(
     private val context: Context,
-    private val database: AppDatabase
+    private val database: AppDatabase,
+    private val dataStore: LauncherDataStore
 ) : FavoritesRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -42,16 +44,7 @@ internal class FavoritesRepositoryImpl(
 
         withContext(Dispatchers.IO) {
 
-            val gridColumns = callbackFlow {
-                send(LauncherPreferences.instance.gridColumnCount)
-                val unregister =
-                    LauncherPreferences.instance.doOnPreferenceChange("grid_column_count") {
-                        trySendBlocking(LauncherPreferences.instance.gridColumnCount)
-                    }
-                awaitClose {
-                    unregister()
-                }
-            }
+            val gridColumns = dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
             val dao = database.searchDao()
 
             val pinnedFavorites = dao.getFavorites().map {

@@ -6,36 +6,61 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.children
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListUpdateCallback
 import de.mm20.launcher2.ktx.ceilToInt
+import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.legacy.helper.ActivityStarterCallback
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.util.*
 import kotlin.math.min
 
-class SearchGridView : ViewGroup, ActivityStarterCallback {
+class SearchGridView : ViewGroup, ActivityStarterCallback, KoinComponent {
     override fun onResume() {
         while (postponedDiffs.isNotEmpty()) {
             postponedDiffs.poll()?.let { applyDiff(it, true) }
         }
     }
 
+    val dataStore: LauncherDataStore by inject()
+
+    var job: Job? = null
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        job?.cancel()
+        lifecycleScope.launch {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                dataStore.data.map { it.grid.columnCount }.distinctUntilChanged().collectLatest {
+                    columnCount = it
+                }
+            }
+        }
+    }
+
 
     var columnCount: Int = 1
         set(value) {
-            if (value > 0) field = value
+            if (value > 0) {
+                field = value
+                requestLayout()
+            }
             else throw IllegalArgumentException("columnCount must be positive (is $value)")
         }
 
@@ -100,8 +125,9 @@ class SearchGridView : ViewGroup, ActivityStarterCallback {
     }
 
     init {
-        columnCount = LauncherPreferences.instance.gridColumnCount.takeIf { it > 1 }
-            ?: context.resources.getInteger(R.integer.config_columnCount)
+        columnCount = runBlocking {
+            dataStore.data.map { it.grid.columnCount }.first().takeIf { it > 0 } ?: 5
+        }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

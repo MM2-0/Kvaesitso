@@ -91,5 +91,5 @@ val favoritesModule = module {
         return@factory NullDeserializer()
     }
 
-    single<FavoritesRepository> { FavoritesRepositoryImpl(androidContext(), get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(androidContext(), get(), get()) }
 }

@@ -117,4 +117,9 @@ message Settings {
   }
   BadgeSettings badges = 18;
 
+  message GridSettings {
+    uint32 column_count = 1;
+  }
+  GridSettings grid = 19;
+
 }
