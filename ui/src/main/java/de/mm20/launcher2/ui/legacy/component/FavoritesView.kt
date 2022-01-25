@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.ui.databinding.ViewFavoritesBinding
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 
 class FavoritesView : FrameLayout {
 
@@ -21,7 +21,7 @@ class FavoritesView : FrameLayout {
 
 
     init {
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         val favorites = viewModel.favorites
         val hide = viewModel.hideFavorites
         favorites.observe(context as AppCompatActivity) {

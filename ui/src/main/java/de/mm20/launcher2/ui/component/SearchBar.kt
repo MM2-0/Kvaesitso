@@ -32,10 +32,9 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWindowSize
-import org.koin.androidx.compose.getViewModel
 import org.koin.androidx.compose.viewModel
 
 /**
@@ -55,7 +54,7 @@ fun SearchBar(
 ) {
     var searchQuery by remember { mutableStateOf("") }
 
-    val viewModel: SearchViewModel by viewModel()
+    val viewModel: SearchVM by viewModel()
 
     LaunchedEffect(searchQuery) {
         viewModel.search(searchQuery)

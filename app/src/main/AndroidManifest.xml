@@ -48,7 +48,7 @@
             android:label="@string/title_activity_settings"
             android:launchMode="singleTask"
             android:exported="true"
-            android:parentActivityName=".ui.legacy.activity.LauncherActivity"
+            android:parentActivityName=".ui.launcher.LauncherActivity"
             android:screenOrientation="portrait"
             android:taskAffinity="de.mm20.launcher2.settings"
             android:theme="@style/SettingsTheme">
@@ -58,7 +58,7 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.legacy.activity.LauncherActivity" />
+                android:value="de.mm20.launcher2.ui.launcher.LauncherActivity" />
         </activity>
 
         <activity

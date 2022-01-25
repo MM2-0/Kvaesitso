@@ -11,7 +11,7 @@ import androidx.lifecycle.LiveData
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 
 class WikipediaView : FrameLayout {
@@ -34,7 +34,7 @@ class WikipediaView : FrameLayout {
         val card = findViewById<ViewGroup>(R.id.card)
         websiteView.layoutParams = params
         card.addView(websiteView)
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         wikipedia = viewModel.wikipediaResult
         wikipedia.observe(context as AppCompatActivity, {
             visibility = if (it == null) View.GONE else View.VISIBLE

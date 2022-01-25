@@ -14,7 +14,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.legacy.search.SearchListView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -38,7 +38,7 @@ class FileView : FrameLayout, KoinComponent {
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val list = findViewById<SearchListView>(R.id.list)
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         files = viewModel.fileResults
         files.observe(context as AppCompatActivity, {
             if (it == null) {

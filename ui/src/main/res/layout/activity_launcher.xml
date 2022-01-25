@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,168 +16,11 @@
         android:layout_height="96dp"
         android:layout_gravity="bottom|center_horizontal" />
 
-    <FrameLayout
+    <de.mm20.launcher2.ui.launcher.LauncherScaffoldView
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
-
-
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/scrollView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:scrollbars="none"
-            tools:context=".activity.LauncherActivity">
-
-            <LinearLayout
-                android:id="@+id/scrollContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:paddingStart="8dp"
-                android:paddingTop="56dp"
-                android:paddingEnd="8dp"
-                android:paddingBottom="8dp">
-
-                <LinearLayout
-                    android:id="@+id/searchContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <View
-                        android:id="@+id/webSearchViewSpacer"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.FavoritesView
-                        android:id="@+id/favoritesView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.ApplicationView
-                        android:id="@+id/applicationView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.CalculatorView
-                        android:id="@+id/calculatorView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.ContactView
-                        android:id="@+id/contactView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.CalendarView
-                        android:id="@+id/calendarView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.UnitConverterView
-                        android:id="@+id/unitConverterView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.FileView
-                        android:id="@+id/fileView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.WebsiteView
-                        android:id="@+id/websiteView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-
-                    <de.mm20.launcher2.ui.legacy.component.WikipediaView
-                        android:id="@+id/wikipediaView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/widgetContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:animateLayoutChanges="true"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:paddingTop="8dp"
-                    android:orientation="vertical">
-
-                    <de.mm20.launcher2.ui.legacy.widget.ClockWidget
-                        android:id="@+id/clockWidget"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-
-                    <com.jmedeisis.draglinearlayout.DragLinearLayout
-                        android:animateLayoutChanges="true"
-                        android:id="@+id/widgetList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:clipChildren="false"
-                        android:clipToPadding="false"
-                        android:orientation="vertical">
-
-                        <!-- Widgets will be added here -->
-
-                    </com.jmedeisis.draglinearlayout.DragLinearLayout>
-
-                    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-                        android:id="@+id/fabEditWidget"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginBottom="16dp"
-                        android:text="@string/menu_edit_widgets"
-                        app:icon="@drawable/ic_edit" />
-
-                </LinearLayout>
-            </LinearLayout>
-        </androidx.core.widget.NestedScrollView>
-
-        <de.mm20.launcher2.ui.legacy.component.SearchBar
-            android:id="@+id/searchBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            app:cardElevation="@dimen/card_elevation" />
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/editWidgetToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="4dp"
-            android:translationY="-56dp"
-            android:visibility="gone"
-            style="@style/Widget.Material3.Toolbar.Surface"
-            app:title="@string/menu_edit_widgets" />
-    </FrameLayout>
+        android:fitsSystemWindows="true" />
 
     <View
         android:id="@+id/activityStartOverlay"

@@ -28,6 +28,7 @@ android {
         versionCode = versionCodeDate()
         versionName = "1.3.0"
         multiDexEnabled = true
+        signingConfig = signingConfigs.getByName("debug")
     }
     buildTypes {
         release {

@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.*
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.ui.databinding.ViewApplicationBinding
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 
 class ApplicationView : FrameLayout {
 
@@ -27,7 +27,7 @@ class ApplicationView : FrameLayout {
         layoutTransition = LayoutTransition()
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         binding.applicationCard.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         applications = viewModel.appResults
         applications.observe(context as AppCompatActivity, Observer<List<Application>> {
             visibility = if (it.isEmpty()) View.GONE else View.VISIBLE

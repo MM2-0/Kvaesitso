@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.databinding.ViewUnitconverterBinding
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.search.UnitConverterItem
 
 class UnitConverterView : FrameLayout {
@@ -36,7 +36,7 @@ class UnitConverterView : FrameLayout {
     private val binding = ViewUnitconverterBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         unitConverter = viewModel.unitConverterResult
         unitConverter.observe(context as AppCompatActivity, Observer {
             if (it == null) visibility = View.GONE

@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.legacy.component
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewWebsearchBinding
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -40,7 +39,7 @@ class WebSearchView : FrameLayout {
     private val binding = ViewWebsearchBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         websearches = viewModel.websearchResults
         websearches.observe(context as AppCompatActivity, Observer {
             updateWebsearches(it)

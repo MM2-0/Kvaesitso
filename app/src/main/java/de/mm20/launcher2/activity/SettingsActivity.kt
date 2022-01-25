@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import de.mm20.launcher2.fragment.PreferencesMainFragment
 import de.mm20.launcher2.fragment.PreferencesServicesFragment
-import de.mm20.launcher2.ui.legacy.activity.LauncherActivity
+import de.mm20.launcher2.ui.launcher.LauncherActivity
 import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 
 class SettingsActivity : AppCompatActivity() {

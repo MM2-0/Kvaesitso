@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SearchViewModel : ViewModel(), KoinComponent {
+class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
 
@@ -36,6 +36,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
     private val websearchRepository: WebsearchRepository by inject()
 
     val isSearching = MutableLiveData(false)
+    val searchQuery = MutableLiveData("")
 
     val favorites by lazy {
         favoritesRepository.getFavorites().asLiveData()
@@ -53,8 +54,13 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     val hideFavorites = MutableLiveData(false)
 
+    init {
+        search("")
+    }
+
     var searchJob: Job? = null
     fun search(query: String) {
+        searchQuery.value = query
         try {
             searchJob?.cancel()
         } catch (e: CancellationException) {

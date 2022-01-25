@@ -18,7 +18,7 @@ import androidx.lifecycle.Observer
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.databinding.ViewCalculatorBinding
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.search.CalculatorItem
 
 class CalculatorView : FrameLayout {
@@ -36,7 +36,7 @@ class CalculatorView : FrameLayout {
     private val binding = ViewCalculatorBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         calculator = viewModel.calculatorResult
         calculator.observe(context as AppCompatActivity, Observer {
             if (it == null) visibility = View.GONE

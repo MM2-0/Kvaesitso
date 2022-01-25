@@ -15,7 +15,7 @@ import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.search.SearchViewModel
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.legacy.search.SearchListView
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -38,7 +38,7 @@ class ContactView : FrameLayout, KoinComponent {
         layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
         val card = findViewById<ViewGroup>(R.id.card)
         card.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-        val viewModel: SearchViewModel by (context as AppCompatActivity).viewModels()
+        val viewModel: SearchVM by (context as AppCompatActivity).viewModels()
         contacts = viewModel.contactResults
         val list = findViewById<SearchListView>(R.id.list)
         contacts.observe(context as AppCompatActivity, {

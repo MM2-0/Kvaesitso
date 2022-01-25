@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="android.widget.LinearLayout"
+    tools:layout_width="match_parent"
+    tools:layout_height="wrap_content">
+
+
+    <View
+        android:id="@+id/webSearchViewSpacer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.FavoritesView
+        android:id="@+id/favoritesView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.ApplicationView
+        android:id="@+id/applicationView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.CalculatorView
+        android:id="@+id/calculatorView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.ContactView
+        android:id="@+id/contactView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.UnitConverterView
+        android:id="@+id/unitConverterView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.FileView
+        android:id="@+id/fileView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.WebsiteView
+        android:id="@+id/websiteView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+    <de.mm20.launcher2.ui.legacy.component.WikipediaView
+        android:id="@+id/wikipediaView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</merge>
