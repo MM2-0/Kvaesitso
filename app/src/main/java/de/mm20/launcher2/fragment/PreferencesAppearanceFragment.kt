@@ -22,7 +22,6 @@ import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.preferences.Themes
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -31,18 +30,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_appearance)
-        findPreference<Preference>("theme")?.setOnPreferenceChangeListener { _, newValue ->
-            val theme = Themes.byValue(newValue as String)
-            @Suppress("DEPRECATION") // Still using MODE_NIGHT_AUTO
-            AppCompatDelegate.setDefaultNightMode(when (theme) {
-                Themes.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                Themes.DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                Themes.AUTO -> AppCompatDelegate.MODE_NIGHT_AUTO
-                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            })
-            requireActivity().recreate()
-            true
-        }
 
         findPreference<Preference>("card_background")?.setOnPreferenceChangeListener { _, newValue ->
             requireActivity().recreate()

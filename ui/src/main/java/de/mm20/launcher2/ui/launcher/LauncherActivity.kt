@@ -13,8 +13,6 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
@@ -22,9 +20,6 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
-import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
-import de.mm20.launcher2.widgets.Widget
-import de.mm20.launcher2.widgets.WidgetViewModel
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
 import java.util.*

@@ -8,14 +8,12 @@ import androidx.fragment.app.Fragment
 import de.mm20.launcher2.fragment.PreferencesMainFragment
 import de.mm20.launcher2.fragment.PreferencesServicesFragment
 import de.mm20.launcher2.ui.launcher.LauncherActivity
-import de.mm20.launcher2.ui.legacy.helper.ThemeHelper
 
 class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ThemeHelper.applyTheme(theme)
 
         if (savedInstanceState == null) {
             val fragment = getStartFragment()

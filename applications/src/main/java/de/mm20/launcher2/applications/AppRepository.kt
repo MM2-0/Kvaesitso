@@ -225,7 +225,6 @@ internal class AppRepositoryImpl(
     }
 
     private fun getActivityByComponentName(componentName: ComponentName?): Application? {
-        if (!LauncherPreferences.instance.searchActivities) return null
         componentName ?: return null
         val intent = Intent().setComponent(componentName)
         val lai = launcherApps.resolveActivity(intent, Process.myUserHandle())

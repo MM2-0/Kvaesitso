@@ -1,7 +1,6 @@
 package de.mm20.launcher2
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
@@ -18,7 +17,6 @@ import de.mm20.launcher2.hiddenitems.hiddenItemsModule
 import de.mm20.launcher2.icons.iconsModule
 import de.mm20.launcher2.music.musicModule
 import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.preferences.Themes
 import de.mm20.launcher2.search.searchModule
 import de.mm20.launcher2.unitconverter.unitConverterModule
 import de.mm20.launcher2.websites.websitesModule
@@ -46,16 +44,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
         super.onCreate()
         Debug()
         LauncherPreferences.initialize(this)
-
-        val theme = LauncherPreferences.instance.theme
-        AppCompatDelegate.setDefaultNightMode(
-            when (theme) {
-                Themes.LIGHT -> AppCompatDelegate.MODE_NIGHT_NO // light
-                Themes.DARK -> AppCompatDelegate.MODE_NIGHT_YES // dark, black
-                Themes.AUTO -> AppCompatDelegate.MODE_NIGHT_AUTO // auto
-                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM //system
-            }
-        )
 
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
