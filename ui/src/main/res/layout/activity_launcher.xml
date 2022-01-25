@@ -5,11 +5,6 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-    <FrameLayout
-        android:id="@+id/dimWallpaper"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <de.mm20.launcher2.ui.legacy.view.BatteryChargingView
         android:id="@+id/batteryAnimationView"
         android:layout_width="48dp"

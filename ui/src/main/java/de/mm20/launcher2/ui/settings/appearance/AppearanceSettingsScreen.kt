@@ -1,19 +1,20 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.preferences.ListPreference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.*
 
 @Composable
 fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
+    val context = LocalContext.current
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -55,6 +56,25 @@ fun AppearanceSettingsScreen() {
                     value = columnCount,
                     onValueChanged = {
                         if (it != null) viewModel.setColumnCount(it)
+                    }
+                )
+            }
+
+            PreferenceCategory(stringResource(id = R.string.preference_category_wallpaper)) {
+                Preference(
+                    title = stringResource(R.string.wallpaper),
+                    summary = stringResource(R.string.preference_wallpaper_summary),
+                    onClick = {
+                        viewModel.openWallpaperChooser(context as AppCompatActivity)
+                    }
+                )
+                val dimWallpaper by viewModel.dimWallpaper.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_dim_wallpaper),
+                    summary = stringResource(R.string.preference_dim_wallpaper_summary),
+                    value = dimWallpaper == true,
+                    onValueChanged = {
+                        viewModel.setDimWallpaper(it)
                     }
                 )
             }

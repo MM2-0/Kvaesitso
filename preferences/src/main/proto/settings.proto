@@ -17,6 +17,7 @@ message Settings {
       BlackAndWhite = 1;
     }
     ColorScheme color_scheme = 6;
+    bool dim_wallpaper = 7;
   }
   AppearanceSettings appearance = 2;
 

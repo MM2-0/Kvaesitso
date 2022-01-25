@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher
 
 import android.app.WallpaperManager
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.*
 import androidx.activity.viewModels
@@ -13,6 +14,7 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
@@ -38,8 +40,22 @@ class LauncherActivity : BaseActivity() {
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
+        viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
+
         binding = ActivityLauncherBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
+
+        viewModel.dimBackground.observe(this) { dim ->
+            window.attributes = window.attributes.also {
+                if (dim) {
+                    it.dimAmount = 0.3f
+                    it.flags = it.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+                } else {
+                    it.dimAmount = 0f
+                    it.flags = it.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
+                }
+            }
+        }
 
         var editFavoritesDialog: MaterialDialog? = null
         viewModel.isEditFavoritesShown.observe(this) {
@@ -81,10 +97,6 @@ class LauncherActivity : BaseActivity() {
                 hiddenItemsDialog?.dismiss()
                 hiddenItemsDialog = null
             }
-        }
-
-        if (LauncherPreferences.instance.dimWallpaper) {
-            binding.dimWallpaper.setBackgroundColor(getColor(R.color.wallpaper_dim))
         }
 
         val dynamicIconController: DynamicIconController by inject()

@@ -9,6 +9,7 @@ fun createFactorySettings(context: Context): Settings {
                 .newBuilder()
                 .setTheme(Settings.AppearanceSettings.Theme.System)
                 .setColorScheme(Settings.AppearanceSettings.ColorScheme.Default)
+                .setDimWallpaper(false)
                 .build()
         )
         .setWeather(

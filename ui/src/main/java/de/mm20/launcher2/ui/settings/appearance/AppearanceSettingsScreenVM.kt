@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -45,5 +47,20 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
                     .build()
             }
         }
+    }
+
+    val dimWallpaper = dataStore.data.map { it.appearance.dimWallpaper }.asLiveData()
+    fun setDimWallpaper(dimWallpaper: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppearance(it.appearance.toBuilder().setDimWallpaper(dimWallpaper))
+                    .build()
+            }
+        }
+    }
+
+    fun openWallpaperChooser(context: AppCompatActivity) {
+        context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
     }
 }
