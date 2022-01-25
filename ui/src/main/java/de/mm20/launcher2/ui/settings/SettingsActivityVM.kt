@@ -12,17 +12,4 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class SettingsActivityVM: ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
-
-    val theme = dataStore.data.map { it.appearance.theme }.asLiveData()
-
-    fun getTheme(): Settings.AppearanceSettings.Theme = runBlocking {
-        dataStore.data.map { it.appearance.theme }.first()
-    }
-
-    val colorScheme = dataStore.data.map { it.appearance.colorScheme }.asLiveData()
-
-    fun getColorScheme(): Settings.AppearanceSettings.ColorScheme = runBlocking {
-        dataStore.data.map { it.appearance.colorScheme }.first()
-    }
 }

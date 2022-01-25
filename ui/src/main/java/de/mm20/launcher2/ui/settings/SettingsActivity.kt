@@ -41,39 +41,9 @@ import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 
 class SettingsActivity : BaseActivity() {
 
-    private val viewModel: SettingsActivityVM by viewModels()
-
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val theme = viewModel.getTheme()
-        when (theme) {
-            Settings.AppearanceSettings.Theme.Light -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_NO
-            )
-            Settings.AppearanceSettings.Theme.Dark -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_YES
-            )
-            else -> AppCompatDelegate.setDefaultNightMode(
-                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            )
-        }
-        viewModel.theme.observe(this) {
-            if (it != theme && it != null) recreate()
-        }
-
-        val colorScheme = viewModel.getColorScheme()
-        val colorSchemeThemeId = when(colorScheme) {
-            Settings.AppearanceSettings.ColorScheme.BlackAndWhite -> R.style.BlackWhiteColors
-            else -> R.style.DefaultColors
-        }
-        this.theme.applyStyle(colorSchemeThemeId, true)
-
-        viewModel.colorScheme.observe(this) {
-            if (it != colorScheme && it != null) recreate()
-        }
-
 
         setContent {
             val navController = rememberAnimatedNavController()

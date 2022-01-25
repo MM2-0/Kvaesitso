@@ -34,41 +34,12 @@ class LauncherActivity : BaseActivity() {
 
     private val viewModel: LauncherActivityVM by viewModels()
 
-    private val preferences = LauncherPreferences.instance
-
-    private var windowBackgroundBlur: Boolean = false
-        set(value) {
-            if (field == value) return
-            field = value
-            if (!isAtLeastApiLevel(31)) return
-            window.attributes = window.attributes.also {
-                if (value) {
-                    it.blurBehindRadius = (32 * dp).toInt()
-                    it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
-                } else {
-                    it.blurBehindRadius = 0
-                    it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
-                }
-            }
-        }
-
-
-    private fun updateSystemBarAppearance() {
-        val allowLightSystemBars = allowsLightSystemBars()
-        val insetsController = WindowInsetsControllerCompat(window, window.decorView)
-        insetsController.isAppearanceLightNavigationBars =
-            allowLightSystemBars && preferences.lightNavBar
-        insetsController.isAppearanceLightStatusBars =
-            allowLightSystemBars && preferences.lightStatusBar
-    }
-
     private lateinit var binding: ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val iconRepository: IconRepository by inject()
         iconRepository.recreate()
-        ThemeHelper.applyTheme(theme)
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
@@ -132,17 +103,9 @@ class LauncherActivity : BaseActivity() {
         ActivityStarter.create(binding.rootView)
         binding.activityStartOverlay.visibility = View.INVISIBLE
 
-        updateSystemBarAppearance()
-
         binding.container.doOnNextLayout {
             WallpaperManager.getInstance(this).setWallpaperOffsets(it.windowToken, 0.5f, 0.5f)
         }
-    }
-
-    private fun allowsLightSystemBars(): Boolean {
-        val dimWallpaper = LauncherPreferences.instance.dimWallpaper
-        val isDarkTheme = resources.getBoolean(R.bool.is_dark_theme)
-        return !(isDarkTheme && dimWallpaper)
     }
 
     override fun onPause() {
