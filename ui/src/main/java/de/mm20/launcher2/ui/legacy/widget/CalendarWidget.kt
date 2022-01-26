@@ -14,7 +14,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewCalendarWidgetBinding
@@ -102,10 +104,20 @@ class CalendarWidget : LauncherWidget {
         val pinnedCalendarEvents = viewModel.pinnedCalendarEvents
         val hiddenPastEvents = viewModel.hiddenPastEvents
         val selectedDate = viewModel.selectedDate
+        val hasPermission = viewModel.hasPermission
 
-        calendarEvents.observe(context as AppCompatActivity, {
-            updateEventList(it, hiddenPastEvents.value ?: 0)
-        })
+        calendarEvents.observe(context as AppCompatActivity) {
+            updateEventList(it, hiddenPastEvents.value ?: 0, hasPermission.value == false)
+        }
+
+        hasPermission.observe(context as AppCompatActivity) {
+            updateEventList(
+                calendarEvents.value ?: emptyList(),
+                hiddenPastEvents.value ?: 0,
+                it == false
+            )
+        }
+
         pinnedCalendarEvents.observe(context as AppCompatActivity) {
             binding.calendarWidgetPinnedList.submitItems(it)
             if (it.isEmpty()) {
@@ -128,11 +140,21 @@ class CalendarWidget : LauncherWidget {
 
     private fun updateEventList(
         events: List<CalendarEvent>,
-        hiddenPastDayEvents: Int
+        hiddenPastDayEvents: Int,
+        missingPermission: Boolean
     ) {
         val items = events.toMutableList<Searchable>()
 
-        if (events.isEmpty()) {
+        if (missingPermission) {
+            items.add(
+                MissingPermission(
+                    context.getString(R.string.permission_calendar_widget),
+                    PermissionGroup.Calendar
+                )
+            )
+        }
+
+        if (events.isEmpty() && !missingPermission) {
             items.add(
                 InformationText(context.getString(R.string.calendar_widget_no_events))
             )

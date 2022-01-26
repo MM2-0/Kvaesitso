@@ -11,6 +11,8 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.CalendarEvent
 import kotlinx.coroutines.flow.collectLatest
 import org.koin.core.component.KoinComponent
@@ -30,7 +32,8 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         favoritesRepository.getPinnedCalendarEvents().asLiveData(viewModelScope.coroutineContext)
     var availableDates = listOf(LocalDate.now())
 
-    val permissionMissing = MutableLiveData(false)
+    private val permissionsManager: PermissionsManager by inject()
+    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
 
     private var showRunningPastDayEvents = false
     val hiddenPastEvents = MutableLiveData(0)
