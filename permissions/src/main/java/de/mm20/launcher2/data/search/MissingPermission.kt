@@ -7,7 +7,12 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.R
 
-class MissingPermission(override val label: String, val permissionGroup: PermissionGroup): Searchable() {
+class MissingPermission(
+    override val label: String,
+    val permissionGroup: PermissionGroup,
+    val secondaryActionLabel: String? = null,
+    val secondaryAction: (() -> Unit)? = null
+    ): Searchable() {
     override val key: String
         get() = "permission://${permissionGroup.ordinal}"
 

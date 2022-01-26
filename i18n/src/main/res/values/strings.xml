@@ -516,4 +516,6 @@
     <string name="no_account_microsoft">You haven\'t connected a Microsoft account yet</string>
     <string name="no_account_google">You haven\'t connected a Google account yet</string>
     <string name="connect_account">Connect account</string>
+
+    <string name="turn_off">Turn off</string>
 </resources>

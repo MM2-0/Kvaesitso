@@ -477,4 +477,5 @@
     <string name="no_account_microsoft">Sie haben noch kein Microsoft-Konto verbunden</string>
     <string name="no_account_google">Sie haben noch kein Google-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
+    <string name="turn_off">Deaktivieren</string>
 </resources>
