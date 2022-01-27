@@ -40,7 +40,6 @@ import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.*
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.notifications.NotificationRepository
-import de.mm20.launcher2.notifications.NotificationService
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
@@ -79,8 +78,8 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                 setOnLongClickListener(null)
                 findViewById<TextView>(R.id.appName).text = application.label
                 val iconView = findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(application)
+                    shape = LauncherIconView.currentShape
                 }
 
                 val notificationView = findViewById<ChipGroup>(R.id.notifications)
@@ -106,6 +105,11 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                                 .collectLatest {
                                     updateNotifications(notificationView, it)
                                 }
+                        }
+                        launch {
+                            LauncherIconView.getDefaultShape().collectLatest {
+                                iconView.shape = it
+                            }
                         }
                     }
                 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
@@ -70,8 +71,23 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
-                    .setSearchBar(it.searchBar.toBuilder()
-                        .setSearchBarStyle(searchBarStyle)
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setSearchBarStyle(searchBarStyle)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val iconShape = dataStore.data.map { it.icons.shape }.asLiveData()
+    fun setIconShape(iconShape: Settings.IconSettings.IconShape) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons.toBuilder()
+                            .setShape(iconShape)
                     )
                     .build()
             }

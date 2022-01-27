@@ -11,7 +11,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.transition.Scene
 import coil.load
-import coil.size.Scale
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
@@ -74,14 +73,21 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
                         label.transitionName = null
                         websiteFavIcon.transitionName = "icon"
                         websiteFavIcon.apply {
-                            shape = LauncherIconView.getDefaultShape(context)
                             icon = iconRepository.getIconIfCached(website)
+                            shape = LauncherIconView.currentShape
                             job = rootView.scope.launch {
                                 rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                    iconRepository.getIcon(website, (84 * rootView.dp).toInt())
-                                        .collectLatest {
-                                            icon = it
+                                    launch {
+                                        iconRepository.getIcon(website, (84 * rootView.dp).toInt())
+                                            .collectLatest {
+                                                icon = it
+                                            }
+                                    }
+                                    launch {
+                                        LauncherIconView.getDefaultShape().collectLatest {
+                                            shape = it
                                         }
+                                    }
                                 }
                             }
                         }

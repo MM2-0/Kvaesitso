@@ -133,4 +133,28 @@ message Settings {
   }
   SearchBarSettings search_bar = 20;
 
+  message IconSettings {
+    enum IconShape {
+      PlatformDefault = 0;
+      Circle = 1;
+      Square = 2;
+      RoundedSquare = 3;
+      Triangle = 4;
+      Squircle = 5;
+      Hexagon = 6;
+      Pentagon = 7;
+      EasterEgg = 8;
+    }
+    IconShape shape = 1;
+    bool themed_icons = 2;
+    string icon_pack = 3;
+    enum LegacyIconBackground {
+      Dynamic = 0;
+      None = 1;
+      White = 2;
+    }
+    LegacyIconBackground legacyIconBg = 4;
+  }
+  IconSettings icons = 21;
+
 }

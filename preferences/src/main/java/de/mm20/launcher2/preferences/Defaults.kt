@@ -106,5 +106,12 @@ fun createFactorySettings(context: Context): Settings {
                 .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
                 .build()
         )
+        .setIcons(
+            Settings.IconSettings.newBuilder()
+                .setLegacyIconBg(Settings.IconSettings.LegacyIconBackground.Dynamic)
+                .setShape(Settings.IconSettings.IconShape.PlatformDefault)
+                .setThemedIcons(false)
+                .setIconPack("")
+        )
         .build()
 }

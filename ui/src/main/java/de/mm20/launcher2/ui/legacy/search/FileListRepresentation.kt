@@ -44,8 +44,8 @@ class FileListRepresentation : Representation, KoinComponent {
                 findViewById<TextView>(R.id.fileLabel).text = file.label
                 findViewById<TextView>(R.id.fileInfo).text = file.getFileType(context)
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(file)
+                    shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
                         rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                             launch {
@@ -57,6 +57,11 @@ class FileListRepresentation : Representation, KoinComponent {
                             launch {
                                 badgeRepository.getBadge(searchable.badgeKey).collectLatest {
                                     badge = it
+                                }
+                            }
+                            launch {
+                                LauncherIconView.getDefaultShape().collectLatest {
+                                    shape = it
                                 }
                             }
                         }

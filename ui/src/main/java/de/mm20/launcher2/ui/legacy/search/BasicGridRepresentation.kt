@@ -9,7 +9,6 @@ import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
@@ -46,7 +45,6 @@ class BasicGridRepresentation : Representation, KoinComponent {
                         .alpha(1f)
                         .start()*/
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     setOnClickListener {
                         if (!ActivityStarter.start(
                                 context,
@@ -58,6 +56,7 @@ class BasicGridRepresentation : Representation, KoinComponent {
                         }
                     }
                     icon = iconRepository.getIconIfCached(searchable)
+                    shape = LauncherIconView.currentShape
 
                     job = rootView.scope.launch {
                         rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -70,6 +69,11 @@ class BasicGridRepresentation : Representation, KoinComponent {
                             launch {
                                 badgeRepository.getBadge(searchable.badgeKey).collectLatest {
                                     badge = it
+                                }
+                            }
+                            launch {
+                                LauncherIconView.getDefaultShape().collectLatest {
+                                    shape = it
                                 }
                             }
                         }

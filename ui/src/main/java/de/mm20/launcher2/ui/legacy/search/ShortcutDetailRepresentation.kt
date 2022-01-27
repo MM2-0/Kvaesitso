@@ -47,8 +47,8 @@ class AppShortcutDetailRepresentation : Representation, KoinComponent {
                 setOnLongClickListener(null)
                 findViewById<TextView>(R.id.appName).text = appShortcut.label
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(appShortcut)
+                    shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
                         rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                             launch {
@@ -60,6 +60,11 @@ class AppShortcutDetailRepresentation : Representation, KoinComponent {
                             launch {
                                 badgeRepository.getBadge(searchable.badgeKey).collectLatest {
                                     badge = it
+                                }
+                            }
+                            launch {
+                                LauncherIconView.getDefaultShape().collectLatest {
+                                    shape = it
                                 }
                             }
                         }

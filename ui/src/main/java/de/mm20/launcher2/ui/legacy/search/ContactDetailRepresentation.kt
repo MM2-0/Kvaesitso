@@ -20,7 +20,6 @@ import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.ktx.setStartCompoundDrawable
 import de.mm20.launcher2.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Contact
@@ -54,8 +53,8 @@ class ContactDetailRepresentation : Representation, KoinComponent {
         scene.setEnterAction {
             with(rootView) {
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(contact)
+                    shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
                         rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                             launch {
@@ -67,6 +66,11 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             launch {
                                 badgeRepository.getBadge(contact.badgeKey).collectLatest {
                                     badge = it
+                                }
+                            }
+                            launch {
+                                LauncherIconView.getDefaultShape().collectLatest {
+                                    shape = it
                                 }
                             }
                         }

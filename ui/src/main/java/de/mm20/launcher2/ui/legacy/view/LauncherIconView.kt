@@ -7,37 +7,25 @@ import android.graphics.*
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Build
 import android.util.AttributeSet
-import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.repeatOnLifecycle
 import com.bartoszlipinski.viewpropertyobjectanimator.ViewPropertyObjectAnimator
 import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.badges.BadgeRepository
+import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.toRectF
-import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.preferences.IconShape
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.helper.BitmapHolder
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
+import org.koin.core.component.get
 import java.lang.Math.pow
-import java.lang.Runnable
 import kotlin.math.abs
 import kotlin.math.hypot
 import kotlin.math.roundToInt
@@ -45,17 +33,19 @@ import kotlin.math.roundToInt
 class LauncherIconView : View, KoinComponent {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
-    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
+    constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(
+        context,
+        attrs,
+        defStyleRes
+    )
 
     var shape: IconShape
         set(value) {
-            if (value == IconShape.PLATFORM_DEFAULT) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    platformShape = getSystemShape()
-                    transformMatrix = Matrix()
-                    platformShapeBounds = RectF()
-                    field = value
-                } else field = IconShape.CIRCLE
+            if (value == IconShape.PlatformDefault) {
+                platformShape = getSystemShape()
+                transformMatrix = Matrix()
+                platformShapeBounds = RectF()
+                field = value
             } else {
                 platformShape = null
                 transformMatrix = null
@@ -108,7 +98,7 @@ class LauncherIconView : View, KoinComponent {
         }
 
     init {
-        shape = IconShape.CIRCLE
+        shape = IconShape.Circle
         setLayerType(LAYER_TYPE_SOFTWARE, null)
     }
 
@@ -200,34 +190,45 @@ class LauncherIconView : View, KoinComponent {
         if (bg != null) {
             bg.bounds = bmpDrawRect
             when (shape) {
-                IconShape.PLATFORM_DEFAULT -> {
+                IconShape.PlatformDefault -> {
                     path.rewind()
                     val matrix = transformMatrix!!
                     val bounds = platformShapeBounds!!
                     val shape = platformShape!!
                     shape.computeBounds(bounds, true)
-                    matrix.setRectToRect(bounds, badgeRect.also { drawRect.toRectF(it) }, Matrix.ScaleToFit.CENTER)
+                    matrix.setRectToRect(
+                        bounds,
+                        badgeRect.also { drawRect.toRectF(it) },
+                        Matrix.ScaleToFit.CENTER
+                    )
                     path.rewind()
                     shape.transform(matrix, path)
                     canvas.drawPath(path, maskPaint)
                 }
-                IconShape.CIRCLE -> {
-                    canvas.drawOval(drawRect.left.toFloat(), drawRect.top.toFloat(), drawRect.right.toFloat(), drawRect.bottom.toFloat(), maskPaint)
-                }
-                IconShape.SQUARE -> {
-                    canvas.drawRect(drawRect, maskPaint)
-                }
-                IconShape.ROUNDED_SQUARE -> {
-                    canvas.drawRoundRect(drawRect.left.toFloat(),
-                            drawRect.top.toFloat(),
-                            drawRect.right.toFloat(),
-                            drawRect.bottom.toFloat(),
-                            width * 0.125f,
-                            height * 0.125f,
-                            maskPaint
+                IconShape.Circle -> {
+                    canvas.drawOval(
+                        drawRect.left.toFloat(),
+                        drawRect.top.toFloat(),
+                        drawRect.right.toFloat(),
+                        drawRect.bottom.toFloat(),
+                        maskPaint
                     )
                 }
-                IconShape.TRIANGLE -> {
+                IconShape.Square -> {
+                    canvas.drawRect(drawRect, maskPaint)
+                }
+                IconShape.RoundedSquare -> {
+                    canvas.drawRoundRect(
+                        drawRect.left.toFloat(),
+                        drawRect.top.toFloat(),
+                        drawRect.right.toFloat(),
+                        drawRect.bottom.toFloat(),
+                        width * 0.125f,
+                        height * 0.125f,
+                        maskPaint
+                    )
+                }
+                IconShape.Triangle -> {
                     path.rewind()
                     var cx = drawRect.left.toFloat()
                     var cy = drawRect.top + drawRect.height().toFloat() * 0.86f
@@ -248,63 +249,157 @@ class LauncherIconView : View, KoinComponent {
                     canvas.drawArc(cx - r, cy - r, cx + r, cy + r, 60f, 60f, true, maskPaint)
 
                 }
-                IconShape.SQUIRCLE -> {
+                IconShape.Squircle -> {
                     path.rewind()
                     val radius = drawRect.width() / 2
                     val radiusToPow = pow(radius.toDouble(), 3.0)
                     path.moveTo(-radius.toFloat(), 0f)
                     for (x in -radius..radius)
-                        path.lineTo(x.toFloat(), Math.cbrt(radiusToPow - Math.abs(x * x * x)).toFloat())
+                        path.lineTo(
+                            x.toFloat(),
+                            Math.cbrt(radiusToPow - Math.abs(x * x * x)).toFloat()
+                        )
                     for (x in radius downTo -radius)
-                        path.lineTo(x.toFloat(), (-Math.cbrt(radiusToPow - Math.abs(x * x * x))).toFloat())
+                        path.lineTo(
+                            x.toFloat(),
+                            (-Math.cbrt(radiusToPow - Math.abs(x * x * x))).toFloat()
+                        )
                     path.close()
                     canvas.save()
                     canvas.translate(width / 2f, height / 2f)
                     canvas.drawPath(path, maskPaint)
                     canvas.restore()
                 }
-                IconShape.HEXAGON -> {
+                IconShape.Hexagon -> {
                     path.rewind()
-                    path.moveTo(drawRect.left + drawRect.width() * 0.25f, drawRect.top + drawRect.height() * 0.933f)
-                    path.lineTo(drawRect.left + drawRect.width() * 0.75f, drawRect.top + drawRect.height() * 0.933f)
-                    path.lineTo(drawRect.left + drawRect.width() * 1.0f, drawRect.top + drawRect.height() * 0.5f)
-                    path.lineTo(drawRect.left + drawRect.width() * 0.75f, drawRect.top + drawRect.height() * 0.067f)
-                    path.lineTo(drawRect.left + drawRect.width() * 0.25f, drawRect.top + drawRect.height() * 0.067f)
+                    path.moveTo(
+                        drawRect.left + drawRect.width() * 0.25f,
+                        drawRect.top + drawRect.height() * 0.933f
+                    )
+                    path.lineTo(
+                        drawRect.left + drawRect.width() * 0.75f,
+                        drawRect.top + drawRect.height() * 0.933f
+                    )
+                    path.lineTo(
+                        drawRect.left + drawRect.width() * 1.0f,
+                        drawRect.top + drawRect.height() * 0.5f
+                    )
+                    path.lineTo(
+                        drawRect.left + drawRect.width() * 0.75f,
+                        drawRect.top + drawRect.height() * 0.067f
+                    )
+                    path.lineTo(
+                        drawRect.left + drawRect.width() * 0.25f,
+                        drawRect.top + drawRect.height() * 0.067f
+                    )
                     path.lineTo(drawRect.left.toFloat(), drawRect.top + drawRect.height() * 0.5f)
                     path.close()
                     canvas.drawPath(path, maskPaint)
                 }
-                IconShape.HEART -> {
+                IconShape.EasterEgg -> {
                     path.rewind()
-                    path.moveTo(0.49999999f * drawRect.width() + drawRect.left, 1f * drawRect.height() + drawRect.top)
-                    path.lineTo(0.42749999f * drawRect.width() + drawRect.left, 0.9339999999999999f * drawRect.height() + drawRect.top)
-                    path.cubicTo(0.16999998f * drawRect.width() + drawRect.left, 0.7005004f * drawRect.height() + drawRect.top, 0f + drawRect.left, 0.5460004f * drawRect.height() + drawRect.top, 0f + drawRect.left, 0.3575003f * drawRect.height() + drawRect.top)
-                    path.cubicTo(0f + drawRect.left, 0.2030004f * drawRect.height() + drawRect.top, 0.12100002f * drawRect.width() + drawRect.left, 0.0825004f * drawRect.height() + drawRect.top, 0.275f * drawRect.width() + drawRect.left, 0.0825004f * drawRect.height() + drawRect.top)
-                    path.cubicTo(0.362f * drawRect.width() + drawRect.left, 0.0825004f * drawRect.height() + drawRect.top, 0.4455f * drawRect.width() + drawRect.left, 0.123f * drawRect.height() + drawRect.top, 0.5f * drawRect.width() + drawRect.left, 0.1865003f * drawRect.height() + drawRect.top)
-                    path.cubicTo(0.55449999f * drawRect.width() + drawRect.left, 0.123f * drawRect.height() + drawRect.top, 0.638f * drawRect.width() + drawRect.left, 0.0825f * drawRect.height() + drawRect.top, 0.725f * drawRect.width() + drawRect.left, 0.0825f * drawRect.height() + drawRect.top)
-                    path.cubicTo(0.87900006f * drawRect.width() + drawRect.left, 0.0825004f * drawRect.height() + drawRect.top, 1f * drawRect.width() + drawRect.left, 0.2030004f * drawRect.height() + drawRect.top, 1f * drawRect.width() + drawRect.left, 0.3575003f * drawRect.height() + drawRect.top)
-                    path.cubicTo(1f * drawRect.width() + drawRect.left, 0.5460004f * drawRect.height() + drawRect.top, 0.82999999f * drawRect.width() + drawRect.left, 0.7005004f * drawRect.height() + drawRect.top, 0.57250001f * drawRect.width() + drawRect.left, 0.9340004f * drawRect.height() + drawRect.top)
+                    path.moveTo(
+                        0.49999999f * drawRect.width() + drawRect.left,
+                        1f * drawRect.height() + drawRect.top
+                    )
+                    path.lineTo(
+                        0.42749999f * drawRect.width() + drawRect.left,
+                        0.9339999999999999f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        0.16999998f * drawRect.width() + drawRect.left,
+                        0.7005004f * drawRect.height() + drawRect.top,
+                        0f + drawRect.left,
+                        0.5460004f * drawRect.height() + drawRect.top,
+                        0f + drawRect.left,
+                        0.3575003f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        0f + drawRect.left,
+                        0.2030004f * drawRect.height() + drawRect.top,
+                        0.12100002f * drawRect.width() + drawRect.left,
+                        0.0825004f * drawRect.height() + drawRect.top,
+                        0.275f * drawRect.width() + drawRect.left,
+                        0.0825004f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        0.362f * drawRect.width() + drawRect.left,
+                        0.0825004f * drawRect.height() + drawRect.top,
+                        0.4455f * drawRect.width() + drawRect.left,
+                        0.123f * drawRect.height() + drawRect.top,
+                        0.5f * drawRect.width() + drawRect.left,
+                        0.1865003f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        0.55449999f * drawRect.width() + drawRect.left,
+                        0.123f * drawRect.height() + drawRect.top,
+                        0.638f * drawRect.width() + drawRect.left,
+                        0.0825f * drawRect.height() + drawRect.top,
+                        0.725f * drawRect.width() + drawRect.left,
+                        0.0825f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        0.87900006f * drawRect.width() + drawRect.left,
+                        0.0825004f * drawRect.height() + drawRect.top,
+                        1f * drawRect.width() + drawRect.left,
+                        0.2030004f * drawRect.height() + drawRect.top,
+                        1f * drawRect.width() + drawRect.left,
+                        0.3575003f * drawRect.height() + drawRect.top
+                    )
+                    path.cubicTo(
+                        1f * drawRect.width() + drawRect.left,
+                        0.5460004f * drawRect.height() + drawRect.top,
+                        0.82999999f * drawRect.width() + drawRect.left,
+                        0.7005004f * drawRect.height() + drawRect.top,
+                        0.57250001f * drawRect.width() + drawRect.left,
+                        0.9340004f * drawRect.height() + drawRect.top
+                    )
                     path.close()
                     canvas.drawPath(path, maskPaint)
                 }
-                IconShape.PENTAGON -> {
+                IconShape.Pentagon -> {
                     path.rewind()
-                    path.moveTo(0.49997027f * drawRect.width() + drawRect.left, 0.0060308f * drawRect.height() + drawRect.top)
-                    path.lineTo(0.99994053f * drawRect.width() + drawRect.left, 0.36928048f * drawRect.height() + drawRect.top)
-                    path.lineTo(0.80896887f * drawRect.width() + drawRect.left, 0.95703078f * drawRect.height() + drawRect.top)
-                    path.lineTo(0.19097162f * drawRect.width() + drawRect.left, 0.95703076f * drawRect.height() + drawRect.top)
-                    path.lineTo(drawRect.left.toFloat(), 0.36928045f * drawRect.height() + drawRect.top)
+                    path.moveTo(
+                        0.49997027f * drawRect.width() + drawRect.left,
+                        0.0060308f * drawRect.height() + drawRect.top
+                    )
+                    path.lineTo(
+                        0.99994053f * drawRect.width() + drawRect.left,
+                        0.36928048f * drawRect.height() + drawRect.top
+                    )
+                    path.lineTo(
+                        0.80896887f * drawRect.width() + drawRect.left,
+                        0.95703078f * drawRect.height() + drawRect.top
+                    )
+                    path.lineTo(
+                        0.19097162f * drawRect.width() + drawRect.left,
+                        0.95703076f * drawRect.height() + drawRect.top
+                    )
+                    path.lineTo(
+                        drawRect.left.toFloat(),
+                        0.36928045f * drawRect.height() + drawRect.top
+                    )
                     path.close()
                     canvas.drawPath(path, maskPaint)
                 }
             }
             c.save()
-            c.scale(backgroundScale, backgroundScale, bmpDrawRect.centerX().toFloat(), bmpDrawRect.centerY().toFloat())
+            c.scale(
+                backgroundScale,
+                backgroundScale,
+                bmpDrawRect.centerX().toFloat(),
+                bmpDrawRect.centerY().toFloat()
+            )
             bg.draw(c)
             c.restore()
         }
         c.save()
-        c.scale(foregroundScale, foregroundScale, bmpDrawRect.centerX().toFloat(), bmpDrawRect.centerY().toFloat())
+        c.scale(
+            foregroundScale,
+            foregroundScale,
+            bmpDrawRect.centerX().toFloat(),
+            bmpDrawRect.centerY().toFloat()
+        )
         fg.draw(c)
         c.restore()
         if (bg != null) {
@@ -314,26 +409,33 @@ class LauncherIconView : View, KoinComponent {
         }
         if (bg != null) {
             when (shape) {
-                IconShape.CIRCLE -> {
-                    canvas.drawOval(drawRect.left.toFloat(), drawRect.top.toFloat(), drawRect.right.toFloat(), drawRect.bottom.toFloat(), shadowPaint)
-                }
-                IconShape.SQUARE -> {
-                    canvas.drawRect(drawRect, shadowPaint)
-                }
-                IconShape.ROUNDED_SQUARE -> {
-                    canvas.drawRoundRect(drawRect.left.toFloat(),
-                            drawRect.top.toFloat(),
-                            drawRect.right.toFloat(),
-                            drawRect.bottom.toFloat(),
-                            width * 0.125f,
-                            height * 0.125f,
-                            shadowPaint
+                IconShape.Circle -> {
+                    canvas.drawOval(
+                        drawRect.left.toFloat(),
+                        drawRect.top.toFloat(),
+                        drawRect.right.toFloat(),
+                        drawRect.bottom.toFloat(),
+                        shadowPaint
                     )
                 }
-                IconShape.TRIANGLE, IconShape.HEXAGON, IconShape.HEART, IconShape.PENTAGON, IconShape.PLATFORM_DEFAULT -> {
+                IconShape.Square -> {
+                    canvas.drawRect(drawRect, shadowPaint)
+                }
+                IconShape.RoundedSquare -> {
+                    canvas.drawRoundRect(
+                        drawRect.left.toFloat(),
+                        drawRect.top.toFloat(),
+                        drawRect.right.toFloat(),
+                        drawRect.bottom.toFloat(),
+                        width * 0.125f,
+                        height * 0.125f,
+                        shadowPaint
+                    )
+                }
+                IconShape.Triangle, IconShape.Hexagon, IconShape.EasterEgg, IconShape.Pentagon, IconShape.PlatformDefault -> {
                     canvas.drawPath(path, shadowPaint)
                 }
-                IconShape.SQUIRCLE -> {
+                IconShape.Squircle -> {
                     canvas.save()
                     canvas.translate(width / 2f, height / 2f)
                     canvas.drawPath(path, shadowPaint)
@@ -361,12 +463,18 @@ class LauncherIconView : View, KoinComponent {
             canvas.drawArc(badgeRect, 270f, it * 360, true, badgeProgressPaint)
         }
         badgeIcon?.let {
-            it.setBounds((drawRect.right - badgeSize * 0.9f).toInt(),
-                    (drawRect.bottom - badgeSize * 0.9f).toInt(),
-                    (drawRect.right - badgeSize * 0.1f).toInt(),
-                    (drawRect.bottom - badgeSize * 0.1f).toInt()
+            it.setBounds(
+                (drawRect.right - badgeSize * 0.9f).toInt(),
+                (drawRect.bottom - badgeSize * 0.9f).toInt(),
+                (drawRect.right - badgeSize * 0.1f).toInt(),
+                (drawRect.bottom - badgeSize * 0.1f).toInt()
             )
-            it.setBounds(badgeRect.left.roundToInt(), badgeRect.top.roundToInt(), badgeRect.right.roundToInt(), badgeRect.bottom.roundToInt())
+            it.setBounds(
+                badgeRect.left.roundToInt(),
+                badgeRect.top.roundToInt(),
+                badgeRect.right.roundToInt(),
+                badgeRect.bottom.roundToInt()
+            )
             it.draw(canvas)
             return
         }
@@ -375,7 +483,12 @@ class LauncherIconView : View, KoinComponent {
             val textSize = (1f - 0.1f - text.length * 0.1f) * badgeSize
             badgeTextPaint.textSize = textSize
             badgeTextPaint.getTextBounds(text, 0, text.length, textBounds)
-            canvas.drawText(it.toString(), badgeRect.centerX(), badgeRect.centerY() - textBounds.exactCenterY(), badgeTextPaint)
+            canvas.drawText(
+                it.toString(),
+                badgeRect.centerX(),
+                badgeRect.centerY() - textBounds.exactCenterY(),
+                badgeTextPaint
+            )
         }
     }
 
@@ -398,7 +511,10 @@ class LauncherIconView : View, KoinComponent {
                 downX = ev.rawX
                 downY = ev.rawY
                 longClicked = false
-                handler?.postDelayed(longClickRunnable, ViewConfiguration.getLongPressTimeout().toLong())
+                handler?.postDelayed(
+                    longClickRunnable,
+                    ViewConfiguration.getLongPressTimeout().toLong()
+                )
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
@@ -428,9 +544,9 @@ class LauncherIconView : View, KoinComponent {
     private fun animateTouchUp() {
         AnimatorSet().also {
             it.playTogether(
-                    ViewPropertyObjectAnimator.animate(this).translationZ(0f).get(),
-                    ObjectAnimator.ofFloat(this, "foregroundScale", icon?.foregroundScale ?: 1f),
-                    ObjectAnimator.ofFloat(this, "backgroundScale", icon?.backgroundScale ?: 1f)
+                ViewPropertyObjectAnimator.animate(this).translationZ(0f).get(),
+                ObjectAnimator.ofFloat(this, "foregroundScale", icon?.foregroundScale ?: 1f),
+                ObjectAnimator.ofFloat(this, "backgroundScale", icon?.backgroundScale ?: 1f)
             )
             it.duration = 300
             it.start()
@@ -440,11 +556,15 @@ class LauncherIconView : View, KoinComponent {
     private fun animateTouchDown() {
         AnimatorSet().also {
             it.playTogether(
-                    ViewPropertyObjectAnimator.animate(this).translationZ(2 * dp).get(),
-                    ObjectAnimator.ofFloat(this, "foregroundScale", (icon?.foregroundScale
-                            ?: 1f) * 0.8f),
-                    ObjectAnimator.ofFloat(this, "backgroundScale", (icon?.backgroundScale
-                            ?: 1f) * 1.2f)
+                ViewPropertyObjectAnimator.animate(this).translationZ(2 * dp).get(),
+                ObjectAnimator.ofFloat(
+                    this, "foregroundScale", (icon?.foregroundScale
+                        ?: 1f) * 0.8f
+                ),
+                ObjectAnimator.ofFloat(
+                    this, "backgroundScale", (icon?.backgroundScale
+                        ?: 1f) * 1.2f
+                )
             )
             it.duration = 250
             it.start()
@@ -452,12 +572,16 @@ class LauncherIconView : View, KoinComponent {
     }
 
 
-    companion object {
+    companion object: KoinComponent {
 
-        fun getDefaultShape(context: Context): IconShape {
-            if (LauncherPreferences.instance.easterEggEnabled) return IconShape.HEART
-            return LauncherPreferences.instance.iconShape.let {
-                return@let if (it != IconShape.HEART) it else IconShape.PLATFORM_DEFAULT
+        var currentShape: IconShape = IconShape.PlatformDefault
+
+        fun getDefaultShape(): Flow<IconShape> = channelFlow {
+            send(currentShape)
+            val dataStore: LauncherDataStore = get()
+            dataStore.data.map { it.icons.shape }.distinctUntilChanged().collectLatest {
+                currentShape = it
+                send(it)
             }
         }
     }

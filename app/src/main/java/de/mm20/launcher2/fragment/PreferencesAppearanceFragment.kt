@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
@@ -88,7 +87,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
         }
 
         val shapePreference = findPreference<Preference>("icon_shape")!!
-        shapePreference.summary = getShapeName()
         shapePreference.setOnPreferenceClickListener {
             val launcherIcon = LauncherIcon(
                     foreground = requireContext().getDrawable(R.mipmap.ic_launcher_foreground)!!,
@@ -110,23 +108,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT)
             val dialog = MaterialDialog(requireContext())
-            shapes.forEachIndexed { i, shape ->
-                val view = View.inflate(requireContext(), R.layout.preference_icon_shape_row, null)
-                view.findViewById<LauncherIconView>(R.id.icon).also { iconView ->
-                    iconView.icon = launcherIcon
-                    iconView.shape = shape.first
-                }
-                view.findViewById<TextView>(R.id.label).also { labelView ->
-                    labelView.setText(shape.second)
-                }
-                view.layoutParams = layoutParams
-                iconShapeList.addView(view)
-                view.setOnClickListener {
-                    LauncherPreferences.instance.iconShape = shape.first
-                    shapePreference.summary = getShapeName()
-                    dialog.dismiss()
-                }
-            }
 
             dialog.customView(view = iconShapeList, scrollable = true)
                     .title(R.string.preference_icon_shape)
@@ -141,19 +122,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             systemBarsCategory.removePreference(findPreference("light_nav_bar"))
         }
-    }
-
-    private fun getShapeName(): String {
-        return requireContext().getString(when (LauncherIconView.getDefaultShape(requireContext())) {
-            IconShape.TRIANGLE -> R.string.preference_icon_shape_triangle
-            IconShape.HEXAGON -> R.string.preference_icon_shape_hexagon
-            IconShape.ROUNDED_SQUARE -> R.string.preference_icon_shape_rounded_square
-            IconShape.SQUIRCLE -> R.string.preference_icon_shape_squircle
-            IconShape.SQUARE -> R.string.preference_icon_shape_square
-            IconShape.PENTAGON -> R.string.preference_icon_shape_pentagon
-            IconShape.PLATFORM_DEFAULT -> R.string.preference_icon_shape_platform
-            else -> R.string.preference_icon_shape_circle
-        })
     }
 
 

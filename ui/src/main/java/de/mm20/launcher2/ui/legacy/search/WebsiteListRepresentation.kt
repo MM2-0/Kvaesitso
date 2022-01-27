@@ -77,8 +77,8 @@ class WebsiteListRepresentation : Representation, KoinComponent {
                         label.transitionName = null
                         websiteFavIcon.transitionName = "icon"
                         websiteFavIcon.apply {
-                            shape = LauncherIconView.getDefaultShape(context)
                             icon = iconRepository.getIconIfCached(website)
+                            shape = LauncherIconView.currentShape
                             job = rootView.scope.launch {
                                 rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                                     launch {
@@ -90,6 +90,11 @@ class WebsiteListRepresentation : Representation, KoinComponent {
                                     launch {
                                         badgeRepository.getBadge(searchable.badgeKey).collectLatest {
                                             badge = it
+                                        }
+                                    }
+                                    launch {
+                                        LauncherIconView.getDefaultShape().collectLatest {
+                                            shape = it
                                         }
                                     }
                                 }

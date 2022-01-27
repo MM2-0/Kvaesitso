@@ -10,7 +10,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
@@ -38,8 +37,8 @@ class ContactListRepresentation : Representation, KoinComponent {
         scene.setEnterAction {
             with(rootView) {
                 findViewById<LauncherIconView>(R.id.icon).apply {
-                    shape = LauncherIconView.getDefaultShape(context)
                     icon = iconRepository.getIconIfCached(contact)
+                    shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
                         rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                             launch {
@@ -51,6 +50,11 @@ class ContactListRepresentation : Representation, KoinComponent {
                             launch {
                                 badgeRepository.getBadge(searchable.badgeKey).collectLatest {
                                     badge = it
+                                }
+                            }
+                            launch {
+                                LauncherIconView.getDefaultShape().collectLatest {
+                                    shape = it
                                 }
                             }
                         }
