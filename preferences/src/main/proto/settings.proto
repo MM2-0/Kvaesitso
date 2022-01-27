@@ -123,4 +123,14 @@ message Settings {
   }
   GridSettings grid = 19;
 
+  message SearchBarSettings {
+    enum SearchBarStyle {
+      Transparent = 0;
+      Solid = 1;
+      Hidden = 2;
+    }
+    SearchBarStyle search_bar_style = 1;
+  }
+  SearchBarSettings search_bar = 20;
+
 }

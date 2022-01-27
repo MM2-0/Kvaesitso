@@ -101,5 +101,10 @@ fun createFactorySettings(context: Context): Settings {
                 .setColumnCount(context.resources.getInteger(R.integer.config_columnCount))
                 .build()
         )
+        .setSearchBar(
+            Settings.SearchBarSettings.newBuilder()
+                .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
+                .build()
+        )
         .build()
 }

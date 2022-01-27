@@ -502,6 +502,9 @@
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
 
+    <string name="preference_search_bar_style">Style</string>
+    <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
+
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
 
     <string name="music_widget_default_title">%1$s is playing media</string>

@@ -459,6 +459,8 @@
     <string name="preference_search_gdrive">Google Drive</string>
     <string name="preference_summary_not_logged_in">Sie sind im Moment nicht angemeldet</string>
     <string name="preference_search_gdrive_summary">%1$ss Dateien auf Google Drive durchsuchen</string>
+    <string name="preference_search_bar_style">Stil</string>
+    <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
 
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -62,5 +63,18 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun openWallpaperChooser(context: AppCompatActivity) {
         context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
+    }
+
+    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
+    fun setSearchBarStyle(searchBarStyle: SearchBarSettings.SearchBarStyle) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(it.searchBar.toBuilder()
+                        .setSearchBarStyle(searchBarStyle)
+                    )
+                    .build()
+            }
+        }
     }
 }

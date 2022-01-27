@@ -30,6 +30,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.focus.onFocusEvent
@@ -41,11 +42,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
 import de.mm20.launcher2.ui.settings.SettingsActivity
+import kotlinx.coroutines.flow.map
+import org.koin.androidx.compose.inject
 import java.io.File
 
 @Composable
@@ -55,6 +61,11 @@ fun SearchBar(
 ) {
     val searchViewModel: SearchVM = viewModel()
     val activityViewModel: LauncherActivityVM = viewModel()
+
+    val dataStore: LauncherDataStore by inject()
+
+    val style by remember { dataStore.data.map { it.searchBar.searchBarStyle } }
+        .collectAsState(SearchBarSettings.SearchBarStyle.Hidden)
 
     val context = LocalContext.current
 
@@ -69,6 +80,7 @@ fun SearchBar(
         onValueChange = {
             searchViewModel.search(it)
         },
+        style = style,
         overflowMenu = { show, onDismissRequest ->
             DropdownMenu(expanded = show, onDismissRequest = onDismissRequest) {
                 DropdownMenuItem(onClick = {
@@ -125,6 +137,7 @@ fun SearchBar(
     websearches: List<Websearch>,
     overflowMenu: @Composable (show: Boolean, onDismissRequest: () -> Unit) -> Unit = { _, _ -> },
     value: String,
+    style: SearchBarSettings.SearchBarStyle,
     onValueChange: (String) -> Unit,
     onFocus: () -> Unit = {}
 ) {
@@ -148,10 +161,10 @@ fun SearchBar(
             }
         }
     ) {
-        when (it) {
-            SearchBarLevel.Resting -> 0.dp
-            SearchBarLevel.Active -> 2.dp
-            SearchBarLevel.Raised -> 8.dp
+        when {
+            it == SearchBarLevel.Resting && style != SearchBarSettings.SearchBarStyle.Solid -> 0.dp
+            it == SearchBarLevel.Raised -> 8.dp
+            else -> 2.dp
         }
     }
 
@@ -166,7 +179,11 @@ fun SearchBar(
                 else -> tween(durationMillis = 500)
             }
         }) {
-        if (it == SearchBarLevel.Resting) 0f else 1f
+        when {
+            style != SearchBarSettings.SearchBarStyle.Transparent -> 1f
+            it == SearchBarLevel.Resting -> 0f
+            else -> 1f
+        }
     }
 
     val contentColor by transition.animateColor(label = "textColor",
@@ -180,7 +197,16 @@ fun SearchBar(
                 else -> tween(durationMillis = 500)
             }
         }) {
-        if (it == SearchBarLevel.Resting) Color.White else LocalContentColor.current
+        when {
+            style != SearchBarSettings.SearchBarStyle.Transparent -> LocalContentColor.current
+            it == SearchBarLevel.Resting -> Color.White
+            else -> LocalContentColor.current
+        }
+    }
+
+    val opacity by transition.animateFloat(label = "opacity") {
+        if (style == SearchBarSettings.SearchBarStyle.Hidden && it == SearchBarLevel.Resting) 0f
+        else 1f
     }
 
     val rightIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
@@ -189,6 +215,7 @@ fun SearchBar(
         modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight()
+            .alpha(opacity)
             .padding(8.dp),
         backgroundOpacity = backgroundOpacity,
         elevation = elevation
