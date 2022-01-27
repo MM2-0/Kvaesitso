@@ -66,6 +66,7 @@ fun CalendarWidgetSettingsScreen() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExcludedCalendarsPreference(
     calendars: List<UserCalendar>,
