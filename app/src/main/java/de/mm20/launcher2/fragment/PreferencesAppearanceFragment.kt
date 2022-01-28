@@ -19,9 +19,6 @@ import de.mm20.launcher2.R
 import de.mm20.launcher2.icons.IconPackManager
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.preferences.IconShape
-import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -86,16 +83,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
             )
             val iconShapeList = LinearLayout(requireContext())
             iconShapeList.orientation = LinearLayout.VERTICAL
-            val shapes = arrayOf(
-                    IconShape.PLATFORM_DEFAULT to R.string.preference_icon_shape_platform,
-                    IconShape.CIRCLE to R.string.preference_icon_shape_circle,
-                    IconShape.ROUNDED_SQUARE to R.string.preference_icon_shape_rounded_square,
-                    IconShape.SQUARE to R.string.preference_icon_shape_square,
-                    IconShape.SQUIRCLE to R.string.preference_icon_shape_squircle,
-                    IconShape.HEXAGON to R.string.preference_icon_shape_hexagon,
-                    IconShape.TRIANGLE to R.string.preference_icon_shape_triangle,
-                    IconShape.PENTAGON to R.string.preference_icon_shape_pentagon
-            )
             val layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT)

@@ -47,15 +47,7 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
     }
 
 
-    var dimWallpaper by BooleanPreference("dim_wallpaper", default = false)
     var appStartAnim by EnumPreference("app_start_anim", default = AppStartAnimation.M)
-
-    var searchCalendars by BooleanPreference("search_calendars", default = true)
-    var searchContacts by BooleanPreference("search_contacts", default = true)
-
-    var themedIcons by BooleanPreference("themed_icons", default = false)
-    var legacyIconBg by StringPreference("legacy_icon_bg", default = "1")
-    var iconShape by EnumPreference("icon_shape", default = IconShape.PLATFORM_DEFAULT)
 
     var cardOpacity by IntPreference("card_opacity", default = 0xFF)
     var cardStrokeWidth by IntPreference("card_stroke_width", default = 0)
@@ -69,18 +61,6 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
             instance = LauncherPreferences(app)
         }
     }
-}
-
-enum class IconShape(override val value: String) : PreferenceEnum {
-    CIRCLE("0"),
-    SQUARE("1"),
-    ROUNDED_SQUARE("2"),
-    TRIANGLE("3"),
-    SQUIRCLE("4"),
-    HEXAGON("5"),
-    HEART("6"),
-    PENTAGON("7"),
-    PLATFORM_DEFAULT("8")
 }
 
 enum class AppStartAnimation(override val value: String): PreferenceEnum {
