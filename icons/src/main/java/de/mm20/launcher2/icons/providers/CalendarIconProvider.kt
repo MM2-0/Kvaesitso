@@ -42,8 +42,7 @@ class CalendarIconProvider(val context: Context): IconProvider {
             foregroundScale = 1.5f,
             backgroundScale = 1.5f,
             packageName = component.packageName,
-            drawableIds = drawableIds,
-            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+            drawableIds = drawableIds
         )
     }
 }

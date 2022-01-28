@@ -16,14 +16,11 @@ class CalendarDynamicLauncherIcon(
     backgroundScale: Float,
     val packageName: String,
     val drawableIds: IntArray,
-    autoGenerateBackgroundMode: Int
 ) : DynamicLauncherIcon(
     foreground,
     background,
     foregroundScale,
     backgroundScale,
-        /** Not needed, we already have a background **/
-    autoGenerateBackgroundMode
 ) {
 
     var currentDay = 0
@@ -39,7 +36,7 @@ class CalendarDynamicLauncherIcon(
         Executors.newSingleThreadExecutor().execute {
             val currentDayDrawable = resources.getDrawableOrNull(drawableIds[day - 1])
                     ?: return@execute
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && currentDayDrawable is AdaptiveIconDrawable) {
+            if (currentDayDrawable is AdaptiveIconDrawable) {
                 foreground = currentDayDrawable.foreground
                 background = currentDayDrawable.background
                 foregroundScale = 1.5f

@@ -35,8 +35,4 @@ class GDriveFile(
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
-
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
-        return null
-    }
 }

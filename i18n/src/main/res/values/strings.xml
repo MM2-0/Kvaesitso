@@ -257,6 +257,7 @@
     <string name="preference_calendar_max_events">Number of events</string>
     <string name="preference_location_disabled_summary">Not supported by this provider</string>
     <string name="preference_legacy_icon_bg">Icon background</string>
+    <string name="preference_legacy_icon_bg_summary">Legacy icon style</string>
     <string name="preference_legacy_icon_bg_none">None</string>
     <string name="preference_legacy_icon_bg_color">Dynamic</string>
     <string name="preference_legacy_icon_bg_white">White</string>

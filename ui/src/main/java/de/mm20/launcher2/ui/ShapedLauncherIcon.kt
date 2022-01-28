@@ -23,6 +23,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.icons.PlaceholderIcon
 import de.mm20.launcher2.ui.icons.getPlaceholderIcon
@@ -48,7 +50,7 @@ fun ShapedLauncherIcon(
 
     LaunchedEffect(item) {
         icon = withContext(Dispatchers.IO) {
-            item.loadIcon(context, iconSize)
+            item.loadIcon(context, iconSize, LegacyIconBackground.Dynamic)
         }
     }
 

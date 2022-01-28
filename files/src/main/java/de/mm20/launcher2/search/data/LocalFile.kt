@@ -13,21 +13,17 @@ import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
 import androidx.core.content.FileProvider
-import androidx.core.database.getStringOrNull
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import java.io.IOException
-import java.util.*
 import java.io.File as JavaIOFile
 
 open class LocalFile(
@@ -45,7 +41,7 @@ open class LocalFile(
 
     override val isStoredInCloud = false
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         if (!JavaIOFile(path).exists()) return null
         when {
             mimeType.startsWith("image/") -> {
@@ -58,7 +54,7 @@ open class LocalFile(
 
                 return LauncherIcon(
                     foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                    autoGenerateBackgroundMode = legacyIconBackground.number
                 )
             }
             mimeType.startsWith("video/") -> {
@@ -70,7 +66,7 @@ open class LocalFile(
                 } ?: return null
                 return LauncherIcon(
                     foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                    autoGenerateBackgroundMode = legacyIconBackground.number
                 )
             }
             mimeType.startsWith("audio/") -> {
@@ -97,7 +93,7 @@ open class LocalFile(
                 thumbnail ?: return null
                 return LauncherIcon(
                     foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                    autoGenerateBackgroundMode = legacyIconBackground.number
                 )
 
             }
@@ -107,7 +103,7 @@ open class LocalFile(
                     pkgInfo?.applicationInfo?.loadIcon(context.packageManager)
                 } ?: return null
                 when {
-                    Build.VERSION.SDK_INT > Build.VERSION_CODES.O && icon is AdaptiveIconDrawable -> {
+                    icon is AdaptiveIconDrawable -> {
                         return LauncherIcon(
                             foreground = icon.foreground,
                             background = icon.background,
@@ -119,7 +115,7 @@ open class LocalFile(
                         return LauncherIcon(
                             foreground = icon,
                             foregroundScale = 0.7f,
-                            autoGenerateBackgroundMode = LauncherIcon.BACKGROUND_COLOR
+                            autoGenerateBackgroundMode = legacyIconBackground.number
                         )
                     }
                 }

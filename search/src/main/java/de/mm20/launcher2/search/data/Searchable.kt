@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.search.R
 import java.text.Collator
 
@@ -32,7 +34,7 @@ abstract class Searchable : Comparable<Searchable> {
         }
     }
 
-    open suspend fun loadIcon(context: Context, size: Int): LauncherIcon? = null
+    open suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? = null
     abstract fun getPlaceholderIcon(context: Context): LauncherIcon
 
     override fun compareTo(other: Searchable): Int {

@@ -13,6 +13,8 @@ import coil.request.ImageRequest
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.sp
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.websites.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,7 +30,7 @@ class Website(
 ) : Searchable() {
 
     override val key = "web://$url"
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         if (favicon.isEmpty()) return null
         try {
             val request = ImageRequest.Builder(context)
@@ -36,18 +38,11 @@ class Website(
                 .size(size)
                 .build()
             val icon = context.imageLoader.execute(request).drawable ?: return null
-            val color = if (color != 0) color else {
-                withContext(Dispatchers.Default) {
-                    Palette
-                        .from(icon.toBitmap())
-                        .generate()
-                        .getLightMutedColor(Color.WHITE)
-                }
-            }
             return LauncherIcon(
                 foreground = icon,
-                background = ColorDrawable(color),
-                foregroundScale = 0.7f
+                background = color.let { ColorDrawable(it) },
+                foregroundScale = 0.7f,
+                autoGenerateBackgroundMode = legacyIconBackground.number
             )
         } catch (e: ExecutionException) {
             return null

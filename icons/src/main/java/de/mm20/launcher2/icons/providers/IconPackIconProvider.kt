@@ -17,13 +17,16 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.icons.CalendarDynamicLauncherIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.randomElementOrNull
-import de.mm20.launcher2.preferences.IconShape
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
 import kotlin.math.roundToInt
 
-class IconPackIconProvider(val context: Context, val iconPack: String): IconProvider {
+class IconPackIconProvider(
+    private val context: Context,
+    private val iconPack: String,
+    private val legacyIconBackground: Settings.IconSettings.LegacyIconBackground
+    ): IconProvider {
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
         val res = try {
@@ -57,18 +60,14 @@ class IconPackIconProvider(val context: Context, val iconPack: String): IconProv
                 LauncherIcon(
                     foreground = drawable,
                     foregroundScale = getScale(),
-                    autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+                    autoGenerateBackgroundMode = legacyIconBackground.number
                 )
             }
         }
     }
 
     private fun getScale(): Float {
-        return when (LauncherPreferences.instance.iconShape) {
-            IconShape.CIRCLE, IconShape.PLATFORM_DEFAULT -> 0.7f
-            else -> 0.8f
-
-        }
+        return 0.7f
     }
 
     private suspend fun generateIcon(
@@ -151,7 +150,7 @@ class IconPackIconProvider(val context: Context, val iconPack: String): IconProv
         return LauncherIcon(
             foreground = BitmapDrawable(context.resources, bitmap),
             foregroundScale = getScale(),
-            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+            autoGenerateBackgroundMode = legacyIconBackground.number
         )
     }
 
@@ -200,7 +199,6 @@ class IconPackIconProvider(val context: Context, val iconPack: String): IconProv
             backgroundScale = 1.5f,
             packageName = iconPack,
             drawableIds = drawableIds,
-            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
         )
     }
 }

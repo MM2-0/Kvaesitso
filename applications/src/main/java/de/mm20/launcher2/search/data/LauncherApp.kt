@@ -8,11 +8,16 @@ import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.os.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Process
+import android.os.UserHandle
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -68,29 +73,26 @@ class LauncherApp(
         return launcherActivityInfo.user
     }
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         try {
             val icon =
                 withContext(Dispatchers.IO) {
                     launcherActivityInfo.getIcon(context.resources.displayMetrics.densityDpi)
 
                 } ?: return null
-            when {
-                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && icon is AdaptiveIconDrawable -> {
-                    return LauncherIcon(
-                        foreground = icon.foreground ?: return null,
-                        background = icon.background,
-                        foregroundScale = 1.5f,
-                        backgroundScale = 1.5f
-                    )
-                }
-                else -> {
-                    return LauncherIcon(
-                        foreground = icon,
-                        foregroundScale = 0.7f,
-                        autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
-                    )
-                }
+            if (icon is AdaptiveIconDrawable) {
+                return LauncherIcon(
+                    foreground = icon.foreground ?: return null,
+                    background = icon.background,
+                    foregroundScale = 1.5f,
+                    backgroundScale = 1.5f
+                )
+            } else {
+                return LauncherIcon(
+                    foreground = icon,
+                    foregroundScale = 0.7f,
+                    autoGenerateBackgroundMode = legacyIconBackground.number
+                )
             }
         } catch (e: PackageManager.NameNotFoundException) {
             return null

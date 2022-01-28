@@ -62,27 +62,19 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                 } else {
                     isEnabled = true
                     summary = "%s"
-                    value = packs.indexOfFirst { it.packageName == iconPackManager.selectedIconPack }.toString()
                 }
                 setOnPreferenceChangeListener { _, newValue ->
                     val index = (newValue as String).toInt()
-                    if (index == -1) iconPackManager.selectIconPack("")
-                    else {
-                        iconPackManager.selectIconPack(packs[index].packageName)
-                    }
-                    iconRepository.recreate()
                     true
                 }
             }
         }
 
         findPreference<Preference>("legacy_icon_bg")?.setOnPreferenceChangeListener { _, _ ->
-            iconRepository.recreate()
             true
         }
 
         findPreference<Preference>("themed_icons")?.setOnPreferenceChangeListener { _, _ ->
-            iconRepository.recreate()
             true
         }
 

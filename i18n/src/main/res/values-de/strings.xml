@@ -257,6 +257,7 @@
     <string name="preference_location_disabled_summary">Von diesem Wetterdienst nicht unterstützt</string>
     <string name="preference_category_search_unitconverter">Einheitenrechner</string>
     <string name="preference_legacy_icon_bg">Symbol-Hintergrund</string>
+    <string name="preference_legacy_icon_bg_summary">Stil von Legacy-Icons</string>
     <string name="preference_legacy_icon_bg_none">Keiner</string>
     <string name="preference_legacy_icon_bg_color">Dynamisch</string>
     <string name="preference_legacy_icon_bg_white">Weiß</string>

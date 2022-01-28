@@ -35,8 +35,6 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val iconRepository: IconRepository by inject()
-        iconRepository.recreate()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 

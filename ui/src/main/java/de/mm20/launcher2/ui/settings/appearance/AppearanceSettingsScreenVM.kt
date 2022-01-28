@@ -2,13 +2,14 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import de.mm20.launcher2.icons.IconPack
+import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -17,6 +18,8 @@ import org.koin.core.component.inject
 
 class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
+
+    private val iconRepository: IconRepository by inject()
 
     val theme = dataStore.data.map { it.appearance.theme }.asLiveData()
     fun setTheme(theme: Theme) {
@@ -88,6 +91,58 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
                     .setIcons(
                         it.icons.toBuilder()
                             .setShape(iconShape)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val legacyIconBackground = dataStore.data.map { it.icons.legacyIconBg }.asLiveData()
+    fun setLegacyIconBackground(legacyIconBackground: LegacyIconBackground) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons.toBuilder()
+                            .setLegacyIconBg(legacyIconBackground)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val themedIcons = dataStore.data.map { it.icons.themedIcons }.asLiveData()
+    fun setThemedIcons(themedIcons: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons.toBuilder()
+                            .setThemedIcons(themedIcons)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val installedIconPacks: LiveData<List<IconPack>> = liveData {
+        emit(
+            listOf(IconPack(
+                name = "System",
+                packageName = "",
+                version = "",
+            )) +
+            iconRepository.getInstalledIconPacks()
+        )
+    }
+    val iconPack = dataStore.data.map { it.icons.iconPack }.asLiveData()
+    fun setIconPack(iconPack: String) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons.toBuilder()
+                            .setIconPack(iconPack)
                     )
                     .build()
             }

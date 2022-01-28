@@ -17,6 +17,8 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -68,7 +70,7 @@ class AppShortcut(
         )
     }
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
             launcherApps.getShortcutIconDrawable(
@@ -87,7 +89,7 @@ class AppShortcut(
         return LauncherIcon(
             foreground = icon,
             foregroundScale = 1f,
-            autoGenerateBackgroundMode = LauncherPreferences.instance.legacyIconBg.toInt()
+            autoGenerateBackgroundMode = legacyIconBackground.number
         )
     }
 }

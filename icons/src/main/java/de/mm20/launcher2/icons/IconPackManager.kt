@@ -28,24 +28,6 @@ private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
 class IconPackManager(
     val context: Context
 ) {
-    var selectedIconPack: String
-        get() {
-            return context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
-                .getString(KEY_ICON_PACK, "")!!
-        }
-        set(value) {
-            Log.d("MM20", "Selected icon pack: $value")
-            context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
-                .edit()
-                .putString(KEY_ICON_PACK, value)
-                .apply()
-        }
-
-
-    fun selectIconPack(iconPack: String) {
-        selectedIconPack = iconPack
-    }
-
     suspend fun getInstalledIconPacks(): List<IconPack> {
         return withContext(Dispatchers.IO) {
             AppDatabase.getInstance(context).iconDao().getInstalledIconPacks().map {

@@ -17,6 +17,8 @@ import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -58,7 +60,7 @@ class Contact(
         )
     }
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         val contentResolver = context.contentResolver
         val bmp = withContext(Dispatchers.IO) {
             val uri = ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return@withContext null
@@ -66,7 +68,9 @@ class Contact(
                 ?.asBitmap()
         } ?: return null
         return LauncherIcon(
-            foreground = bmp.toDrawable(context.resources)
+            foreground = bmp.toDrawable(context.resources),
+            background = null,
+            autoGenerateBackgroundMode = legacyIconBackground.number
         )
     }
 

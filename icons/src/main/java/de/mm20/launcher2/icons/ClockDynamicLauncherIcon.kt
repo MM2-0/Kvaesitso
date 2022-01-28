@@ -23,9 +23,7 @@ class ClockDynamicLauncherIcon(
     foreground,
     background,
     foregroundScale,
-    backgroundScale,
-        /** Not needed, we already have a background **/
-    LauncherIcon.BACKGROUND_WHITE
+    backgroundScale
 ) {
 
 

@@ -25,7 +25,7 @@ open class LauncherIcon(
     private fun updateBackgroundColor() {
         if (background == null) {
             when (autoGenerateBackgroundMode) {
-                BACKGROUND_COLOR -> {
+                BACKGROUND_DYNAMIC -> {
                     val palette = Palette
                             .from(foreground.toBitmap())
                             .generate()
@@ -77,8 +77,8 @@ open class LauncherIcon(
     }
 
     companion object {
-        const val BACKGROUND_NONE = 0
-        const val BACKGROUND_COLOR = 1
+        const val BACKGROUND_NONE = 1
+        const val BACKGROUND_DYNAMIC = 0
         const val BACKGROUND_WHITE = 2
     }
 }

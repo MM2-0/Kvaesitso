@@ -21,8 +21,6 @@ class ThemedCalendarDynamicLauncherIcon(
     background = background,
     foregroundScale = foregroundScale,
     backgroundScale = 1f,
-        /** Not needed, we already have a background **/
-    BACKGROUND_WHITE
 ) {
 
     var currentDay = 0

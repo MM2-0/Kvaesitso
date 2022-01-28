@@ -10,6 +10,8 @@ import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.applications.R
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 
 class AppInstallation(
         val session: PackageInstaller.SessionInfo
@@ -38,7 +40,7 @@ class AppInstallation(
                 foregroundScale = 0.5f)
     }
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
+    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
         val icon = session.appIcon ?: return getPlaceholderIcon(context)
         val foreground = BitmapDrawable(context.resources, icon)
         foreground.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {

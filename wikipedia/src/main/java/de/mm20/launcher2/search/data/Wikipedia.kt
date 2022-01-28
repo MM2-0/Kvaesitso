@@ -30,10 +30,6 @@ class Wikipedia(
 ) : Searchable() {
     override val key = "wikipedia://$wikipediaUrl:$id"
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
-        return null
-    }
-
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         return LauncherIcon(
                 foreground = context.getDrawable(R.drawable.ic_wikipedia)!!,

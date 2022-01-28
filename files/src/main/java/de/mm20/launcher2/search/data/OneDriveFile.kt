@@ -26,10 +26,6 @@ class OneDriveFile(
 
     override val isStoredInCloud = true
 
-    override suspend fun loadIcon(context: Context, size: Int): LauncherIcon? {
-        return null
-    }
-
     override fun getLaunchIntent(context: Context): Intent? {
         return Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(webUrl)
