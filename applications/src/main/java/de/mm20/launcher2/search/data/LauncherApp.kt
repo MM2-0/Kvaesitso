@@ -1,5 +1,6 @@
 package de.mm20.launcher2.search.data
 
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -114,6 +115,8 @@ class LauncherApp(
                     options
                 )
             } catch (e: SecurityException) {
+                return false
+            } catch (e: ActivityNotFoundException) {
                 return false
             }
         }
