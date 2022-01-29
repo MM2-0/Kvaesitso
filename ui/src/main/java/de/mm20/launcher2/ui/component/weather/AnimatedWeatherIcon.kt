@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.weather
+package de.mm20.launcher2.ui.component.weather
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColor
@@ -27,7 +27,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.*
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.icons.*
 import kotlin.math.PI

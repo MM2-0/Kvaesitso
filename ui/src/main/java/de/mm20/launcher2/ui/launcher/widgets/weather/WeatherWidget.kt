@@ -31,8 +31,8 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.weather.AnimatedWeatherIcon
-import de.mm20.launcher2.ui.weather.WeatherIcon
+import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
+import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import java.text.DateFormat

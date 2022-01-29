@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.weather
+package de.mm20.launcher2.ui.component.weather
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset
