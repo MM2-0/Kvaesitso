@@ -101,11 +101,7 @@ open class SearchableView(context: Context, representation: Int) : FrameLayout(c
             is Contact -> ContactDetailRepresentation()
             is CalendarEvent -> CalendarDetailRepresentation()
             is Wikipedia -> WikipediaDetailRepresentation()
-            is AppShortcut -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-                AppShortcutDetailRepresentation()
-            } else {
-                return
-            }
+            is AppShortcut -> AppShortcutDetailRepresentation()
             else -> return
         }
         applyScene(representation.getScene(this, searchable, previousRepresentation))

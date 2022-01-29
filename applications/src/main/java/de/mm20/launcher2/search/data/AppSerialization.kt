@@ -48,7 +48,6 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
 }
 
 class AppShortcutSerializer : SearchableSerializer {
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
     override fun serialize(searchable: Searchable): String {
         searchable as AppShortcut
         return jsonObjectOf(
@@ -67,7 +66,6 @@ class AppShortcutDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
 
-    @RequiresApi(Build.VERSION_CODES.N_MR1)
     override fun deserialize(serialized: String): Searchable? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return null

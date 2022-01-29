@@ -81,9 +81,6 @@ class ThemedIconProvider(
     }
 
     private fun getClockIcon(resources: Resources, resId: Int): LauncherIcon? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            return null
-        }
         try {
             val array = resources.obtainTypedArrayOrNull(resId) ?: return null
             var i = 0

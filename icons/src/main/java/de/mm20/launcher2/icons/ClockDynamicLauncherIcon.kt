@@ -10,7 +10,6 @@ import androidx.annotation.RequiresApi
 import java.util.*
 import kotlin.math.roundToInt
 
-@RequiresApi(Build.VERSION_CODES.O)
 class ClockDynamicLauncherIcon(
     foreground: LayerDrawable,
     background: Drawable?,

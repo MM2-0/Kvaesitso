@@ -96,11 +96,6 @@ class PreferencesAppearanceFragment : PreferenceFragmentCompat() {
                     .show()
             true
         }
-
-        val systemBarsCategory = findPreference<PreferenceCategory>("system_bars")!!
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            systemBarsCategory.removePreference(findPreference("light_nav_bar"))
-        }
     }
 
 

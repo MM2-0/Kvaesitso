@@ -14,7 +14,6 @@ import de.mm20.launcher2.search.data.Searchable
 
 class GoogleClockIconProvider(val context: Context) : IconProvider {
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon? {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return null
         if (searchable !is Application) return null
         if (searchable.`package` != "com.google.android.deskclock") return null
         val pm = context.packageManager

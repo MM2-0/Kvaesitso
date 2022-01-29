@@ -59,7 +59,6 @@ class LauncherIconView : View, KoinComponent {
     private var platformShapeBounds: RectF? = null
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getSystemShape(): Path {
         return AdaptiveIconDrawable(null, null).iconMask
     }

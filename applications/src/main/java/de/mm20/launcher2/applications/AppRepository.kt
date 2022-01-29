@@ -40,11 +40,7 @@ internal class AppRepositoryImpl(
 
 
     private val profiles: List<UserHandle> =
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
-        } else {
-            listOf(Process.myUserHandle())
-        }
+        launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
 
 
     private val installingPackages = mutableMapOf<Int, String>()

@@ -124,13 +124,11 @@ public class CrashUtil {
     }
 
     private static void createNotificationChannel(NotificationManager notificationManager, Context context) {
-        if (Build.VERSION.SDK_INT >= 26) {
-            CharSequence name = context.getString(R.string.notification_crash_report_title);
-            String description = "";
-            NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
-            channel.setDescription(description);
-            notificationManager.createNotificationChannel(channel);
-        }
+        CharSequence name = context.getString(R.string.notification_crash_report_title);
+        String description = "";
+        NotificationChannel channel = new NotificationChannel(CHANNEL_NOTIFICATION_ID, name, NotificationManager.IMPORTANCE_DEFAULT);
+        channel.setDescription(description);
+        notificationManager.createNotificationChannel(channel);
     }
 
     private static String getStackTrace(Throwable e) {

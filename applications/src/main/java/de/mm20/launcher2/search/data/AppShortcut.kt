@@ -22,7 +22,6 @@ import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-@RequiresApi(Build.VERSION_CODES.N_MR1)
 class AppShortcut(
     context: Context,
     val launcherShortcut: ShortcutInfo,
@@ -78,7 +77,7 @@ class AppShortcut(
                 context.resources.displayMetrics.densityDpi
             )
         } ?: return null
-        if (isAtLeastApiLevel(Build.VERSION_CODES.O) && icon is AdaptiveIconDrawable) {
+        if (icon is AdaptiveIconDrawable) {
             return LauncherIcon(
                 foreground = icon.foreground,
                 background = icon.background,

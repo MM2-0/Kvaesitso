@@ -25,7 +25,6 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-@RequiresApi(Build.VERSION_CODES.N_MR1)
 class AppShortcutDetailRepresentation : Representation, KoinComponent {
 
     private val iconRepository: IconRepository by inject()

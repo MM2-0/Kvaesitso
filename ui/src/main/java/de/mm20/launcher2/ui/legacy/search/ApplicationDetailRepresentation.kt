@@ -18,7 +18,6 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import android.net.Uri
-import android.os.Build
 import android.os.Handler
 import android.os.Process
 import android.service.notification.StatusBarNotification
@@ -37,8 +36,10 @@ import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.*
-import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ktx.castToOrNull
+import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.ktx.getBadgeIcon
+import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
@@ -46,11 +47,13 @@ import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
 import de.mm20.launcher2.ui.legacy.view.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.concurrent.Executors
@@ -176,7 +179,10 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
         return scene
     }
 
-    private fun updateNotifications(chipGroup: ChipGroup, notifications: List<StatusBarNotification>) {
+    private fun updateNotifications(
+        chipGroup: ChipGroup,
+        notifications: List<StatusBarNotification>
+    ) {
         val context = chipGroup.context
         chipGroup.removeAllViews()
         notifications.forEach {
@@ -299,69 +305,67 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
 
     private fun setupShortcuts(appShortcuts: ChipGroup, app: Application) {
         val context = appShortcuts.context
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            val launcherApps =
-                context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-            if (launcherApps.hasShortcutHostPermission()) {
-                val shortcuts = app.shortcuts
+        val launcherApps =
+            context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        if (launcherApps.hasShortcutHostPermission()) {
+            val shortcuts = app.shortcuts
 
-                val repository: FavoritesRepository by inject()
+            val repository: FavoritesRepository by inject()
 
-                var count = 0
-                for (si in shortcuts) {
-                    if (count > 4) break
-                    count++
-                    val view = Chip(context)
-                    view.text = si.label
+            var count = 0
+            for (si in shortcuts) {
+                if (count > 4) break
+                count++
+                val view = Chip(context)
+                view.text = si.label
 
-                    view.chipIcon = createShortcutDrawable(
-                        launcherApps.getShortcutBadgedIconDrawable(
-                            si.launcherShortcut,
-                            context.resources.displayMetrics.densityDpi
-                        )
+                view.chipIcon = createShortcutDrawable(
+                    launcherApps.getShortcutBadgedIconDrawable(
+                        si.launcherShortcut,
+                        context.resources.displayMetrics.densityDpi
                     )
+                )
 
-                    view.chipIconSize = 24 * context.dp
+                view.chipIconSize = 24 * context.dp
 
-                    view.chipIconTint = null
+                view.chipIconTint = null
 
-                    view.chipStrokeWidth = 1 * context.dp
-                    view.chipStrokeColor =
-                        ContextCompat.getColorStateList(context, R.color.chip_stroke)
-                    view.chipBackgroundColor =
-                        ContextCompat.getColorStateList(context, R.color.chip_background)
-                    view.setTextAppearanceResource(R.style.ChipTextAppearance)
-                    view.closeIcon = context.getDrawable(R.drawable.ic_star_solid)
-                    view.closeIconTint = ColorStateList.valueOf(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.text_color_primary
-                        )
+                view.chipStrokeWidth = 1 * context.dp
+                view.chipStrokeColor =
+                    ContextCompat.getColorStateList(context, R.color.chip_stroke)
+                view.chipBackgroundColor =
+                    ContextCompat.getColorStateList(context, R.color.chip_background)
+                view.setTextAppearanceResource(R.style.ChipTextAppearance)
+                view.closeIcon = context.getDrawable(R.drawable.ic_star_solid)
+                view.closeIconTint = ColorStateList.valueOf(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.text_color_primary
                     )
-                    val isPinned = repository.isPinned(si).asLiveData()
+                )
+                val isPinned = repository.isPinned(si).asLiveData()
 
-                    isPinned.observe(context as LifecycleOwner, Observer {
-                        view.isCloseIconVisible = isPinned.value == true
-                    })
+                isPinned.observe(context as LifecycleOwner, Observer {
+                    view.isCloseIconVisible = isPinned.value == true
+                })
 
-                    view.setOnClickListener {
-                        ActivityStarter.start(context, view)
-                        launcherApps.startShortcut(si.launcherShortcut, null, null)
-                    }
-                    view.setOnLongClickListener {
-                        if (isPinned.value == true) {
-                            repository.unpinItem(si)
-                        } else {
-                            repository.pinItem(si)
-                        }
-                        true
-                    }
-                    view.setOnCloseIconClickListener {
-                        repository.unpinItem(si)
-                        view.isCloseIconVisible = false
-                    }
-                    appShortcuts.addView(view)
+                view.setOnClickListener {
+                    ActivityStarter.start(context, view)
+                    launcherApps.startShortcut(si.launcherShortcut, null, null)
                 }
+                view.setOnLongClickListener {
+                    if (isPinned.value == true) {
+                        repository.unpinItem(si)
+                    } else {
+                        repository.pinItem(si)
+                    }
+                    true
+                }
+                view.setOnCloseIconClickListener {
+                    repository.unpinItem(si)
+                    view.isCloseIconVisible = false
+                }
+                appShortcuts.addView(view)
             }
         }
     }

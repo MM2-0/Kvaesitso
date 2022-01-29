@@ -17,7 +17,7 @@ class BadgeDrawable(context: Context, drawable: Drawable) : Drawable() {
 
     init {
         val size = (28.8 * context.dp).roundToInt()
-        val drw: Drawable = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && drawable is AdaptiveIconDrawable) {
+        val drw: Drawable = if (drawable is AdaptiveIconDrawable) {
             LayerDrawable(arrayOf(
                     drawable.background,
                     drawable.foreground

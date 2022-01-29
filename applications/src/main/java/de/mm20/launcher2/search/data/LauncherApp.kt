@@ -8,15 +8,12 @@ import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.preferences.LauncherPreferences
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -36,26 +33,24 @@ class LauncherApp(
     version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
     shortcuts = run {
         val appShortcuts = mutableListOf<AppShortcut>()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
-            val launcherApps = context.getSystemService<LauncherApps>()!!
-            if (!launcherApps.hasShortcutHostPermission()) return@run appShortcuts
-            val query = LauncherApps.ShortcutQuery()
-                .setPackage(launcherActivityInfo.applicationInfo.packageName)
-                .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
-            val shortcuts = try {
-                launcherApps.getShortcuts(query, launcherActivityInfo.user)
-            } catch (e: IllegalStateException) {
-                emptyList<ShortcutInfo>()
-            }
-            appShortcuts.addAll(shortcuts?.map {
-                AppShortcut(
-                    context,
-                    it,
-                    launcherActivityInfo.label.toString()
-                )
-            }
-                ?: emptyList())
+        val launcherApps = context.getSystemService<LauncherApps>()!!
+        if (!launcherApps.hasShortcutHostPermission()) return@run appShortcuts
+        val query = LauncherApps.ShortcutQuery()
+            .setPackage(launcherActivityInfo.applicationInfo.packageName)
+            .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
+        val shortcuts = try {
+            launcherApps.getShortcuts(query, launcherActivityInfo.user)
+        } catch (e: IllegalStateException) {
+            emptyList<ShortcutInfo>()
         }
+        appShortcuts.addAll(shortcuts?.map {
+            AppShortcut(
+                context,
+                it,
+                launcherActivityInfo.label.toString()
+            )
+        }
+            ?: emptyList())
         appShortcuts
     }
 ), KoinComponent {
@@ -73,7 +68,11 @@ class LauncherApp(
         return launcherActivityInfo.user
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
+    override suspend fun loadIcon(
+        context: Context,
+        size: Int,
+        legacyIconBackground: LegacyIconBackground
+    ): LauncherIcon? {
         try {
             val icon =
                 withContext(Dispatchers.IO) {

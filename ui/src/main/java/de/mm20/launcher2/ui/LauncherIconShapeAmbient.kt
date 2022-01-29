@@ -33,7 +33,6 @@ object LauncherIconShape {
     }
     val platformDefault: Shape = run {
         val platformShape = getSystemShape()
-        if (platformShape == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return@run CircleShape
         GenericShape { size, _ ->
             Log.d("MM20", "GenericShape {}")
             val matrix = Matrix()
@@ -45,11 +44,7 @@ object LauncherIconShape {
         }
     }
 
-    private fun getSystemShape(): Path? {
-        return if (isAtLeastApiLevel(Build.VERSION_CODES.O)) {
-            AdaptiveIconDrawable(null, null).iconMask
-        } else {
-            null
-        }
+    private fun getSystemShape(): Path {
+        return AdaptiveIconDrawable(null, null).iconMask
     }
 }

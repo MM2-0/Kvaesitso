@@ -48,7 +48,7 @@ class IconPackIconProvider(
             ?: return generateIcon(context, searchable.launcherActivityInfo, size)
         val drawable = ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
         return when {
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && drawable is AdaptiveIconDrawable -> {
+            drawable is AdaptiveIconDrawable -> {
                 LauncherIcon(
                     foreground = drawable.foreground,
                     background = drawable.background,
