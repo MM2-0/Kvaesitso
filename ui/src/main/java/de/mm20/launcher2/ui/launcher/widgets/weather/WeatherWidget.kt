@@ -158,10 +158,12 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    WeatherDetailRow(
-                        title = stringResource(id = R.string.weather_humidity),
-                        value = "${forecast.humidity.roundToInt()} %"
-                    )
+                    if (forecast.humidity >= 0) {
+                        WeatherDetailRow(
+                            title = stringResource(id = R.string.weather_humidity),
+                            value = "${forecast.humidity.roundToInt()} %"
+                        )
+                    }
                     WeatherDetailRow(
                         title = stringResource(id = R.string.weather_wind),
                         value = formatWindSpeed(imperialUnits, forecast)
