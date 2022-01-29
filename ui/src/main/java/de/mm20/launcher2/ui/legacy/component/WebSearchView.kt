@@ -17,7 +17,7 @@ import coil.size.Scale
 import com.google.android.material.chip.Chip
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewWebsearchBinding

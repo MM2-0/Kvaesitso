@@ -127,12 +127,14 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
 
     val installedIconPacks: LiveData<List<IconPack>> = liveData {
         emit(
-            listOf(IconPack(
-                name = "System",
-                packageName = "",
-                version = "",
-            )) +
-            iconRepository.getInstalledIconPacks()
+            listOf(
+                IconPack(
+                    name = "System",
+                    packageName = "",
+                    version = "",
+                )
+            ) +
+                    iconRepository.getInstalledIconPacks()
         )
     }
     val iconPack = dataStore.data.map { it.icons.iconPack }.asLiveData()

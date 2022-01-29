@@ -56,7 +56,6 @@
             app:title="@string/preference_icon_shape" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/preference_category_animations">
-        <de.mm20.launcher2.ui.preferences.AppStartAnimPreference app:title="@string/preference_app_start_animation" />
     </PreferenceCategory>
     <PreferenceCategory app:title="@string/preference_category_searchbar">
         <ListPreference

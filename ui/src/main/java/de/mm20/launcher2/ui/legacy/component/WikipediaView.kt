@@ -8,7 +8,7 @@ import android.widget.FrameLayout
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.SearchVM

@@ -13,7 +13,7 @@ import androidx.core.text.HtmlCompat
 import androidx.transition.Scene
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ktx.setStartCompoundDrawable
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView

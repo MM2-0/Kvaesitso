@@ -14,18 +14,13 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.legacy.helper.ActivityStarter
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
-import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
-import org.koin.core.component.inject
-import java.util.*
 
 
 class LauncherActivity : BaseActivity() {
@@ -114,7 +109,6 @@ class LauncherActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        ActivityStarter.resume()
         ActivityStarter.create(binding.rootView)
         binding.activityStartOverlay.visibility = View.INVISIBLE
 
@@ -123,18 +117,8 @@ class LauncherActivity : BaseActivity() {
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        ActivityStarter.pause()
-    }
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         onBackPressed()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        ActivityStarter.destroy()
     }
 }

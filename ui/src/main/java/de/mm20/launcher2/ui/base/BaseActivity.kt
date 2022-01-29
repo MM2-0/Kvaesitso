@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.base
 
 import android.os.Bundle
+import android.view.Window
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate

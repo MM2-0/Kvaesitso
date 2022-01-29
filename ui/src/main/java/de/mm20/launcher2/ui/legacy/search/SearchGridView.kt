@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.ListUpdateCallback
 import de.mm20.launcher2.ktx.ceilToInt
 import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.legacy.helper.ActivityStarter
-import de.mm20.launcher2.legacy.helper.ActivityStarterCallback
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarterCallback
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
@@ -32,12 +31,7 @@ import org.koin.core.component.inject
 import java.util.*
 import kotlin.math.min
 
-class SearchGridView : ViewGroup, ActivityStarterCallback, KoinComponent {
-    override fun onResume() {
-        while (postponedDiffs.isNotEmpty()) {
-            postponedDiffs.poll()?.let { applyDiff(it, true) }
-        }
-    }
+class SearchGridView : ViewGroup, KoinComponent {
 
     val dataStore: LauncherDataStore by inject()
 
@@ -96,9 +90,6 @@ class SearchGridView : ViewGroup, ActivityStarterCallback, KoinComponent {
 
     private var currentItems = listOf<Searchable>()
 
-    private val postponedDiffs = ArrayDeque<Queue<DiffAction>>()
-
-
     /**
      * The height of each row. An absolute pixel size or [ROW_HEIGHT_AUTO]
      */
@@ -121,7 +112,6 @@ class SearchGridView : ViewGroup, ActivityStarterCallback, KoinComponent {
             it.enableTransitionType(LayoutTransition.CHANGING)
         }
         clipChildren = false
-        ActivityStarter.registerCallback(this)
     }
 
     init {
@@ -228,11 +218,7 @@ class SearchGridView : ViewGroup, ActivityStarterCallback, KoinComponent {
      * Applies a diff queue. Enqueues to postponedDiffs if an activity is starting (leaving this view
      * in an unstable state) or if postponedDiffs is not empty and [force] is not set.
      */
-    private fun applyDiff(diff: Queue<DiffAction>, force: Boolean = false) {
-        if (ActivityStarter.isStarting() || (postponedDiffs.isNotEmpty() && !force)) {
-            postponedDiffs.push(diff)
-            return
-        }
+    private fun applyDiff(diff: Queue<DiffAction>) {
         val representation =
             if (columnCount == 1) SearchableView.REPRESENTATION_LIST else SearchableView.REPRESENTATION_GRID
         while (diff.isNotEmpty()) {

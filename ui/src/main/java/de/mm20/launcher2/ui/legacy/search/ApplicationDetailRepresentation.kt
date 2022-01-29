@@ -38,7 +38,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.*
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application

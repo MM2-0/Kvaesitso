@@ -164,5 +164,4 @@ message Settings {
     bool lightNavBar = 2;
   }
   SystemBarsSettings system_bars = 23;
-
 }

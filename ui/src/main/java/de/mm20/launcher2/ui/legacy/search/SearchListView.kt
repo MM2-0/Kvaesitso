@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.legacy.helper.ActivityStarter
-import de.mm20.launcher2.legacy.helper.ActivityStarterCallback
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarterCallback
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
@@ -17,12 +17,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class SearchListView : LinearLayout, ActivityStarterCallback {
-    override fun onResume() {
-        while (postponedDiffs.isNotEmpty()) {
-            postponedDiffs.poll()?.let { applyDiff(it, true) }
-        }
-    }
+class SearchListView : LinearLayout {
 
     @ObsoleteCoroutinesApi
     private val updateActor = lifecycleScope
@@ -55,27 +50,19 @@ class SearchListView : LinearLayout, ActivityStarterCallback {
 
     private var currentItems = listOf<Searchable>()
 
-    private val postponedDiffs = ArrayDeque<Queue<DiffAction>>()
-
-
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes) {
         layoutTransition = ChangingLayoutTransition()
         clipChildren = false
         orientation = VERTICAL
-        ActivityStarter.registerCallback(this)
     }
 
     /**
      * Applies a diff queue. Enqueues to postponedDiffs if an activity is starting (leaving this view
      * in an unstable state) or if postponedDiffs is not empty and [force] is not set.
      */
-    private fun applyDiff(diff: Queue<DiffAction>, force: Boolean = false) {
-        if (ActivityStarter.isStarting() || (postponedDiffs.isNotEmpty() && !force)) {
-            postponedDiffs.push(diff)
-            return
-        }
+    private fun applyDiff(diff: Queue<DiffAction>) {
         val representation = SearchableView.REPRESENTATION_LIST
         while (diff.isNotEmpty()) {
             val action = diff.poll() ?: continue

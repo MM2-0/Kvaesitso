@@ -9,7 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.SearchVM

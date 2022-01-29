@@ -6,10 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
@@ -32,10 +29,9 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.dp
+import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
-import de.mm20.launcher2.preferences.Settings.IconSettings
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.launcher.search.SearchBar

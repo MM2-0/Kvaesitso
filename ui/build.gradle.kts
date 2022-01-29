@@ -67,6 +67,8 @@ dependencies {
 
     implementation(libs.composecolorpicker)
 
+    implementation(libs.lottie.compose)
+
     // Legacy dependencies
     implementation(libs.androidx.transition)
 
@@ -76,7 +78,6 @@ dependencies {
 
     implementation(libs.viewpropertyobjectanimator)
     implementation(libs.draglinearlayout)
-    implementation(libs.lottie.core)
 
     implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)

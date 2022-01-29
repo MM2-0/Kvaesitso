@@ -21,7 +21,7 @@ import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.setStartCompoundDrawable
-import de.mm20.launcher2.legacy.helper.ActivityStarter
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
