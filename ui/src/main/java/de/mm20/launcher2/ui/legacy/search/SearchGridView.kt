@@ -35,17 +35,26 @@ class SearchGridView : ViewGroup, KoinComponent {
 
     val dataStore: LauncherDataStore by inject()
 
+    private val columnCountPreference = dataStore.data
+        .map { it.grid.columnCount.takeIf { it > 0 } ?: 5 }
+        .distinctUntilChanged()
+
     var job: Job? = null
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         job?.cancel()
         lifecycleScope.launch {
             lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dataStore.data.map { it.grid.columnCount }.distinctUntilChanged().collectLatest {
+                columnCountPreference.collectLatest {
                     columnCount = it
                 }
             }
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        job?.cancel()
     }
 
 
@@ -116,7 +125,7 @@ class SearchGridView : ViewGroup, KoinComponent {
 
     init {
         columnCount = runBlocking {
-            dataStore.data.map { it.grid.columnCount }.first().takeIf { it > 0 } ?: 5
+            columnCountPreference.first()
         }
     }
 
