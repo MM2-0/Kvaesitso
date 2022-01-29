@@ -7,7 +7,7 @@ import android.content.IntentFilter
 import android.util.LruCache
 import de.mm20.launcher2.icons.providers.*
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -45,28 +45,7 @@ class IconRepository(
 
         scope.launch {
             dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest {
-                val placeholderProvider = if (it.themedIcons) {
-                    ThemedPlaceholderIconProvider(context)
-                } else {
-                    PlaceholderIconProvider(context)
-                }
-                val providers = mutableListOf<IconProvider>()
-
-                if (it.themedIcons) {
-                    providers.add(ThemedIconProvider(context))
-                }
-
-                if (it.iconPack.isNotBlank()) {
-                    providers.add(IconPackIconProvider(context, it.iconPack, it.legacyIconBg))
-                }
-                providers.add(GoogleClockIconProvider(context))
-                providers.add(CalendarIconProvider(context))
-                providers.add(SystemIconProvider(context, it.legacyIconBg))
-                providers.add(placeholderProvider)
-                cache.evictAll()
-
-                this@IconRepository.placeholderProvider = placeholderProvider
-                iconProviders.value = providers
+                recreate(it)
             }
         }
     }
@@ -119,5 +98,36 @@ class IconRepository(
 
     suspend fun getInstalledIconPacks(): List<IconPack> {
         return iconPackManager.getInstalledIconPacks()
+    }
+
+    fun recreate() {
+        scope.launch {
+            recreate(dataStore.data.map { it.icons }.first())
+        }
+    }
+
+    private fun recreate(settings: Settings.IconSettings) {
+        val placeholderProvider = if (settings.themedIcons) {
+            ThemedPlaceholderIconProvider(context)
+        } else {
+            PlaceholderIconProvider(context)
+        }
+        val providers = mutableListOf<IconProvider>()
+
+        if (settings.themedIcons) {
+            providers.add(ThemedIconProvider(context))
+        }
+
+        if (settings.iconPack.isNotBlank()) {
+            providers.add(IconPackIconProvider(context, settings.iconPack, settings.legacyIconBg))
+        }
+        providers.add(GoogleClockIconProvider(context))
+        providers.add(CalendarIconProvider(context))
+        providers.add(SystemIconProvider(context, settings.legacyIconBg))
+        providers.add(placeholderProvider)
+        cache.evictAll()
+
+        this@IconRepository.placeholderProvider = placeholderProvider
+        iconProviders.value = providers
     }
 }

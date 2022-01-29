@@ -24,6 +24,7 @@ import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
 import kotlinx.coroutines.*
 import org.koin.android.ext.android.inject
+import org.koin.core.component.inject
 import java.util.*
 
 
@@ -35,6 +36,9 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val iconRepository: IconRepository by inject()
+        iconRepository.recreate()
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 

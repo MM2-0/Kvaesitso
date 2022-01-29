@@ -3,12 +3,10 @@ package de.mm20.launcher2.ui.launcher
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -26,12 +24,6 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
     ) { dim, darkMode ->
         dim && darkMode
     }.asLiveData()
-
-    init {
-        viewModelScope.launch {
-
-        }
-    }
 
     fun setDarkMode(darkMode: Boolean) {
         isDarkInMode.value = darkMode
