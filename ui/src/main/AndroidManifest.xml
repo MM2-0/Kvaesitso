@@ -31,17 +31,6 @@
 
         </activity>
         <activity
-            android:name=".activity.ComposeActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleTask"
-            android:exported="true"
-            android:resizeableActivity="false"
-            android:theme="@style/LauncherTheme"
-            android:windowSoftInputMode="stateHidden">
-
-        </activity>
-
-        <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings"
             android:launchMode="singleTask"
