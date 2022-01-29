@@ -157,4 +157,6 @@ message Settings {
   }
   IconSettings icons = 21;
 
+  bool easter_egg = 22;
+
 }

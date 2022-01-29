@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.about
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.runtime.*
@@ -37,9 +38,22 @@ fun AboutSettingsScreen() {
                         ).versionName
                     }
                 }
+                var easterEggCounter by remember { mutableStateOf(0) }
                 Preference(
                     title = stringResource(R.string.preference_version),
-                    summary = appVersion
+                    summary = appVersion,
+                    onClick = {
+                        when(easterEggCounter) {
+                            3 -> Toast.makeText(context, context.getString(R.string.easter_egg_1), Toast.LENGTH_SHORT).show()
+                            7 -> Toast.makeText(context, context.getString(R.string.easter_egg_2), Toast.LENGTH_SHORT).show()
+                            11 -> Toast.makeText(context, context.getString(R.string.easter_egg_3), Toast.LENGTH_SHORT).show()
+                        }
+                        easterEggCounter++
+                        if (easterEggCounter >= 14) {
+                            navController?.navigate("settings/about/easteregg")
+                            easterEggCounter = 0
+                        }
+                    }
                 )
                 Preference(
                     title = stringResource(R.string.preference_screen_buildinfo),

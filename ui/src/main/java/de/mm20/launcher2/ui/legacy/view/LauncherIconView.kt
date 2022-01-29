@@ -579,9 +579,16 @@ class LauncherIconView : View, KoinComponent {
         fun getDefaultShape(): Flow<IconShape> = channelFlow {
             send(currentShape)
             val dataStore: LauncherDataStore = get()
-            dataStore.data.map { it.icons.shape }.distinctUntilChanged().collectLatest {
-                currentShape = it
-                send(it)
+            dataStore.data.map { it.icons.shape }.distinctUntilChanged().collectLatest { shape ->
+                dataStore.data.map { it.easterEgg }.distinctUntilChanged().collectLatest { ee ->
+                    if (ee) {
+                        currentShape = IconShape.EasterEgg
+                        send(IconShape.EasterEgg)
+                    } else {
+                        currentShape = shape
+                        send(shape)
+                    }
+                }
             }
         }
     }

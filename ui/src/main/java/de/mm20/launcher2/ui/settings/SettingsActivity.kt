@@ -2,8 +2,6 @@ package de.mm20.launcher2.ui.settings
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -16,9 +14,7 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.LegacyLauncherTheme
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
@@ -33,6 +29,7 @@ import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
+import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
@@ -101,6 +98,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/about/buildinfo") {
                             BuildInfoSettingsScreen()
+                        }
+                        composable("settings/about/easteregg") {
+                            EasterEggSettingsScreen()
                         }
                         composable("settings/debug") {
                             DebugSettingsScreen()

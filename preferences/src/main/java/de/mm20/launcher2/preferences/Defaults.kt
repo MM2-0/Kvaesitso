@@ -113,5 +113,6 @@ fun createFactorySettings(context: Context): Settings {
                 .setThemedIcons(false)
                 .setIconPack("")
         )
+        .setEasterEgg(false)
         .build()
 }
