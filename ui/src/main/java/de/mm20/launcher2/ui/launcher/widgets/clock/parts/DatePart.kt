@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.clockwidget.parts
+package de.mm20.launcher2.ui.launcher.widgets.clock.parts
 
 import android.content.ContentUris
 import android.content.Intent
@@ -9,13 +9,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.em
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
-import de.mm20.launcher2.ui.R
 import java.text.SimpleDateFormat
 import java.util.*
 

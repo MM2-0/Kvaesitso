@@ -22,7 +22,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
-import de.mm20.launcher2.ui.settings.clockwidget.parts.DatePart
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePart
 
 @Composable
 fun ClockWidget(
