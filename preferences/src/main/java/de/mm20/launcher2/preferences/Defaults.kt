@@ -114,5 +114,10 @@ fun createFactorySettings(context: Context): Settings {
                 .setIconPack("")
         )
         .setEasterEgg(false)
+        .setSystemBars(
+            Settings.SystemBarsSettings.newBuilder()
+                .setLightNavBar(false)
+                .setLightStatusBar(false)
+        )
         .build()
 }

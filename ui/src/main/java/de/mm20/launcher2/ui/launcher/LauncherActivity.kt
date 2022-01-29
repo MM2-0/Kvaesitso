@@ -57,6 +57,14 @@ class LauncherActivity : BaseActivity() {
             }
         }
 
+        val windowController = WindowInsetsControllerCompat(window, binding.rootView)
+        viewModel.lightStatusBar.observe(this) {
+            windowController.isAppearanceLightStatusBars = it
+        }
+        viewModel.lightNavBar.observe(this) {
+            windowController.isAppearanceLightNavigationBars = it
+        }
+
         var editFavoritesDialog: MaterialDialog? = null
         viewModel.isEditFavoritesShown.observe(this) {
             if (it) {

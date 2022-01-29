@@ -18,11 +18,26 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
 
     private var isDarkInMode = MutableStateFlow(false)
 
-    val dimBackground = combine(
+    private val dimBackgroundState = combine(
         dataStore.data.map { it.appearance.dimWallpaper },
         isDarkInMode
     ) { dim, darkMode ->
         dim && darkMode
+    }
+    val dimBackground = dimBackgroundState.asLiveData()
+
+    val lightStatusBar = combine(
+        dimBackgroundState,
+        dataStore.data.map { it.systemBars.lightStatusBar }
+    ) { dim, light ->
+        !dim && light
+    }.asLiveData()
+
+    val lightNavBar = combine(
+        dimBackgroundState,
+        dataStore.data.map { it.systemBars.lightNavBar }
+    ) { dim, light ->
+        !dim && light
     }.asLiveData()
 
     fun setDarkMode(darkMode: Boolean) {

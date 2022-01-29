@@ -159,4 +159,10 @@ message Settings {
 
   bool easter_egg = 22;
 
+  message SystemBarsSettings {
+    bool lightStatusBar = 1;
+    bool lightNavBar = 2;
+  }
+  SystemBarsSettings system_bars = 23;
+
 }

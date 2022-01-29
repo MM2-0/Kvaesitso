@@ -173,6 +173,24 @@ fun AppearanceSettingsScreen() {
                     }
                 )
             }
+            PreferenceCategory(stringResource(R.string.preference_category_system_bars)) {
+                val lightStatusBar by viewModel.lightStatusBar.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_light_status_bar),
+                    value = lightStatusBar == true,
+                    onValueChanged = {
+                        viewModel.setLightStatusBar(it)
+                    }
+                )
+                val lightNavBar by viewModel.lightNavBar.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_light_nav_bar),
+                    value = lightNavBar == true,
+                    onValueChanged = {
+                        viewModel.setLightNavBar(it)
+                    }
+                )
+            }
         }
     }
 }

@@ -148,4 +148,32 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val lightStatusBar = dataStore.data.map { it.systemBars.lightStatusBar }.asLiveData()
+    fun setLightStatusBar(lightStatusBar: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSystemBars(
+                        it.systemBars.toBuilder()
+                            .setLightStatusBar(lightStatusBar)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val lightNavBar = dataStore.data.map { it.systemBars.lightNavBar }.asLiveData()
+    fun setLightNavBar(lightNavBar: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSystemBars(
+                        it.systemBars.toBuilder()
+                            .setLightNavBar(lightNavBar)
+                    )
+                    .build()
+            }
+        }
+    }
 }
