@@ -67,8 +67,6 @@ dependencies {
 
     implementation(libs.composecolorpicker)
 
-    implementation(libs.lottie.compose)
-
     // Legacy dependencies
     implementation(libs.androidx.transition)
 

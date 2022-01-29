@@ -105,9 +105,6 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.svg)
 
-    implementation(libs.lottie.core)
-
-
     implementation(libs.bundles.materialdialogs)
 
     implementation(libs.draglinearlayout)

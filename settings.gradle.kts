@@ -262,14 +262,6 @@ dependencyResolutionManagement {
                 .to("com.google.android.material", "compose-theme-adapter")
                 .version("1.1.1")
 
-            version("lottie", "4.2.2")
-            alias("lottie.core")
-                .to("com.airbnb.android", "lottie")
-                .versionRef("lottie")
-            alias("lottie.compose")
-                .to("com.airbnb.android", "lottie-compose")
-                .versionRef("lottie")
-
             alias("okhttp")
                 .to("com.squareup.okhttp3", "okhttp")
                 .version("4.9.1")

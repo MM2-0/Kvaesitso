@@ -43,7 +43,6 @@ dependencies {
 
     implementation(libs.androidx.palette)
 
-    implementation(libs.lottie.core)
     implementation(libs.bundles.materialdialogs)
 
     implementation(project(":ktx"))

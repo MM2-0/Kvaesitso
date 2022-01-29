@@ -32,13 +32,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://material.io/develop/android/"
     ),
     OpenSourceLibrary(
-        name = "Lottie",
-        description = "Lottie is a library for Android, iOS, Web, and Windows that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile and on the web.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://airbnb.io/lottie/"
-    ),
-    OpenSourceLibrary(
         name = "OkHttp",
         description = "An HTTP & HTTP/2 client for Android and Java applications",
         licenseName = R.string.apache_license_name,
