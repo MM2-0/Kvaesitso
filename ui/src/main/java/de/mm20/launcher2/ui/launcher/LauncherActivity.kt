@@ -50,11 +50,9 @@ class LauncherActivity : BaseActivity() {
         viewModel.dimBackground.observe(this) { dim ->
             window.attributes = window.attributes.also {
                 if (dim) {
-                    it.dimAmount = 0.3f
-                    it.flags = it.flags or WindowManager.LayoutParams.FLAG_DIM_BEHIND
+                    binding.rootView.setBackgroundColor(0x4C000000)
                 } else {
-                    it.dimAmount = 0f
-                    it.flags = it.flags and WindowManager.LayoutParams.FLAG_DIM_BEHIND.inv()
+                    binding.rootView.setBackgroundColor(0)
                 }
             }
         }
