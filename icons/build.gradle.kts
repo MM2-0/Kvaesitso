@@ -40,6 +40,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.palette)
 
+    implementation(libs.materialcomponents.core)
+
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)

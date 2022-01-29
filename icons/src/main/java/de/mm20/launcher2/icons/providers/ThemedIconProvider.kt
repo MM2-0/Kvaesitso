@@ -7,7 +7,6 @@ import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
-import android.os.Build
 import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.crashreporter.CrashReporter
