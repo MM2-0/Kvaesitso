@@ -80,8 +80,8 @@
     <string name="preference_category_licenses">Open source licenses</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
-    <string name="preference_screen_about_summary">Version, Developer, Open source licenses</string>
-    <string name="preference_screen_appearance_summary">Theme, Icons, Search bar, System bars</string>
+    <string name="preference_screen_about_summary">App and license information</string>
+    <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
     <string name="preference_screen_weather_summary">Provider, Units, location</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
@@ -268,7 +268,7 @@
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it?</string>
     <string name="easter_egg_activated">Easter egg enabled!</string>
     <string name="easter_egg_deactivated">Easter egg disabled!</string>
-    <string name="permission_calendar_widget">Grant calendar permission to display your upcomping events here.</string>
+    <string name="permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
     <string name="permission_calendar_search">Grant calendar permission to search your calendar.</string>
     <string name="permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <string name="permission_contact_search">Grant contact permission to search your contact.</string>
@@ -462,7 +462,7 @@
     <string name="preference_export_log">Export log file</string>
 
     <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Configure what should be searched</string>
+    <string name="preference_screen_search_summary">Configure the search</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
     <string name="preference_search_files">Files</string>
@@ -470,7 +470,7 @@
     <string name="preference_search_contacts">Contacts</string>
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
-    <string name="preference_search_calendar_summary">Search upcoming appointments</string>
+    <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
     <string name="preference_search_calculator">Calculator</string>
     <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
     <string name="preference_search_unitconverter">Unit converter</string>

@@ -39,8 +39,8 @@
     <string name="preference_category_links">Links</string>
     <string name="preference_category_licenses">Open-Source-Lizenzen</string>
     <string name="open_webpage">Webseite öffnen</string>
-    <string name="preference_screen_about_summary">Version, Entwickler, Open-Source-Lizenzen</string>
-    <string name="preference_screen_appearance_summary">Design, Symbole, Suchleiste, Systemleisten</string>
+    <string name="preference_screen_about_summary">Informationen zur App und Lizenzhinweise</string>
+    <string name="preference_screen_appearance_summary">Personalisierung des Launchers</string>
     <string name="preference_screen_weather_summary">Provider, Einheiten, Standort</string>
     <string name="preference_category_location">Standort</string>
     <string name="preference_automatic_location">Automatischer Standort</string>
@@ -283,7 +283,7 @@
     <string name="preference_category_wallpaper">Hintergrund</string>
     <string name="preference_wallpaper_summary">Hintergrundbild auswählen</string>
     <string name="preference_dim_wallpaper">Hintergrund dimmen</string>
-    <string name="preference_dim_wallpaper_summary">Hintergrundbild bei Verwendung von dunklen Desings abdunkeln</string>
+    <string name="preference_dim_wallpaper_summary">Hintergrundbild bei Verwendung von dunklen Designs abdunkeln</string>
     <string name="preference_screen_badges">Plaketten</string>
     <string name="preference_screen_badges_summary">Symbolplaketten konfigurieren</string>
     <string name="preference_notification_badges">Benachrichtigungsplaketten</string>
@@ -429,7 +429,7 @@
     </plurals>
 
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Konfigurieren was durchsucht werden soll</string>
+    <string name="preference_screen_search_summary">Die Suche konfigurieren</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_files">Dateien</string>
