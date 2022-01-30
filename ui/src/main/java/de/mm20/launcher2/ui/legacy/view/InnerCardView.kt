@@ -10,7 +10,6 @@ import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.lifecycleOwner
 import de.mm20.launcher2.ktx.lifecycleScope
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest

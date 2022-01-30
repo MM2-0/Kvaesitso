@@ -7,7 +7,6 @@ import de.mm20.launcher2.msservices.DriveItem
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.msservices.MicrosoftGraphApiHelper
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.preferences.LauncherPreferences
 
 class OneDriveFile(
         val fileId: String,

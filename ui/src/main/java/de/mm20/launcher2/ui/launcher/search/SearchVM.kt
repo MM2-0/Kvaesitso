@@ -10,7 +10,6 @@ import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.contacts.ContactRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.files.FileRepository
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.unitconverter.UnitConverterRepository

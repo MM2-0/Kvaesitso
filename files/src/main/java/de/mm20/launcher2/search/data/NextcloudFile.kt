@@ -6,7 +6,6 @@ import android.net.Uri
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.helper.NetworkUtils
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
-import de.mm20.launcher2.preferences.LauncherPreferences
 
 class NextcloudFile(
         fileId: Long,

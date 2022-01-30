@@ -13,13 +13,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import de.mm20.launcher2.R
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.ui.legacy.view.LauncherCardView
 import kotlin.math.roundToInt
 
 class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
-
-    val preferences = LauncherPreferences.instance
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

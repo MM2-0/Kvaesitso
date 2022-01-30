@@ -16,7 +16,6 @@ import com.microsoft.identity.client.PublicClientApplication
 import com.microsoft.identity.client.exception.MsalClientException
 import com.microsoft.identity.client.exception.MsalException
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.preferences.LauncherPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URLEncoder

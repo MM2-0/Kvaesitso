@@ -8,7 +8,6 @@ import de.mm20.launcher2.gservices.DriveFileMeta
 import de.mm20.launcher2.gservices.GoogleApiHelper
 import de.mm20.launcher2.helper.NetworkUtils
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.preferences.LauncherPreferences
 
 class GDriveFile(
     val fileId: String,

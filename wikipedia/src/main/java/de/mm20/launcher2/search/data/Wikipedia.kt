@@ -13,7 +13,6 @@ import androidx.core.text.toHtml
 import de.mm20.launcher2.wikipedia.R
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.helper.NetworkUtils
-import de.mm20.launcher2.preferences.LauncherPreferences
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException

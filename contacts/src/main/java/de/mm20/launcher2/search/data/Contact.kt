@@ -16,7 +16,6 @@ import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers

@@ -16,7 +16,6 @@ import de.mm20.launcher2.files.filesModule
 import de.mm20.launcher2.hiddenitems.hiddenItemsModule
 import de.mm20.launcher2.icons.iconsModule
 import de.mm20.launcher2.music.musicModule
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.searchModule
 import de.mm20.launcher2.unitconverter.unitConverterModule
 import de.mm20.launcher2.websites.websitesModule
@@ -43,7 +42,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
     override fun onCreate() {
         super.onCreate()
         Debug()
-        LauncherPreferences.initialize(this)
 
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)

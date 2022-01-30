@@ -22,7 +22,6 @@ import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherPreferences
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import java.text.SimpleDateFormat

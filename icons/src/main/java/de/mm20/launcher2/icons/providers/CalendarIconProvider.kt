@@ -7,7 +7,6 @@ import android.graphics.drawable.ColorDrawable
 import de.mm20.launcher2.icons.CalendarDynamicLauncherIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.Searchable
 

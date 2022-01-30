@@ -12,7 +12,6 @@ import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
-import de.mm20.launcher2.preferences.LauncherPreferences
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
