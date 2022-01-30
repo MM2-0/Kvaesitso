@@ -3,8 +3,6 @@
     <string name="app_name">Kvæsitso</string>
     <!-- Shown in the search bar when the search field is empty -->
     <string name="edit_text_search_hint">Search</string>
-    <!-- Used for date format in date/time widget. Should include a line break. %1$s will be replaced by day of week, %2$s by date -->
-    <string name="date_format_clock_widget">%1$s,\n%2$s</string>
     <!-- A dialog for an action that requires a short amount of time. Used when sharing APK files -->
     <string name="dialog_wait">Preparing…</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store -->
@@ -64,41 +62,24 @@
     <string name="preference_theme">Theme</string>
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>
-    <string name="preference_theme_black">Black</string>
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_colors_default">Default</string>
-    <string name="preference_colors_mm20">MM20</string>
-    <string name="preference_colors_wallpaper">From wallpaper</string>
-    <string name="preference_colors_mdyou">System / Material You</string>
     <string name="preference_colors_bw">Black and White</string>
-    <string name="preference_colors_custom">Custom</string>
-    <string name="preference_category_custom_colors">Edit color scheme</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
-    <string name="preference_category_developer">Developer</string>
     <string name="preference_category_links">Links</string>
     <string name="preference_category_licenses">Open source licenses</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
     <string name="preference_screen_about_summary">App and license information</string>
     <string name="preference_screen_appearance_summary">Customize the look-and-feel</string>
-    <string name="preference_screen_weather_summary">Provider, Units, location</string>
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
-    <string name="preference_location_default_summary">Not set</string>
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
-    <string name="unit_degrees_fahrenheit">°F</string>
-    <string name="unit_degrees_celsius">°C</string>
-    <string name="unit_mph">%1$s mph</string>
-    <string name="kmh">%1$s km/h</string>
-    <string name="unit_mm">%1$s mm</string>
-    <string name="preference_translucent_cards">Translucent cards</string>
     <string name="preference_category_debug">Debug</string>
-    <string name="preference_export_debug">Export debug information</string>
-    <string name="debug_export_information_file">Exported to %1$s</string>
     <!-- Wikipedia url prefix -->
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <string name="wikipedia_source">From Wikipedia</string>
@@ -109,12 +90,7 @@
     <string name="preference_icon_shape_squircle">Squircle</string>
     <string name="preference_icon_shape_triangle">Reuleaux triangle</string>
     <string name="preference_icon_shape_circle">Circle</string>
-    <string name="calculator_solution">= %1$s</string>
     <string name="preference_category_searchbar">Search bar</string>
-    <string name="preference_searchbar_behavior">On home screen</string>
-    <string name="preference_searchbar_behavior_fade_alpha">Hide background</string>
-    <string name="preference_searchbar_behavior_always_visible">Do nothing</string>
-    <string name="preference_searchbar_behavior_hide">Hide</string>
     <string name="file_type_directory">Directory</string>
     <string name="file_type_archive">Archive file</string>
     <string name="file_type_android">Android package file</string>
@@ -147,27 +123,7 @@
     <string name="file_meta_app_pkgname">Package name</string>
     <string name="file_meta_app_min_sdk">Min SDK version</string>
     <string name="preference_screen_services">Services</string>
-    <string name="preference_theme_auto">Auto (by time of day)</string>
     <string name="preference_theme_system">Follow system</string>
-    <string name="preference_category_search_favorites">Favorites</string>
-    <string name="preference_search_show_favorites">Show favorites</string>
-    <string name="preference_search_show_favorites_summary">Show favorites above the app list</string>
-    <string name="preference_search_auto_add_favorites">Frequently used items</string>
-    <string name="preference_search_auto_add_favorites_summary">Automatically add frequently used items to favorites</string>
-    <string name="preference_category_search_files">Files</string>
-    <string name="preference_category_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_mobile_data">Allow mobile data usage</string>
-    <string name="preference_search_mobile_data_summary">Additional fees may apply</string>
-    <string name="preference_category_search_websites">Websites</string>
-    <string name="preference_search_websites_protocol">Default web protocol</string>
-    <string name="preference_search_websites_protocol_summary">Default protocol for websites, if not given. You can explicate protocol by adding https:// or http:// in front of your search term</string>
-    <string name="websites_protocol_http">HTTP (unencrypted)</string>
-    <string name="websites_protocol_https">HTTPS (encrypted)</string>
-    <string name="preference_category_search_unitconverter">Unit converter</string>
-    <string name="preference_category_search_calculator">Calculator</string>
-    <string name="preference_search_activities_summary">Try \'%1$s\'</string>
-    <string name="preference_category_search_websearch">Web search</string>
-    <string name="preference_search_edit_websearch">Edit web searches</string>
     <string name="file_meta_location">Location</string>
     <string name="websearch_google">Google</string>
     <string name="websearch_youtube">YouTube</string>
@@ -175,8 +131,6 @@
     <string name="websearch_google_url">https://google.com/search?q=${1}</string>
     <string name="websearch_youtube_url">https://www.youtube.com/results?search_query=${1}</string>
     <string name="websearch_playstore_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="preference_websearch_new">Add web search…</string>
-    <string name="alert_delete_button">Delete</string>
     <string name="websearch_dialog_name_hint">Name</string>
     <string name="websearch_dialog_url_hint">URL</string>
     <string name="websearch_dialog_url_description">\'${1}\' will be replaced by the actual search term.</string>
@@ -188,18 +142,10 @@
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
     <string name="provider_here">HERE</string>
-    <string name="preference_automatic_location_disabled_summary">Not supported by this provider</string>
-    <string name="date_format_long_without_year">EE, MMMM d</string>
-    <string name="weather_wind_direction_speed">%1$s • %2$s</string>
     <string name="preference_themed_icons">Themed icons</string>
     <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
     <string name="preference_icon_pack">Icon pack</string>
     <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
-    <string name="preference_dynamic_icon_bg">Dynamic background</string>
-    <string name="preference_dynamic_icon_bg_summary">Adjust background color to icon</string>
-    <string name="preference_category_widget">Widget</string>
-    <string name="preference_screen_calendar_summary">Calendars, Widget settings</string>
-    <string name="preference_permission_denied">Permission denied</string>
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
@@ -213,17 +159,9 @@
     <string name="favorites_menu_pin">Pin to favorites</string>
     <string name="favorites_menu_unpin">Unpin</string>
     <string name="menu_back">Back</string>
-    <string name="menu_contact_call">Call</string>
-    <string name="menu_contact_message">Message</string>
-    <string name="menu_contact_telegram">Telegram</string>
-    <string name="menu_contact_whatsapp">WhatsApp</string>
-    <string name="menu_contact_mail">Email</string>
     <string name="contact_multiple_numbers">%1$d phone numbers</string>
     <string name="contact_multiple_emails">%1$d email addresses</string>
-    <string name="menu_contact_postal">Location</string>
     <string name="contact_multiple_postals">%1$d postal addresses</string>
-    <string name="preference_category_search_calendar">Calendar</string>
-    <string name="preference_category_search_contacts">Contacts</string>
     <string name="menu_app_info">App info</string>
     <string name="preference_screen_services_summary">Manage connected accounts and services</string>
     <string name="preference_category_services_google">Google</string>
@@ -239,43 +177,27 @@
     <string name="menu_hidden_items">Hidden items</string>
     <string name="menu_delete">Delete</string>
     <string name="calendar_menu_open_externally">Open in calendar app</string>
-    <string name="calculator_bin_oct_hex_label">BIN:\nOCT:\nHEX:</string>
     <string name="preference_search_wikipedia_pictures">Show pictures</string>
     <string name="preference_search_wikipedia_pictures_summary">Significantly increases data usage</string>
     <string name="preference_google_signin">Sign in with Google</string>
     <string name="preference_google_signin_summary">Sign in to search Google Drive</string>
-    <string name="google_signin_authcode_message">Enter the auth code here:</string>
-    <string name="google_signin_failed">Google sing-in failed!</string>
     <string name="preference_icon_shape_hexagon">Hexagon</string>
-    <string name="calendar_event_time">Time</string>
-    <string name="calendar_event_description">Description</string>
-    <string name="calendar_event_location">Location</string>
-    <string name="calendar_event_attendees">Attendees</string>
     <string name="shortcut_summary">By %1$s</string>
     <string name="installation_in_progress">Installation in progress… (%1$d%%)</string>
     <string name="activity_not_found_searchable">Couldn\'t open %1$s</string>
-    <string name="preference_calendar_max_events">Number of events</string>
-    <string name="preference_location_disabled_summary">Not supported by this provider</string>
     <string name="preference_legacy_icon_bg">Icon background</string>
     <string name="preference_legacy_icon_bg_summary">Legacy icon style</string>
-    <string name="preference_legacy_icon_bg_none">None</string>
-    <string name="preference_legacy_icon_bg_color">Dynamic</string>
-    <string name="preference_legacy_icon_bg_white">White</string>
     <!-- Easter egg preference toasts -->
     <string name="easter_egg_1">There are no easter eggs here, unless you brought them with you.</string>
     <string name="easter_egg_2">Please, stop it, you are wasting your time</string>
     <string name="easter_egg_3">I won\'t say it again: there are absolutely no easter eggs hidden here</string>
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it?</string>
-    <string name="easter_egg_activated">Easter egg enabled!</string>
-    <string name="easter_egg_deactivated">Easter egg disabled!</string>
     <string name="permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
     <string name="permission_calendar_search">Grant calendar permission to search your calendar.</string>
     <string name="permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <string name="permission_contact_search">Grant contact permission to search your contact.</string>
     <string name="close">Close</string>
-    <string name="dialog_continue">Continue</string>
     <string name="custom_icon">Custom icon</string>
-    <string name="websearch_dialog_choose_icon_color">Choose icon color</string>
     <string name="widget_action_adjust_height">Adjust height</string>
     <string name="widget_action_remove">Remove</string>
     <string name="widget_action_settings">Settings</string>
@@ -295,30 +217,14 @@
     <string name="preference_shortcut_badges">Shortcut badges</string>
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
     <string name="preference_icon_shape_platform">System default</string>
-    <string name="preference_export_databases">Export databases</string>
-    <string name="debug_export_databases_warning">The exported databases contain personal data and are not intended to be shared.</string>
-    <string name="preference_category_animations">Animations</string>
-    <string name="preference_app_start_animation">App start animation</string>
-    <string name="preference_app_start_animation_splash1">Splash screen 1</string>
-    <string name="preference_app_start_animation_splash2">Splash screen 2</string>
-    <string name="preference_app_start_animation_slide_bottom">Slide from bottom</string>
-    <string name="preference_app_start_animation_fade">Fade</string>
-    <string name="preference_app_start_animation_m">Expand from icon</string>
-    <string name="preference_app_start_animation_default">Default</string>
     <string name="preference_category_services_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Sign in with Microsoft</string>
     <string name="preference_ms_signin_summary">Sign in to search OneDrive</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_account_checking_status">Checking status…</string>
-    <string name="storage_google_drive">Google Drive</string>
-    <string name="storage_onedrive">OneDrive</string>
     <string name="preference_about_telegram">Telegram group</string>
     <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_screen_plugins">Plugins</string>
-    <string name="preference_screen_plugins_summary">Enable or disable plugins</string>
-    <string name="preference_plugins_installed">Installed plugins</string>
-    <string name="title_widget_settings">Settings for %1$s</string>
     <string name="menu_item_edit_favs">Edit favorites</string>
     <string name="edit_favorites_dialog_stage2">Not pinned – frequently used</string>
     <string name="edit_favorites_dialog_stage1">Pinned – automatically sorted</string>
@@ -328,8 +234,6 @@
     <string name="next_cloud_server_url_empty">Server URL must not be empty</string>
     <string name="preference_category_services_nextcloud">Nextcloud</string>
     <string name="next_cloud_server_invalid_url">This URL does not point to a valid Nextcloud installation</string>
-    <string name="preference_signin_user_nextcloud">Logged in as %1$s.</string>
-    <string name="nextcloud_login_failed">Login failed: incorrect username or password.</string>
 
     <string name="owncloud_server_url">Owncloud server URL</string>
     <string name="preference_category_services_owncloud">Owncloud</string>
@@ -351,10 +255,6 @@
     <string name="disclaimer">Disclaimer</string>
     <string name="disclaimer_currency_converter">"Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.\n\nLast update: %1$s"</string>
     <string name="unit_converter_show_all">Show all</string>
-    <string name="preference_card_background">Background</string>
-    <string name="preference_card_background_default">Default</string>
-    <string name="preference_card_background_black">White/black</string>
-    <string name="preference_card_background_colored">Colored (from wallpaper)</string>
 
     <string name="date_today">Today</string>
     <string name="date_tomorrow">Tomorrow</string>
@@ -423,8 +323,6 @@
     <string name="preference_category_license">License</string>
     <string name="preference_about_license">This app is free software.</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
-    <string name="feature_not_available">This feature is not available in this version of %1$s</string>
-    <string name="preference_category_clock_widget">Clock</string>
 
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_column_count">Number of columns</string>
