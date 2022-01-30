@@ -471,6 +471,7 @@
     <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
     <string name="missing_permission_file_search">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
     <string name="missing_permission_file_search_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
+    <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
 
     <string name="websearch_dialog_create_title">Websuche hinzufügen</string>
     <string name="websearch_dialog_edit_title">Websuche bearbeiten</string>

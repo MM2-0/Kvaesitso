@@ -1,8 +1,11 @@
 package de.mm20.launcher2.ui.settings.badges
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -12,6 +15,9 @@ import org.koin.core.component.inject
 class BadgeSettingsScreenVM : ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
+    private val permissionsManager: PermissionsManager by inject()
+
+    val hasNotificationsPermission = permissionsManager.hasPermission(PermissionGroup.Notifications).asLiveData()
 
     val notifications = dataStore.data.map { it.badges.notifications }.asLiveData()
     fun setNotifications(notifications: Boolean) {
@@ -25,6 +31,10 @@ class BadgeSettingsScreenVM : ViewModel(), KoinComponent {
                     .build()
             }
         }
+    }
+
+    fun requestNotificationsPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Notifications)
     }
 
     val cloudFiles = dataStore.data.map { it.badges.cloudFiles }.asLiveData()
