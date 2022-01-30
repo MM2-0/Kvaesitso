@@ -6,11 +6,11 @@
             android:name=".LoginActivity"
             android:label="@string/preference_category_services_nextcloud"
             android:taskAffinity="de.mm20.launcher2.nextcloud"
-            android:parentActivityName=".activity.SettingsActivity"
+            android:parentActivityName="de.mm20.launcher2.ui.settings.SettingsActivity"
             android:theme="@style/OwncloudLoginTheme" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.activity.SettingsActivity" />
+                android:value="de.mm20.launcher2.ui.settings.SettingsActivity" />
         </activity>
     </application>
 

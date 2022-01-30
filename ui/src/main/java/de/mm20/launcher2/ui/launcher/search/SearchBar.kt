@@ -1,8 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
-import android.content.ComponentName
 import android.content.Intent
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateDp
@@ -20,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.DropdownMenu
 import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
@@ -31,9 +28,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
@@ -43,7 +38,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
@@ -112,18 +106,6 @@ fun SearchBar(
                     onDismissRequest()
                 }) {
                     Text(stringResource(R.string.settings))
-                }
-                DropdownMenuItem(onClick = {
-                    context.startActivity(Intent().also {
-                        it.component = ComponentName(
-                            context.packageName,
-                            "de.mm20.launcher2.activity.SettingsActivity"
-                        )
-                        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                    })
-                    onDismissRequest()
-                }) {
-                    Text("Legacy Settings")
                 }
             }
         },
