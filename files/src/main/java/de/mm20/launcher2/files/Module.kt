@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val filesModule = module {
-    single<FileRepository> { FileRepositoryImpl(androidContext(), get(), get()) }
+    single<FileRepository> { FileRepositoryImpl(androidContext(), get(), get(), get()) }
 }

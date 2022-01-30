@@ -9,6 +9,7 @@ import de.mm20.launcher2.files.providers.OwncloudFileProvider
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.*
 import kotlinx.coroutines.*
@@ -22,7 +23,8 @@ interface FileRepository {
 internal class FileRepositoryImpl(
     private val context: Context,
     hiddenItemsRepository: HiddenItemsRepository,
-    private val dataStore: LauncherDataStore
+    private val dataStore: LauncherDataStore,
+    private val permissionsManager: PermissionsManager,
 ) : FileRepository {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -43,7 +45,7 @@ internal class FileRepositoryImpl(
             dataStore.data.map { it.fileSearch }.distinctUntilChanged().collectLatest {
                 val provs = mutableListOf<FileProvider>()
                 if (it.localFiles) {
-                    provs += LocalFileProvider(context)
+                    provs += LocalFileProvider(context, permissionsManager)
                 }
                 if (it.nextcloud) {
                     provs += NextcloudFileProvider(nextcloudClient)

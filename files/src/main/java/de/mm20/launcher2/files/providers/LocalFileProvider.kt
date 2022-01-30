@@ -3,15 +3,21 @@ package de.mm20.launcher2.files.providers
 import android.content.Context
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.LocalFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 internal class LocalFileProvider(
-    private val context: Context
+    private val context: Context,
+    private val permissionsManager: PermissionsManager
 ): FileProvider {
     override suspend fun search(query: String): List<File> = withContext(Dispatchers.IO) {
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage)) {
+            return@withContext emptyList()
+        }
         val results = mutableListOf<LocalFile>()
         val uri = MediaStore.Files.getContentUri("external").buildUpon()
             .appendQueryParameter("limit", "10").build()
