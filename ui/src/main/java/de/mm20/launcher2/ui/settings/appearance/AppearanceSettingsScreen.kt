@@ -85,15 +85,14 @@ fun AppearanceSettingsScreen() {
                 )
             }
             PreferenceCategory(title = stringResource(R.string.preference_category_grid)) {
-                val columnCount by viewModel.columnCount.observeAsState()
-                ListPreference(
+                val columnCount by viewModel.columnCount.observeAsState(5)
+                SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
-                    items = (3..8).map {
-                        it.toString() to it
-                    },
                     value = columnCount,
+                    min = 3,
+                    max = 8,
                     onValueChanged = {
-                        if (it != null) viewModel.setColumnCount(it)
+                        viewModel.setColumnCount(it)
                     }
                 )
             }
