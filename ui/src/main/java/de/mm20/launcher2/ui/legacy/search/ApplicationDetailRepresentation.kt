@@ -89,7 +89,7 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
                 notificationView.layoutTransition = ChangingLayoutTransition()
 
                 job = rootView.scope.launch {
-                    rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                         launch {
                             iconRepository.getIcon(application, (84 * rootView.dp).toInt())
                                 .collectLatest {

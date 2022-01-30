@@ -76,7 +76,7 @@ class WebsiteDetailRepresentation : Representation, KoinComponent {
                             icon = iconRepository.getIconIfCached(website)
                             shape = LauncherIconView.currentShape
                             job = rootView.scope.launch {
-                                rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                                     launch {
                                         iconRepository.getIcon(website, (84 * rootView.dp).toInt())
                                             .collectLatest {

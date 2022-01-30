@@ -47,7 +47,7 @@ class FileListRepresentation : Representation, KoinComponent {
                     icon = iconRepository.getIconIfCached(file)
                     shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
-                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                             launch {
                                 iconRepository.getIcon(searchable, (84 * rootView.dp).toInt())
                                     .collectLatest {

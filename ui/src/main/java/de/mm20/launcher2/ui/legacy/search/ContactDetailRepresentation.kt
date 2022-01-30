@@ -56,7 +56,7 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                     icon = iconRepository.getIconIfCached(contact)
                     shape = LauncherIconView.currentShape
                     job = rootView.scope.launch {
-                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        rootView.lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                             launch {
                                 iconRepository.getIcon(contact, (84 * rootView.dp).toInt())
                                     .collectLatest {

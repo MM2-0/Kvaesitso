@@ -44,7 +44,7 @@ class SearchGridView : ViewGroup, KoinComponent {
         super.onAttachedToWindow()
         job?.cancel()
         lifecycleScope.launch {
-            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 columnCountPreference.collectLatest {
                     columnCount = it
                 }

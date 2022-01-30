@@ -372,7 +372,7 @@ class SwipeCardView @JvmOverloads constructor(
         super.onAttachedToWindow()
         job?.cancel()
         job = lifecycleScope.launch {
-            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.CREATED) {
                 dataStore.data.map { it.cards.radius }.distinctUntilChanged().collectLatest {
                     radius = it * dp
                 }

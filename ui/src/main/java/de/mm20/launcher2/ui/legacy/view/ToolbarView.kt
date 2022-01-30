@@ -251,7 +251,7 @@ class FavoriteToolbarAction(val context: Context, val item: Searchable) : Toolba
 
         (context as LifecycleOwner).apply {
             lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                repeatOnLifecycle(Lifecycle.State.CREATED) {
                     repository.isPinned(item).collectLatest {
                         isPinned = it
                     }
@@ -290,7 +290,7 @@ class VisibilityToolbarAction(val context: Context, val item: Searchable) : Tool
 
         (context as LifecycleOwner).apply {
             lifecycleScope.launch {
-                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                repeatOnLifecycle(Lifecycle.State.CREATED) {
                     repository.isHidden(item).collectLatest {
                         isHidden = it
                     }
