@@ -75,7 +75,7 @@ fun buildTime(): String {
 }
 
 fun versionCodeDate(): Int {
-    val df = SimpleDateFormat("yyyyMMdd01")
+    val df = SimpleDateFormat("yyyyMMdd00")
     return df.format(Date()).toInt()
 }
 
