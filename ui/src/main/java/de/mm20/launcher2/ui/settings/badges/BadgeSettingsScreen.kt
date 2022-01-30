@@ -38,7 +38,8 @@ fun BadgeSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_notification_badges),
                     summary = stringResource(R.string.preference_notification_badges_summary),
-                    value = notifications == true && hasNotificationsPermission == false,
+                    enabled = hasNotificationsPermission != false,
+                    value = notifications == true && hasNotificationsPermission == true,
                     onValueChanged = {
                         viewModel.setNotifications(it)
                     }
