@@ -44,30 +44,38 @@ internal class FavoritesRepositoryImpl(
         withContext(Dispatchers.IO) {
 
             val gridColumns = dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
+            val enableFavorites = dataStore.data.map { it.favorites.enabled}.distinctUntilChanged()
             val dao = database.searchDao()
 
-            val pinnedFavorites = dao.getFavorites().map {
-                it.mapNotNull {
-                    val item = fromDatabaseEntity(it).searchable
-                    if (item == null) {
-                        dao.deleteByKey(it.key)
-                    }
-                    return@mapNotNull item
+            enableFavorites.collectLatest {
+                if (!it) {
+                    send(emptyList())
+                    return@collectLatest
                 }
-            }
 
-            pinnedFavorites.collectLatest { pinned ->
-                gridColumns.collectLatest { columns ->
-                    var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
-                    if (pinned.size < columns) favCount += columns
-                    val autoFavs = dao.getAutoFavorites(favCount - pinned.size).mapNotNull {
+                val pinnedFavorites = dao.getFavorites().map {
+                    it.mapNotNull {
                         val item = fromDatabaseEntity(it).searchable
                         if (item == null) {
                             dao.deleteByKey(it.key)
                         }
                         return@mapNotNull item
                     }
-                    send(pinned + autoFavs)
+                }
+
+                pinnedFavorites.collectLatest { pinned ->
+                    gridColumns.collectLatest { columns ->
+                        var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
+                        if (pinned.size < columns) favCount += columns
+                        val autoFavs = dao.getAutoFavorites(favCount - pinned.size).mapNotNull {
+                            val item = fromDatabaseEntity(it).searchable
+                            if (item == null) {
+                                dao.deleteByKey(it.key)
+                            }
+                            return@mapNotNull item
+                        }
+                        send(pinned + autoFavs)
+                    }
                 }
             }
         }
