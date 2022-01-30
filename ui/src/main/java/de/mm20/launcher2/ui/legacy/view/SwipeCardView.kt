@@ -13,23 +13,28 @@ import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.*
 import com.google.android.material.card.MaterialCardView
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.ktx.lifecycleOwner
+import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.abs
 
 class SwipeCardView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
-) : MaterialCardView(context, attrs, defStyleAttr) {
+) : MaterialCardView(context, attrs, defStyleAttr), KoinComponent {
 
     private val backdrop = FrameLayout(context)
     private val icon = ImageView(context)
@@ -44,10 +49,9 @@ class SwipeCardView @JvmOverloads constructor(
         icon.setColorFilter(iconColor)
         super.addView(content)
         content.layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-        content.radius = radius
         content.transitionName = "SwipeCardView/content"
-        radius = LauncherPreferences.instance.cardRadius * dp
-        //content.setCardBackgroundColor(cardBackgroundColor)
+        radius = LauncherCardView.currentCardStyle.radius * dp
+        content.radius = radius
         super.setCardBackgroundColor(
             ContextCompat.getColor(
                 context,
@@ -361,6 +365,25 @@ class SwipeCardView @JvmOverloads constructor(
             else -> false
         }
     }
+
+    private val dataStore: LauncherDataStore by inject()
+    private var job: Job? = null
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        job?.cancel()
+        job = lifecycleScope.launch {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                dataStore.data.map { it.cards.radius }.distinctUntilChanged().collectLatest {
+                    radius = it * dp
+                }
+            }
+        }
+    }
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        job?.cancel()
+    }
+
 
     open class SwipeAction(
         @DrawableRes var icon: Int,

@@ -7,6 +7,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -14,29 +16,38 @@ import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.base.BaseActivity
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
+import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.badges.BadgeSettingsScreen
+import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
+import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
+import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
+import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
-import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
-import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
-import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
-import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import org.koin.android.ext.android.inject
 
 class SettingsActivity : BaseActivity() {
+
+    private val dataStore: LauncherDataStore by inject()
 
     @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +55,15 @@ class SettingsActivity : BaseActivity() {
 
         setContent {
             val navController = rememberAnimatedNavController()
-            CompositionLocalProvider(LocalNavController provides navController) {
+            val cardStyle by remember {
+                dataStore.data.map { it.cards }.distinctUntilChanged()
+            }.collectAsState(
+                Settings.CardSettings.getDefaultInstance()
+            )
+            CompositionLocalProvider(
+                LocalNavController provides navController,
+                LocalCardStyle provides cardStyle
+            ) {
                 LegacyLauncherTheme {
                     AnimatedNavHost(
                         navController = navController,
@@ -59,6 +78,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/appearance") {
                             AppearanceSettingsScreen()
+                        }
+                        composable("settings/appearance/cards") {
+                            CardsSettingsScreen()
                         }
                         composable("settings/search") {
                             SearchSettingsScreen()

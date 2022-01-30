@@ -164,4 +164,11 @@ message Settings {
     bool lightNavBar = 2;
   }
   SystemBarsSettings system_bars = 23;
+
+  message CardSettings {
+    float opacity = 1;
+    uint32 radius = 2;
+    uint32 border_width = 3;
+  }
+  CardSettings cards = 24;
 }

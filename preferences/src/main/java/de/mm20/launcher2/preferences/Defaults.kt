@@ -119,5 +119,11 @@ fun createFactorySettings(context: Context): Settings {
                 .setLightNavBar(false)
                 .setLightStatusBar(false)
         )
+        .setCards(
+            Settings.CardSettings.newBuilder()
+                .setBorderWidth(0)
+                .setRadius(8)
+                .setOpacity(1f)
+        )
         .build()
 }

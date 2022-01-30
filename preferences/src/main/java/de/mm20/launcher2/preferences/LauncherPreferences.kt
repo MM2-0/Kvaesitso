@@ -49,8 +49,6 @@ class LauncherPreferences(val context: Application, version: Int = 3) {
 
     var appStartAnim by EnumPreference("app_start_anim", default = AppStartAnimation.M)
 
-    var cardOpacity by IntPreference("card_opacity", default = 0xFF)
-    var cardStrokeWidth by IntPreference("card_stroke_width", default = 0)
     var cardRadius by IntPreference("card_radius", default = 8)
 
     var easterEggEnabled by BooleanPreference("easter_egg", default = false)

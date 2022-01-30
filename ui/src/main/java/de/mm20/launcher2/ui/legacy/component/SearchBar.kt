@@ -6,21 +6,32 @@ import android.util.Log
 import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Box
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.MutableLiveData
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.LegacyLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
+import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.locals.LocalNavController
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class SearchBar @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.materialCardViewStyle
-) : FrameLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr), KoinComponent {
 
     var level: SearchBarLevel = SearchBarLevel.Resting
         set(value) {
@@ -28,6 +39,7 @@ class SearchBar @JvmOverloads constructor(
             field = value
         }
 
+    private val dataStore: LauncherDataStore by inject()
     private val levelState = MutableLiveData(level)
 
     var onFocus: (() -> Unit)? = null
@@ -36,12 +48,21 @@ class SearchBar @JvmOverloads constructor(
         val view = ComposeView(context)
         view.setContent {
             val level by levelState.observeAsState(SearchBarLevel.Resting)
-            LegacyLauncherTheme {
-                Box(contentAlignment = Alignment.TopCenter) {
-                    SearchBar(
-                        level,
-                        onFocus = { onFocus?.invoke() }
-                    )
+            val cardStyle by remember {
+                dataStore.data.map { it.cards }.distinctUntilChanged()
+            }.collectAsState(
+                Settings.CardSettings.getDefaultInstance()
+            )
+            CompositionLocalProvider(
+                LocalCardStyle provides cardStyle
+            ) {
+                LegacyLauncherTheme {
+                    Box(contentAlignment = Alignment.TopCenter) {
+                        SearchBar(
+                            level,
+                            onFocus = { onFocus?.invoke() }
+                        )
+                    }
                 }
             }
         }

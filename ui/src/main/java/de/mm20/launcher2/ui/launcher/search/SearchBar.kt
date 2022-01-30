@@ -49,6 +49,7 @@ import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
@@ -176,10 +177,11 @@ fun SearchBar(
                     durationMillis = 200,
                     delayMillis = 200
                 )
-                else -> tween(durationMillis = 500)
+                else -> tween(durationMillis = 200)
             }
         }) {
         when {
+            it == SearchBarLevel.Active -> LocalCardStyle.current.opacity
             style != SearchBarSettings.SearchBarStyle.Transparent -> 1f
             it == SearchBarLevel.Resting -> 0f
             else -> 1f

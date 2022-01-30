@@ -37,6 +37,7 @@ import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.legacy.view.LauncherIconView
+import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -44,6 +45,7 @@ import kotlinx.coroutines.isActive
 fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val context = LocalContext.current
+    val navController = LocalNavController.current
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -72,6 +74,13 @@ fun AppearanceSettingsScreen() {
                     onValueChanged = { newValue ->
                         if (newValue == null) return@ListPreference
                         viewModel.setColorScheme(newValue)
+                    }
+                )
+                Preference(
+                    title = stringResource(R.string.preference_cards),
+                    summary = stringResource(R.string.preference_cards_summary),
+                    onClick = {
+                        navController?.navigate("settings/appearance/cards")
                     }
                 )
             }

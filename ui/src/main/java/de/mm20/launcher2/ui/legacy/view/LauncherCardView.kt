@@ -3,10 +3,22 @@ package de.mm20.launcher2.ui.legacy.view
 import android.content.Context
 import android.content.res.ColorStateList
 import android.util.AttributeSet
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.card.MaterialCardView
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.preferences.LauncherPreferences
+import de.mm20.launcher2.ktx.lifecycleOwner
+import de.mm20.launcher2.ktx.lifecycleScope
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import kotlin.math.roundToInt
 
 /**
@@ -15,15 +27,12 @@ import kotlin.math.roundToInt
  *  (2) Elevation overlay color
  */
 open class LauncherCardView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = R.attr.materialCardViewStyle
-) : MaterialCardView(context, attrs, defStyleAttr) {
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = R.attr.materialCardViewStyle
+) : MaterialCardView(context, attrs, defStyleAttr), KoinComponent {
 
-    private val isDarkTheme = resources.getBoolean(R.bool.is_dark_theme)
-
-
-    var backgroundOpacity: Int = LauncherPreferences.instance.cardOpacity
+    var backgroundOpacity: Int = (currentCardStyle.opacity * 255).roundToInt()
         set(value) {
             setCardBackgroundColor(cardBackgroundColor.defaultColor.let {
                 ColorStateList.valueOf((it and 0xFFFFFF) or (value shl 24))
@@ -31,7 +40,7 @@ open class LauncherCardView @JvmOverloads constructor(
             field = value
         }
 
-    var strokeOpacity: Int = if (LauncherPreferences.instance.cardStrokeWidth > 0) 0xFF else 0
+    private var strokeOpacity: Int = if (currentCardStyle.borderWidth > 0) 0xFF else 0
         set(value) {
             setStrokeColor(strokeColorStateList?.defaultColor?.let {
                 ColorStateList.valueOf((it and 0xFFFFFF) or (value shl 24))
@@ -39,23 +48,24 @@ open class LauncherCardView @JvmOverloads constructor(
             field = value
         }
 
+    private var overrideBackgroundOpacity = false
+
     init {
-        /*val cardColor = when (LauncherPreferences.instance.cardBackground) {
-            CardBackground.DEFAULT-> context.getColor(R.color.cardview_background)
-            CardBackground.BLACK -> context.getColor(R.color.cardview_background_black)
-        }
-        setCardBackgroundColor(cardColor)*/
         strokeColor = cardBackgroundColor.defaultColor
-        strokeWidth = (LauncherPreferences.instance.cardStrokeWidth * dp).roundToInt()
-        radius = LauncherPreferences.instance.cardRadius * dp
+        strokeWidth = (currentCardStyle.borderWidth * dp).roundToInt()
+        radius = currentCardStyle.radius * dp
 
         context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.LauncherCardView,
-                0, 0).apply {
+            attrs,
+            R.styleable.LauncherCardView,
+            0, 0
+        ).apply {
 
             try {
-                backgroundOpacity = getInt(R.styleable.LauncherCardView_backgroundOpacity, LauncherPreferences.instance.cardOpacity)
+                if (hasValue(R.styleable.LauncherCardView_backgroundOpacity)) {
+                    overrideBackgroundOpacity = true
+                    backgroundOpacity = getInt(R.styleable.LauncherCardView_backgroundOpacity, 255)
+                }
             } finally {
                 recycle()
             }
@@ -63,5 +73,37 @@ open class LauncherCardView @JvmOverloads constructor(
         strokeOpacity = if (backgroundOpacity == 0) 0 else 0xFF
         elevation = if (backgroundOpacity == 255) elevation else 0f
         cardElevation = elevation
+    }
+
+    private val dataStore: LauncherDataStore by inject()
+
+    private var job: Job? = null
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        job?.cancel()
+        job = lifecycleScope.launch {
+            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                dataStore.data.map { it.cards }.distinctUntilChanged().collectLatest {
+                    currentCardStyle = it
+                    if (!overrideBackgroundOpacity) {
+                        backgroundOpacity = (it.opacity * 255).roundToInt()
+                        strokeOpacity = if (backgroundOpacity == 0) 0 else 0xFF
+                        elevation = if (backgroundOpacity == 255) elevation else 0f
+                        cardElevation = elevation
+                    }
+                    strokeWidth = (it.borderWidth * dp).roundToInt()
+                    radius = it.radius * dp
+                }
+            }
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        job?.cancel()
+    }
+
+    companion object {
+        internal var currentCardStyle = Settings.CardSettings.getDefaultInstance()
     }
 }

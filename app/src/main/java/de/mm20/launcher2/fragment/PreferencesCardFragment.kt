@@ -24,13 +24,11 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val previewCard = view.findViewById<LauncherCardView>(R.id.previewCard)
-        previewCard.strokeOpacity = 0xFF
 
         val prefFragment = PreferenesCardInnerFragment()
 
         prefFragment.onPreferencesReady = {
             findPreference<Preference>("card_radius")?.let {
-                it.summary = preferences.cardRadius.toString()
                 it.setOnPreferenceChangeListener { pref, newValue ->
                     val value = newValue as Int
                     previewCard.radius = value * dp
@@ -39,7 +37,6 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
                 }
             }
             findPreference<Preference>("card_opacity")?.let {
-                it.summary = preferences.cardOpacity.toString()
                 it.setOnPreferenceChangeListener { pref, newValue ->
                     val value = newValue as Int
                     previewCard.backgroundOpacity = value
@@ -49,7 +46,6 @@ class PreferencesCardFragment : Fragment(R.layout.fragment_card_settings) {
                 }
             }
             findPreference<Preference>("card_stroke_width")?.let {
-                it.summary = preferences.cardRadius.toString()
                 it.setOnPreferenceChangeListener { pref, newValue ->
                     val value = newValue as Int
                     previewCard.strokeWidth = (value * dp).roundToInt()
