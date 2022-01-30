@@ -22,11 +22,6 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
 
-    val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
-    val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
-    val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
-    val currentDailyForecast = MutableLiveData<DailyForecast>(null)
-
     private var selectedDayIndex = 0
         set(value) {
             field = min(value, forecasts.lastIndex)
@@ -70,6 +65,11 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
+    val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
+    val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
+    val currentDailyForecast = MutableLiveData<DailyForecast>(null)
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
     fun requestLocationPermission(context: AppCompatActivity) {
