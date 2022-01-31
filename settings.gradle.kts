@@ -362,15 +362,11 @@ dependencyResolutionManagement {
                 .version("30.1.1-android")
 
             alias("microsoft.graph")
-                .to("com.microsoft.graph", "msgraph-sdk-android")
-                .version("1.7.0")
+                .to("com.microsoft.graph", "microsoft-graph")
+                .version("5.13.0")
             alias("microsoft.identity")
                 .to("com.microsoft.identity.client", "msal")
                 .version("2.2.0")
-
-            alias("android.volley")
-                .to("com.android.volley", "volley")
-                .version("1.1.1")
 
             version("protobuf", "3.14.0")
             alias("protobuf.protoc")

@@ -4,11 +4,13 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.core.content.edit
+import com.azure.core.credential.AccessToken
+import com.azure.core.credential.TokenCredential
+import com.microsoft.graph.authentication.TokenCredentialAuthProvider
 import com.microsoft.graph.core.ClientException
-import com.microsoft.graph.core.DefaultClientConfig
-import com.microsoft.graph.extensions.GraphServiceClient
-import com.microsoft.graph.extensions.IGraphServiceClient
 import com.microsoft.graph.http.GraphServiceException
+import com.microsoft.graph.models.DriveSearchParameterSet
+import com.microsoft.graph.requests.GraphServiceClient
 import com.microsoft.identity.client.AuthenticationCallback
 import com.microsoft.identity.client.IAuthenticationResult
 import com.microsoft.identity.client.ISingleAccountPublicClientApplication
@@ -18,6 +20,8 @@ import com.microsoft.identity.client.exception.MsalException
 import de.mm20.launcher2.crashreporter.CrashReporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.Request
+import reactor.core.publisher.Mono
 import java.net.URLEncoder
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -25,17 +29,14 @@ import kotlin.coroutines.suspendCoroutine
 class MicrosoftGraphApiHelper(val context: Context) {
 
     private var accessToken: String? = null
-    private val client: IGraphServiceClient
-    private var clientApplication: ISingleAccountPublicClientApplication? = null
+    private val client: GraphServiceClient<Request> = GraphServiceClient
+        .builder()
+        .authenticationProvider(TokenCredentialAuthProvider {
+            Mono.just(AccessToken(accessToken, null))
+        })
+        .buildClient()
 
-    init {
-        client = GraphServiceClient
-            .Builder()
-            .fromConfig(DefaultClientConfig.createWithAuthenticationProvider {
-                it.addHeader("Authorization", "Bearer $accessToken")
-            })
-            .buildClient()
-    }
+    private var clientApplication: ISingleAccountPublicClientApplication? = null
 
     private suspend fun getClientApplication(): ISingleAccountPublicClientApplication? {
         val resId = getConfigResId()
@@ -124,7 +125,7 @@ class MicrosoftGraphApiHelper(val context: Context) {
         if (!acquireAccessToken()) return null
         return withContext(Dispatchers.IO) {
             try {
-                val user = client.me.buildRequest().get() ?: return@withContext null
+                val user = client.me().buildRequest().get() ?: return@withContext null
                 val name = user.displayName ?: user.mail ?: "Microsoft User"
                 context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
                     putString(PREF_ACCOUNT_NAME, name)
@@ -151,8 +152,10 @@ class MicrosoftGraphApiHelper(val context: Context) {
         if (!acquireAccessToken()) return null
         return try {
             withContext(Dispatchers.IO) {
-                client.me.drive.getSearch(
-                    URLEncoder.encode(query.replace("'", "''"), "utf8")
+                client.me().drive().search(
+                    DriveSearchParameterSet.newBuilder()
+                        .withQ(query)
+                        .build()
                 )
                     .buildRequest()
                     .select("id,name,file,size,video,image,webUrl,shared,createdBy")

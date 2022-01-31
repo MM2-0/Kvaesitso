@@ -1,6 +1,6 @@
 package de.mm20.launcher2.msservices
 
-import com.microsoft.graph.extensions.DriveItem as MSDriveItem
+import com.microsoft.graph.models.DriveItem as MSDriveItem
 
 data class DriveItem(
         val id : String,

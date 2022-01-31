@@ -126,12 +126,12 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/googleapis/google-api-java-client"
     ),
     OpenSourceLibrary(
-        name = "Microsoft Graph Android SDK",
-        description = "Deprecated API client for Microsoft Graph APIs",
+        name = "Microsoft Graph SDK for Java",
+        description = "Get started with the Microsoft Graph SDK for Java by integrating the Microsoft Graph API into your Java application!",
         licenseName = R.string.mit_license_name,
         licenseText = R.raw.license_mit,
-        copyrightNote = "Copyright (c) 2015 Microsoft Corporation",
-        url = "https://github.com/microsoftgraph/msgraph-sdk-android"
+        copyrightNote = "Copyright (c) 2018 Microsoft Graph",
+        url = "https://github.com/microsoftgraph/msgraph-sdk-java"
     ),
     OpenSourceLibrary(
         name = "Microsoft Authentication Library (MSAL) for Android",
