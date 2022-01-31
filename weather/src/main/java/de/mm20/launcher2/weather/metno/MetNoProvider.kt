@@ -32,20 +32,20 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
         val rise = sunTimes.rise
 
         if (set == null && rise != null) {
-            return timestamp < rise.time
+            return timestamp < rise.toEpochSecond() * 1000
         }
 
         if (set != null && rise == null) {
-            return set.time < timestamp
+            return set.toEpochSecond() * 1000 < timestamp
         }
 
         if (set == null || rise == null) return false
 
-        if (set.time < rise.time) {
-            return (set.time < timestamp && timestamp < rise.time)
+        if (set.toEpochSecond() < rise.toEpochSecond()) {
+            return (set.toEpochSecond() * 1000 < timestamp && timestamp < rise.toEpochSecond() * 1000)
         }
 
-        return !(rise.time < timestamp && timestamp < set.time)
+        return !(rise.toEpochSecond() * 1000 < timestamp && timestamp < set.toEpochSecond() * 1000)
 
     }
 

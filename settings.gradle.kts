@@ -300,7 +300,7 @@ dependencyResolutionManagement {
 
             alias("suncalc")
                 .to("org.shredzone.commons", "commons-suncalc")
-                .version("2.12")
+                .version("3.5")
 
             alias("jsoup")
                 .to("org.jsoup", "jsoup")
