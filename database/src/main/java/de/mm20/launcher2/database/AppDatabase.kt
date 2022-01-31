@@ -15,8 +15,7 @@ import de.mm20.launcher2.database.entities.*
     CurrencyEntity::class,
     IconEntity::class,
     IconPackEntity::class,
-    PluginEntity::class,
-    WidgetEntity::class], version = 14, exportSchema = true)
+    WidgetEntity::class], version = 15, exportSchema = true)
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -54,7 +53,8 @@ abstract class AppDatabase : RoomDatabase() {
                                     Migration_10_11(),
                                     Migration_11_12(),
                                     Migration_12_13(),
-                                    Migration_13_14()
+                                    Migration_13_14(),
+                                    Migration_14_15()
                             ).build()
             if (_instance == null) _instance = instance
             return instance
@@ -143,5 +143,8 @@ class Migration_13_14 : Migration(13, 14) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE IF EXISTS `Plugins`;")
     }
-
+}
+class Migration_14_15 : Migration(14, 15) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+    }
 }

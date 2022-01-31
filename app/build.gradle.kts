@@ -135,7 +135,6 @@ dependencies {
     implementation(project(":owncloud"))
     implementation(project(":permissions"))
     implementation(project(":preferences"))
-    implementation(project(":rssparser"))
     implementation(project(":search"))
     implementation(project(":transition"))
     implementation(project(":unitconverter"))
