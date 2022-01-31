@@ -9,7 +9,7 @@ import androidx.transition.Scene
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.MissingPermission
 import de.mm20.launcher2.search.data.Searchable
-import de.mm20.launcher2.ui.LegacyLauncherTheme
+import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.legacy.searchable.SearchableView
@@ -29,7 +29,7 @@ class PermissionListRepresentation : Representation, KoinComponent {
         scene.setEnterAction {
             val permissionsManager: PermissionsManager = get()
             rootView.findViewById<ComposeView>(R.id.composeView).setContent {
-                LegacyLauncherTheme {
+                MdcLauncherTheme {
                     MissingPermissionBanner(
                         text = missingPermission.label,
                         onClick = {

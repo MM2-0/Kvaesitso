@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import android.widget.FrameLayout
 import androidx.compose.ui.platform.ComposeView
 import de.mm20.launcher2.ui.ClockWidget
-import de.mm20.launcher2.ui.LegacyLauncherTheme
+import de.mm20.launcher2.ui.MdcLauncherTheme
 
 class ClockWidget : FrameLayout {
 
@@ -34,7 +34,7 @@ class ClockWidget : FrameLayout {
 
 
         composeView.setContent {
-            LegacyLauncherTheme {
+            MdcLauncherTheme {
                 ClockWidget()
             }
         }

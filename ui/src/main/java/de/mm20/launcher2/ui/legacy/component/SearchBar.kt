@@ -2,8 +2,6 @@ package de.mm20.launcher2.ui.legacy.component
 
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
-import android.view.MotionEvent
 import android.widget.FrameLayout
 import androidx.compose.foundation.layout.Box
 import androidx.compose.runtime.CompositionLocalProvider
@@ -16,12 +14,11 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.LegacyLauncherTheme
+import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.locals.LocalCardStyle
-import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
@@ -56,7 +53,7 @@ class SearchBar @JvmOverloads constructor(
             CompositionLocalProvider(
                 LocalCardStyle provides cardStyle
             ) {
-                LegacyLauncherTheme {
+                MdcLauncherTheme {
                     Box(contentAlignment = Alignment.TopCenter) {
                         SearchBar(
                             level,

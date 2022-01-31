@@ -16,7 +16,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import de.mm20.launcher2.search.data.Calculator
-import de.mm20.launcher2.ui.LegacyLauncherTheme
+import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.databinding.ViewCalculatorBinding
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.search.CalculatorItem
@@ -47,7 +47,7 @@ class CalculatorView : FrameLayout {
 
         binding.composeView.setContent {
             val converter by calculator.observeAsState()
-            LegacyLauncherTheme {
+            MdcLauncherTheme {
                 // TODO: Temporary solution until parent widget card is rewritten in Compose
                 CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                     Column {

@@ -41,7 +41,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.ktx.toHexString
-import de.mm20.launcher2.ui.toPixels
+import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.launch
 import java.io.File
 
