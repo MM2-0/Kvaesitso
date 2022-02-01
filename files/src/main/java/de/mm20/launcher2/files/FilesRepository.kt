@@ -73,6 +73,10 @@ internal class FileRepositoryImpl(
         //TODO SearchListView crashes if we send too many updates at once. Rewrite this code
         // once SearchListView has been replaced with a Jetpack Compose version of itself
         providers.collectLatest { providers ->
+            if (providers.isEmpty()) {
+                send(emptyList())
+                return@collectLatest
+            }
             hiddenItems.collectLatest { hiddenItems ->
                 if (providers.first() is LocalFileProvider) {
                     val localFiles = providers.first().takeIf { it is LocalFileProvider }?.search(query) ?: emptyList()
