@@ -205,7 +205,7 @@ class WidgetsView @JvmOverloads constructor(
                 title(R.string.widget_add_widget)
                 listItems(items = internalWidgets.map { it.label }) { dialog, index, _ ->
                     val widget = internalWidgets[index]
-                    val view = WidgetView(context)
+                    val view = WidgetView(this@WidgetsView.context)
                     val params = LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT
