@@ -36,6 +36,7 @@ class Website(
             val request = ImageRequest.Builder(context)
                 .data(favicon)
                 .size(size)
+                .allowHardware(false)
                 .build()
             val icon = context.imageLoader.execute(request).drawable ?: return null
             return LauncherIcon(
