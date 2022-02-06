@@ -210,7 +210,7 @@
     <string name="preference_screen_badges_summary">Configure icon badges</string>
     <string name="preference_notification_badges">Notification badges</string>
     <string name="preference_notification_badges_summary">Show a badge for applications with unread notifications</string>
-    <string name="preference_suspended_badges_summary">Show a badge for suspended applicatoins</string>
+    <string name="preference_suspended_badges_summary">Show a badge for suspended applications</string>
     <string name="preference_suspended_badges">Suspended apps</string>
     <string name="preference_cloud_badges">Cloud badges</string>
     <string name="preference_cloud_badges_summary">Show a badge for files that are stored in a cloud</string>
