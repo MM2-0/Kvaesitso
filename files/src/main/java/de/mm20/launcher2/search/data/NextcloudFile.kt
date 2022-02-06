@@ -23,7 +23,6 @@ class NextcloudFile(
         get() = true
 
     override fun getLaunchIntent(context: Context): Intent? {
-        var nextcloudApp: String? = null
         return Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse("$server/f/$id")
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
