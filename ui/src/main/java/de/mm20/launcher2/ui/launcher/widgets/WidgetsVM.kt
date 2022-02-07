@@ -3,14 +3,12 @@ package de.mm20.launcher2.ui.launcher.widgets
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
-import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class WidgetsVM: ViewModel(), KoinComponent {
+class WidgetsVM : ViewModel(), KoinComponent {
     private val widgetRepository: WidgetRepository by inject()
 
     val isEditMode = MutableLiveData(false)
@@ -24,12 +22,10 @@ class WidgetsVM: ViewModel(), KoinComponent {
     }
 
     fun saveWidgets(widgets: List<Widget>) {
-        viewModelScope.launch {
-            widgetRepository.saveWidgets(widgets)
-        }
+        widgetRepository.saveWidgets(widgets)
     }
 
-    fun getInternalWidgets() : List<Widget> {
+    fun getInternalWidgets(): List<Widget> {
         return widgetRepository.getInternalWidgets()
     }
 }

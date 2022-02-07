@@ -3,14 +3,14 @@ package de.mm20.launcher2.widgets
 import android.content.Context
 import de.mm20.launcher2.widgets.R
 import de.mm20.launcher2.database.AppDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.concurrent.Executors
 
 class WidgetRepository(
         val context: Context
 ) {
+
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     suspend fun getWidgets(): List<Widget> {
         return withContext(Dispatchers.IO) {
@@ -27,9 +27,11 @@ class WidgetRepository(
     }
 
 
-    suspend fun saveWidgets(widgets: List<Widget>) {
-        withContext(Dispatchers.IO) {
-            AppDatabase.getInstance(context).widgetDao().updateWidgets(widgets.mapIndexed { i, widget -> widget.toDatabaseEntity(i) })
+    fun saveWidgets(widgets: List<Widget>) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                AppDatabase.getInstance(context).widgetDao().updateWidgets(widgets.mapIndexed { i, widget -> widget.toDatabaseEntity(i) })
+            }
         }
     }
 }
