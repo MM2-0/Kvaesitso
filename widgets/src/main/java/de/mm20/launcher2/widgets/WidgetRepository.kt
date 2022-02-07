@@ -4,6 +4,9 @@ import android.content.Context
 import de.mm20.launcher2.widgets.R
 import de.mm20.launcher2.database.AppDatabase
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import java.util.concurrent.Executors
 
 class WidgetRepository(
@@ -12,10 +15,10 @@ class WidgetRepository(
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    suspend fun getWidgets(): List<Widget> {
-        return withContext(Dispatchers.IO) {
-            AppDatabase.getInstance(context).widgetDao().getWidgets().map { Widget(it) }
-        }
+    fun getWidgets(): Flow<List<Widget>> {
+        return AppDatabase.getInstance(context).widgetDao()
+            .getWidgets()
+            .map { it.map { Widget(it) } }
     }
 
     fun getInternalWidgets(): List<Widget> {

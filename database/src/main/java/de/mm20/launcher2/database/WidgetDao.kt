@@ -3,11 +3,12 @@ package de.mm20.launcher2.database
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.WidgetEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WidgetDao {
     @Query("SELECT * FROM Widget ORDER BY position ASC")
-    fun getWidgets(): List<WidgetEntity>
+    fun getWidgets(): Flow<List<WidgetEntity>>
 
     @Transaction
     fun updateWidgets(widgets: List<WidgetEntity>) {

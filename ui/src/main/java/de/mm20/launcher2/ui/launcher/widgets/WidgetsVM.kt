@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -13,9 +14,7 @@ class WidgetsVM : ViewModel(), KoinComponent {
 
     val isEditMode = MutableLiveData(false)
 
-    val widgets = liveData<List<Widget>?> {
-        emit(widgetRepository.getWidgets())
-    }
+    val widgets = widgetRepository.getWidgets().asLiveData()
 
     fun setEditMode(editMode: Boolean) {
         isEditMode.value = editMode
