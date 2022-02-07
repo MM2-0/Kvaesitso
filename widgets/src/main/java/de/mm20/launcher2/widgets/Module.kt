@@ -6,5 +6,4 @@ import org.koin.dsl.module
 
 val widgetsModule = module {
     single { WidgetRepository(androidContext()) }
-    viewModel { WidgetViewModel(get()) }
 }
