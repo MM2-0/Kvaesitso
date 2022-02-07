@@ -26,7 +26,7 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
-        versionName = "1.4.2"
+        versionName = "1.4.3"
         multiDexEnabled = true
         signingConfig = signingConfigs.getByName("debug")
     }
