@@ -137,43 +137,43 @@
     </plurals>
     <string name="unit_kilobyte_symbol">Ko</string>
     <plurals name="unit_kilobyte">
-        <item quantity="one">kilooctet</item>
-        <item quantity="other">kilooctets</item>
+        <item quantity="one">kilo-octet</item>
+        <item quantity="other">kilo-octets</item>
     </plurals>
     <string name="unit_megabyte_symbol">Mo</string>
     <plurals name="unit_megabyte">
-        <item quantity="one">mégaoctet</item>
-        <item quantity="other">mégaoctets</item>
+        <item quantity="one">méga-octet</item>
+        <item quantity="other">méga-octets</item>
     </plurals>
     <string name="unit_gigabyte_symbol">Go</string>
     <plurals name="unit_gigabyte">
-        <item quantity="one">gigaoctet</item>
-        <item quantity="other">gigaoctets</item>
+        <item quantity="one">giga-octet</item>
+        <item quantity="other">giga-octets</item>
     </plurals>
     <string name="unit_terabyte_symbol">To</string>
     <plurals name="unit_terabyte">
-        <item quantity="one">téraoctet</item>
-        <item quantity="other">téraoctets</item>
+        <item quantity="one">téra-octet</item>
+        <item quantity="other">téra-octets</item>
     </plurals>
     <string name="unit_kibibyte_symbol">kio</string>
     <plurals name="unit_kibibyte">
-        <item quantity="one">kibioctet</item>
-        <item quantity="other">kibioctets</item>
+        <item quantity="one">kibi-octet</item>
+        <item quantity="other">kibi-octets</item>
     </plurals>
     <string name="unit_mebibyte_symbol">Mio</string>
     <plurals name="unit_mebibyte">
-        <item quantity="one">mebioctet</item>
-        <item quantity="other">mebioctets</item>
+        <item quantity="one">mebi-octet</item>
+        <item quantity="other">mebi-octets</item>
     </plurals>
     <string name="unit_gibibyte_symbol">Gio</string>
     <plurals name="unit_gibibyte">
-        <item quantity="one">gibioctet</item>
-        <item quantity="other">gibioctets</item>
+        <item quantity="one">gibi-octet</item>
+        <item quantity="other">gibi-octets</item>
     </plurals>
     <string name="unit_tebibyte_symbol">TiB</string>
     <plurals name="unit_tebibyte">
-        <item quantity="one">tebioctet</item>
-        <item quantity="other">tebioctets</item>
+        <item quantity="one">tebi-octet</item>
+        <item quantity="other">tebi-octets</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
     <plurals name="unit_bit">
@@ -187,8 +187,8 @@
     </plurals>
     <string name="unit_megabit_symbol">Mbit</string>
     <plurals name="unit_megabit">
-        <item quantity="one">megabit</item>
-        <item quantity="other">megabits</item>
+        <item quantity="one">mégabit</item>
+        <item quantity="other">mégabits</item>
     </plurals>
     <string name="unit_gigabit_symbol">Gbit</string>
     <plurals name="unit_gigabit">
@@ -268,17 +268,17 @@
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
-        <item quantity="one">degré celsius</item>
-        <item quantity="other">degrés celsius</item>
+        <item quantity="one">degré Celsius</item>
+        <item quantity="other">degrés Celsius</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
     <plurals name="unit_degree_fahrenheit">
-        <item quantity="one">degré fahrenheit</item>
-        <item quantity="other">degrés fahrenheit</item>
+        <item quantity="one">degré Fahrenheit</item>
+        <item quantity="other">degrés Fahrenheit</item>
     </plurals>
     <string name="unit_kelvin_symbol">K</string>
     <plurals name="unit_kelvin">
-        <item quantity="one">kelvin</item>
-        <item quantity="other">kelvins</item>
+        <item quantity="one">Kelvin</item>
+        <item quantity="other">Kelvins</item>
     </plurals>
 </resources>
