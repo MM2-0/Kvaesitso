@@ -187,7 +187,7 @@
     <string name="preference_legacy_icon_bg">Arrière-plan de l\'icône</string>
     <string name="preference_legacy_icon_bg_summary">Style d\'icône legacy</string>
     <!-- Easter egg preference toasts -->
-    <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l'ayez amené avec vous.</string>
+    <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l\'ayez amené avec vous.</string>
     <string name="easter_egg_2">Merci d\'arrêter, vous perdez votre temps.</string>
     <string name="easter_egg_3">Je ne vais pas le répéter: il n\'y a absoluement aucun easter easter egg caché ici.</string>
     <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
