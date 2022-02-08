@@ -50,7 +50,7 @@ val favoritesModule = module {
         if (searchable is Website) {
             return@factory WebsiteSerializer()
         }
-        throw IllegalArgumentException("No known serializer exists for type ${searchable.javaClass.canonicalName}")
+        return@factory null
     }
 
     factory { (serialized: String) ->

@@ -103,7 +103,7 @@ internal class FavoritesRepositoryImpl(
                     pinPosition = 1,
                     hidden = false
                 )
-                dao.insertReplaceExisting(favoritesItem.toDatabaseEntity())
+                favoritesItem.toDatabaseEntity()?.let { dao.insertReplaceExisting(it) }
             }
         }
     }
@@ -132,7 +132,7 @@ internal class FavoritesRepositoryImpl(
                     pinPosition = 0,
                     hidden = true
                 )
-                dao.insertReplaceExisting(favoritesItem.toDatabaseEntity())
+                favoritesItem.toDatabaseEntity()?.let { dao.insertReplaceExisting(it) }
             }
         }
     }
@@ -149,8 +149,10 @@ internal class FavoritesRepositoryImpl(
         scope.launch {
             withContext(Dispatchers.IO) {
                 val item = FavoritesItem(searchable.key, searchable, 0, 0, false)
-                AppDatabase.getInstance(context).searchDao()
-                    .incrementLaunchCount(item.toDatabaseEntity())
+                item.toDatabaseEntity()?.let {
+                    AppDatabase.getInstance(context).searchDao()
+                        .incrementLaunchCount(it)
+                }
             }
         }
     }
@@ -167,7 +169,7 @@ internal class FavoritesRepositoryImpl(
         scope.launch {
             withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context).searchDao()
-                    .saveFavorites(favorites.map { it.toDatabaseEntity() })
+                    .saveFavorites(favorites.mapNotNull { it.toDatabaseEntity() })
             }
         }
     }
