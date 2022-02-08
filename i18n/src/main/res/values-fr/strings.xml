@@ -18,7 +18,7 @@
     <!-- Menu entry for launcher settings -->
     <string name="settings">Paramètres</string>
     <!-- Set the device's wallpaper -->
-    <string name="wallpaper">Papier peint</string>
+    <string name="wallpaper">Papier-peint</string>
     <!-- Launcher settings title -->
     <string name="title_activity_settings">Paramètres</string>
     <!-- Calendar events that last the entire day -->
@@ -36,7 +36,7 @@
     <!-- Wind direction, used in weather widget -->
     <string name="wind_east_south_east">Est-Sud-Est</string>
     <!-- Wind direction, used in weather widget -->
-    <string name="wind_south_east">Sud Est</string>
+    <string name="wind_south_east">Sud-Est</string>
     <!-- Wind direction, used in weather widget -->
     <string name="wind_south_south_east">Sud-Sud-Est</string>
     <!-- Wind direction, used in weather widget -->
@@ -62,7 +62,7 @@
     <string name="preference_theme">Thème</string>
     <string name="preference_theme_light">Clair</string>
     <string name="preference_theme_dark">Sombre</string>
-    <string name="preference_screen_colors">Palette de couleurs</string>
+    <string name="preference_screen_colors">Palette de couleur</string>
     <string name="preference_colors_default">Défaut</string>
     <string name="preference_colors_bw">Noir et Blanc</string>
     <string name="preference_screen_about">À propos</string>
@@ -71,14 +71,14 @@
     <string name="preference_category_licenses">Licenses open-source</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Ouvrir le site Internet</string>
-    <string name="preference_screen_about_summary">Application et informations sur la license</string>
-    <string name="preference_screen_appearance_summary">Customiser l\'apparence</string>
+    <string name="preference_screen_about_summary">informations sur l\'application et la license</string>
+    <string name="preference_screen_appearance_summary">Modifier l\'apparence</string>
     <string name="preference_category_location">Position</string>
-    <string name="preference_automatic_location">Position Automatique</string>
+    <string name="preference_automatic_location">Position automatique</string>
     <string name="preference_automatic_location_summary">Utiliser le GPS et les services de localisation pour déterminer la localisation automatiquement</string>
-    <string name="preference_location">Localisation</string>
+    <string name="preference_location">Position</string>
     <string name="preference_imperial_units_summary">Utiliser les degrés Fahrenheit et les miles par heure</string>
-    <string name="preference_imperial_units">Système Impérial</string>
+    <string name="preference_imperial_units">Système impérial</string>
     <string name="preference_category_debug">Débogage</string>
     <!-- Wikipedia url prefix -->
     <string name="wikipedia_url">https://fr.wikipedia.org</string>
@@ -106,8 +106,8 @@
     <string name="file_type_presentation">Présentation</string>
     <string name="file_type_compressed">Fichier compressé</string>
     <string name="file_type_text">Fichier texte</string>
-    <string name="alert_delete_directory">Le dossier %1$s et ce qu\'il contient vont être totalement supprimés. Procéder ?</string>
-    <string name="alert_delete_file">Le fichier %1$s va être totalement supprimé. Procéder ?</string>
+    <string name="alert_delete_directory">Le dossier %1$s et ce qu\'il contient vont être définitivement supprimés. Procéder ?</string>
+    <string name="alert_delete_file">Le fichier %1$s va être définitivement supprimé. Procéder ?</string>
     <string name="file_meta_title">Titre</string>
     <string name="file_meta_album">Album</string>
     <string name="file_meta_duration">Durée</string>
@@ -139,12 +139,12 @@
     <string name="preference_weather_provider">Source</string>
     <string name="provider_metno">MET Norway</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
-    <string name="provider_brightsky">Deutscher Wetterdienst (seuleument pour l\'Allemagne)</string>
+    <string name="provider_brightsky">Deutscher Wetterdienst (seulement pour l\'Allemagne)</string>
     <string name="provider_here">HERE</string>
     <string name="preference_themed_icons">Icônes avec thème</string>
-    <string name="preference_themed_icons_summary">Colorie les icônes avec les couleurs de l\'application</string>
+    <string name="preference_themed_icons_summary">Colorer les icônes avec les couleurs de l\'application</string>
     <string name="preference_icon_pack">Pack d\'icônes</string>
-    <string name="preference_icon_pack_summary_empty">Aucun pack d\'icônes installé</string>
+    <string name="preference_icon_pack_summary_empty">Aucun pack d\'icônes n\'est installé</string>
     <string name="menu_edit_widgets">Éditer les widgets</string>
     <string name="widget_name_weather">Météo</string>
     <string name="widget_name_calendar">Calendrier</string>
@@ -159,7 +159,7 @@
     <string name="favorites_menu_unpin">Enlever</string>
     <string name="menu_back">Retour</string>
     <string name="contact_multiple_numbers">%1$d numéros de téléphone</string>
-    <string name="contact_multiple_emails">%1$d adresses email</string>
+    <string name="contact_multiple_emails">%1$d adresses mail</string>
     <string name="contact_multiple_postals">%1$d adresses postales</string>
     <string name="menu_app_info">Informations sur l\'application</string>
     <string name="preference_screen_services_summary">Gérer les comptes et les services</string>
@@ -177,26 +177,26 @@
     <string name="menu_delete">Supprimer</string>
     <string name="calendar_menu_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_search_wikipedia_pictures">Voir les photos</string>
-    <string name="preference_search_wikipedia_pictures_summary">Augmente fortement l'utilisation des données</string>
+    <string name="preference_search_wikipedia_pictures_summary">Augmente considérablement l\'utilisation des données</string>
     <string name="preference_google_signin">Se connecter avec Google</string>
     <string name="preference_google_signin_summary">Se connecter pour rechercher dans Google Drive</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
     <string name="installation_in_progress">Installation en cours... (%1$d%%)</string>
-    <string name="activity_not_found_searchable">Impossible d'ouvrir %1$s</string>
-    <string name="preference_legacy_icon_bg">Arière-plan de l\'icône</string>
+    <string name="activity_not_found_searchable">Impossible d\'ouvrir %1$s</string>
+    <string name="preference_legacy_icon_bg">Arrière-plan de l\'icône</string>
     <string name="preference_legacy_icon_bg_summary">Style d\'icône legacy</string>
     <!-- Easter egg preference toasts -->
-    <string name="easter_egg_1">Il n\'y a pas d'easter eggs ici, à moins que vous ne les ayez amenés avec vous.</string>
-    <string name="easter_egg_2">Merci d\'arrêter, vous perdez votre temps</string>
-    <string name="easter_egg_3">Je ne vais pas le répéter: il n\'y a absoluement aucun easter easter eggs cachés ici</string>
+    <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l'ayez amené avec vous.</string>
+    <string name="easter_egg_2">Merci d\'arrêter, vous perdez votre temps.</string>
+    <string name="easter_egg_3">Je ne vais pas le répéter: il n\'y a absoluement aucun easter easter egg caché ici.</string>
     <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
-    <string name="permission_calendar_widget">Accordez la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
-    <string name="permission_calendar_search">Accordez la permission pour rechercher dans votre calendrier.</string>
-    <string name="permission_files_search">Accordez la permission d\'accès au stockage pour rechercher des photos, des médias et des documents sur cet appareil.</string>
-    <string name="permission_contact_search">Accordez la permission d\'accès aux contacts pour rechercher dans vos contacts.</string>
+    <string name="permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
+    <string name="permission_calendar_search">Accorder la permission pour rechercher dans le calendrier.</string>
+    <string name="permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des photos, des médias et des documents sur cet appareil.</string>
+    <string name="permission_contact_search">Accorder la permission d\'accès aux contacts pour rechercher dans les contacts.</string>
     <string name="close">Fermer</string>
-    <string name="custom_icon">Icône custoimisée</string>
+    <string name="custom_icon">Icône personnalisée</string>
     <string name="widget_action_adjust_height">Ajuster la hauteur</string>
     <string name="widget_action_remove">Retirer</string>
     <string name="widget_action_settings">Paramètres</string>
@@ -207,15 +207,15 @@
     <string name="preference_wallpaper_summary">Choisir un papier-peint</string>
     <string name="preference_screen_badges">Badges</string>
     <string name="preference_screen_badges_summary">Configurer les badges d\'icône</string>
-    <string name="preference_notification_badges">Notification badges</string>
+    <string name="preference_notification_badges">Badges de notification</string>
     <string name="preference_notification_badges_summary">Afficher un badge pour les applications avec des notifications non-lues</string>
     <string name="preference_suspended_badges_summary">Afficher un badge pour les applications suspendues</string>
     <string name="preference_suspended_badges">Applications suspendues</string>
     <string name="preference_cloud_badges">Badges du cloud</string>
     <string name="preference_cloud_badges_summary">Afficher un badge pour les fichiers stockés dans le cloud</string>
     <string name="preference_shortcut_badges">Badges de raccourci</string>
-    <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient-il</string>
-    <string name="preference_icon_shape_platform">Système par défaut</string>
+    <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
+    <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_category_services_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Se connecter avec Microsoft</string>
     <string name="preference_ms_signin_summary">Se connecter pour rechercher dans OneDrive</string>
@@ -238,32 +238,32 @@
     <string name="preference_category_services_owncloud">Owncloud</string>
     <string name="owncloud_server_invalid_url">Cette URL ne dirige pas vers une installation Owncloud valide</string>
     <string name="owncloud_password">Mot de passe</string>
-    <string name="owncloud_username">Nom d'utilisateur</string>
-    <string name="owncloud_login_2fa_hint">Si vous avez activé l\'authentification à deux facteurs, vous devez utiliser un mot de passe d'application ici.</string>
+    <string name="owncloud_username">Nom d\'utilisateur</string>
+    <string name="owncloud_login_2fa_hint">Si vous avez activé l\'authentification à deux facteurs, vous devez utiliser un mot de passe d\'application ici.</string>
     <string name="login_flow_login">Se connecter</string>
-    <string name="owncloud_login_failed">La connection a échoué: nom d\'utilsateur ou le mot de passe incorrect.</string>
+    <string name="owncloud_login_failed">La connection a échoué: nom d\'utilsateur ou mot de passe incorrect.</string>
     <string name="preference_owncloud_signin">Se connecter avec Owncloud</string>
     <string name="preference_owncloud_signin_summary">Se connecter pour rechercher dans votre serveur Owncloud</string>
     <string name="owncloud_username_empty">Le nom d\'utilisateur ne peut pas être vide</string>
     <string name="owncloud_password_empty">Le mot de pase ne peut pas être vide</string>
-    <string name="preference_cards_summary">Customiser l\'apparence des cartes</string>
+    <string name="preference_cards_summary">Modifier l\'apparence des cartes</string>
     <string name="preference_cards">Cartes</string>
     <string name="preference_cards_corner_radius">Rayon d\'angle</string>
     <string name="preference_cards_stroke_width">Épaisseur du contour</string>
     <string name="preference_cards_opacity">Opacité</string>
     <string name="disclaimer">Avis de non-responsabilité</string>
-    <string name="disclaimer_currency_converter">"Les taux de change sont publiés une fois par jour par la Banque Européenne centrale. Toutes les informations sont fournies \"en l\'état\" sans aucune sorte de garantie. Aucune responsabilité n'est assumée pour ces informations\n\nDernière mise-à-jour: %1$s"</string>
+    <string name="disclaimer_currency_converter">"Les taux de change sont publiés une fois par jour par la Banque Centrale Européenne. Toutes les informations sont fournies \"en l\'état\", sans aucune sorte de garantie. Aucune responsabilité n\'est assumée pour ces informations\n\nDernière mise-à-jour: %1$s"</string>
     <string name="unit_converter_show_all">Tout montrer</string>
 
     <string name="date_today">Aujourd\'hui</string>
     <string name="date_tomorrow">Demain</string>
     <string name="calendar_widget_pinned_events">À venir</string>
-    <string name="calendar_widget_no_events">Pas d\'évènements aujourd'hui</string>
+    <string name="calendar_widget_no_events">Pas d\'évènements aujourd\'hui</string>
     <string name="calendar_widget_open_app">Ouvrir l\'application de calendrier</string>
     <string name="calendar_widget_new_event">Nouvel évènement</string>
     <plurals name="calendar_widget_running_events">
-        <item quantity="one">+%1$d a eu lieu ces derniers jours</item>
-        <item quantity="other">+%1$d ont lieu ces derniers jours</item>
+        <item quantity="one">+%1$d évènement a eu lieu ces derniers jours</item>
+        <item quantity="other">+%1$d évènements ont eu lieu ces derniers jours</item>
     </plurals>
 
     <!-- Weather widget -->
@@ -334,7 +334,7 @@
     <string name="missing_permission_calendar_widget_settings">Ce widget nécessite la permission d\'accès au calendrier</string>
     <string name="missing_permission_file_search_android10">La permission de gérer tous les fichiers est nécessaire pour rechercher des fichiers locaux</string>
     <string name="missing_permission_file_search">La permission d\'accès au stockage externe est nécessaire pour rechercher des fichiers locaux</string>
-    <string name="missing_permission_notification_badges">La permission d\'accès aux notifications est nécessaire pour afficher les badges des notifications</string>
+    <string name="missing_permission_notification_badges">La permission d\'accès aux notifications est nécessaire pour afficher les badges de notification</string>
 
     <string name="weather_widget_set_location">Définir la position</string>
 
@@ -367,7 +367,7 @@
     <string name="preference_search_contacts">Contacts</string>
     <string name="preference_search_contacts_summary">Rechercher les contacts sur cet appareil</string>
     <string name="preference_search_calendar">Calendrier</string>
-    <string name="preference_search_calendar_summary">Rechercher les futurs rendez-vous et évènements</string>
+    <string name="preference_search_calendar_summary">Rechercher les futurs évènements</string>
     <string name="preference_search_calculator">Calculatrice</string>
     <string name="preference_search_calculator_summary">Évaluer des calculs mathématiques</string>
     <string name="preference_search_unitconverter">Convertisseur d\'unités</string>
@@ -381,7 +381,7 @@
     <string name="preference_search_localfiles">Fichiers locaux</string>
     <string name="preference_search_localfiles_summary">Rechercher dans les documents, les photos et les autres fichiers stockés sur cet appareil</string>
     <string name="preference_search_gdrive">Google Drive</string>
-    <string name="preference_search_gdrive_summary">Recherche dans les fichiers de %1$s sur Google Drive</string>
+    <string name="preference_search_gdrive_summary">Rechercher dans les fichiers de %1$s sur Google Drive</string>
     <string name="preference_search_onedrive">OneDrive</string>
     <string name="preference_search_onedrive_summary">Rechercher dans les fichiers de %1$s sur OneDrive</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
@@ -390,7 +390,7 @@
 
     <string name="preference_screen_calendarwidget">Calendrier</string>
     <string name="preference_calendar_calendars">Calendriers</string>
-    <string name="preference_calendar_hide_allday">Cacher les évènements sur toute la journée</string>
+    <string name="preference_calendar_hide_allday">Cacher les évènements qui durent toute la journée</string>
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendrier sélectioné</item>
         <item quantity="other">%1$d calendriers sélectionés</item>
@@ -403,7 +403,7 @@
     <string name="preference_music_filter_sources_summary">Ignorer les sessions multimédias pour les applications qui ne sont pas des applications musicales</string>
 
     <string name="preference_search_bar_style">Style</string>
-    <string name="preference_search_bar_style_summary">Customiser l\'apparence de la barre de rechercher</string>
+    <string name="preference_search_bar_style_summary">Modifier l\'apparence de la barre de rechercher</string>
 
     <string name="preference_wikipedia_customurl">URL Wikipédia</string>
 
@@ -414,10 +414,10 @@
     <string name="websearch_dialog_create_title">Ajouter un moteur de recherche</string>
     <string name="websearch_dialog_edit_title">Éditer un moteur de recherche</string>
 
-    <string name="no_account_nextcloud">Vous n'\avez pas connecté de compte Nextcloud pour le moment</string>
-    <string name="no_account_owncloud">Vous n'\avez pas connecté de compte Owncloud pour le moment</string>
-    <string name="no_account_microsoft">Vous n'\avez pas connecté de compte Microsoft pour le moment</string>
-    <string name="no_account_google">Vous n'\avez pas connecté de compte Google pour le moment</string>
+    <string name="no_account_nextcloud">Vous n\'avez pas connecté de compte Nextcloud pour le moment</string>
+    <string name="no_account_owncloud">Vous n\'avez pas connecté de compte Owncloud pour le moment</string>
+    <string name="no_account_microsoft">Vous n\'avez pas connecté de compte Microsoft pour le moment</string>
+    <string name="no_account_google">Vous n\'avez pas connecté de compte Google pour le moment</string>
     <string name="connect_account">Connecter un compte</string>
 
     <string name="turn_off">Désactiver</string>
