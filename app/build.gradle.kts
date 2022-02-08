@@ -32,18 +32,13 @@ android {
     }
     buildTypes {
         release {
-            isMinifyEnabled = false
-            isShrinkResources = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android.txt"),
-                "proguard-rules.pro"
-            )
             applicationIdSuffix = ".release"
 
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            postprocessing {
+                isRemoveUnusedCode = false
+                isObfuscate = false
+                isOptimizeCode = false
+            }
 
             versionNameSuffix = "-" + buildTime()
         }
