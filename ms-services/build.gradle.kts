@@ -20,6 +20,7 @@ android {
                     getDefaultProguardFile("proguard-android-optimize.txt"),
                     "proguard-rules.pro"
             )
+            consumerProguardFile("proguard-rules.pro")
         }
     }
 

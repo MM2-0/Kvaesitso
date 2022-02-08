@@ -35,7 +35,7 @@ android {
             applicationIdSuffix = ".release"
 
             postprocessing {
-                isRemoveUnusedCode = false
+                isRemoveUnusedCode = true
                 isObfuscate = false
                 isOptimizeCode = false
             }
