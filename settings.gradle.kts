@@ -342,10 +342,10 @@ dependencyResolutionManagement {
 
             alias("google.auth")
                 .to("com.google.auth", "google-auth-library-oauth2-http")
-                .version("1.1.0")
+                .version("1.4.0")
             alias("google.apiclient")
                 .to("com.google.api-client", "google-api-client-android")
-                .version("1.31.2")
+                .version("1.33.2")
             alias("google.drive")
                 .to("com.google.apis", "google-api-services-drive")
                 .version("v3-rev197-1.25.0")
