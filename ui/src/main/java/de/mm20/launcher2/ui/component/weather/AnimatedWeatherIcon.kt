@@ -9,14 +9,12 @@ import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AcUnit
 import androidx.compose.material.icons.rounded.Air
 import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.Thermostat
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,7 +67,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIcon")
 
     val color by animateColorAsState(
-        if (night)colorResource(id = R.color.weather_moon) else colorResource(id = R.color.weather_sun)
+        if (night) colorResource(id = R.color.weather_moon) else colorResource(id = R.color.weather_sun)
     )
     val scale by transition.animateFloat(label = "sunScale") {
         when (it) {
@@ -487,12 +485,15 @@ fun AnimatedWeatherIconTestPanel() {
                 var menu by remember { mutableStateOf(false) }
                 DropdownMenu(expanded = menu, onDismissRequest = { menu = false }) {
                     for (ic in icons) {
-                        DropdownMenuItem(onClick = {
-                            icon = ic
-                            menu = false
-                        }) {
-                            Text(text = ic.name)
-                        }
+                        DropdownMenuItem(
+                            onClick = {
+                                icon = ic
+                                menu = false
+                            },
+                            text = {
+                                Text(text = ic.name)
+                            }
+                        )
                     }
                 }
                 Button(onClick = { menu = true }) {

@@ -2,23 +2,15 @@ package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
-import androidx.compose.material3.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.favorites.FavoritesRepository
-import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
-import org.koin.androidx.compose.getViewModel
-import org.koin.androidx.compose.inject
 import kotlin.math.min
 
 @Composable
@@ -49,7 +41,8 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                 }
                 DropdownMenu(
                     expanded = showMenu,
-                    onDismissRequest = { showMenu = false }
+                    onDismissRequest = { showMenu = false },
+                    modifier = Modifier.animateContentSize()
                 ) {
                     OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
                         showMenu = false
@@ -61,11 +54,6 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             when (action) {
                 is DefaultToolbarAction -> {
                     IconButton(action.action) {
-                        Icon(action.icon, contentDescription = action.label)
-                    }
-                }
-                is ToggleToolbarAction -> {
-                    IconToggleButton(action.isChecked, action.onCheckedChange) {
                         Icon(action.icon, contentDescription = action.label)
                     }
                 }
@@ -102,34 +90,25 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                 is SubmenuToolbarAction -> {
                     DropdownMenuItem(
                         onClick = { selectedSubMenu = i },
-                    ) {
-                        Text(
-                            action.label, modifier = Modifier.weight(1f),
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                        Icon(imageVector = Icons.Rounded.ArrowRight, contentDescription = null)
-                    }
-                }
-                is ToggleToolbarAction -> {
-                    DropdownMenuItem(
-                        onClick = { action.onCheckedChange(!action.isChecked) },
-                    ) {
-                        Text(
-                            action.label,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
+                        text = {
+                            Text(
+                                action.label, modifier = Modifier.weight(1f),
+                            )
+                        }
+                    )
                 }
                 is DefaultToolbarAction -> {
-                    DropdownMenuItem(onClick = {
-                        action.action
-                        onDismiss()
-                    }) {
-                        Text(
-                            action.label,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
+                    DropdownMenuItem(
+                        onClick = {
+                            action.action()
+                            onDismiss()
+                        },
+                        text = {
+                            Text(
+                                action.label,
+                            )
+                        }
+                    )
                 }
             }
         }
@@ -154,11 +133,4 @@ data class SubmenuToolbarAction(
     override val label: String,
     override val icon: ImageVector,
     val children: List<ToolbarAction>
-) : ToolbarAction
-
-data class ToggleToolbarAction(
-    override val label: String,
-    override val icon: ImageVector,
-    val isChecked: Boolean,
-    val onCheckedChange: (Boolean) -> Unit
 ) : ToolbarAction

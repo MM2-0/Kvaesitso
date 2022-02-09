@@ -12,8 +12,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
@@ -232,15 +230,16 @@ fun EditWebsearchDialog(
                                     DropdownMenu(
                                         expanded = showDropdown,
                                         onDismissRequest = { showDropdown = false }) {
-                                        DropdownMenuItem(onClick = {
-                                            onValueDeleted(value)
-                                            onCancel()
-                                        }) {
-                                            Text(
-                                                text = stringResource(R.string.menu_delete),
-                                                style = MaterialTheme.typography.labelLarge
-                                            )
-                                        }
+                                        DropdownMenuItem(
+                                            text = {
+                                                Text(
+                                                    text = stringResource(R.string.menu_delete)
+                                                )
+                                            },
+                                            onClick = {
+                                                onValueDeleted(value)
+                                                onCancel()
+                                            })
                                     }
                                 }
                             }
@@ -266,7 +265,10 @@ fun EditWebsearchDialog(
                                 },
                                 modifier = Modifier.padding(4.dp)
                             ) {
-                                Text(stringResource(R.string.websearch_dialog_replace_icon), style = MaterialTheme.typography.labelLarge)
+                                Text(
+                                    stringResource(R.string.websearch_dialog_replace_icon),
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                             TextButton(
                                 onClick = {
@@ -277,7 +279,10 @@ fun EditWebsearchDialog(
                                     contentColor = MaterialTheme.colorScheme.error
                                 )
                             ) {
-                                Text(stringResource(R.string.websearch_dialog_delete_icon), style = MaterialTheme.typography.labelLarge)
+                                Text(
+                                    stringResource(R.string.websearch_dialog_delete_icon),
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                         }
                     } else {
@@ -411,7 +416,11 @@ private fun ColorPicker(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    var textFieldValue by remember(value) { mutableStateOf(Color(value).toHexString().substring(1)) }
+                    var textFieldValue by remember(value) {
+                        mutableStateOf(
+                            Color(value).toHexString().substring(1)
+                        )
+                    }
                     TextField(
                         value = textFieldValue,
                         leadingIcon = {
@@ -425,7 +434,7 @@ private fun ColorPicker(
                         },
                         singleLine = true,
                         modifier = Modifier.width(150.dp)
-                        )
+                    )
                     TextButton(onClick = { showCustomColorPicker = false }) {
                         Text(
                             stringResource(android.R.string.ok),

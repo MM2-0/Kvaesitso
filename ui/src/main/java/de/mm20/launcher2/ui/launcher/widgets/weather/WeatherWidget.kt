@@ -10,8 +10,6 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.LightMode
@@ -73,7 +71,10 @@ fun WeatherWidget() {
                     TextButton(onClick = {
                         showLocationDialog = true
                     }) {
-                        Text(stringResource(R.string.weather_widget_set_location), style = MaterialTheme.typography.labelLarge)
+                        Text(
+                            stringResource(R.string.weather_widget_set_location),
+                            style = MaterialTheme.typography.labelLarge
+                        )
                     }
                 }
             )
@@ -291,32 +292,33 @@ fun WeatherDaySelector(
                     onClick = {
                         menuExpanded.value = false
                         onDaySelected(i)
+                    },
+                    text = {
+                        Row {
+                            WeatherIcon(icon = weatherIconById(d.icon))
+                            Text(
+                                text = dateFormat.format(d.timestamp),
+                                style = MaterialTheme.typography.titleSmall,
+                                softWrap = false,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 16.dp, end = 8.dp)
+                                    .weight(1f)
+                            )
+                            Text(
+                                text = "${
+                                    convertTemperature(
+                                        imperialUnits,
+                                        d.minTemp
+                                    )
+                                }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
+                                softWrap = false,
+                                style = MaterialTheme.typography.titleSmall,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        }
                     }
-                ) {
-                    Row {
-                        WeatherIcon(icon = weatherIconById(d.icon))
-                        Text(
-                            text = dateFormat.format(d.timestamp),
-                            style = MaterialTheme.typography.titleSmall,
-                            softWrap = false,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 16.dp, end = 8.dp)
-                                .weight(1f)
-                        )
-                        Text(
-                            text = "${
-                                convertTemperature(
-                                    imperialUnits,
-                                    d.minTemp
-                                )
-                            }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
-                            softWrap = false,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
-                    }
-                }
+                )
             }
         }
     }
@@ -362,29 +364,32 @@ fun WeatherTimeSelector(
             }) {
 
             for ((i, fc) in forecasts.withIndex()) {
-                DropdownMenuItem(onClick = {
-                    menuExpanded.value = false
-                    onTimeSelected(i)
-                }) {
-                    Row {
-                        WeatherIcon(icon = weatherIconById(fc.icon), night = fc.night)
-                        Text(
-                            text = dateFormat.format(fc.timestamp),
-                            style = MaterialTheme.typography.titleSmall,
-                            softWrap = false,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .padding(start = 16.dp, end = 8.dp)
-                                .weight(1f)
-                        )
-                        Text(
-                            text = "${convertTemperature(imperialUnits, fc.temperature)}°",
-                            softWrap = false,
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.align(Alignment.CenterVertically)
-                        )
+                DropdownMenuItem(
+                    onClick = {
+                        menuExpanded.value = false
+                        onTimeSelected(i)
+                    },
+                    text = {
+                        Row {
+                            WeatherIcon(icon = weatherIconById(fc.icon), night = fc.night)
+                            Text(
+                                text = dateFormat.format(fc.timestamp),
+                                style = MaterialTheme.typography.titleSmall,
+                                softWrap = false,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .padding(start = 16.dp, end = 8.dp)
+                                    .weight(1f)
+                            )
+                            Text(
+                                text = "${convertTemperature(imperialUnits, fc.temperature)}°",
+                                softWrap = false,
+                                style = MaterialTheme.typography.titleSmall,
+                                modifier = Modifier.align(Alignment.CenterVertically)
+                            )
+                        }
                     }
-                }
+                )
             }
 
         }

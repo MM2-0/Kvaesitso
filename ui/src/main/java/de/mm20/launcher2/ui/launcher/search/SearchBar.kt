@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
@@ -78,35 +76,47 @@ fun SearchBar(
         style = style,
         overflowMenu = { show, onDismissRequest ->
             DropdownMenu(expanded = show, onDismissRequest = onDismissRequest) {
-                DropdownMenuItem(onClick = {
-                    activityViewModel.showEditFavorites()
-                    onDismissRequest()
-                }) {
-                    Text(stringResource(R.string.menu_item_edit_favs))
-                }
-                DropdownMenuItem(onClick = {
-                    activityViewModel.showHiddenItems()
-                    onDismissRequest()
-                }) {
-                    Text(stringResource(R.string.menu_hidden_items))
-                }
-                DropdownMenuItem(onClick = {
-                    context.startActivity(
-                        Intent.createChooser(
-                            Intent(Intent.ACTION_SET_WALLPAPER),
-                            null
+                DropdownMenuItem(
+                    onClick = {
+                        activityViewModel.showEditFavorites()
+                        onDismissRequest()
+                    },
+                    text = {
+                        Text(stringResource(R.string.menu_item_edit_favs))
+                    }
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        activityViewModel.showHiddenItems()
+                        onDismissRequest()
+                    },
+                    text = {
+                        Text(stringResource(R.string.menu_hidden_items))
+                    }
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        context.startActivity(
+                            Intent.createChooser(
+                                Intent(Intent.ACTION_SET_WALLPAPER),
+                                null
+                            )
                         )
-                    )
-                    onDismissRequest()
-                }) {
-                    Text(stringResource(R.string.wallpaper))
-                }
-                DropdownMenuItem(onClick = {
-                    context.startActivity(Intent(context, SettingsActivity::class.java))
-                    onDismissRequest()
-                }) {
-                    Text(stringResource(R.string.settings))
-                }
+                        onDismissRequest()
+                    },
+                    text = {
+                        Text(stringResource(R.string.wallpaper))
+                    }
+                )
+                DropdownMenuItem(
+                    onClick = {
+                        context.startActivity(Intent(context, SettingsActivity::class.java))
+                        onDismissRequest()
+                    },
+                    text = {
+                        Text(stringResource(R.string.settings))
+                    }
+                )
             }
         },
         onFocus = onFocus,
