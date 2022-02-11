@@ -79,7 +79,6 @@ dependencies {
 
     //Android Jetpack
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.preference)
     implementation(libs.androidx.cardview)
     implementation(libs.androidx.browser)
     implementation(libs.androidx.palette)

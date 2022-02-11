@@ -159,10 +159,6 @@ dependencyResolutionManagement {
                 .to("androidx.activity", "activity-compose")
                 .versionRef("androidx.activity")
 
-            alias("androidx.preference")
-                .to("androidx.preference", "preference-ktx")
-                .version("1.2.0")
-
             alias("androidx.work")
                 .to("androidx.work", "work-runtime-ktx")
                 .version("2.7.1")

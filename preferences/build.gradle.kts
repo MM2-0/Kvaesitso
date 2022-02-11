@@ -59,7 +59,6 @@ dependencies {
     implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.preference)
     api(libs.androidx.datastore)
     api(libs.protobuf.javalite)
     implementation(libs.koin.android)

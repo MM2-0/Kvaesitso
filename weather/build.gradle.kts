@@ -37,7 +37,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.preference)
     implementation(libs.androidx.work)
     implementation(libs.okhttp)
     implementation(libs.bundles.retrofit)
