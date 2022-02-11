@@ -5,10 +5,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 data class BrightSkyResult(
-    val weather: Array<BrightSkyResultWether>
+    val weather: Array<BrightSkyResultWeather>
 )
 
-data class BrightSkyResultWether(
+data class BrightSkyResultWeather(
     val timestamp: String?,
     @SerializedName("source_id") val sourceId: Int?,
     @SerializedName("cloud_cover") val cloudCover: Double?,
