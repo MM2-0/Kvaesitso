@@ -27,7 +27,6 @@ android {
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
         versionName = "1.4.3"
-        multiDexEnabled = true
         signingConfig = signingConfigs.getByName("debug")
     }
     buildTypes {
@@ -90,12 +89,10 @@ dependencies {
     implementation(libs.androidx.media2)
     implementation(libs.materialcomponents.core)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.gridlayout)
 
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.androidx.work)
-    implementation(libs.androidx.multidex)
 
     implementation(libs.coil.core)
     implementation(libs.coil.svg)
