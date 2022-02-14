@@ -108,8 +108,6 @@ class LauncherScaffoldView @JvmOverloads constructor(
             ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0).setDuration(200).start()
         }
 
-        binding.scrollContainer.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
-
         binding.scrollView.scrollY = viewModel.scrollY
         binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
 
@@ -173,7 +171,6 @@ class LauncherScaffoldView @JvmOverloads constructor(
                 viewModel.setStatusBarColor(colorSurface.data)
             } else {
                 binding.widgetContainer.layoutTransition = ChangingLayoutTransition()
-                binding.scrollContainer.layoutTransition = ChangingLayoutTransition()
                 binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
 
                 binding.searchBar.visibility = View.VISIBLE

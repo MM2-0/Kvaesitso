@@ -162,21 +162,19 @@ class FileDetailRepresentation : Representation, KoinComponent {
 
         sb.append(
             context.getString(
-                R.string.file_meta_data_entry,
-                context.getString(R.string.file_meta_type),
+                R.string.file_meta_type,
                 file.mimeType
             )
         )
 
         for ((k, v) in file.metaData) {
             sb.append("\n")
-                .append(context.getString(R.string.file_meta_data_entry, context.getString(k), v))
+                .append(context.getString(k, v))
         }
         if (!file.isDirectory) {
             sb.append("\n").append(
                 context.getString(
-                    R.string.file_meta_data_entry,
-                    context.getString(R.string.file_meta_size),
+                    R.string.file_meta_size,
                     formatFileSize(file.size)
                 )
             )
@@ -184,8 +182,7 @@ class FileDetailRepresentation : Representation, KoinComponent {
         if (file.path.isNotEmpty()) {
             sb.append("\n").append(
                 context.getString(
-                    R.string.file_meta_data_entry,
-                    context.getString(R.string.file_meta_path),
+                    R.string.file_meta_path,
                     file.path
                 )
             )

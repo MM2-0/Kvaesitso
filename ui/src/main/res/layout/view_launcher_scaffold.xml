@@ -19,16 +19,15 @@
             android:id="@+id/scrollContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:orientation="vertical"
-            android:padding="8dp">
+            android:orientation="vertical">
 
             <de.mm20.launcher2.ui.launcher.search.SearchView
                 android:id="@+id/searchContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:visibility="gone" />
 
 
@@ -38,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:layout_margin="8dp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

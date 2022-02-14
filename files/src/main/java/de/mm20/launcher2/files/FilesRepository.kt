@@ -2,18 +2,17 @@ package de.mm20.launcher2.files
 
 import android.content.Context
 import de.mm20.launcher2.files.providers.*
-import de.mm20.launcher2.files.providers.GDriveFileProvider
-import de.mm20.launcher2.files.providers.LocalFileProvider
-import de.mm20.launcher2.files.providers.NextcloudFileProvider
-import de.mm20.launcher2.files.providers.OwncloudFileProvider
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.data.*
-import kotlinx.coroutines.*
+import de.mm20.launcher2.search.data.File
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 interface FileRepository {
     fun search(query: String): Flow<List<File>>
@@ -70,28 +69,16 @@ internal class FileRepositoryImpl(
             return@channelFlow
         }
 
-        //TODO SearchListView crashes if we send too many updates at once. Rewrite this code
-        // once SearchListView has been replaced with a Jetpack Compose version of itself
         providers.collectLatest { providers ->
             if (providers.isEmpty()) {
                 send(emptyList())
                 return@collectLatest
             }
             hiddenItems.collectLatest { hiddenItems ->
-                if (providers.first() is LocalFileProvider) {
-                    val localFiles = providers.first().takeIf { it is LocalFileProvider }?.search(query) ?: emptyList()
-                    delay(300)
-                    if (providers.size > 1) {
-                        val cloudFiles = providers.subList(1, providers.size).map {
-                            async { it.search(query) }
-                        }.awaitAll().flatten()
-                        send(localFiles + cloudFiles)
-                    }
-                } else {
-                    val files = providers.map {
-                        async { it.search(query) }
-                    }.awaitAll().flatten()
-                    send(files)
+                val results = mutableListOf<File>()
+                for (provider in providers) {
+                    results.addAll(provider.search(query))
+                    send(results)
                 }
             }
         }

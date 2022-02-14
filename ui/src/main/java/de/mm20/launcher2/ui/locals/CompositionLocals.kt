@@ -13,3 +13,11 @@ val LocalAppWidgetHost = compositionLocalOf<AppWidgetHost?>(defaultFactory = { n
 val LocalNavController = compositionLocalOf<NavController?> { null }
 
 val LocalCardStyle = compositionLocalOf<Settings.CardSettings> { Settings.CardSettings.getDefaultInstance() }
+
+val LocalFavoritesEnabled = compositionLocalOf { true }
+
+/**
+ * Workaround a bug in Jetpack Compose which incorrectly places popups
+ * that are nested inside other popups.
+ */
+val LocalWindowPosition = compositionLocalOf { 0f }

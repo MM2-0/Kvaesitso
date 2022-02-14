@@ -26,6 +26,6 @@
         <item name="colorOnSurfaceVariant">@android:color/system_neutral2_700</item>
         <item name="colorSurfaceInverse">@android:color/system_neutral2_800</item>
         <item name="colorOnSurfaceInverse">@android:color/system_neutral2_50</item>
-        <item name="elevationOverlayEnabled">false</item>
+        <item name="elevationOverlayEnabled">true</item>
     </style>
 </resources>

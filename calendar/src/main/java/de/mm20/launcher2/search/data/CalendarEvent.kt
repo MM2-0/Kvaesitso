@@ -1,6 +1,5 @@
 package de.mm20.launcher2.search.data
 
-import android.Manifest
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
@@ -10,7 +9,6 @@ import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.provider.CalendarContract
 import androidx.core.content.ContextCompat
-import androidx.core.database.getStringOrNull
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.blue
 import androidx.core.graphics.green
@@ -18,14 +16,8 @@ import androidx.core.graphics.red
 import de.mm20.launcher2.calendar.R
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import java.text.SimpleDateFormat
-import java.util.*
 
 class CalendarEvent(
     override val label: String,
@@ -53,19 +45,19 @@ class CalendarEvent(
             TextDrawable(
                 day,
                 color = Color.WHITE,
-                fontSize = 40 * context.dp,
+                fontSize = 20 * context.dp,
                 typeface = Typeface.DEFAULT_BOLD
             ),
             TextDrawable(
                 month,
                 color = Color.WHITE,
-                fontSize = 26 * context.dp,
+                fontSize = 13 * context.dp,
                 typeface = Typeface.DEFAULT_BOLD
             )
         )
         val foreground = LayerDrawable(fgLayers)
-        foreground.setLayerInset(0, 0, 0, 0, (26 * context.dp).toInt())
-        foreground.setLayerInset(1, 0, (40 * context.dp).toInt(), 0, 0)
+        foreground.setLayerInset(0, 0, 0, 0, (13 * context.dp).toInt())
+        foreground.setLayerInset(1, 0, (20 * context.dp).toInt(), 0, 0)
         val background = ColorDrawable(getDisplayColor(context, color))
         return LauncherIcon(
             foreground = foreground,
@@ -74,8 +66,9 @@ class CalendarEvent(
         )
     }
 
-    override fun getLaunchIntent(context: Context): Intent? {
-        return null
+    override fun getLaunchIntent(context: Context): Intent {
+        val uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id)
+        return Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
     companion object {

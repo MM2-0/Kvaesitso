@@ -9,8 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.locals.LocalWindowPosition
 import kotlin.math.min
 
 @Composable
@@ -39,13 +42,19 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                 IconButton(onClick = { showMenu = true }) {
                     Icon(Icons.Rounded.MoreVert, contentDescription = "")
                 }
-                DropdownMenu(
-                    expanded = showMenu,
-                    onDismissRequest = { showMenu = false },
-                    modifier = Modifier.animateContentSize()
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .offset(0.dp, LocalWindowPosition.current.toDp())
                 ) {
-                    OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
-                        showMenu = false
+                    DropdownMenu(
+                        expanded = showMenu,
+                        onDismissRequest = { showMenu = false },
+                        modifier = Modifier.animateContentSize()
+                    ) {
+                        OverflowMenuItems(items = actions.subList(slots - 1, actions.size)) {
+                            showMenu = false
+                        }
                     }
                 }
             }
@@ -65,13 +74,19 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                         }) {
                             Icon(action.icon, contentDescription = action.label)
                         }
-                        DropdownMenu(
-                            expanded = showMenu,
-                            onDismissRequest = { showMenu = false },
-                            modifier = Modifier.animateContentSize()
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp)
+                                .offset(0.dp, LocalWindowPosition.current.toDp())
                         ) {
-                            OverflowMenuItems(items = action.children) {
-                                showMenu = false
+                            DropdownMenu(
+                                expanded = showMenu,
+                                onDismissRequest = { showMenu = false },
+                                modifier = Modifier.animateContentSize()
+                            ) {
+                                OverflowMenuItems(items = action.children) {
+                                    showMenu = false
+                                }
                             }
                         }
                     }

@@ -90,8 +90,6 @@ class WidgetView : LauncherCardView {
             enableTransitionType(LayoutTransition.CHANGING)
         }
 
-        elevation = if (backgroundOpacity < 255) 0f else resources.getDimension(R.dimen.card_elevation)
-
         TooltipCompat.setTooltipText(binding.widgetActionResize, context.getString(R.string.widget_action_adjust_height))
         TooltipCompat.setTooltipText(binding.widgetActionRemove, context.getString(R.string.widget_action_remove))
     }

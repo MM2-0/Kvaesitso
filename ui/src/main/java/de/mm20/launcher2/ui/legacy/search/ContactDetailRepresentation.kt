@@ -135,9 +135,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
             val callView = (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                 it.setStartCompoundDrawable(R.drawable.ic_call)
                 if (contact.phones.size == 1) {
-                    it.text = contact.phones.first()
+                    it.text = contact.phones.first().label
                     it.setOnClickListener {
-                        call(rootView, contact.phones.first())
+                        call(rootView, contact.phones.first().data)
                     }
                 } else {
                     it.text =
@@ -146,10 +146,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                         val menu = PopupMenu(context, it, Gravity.START)
                         val phones = contact.phones.toList()
                         for ((i, phone) in phones.withIndex()) {
-                            menu.menu.add(Menu.NONE, i, Menu.NONE, phone)
+                            menu.menu.add(Menu.NONE, i, Menu.NONE, phone.label)
                         }
                         menu.setOnMenuItemClickListener {
-                            call(rootView, phones[it.itemId])
+                            call(rootView, phones[it.itemId].data)
                             true
                         }
                         menu.show()
@@ -164,9 +164,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                 (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                     it.setStartCompoundDrawable(R.drawable.ic_message)
                     if (contact.phones.size == 1) {
-                        it.text = contact.phones.first()
+                        it.text = contact.phones.first().label
                         it.setOnClickListener {
-                            message(rootView, contact.phones.first())
+                            message(rootView, contact.phones.first().data)
                         }
                     } else {
                         it.text = context.getString(
@@ -177,10 +177,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             val menu = PopupMenu(context, it, Gravity.START)
                             val phones = contact.phones.toList()
                             for ((i, phone) in phones.withIndex()) {
-                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone)
+                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone.label)
                             }
                             menu.setOnMenuItemClickListener {
-                                message(rootView, phones[it.itemId])
+                                message(rootView, phones[it.itemId].data)
                                 true
                             }
                             menu.show()
@@ -195,9 +195,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                 (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                     it.setStartCompoundDrawable(R.drawable.ic_mail)
                     if (contact.emails.size == 1) {
-                        it.text = contact.emails.first()
+                        it.text = contact.emails.first().label
                         it.setOnClickListener {
-                            email(rootView, contact.emails.first())
+                            email(rootView, contact.emails.first().data)
                         }
                     } else {
                         it.text =
@@ -206,10 +206,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             val menu = PopupMenu(context, it, Gravity.START)
                             val emails = contact.emails.toList()
                             for ((i, email) in emails.withIndex()) {
-                                menu.menu.add(Menu.NONE, i, Menu.NONE, email)
+                                menu.menu.add(Menu.NONE, i, Menu.NONE, email.label)
                             }
                             menu.setOnMenuItemClickListener {
-                                email(rootView, emails[it.itemId])
+                                email(rootView, emails[it.itemId].data)
                                 true
                             }
                             menu.show()
@@ -224,9 +224,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                 (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                     it.setStartCompoundDrawable(R.drawable.ic_telegram)
                     if (contact.telegram.size == 1) {
-                        it.text = contact.telegram.first().substringAfter('$')
+                        it.text = contact.telegram.first().label
                         it.setOnClickListener {
-                            telegram(rootView, contact.telegram.first().substringBefore('$'))
+                            telegram(rootView, contact.telegram.first().data)
                         }
                     } else {
                         it.text = context.getString(
@@ -237,10 +237,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             val menu = PopupMenu(context, it, Gravity.START)
                             val phones = contact.telegram.toList()
                             for ((i, phone) in phones.withIndex()) {
-                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone.substringAfter('$'))
+                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone.label)
                             }
                             menu.setOnMenuItemClickListener {
-                                telegram(rootView, phones[it.itemId].substringBefore('$'))
+                                telegram(rootView, phones[it.itemId].data)
                                 true
                             }
                             menu.show()
@@ -254,9 +254,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                 (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                     it.setStartCompoundDrawable(R.drawable.ic_whatsapp)
                     if (contact.whatsapp.size == 1) {
-                        it.text = contact.whatsapp.first().substringAfter("$")
+                        it.text = contact.whatsapp.first().label
                         it.setOnClickListener {
-                            whatsapp(rootView, contact.whatsapp.first().substringBefore("$"))
+                            whatsapp(rootView, contact.whatsapp.first().data)
                         }
                     } else {
                         it.text = context.getString(
@@ -267,10 +267,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             val menu = PopupMenu(context, it, Gravity.START)
                             val phones = contact.whatsapp.toList()
                             for ((i, phone) in phones.withIndex()) {
-                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone.substringAfter('$'))
+                                menu.menu.add(Menu.NONE, i, Menu.NONE, phone.label)
                             }
                             menu.setOnMenuItemClickListener {
-                                whatsapp(rootView, phones[it.itemId].substringBefore('$'))
+                                whatsapp(rootView, phones[it.itemId].data)
                                 true
                             }
                             menu.show()
@@ -284,9 +284,9 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                 (View.inflate(context, R.layout.view_list_item, null) as TextView).also {
                     it.setStartCompoundDrawable(R.drawable.ic_location)
                     if (contact.postals.size == 1) {
-                        it.text = contact.postals.first()
+                        it.text = contact.postals.first().label
                         it.setOnClickListener {
-                            navigate(rootView, contact.postals.first())
+                            navigate(rootView, contact.postals.first().data)
                         }
                     } else {
                         it.text = context.getString(
@@ -297,10 +297,10 @@ class ContactDetailRepresentation : Representation, KoinComponent {
                             val menu = PopupMenu(context, it, Gravity.START)
                             val postals = contact.postals.toList()
                             for ((i, postal) in postals.withIndex()) {
-                                menu.menu.add(Menu.NONE, i, Menu.NONE, postal)
+                                menu.menu.add(Menu.NONE, i, Menu.NONE, postal.label)
                             }
                             menu.setOnMenuItemClickListener {
-                                navigate(rootView, postals[it.itemId])
+                                navigate(rootView, postals[it.itemId].data)
                                 true
                             }
                             menu.show()
@@ -311,44 +311,44 @@ class ContactDetailRepresentation : Representation, KoinComponent {
         }
     }
 
-    private fun call(rootView: SearchableView, number: String) {
+    private fun call(rootView: SearchableView, data: String) {
         val context = rootView.context
         try {
             val callIntent = Intent(Intent.ACTION_DIAL)
-            callIntent.data = Uri.parse("tel:$number")
+            callIntent.data = Uri.parse(data)
             ActivityStarter.start(context, rootView, intent = callIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun message(rootView: SearchableView, number: String) {
+    private fun message(rootView: SearchableView, data: String) {
         val context = rootView.context
         try {
             val messageIntent = Intent(Intent.ACTION_VIEW)
-            messageIntent.data = Uri.parse("sms:$number")
+            messageIntent.data = Uri.parse(data)
             ActivityStarter.start(context, rootView, intent = messageIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun email(rootView: SearchableView, address: String) {
+    private fun email(rootView: SearchableView, data: String) {
         val context = rootView.context
         try {
             val mailIntent = Intent(Intent.ACTION_VIEW)
-            mailIntent.data = Uri.parse("mailto:$address")
+            mailIntent.data = Uri.parse(data)
             ActivityStarter.start(context, rootView, intent = mailIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun whatsapp(rootView: SearchableView, number: String) {
+    private fun whatsapp(rootView: SearchableView, data: String) {
         val context = rootView.context
         try {
             val whatsappIntent = Intent(Intent.ACTION_VIEW)
-            whatsappIntent.data = Uri.withAppendedPath(ContactsContract.Data.CONTENT_URI, number)
+            whatsappIntent.data = Uri.parse(data)
             ActivityStarter.start(context, rootView, intent = whatsappIntent)
         } catch (e: ActivityNotFoundException) {
             Toast.makeText(context, R.string.activity_not_found, Toast.LENGTH_SHORT).show()

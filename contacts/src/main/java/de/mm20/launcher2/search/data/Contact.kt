@@ -1,10 +1,12 @@
 package de.mm20.launcher2.search.data
 
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
 import androidx.core.database.getStringOrNull
@@ -14,14 +16,10 @@ import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.sp
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
+import java.net.URLEncoder
 
 class Contact(
     val id: Long,
@@ -29,11 +27,11 @@ class Contact(
     val lastName: String,
     val displayName: String,
     val lookupKey: String,
-    val phones: Set<String>,
-    val emails: Set<String>,
-    val telegram: Set<String>,
-    val whatsapp: Set<String>,
-    val postals: Set<String>
+    val phones: Set<ContactInfo>,
+    val emails: Set<ContactInfo>,
+    val telegram: Set<ContactInfo>,
+    val whatsapp: Set<ContactInfo>,
+    val postals: Set<ContactInfo>,
 ) : Searchable() {
     override val key: String
         get() = "contact://$id"
@@ -42,7 +40,7 @@ class Contact(
 
     val summary: String
         get() {
-            return phones.union(emails).joinToString(separator = ", ")
+            return phones.union(emails).joinToString(separator = ", ") { it.label }
         }
 
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
@@ -52,17 +50,22 @@ class Contact(
             foreground = TextDrawable(
                 iconText,
                 Color.WHITE,
-                fontSize = 40 * context.sp,
+                fontSize = 20 * context.sp,
                 typeface = Typeface.DEFAULT_BOLD
             ),
             background = ColorDrawable(ContextCompat.getColor(context, R.color.blue))
         )
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
+    override suspend fun loadIcon(
+        context: Context,
+        size: Int,
+        legacyIconBackground: LegacyIconBackground
+    ): LauncherIcon? {
         val contentResolver = context.contentResolver
         val bmp = withContext(Dispatchers.IO) {
-            val uri = ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return@withContext null
+            val uri =
+                ContactsContract.Contacts.getLookupUri(id, lookupKey) ?: return@withContext null
             ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)
                 ?.asBitmap()
         } ?: return null
@@ -73,9 +76,12 @@ class Contact(
         )
     }
 
-    override fun getLaunchIntent(context: Context): Intent? {
-        return null
+    override fun getLaunchIntent(context: Context): Intent {
+        val uri =
+            ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)
+        return Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
+
 
     companion object {
         internal fun contactById(context: Context, id: Long, rawIds: Set<Long>): Contact? {
@@ -92,11 +98,11 @@ class Contact(
                 ContactsContract.Data.CONTENT_URI,
                 null, s, null, null
             ) ?: return null
-            val phones = mutableSetOf<String>()
-            val emails = mutableSetOf<String>()
-            val telegram = mutableSetOf<String>()
-            val whatsapp = mutableSetOf<String>()
-            val postals = mutableSetOf<String>()
+            val phones = mutableSetOf<ContactInfo>()
+            val emails = mutableSetOf<ContactInfo>()
+            val telegram = mutableSetOf<ContactInfo>()
+            val whatsapp = mutableSetOf<ContactInfo>()
+            val postals = mutableSetOf<ContactInfo>()
             var firstName = ""
             var lastName = ""
             var displayName = ""
@@ -119,13 +125,28 @@ class Contact(
             loop@ while (dataCursor.moveToNext()) {
                 when (dataCursor.getStringOrNull(mimeTypeColumn)) {
                     ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE ->
-                        dataCursor.getStringOrNull(emailAddressColumn)?.let { emails.add(it) }
+                        dataCursor.getStringOrNull(emailAddressColumn)?.let {
+                            emails.add(ContactInfo(it, "mailto:$it"))
+                        }
                     ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE ->
                         dataCursor.getStringOrNull(numberColumn)?.let {
-                            phones.add(it.replace(Regex("[^+0-9]"), ""))
+                            val phone = it.replace(Regex("[^+0-9]"), "")
+                            phones.add(
+                                ContactInfo(
+                                    phone,
+                                    "tel:$phone"
+                                )
+                            )
                         }
                     ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_ITEM_TYPE ->
-                        dataCursor.getStringOrNull(addressColumn)?.let { postals.add(it) }
+                        dataCursor.getStringOrNull(addressColumn)?.let {
+                            postals.add(
+                                ContactInfo(
+                                    it.replace("\n", ", "),
+                                    "geo:0,0?q=${URLEncoder.encode(it, "utf8")}"
+                                )
+                            )
+                        }
                     ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE -> {
                         firstName = dataCursor.getStringOrNull(givenNameColumn) ?: ""
                         lastName = dataCursor.getStringOrNull(familyNameColumn) ?: ""
@@ -136,13 +157,23 @@ class Contact(
                             ?: continue@loop
                         val data3 = dataCursor.getStringOrNull(data3Column)
                             ?: continue@loop
-                        telegram.add("$data1$$data3")
+                        telegram.add(
+                            ContactInfo(data3.substringAfterLast(" "), "tg:openmessage?user_id=$data1")
+                        )
                     }
                     "vnd.android.cursor.item/vnd.com.whatsapp.profile" -> {
                         val data1 = dataCursor.getStringOrNull(data1Column)
                             ?: continue@loop
                         val dataId = dataCursor.getLong(idColumn)
-                        whatsapp.add("$dataId$+${data1.substringBefore('@')}")
+                        whatsapp.add(
+                            ContactInfo(
+                                "+${data1.substringBefore('@')}",
+                                Uri.withAppendedPath(
+                                    ContactsContract.Data.CONTENT_URI,
+                                    dataId.toString()
+                                ).toString()
+                            )
+                        )
                     }
                 }
             }
@@ -177,3 +208,8 @@ class Contact(
 
     }
 }
+
+data class ContactInfo(
+    val label: String,
+    val data: String
+)

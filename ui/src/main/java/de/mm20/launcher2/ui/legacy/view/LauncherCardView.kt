@@ -50,6 +50,8 @@ open class LauncherCardView @JvmOverloads constructor(
 
     private var overrideBackgroundOpacity = false
 
+    private var actualElevation: Float
+
     init {
         strokeColor = cardBackgroundColor.defaultColor
         strokeWidth = (currentCardStyle.borderWidth * dp).roundToInt()
@@ -71,8 +73,8 @@ open class LauncherCardView @JvmOverloads constructor(
             }
         }
         strokeOpacity = if (backgroundOpacity == 0) 0 else 0xFF
-        elevation = if (backgroundOpacity == 255) elevation else 0f
-        cardElevation = elevation
+        actualElevation = context.resources.getDimension(R.dimen.card_elevation)
+        cardElevation = if (backgroundOpacity == 255) actualElevation else 0f
     }
 
     private val dataStore: LauncherDataStore by inject()
@@ -88,8 +90,7 @@ open class LauncherCardView @JvmOverloads constructor(
                     if (!overrideBackgroundOpacity) {
                         backgroundOpacity = (it.opacity * 255).roundToInt()
                         strokeOpacity = if (backgroundOpacity == 0) 0 else 0xFF
-                        elevation = if (backgroundOpacity == 255) elevation else 0f
-                        cardElevation = elevation
+                        cardElevation = if (backgroundOpacity == 255) actualElevation else 0f
                     }
                     strokeWidth = (it.borderWidth * dp).roundToInt()
                     radius = it.radius * dp
