@@ -21,9 +21,9 @@ class ThemedPlaceholderIconProvider(
         val isDarkMode =
             context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES != 0
 
-        val bgAttr =
-            if (isDarkMode) R.attr.colorOnSurfaceInverse else R.attr.colorPrimaryContainer
-        val fgAttr = if (isDarkMode) R.attr.colorOnPrimaryContainer else R.attr.colorOnSurfaceVariant
+        val bgAttr = R.attr.colorPrimaryContainer
+        val fgAttr = R.attr.colorOnPrimaryContainer
+
         bgColor = theme.resolveAttribute(bgAttr, typedValue, true).let {
             typedValue.data
         }
