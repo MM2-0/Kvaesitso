@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:clipChildren="false"
             android:clipToPadding="false"
+            android:animateLayoutChanges="true"
             android:orientation="vertical">
 
             <de.mm20.launcher2.ui.launcher.search.SearchView
