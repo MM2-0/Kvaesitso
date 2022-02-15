@@ -4,21 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class WebsiteItemVM(
     private val website: Website
-): KoinComponent {
-    private val favoritesRepository: FavoritesRepository by inject()
-
-    val isPinned = favoritesRepository.isPinned(website)
-    fun pin() {
-        favoritesRepository.pinItem(website)
-    }
-    fun unpin() {
-        favoritesRepository.unpinItem(website)
-    }
+): SearchableItemVM(website) {
 
     fun share(context: AppCompatActivity) {
         val shareIntent = Intent(Intent.ACTION_SEND)

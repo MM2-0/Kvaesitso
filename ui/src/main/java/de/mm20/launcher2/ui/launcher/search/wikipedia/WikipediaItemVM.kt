@@ -6,22 +6,13 @@ import androidx.core.text.HtmlCompat
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class WikipediaItemVM(
     private val wikipedia: Wikipedia
-) : KoinComponent {
-    private val favoritesRepository: FavoritesRepository by inject()
-
-    val isPinned = favoritesRepository.isPinned(wikipedia)
-    fun pin() {
-        favoritesRepository.pinItem(wikipedia)
-    }
-
-    fun unpin() {
-        favoritesRepository.unpinItem(wikipedia)
-    }
+) : SearchableItemVM(wikipedia) {
 
     fun share(context: AppCompatActivity) {
         val text = HtmlCompat.fromHtml(wikipedia.text, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()

@@ -5,6 +5,7 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -45,7 +46,9 @@ fun WikipediaItem(
     val viewModel = remember(wikipedia) { WikipediaItemVM(wikipedia) }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = modifier.clickable {
+            viewModel.launch(context as AppCompatActivity)
+        }
     ) {
         if (!wikipedia.image.isNullOrEmpty()) {
             Image(
