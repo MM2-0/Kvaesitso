@@ -79,9 +79,9 @@ class SearchView @JvmOverloads constructor(
                             CalculatorResults()
                             CalendarResults()
                             ContactResults()
-                            FileResults()
                             WikipediaResults()
                             WebsiteResults()
+                            FileResults()
                         }
                     }
                 }
