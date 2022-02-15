@@ -66,6 +66,8 @@ dependencies {
 
     implementation(libs.composecolorpicker)
 
+    implementation(libs.jsoup)
+
     // Legacy dependencies
     implementation(libs.androidx.transition)
 

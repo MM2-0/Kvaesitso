@@ -34,7 +34,7 @@ data class WikipediaGetPageImageResultQueryPageThumnail(
 )
 
 interface WikipediaApi {
-    @GET("w/api.php?action=query&generator=search&redirects=true&gsrlimit=1&explaintext=true&exchars=500&prop=extracts&exintro=true&format=json")
+    @GET("w/api.php?action=query&generator=search&redirects=true&gsrlimit=1&exchars=500&prop=extracts&exintro=true&format=json")
     suspend fun search(@Query("gsrsearch") query: String): WikipediaSearchResult
 
     @GET("w/api.php?action=query&prop=pageimages&format=json")

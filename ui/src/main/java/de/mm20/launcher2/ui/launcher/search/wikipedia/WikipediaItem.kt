@@ -33,6 +33,7 @@ import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.utils.htmlToAnnotatedString
 
 @Composable
 fun WikipediaItem(
@@ -72,7 +73,7 @@ fun WikipediaItem(
             )
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
-                text = wikipedia.text,
+                text = htmlToAnnotatedString(wikipedia.text),
                 style = MaterialTheme.typography.bodySmall
             )
         }
