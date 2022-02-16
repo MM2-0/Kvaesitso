@@ -8,6 +8,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewWidgetsBinding
+import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.ui.legacy.component.WidgetView
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetType
@@ -49,7 +51,6 @@ class WidgetsView @JvmOverloads constructor(
     private lateinit var widgets: MutableList<Widget>
 
     private val pickWidgetLauncher: ActivityResultLauncher<Intent>
-    private val configureWidgetLauncher: ActivityResultLauncher<Intent>
 
     init {
         context as AppCompatActivity
@@ -57,34 +58,14 @@ class WidgetsView @JvmOverloads constructor(
         layoutTransition = ChangingLayoutTransition()
         binding.widgetList.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
-        configureWidgetLauncher = context.registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            val data = it.data ?: return@registerForActivityResult
-            if (it.resultCode == Activity.RESULT_OK) {
-                bindAppWidget(data)
-            }
-        }
-
         pickWidgetLauncher = context.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) {
             val data = it.data ?: return@registerForActivityResult
-            val widgetId = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-            if (widgetId == -1) return@registerForActivityResult
+            val widgetId = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+            if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return@registerForActivityResult
             if (it.resultCode == Activity.RESULT_OK) {
-                val appWidget = AppWidgetManager.getInstance(context)
-                    .getAppWidgetInfo(widgetId) ?: return@registerForActivityResult
-                if (appWidget.configure != null) {
-                    val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
-                    intent.component = appWidget.configure
-                    intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
-                    configureWidgetLauncher.launch(intent)
-                } else {
-                    bindAppWidget(data)
-                }
-            } else {
-                widgetHost.deleteAppWidgetId(widgetId)
+                bindAppWidget(widgetId)
             }
         }
 
@@ -231,18 +212,12 @@ class WidgetsView @JvmOverloads constructor(
                 }
                 @Suppress("DEPRECATION") // I don't care that neutral buttons are discouraged.
                 neutralButton(R.string.widget_add_external) {
-                    val appWidgetId = widgetHost.allocateAppWidgetId()
-                    val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
-                    pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                    pickWidgetLauncher.launch(pickIntent)
+                    pickAppWidget()
                     it.dismiss()
                 }
             }
         } else {
-            val appWidgetId = widgetHost.allocateAppWidgetId()
-            val pickIntent = Intent(AppWidgetManager.ACTION_APPWIDGET_PICK)
-            pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-            pickWidgetLauncher.launch(pickIntent)
+            pickAppWidget()
         }
     }
 
@@ -253,9 +228,13 @@ class WidgetsView @JvmOverloads constructor(
         widgetHost.deleteAppWidgetId(id)
     }
 
-    private fun bindAppWidget(data: Intent) {
-        val widgetId = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1)
-        if (widgetId == -1) return
+    private fun pickAppWidget() {
+        val pickIntent = Intent(context, PickAppWidgetActivity::class.java)
+        pickWidgetLauncher.launch(pickIntent)
+    }
+
+    private fun bindAppWidget(widgetId: Int) {
+        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return
         val appWidget = AppWidgetManager.getInstance(context)
             .getAppWidgetInfo(widgetId) ?: return
         val widget = Widget(
