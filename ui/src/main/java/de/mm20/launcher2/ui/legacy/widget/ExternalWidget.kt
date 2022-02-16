@@ -6,10 +6,14 @@ import android.appwidget.AppWidgetHostView
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.ScrollView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.doOnLayout
+import androidx.core.view.doOnNextLayout
 import androidx.core.view.get
 import androidx.core.view.iterator
 import de.mm20.launcher2.ktx.dp
@@ -24,10 +28,12 @@ class ExternalWidget(
 
     val widgetInfo: AppWidgetProviderInfo?
 
+    val widgetView: View
+
     init {
         val id = widget.data.toInt()
         widgetInfo = AppWidgetManager.getInstance(context.applicationContext).getAppWidgetInfo(id)
-        val widgetView = host.createView(context.applicationContext, id, widgetInfo)
+        widgetView = host.createView(context.applicationContext, id, widgetInfo)
                 ?: View(context)
         if (widgetView is AppWidgetHostView && widgetView.childCount > 0) {
             enableNestedScroll(widgetView[0])
@@ -38,6 +44,18 @@ class ExternalWidget(
         layoutParams = params
         widgetView.layoutParams = p
         addView(widgetView)
+    }
+
+    override fun setLayoutParams(params: ViewGroup.LayoutParams?) {
+        super.setLayoutParams(params)
+        params ?: return
+        doOnNextLayout {
+            val width = if (params.width > 0) params.width else it.width
+            val height = if (params.height > 0) params.height else widgetInfo?.minHeight ?: it.height
+            if (widgetView is AppWidgetHostView) {
+                widgetView.updateAppWidgetSize(Bundle(), 0, 0, width, height)
+            }
+        }
     }
 
     private fun enableNestedScroll(view: View) {
