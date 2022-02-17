@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.legacy.component
+package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
 import android.util.AttributeSet
@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SearchBar @JvmOverloads constructor(
+class SearchBarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.materialCardViewStyle

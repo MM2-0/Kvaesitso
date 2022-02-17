@@ -43,7 +43,7 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <de.mm20.launcher2.ui.legacy.component.SearchBar
+    <de.mm20.launcher2.ui.launcher.search.SearchBarView
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
         android:layout_height="112dp"
