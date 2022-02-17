@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.locals
 import android.appwidget.AppWidgetHost
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import de.mm20.launcher2.preferences.Settings
 
@@ -15,6 +16,8 @@ val LocalNavController = compositionLocalOf<NavController?> { null }
 val LocalCardStyle = compositionLocalOf<Settings.CardSettings> { Settings.CardSettings.getDefaultInstance() }
 
 val LocalFavoritesEnabled = compositionLocalOf { true }
+
+val LocalGridColumns = compositionLocalOf { 5 }
 
 /**
  * Workaround a bug in Jetpack Compose which incorrectly places popups

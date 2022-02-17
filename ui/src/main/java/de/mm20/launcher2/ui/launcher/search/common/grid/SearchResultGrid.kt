@@ -27,18 +27,21 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.apps.AppItemGridPopup
+import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlinx.coroutines.delay
 import kotlin.math.ceil
 
 @Composable
 fun SearchResultGrid(items: List<Searchable>) {
+
+    val columns = LocalGridColumns.current
     Column(
         modifier = Modifier.animateContentSize().fillMaxWidth().padding(4.dp)
     ) {
-        for (i in 0 until ceil(items.size / 5f).toInt()) {
+        for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
             Row {
-                for (j in 0 until 5) {
-                    val item = items.getOrNull(i * 5 + j)
+                for (j in 0 until columns) {
+                    val item = items.getOrNull(i * columns + j)
                     if (item != null) {
                         GridItem(
                             modifier = Modifier
