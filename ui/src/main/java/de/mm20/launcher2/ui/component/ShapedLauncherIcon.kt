@@ -4,22 +4,26 @@ import android.graphics.Matrix
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -104,24 +108,34 @@ fun ShapedLauncherIcon(
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd),
-                color = MaterialTheme.colorScheme.secondaryContainer,
+                color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {
                 Box(
                     contentAlignment = Alignment.Center
                 ) {
+
+                    badge.progress?.let {
+                        val progress by animateFloatAsState(it)
+                        CircularProgressIndicator(
+                            modifier = Modifier.fillMaxSize(),
+                            progress = progress,
+                            strokeWidth = size / 48,
+                            color = MaterialTheme.colorScheme.secondaryContainer
+                        )
+                    }
                     val badgeIconRes = badge.iconRes
                     val badgeIcon = badge.icon
 
                     val number = badge.number
                     if (badgeIconRes != null) {
                         Image(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().padding(size / 48),
                             painter = painterResource(badgeIconRes),
                             contentDescription = null
                         )
                     } else if (badgeIcon != null) {
-                        Canvas(modifier = Modifier.fillMaxSize()) {
+                        Canvas(modifier = Modifier.fillMaxSize().padding(size / 48)) {
                             badgeIcon.setBounds(
                                 0,
                                 0,
@@ -135,7 +149,7 @@ fun ShapedLauncherIcon(
                     } else if (number != null && number > 0 && number < 100) {
                         Text(
                             number.toString(),
-                            color = MaterialTheme.colorScheme.onSecondaryContainer,
+                            color = MaterialTheme.colorScheme.secondaryContainer,
                             style = MaterialTheme.typography.labelSmall.copy(
                                 fontSize = with(LocalDensity.current) {
                                     size.toSp() * 0.2f
