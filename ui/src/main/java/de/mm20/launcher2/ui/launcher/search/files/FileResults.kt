@@ -21,9 +21,16 @@ fun ColumnScope.FileResults() {
 
     AnimatedVisibility(files.isNotEmpty()) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth()
         ) {
-            SearchResultList(items = files)
+            SearchResultList(
+                items = files,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
         }
     }
 }

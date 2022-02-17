@@ -4,6 +4,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -47,7 +48,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 val startDate =
                     Instant.ofEpochMilli(it.startTime).atZone(ZoneId.systemDefault()).toLocalDate()
                 val endDate =
-                    Instant.ofEpochMilli(it.startTime).atZone(ZoneId.systemDefault()).toLocalDate()
+                    Instant.ofEpochMilli(it.endTime).atZone(ZoneId.systemDefault()).toLocalDate()
                 return@flatMap listOf(
                     startDate,
                     endDate
@@ -121,7 +122,8 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
             val totalCount = events.size
 
             events = events.filter {
-                it.startTime >= date.atStartOfDay().toEpochSecond(offset) * 1000
+                it.startTime >= date.atStartOfDay().toEpochSecond(offset) * 1000 ||
+                        it.endTime < date.atStartOfDay().plusDays(1).toEpochSecond(offset) * 1000
             }
 
             val hiddenCount = totalCount - events.size
@@ -137,5 +139,9 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         calendarRepository.getUpcomingEvents().collectLatest {
             upcomingEvents = it
         }
+    }
+
+    fun requestCalendarPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Calendar)
     }
 }

@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,11 +10,12 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Searchable
 
 @Composable
-fun SearchResultList(items: List<Searchable>) {
+fun SearchResultList(
+    items: List<Searchable>,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
+        modifier = modifier
     ) {
         for (item in items) {
             key(item.key) {

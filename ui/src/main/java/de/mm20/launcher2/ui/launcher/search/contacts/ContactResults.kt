@@ -21,9 +21,16 @@ fun ColumnScope.ContactResults() {
 
     AnimatedVisibility(contacts.isNotEmpty()) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth()
         ) {
-            SearchResultList(items = contacts)
+            SearchResultList(
+                items = contacts,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
         }
     }
 }

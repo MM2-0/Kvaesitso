@@ -21,9 +21,16 @@ fun ColumnScope.CalendarResults() {
 
     AnimatedVisibility(calendarEvents.isNotEmpty()) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp).fillMaxWidth()
+            modifier = Modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth()
         ) {
-            SearchResultList(items = calendarEvents)
+            SearchResultList(
+                items = calendarEvents,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp)
+            )
         }
     }
 }

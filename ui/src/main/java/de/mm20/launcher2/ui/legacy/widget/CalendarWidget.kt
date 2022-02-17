@@ -1,30 +1,18 @@
 package de.mm20.launcher2.ui.legacy.widget
 
-import android.animation.LayoutTransition
 import android.content.Context
-import android.text.format.DateUtils
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.PopupMenu
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
-import de.mm20.launcher2.ktx.lifecycleOwner
-import de.mm20.launcher2.ktx.lifecycleScope
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.MissingPermission
-import de.mm20.launcher2.search.data.Searchable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.LocalAbsoluteTonalElevation
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.databinding.ViewCalendarWidgetBinding
-import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidgetVM
-import de.mm20.launcher2.ui.legacy.data.InformationText
-import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.ZoneId
+import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 
 class CalendarWidget : LauncherWidget {
 
@@ -39,141 +27,25 @@ class CalendarWidget : LauncherWidget {
         defStyleRes
     )
 
-    private fun formatDay(day: LocalDate): String {
-        val today = LocalDate.now()
-        return when {
-            today == day -> context.getString(R.string.date_today)
-            today.plusDays(1) == day -> context.getString(R.string.date_tomorrow)
-            else -> DateUtils.formatDateTime(
-                context,
-                day.atStartOfDay(ZoneId.systemDefault()).toEpochSecond() * 1000,
-                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_ABBREV_WEEKDAY
-            )
-        }
-    }
-
-    private val binding =
-        ViewCalendarWidgetBinding.inflate(LayoutInflater.from(context), this, true)
-
-    private val viewModel: CalendarWidgetVM by (context as AppCompatActivity).viewModels()
-
     init {
-        clipToPadding = false
-        clipChildren = false
-
-        lifecycleScope.launch {
-            lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                viewModel.onActive()
+        val composeView = ComposeView(context)
+        composeView.setContent {
+            MdcLauncherTheme {
+                ProvideSettings {
+                    // TODO: Temporary solution until parent widget card is rewritten in Compose
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.onSurface,
+                        LocalAbsoluteTonalElevation provides 1.dp
+                    ) {
+                        Column {
+                            CalendarWidget()
+                        }
+                    }
+                }
             }
         }
+        addView(composeView)
 
-        binding.calendarNewEvent.setOnClickListener {
-            viewModel.createEvent(context)
-        }
-
-        binding.calendarDate.setOnClickListener {
-            val menu = PopupMenu(context, binding.calendarDate)
-            val availableDates = viewModel.availableDates
-            for ((i, d) in availableDates.withIndex()) {
-                menu.menu.add(
-                    Menu.NONE,
-                    i,
-                    Menu.NONE,
-                    formatDay(d)
-                )
-            }
-            menu.setOnMenuItemClickListener {
-                viewModel.selectDate(availableDates[it.itemId])
-                true
-            }
-            menu.show()
-        }
-
-        binding.calendarOpenApp.setOnClickListener {
-            viewModel.openCalendarApp(context)
-        }
-
-        binding.calendarDateNext.setOnClickListener {
-            viewModel.nextDay()
-        }
-        binding.calendarDatePrev.setOnClickListener {
-            viewModel.previousDay()
-        }
-
-        val calendarEvents = viewModel.calendarEvents
-        val pinnedCalendarEvents = viewModel.pinnedCalendarEvents
-        val hiddenPastEvents = viewModel.hiddenPastEvents
-        val selectedDate = viewModel.selectedDate
-        val hasPermission = viewModel.hasPermission
-
-        calendarEvents.observe(context as AppCompatActivity) {
-            updateEventList(it, hiddenPastEvents.value ?: 0, hasPermission.value == false)
-        }
-
-        hasPermission.observe(context as AppCompatActivity) {
-            updateEventList(
-                calendarEvents.value ?: emptyList(),
-                hiddenPastEvents.value ?: 0,
-                it == false
-            )
-        }
-
-        pinnedCalendarEvents.observe(context as AppCompatActivity) {
-            binding.calendarWidgetPinnedList.submitItems(it)
-            if (it.isEmpty()) {
-                binding.calendarWidgetPinnedList.visibility = View.GONE
-                binding.calendarUpcomingEventsTitle.visibility = View.GONE
-            } else {
-                binding.calendarWidgetPinnedList.visibility = View.VISIBLE
-                binding.calendarUpcomingEventsTitle.visibility = View.VISIBLE
-            }
-        }
-
-        selectedDate.observe(context as AppCompatActivity) {
-            binding.calendarDate.text = formatDay(it)
-        }
-
-        binding.calendarWidgetRoot.layoutTransition = LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.CHANGING)
-        }
-    }
-
-    private fun updateEventList(
-        events: List<CalendarEvent>,
-        hiddenPastDayEvents: Int,
-        missingPermission: Boolean
-    ) {
-        val items = events.toMutableList<Searchable>()
-
-        if (missingPermission) {
-            items.add(
-                MissingPermission(
-                    context.getString(R.string.permission_calendar_widget),
-                    PermissionGroup.Calendar
-                )
-            )
-        }
-
-        if (events.isEmpty() && !missingPermission) {
-            items.add(
-                InformationText(context.getString(R.string.calendar_widget_no_events))
-            )
-        }
-
-        if (hiddenPastDayEvents > 0) {
-            items.add(
-                InformationText(
-                    resources.getQuantityString(
-                        R.plurals.calendar_widget_running_events,
-                        hiddenPastDayEvents,
-                        hiddenPastDayEvents
-                    )
-                ) {
-                    viewModel.showAllEvents()
-                })
-        }
-
-        binding.calendarWidgetList.submitItems(items)
     }
 
 
