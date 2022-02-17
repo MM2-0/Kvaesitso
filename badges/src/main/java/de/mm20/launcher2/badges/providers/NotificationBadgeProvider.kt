@@ -1,5 +1,6 @@
 package de.mm20.launcher2.badges.providers
 
+import android.app.Notification
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.notifications.NotificationRepository
 import kotlinx.coroutines.flow.Flow
@@ -21,9 +22,21 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
                 if (it.isEmpty()) {
                     send(null)
                 } else {
-                    val badge = Badge(number = it.sumOf {
-                        it.notification.number
-                    })
+                    val badge = Badge(
+                        number = it.sumOf {
+                            it.notification.number
+                        },
+                        progress = it.mapNotNull {
+                            if (!it.notification.extras.containsKey(Notification.EXTRA_PROGRESS)) return@mapNotNull null
+                            val progress = it.notification.extras.getInt(Notification.EXTRA_PROGRESS)
+                            val progressMax = it.notification.extras.getInt(Notification.EXTRA_PROGRESS_MAX).takeIf { it > 0 } ?: return@mapNotNull null
+                            return@mapNotNull progress.toFloat() / progressMax.toFloat()
+                        }
+                            .takeIf { it.isNotEmpty() }
+                            ?.let {
+                                it.sumOf { it.toDouble() }.toFloat() / it.size
+                            }
+                    )
                     send(badge)
                 }
             }
