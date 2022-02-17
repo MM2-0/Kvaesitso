@@ -55,8 +55,6 @@ class WidgetsView @JvmOverloads constructor(
     init {
         context as AppCompatActivity
 
-        layoutTransition = ChangingLayoutTransition()
-        binding.widgetList.layoutTransition.enableTransitionType(LayoutTransition.CHANGING)
 
         pickWidgetLauncher = context.registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -78,6 +76,7 @@ class WidgetsView @JvmOverloads constructor(
 
         viewModel.isEditMode.observe(context) {
             if (it) {
+                OneShotLayoutTransition.run(binding.widgetList)
                 binding.clockWidget.visibility = View.GONE
 
                 for (v in binding.widgetList.iterator()) {
@@ -89,8 +88,6 @@ class WidgetsView @JvmOverloads constructor(
                         }
                     }
                 }
-                OneShotLayoutTransition.run(binding.widgetList)
-                OneShotLayoutTransition.run(this)
                 binding.fabEditWidget.apply {
                     setIconResource(R.drawable.ic_add)
                     setText(R.string.widget_add_widget)
@@ -99,13 +96,14 @@ class WidgetsView @JvmOverloads constructor(
                     }
                 }
             } else {
-                if (::widgets.isInitialized) viewModel.saveWidgets(widgets)
-                binding.widgetList.layoutTransition = ChangingLayoutTransition()
+                if (::widgets.isInitialized) {
+                    viewModel.saveWidgets(widgets)
+                    OneShotLayoutTransition.run(binding.widgetList)
+                }
                 binding.clockWidget.visibility = View.VISIBLE
                 for (v in binding.widgetList.iterator()) {
                     if (v is WidgetView) {
                         v.editMode = false
-                        v.layoutTransition = ChangingLayoutTransition()
                     }
                 }
                 binding.fabEditWidget.apply {
@@ -155,7 +153,6 @@ class WidgetsView @JvmOverloads constructor(
         params.topMargin = (8 * dp).roundToInt()
         for (w in widgets) {
             val view = WidgetView(context)
-            view.layoutTransition = ChangingLayoutTransition()
             view.layoutParams = params
             if (view.setWidget(w, widgetHost)) {
                 binding.widgetList.addDragView(view, view.getDragHandle())

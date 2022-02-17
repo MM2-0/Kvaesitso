@@ -11,11 +11,6 @@ abstract class LauncherWidget : FrameLayout {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, defStyleRes: Int) : super(context, attrs, defStyleRes)
 
-    init {
-        layoutTransition = LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.CHANGING)
-        }
-    }
     abstract val canResize: Boolean
     abstract val name: String
 

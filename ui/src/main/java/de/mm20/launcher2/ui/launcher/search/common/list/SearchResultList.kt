@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

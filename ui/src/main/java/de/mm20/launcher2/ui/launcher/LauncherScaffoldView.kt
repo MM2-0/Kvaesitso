@@ -1,12 +1,10 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.animation.AnimatorSet
-import android.animation.LayoutTransition
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -20,13 +18,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.setPadding
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.ktx.isBrightColor
-import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewLauncherScaffoldBinding
@@ -152,9 +147,9 @@ class LauncherScaffoldView @JvmOverloads constructor(
         }
 
         widgetsViewModel.isEditMode.observe(context) {
+            OneShotLayoutTransition.run(binding.scrollContainer)
             if (it) {
                 binding.scrollView.setOnTouchListener(null)
-                OneShotLayoutTransition.run(binding.scrollContainer)
                 binding.searchBar.visibility = View.INVISIBLE
                 binding.editWidgetToolbar
                     .animate()
@@ -170,7 +165,6 @@ class LauncherScaffoldView @JvmOverloads constructor(
                 context.window.statusBarColor = colorSurface.data
                 viewModel.setStatusBarColor(colorSurface.data)
             } else {
-                binding.widgetContainer.layoutTransition = ChangingLayoutTransition()
                 binding.scrollView.setOnTouchListener(scrollViewOnTouchListener)
 
                 binding.searchBar.visibility = View.VISIBLE
@@ -233,6 +227,7 @@ class LauncherScaffoldView @JvmOverloads constructor(
         set.duration = 300
         set.doOnEnd {
             binding.searchContainer.visibility = View.GONE
+            binding.widgetContainer.animate().alpha(1f).setDuration(500).start()
             binding.widgetContainer.visibility = View.VISIBLE
         }
         set.playTogether(
@@ -255,7 +250,9 @@ class LauncherScaffoldView @JvmOverloads constructor(
     }
 
     private fun showSearch() {
+        OneShotLayoutTransition.run(binding.widgetContainer)
         binding.searchContainer.visibility = View.VISIBLE
+        binding.widgetContainer.animate().alpha(0f).setDuration(500).start()
         binding.widgetContainer.visibility = View.GONE
         val set = AnimatorSet()
         set.duration = 300

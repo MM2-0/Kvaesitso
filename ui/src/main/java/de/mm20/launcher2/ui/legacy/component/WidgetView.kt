@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.legacy.component
 
-import android.animation.LayoutTransition
 import android.appwidget.AppWidgetHost
 import android.content.Context
 import android.util.AttributeSet
@@ -9,7 +8,6 @@ import android.view.View
 import androidx.appcompat.widget.TooltipCompat
 import androidx.core.view.get
 import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.transition.ChangingLayoutTransition
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewWidgetBinding
@@ -29,24 +27,19 @@ class WidgetView : LauncherCardView {
 
     var editMode = false
         set(value) {
+            OneShotLayoutTransition.run(this)
             if (value) {
                 binding.widgetControlPanel.visibility = View.VISIBLE
                 val widget = binding.widgetWrapper[2]
                 widget.visibility = View.GONE
                 binding.widgetName.visibility = View.VISIBLE
                 visibility = View.VISIBLE
-                layoutTransition = OneShotLayoutTransition(this)
-                widgetView?.layoutTransition = null
-                binding.widgetWrapper.layoutTransition = null
             } else {
                 resizeMode = false
                 binding.widgetControlPanel.visibility = View.GONE
                 val widget = binding.widgetWrapper[2] as LauncherWidget
                 widget.visibility = View.VISIBLE
                 binding.widgetName.visibility = View.GONE
-                layoutTransition = ChangingLayoutTransition()
-                widgetView?.layoutTransition = ChangingLayoutTransition()
-                binding.widgetWrapper.layoutTransition = ChangingLayoutTransition()
             }
             field = value
         }
@@ -55,6 +48,8 @@ class WidgetView : LauncherCardView {
         set(value) {
             if (value == field) return
             onResizeModeChange?.invoke(value)
+            OneShotLayoutTransition.run(this)
+            OneShotLayoutTransition.run(binding.widgetWrapper)
             if (value) {
                 binding.widgetResizeDragHandle.visibility = View.VISIBLE
                 val widget = binding.widgetWrapper[2]
@@ -69,7 +64,6 @@ class WidgetView : LauncherCardView {
                 }
 
             }
-            layoutTransition = OneShotLayoutTransition(this)
             field = value
         }
 
@@ -85,9 +79,6 @@ class WidgetView : LauncherCardView {
         }
         binding.widgetActionRemove.setOnClickListener {
             onRemove?.invoke()
-        }
-        layoutTransition = LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.CHANGING)
         }
 
         TooltipCompat.setTooltipText(binding.widgetActionResize, context.getString(R.string.widget_action_adjust_height))
@@ -117,9 +108,6 @@ class WidgetView : LauncherCardView {
             binding.widgetWrapper.addView(widgetView, 2)
             binding.widgetName.text = widgetView?.name
             binding.widgetActionResize.visibility = View.VISIBLE
-        }
-        widgetView?.layoutTransition = LayoutTransition().apply {
-            enableTransitionType(LayoutTransition.CHANGING)
         }
         this.widget = widget
         return true
