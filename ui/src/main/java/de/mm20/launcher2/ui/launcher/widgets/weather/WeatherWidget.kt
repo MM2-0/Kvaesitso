@@ -87,7 +87,7 @@ fun WeatherWidget() {
         CurrentWeather(forecast, imperialUnits)
 
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
@@ -99,7 +99,7 @@ fun WeatherWidget() {
                     onDaySelected = {
                         viewModel.selectDay(it)
                     },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
                     imperialUnits = imperialUnits
                 )
             }
@@ -110,7 +110,8 @@ fun WeatherWidget() {
                 imperialUnits = imperialUnits,
                 onTimeSelected = {
                     viewModel.selectForecast(it)
-                }
+                },
+                modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
             )
         }
     }
@@ -247,15 +248,12 @@ fun WeatherDaySelector(
 ) {
     val menuExpanded = remember { mutableStateOf(false) }
     val dateFormat = SimpleDateFormat("EEE")
-    Row(modifier = modifier) {
-        Row(
-            modifier = Modifier
-                .clickable(onClick = {
-                    menuExpanded.value = true
-                })
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
+    Box(modifier = modifier, contentAlignment = Alignment.CenterStart) {
+        TextButton(
+            onClick = {
+                menuExpanded.value = true
+            },
+            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
         ) {
             WeatherIcon(icon = weatherIconById(selectedDay.icon))
             Text(
@@ -301,7 +299,6 @@ fun WeatherDaySelector(
                                 style = MaterialTheme.typography.titleSmall,
                                 softWrap = false,
                                 modifier = Modifier
-                                    .align(Alignment.CenterVertically)
                                     .padding(start = 16.dp, end = 8.dp)
                                     .weight(1f)
                             )
@@ -314,7 +311,6 @@ fun WeatherDaySelector(
                                 }° / ${convertTemperature(imperialUnits, d.maxTemp)}°",
                                 softWrap = false,
                                 style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.align(Alignment.CenterVertically)
                             )
                         }
                     }
@@ -336,20 +332,19 @@ fun WeatherTimeSelector(
 
     val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
 
-    Row(
-        modifier = modifier
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.CenterEnd
     ) {
-        Row(
-            modifier = Modifier
-                .clickable(onClick = {
-                    menuExpanded.value = true
-                })
-                .padding(16.dp)
+        TextButton(
+            onClick = {
+                menuExpanded.value = true
+            },
+            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
         ) {
             Text(
                 text = dateFormat.format(selectedForecast.timestamp),
                 style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.align(Alignment.CenterVertically)
             )
             Icon(
                 imageVector = Icons.Rounded.ArrowDropDown,
