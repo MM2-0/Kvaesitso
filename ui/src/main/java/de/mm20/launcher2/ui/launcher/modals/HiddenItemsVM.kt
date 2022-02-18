@@ -13,13 +13,5 @@ import org.koin.core.component.inject
 class HiddenItemsVM: ViewModel(), KoinComponent {
     private val repository: FavoritesRepository by inject()
 
-    val hiddenItems = MutableLiveData<List<Searchable>>(emptyList())
-
-    suspend fun onActive() {
-        withContext(Dispatchers.IO) {
-            repository.getHiddenItems().collectLatest {
-                hiddenItems.postValue(it)
-            }
-        }
-    }
+    val hiddenItems = repository.getHiddenItems()
 }

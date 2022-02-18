@@ -9,8 +9,10 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.*
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.savedstate.ViewTreeSavedStateRegistryOwner
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -107,22 +109,20 @@ class LauncherActivity : BaseActivity() {
             }
         }
 
-        var hiddenItemsDialog: MaterialDialog? = null
+        var hiddenItemsView: HiddenItemsView? = null
         viewModel.isHiddenItemsShown.observe(this) {
             if (it) {
-                val view = HiddenItemsView(this)
-                hiddenItemsDialog = MaterialDialog(this, BottomSheet(LayoutMode.MATCH_PARENT))
-                    .show {
-                        title(R.string.menu_hidden_items)
-                        customView(view = view)
-                        negativeButton(R.string.close) { dismiss() }
-                        onDismiss {
-                            viewModel.hideHiddenItems()
-                        }
+                if (hiddenItemsView != null) return@observe
+                hiddenItemsView = HiddenItemsView(this).apply {
+                    onDismiss = {
+                        viewModel.hideHiddenItems()
                     }
+                }
+                binding.rootView.addView(hiddenItemsView)
             } else {
-                hiddenItemsDialog?.dismiss()
-                hiddenItemsDialog = null
+                if (hiddenItemsView == null) return@observe
+                binding.rootView.removeView(hiddenItemsView)
+                hiddenItemsView = null
             }
         }
 
