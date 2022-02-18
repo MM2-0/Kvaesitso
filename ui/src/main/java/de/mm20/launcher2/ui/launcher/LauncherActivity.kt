@@ -7,12 +7,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
-import androidx.core.view.*
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewTreeLifecycleOwner
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.savedstate.ViewTreeSavedStateRegistryOwner
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.doOnNextLayout
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -25,9 +23,6 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
-import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
@@ -61,7 +56,8 @@ class LauncherActivity : BaseActivity() {
         }
 
         val windowController = WindowInsetsControllerCompat(window, binding.rootView)
-        windowController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        windowController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
         viewModel.lightStatusBar.observe(this) {
             windowController.isAppearanceLightStatusBars = it
@@ -133,7 +129,6 @@ class LauncherActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        ActivityStarter.create(binding.rootView)
         binding.activityStartOverlay.visibility = View.INVISIBLE
 
         binding.container.doOnNextLayout {
