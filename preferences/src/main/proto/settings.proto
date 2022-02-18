@@ -162,6 +162,8 @@ message Settings {
   message SystemBarsSettings {
     bool lightStatusBar = 1;
     bool lightNavBar = 2;
+    bool hideStatusBar = 3;
+    bool hideNavBar = 4;
   }
   SystemBarsSettings system_bars = 23;
 

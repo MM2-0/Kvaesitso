@@ -4,9 +4,13 @@ import android.app.WallpaperManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.view.*
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -14,12 +18,14 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
+import de.mm20.launcher2.ui.legacy.helper.ActivityStarter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 
@@ -53,11 +59,29 @@ class LauncherActivity : BaseActivity() {
         }
 
         val windowController = WindowInsetsControllerCompat(window, binding.rootView)
+        windowController.systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
         viewModel.lightStatusBar.observe(this) {
             windowController.isAppearanceLightStatusBars = it
         }
+
         viewModel.lightNavBar.observe(this) {
             windowController.isAppearanceLightNavigationBars = it
+        }
+
+        viewModel.hideStatusBar.observe(this) {
+            if (it) {
+                windowController.hide(WindowInsetsCompat.Type.statusBars())
+            } else {
+                windowController.show(WindowInsetsCompat.Type.statusBars())
+            }
+        }
+        viewModel.hideNavBar.observe(this) {
+            if (it) {
+                windowController.hide(WindowInsetsCompat.Type.navigationBars())
+            } else {
+                windowController.show(WindowInsetsCompat.Type.navigationBars())
+            }
         }
 
         var editFavoritesDialog: MaterialDialog? = null

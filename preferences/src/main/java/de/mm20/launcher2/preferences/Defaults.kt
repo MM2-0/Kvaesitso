@@ -118,6 +118,8 @@ fun createFactorySettings(context: Context): Settings {
             Settings.SystemBarsSettings.newBuilder()
                 .setLightNavBar(false)
                 .setLightStatusBar(false)
+                .setHideStatusBar(false)
+                .setHideNavBar(false)
         )
         .setCards(
             Settings.CardSettings.newBuilder()

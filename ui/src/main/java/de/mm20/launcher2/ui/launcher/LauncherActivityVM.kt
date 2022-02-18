@@ -40,6 +40,9 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
         !dim && light
     }.asLiveData()
 
+    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }.asLiveData()
+    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }.asLiveData()
+
     fun setDarkMode(darkMode: Boolean) {
         isDarkInMode.value = darkMode
     }

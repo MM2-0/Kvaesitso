@@ -194,6 +194,22 @@ fun AppearanceSettingsScreen() {
                         viewModel.setLightNavBar(it)
                     }
                 )
+                val hideStatusBar by viewModel.hideStatusBar.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_hide_status_bar),
+                    value = hideStatusBar == true,
+                    onValueChanged = {
+                        viewModel.setHideStatusBar(it)
+                    }
+                )
+                val hideNavBar by viewModel.hideNavBar.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_hide_nav_bar),
+                    value = hideNavBar == true,
+                    onValueChanged = {
+                        viewModel.setHideNavBar(it)
+                    }
+                )
             }
         }
     }

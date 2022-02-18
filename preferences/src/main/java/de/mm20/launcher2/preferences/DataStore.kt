@@ -7,6 +7,7 @@ import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.migrations.FactorySettingsMigration
+import de.mm20.launcher2.preferences.migrations.Migration_1_2
 
 typealias LauncherDataStore = DataStore<Settings>
 
@@ -14,7 +15,7 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     fileName = "settings.pb",
     serializer = SettingsSerializer,
     produceMigrations = {
-        listOf(FactorySettingsMigration(it))
+        listOf(FactorySettingsMigration(it), Migration_1_2())
     },
     corruptionHandler = ReplaceFileCorruptionHandler {
         CrashReporter.logException(it)
@@ -23,4 +24,4 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     }
 )
 
-internal const val SchemaVersion = 1
+internal const val SchemaVersion = 2
