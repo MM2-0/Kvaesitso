@@ -196,7 +196,7 @@ fun AppItem(
                 label = stringResource(R.string.menu_app_info),
                 icon = Icons.Rounded.Info
             ) {
-                viewModel.openAppInfo(context as AppCompatActivity)
+                viewModel.openAppInfo(context)
             })
 
         toolbarActions.add(
@@ -204,7 +204,7 @@ fun AppItem(
                 label = stringResource(R.string.menu_launch),
                 icon = Icons.Rounded.OpenInNew,
                 action = {
-                    viewModel.launch(context as AppCompatActivity)
+                    viewModel.launch(context)
                 }
             )
         )
@@ -216,7 +216,7 @@ fun AppItem(
                 icon = Icons.Rounded.Share
             ) {
                 scope.launch {
-                    viewModel.shareApkFile(context as AppCompatActivity)
+                    viewModel.shareApkFile(context)
                 }
             }
         } else {
@@ -228,7 +228,7 @@ fun AppItem(
                         label = stringResource(R.string.share_menu_store_link, storeDetails.label),
                         icon = Icons.Rounded.Share,
                         action = {
-                            viewModel.shareStoreLink(context as AppCompatActivity, storeDetails.url)
+                            viewModel.shareStoreLink(context, storeDetails.url)
                         }
                     ),
                     DefaultToolbarAction(
@@ -236,7 +236,7 @@ fun AppItem(
                         icon = Icons.Rounded.Share
                     ) {
                         scope.launch {
-                            viewModel.shareApkFile(context as AppCompatActivity)
+                            viewModel.shareApkFile(context)
                         }
                     }
                 )
@@ -250,7 +250,7 @@ fun AppItem(
                     label = stringResource(R.string.menu_uninstall),
                     icon = Icons.Rounded.Delete,
                 ) {
-                    viewModel.uninstall(context as AppCompatActivity)
+                    viewModel.uninstall(context)
                     onBack()
                 }
             )

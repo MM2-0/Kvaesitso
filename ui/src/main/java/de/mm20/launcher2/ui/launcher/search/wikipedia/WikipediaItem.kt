@@ -47,7 +47,7 @@ fun WikipediaItem(
 
     Column(
         modifier = modifier.clickable {
-            viewModel.launch(context as AppCompatActivity)
+            viewModel.launch(context)
         }
     ) {
         if (!wikipedia.image.isNullOrEmpty()) {
@@ -110,7 +110,7 @@ fun WikipediaItem(
                 label = stringResource(R.string.menu_share),
                 icon = Icons.Rounded.Share,
                 action = {
-                    viewModel.share(context as AppCompatActivity)
+                    viewModel.share(context)
                 }
             )
         )

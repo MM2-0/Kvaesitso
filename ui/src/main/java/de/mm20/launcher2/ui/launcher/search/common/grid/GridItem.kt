@@ -66,7 +66,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable) {
             badge = badge,
             icon = icon,
             onClick = {
-                if (!launchOnPress || !viewModel.launch(context as AppCompatActivity, bounds)) {
+                if (!launchOnPress || !viewModel.launch(context, bounds)) {
                     showPopup = true
                 }
             },

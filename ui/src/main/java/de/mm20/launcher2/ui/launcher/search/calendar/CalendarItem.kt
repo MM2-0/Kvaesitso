@@ -135,7 +135,7 @@ fun CalendarItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    viewModel.openLocation(context as AppCompatActivity)
+                                    viewModel.openLocation(context)
                                 }
                         ) {
                             Icon(
@@ -199,7 +199,7 @@ fun CalendarItem(
                             label = stringResource(R.string.calendar_menu_open_externally),
                             icon = Icons.Rounded.OpenInNew,
                             action = {
-                                viewModel.launch(context as AppCompatActivity)
+                                viewModel.launch(context)
                                 onBack()
                             }
                         )

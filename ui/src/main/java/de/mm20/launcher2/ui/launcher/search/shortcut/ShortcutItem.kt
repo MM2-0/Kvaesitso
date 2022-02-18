@@ -98,7 +98,7 @@ fun AppItem(
                 label = stringResource(R.string.menu_app_info),
                 icon = Icons.Rounded.Info
             ) {
-                viewModel.openAppInfo(context as AppCompatActivity)
+                viewModel.openAppInfo(context)
             })
 
         Toolbar(

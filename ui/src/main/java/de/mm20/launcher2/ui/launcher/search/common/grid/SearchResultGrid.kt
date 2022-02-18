@@ -32,11 +32,14 @@ import kotlinx.coroutines.delay
 import kotlin.math.ceil
 
 @Composable
-fun SearchResultGrid(items: List<Searchable>) {
+fun SearchResultGrid(
+    items: List<Searchable>,
+    modifier: Modifier = Modifier,
+) {
 
     val columns = LocalGridColumns.current
     Column(
-        modifier = Modifier.animateContentSize().fillMaxWidth().padding(4.dp)
+        modifier = modifier.animateContentSize().fillMaxWidth().padding(4.dp)
     ) {
         for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
             Row {

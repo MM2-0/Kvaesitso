@@ -110,7 +110,7 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context as AppCompatActivity, it)
+                                        viewModel.contact(context, it)
                                     }
                                 )
                             }
@@ -134,7 +134,7 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context as AppCompatActivity, it)
+                                        viewModel.contact(context, it)
                                     }
                                 )
                             }
@@ -158,7 +158,7 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context as AppCompatActivity, it)
+                                        viewModel.contact(context, it)
                                     }
                                 )
                             }
@@ -182,7 +182,7 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context as AppCompatActivity, it)
+                                        viewModel.contact(context, it)
                                     }
                                 )
                             }
@@ -206,7 +206,7 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context as AppCompatActivity, it)
+                                        viewModel.contact(context, it)
                                     }
                                 )
                             }
@@ -263,7 +263,7 @@ fun ContactItem(
                         label = stringResource(R.string.calendar_menu_open_externally),
                         icon = Icons.Rounded.OpenInNew,
                         action = {
-                            viewModel.launch(context as AppCompatActivity)
+                            viewModel.launch(context)
                         }
                     )
                 )

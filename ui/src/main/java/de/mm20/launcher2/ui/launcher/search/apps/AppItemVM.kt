@@ -8,14 +8,9 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.provider.Settings
 import android.service.notification.StatusBarNotification
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.favorites.FavoritesRepository
-import de.mm20.launcher2.icons.IconRepository
-import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.data.AppShortcut
@@ -25,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AppItemVM(
@@ -41,8 +35,8 @@ class AppItemVM(
         notificationRepository.cancelNotification(notification)
     }
 
-    fun openAppInfo(activity: AppCompatActivity) {
-        activity.tryStartActivity(
+    fun openAppInfo(context: Context) {
+        context.tryStartActivity(
             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
                 data = Uri.parse("package:${app.`package`}")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -50,14 +44,14 @@ class AppItemVM(
         )
     }
 
-    suspend fun shareApkFile(activity: AppCompatActivity) {
+    suspend fun shareApkFile(context: Context) {
         val fileCopy = java.io.File(
-            activity.cacheDir,
+            context.cacheDir,
             "${app.`package`}-${app.version}.apk"
         )
         withContext(Dispatchers.IO) {
             try {
-                val info = activity.packageManager
+                val info = context.packageManager
                     .getApplicationInfo(app.`package`, 0)
                 val file = java.io.File(info.publicSourceDir)
 
@@ -73,30 +67,30 @@ class AppItemVM(
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         val uri = FileProvider.getUriForFile(
-            activity,
-            activity.applicationContext.packageName + ".fileprovider",
+            context,
+            context.applicationContext.packageName + ".fileprovider",
             fileCopy
         )
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         shareIntent.type = "application/vnd.android.package-archive"
         withContext(Dispatchers.Main) {
-            activity.startActivity(Intent.createChooser(shareIntent, null))
+            context.startActivity(Intent.createChooser(shareIntent, null))
         }
     }
 
-    fun shareStoreLink(activity: AppCompatActivity, url: String) {
+    fun shareStoreLink(context: Context, url: String) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.putExtra(Intent.EXTRA_TEXT, url)
         shareIntent.type = "text/plain"
-        activity.startActivity(Intent.createChooser(shareIntent, null))
+        context.startActivity(Intent.createChooser(shareIntent, null))
     }
 
     val canUninstall = app.flags and ApplicationInfo.FLAG_SYSTEM == 0
 
-    fun uninstall(activity: AppCompatActivity) {
+    fun uninstall(context: Context) {
         val intent = Intent(Intent.ACTION_DELETE)
         intent.data = Uri.parse("package:" + app.`package`)
-        activity.startActivity(intent)
+        context.startActivity(intent)
     }
 
 

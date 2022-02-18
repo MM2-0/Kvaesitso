@@ -418,7 +418,6 @@ class ApplicationDetailRepresentation : Representation, KoinComponent {
     private fun shareApk(context: Context, app: Application) {
         val handler = Handler()
         val progressDialog = ProgressDialog(context)
-        progressDialog.setMessage(context.getString(R.string.dialog_wait))
         progressDialog.show()
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {

@@ -149,7 +149,7 @@ fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
                         modifier = Modifier.combinedClickable(
                             enabled = !showDetails,
                             onClick = {
-                                if (!viewModel.launch(context as AppCompatActivity, bounds)) {
+                                if (!viewModel.launch(context, bounds)) {
                                     showDetails = true
                                 }
                             },

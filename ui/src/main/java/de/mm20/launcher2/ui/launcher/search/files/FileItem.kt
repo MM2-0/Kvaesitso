@@ -164,7 +164,7 @@ fun FileItem(
                         label = stringResource(R.string.menu_open_file),
                         icon = Icons.Rounded.OpenInNew,
                         action = {
-                            viewModel.launch(context as AppCompatActivity)
+                            viewModel.launch(context)
                         }
                     )
                 )
@@ -174,7 +174,7 @@ fun FileItem(
                         label = stringResource(R.string.menu_share),
                         icon = Icons.Rounded.Share,
                         action = {
-                            viewModel.share(context as AppCompatActivity)
+                            viewModel.share(context)
                         }
                     ))
                 }

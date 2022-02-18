@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
@@ -44,10 +45,11 @@ abstract class SearchableItemVM(
     }
 
 
-    fun launch(context: AppCompatActivity, bounds: Rect? = null): Boolean {
-        val options = if (bounds != null) {
+    fun launch(context: Context, bounds: Rect? = null): Boolean {
+        val view = (context as? AppCompatActivity)?.window?.decorView
+        val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeClipRevealAnimation(
-                context.window.decorView,
+                view,
                 bounds.left.toInt(),
                 bounds.top.toInt(),
                 bounds.width.toInt(),

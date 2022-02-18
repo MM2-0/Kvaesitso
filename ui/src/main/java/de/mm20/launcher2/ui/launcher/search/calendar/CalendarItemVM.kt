@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.ui.R
@@ -50,15 +48,34 @@ class CalendarItemVM(
     }
 
     fun formatTime(context: Context): String {
-        if (calendarEvent.allDay) return DateUtils.formatDateRange(context, calendarEvent.startTime, calendarEvent.endTime, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY)
-        return DateUtils.formatDateRange(context, calendarEvent.startTime, calendarEvent.endTime, DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY)
+        if (calendarEvent.allDay) return DateUtils.formatDateRange(
+            context,
+            calendarEvent.startTime,
+            calendarEvent.endTime,
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY
+        )
+        return DateUtils.formatDateRange(
+            context,
+            calendarEvent.startTime,
+            calendarEvent.endTime,
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY
+        )
 
     }
 
-    fun openLocation(context: AppCompatActivity) {
+    fun openLocation(context: Context) {
         context.tryStartActivity(
             Intent(Intent.ACTION_VIEW)
-                .setData(Uri.parse("geo:0,0?q=${URLEncoder.encode(calendarEvent.location, "utf8")}"))
+                .setData(
+                    Uri.parse(
+                        "geo:0,0?q=${
+                            URLEncoder.encode(
+                                calendarEvent.location,
+                                "utf8"
+                            )
+                        }"
+                    )
+                )
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
     }

@@ -47,7 +47,7 @@ fun WebsiteItem(
 
     Column(
         modifier = modifier.clickable {
-            viewModel.launch(context as AppCompatActivity)
+            viewModel.launch(context)
         }
     ) {
         if (website.image.isNotBlank()) {
@@ -104,7 +104,7 @@ fun WebsiteItem(
                 label = stringResource(R.string.menu_share),
                 icon= Icons.Rounded.Share,
                 action = {
-                    viewModel.share(context as AppCompatActivity)
+                    viewModel.share(context)
                 }
             )
         )
