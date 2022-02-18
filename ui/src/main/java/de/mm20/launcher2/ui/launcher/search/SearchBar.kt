@@ -26,6 +26,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -54,11 +56,22 @@ fun SearchBar(
 ) {
     val searchViewModel: SearchVM = viewModel()
     val activityViewModel: LauncherActivityVM = viewModel()
+    val viewModel: SearchBarVM = viewModel()
 
     val dataStore: LauncherDataStore by inject()
 
     val style by remember { dataStore.data.map { it.searchBar.searchBarStyle } }
         .collectAsState(SearchBarSettings.SearchBarStyle.Hidden)
+
+    val focused by viewModel.focused.observeAsState(false)
+
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(focused) {
+        if (focused) focusRequester.requestFocus()
+        else focusManager.clearFocus()
+    }
 
     val context = LocalContext.current
 
@@ -119,7 +132,13 @@ fun SearchBar(
                 )
             }
         },
-        onFocus = onFocus,
+        focusRequester = focusRequester,
+        onFocus = {
+            viewModel.setFocused(true)
+        },
+        onUnfocus = {
+            viewModel.setFocused(false)
+        }
     )
 }
 
@@ -132,7 +151,9 @@ fun SearchBar(
     value: String,
     style: SearchBarSettings.SearchBarStyle,
     onValueChange: (String) -> Unit,
-    onFocus: () -> Unit = {}
+    onFocus: () -> Unit = {},
+    onUnfocus: () -> Unit = {},
+    focusRequester: FocusRequester = remember { FocusRequester() }
 ) {
     val context = LocalContext.current
 
@@ -237,13 +258,14 @@ fun SearchBar(
                     }
                     val focusManager = LocalFocusManager.current
                     LaunchedEffect(level) {
-                        if (level == SearchBarLevel.Resting) focusManager.clearFocus()
+                        if (level == SearchBarLevel.Resting) onUnfocus()
                     }
                     BasicTextField(
                         modifier = Modifier
                             .onFocusChanged {
                                 if (it.hasFocus) onFocus()
                             }
+                            .focusRequester(focusRequester)
                             .fillMaxWidth(),
                         textStyle = MaterialTheme.typography.bodyLarge.copy(
                             color = contentColor

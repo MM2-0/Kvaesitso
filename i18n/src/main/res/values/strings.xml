@@ -410,6 +410,9 @@
     <string name="preference_search_bar_style">Style</string>
     <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
 
+    <string name="preference_search_bar_auto_focus">Launch keyboard</string>
+    <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the search</string>
+
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
 
     <string name="music_widget_default_title">%1$s is playing media</string>

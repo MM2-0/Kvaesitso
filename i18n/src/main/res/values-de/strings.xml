@@ -365,6 +365,8 @@
     <string name="preference_search_gdrive_summary">%1$ss Dateien auf Google Drive durchsuchen</string>
     <string name="preference_search_bar_style">Stil</string>
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
+    <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
+    <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Suche automatisch einblenden</string>
 
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
 

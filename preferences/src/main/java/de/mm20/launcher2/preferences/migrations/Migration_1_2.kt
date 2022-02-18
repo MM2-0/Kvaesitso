@@ -10,5 +10,6 @@ class Migration_1_2: VersionedMigration(1, 2) {
                     .setHideNavBar(false)
                     .setHideStatusBar(false)
             )
+            .setSearchBar(builder.searchBar.toBuilder().setAutoFocus(false))
     }
 }

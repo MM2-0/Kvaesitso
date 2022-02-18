@@ -2,10 +2,15 @@ package de.mm20.launcher2.ui.launcher
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.ktx.isBrightColor
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
+import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class LauncherScaffoldVM : ViewModel() {
+class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val isSearchOpen = MutableLiveData(false)
     val blurBackground = MutableLiveData(false)
 
@@ -13,6 +18,10 @@ class LauncherScaffoldVM : ViewModel() {
     val darkStatusBarIcons = MutableLiveData(false)
 
     val searchBarLevel = MutableLiveData(SearchBarLevel.Resting)
+
+    val dataStore: LauncherDataStore by inject()
+
+    val autoFocus = dataStore.data.map { it.searchBar.autoFocus }.asLiveData()
 
     var scrollY = 0
         set(value) {

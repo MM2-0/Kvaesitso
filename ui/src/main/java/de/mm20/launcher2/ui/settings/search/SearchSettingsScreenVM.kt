@@ -136,4 +136,18 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val autoFocus = dataStore.data.map { it.searchBar.autoFocus }.asLiveData()
+    fun setAutoFocus(autoFocus: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setAutoFocus(autoFocus)
+                    )
+                    .build()
+            }
+        }
+    }
 }

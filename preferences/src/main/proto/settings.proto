@@ -130,6 +130,7 @@ message Settings {
       Hidden = 2;
     }
     SearchBarStyle search_bar_style = 1;
+    bool auto_focus = 2;
   }
   SearchBarSettings search_bar = 20;
 

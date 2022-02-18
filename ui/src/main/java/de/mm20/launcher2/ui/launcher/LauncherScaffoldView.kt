@@ -25,6 +25,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.transition.OneShotLayoutTransition
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.databinding.ViewLauncherScaffoldBinding
+import de.mm20.launcher2.ui.launcher.search.SearchBarVM
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetsVM
 
@@ -38,6 +39,9 @@ class LauncherScaffoldView @JvmOverloads constructor(
     private val viewModel: LauncherScaffoldVM by (context as AppCompatActivity).viewModels()
     private val widgetsViewModel: WidgetsVM by (context as AppCompatActivity).viewModels()
     private val searchViewModel: SearchVM by (context as AppCompatActivity).viewModels()
+    private val searchBarViewModel: SearchBarVM by (context as AppCompatActivity).viewModels()
+
+    private var autoFocus = false
 
     private val scrollViewOnTouchListener = object : OnTouchListener {
         @SuppressLint("ClickableViewAccessibility")
@@ -146,6 +150,10 @@ class LauncherScaffoldView @JvmOverloads constructor(
             )
         }
 
+        viewModel.autoFocus.observe(context) {
+            autoFocus = it == true
+        }
+
         widgetsViewModel.isEditMode.observe(context) {
             OneShotLayoutTransition.run(binding.scrollContainer)
             if (it) {
@@ -190,8 +198,10 @@ class LauncherScaffoldView @JvmOverloads constructor(
             }
         }
 
-        binding.searchBar.onFocus = {
-            viewModel.openSearch()
+        searchBarViewModel.focused.observe(context) {
+            if (it) {
+                viewModel.openSearch()
+            }
         }
 
         viewModel.blurBackground.observe(context) { blur ->
@@ -271,5 +281,6 @@ class LauncherScaffoldView @JvmOverloads constructor(
             )
         )
         set.start()
+        if (autoFocus) searchBarViewModel.setFocused(true)
     }
 }

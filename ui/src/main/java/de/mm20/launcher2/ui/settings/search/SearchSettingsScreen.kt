@@ -156,5 +156,17 @@ fun SearchSettingsScreen() {
                 )
             }
         }
+        item {
+            val autoFocus by viewModel.autoFocus.observeAsState()
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_auto_focus),
+                    summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
+                    value = autoFocus == true,
+                    onValueChanged = {
+                    viewModel.setAutoFocus(it)
+                })
+            }
+        }
     }
 }
