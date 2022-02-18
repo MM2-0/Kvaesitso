@@ -160,8 +160,8 @@ private fun Info(
         Box(
             contentAlignment = Alignment.CenterStart,
             modifier = Modifier
-                .padding(12.dp)
                 .clickable(enabled = onClick != null, onClick = { onClick?.invoke() })
+                .padding(12.dp)
         ) {
             Text(text, style = MaterialTheme.typography.bodySmall)
         }
