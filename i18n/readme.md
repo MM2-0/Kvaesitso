@@ -16,7 +16,10 @@ There are two components: i18n and units:
 
 - `units` is an extra component that contains all the strings that are used by the unit converter.
 Each unit has a `unit_[name]` and a `unit_[name]_symbol` resource. `unit_[name]_symbol` is the
-symbol that is used in the search query. For SI units, this should be the SI symbol (m, s, kg and so on),
-but other, non-SI units may need to be translated (e.g. nautical miles or horse powers.
-**For technical reasons, these symbols may not contain spaces.**
+symbol that is used in the search query. For SI units, this should usually be the SI symbol (m, s, kg and so on),
+but other, non-SI units may need their symbols to be translated (e.g. nautical miles or horse powers)g.
+**For technical reasons, these symbols may not contain spaces.** `unit_[name]` is the full name
+  of the unit that is used in the unit converter results.
 
+New translations need to be reviewed by a reviewer before they get merged into the main repo. If you
+are interested in becoming a reviewer, open a new issue with your request.
