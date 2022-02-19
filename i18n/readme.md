@@ -6,7 +6,5 @@ might need localization must go to this module.**
 
 ## Contribute
 
-Currently looking into web translation services (e.g. Crowdin or something similar). For now just
-manually translate the XML files or use Android Studio's Translations Editor and submit a pull
-request with your changes.
+Go to the [Weblate project instance](https://i18n.mm20.de/engage/kvaesitso/) and start translating.
 
