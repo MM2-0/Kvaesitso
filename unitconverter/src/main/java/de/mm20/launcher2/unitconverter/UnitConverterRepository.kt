@@ -36,7 +36,7 @@ internal class UnitConverterRepositoryImpl(val context: Context) : UnitConverter
     }
 
     private suspend fun queryUnitConverter(query: String): UnitConverter? {
-        if (!query.matches(Regex("[0-9,.:]+ [A-Za-z/²³°.]+")) && !query.matches(Regex("[0-9,.:]+ [A-Za-z/²³°.]+ >> [A-Za-z/²³°]+"))) return null
+        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) && !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+"))) return null
         val valueStr: String
         val unitStr: String
         val targetUnitStr: String?
