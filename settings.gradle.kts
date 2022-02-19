@@ -294,6 +294,10 @@ dependencyResolutionManagement {
                 .to("org.jsoup", "jsoup")
                 .version("1.14.2")
 
+            alias("commons.text")
+                .to("org.apache.commons", "commons-text")
+                .version("1.9")
+
             version("materialdialogs", "3.3.0")
             alias("materialdialogs.core")
                 .to("com.afollestad.material-dialogs", "core")

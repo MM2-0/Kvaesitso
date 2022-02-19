@@ -187,4 +187,11 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         url = "https://github.com/godaddy/compose-color-picker"
     ),
+    OpenSourceLibrary(
+        name = "Apache Commons Text",
+        description = "Apache Commons Text is a library focused on algorithms working on strings. ",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://commons.apache.org/proper/commons-text/"
+    ),
 )
