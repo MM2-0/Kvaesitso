@@ -45,7 +45,6 @@
         <item quantity="one">Seemeile</item>
         <item quantity="other">Seemeilen</item>
     </plurals>
-
     <!-- UNITS OF AREA -->
     <string name="unit_sqmeter_symbol">m²</string>
     <plurals name="unit_sqmeter">
@@ -92,7 +91,6 @@
         <item quantity="one">Acre</item>
         <item quantity="other">Acre</item>
     </plurals>
-
     <!-- UNITS OF TIME -->
     <string name="unit_second_symbol">s</string>
     <plurals name="unit_second">
@@ -124,7 +122,6 @@
         <item quantity="one">Jahr</item>
         <item quantity="other">Jahre</item>
     </plurals>
-
     <!-- UNITS OF DATA SIZES -->
     <string name="unit_byte_symbol">B</string>
     <plurals name="unit_byte">
@@ -196,7 +193,6 @@
         <item quantity="one">Terabit</item>
         <item quantity="other">Terabit</item>
     </plurals>
-
     <!-- UNITS OF VELOCITY -->
     <string name="unit_meter_per_second_symbol">m/s</string>
     <plurals name="unit_meter_per_second">
@@ -218,7 +214,6 @@
         <item quantity="one">Knoten</item>
         <item quantity="other">Knoten</item>
     </plurals>
-
     <!-- UNITS OF MASS -->
     <string name="unit_kilogram_symbol">kg</string>
     <plurals name="unit_kilogram">
@@ -260,7 +255,6 @@
         <item quantity="one">Short Ton</item>
         <item quantity="other">Short Tons</item>
     </plurals>
-
     <!-- UNITS OF TEMPERATURE -->
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
