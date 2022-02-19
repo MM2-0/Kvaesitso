@@ -389,4 +389,10 @@
     <string name="connect_account">Connecter un compte</string>
     <string name="turn_off">Désactiver</string>
     <string name="file_meta_artist">Artiste : %1$s</string>
+    <string name="weather_condition_wind">Vent</string>
+    <string name="preference_hide_status_bar">Cacher la barre de statuts</string>
+    <string name="preference_hide_nav_bar">Cacher la barre de navigation</string>
+    <string name="menu_launch">Lancer</string>
+    <string name="menu_open_file">Ouvrir</string>
+    <string name="preference_search_bar_auto_focus">Ouvrir le clavier</string>
 </resources>
