@@ -42,6 +42,8 @@ dependencies {
 
     implementation(libs.koin.android)
 
+    implementation(libs.commons.text)
+
     implementation(project(":search"))
     implementation(project(":base"))
     implementation(project(":preferences"))

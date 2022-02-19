@@ -18,6 +18,8 @@ import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
+import org.apache.commons.text.similarity.FuzzyScore
+import java.util.*
 
 interface AppRepository {
     fun search(query: String): Flow<List<Application>>
@@ -188,22 +190,17 @@ internal class AppRepositoryImpl(
 
         merge(installedApps, hiddenItems, installations).collectLatest {
             withContext(Dispatchers.IO) {
+                val fuzzyScore = FuzzyScore(Locale.getDefault())
                 val appResults = mutableListOf<Application>()
                 if (query.isEmpty()) {
                     appResults.addAll(installedApps.value)
                     appResults.addAll(installations.value)
                 } else {
                     appResults.addAll(installedApps.value.filter {
-                        it.label.contains(
-                            query,
-                            ignoreCase = true
-                        )
+                        fuzzyScore.fuzzyScore(it.label, query) >= query.length * 1.5
                     })
                     appResults.addAll(installations.value.filter {
-                        it.label.contains(
-                            query,
-                            ignoreCase = true
-                        )
+                        fuzzyScore.fuzzyScore(it.label, query) >= query.length * 1.5
                     })
                 }
 
