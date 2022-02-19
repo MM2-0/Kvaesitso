@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -10,6 +11,9 @@ import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.contacts.ContactRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.files.FileRepository
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
@@ -17,12 +21,17 @@ import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
+    private val permissionsManager: PermissionsManager by inject()
+    private val dataStore: LauncherDataStore by inject()
 
     private val calendarRepository: CalendarRepository by inject()
     private val contactRepository: ContactRepository by inject()
@@ -36,6 +45,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val isSearching = MutableLiveData(false)
     val searchQuery = MutableLiveData("")
+    val isSearchEmpty = MutableLiveData(true)
 
     val favorites by lazy {
         favoritesRepository.getFavorites().asLiveData()
@@ -60,6 +70,7 @@ class SearchVM : ViewModel(), KoinComponent {
     var searchJob: Job? = null
     fun search(query: String) {
         searchQuery.value = query
+        isSearchEmpty.value = query.isEmpty()
         try {
             searchJob?.cancel()
         } catch (e: CancellationException) {
@@ -115,6 +126,64 @@ class SearchVM : ViewModel(), KoinComponent {
             }
             jobs.map { it.await() }
             isSearching.postValue(false)
+        }
+    }
+
+    val missingCalendarPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.Calendar),
+        dataStore.data.map { it.calendarSearch.enabled }.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestCalendarPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Calendar)
+    }
+
+    fun disableCalendarSearch() {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setCalendarSearch(it.calendarSearch.toBuilder().setEnabled(false))
+                    .build()
+            }
+        }
+    }
+
+
+    val missingContactsPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.Contacts),
+        dataStore.data.map { it.contactsSearch.enabled }.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestContactsPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Contacts)
+    }
+
+    fun disableContactsSearch() {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setContactsSearch(it.contactsSearch.toBuilder().setEnabled(false))
+                    .build()
+            }
+        }
+    }
+
+    val missingFilesPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.ExternalStorage),
+        dataStore.data.map { it.fileSearch.localFiles }.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestFilesPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.ExternalStorage)
+    }
+
+    fun disableFilesSearch() {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setFileSearch(it.fileSearch.toBuilder().setLocalFiles(false))
+                    .build()
+            }
         }
     }
 
