@@ -2,8 +2,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <!-- Name of the app -->
     <string name="app_name">Kvæsitso</string>
-
-
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store
@@ -30,17 +28,14 @@
     <string name="menu_contacts_open_externally">Open in contacts app</string>
     <!-- Open an event in the calendar app -->
     <string name="menu_calendar_open_externally">Open in calendar app</string>
-
     <!-- Shown in the search bar when the search text field is empty -->
     <string name="search_bar_placeholder">Search</string>
-
     <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Version %1$s</string>
     <!-- Menu entry for launcher settings -->
     <string name="settings">Settings</string>
     <!-- Set the device's wallpaper -->
     <string name="wallpaper">Wallpaper</string>
-
     <!-- Wind direction, used in weather widget -->
     <string name="wind_north">North</string>
     <!-- Wind direction, used in weather widget -->
@@ -75,7 +70,6 @@
     <string name="wind_north_north_west">North north west</string>
     <!-- No rain or snow, used in weather widget -->
     <string name="precipitation_none">No precipitation</string>
-
     <!-- The URL of the Wikipedia instance that is used per default. Can be overridden by user.
      This should point to the Wikipedia in the given language. If no such Wikipedia exists,
       a fallback that is suited best for most users of this language should be used
@@ -83,8 +77,6 @@
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <!-- Shown in Wikipedia results to indicate where they come from -->
     <string name="wikipedia_source">From Wikipedia</string>
-
-
     <!-- File meta data, title of audio tracks -->
     <string name="file_meta_title">Title: %1$s</string>
     <!-- File meta data, artist of audio tracks -->
@@ -115,7 +107,6 @@
     <string name="file_meta_owner">Owner: %1$s</string>
     <!-- File meta, location (e.g. location where a photo has been taken) -->
     <string name="file_meta_location">Location: %1$s</string>
-
     <string name="file_type_directory">Directory</string>
     <!-- ZIP, TAR, … archive files  -->
     <string name="file_type_archive">Archive file</string>
@@ -150,15 +141,12 @@
     <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">%1$s file</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
-    <string name="alert_delete_directory">The directory %1$s and all its content will be deleted permanently. Proceed?</string>
+    <string name="alert_delete_directory">The directory %1$s and all its content will be deleted permanently. Proceed\?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
-    <string name="alert_delete_file">The file %1$s will be deleted permanently. Proceed?</string>
-
-
+    <string name="alert_delete_file">The file %1$s will be deleted permanently. Proceed\?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <string name="error_activity_not_found">Couldn\'t open %1$s</string>
-
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the first one. Must be in sync with [default_websearch_1_url].
@@ -172,7 +160,7 @@
         Usually Google, but can be substituted with something else if Google is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_1_url">https://google.com/search?q=${1}</string>
+    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the second one. Must be in sync with [default_websearch_2_url].
@@ -186,7 +174,7 @@
         Usually YouTube, but can be substituted with something else if YouTube is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <!--
         When the app is first launched, three web search shortcuts will be pre-created (can later be customized by user)
         This is the name of the third one. Must be in sync with [default_websearch_3_url].
@@ -200,9 +188,7 @@
         Usually Google Play, but can be substituted with something else if Google Play is not available in
         the region of the language or not commonly used.
        -->
-    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
-
-
+    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="websearch_dialog_create_title">Add web search</string>
     <string name="websearch_dialog_edit_title">Edit web search</string>
     <string name="websearch_dialog_name">Name</string>
@@ -212,7 +198,6 @@
     <string name="websearch_dialog_replace_icon">Replace icon</string>
     <string name="websearch_dialog_delete_icon">Delete icon</string>
     <string name="websearch_dialog_custom_icon">Custom icon</string>
-
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>
@@ -224,7 +209,6 @@
     <string name="shortcut_summary">By %1$s</string>
     <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->
     <string name="installation_in_progress">Installation in progress… (%1$s)</string>
-
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_1">There are no easter eggs here, unless you brought them with you.</string>
     <!-- Wait, we have easter eggs? No way! -->
@@ -232,17 +216,14 @@
     <!-- Wait, we have easter eggs? No way! -->
     <string name="easter_egg_3">I won\'t say it again: there are absolutely no easter eggs hidden here</string>
     <!-- Wait, we have easter eggs? No way! -->
-    <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it?</string>
-
+    <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
-
     <string name="widget_action_adjust_height">Adjust height</string>
     <string name="widget_action_remove">Remove</string>
     <string name="widget_action_settings">Settings</string>
-
     <string name="menu_item_edit_favs">Edit favorites</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
     <string name="edit_favorites_dialog_unpinned">Not pinned – frequently used</string>
@@ -250,8 +231,6 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Pinned – automatically sorted</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Pinned – manually sorted</string>
-
-
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -278,13 +257,12 @@
     <string name="login_flow_continue">Continue</string>
     <!-- Nextcloud/Owncloud login flow, login button -->
     <string name="login_flow_login">Log in</string>
-
-
     <string name="disclaimer">Disclaimer</string>
     <!-- Info and disclaimer for currency conversions. %1$s: formatted date of last currency data update  -->
-    <string name="disclaimer_currency_converter">"Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.\n\nLast update: %1$s"</string>
+    <string name="disclaimer_currency_converter">Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.
+\n
+\nLast update: %1$s</string>
     <string name="unit_converter_show_all">Show all</string>
-
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">Today</string>
     <!-- Used in calendar widget date selector. -->
@@ -306,11 +284,9 @@
     </plurals>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">all-day</string>
-
     <!-- Default title that is shown in the music widget if the app that is playing media did not publish a title -->
     <string name="music_widget_default_title">%1$s is playing media</string>
     <string name="music_widget_no_data">No media has been played yet</string>
-
     <string name="weather_condition_sleetshowers">Sleet showers</string>
     <string name="weather_condition_heavysleet">Heavy sleet</string>
     <string name="weather_condition_lightrainshowersandthunder">Light rain showers and thunder</string>
@@ -368,8 +344,6 @@
     <!-- Manually set a location, used in weather widget location permission banner as an
         alternative to granting the permission -->
     <string name="weather_widget_set_location">Set location</string>
-
-
     <!-- Missing location permission in weather widget and weather widget settings settings -->
     <string name="missing_permission_auto_location">Location access is required to determine the location automatically</string>
     <!-- Missing notification permission in music widget settings -->
@@ -396,10 +370,8 @@
     <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
-
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
-
     <!-- Appearance preference title -->
     <string name="preference_screen_appearance">Appearance</string>
     <string name="preference_theme">Theme</string>
@@ -490,30 +462,23 @@
     <string name="preference_category_license">License</string>
     <string name="preference_about_license">This app is free software.</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
-
     <string name="preference_category_grid">Grid</string>
     <string name="preference_grid_column_count">Number of columns</string>
-
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
-
     <string name="preference_screen_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Configure widgets</string>
-
     <string name="preference_screen_weatherwidget">Weather</string>
     <string name="preference_screen_musicwidget">Music</string>
-
     <string name="preference_screen_clockwidget">Clock</string>
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Vertical</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Select a clock</string>
-
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_export_log">Export log file</string>
-
     <string name="preference_screen_search">Search</string>
     <string name="preference_screen_search_summary">Configure the search</string>
     <string name="preference_search_favorites">Favorites</string>
@@ -527,7 +492,7 @@
     <string name="preference_search_calculator">Calculator</string>
     <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
     <string name="preference_search_unitconverter">Unit converter</string>
-    <string name="preference_search_unitconverter_summary">Usage: "1.5 kg" or "4 cm >> in"</string>
+    <string name="preference_search_unitconverter_summary">Usage: 1.5 kg or 4 cm &gt;&gt; in</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
@@ -554,21 +519,15 @@
         <item quantity="one">%1$d calendar selected</item>
         <item quantity="other">%1$d calendars selected</item>
     </plurals>
-
     <string name="preference_screen_buildinfo">Build information</string>
     <string name="preference_screen_buildinfo_summary">More information about this build of this app</string>
-
     <string name="preference_music_filter_sources">Restrict to music apps</string>
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
-
     <string name="preference_search_bar_style">Style</string>
     <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
-
     <string name="preference_search_bar_auto_focus">Launch keyboard</string>
     <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the search</string>
-
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
-
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
@@ -579,5 +538,4 @@
     <string name="no_account_google">You haven\'t connected a Google account yet</string>
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->
     <string name="connect_account">Connect account</string>
-
 </resources>
