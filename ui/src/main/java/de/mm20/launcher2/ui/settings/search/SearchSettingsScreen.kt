@@ -53,7 +53,7 @@ fun SearchSettingsScreen() {
                 val hasContactsPermission by viewModel.hasContactsPermission.observeAsState()
                 AnimatedVisibility(hasContactsPermission == false) {
                     MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_contact_search),
+                        text = stringResource(R.string.missing_permission_contact_search_settings),
                         onClick = {
                             viewModel.requestContactsPermission(context as AppCompatActivity)
                         },
@@ -75,7 +75,7 @@ fun SearchSettingsScreen() {
                 val hasCalendarPermission by viewModel.hasCalendarPermission.observeAsState()
                 AnimatedVisibility(hasCalendarPermission == false) {
                     MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_calendar_search),
+                        text = stringResource(R.string.missing_permission_calendar_search_settings),
                         onClick = {
                             viewModel.requestCalendarPermission(context as AppCompatActivity)
                         },

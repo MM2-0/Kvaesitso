@@ -161,20 +161,20 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     if (forecast.humidity >= 0) {
-                        WeatherDetailRow(
-                            title = stringResource(id = R.string.weather_humidity),
-                            value = "${forecast.humidity.roundToInt()} %"
+                        Text(
+                            stringResource(id = R.string.weather_details_humidity, "${forecast.humidity.roundToInt()} %"),
+                            style = MaterialTheme.typography.bodySmall,
                         )
                     }
-                    WeatherDetailRow(
-                        title = stringResource(id = R.string.weather_wind),
-                        value = formatWindSpeed(imperialUnits, forecast)
+                    Text(
+                        stringResource(id = R.string.weather_details_wind, formatWindSpeed(imperialUnits, forecast)),
+                        style = MaterialTheme.typography.bodySmall,
                     )
                     val precipitation = formatPrecipitation(imperialUnits, forecast)
                     if (precipitation != null) {
-                        WeatherDetailRow(
-                            title = stringResource(id = R.string.weather_precipitation),
-                            value = precipitation
+                        Text(
+                            stringResource(id = R.string.weather_details_precipitation, precipitation),
+                            style = MaterialTheme.typography.bodySmall,
                         )
                     }
                 }
@@ -228,7 +228,7 @@ fun WeatherDetailRow(title: String, value: String) {
     Row {
         Text(
             text = title,
-            modifier = Modifier.padding(end = 8.dp),
+            modifier = Modifier,//.padding(end = 8.dp),
             style = MaterialTheme.typography.bodySmall,
         )
         Text(

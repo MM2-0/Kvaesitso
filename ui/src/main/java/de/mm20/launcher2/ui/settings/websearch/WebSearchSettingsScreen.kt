@@ -299,7 +299,7 @@ fun EditWebsearchDialog(
                                 .align(Alignment.End)
                         ) {
                             Text(
-                                stringResource(R.string.custom_icon),
+                                stringResource(R.string.websearch_dialog_custom_icon),
                                 style = MaterialTheme.typography.labelLarge
                             )
                         }
@@ -315,7 +315,7 @@ fun EditWebsearchDialog(
                             label = it
                         },
                         label = {
-                            Text(text = stringResource(R.string.websearch_dialog_name_hint))
+                            Text(text = stringResource(R.string.websearch_dialog_name))
                         }
                     )
                     OutlinedTextField(
@@ -327,7 +327,7 @@ fun EditWebsearchDialog(
                             urlTemplate = it
                         },
                         label = {
-                            Text(text = stringResource(R.string.websearch_dialog_url_hint))
+                            Text(text = stringResource(R.string.websearch_dialog_url))
                         },
                     )
                     AnimatedVisibility(showError) {

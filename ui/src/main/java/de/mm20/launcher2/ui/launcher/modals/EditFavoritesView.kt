@@ -39,21 +39,21 @@ class EditFavoritesView @JvmOverloads constructor(
             viewModel.getFavorites().toMutableList()
         }
         binding.progressBar.visibility = View.GONE
-        binding.itemList.addView(getLabel(R.string.edit_favorites_dialog_stage0))
+        binding.itemList.addView(getLabel(R.string.edit_favorites_dialog_pinned_sorted))
 
         binding.itemList.setContainerScrollView(binding.scrollView)
 
         var stage = 0
         for (favorite in favorites) {
             if (favorite.pinPosition <= 1 && stage == 0) {
-                getLabel(R.string.edit_favorites_dialog_stage1).let {
+                getLabel(R.string.edit_favorites_dialog_pinned_unsorted).let {
                     it.tag = "stage1"
                     binding.itemList.addDragView(it, it.getChildAt(1))
                 }
                 stage++
             }
             if (favorite.pinPosition == 0 && stage == 1) {
-                getLabel(R.string.edit_favorites_dialog_stage2).let {
+                getLabel(R.string.edit_favorites_dialog_unpinned).let {
                     it.tag = "stage2"
                     binding.itemList.addDragView(it, it.getChildAt(1))
                 }
@@ -63,14 +63,14 @@ class EditFavoritesView @JvmOverloads constructor(
             binding.itemList.addDragView(view, view.getDragHandle())
         }
         if (stage == 0) {
-            getLabel(R.string.edit_favorites_dialog_stage1).let {
+            getLabel(R.string.edit_favorites_dialog_pinned_unsorted).let {
                 it.tag = "stage1"
                 binding.itemList.addDragView(it, it.getChildAt(1))
             }
             stage++
         }
         if (stage == 1) {
-            getLabel(R.string.edit_favorites_dialog_stage2).let {
+            getLabel(R.string.edit_favorites_dialog_unpinned).let {
                 it.tag = "stage2"
                 binding.itemList.addDragView(it, it.getChildAt(1))
             }

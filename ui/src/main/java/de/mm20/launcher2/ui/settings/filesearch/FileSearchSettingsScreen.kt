@@ -58,7 +58,7 @@ fun FileSearchSettingsScreen() {
                 AnimatedVisibility(hasFilePermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(
-                            if (isAtLeastApiLevel(29)) R.string.missing_permission_file_search_android10 else R.string.missing_permission_file_search
+                            if (isAtLeastApiLevel(29)) R.string.missing_permission_file_search_settings_android10 else R.string.missing_permission_file_search_settings
                         ), onClick = {
                             viewModel.requestFilePermission(context as AppCompatActivity)
                         },

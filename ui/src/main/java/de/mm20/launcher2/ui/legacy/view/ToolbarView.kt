@@ -224,7 +224,7 @@ open class ToolbarSubaction(val title: String, var clickAction: (() -> Unit)) {
 
 class FavoriteToolbarAction(val context: Context, val item: Searchable) : ToolbarAction(
     R.drawable.ic_star_outline,
-    context.getString(R.string.favorites_menu_pin)
+    context.getString(R.string.menu_favorites_pin)
 ), KoinComponent {
 
     private val repository: FavoritesRepository by inject()
@@ -232,10 +232,10 @@ class FavoriteToolbarAction(val context: Context, val item: Searchable) : Toolba
         set(value) {
             field = value
             if (value) {
-                title = context.getString(R.string.favorites_menu_unpin)
+                title = context.getString(R.string.menu_favorites_unpin)
                 icon = R.drawable.ic_star_solid
             } else {
-                title = context.getString(R.string.favorites_menu_pin)
+                title = context.getString(R.string.menu_favorites_pin)
                 icon = R.drawable.ic_star_outline
             }
         }

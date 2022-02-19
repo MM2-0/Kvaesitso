@@ -35,9 +35,9 @@ abstract class AppDatabase : RoomDatabase() {
                                 override fun onCreate(db: SupportSQLiteDatabase) {
                                     super.onCreate(db)
                                     db.execSQL("INSERT INTO Websearch (urlTemplate, label, color, icon) VALUES " +
-                                            "('${context.getString(R.string.websearch_google_url)}', '${context.getString(R.string.websearch_google)}', 0, NULL )," +
-                                            "('${context.getString(R.string.websearch_youtube_url)}', '${context.getString(R.string.websearch_youtube)}', 0, NULL )," +
-                                            "('${context.getString(R.string.websearch_playstore_url)}', '${context.getString(R.string.websearch_playstore)}', 0, NULL );")
+                                            "('${context.getString(R.string.default_websearch_1_url)}', '${context.getString(R.string.default_websearch_1_name)}', 0, NULL )," +
+                                            "('${context.getString(R.string.default_websearch_2_url)}', '${context.getString(R.string.default_websearch_2_name)}', 0, NULL )," +
+                                            "('${context.getString(R.string.default_websearch_3_url)}', '${context.getString(R.string.default_websearch_3_name)}', 0, NULL );")
 
                                     db.execSQL("INSERT INTO Widget (type, data, height, position, label) VALUES " +
                                             "('internal', 'weather', -1, 0, '${context.getString(R.string.widget_name_weather)}')," +

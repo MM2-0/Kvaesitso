@@ -1,26 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fr">
     <string name="app_name">Kvæsitso</string>
     <!-- Shown in the search bar when the search field is empty -->
-    <string name="edit_text_search_hint">Rechercher</string>
-    <!-- A dialog for an action that requires a short amount of time. Used when sharing APK files -->
-    <string name="dialog_wait">Préparation...</string>
+    <string name="search_bar_placeholder">Rechercher</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store -->
-    <string name="share_menu_store_link">Lien %1$s</string>
+    <string name="menu_share_store_link">Lien %1$s</string>
     <!-- Share app menu when both, link and apk share are available-->
-    <string name="share_menu_apk_file">Fichier du programme</string>
+    <string name="menu_share_apk_file">Fichier du programme</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">Désinstaller</string>
     <!-- Share something -->
     <string name="menu_share">Partager</string>
-    <!-- %1$s is the app version, %2$s the package name of an app -->
-    <string name="app_info">Version %1$s\n%2$s</string>
+    <string name="app_info_version">Version %1$s</string>
     <!-- Menu entry for launcher settings -->
     <string name="settings">Paramètres</string>
     <!-- Set the device's wallpaper -->
     <string name="wallpaper">Papier-peint</string>
-    <!-- Launcher settings title -->
-    <string name="title_activity_settings">Paramètres</string>
     <!-- Calendar events that last the entire day -->
     <string name="calendar_event_allday">Journée entière</string>
     <!-- Wind direction, used in weather widget -->
@@ -102,7 +97,6 @@
     <string name="file_type_image">Photo</string>
     <string name="file_type_none">Fichier</string>
     <string name="file_type_generic">Fichier %1$s</string>
-    <string name="activity_not_found">Aucune application appropriée n\'est installée.</string>
     <string name="file_type_presentation">Présentation</string>
     <string name="file_type_compressed">Fichier compressé</string>
     <string name="file_type_text">Fichier texte</string>
@@ -124,14 +118,14 @@
     <string name="file_meta_owner">Propriétaire: %1$s</string>
     <string name="preference_screen_services">Services</string>
     <string name="preference_theme_system">Suivre le système</string>
-    <string name="websearch_google">Google</string>
-    <string name="websearch_youtube">YouTube</string>
-    <string name="websearch_playstore">Google Play</string>
-    <string name="websearch_google_url">https://google.com/search?q=${1}</string>
-    <string name="websearch_youtube_url">https://www.youtube.com/results?search_query=${1}</string>
-    <string name="websearch_playstore_url">https://play.google.com/store/search?q=${1}</string>
-    <string name="websearch_dialog_name_hint">Nom</string>
-    <string name="websearch_dialog_url_hint">URL</string>
+    <string name="default_websearch_1_name">Google</string>
+    <string name="default_websearch_2_name">YouTube</string>
+    <string name="default_websearch_3_name">Google Play</string>
+    <string name="default_websearch_1_url">https://google.com/search?q=${1}</string>
+    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
+    <string name="websearch_dialog_name">Nom</string>
+    <string name="websearch_dialog_url">URL</string>
     <string name="websearch_dialog_url_description">\'${1}\' va être remplacé par la recherche actuelle.</string>
     <string name="websearch_dialog_url_error">Le placeholder \'${1}\' est manquant dans cette URL</string>
     <string name="websearch_dialog_replace_icon">Remplacer l\'icône</string>
@@ -154,13 +148,10 @@
     <string name="preference_light_status_bar">Icônes de la barre de statut sombres</string>
     <string name="preference_light_nav_bar">Icônes de la barre de navigation sombres</string>
     <string name="widget_name_music">Musique</string>
-    <string name="contacts_menu_open_externally">Ouvrir dans l\'application de contacts</string>
-    <string name="favorites_menu_pin">Ajouter aux favoris</string>
-    <string name="favorites_menu_unpin">Enlever</string>
+    <string name="menu_contacts_open_externally">Ouvrir dans l\'application de contacts</string>
+    <string name="menu_favorites_pin">Ajouter aux favoris</string>
+    <string name="menu_favorites_unpin">Enlever</string>
     <string name="menu_back">Retour</string>
-    <string name="contact_multiple_numbers">%1$d numéros de téléphone</string>
-    <string name="contact_multiple_emails">%1$d adresses mail</string>
-    <string name="contact_multiple_postals">%1$d adresses postales</string>
     <string name="menu_app_info">Informations sur l\'application</string>
     <string name="preference_screen_services_summary">Gérer les comptes et les services</string>
     <string name="preference_category_services_google">Google</string>
@@ -174,15 +165,15 @@
     <string name="menu_unhide">Ne pas cacher</string>
     <string name="menu_hidden_items">Applications cachées</string>
     <string name="menu_delete">Supprimer</string>
-    <string name="calendar_menu_open_externally">Ouvrir dans l\'application de calendrier</string>
+    <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_search_wikipedia_pictures">Voir les photos</string>
     <string name="preference_search_wikipedia_pictures_summary">Augmente considérablement l\'utilisation des données</string>
     <string name="preference_google_signin">Se connecter avec Google</string>
     <string name="preference_google_signin_summary">Se connecter pour rechercher dans Google Drive</string>
     <string name="preference_icon_shape_hexagon">Hexagone</string>
     <string name="shortcut_summary">Par %1$s</string>
-    <string name="installation_in_progress">Installation en cours... (%1$d%%)</string>
-    <string name="activity_not_found_searchable">Impossible d\'ouvrir %1$s</string>
+    <string name="installation_in_progress">Installation en cours… (%1$s)</string>
+    <string name="error_activity_not_found">Impossible d\'ouvrir %1$s</string>
     <string name="preference_legacy_icon_bg">Arrière-plan de l\'icône</string>
     <string name="preference_legacy_icon_bg_summary">Style d\'icône legacy</string>
     <!-- Easter egg preference toasts -->
@@ -190,12 +181,12 @@
     <string name="easter_egg_2">Merci d\'arrêter, vous perdez votre temps.</string>
     <string name="easter_egg_3">Je ne vais pas le répéter: il n\'y a absoluement aucun easter easter egg caché ici.</string>
     <string name="easter_egg_text">Bien, vous m\'avez trouvé. Bravo. Cela en valait-il la peine ?</string>
-    <string name="permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
-    <string name="permission_calendar_search">Accorder la permission pour rechercher dans le calendrier.</string>
-    <string name="permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des photos, des médias et des documents sur cet appareil.</string>
-    <string name="permission_contact_search">Accorder la permission d\'accès aux contacts pour rechercher dans les contacts.</string>
+    <string name="missing_permission_calendar_widget">Accorder la permission d\'accès au calendrier pour afficher les évènements à venir ici.</string>
+    <string name="missing_permission_calendar_search">Accorder la permission pour rechercher dans le calendrier.</string>
+    <string name="missing_permission_files_search">Accorder la permission d\'accès au stockage pour rechercher des photos, des médias et des documents sur cet appareil.</string>
+    <string name="missing_permission_contact_search">Accorder la permission d\'accès aux contacts pour rechercher dans les contacts.</string>
     <string name="close">Fermer</string>
-    <string name="custom_icon">Icône personnalisée</string>
+    <string name="websearch_dialog_custom_icon">Icône personnalisée</string>
     <string name="widget_action_adjust_height">Ajuster la hauteur</string>
     <string name="widget_action_remove">Retirer</string>
     <string name="widget_action_settings">Paramètres</string>
@@ -220,18 +211,17 @@
     <string name="preference_ms_signin_summary">Se connecter pour rechercher dans OneDrive</string>
     <string name="preference_nextcloud_signin">Se connecter avec Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Se connecter pour rechercher dans votre serveur Nextcloud</string>
-    <string name="preference_account_checking_status">Vérifie la statut...</string>
     <string name="preference_about_telegram">Groupe Telegram</string>
     <string name="preference_about_fdroid">Dépôt F-Droid</string>
     <string name="menu_item_edit_favs">Éditer les favoris</string>
-    <string name="edit_favorites_dialog_stage2">Pas épinglé – utilisé fréquemment</string>
-    <string name="edit_favorites_dialog_stage1">Épinglé – trié automatiquement</string>
-    <string name="edit_favorites_dialog_stage0">Épinglé – trié manuellement</string>
-    <string name="login_flow_next">Suivant</string>
-    <string name="next_cloud_server_url">URL du serveur Nextcloud</string>
-    <string name="next_cloud_server_url_empty">L\'URL ne peut pas être vide</string>
+    <string name="edit_favorites_dialog_unpinned">Pas épinglé – utilisé fréquemment</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Épinglé – trié automatiquement</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Épinglé – trié manuellement</string>
+    <string name="login_flow_continue">Suivant</string>
+    <string name="nextcloud_server_url">URL du serveur Nextcloud</string>
+    <string name="nextcloud_server_url_empty">L\'URL ne peut pas être vide</string>
     <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="next_cloud_server_invalid_url">Cette URL ne dirige pas vers une installation Nextcloud valide</string>
+    <string name="nextcloud_server_invalid_url">Cette URL ne dirige pas vers une installation Nextcloud valide</string>
 
     <string name="owncloud_server_url">URL du serveur Owncloud</string>
     <string name="preference_category_services_owncloud">Owncloud</string>
@@ -266,58 +256,57 @@
     </plurals>
 
     <!-- Weather widget -->
-    <string name="weather_sleetshowers">Averses de grésil</string>
-    <string name="weather_heavysleet">Fort grésil</string>
-    <string name="weather_lightrainshowersandthunder">Légères averses et orage</string>
-    <string name="weather_heavyrain">Forte pluie</string>
-    <string name="weather_lightsnowandthunder">Légère neige et orage</string>
-    <string name="weather_lightrain">Légère pluie</string>
-    <string name="weather_lightrainshowers">Légères averses</string>
-    <string name="weather_lightsnow">Légère neige</string>
-    <string name="weather_heavysleetshowersandthunder">Fortes averses de grésil et orage</string>
-    <string name="weather_lightsnowshowers">Légères averses de neige</string>
-    <string name="weather_lightssleetshowersandthunder">Légères averses de grésil et orage</string>
-    <string name="weather_snowandthunder">Neige et orage</string>
-    <string name="weather_heavysleetshowers">Fortes averses de grésil</string>
-    <string name="weather_heavysnow">Forte neige</string>
-    <string name="weather_cloudy">Nuageux</string>
-    <string name="weather_lightrainandthunder">Légère pluie et orage</string>
-    <string name="weather_snow">Neige</string>
-    <string name="weather_hail">Grêle</string>
-    <string name="weather_thunder">Orage</string>
-    <string name="weather_heavysnowshowers">Fortes averses de neige</string>
-    <string name="weather_heavyrainshowers">Fortes averses</string>
-    <string name="weather_rainshowersandthunder">Averses et orage</string>
-    <string name="weather_clearsky">Ciel clair</string>
-    <string name="weather_sleet">Grésil</string>
-    <string name="weather_rain">Pluie</string>
-    <string name="weather_sleetandthunder">Grésil et orage</string>
-    <string name="weather_lightssnowshowersandthunder">Légères averses de neige et orage</string>
-    <string name="weather_heavyrainshowersandthunder">Fortes averses et orage</string>
-    <string name="weather_fair">Beau temps</string>
-    <string name="weather_fog">Brouillard</string>
-    <string name="weather_sleetshowersandthunder">Averses de grésil et orage</string>
-    <string name="weather_rainandthunder">Pluie et orage</string>
-    <string name="weather_lightsleet">Léger grésil</string>
-    <string name="weather_heavysleetandthunder">Fort grésil et orage</string>
-    <string name="weather_partlycloudy">Partiellement nuageux</string>
-    <string name="weather_heavysnowandthunder">Forte neige et orage</string>
-    <string name="weather_rainshowers">Averses</string>
-    <string name="weather_lightsleetandthunder">Léger grésil et orage</string>
-    <string name="weather_heavysnowshowersandthunder">Fortes averses de neige et orage</string>
-    <string name="weather_lightsleetshowers">Légère averses de grésil</string>
-    <string name="weather_snowshowersandthunder">Averses de neige et orage</string>
-    <string name="weather_snowshowers">Averses de neige</string>
-    <string name="weather_heavyrainandthunder">Forte pluie et orage</string>
-    <string name="weather_unknown">Inconnu</string>
+    <string name="weather_condition_sleetshowers">Averses de grésil</string>
+    <string name="weather_condition_heavysleet">Fort grésil</string>
+    <string name="weather_condition_lightrainshowersandthunder">Légères averses et orage</string>
+    <string name="weather_condition_heavyrain">Forte pluie</string>
+    <string name="weather_condition_lightsnowandthunder">Légère neige et orage</string>
+    <string name="weather_condition_lightrain">Légère pluie</string>
+    <string name="weather_condition_lightrainshowers">Légères averses</string>
+    <string name="weather_condition_lightsnow">Légère neige</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Fortes averses de grésil et orage</string>
+    <string name="weather_condition_lightsnowshowers">Légères averses de neige</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Légères averses de grésil et orage</string>
+    <string name="weather_condition_snowandthunder">Neige et orage</string>
+    <string name="weather_condition_heavysleetshowers">Fortes averses de grésil</string>
+    <string name="weather_condition_heavysnow">Forte neige</string>
+    <string name="weather_condition_cloudy">Nuageux</string>
+    <string name="weather_condition_lightrainandthunder">Légère pluie et orage</string>
+    <string name="weather_condition_snow">Neige</string>
+    <string name="weather_condition_hail">Grêle</string>
+    <string name="weather_condition_thunder">Orage</string>
+    <string name="weather_condition_heavysnowshowers">Fortes averses de neige</string>
+    <string name="weather_condition_heavyrainshowers">Fortes averses</string>
+    <string name="weather_condition_rainshowersandthunder">Averses et orage</string>
+    <string name="weather_condition_clearsky">Ciel clair</string>
+    <string name="weather_condition_sleet">Grésil</string>
+    <string name="weather_condition_rain">Pluie</string>
+    <string name="weather_condition_sleetandthunder">Grésil et orage</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Légères averses de neige et orage</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Fortes averses et orage</string>
+    <string name="weather_condition_fair">Beau temps</string>
+    <string name="weather_condition_fog">Brouillard</string>
+    <string name="weather_condition_sleetshowersandthunder">Averses de grésil et orage</string>
+    <string name="weather_condition_rainandthunder">Pluie et orage</string>
+    <string name="weather_condition_lightsleet">Léger grésil</string>
+    <string name="weather_condition_heavysleetandthunder">Fort grésil et orage</string>
+    <string name="weather_condition_partlycloudy">Partiellement nuageux</string>
+    <string name="weather_condition_heavysnowandthunder">Forte neige et orage</string>
+    <string name="weather_condition_rainshowers">Averses</string>
+    <string name="weather_condition_lightsleetandthunder">Léger grésil et orage</string>
+    <string name="weather_condition_heavysnowshowersandthunder">Fortes averses de neige et orage</string>
+    <string name="weather_condition_lightsleetshowers">Légère averses de grésil</string>
+    <string name="weather_condition_snowshowersandthunder">Averses de neige et orage</string>
+    <string name="weather_condition_snowshowers">Averses de neige</string>
+    <string name="weather_condition_heavyrainandthunder">Forte pluie et orage</string>
+    <string name="weather_condition_unknown">Inconnu</string>
     <string name="weather_widget_show_details">Montrer les détails</string>
     <string name="weather_widget_hide_details">Cacher les détails</string>
-    <string name="weather_humidity">Humidité :</string>
-    <string name="weather_wind">Vent :</string>
+    <string name="weather_details_humidity">Humidité : %1$s</string>
+    <string name="weather_details_wind">Vent : %1$s</string>
+    <string name="weather_details_precipitation">Précipitations : %1$s</string>
     <string name="weather_no_data">Aucune donnée météo disponible.</string>
-    <string name="weather_location_not_found">Cette position est introuvable.</string>
 
-    <string name="weather_precipitation">Précipitations :</string>
     <string name="preference_category_license">License</string>
     <string name="preference_about_license">Cette application est un logiciel libre.</string>
     <string name="preference_about_license_summary">Sous la license GNU General Public License 3.0</string>
@@ -328,11 +317,11 @@
     <string name="grant_permission">Accorder</string>
     <string name="missing_permission_auto_location">La permission d\'accès à la position est nécessaire pour déterminer la position automatiquement</string>
     <string name="missing_permission_music_widget">La permission d\'accès aux notifications est nécessaire pour contrôler la lecture du média</string>
-    <string name="missing_permission_contact_search">La permission d\'accès aux contacts est nécessaire pour rechercher des contacts</string>
-    <string name="missing_permission_calendar_search">La permission d\'accès au calendrier est nécessaire pour rechercher dans le calendrier</string>
+    <string name="missing_permission_contact_search_settings">La permission d\'accès aux contacts est nécessaire pour rechercher des contacts</string>
+    <string name="missing_permission_calendar_search_settings">La permission d\'accès au calendrier est nécessaire pour rechercher dans le calendrier</string>
     <string name="missing_permission_calendar_widget_settings">Ce widget nécessite la permission d\'accès au calendrier</string>
-    <string name="missing_permission_file_search_android10">La permission de gérer tous les fichiers est nécessaire pour rechercher des fichiers locaux</string>
-    <string name="missing_permission_file_search">La permission d\'accès au stockage externe est nécessaire pour rechercher des fichiers locaux</string>
+    <string name="missing_permission_file_search_settings_android10">La permission de gérer tous les fichiers est nécessaire pour rechercher des fichiers locaux</string>
+    <string name="missing_permission_file_search_settings">La permission d\'accès au stockage externe est nécessaire pour rechercher des fichiers locaux</string>
     <string name="missing_permission_notification_badges">La permission d\'accès aux notifications est nécessaire pour afficher les badges de notification</string>
 
     <string name="weather_widget_set_location">Définir la position</string>

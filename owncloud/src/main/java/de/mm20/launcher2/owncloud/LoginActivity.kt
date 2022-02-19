@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
                     url = "https://$url"
                 }
                 if (url.isBlank()) {
-                    binding.serverUrlInputLayout.error = getString(R.string.next_cloud_server_url_empty)
+                    binding.serverUrlInputLayout.error = getString(R.string.nextcloud_server_url_empty)
                     return@launch
                 }
                 if (owncloudClient.checkOwncloudInstallation(url)) {

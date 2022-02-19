@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.contacts
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.snap
@@ -220,7 +219,7 @@ fun ContactItem(
                     val isPinned by viewModel.isPinned.collectAsState(false)
                     val favAction = if (isPinned) {
                         DefaultToolbarAction(
-                            label = stringResource(R.string.favorites_menu_unpin),
+                            label = stringResource(R.string.menu_favorites_unpin),
                             icon = Icons.Rounded.Star,
                             action = {
                                 viewModel.unpin()
@@ -228,7 +227,7 @@ fun ContactItem(
                         )
                     } else {
                         DefaultToolbarAction(
-                            label = stringResource(R.string.favorites_menu_pin),
+                            label = stringResource(R.string.menu_favorites_pin),
                             icon = Icons.Rounded.StarOutline,
                             action = {
                                 viewModel.pin()
@@ -260,7 +259,7 @@ fun ContactItem(
 
                 toolbarActions.add(
                     DefaultToolbarAction(
-                        label = stringResource(R.string.calendar_menu_open_externally),
+                        label = stringResource(R.string.menu_calendar_open_externally),
                         icon = Icons.Rounded.OpenInNew,
                         action = {
                             viewModel.launch(context)

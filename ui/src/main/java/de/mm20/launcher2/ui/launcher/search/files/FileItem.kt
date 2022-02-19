@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.files
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.*
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.snap
@@ -23,7 +22,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.LocalFile
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -142,7 +140,7 @@ fun FileItem(
                     val isPinned by viewModel.isPinned.collectAsState(false)
                     val favAction = if (isPinned) {
                         DefaultToolbarAction(
-                            label = stringResource(R.string.favorites_menu_unpin),
+                            label = stringResource(R.string.menu_favorites_unpin),
                             icon = Icons.Rounded.Star,
                             action = {
                                 viewModel.unpin()
@@ -150,7 +148,7 @@ fun FileItem(
                         )
                     } else {
                         DefaultToolbarAction(
-                            label = stringResource(R.string.favorites_menu_pin),
+                            label = stringResource(R.string.menu_favorites_pin),
                             icon = Icons.Rounded.StarOutline,
                             action = {
                                 viewModel.pin()

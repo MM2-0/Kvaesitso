@@ -251,7 +251,7 @@ fun SearchBar(
                 ) {
                     if (value.isEmpty()) {
                         Text(
-                            text = stringResource(R.string.edit_text_search_hint),
+                            text = stringResource(R.string.search_bar_placeholder),
                             style = MaterialTheme.typography.bodyLarge,
                             color = contentColor
                         )

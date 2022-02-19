@@ -29,13 +29,13 @@ class LoginActivity : AppCompatActivity() {
                     url = "https://$url"
                 }
                 if (url.isBlank()) {
-                    binding.serverUrlInputLayout.error = getString(R.string.next_cloud_server_url_empty)
+                    binding.serverUrlInputLayout.error = getString(R.string.nextcloud_server_url_empty)
                     return@launch
                 }
                 if (nextcloudClient.checkNextcloudInstallation(url)) {
                     openLoginPage(url)
                 } else {
-                    binding.serverUrlInputLayout.error = getString(R.string.next_cloud_server_invalid_url)
+                    binding.serverUrlInputLayout.error = getString(R.string.nextcloud_server_invalid_url)
                 }
             }
         }

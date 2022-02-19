@@ -104,7 +104,7 @@ fun CalendarWidget() {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp),
-                    text = stringResource(R.string.permission_calendar_widget),
+                    text = stringResource(R.string.missing_permission_calendar_widget),
                     onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) }
                 )
             }

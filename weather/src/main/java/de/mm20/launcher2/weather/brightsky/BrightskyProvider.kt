@@ -94,16 +94,16 @@ class BrightskyProvider(
 
     private fun getCondition(icon: String): String? {
         val resId = when (icon) {
-            "clear-day", "clear-night" -> R.string.weather_clearsky
-            "partly-cloudy-day", "partly-cloudy-night" -> R.string.weather_partlycloudy
-            "cloudy" -> R.string.weather_cloudy
-            "fog" -> R.string.weather_fog
-            "wind" -> R.string.weather_wind
-            "rain" -> R.string.weather_rain
-            "sleet" -> R.string.weather_sleet
-            "snow" -> R.string.weather_snow
-            "hail" -> R.string.weather_hail
-            "thunderstorm" -> R.string.weather_thunder
+            "clear-day", "clear-night" -> R.string.weather_condition_clearsky
+            "partly-cloudy-day", "partly-cloudy-night" -> R.string.weather_condition_partlycloudy
+            "cloudy" -> R.string.weather_condition_cloudy
+            "fog" -> R.string.weather_condition_fog
+            "wind" -> R.string.weather_details_wind
+            "rain" -> R.string.weather_condition_rain
+            "sleet" -> R.string.weather_condition_sleet
+            "snow" -> R.string.weather_condition_snow
+            "hail" -> R.string.weather_condition_hail
+            "thunderstorm" -> R.string.weather_condition_thunder
             else -> return null
         }
         return context.getString(resId)

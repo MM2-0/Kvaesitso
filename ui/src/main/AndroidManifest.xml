@@ -33,7 +33,7 @@
         <activity
             android:name=".settings.SettingsActivity"
             android:exported="true"
-            android:label="@string/title_activity_settings"
+            android:label="@string/settings"
             android:launchMode="singleTask"
             android:parentActivityName=".launcher.LauncherActivity"
             android:screenOrientation="portrait"
@@ -51,7 +51,6 @@
         <activity
             android:name=".launcher.widgets.picker.PickAppWidgetActivity"
             android:exported="true"
-            android:label="@string/title_activity_settings"
             android:launchMode="singleTask"
             android:parentActivityName=".launcher.LauncherActivity"
             android:screenOrientation="portrait"
