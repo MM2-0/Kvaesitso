@@ -29,7 +29,7 @@ abstract class Searchable : Comparable<Searchable> {
             context.startActivity(intent, options)
             true
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(context, context.getString(R.string.activity_not_found_searchable, label), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.error_activity_not_found, label), Toast.LENGTH_SHORT).show()
             false
         }
     }
