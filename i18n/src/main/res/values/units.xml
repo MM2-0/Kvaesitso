@@ -46,8 +46,8 @@
     </plurals>
     <string name="unit_nautic_mile_symbol">NM</string>
     <plurals name="unit_nautic_mile">
-        <item quantity="one">nautic mile</item>
-        <item quantity="other">nautic miles</item>
+        <item quantity="one">nautical mile</item>
+        <item quantity="other">nautical miles</item>
     </plurals>
     <!-- UNITS OF AREA -->
     <string name="unit_sqmeter_symbol">m²</string>
