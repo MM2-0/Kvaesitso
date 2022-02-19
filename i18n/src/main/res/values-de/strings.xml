@@ -176,7 +176,7 @@
     <string name="weather_condition_fog">Nebel</string>
     <string name="weather_condition_sleetshowersandthunder">Schneeregenschauer und Gewitter</string>
     <string name="weather_condition_rainandthunder">Regen und Gewitter</string>
-    <string name="weather_condition_lightsleet">Leichter Schneeregenschauer</string>
+    <string name="weather_condition_lightsleet">Leichter Schneeregen</string>
     <string name="weather_condition_heavysleetandthunder">Starker Schneeregen und Gewitter</string>
     <string name="weather_condition_partlycloudy">Teilweise bewölkt</string>
     <string name="weather_condition_heavysnowandthunder">Starker Schneefall und Gewitter</string>
