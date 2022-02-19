@@ -181,9 +181,9 @@
     <string name="weather_condition_partlycloudy">Teilweise bewölkt</string>
     <string name="weather_condition_heavysnowandthunder">Starker Schneefall und Gewitter</string>
     <string name="weather_condition_rainshowers">Regenschauer</string>
-    <string name="weather_condition_lightsleetandthunder">Light sleet and thunder</string>
+    <string name="weather_condition_lightsleetandthunder">Leichter Schneeregen und Gewitter</string>
     <string name="weather_condition_heavysnowshowersandthunder">Starke Schneeschauer und Gewitter</string>
-    <string name="weather_condition_lightsleetshowers">Light sleet showers</string>
+    <string name="weather_condition_lightsleetshowers">Leichte Schneeschauer</string>
     <string name="weather_condition_snowshowersandthunder">Schneeschauer und Gewitter</string>
     <string name="weather_condition_snowshowers">Schneeschauer</string>
     <string name="weather_condition_heavyrainandthunder">Starkregen und Gewitter</string>
@@ -193,7 +193,7 @@
     <string name="preference_legacy_icon_bg_summary">Stil von Legacy-Icons</string>
     <string name="easter_egg_1">Hier gibt es keine Easter Eggs, es sei denn Ihr hättet sie mitgebracht.</string>
     <string name="easter_egg_2">Bitte, hör auf, du verschwendest deine Zeit</string>
-    <string name="easter_egg_3">Ich werde es nicht noch einmal sagen: hier sind definitiv keine Easter Eggs versteckt.</string>
+    <string name="easter_egg_3">Ich werde es nicht noch einmal sagen: hier sind definitiv keine Easter Eggs versteckt</string>
     <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert?</string>
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
     <string name="missing_permission_calendar_search">Kalender-Berechtigung gewähren, um Termine zu durchsuchen.</string>
@@ -234,7 +234,7 @@
     <string name="edit_favorites_dialog_pinned_sorted">Angeheftet – manuell sortiert</string>
     <string name="login_flow_continue">Weiter</string>
     <string name="nextcloud_server_url">Nextcloud-Server-URL</string>
-    <string name="nextcloud_server_url_empty">Server-URL darf nicht leer sein.</string>
+    <string name="nextcloud_server_url_empty">Server-URL darf nicht leer sein</string>
     <string name="preference_category_services_nextcloud">Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Diese URL verweist auf keine gültige Nextcloud-Installation</string>
     <string name="login_flow_login">Anmelden</string>
@@ -281,40 +281,31 @@
     <string name="preference_themed_icons">Eingefärbte Symbole</string>
     <string name="preference_themed_icons_summary">Symbole an das Farbschema der App anpassen</string>
     <string name="weather_no_data">Keine Wetterdaten verfügbar.</string>
-
     <string name="preference_category_grid">Raster</string>
     <string name="preference_grid_column_count">Spaltenanzahl</string>
-
     <string name="grant_permission">Gewähren</string>
     <string name="missing_permission_auto_location">Standortzugriff wird benötigt, um den Standort automatisch zu ermitteln</string>
     <string name="missing_permission_music_widget">Benachrichtigungszugriff wird benötigt, um Medienwiedergabe zu steuern</string>
     <string name="missing_permission_contact_search_settings">Kontakteberechtigung ist erforderlich, um Kontakte durchsuchen zu können</string>
     <string name="missing_permission_calendar_search_settings">Kalenderberechtigung ist erforderlich, um Kalender durchsuchen zu können</string>
     <string name="weather_widget_set_location">Standort festlegen</string>
-
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Werkzeuge zur Fehlerbehebung</string>
-
     <string name="preference_screen_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Widgets konfigurieren</string>
-
     <string name="preference_screen_weatherwidget">Wetter</string>
     <string name="preference_screen_musicwidget">Musik</string>
-
     <string name="preference_screen_clockwidget">Uhr</string>
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Vertikal</string>
     <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
     <string name="preference_clock_widget_style">Stil</string>
     <string name="preference_clock_widget_style_summary">Uhr auswählen</string>
-
     <string name="preference_crash_reporter">Crash-Reporter</string>
     <string name="preference_crash_reporter_summary">Fehler- und Absturzberichte</string>
     <string name="preference_export_log">Log-Datei exportieren</string>
-
     <string name="preference_music_filter_sources">Auf Musik-Apps begrenzen</string>
     <string name="preference_music_filter_sources_summary">Mediensitzungen von Apps ignorieren, die keine Musik-Apps sind</string>
-
     <string name="preference_screen_calendarwidget">Kalender</string>
     <string name="preference_calendar_calendars">Kalender</string>
     <string name="preference_calendar_hide_allday">Ganztägige Termine ausblenden</string>
@@ -322,7 +313,6 @@
         <item quantity="one">%1$d Kalender ausgewählt</item>
         <item quantity="other">%1$d Kalender ausgewählt</item>
     </plurals>
-
     <string name="preference_screen_search">Suche</string>
     <string name="preference_screen_search_summary">Die Suche konfigurieren</string>
     <string name="preference_search_favorites">Favoriten</string>
@@ -336,7 +326,7 @@
     <string name="preference_search_calculator">Taschenrechner</string>
     <string name="preference_search_calculator_summary">Mathematische Terme auswerten</string>
     <string name="preference_search_unitconverter">Einheitenrechner</string>
-    <string name="preference_search_unitconverter_summary">Benutzung: „1,5 kg“ oder „4 cm >> in“</string>
+    <string name="preference_search_unitconverter_summary">Benutzung: „1,5 kg“ oder „4 cm &gt;&gt; in“</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Die freie Enzyklopädie durchsuchen</string>
     <string name="preference_search_websites">Webseiten</string>
@@ -359,20 +349,15 @@
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
     <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Suche automatisch einblenden</string>
-
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
-
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
-
     <string name="missing_permission_calendar_widget_settings">Kalenderzugriff wird benötigt um Termine abzurufen</string>
     <string name="missing_permission_file_search_settings">Speicher-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
     <string name="missing_permission_file_search_settings_android10">Alle Dateien verwalten-Berechtigung wird benötigt um lokale Dateien zu durchsuchen</string>
     <string name="missing_permission_notification_badges">Benachrichtigungszugriff wird benötigt um Benachrichtigungsplaketten anzuzeigen</string>
-
     <string name="websearch_dialog_create_title">Websuche hinzufügen</string>
     <string name="websearch_dialog_edit_title">Websuche bearbeiten</string>
-
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
     <string name="no_account_microsoft">Sie haben noch kein Microsoft-Konto verbunden</string>
