@@ -69,8 +69,8 @@
     <string name="file_type_presentation">Präsentation</string>
     <string name="file_type_compressed">Komprimierte Datei</string>
     <string name="file_type_text">Text-Datei</string>
-    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwideruflich gelöscht. Fortfahren?</string>
-    <string name="alert_delete_file">Die Datei %1$s wird unwideruflich gelöscht. Fortfahren?</string>
+    <string name="alert_delete_directory">Das Verzeichnis %1$s wird samt Inhalt unwideruflich gelöscht. Fortfahren\?</string>
+    <string name="alert_delete_file">Die Datei %1$s wird unwideruflich gelöscht. Fortfahren\?</string>
     <string name="file_meta_title">Titel: %1$s</string>
     <string name="file_meta_artist">Künstler: %1$s</string>
     <string name="file_meta_album">Album: %1$s</string>
@@ -90,9 +90,9 @@
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="default_websearch_1_url">https://google.de/search?q=${1}</string>
-    <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
-    <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
+    <string name="default_websearch_1_url">https://google.de/search\?q=${1}</string>
+    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="websearch_dialog_name">Name</string>
     <string name="websearch_dialog_url">URL</string>
     <string name="websearch_dialog_url_description">„${1}“ wird durch den eigentlichen Suchbegriff ersetzt.</string>
@@ -194,7 +194,7 @@
     <string name="easter_egg_1">Hier gibt es keine Easter Eggs, es sei denn Ihr hättet sie mitgebracht.</string>
     <string name="easter_egg_2">Bitte, hör auf, du verschwendest deine Zeit</string>
     <string name="easter_egg_3">Ich werde es nicht noch einmal sagen: hier sind definitiv keine Easter Eggs versteckt</string>
-    <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert?</string>
+    <string name="easter_egg_text">Tja, da sind Sie. Herzlichen Glückwunsch. War es das wert\?</string>
     <string name="missing_permission_calendar_widget">Kalender-Berechtigung gewähren, um Ihre nächsten Termine hier anzuzeigen.</string>
     <string name="missing_permission_calendar_search">Kalender-Berechtigung gewähren, um Termine zu durchsuchen.</string>
     <string name="missing_permission_contact_search">Kontakt-Berechtigung gewähren, um Kontakte zu durchsuchen.</string>
@@ -255,7 +255,9 @@
     <string name="preference_cards_stroke_width">Rahmenstärke</string>
     <string name="preference_cards_opacity">Deckkraft</string>
     <string name="disclaimer">Haftungsausschluss</string>
-    <string name="disclaimer_currency_converter">Wechselkurse so wie sie einmal täglich von der Europäischen Zentralbank herausgegeben werden. Alle Angaben sind ohne Gewähr. Es wird keine Haftung für die hier dargestellten Informationen übernommen.\n\nLetzte Aktualisierung: %1$s</string>
+    <string name="disclaimer_currency_converter">Wechselkurse so wie sie einmal täglich von der Europäischen Zentralbank herausgegeben werden. Alle Angaben sind ohne Gewähr. Es wird keine Haftung für die hier dargestellten Informationen übernommen.
+\n
+\nLetzte Aktualisierung: %1$s</string>
     <string name="unit_converter_show_all">Alle anzeigen</string>
     <string name="preference_screen_colors">Farbschema</string>
     <string name="preference_colors_default">Standard</string>
