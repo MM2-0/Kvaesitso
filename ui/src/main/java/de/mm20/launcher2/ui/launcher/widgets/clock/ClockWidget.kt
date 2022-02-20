@@ -19,9 +19,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
-import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
-import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
-import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePart
 
 @Composable
@@ -120,6 +118,8 @@ fun Clock(
         ClockStyle.DigitalClock1 -> DigitalClock1(time, layout)
         ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)
         ClockStyle.BinaryClock -> BinaryClock(time, layout)
+        ClockStyle.AnalogClock -> AnalogClock(time, layout)
+        ClockStyle.EmptyClock -> EmptyClock(time, layout)
         else -> {}
     }
 }

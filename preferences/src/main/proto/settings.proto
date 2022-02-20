@@ -48,6 +48,8 @@ message Settings {
       DigitalClock1 = 0;
       DigitalClock2 = 1;
       BinaryClock = 2;
+      AnalogClock = 3;
+      EmptyClock = 4;
     }
     ClockStyle clock_style = 2;
   }
