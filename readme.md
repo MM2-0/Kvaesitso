@@ -38,7 +38,7 @@ If you notice any bugs or issues create a new issue in
 the [issue tracker](https://github.com/MM2-0/Kvaesitso/issues). Before you do, please search the
 existing issues for any similar issues. Please include any relevant information such as steps to
 reproduce, stack traces, logs, and device information. These information can be founder under
-Settings > About > Crash reporter and Settings > About > Export debug information.
+Settings > Debug > Crash reporter and Settings > Debug > Export debug information.
 
 ## Feature requests
 
