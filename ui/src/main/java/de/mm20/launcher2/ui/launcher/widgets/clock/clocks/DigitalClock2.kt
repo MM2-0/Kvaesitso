@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import de.mm20.launcher2.preferences.Settings
 
 
@@ -15,6 +16,8 @@ fun DigitalClock2(
 ) {
     Text(
         text = DateUtils.formatDateTime(LocalContext.current, time, DateUtils.FORMAT_SHOW_TIME),
-        style = MaterialTheme.typography.displaySmall
+        style = MaterialTheme.typography.displaySmall.copy(
+            fontWeight = FontWeight.Normal
+        )
     )
 }
