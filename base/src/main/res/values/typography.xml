@@ -32,13 +32,13 @@
         <item name="android:textSize">13sp</item>
     </style>
 
-    <style name="Typography.Display.Large" parent="TextAppearance.Material3.DisplaySmall">
+    <style name="Typography.Display.Large" parent="TextAppearance.Material3.DisplayLarge">
         <item name="fontFamily">@font/poppins</item>
         <item name="fontWeight">500</item>
         <item name="android:textFontWeight">500</item>
     </style>
 
-    <style name="Typography.Display.Medium" parent="TextAppearance.Material3.DisplaySmall">
+    <style name="Typography.Display.Medium" parent="TextAppearance.Material3.DisplayMedium">
         <item name="fontFamily">@font/poppins</item>
         <item name="fontWeight">500</item>
         <item name="android:textFontWeight">500</item>

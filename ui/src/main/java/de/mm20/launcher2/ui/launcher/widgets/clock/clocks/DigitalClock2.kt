@@ -15,6 +15,6 @@ fun DigitalClock2(
 ) {
     Text(
         text = DateUtils.formatDateTime(LocalContext.current, time, DateUtils.FORMAT_SHOW_TIME),
-        style = MaterialTheme.typography.displayLarge
+        style = MaterialTheme.typography.displaySmall
     )
 }
