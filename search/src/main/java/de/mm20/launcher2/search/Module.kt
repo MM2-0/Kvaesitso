@@ -6,5 +6,4 @@ import org.koin.dsl.module
 
 val searchModule = module {
     single<WebsearchRepository> { WebsearchRepositoryImpl(androidContext(), get()) }
-    viewModel { WebsearchViewModel(get()) }
 }
