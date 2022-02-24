@@ -366,4 +366,6 @@
     <string name="no_account_google">Sie haben noch kein Google-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
     <string name="turn_off">Deaktivieren</string>
+    <string name="websearch_dialog_import_error">Die angegebene URL kann nicht automatisch importiert werden. Sie können es mit einer anderen URL versuchen oder die benötigten Daten manuell eingeben.</string>
+    <string name="websearch_dialog_import_url">Von URL importieren</string>
 </resources>
