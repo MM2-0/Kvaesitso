@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Slider
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -11,11 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ktx.ceilToInt
 import java.text.DecimalFormat
 import kotlin.math.floor
 import kotlin.math.log
-import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable

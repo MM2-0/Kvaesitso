@@ -61,7 +61,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-alpha03")
+            version("androidx.compose", "1.2.0-alpha04")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -94,7 +94,7 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-alpha05")
+                .version("1.0.0-alpha06")
 
             version("androidx.lifecycle", "2.4.1")
             alias("androidx.lifecycle.viewmodel")
