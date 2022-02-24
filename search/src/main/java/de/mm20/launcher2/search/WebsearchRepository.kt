@@ -147,6 +147,7 @@ internal class WebsearchRepositoryImpl(
                                     val size =
                                         parser.getAttributeValue(null, "width")?.toIntOrNull() ?: 0
                                     if (size > iconSize || iconUrl == null) {
+                                        parser.next()
                                         if (parser.eventType == XmlPullParser.TEXT) {
                                             iconUrl = parser.text
                                             iconSize = size
