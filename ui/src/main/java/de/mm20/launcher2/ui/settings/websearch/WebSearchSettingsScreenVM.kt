@@ -45,20 +45,12 @@ class WebSearchSettingsScreenVM: ViewModel(), KoinComponent {
      * Read a user-selected icon, scale it down and copy it to the app's data dir
      * @return the absolute path of the copied file
      */
-    suspend fun createIcon(context: Context, uri: Uri, size: Int): String? = withContext(
-        Dispatchers.IO) {
-        val file = File(context.dataDir, System.currentTimeMillis().toString())
-        val imageRequest = ImageRequest.Builder(context)
-            .data(uri)
-            .size(size)
-            .scale(Scale.FIT)
-            .build()
-        val drawable = context.imageLoader.execute(imageRequest).drawable ?: return@withContext null
-        val scaledIcon = drawable.toBitmap()
-        val out = FileOutputStream(file)
-        scaledIcon.compress(Bitmap.CompressFormat.PNG, 100, out)
-        out.close()
-        return@withContext file.absolutePath
+    suspend fun createIcon(uri: Uri, size: Int): String? {
+        return repository.createIcon(uri, size)
+    }
+
+    suspend fun importWebsearch(url: String, size: Int): Websearch? {
+        return repository.importWebsearch(url, size)
     }
 
 

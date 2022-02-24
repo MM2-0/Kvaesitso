@@ -198,6 +198,8 @@
     <string name="websearch_dialog_replace_icon">Replace icon</string>
     <string name="websearch_dialog_delete_icon">Delete icon</string>
     <string name="websearch_dialog_custom_icon">Custom icon</string>
+    <string name="websearch_dialog_import_url">Import from URL</string>
+    <string name="websearch_dialog_import_error">The given URL cannot be imported automatically. You can try a different URL or enter the required data manually.</string>
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>

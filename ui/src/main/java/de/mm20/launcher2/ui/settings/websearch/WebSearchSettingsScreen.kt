@@ -85,7 +85,8 @@ fun WebSearchSettingsScreen() {
             },
             onCancel = {
                 showNewDialog = false
-            }
+            },
+            enableImport = true
         )
     }
 }
@@ -145,7 +146,8 @@ fun EditWebsearchDialog(
     value: Websearch,
     onValueSaved: (Websearch) -> Unit,
     onValueDeleted: ((Websearch) -> Unit)? = null,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    enableImport: Boolean = false
 ) {
     val context = LocalContext.current
     var showDropdown by remember { mutableStateOf(false) }
@@ -158,6 +160,10 @@ fun EditWebsearchDialog(
 
     val scope = rememberCoroutineScope()
 
+    var showImport by remember { mutableStateOf(false) }
+    var loadingImport by remember { mutableStateOf(false) }
+    var importError by remember { mutableStateOf(false) }
+
     val viewModel: WebSearchSettingsScreenVM = viewModel()
 
     val iconSizePx = 32.dp.toPixels().toInt()
@@ -167,10 +173,12 @@ fun EditWebsearchDialog(
     ) {
         if (it != null) {
             scope.launch {
-                icon = viewModel.createIcon(context, it, iconSizePx)
+                icon = viewModel.createIcon(it, iconSizePx)
             }
         }
     }
+
+
 
     Dialog(
         onDismissRequest = onCancel,
@@ -217,6 +225,20 @@ fun EditWebsearchDialog(
                             }) {
                                 Icon(imageVector = Icons.Rounded.Save, contentDescription = null)
                             }
+                            if (enableImport) {
+                                Box {
+                                    IconButton(onClick = {
+                                        showImport = !showImport
+                                        importError = false
+                                    }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Download,
+                                            contentDescription = null
+                                        )
+                                    }
+
+                                }
+                            }
                             if (onValueDeleted != null) {
                                 Box {
                                     IconButton(onClick = {
@@ -248,6 +270,88 @@ fun EditWebsearchDialog(
                 }
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
+
+                    AnimatedVisibility(showImport) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 24.dp)
+                        ) {
+                            Column(
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp)
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    var importUrl by remember { mutableStateOf("") }
+                                    OutlinedTextField(
+                                        modifier = Modifier
+                                            .weight(1f)
+                                            .padding(bottom = 16.dp, top = 8.dp, end = 8.dp),
+                                        label = { Text(stringResource(R.string.websearch_dialog_import_url)) },
+                                        value = importUrl,
+                                        onValueChange = {
+                                            importUrl = it
+                                            importError = false
+                                        }
+                                    )
+                                    if (loadingImport) {
+                                        CircularProgressIndicator(
+                                            modifier = Modifier
+                                                .padding(12.dp)
+                                                .size(24.dp)
+                                        )
+                                    } else {
+                                        IconButton(onClick = {
+                                            scope.launch {
+                                                loadingImport = true
+                                                val websearch =
+                                                    viewModel.importWebsearch(
+                                                        importUrl,
+                                                        iconSizePx
+                                                    )
+                                                if (websearch != null) {
+                                                    label = websearch.label
+                                                    icon = websearch.icon
+                                                    urlTemplate = websearch.urlTemplate
+                                                    color = websearch.color
+                                                    showImport = false
+                                                } else {
+                                                    importError = true
+                                                }
+                                                loadingImport = false
+                                            }
+                                        }) {
+                                            Icon(
+                                                imageVector = Icons.Rounded.ArrowForward,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    }
+                                }
+                                AnimatedVisibility(importError) {
+                                    Column(
+                                        modifier = Modifier.padding(bottom = 8.dp)
+                                    ) {
+                                        Text(
+                                            text = stringResource(R.string.websearch_dialog_import_error),
+                                            style = MaterialTheme.typography.labelSmall
+                                        )
+                                        TextButton(
+                                            modifier = Modifier.align(Alignment.End),
+                                            onClick = { showImport = false }) {
+                                            Text(
+                                                text = stringResource(android.R.string.ok),
+                                                style = MaterialTheme.typography.labelMedium
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     if (icon != null) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
@@ -347,6 +451,7 @@ fun EditWebsearchDialog(
             }
         }
     }
+
 }
 
 @Composable
