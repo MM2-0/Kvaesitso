@@ -1,6 +1,7 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
+import android.util.Log
 import de.mm20.launcher2.files.providers.*
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
@@ -78,7 +79,7 @@ internal class FileRepositoryImpl(
                 val results = mutableListOf<File>()
                 for (provider in providers) {
                     results.addAll(provider.search(query))
-                    send(results)
+                    send(results.toList())
                 }
             }
         }
