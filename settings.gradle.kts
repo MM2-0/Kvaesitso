@@ -207,7 +207,7 @@ dependencyResolutionManagement {
                 .to("androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.4.1")
+            version("androidx.room", "2.4.2")
             alias("androidx.roomruntime")
                 .to("androidx.room", "room-runtime")
                 .versionRef("androidx.room")
