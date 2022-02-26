@@ -38,7 +38,7 @@ fun AnalogClock(
             center = this.size.center,
             style = Fill
         )
-        rotate(hour.toFloat() / 12f * 360f + minute.toFloat() / 60f * 5f, this.size.center) {
+        rotate(hour.toFloat() / 12f * 360f + (minute.toFloat() / 60f) * 30f, this.size.center) {
             drawLine(
                 color,
                 this.size.center, this.size.center.copy(y = this.size.height * 0.25f),
@@ -46,7 +46,7 @@ fun AnalogClock(
                 cap = StrokeCap.Round
             )
         }
-        rotate(minute.toFloat() / 60 * 360, this.size.center) {
+        rotate(minute.toFloat() / 60f * 360f, this.size.center) {
             drawLine(
                 color,
                 this.size.center, this.size.center.copy(y = this.size.height * 0.1f),
