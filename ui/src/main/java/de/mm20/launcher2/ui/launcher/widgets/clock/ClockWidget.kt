@@ -20,7 +20,7 @@ import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
-import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePart
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 
 @Composable
 fun ClockWidget(
@@ -31,6 +31,9 @@ fun ClockWidget(
     val time by viewModel.getTime(context).collectAsState(System.currentTimeMillis())
     val layout by viewModel.layout.observeAsState()
     val clockStyle by viewModel.clockStyle.observeAsState()
+
+    val partProvider by viewModel.getActivePart().collectAsState(null)
+
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -59,27 +62,27 @@ fun ClockWidget(
                     DynamicZone(
                         modifier = Modifier.padding(bottom = 16.dp),
                         ClockWidgetLayout.Vertical,
-                        time
+                        provider = partProvider,
                     )
                 }
             }
             if (layout == ClockWidgetLayout.Horizontal) {
                 Column(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(imageVector = Icons.Rounded.ExpandLess, contentDescription = "")
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(end = 16.dp),
+                            .padding(end = 8.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         DynamicZone(
                             modifier = Modifier.weight(1f),
                             ClockWidgetLayout.Horizontal,
-                            time
+                            provider = partProvider,
                         )
                         Box(
                             modifier = Modifier
@@ -128,11 +131,11 @@ fun Clock(
 fun DynamicZone(
     modifier: Modifier = Modifier,
     layout: ClockWidgetLayout,
-    time: Long,
+    provider: PartProvider?,
 ) {
     Column(
         modifier = modifier
     ) {
-        DatePart(time, layout)
+        provider?.Component(layout)
     }
 }
