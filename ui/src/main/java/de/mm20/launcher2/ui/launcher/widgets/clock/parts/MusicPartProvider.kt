@@ -1,10 +1,12 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
 
 import android.app.PendingIntent
+import android.content.Context
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +41,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
 
     private val musicRepository: MusicRepository by inject()
 
-    override fun getRanking(): Flow<Int> = channelFlow {
+    override fun getRanking(context: Context): Flow<Int> = channelFlow {
         musicRepository.playbackState.collectLatest {
             if (it == PlaybackState.Stopped) send(0)
             else send(50)
@@ -48,7 +50,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
 
     @OptIn(
         ExperimentalAnimationGraphicsApi::class,
-        androidx.compose.foundation.ExperimentalFoundationApi::class
+        ExperimentalFoundationApi::class
     )
     @Composable
     override fun Component(layout: ClockWidgetLayout) {

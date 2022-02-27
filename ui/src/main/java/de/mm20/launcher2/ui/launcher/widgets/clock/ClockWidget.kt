@@ -14,7 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
@@ -28,11 +31,18 @@ fun ClockWidget(
 ) {
     val viewModel: ClockWidgetVM = viewModel()
     val context = LocalContext.current
-    val time by viewModel.getTime(context).collectAsState(System.currentTimeMillis())
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val time by viewModel.time.collectAsState(System.currentTimeMillis())
     val layout by viewModel.layout.observeAsState()
     val clockStyle by viewModel.clockStyle.observeAsState()
 
-    val partProvider by viewModel.getActivePart().collectAsState(null)
+    LaunchedEffect(null) {
+        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.onActive(context)
+        }
+    }
+
+    val partProvider by viewModel.getActivePart(LocalContext.current).collectAsState(null)
 
     Box(
         modifier = Modifier
@@ -68,7 +78,9 @@ fun ClockWidget(
             }
             if (layout == ClockWidgetLayout.Horizontal) {
                 Column(
-                    modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Icon(imageVector = Icons.Rounded.ExpandLess, contentDescription = "")

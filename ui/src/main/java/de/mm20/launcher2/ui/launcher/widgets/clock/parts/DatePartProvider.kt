@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.parts
 
 import android.content.ContentUris
+import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import android.text.format.DateFormat
@@ -20,19 +21,25 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
 import java.util.*
 
 class DatePartProvider: PartProvider {
-    override fun getRanking(): Flow<Int> = flow {
+    override fun getRanking(context: Context): Flow<Int> = flow {
         emit(1)
+    }
+
+    private val time = MutableStateFlow(System.currentTimeMillis())
+
+    override fun setTime(time: Long) {
+        this.time.value = time
     }
 
     @Composable
     override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {
-        val viewModel: ClockWidgetVM = viewModel()
-        val time by viewModel.getTime(LocalContext.current).collectAsState(System.currentTimeMillis())
+        val time by this.time.collectAsState(System.currentTimeMillis())
         val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
         val context = LocalContext.current
         TextButton(onClick = {
