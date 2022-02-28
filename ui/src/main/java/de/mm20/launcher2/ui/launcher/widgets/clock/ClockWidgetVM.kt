@@ -10,10 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.ui.launcher.widgets.clock.parts.AlarmPartProvider
-import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePartProvider
-import de.mm20.launcher2.ui.launcher.widgets.clock.parts.MusicPartProvider
-import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
@@ -29,7 +26,8 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         partProviders.value = listOf(
             DatePartProvider(),
             MusicPartProvider(),
-            AlarmPartProvider()
+            AlarmPartProvider(),
+            BatteryPartProvider(),
         )
     }
 
