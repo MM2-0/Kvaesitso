@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.provider.AlarmClock
 import android.text.format.DateUtils
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material3.*
@@ -78,23 +79,57 @@ class AlarmPartProvider : PartProvider {
         val time by this.time.collectAsState(System.currentTimeMillis())
 
         alarmTime?.let {
-            TextButton(onClick = {
-                context.tryStartActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS))
-            },
-                colors = ButtonDefaults.textButtonColors(
-                    contentColor = LocalContentColor.current
-                )
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Alarm,
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier.padding(start = 12.dp),
-                    text = DateUtils.getRelativeTimeSpanString(it, time, DateUtils.MINUTE_IN_MILLIS)
-                        .toString(),
-                    style = MaterialTheme.typography.labelLarge
-                )
+
+            if (layout == ClockWidgetLayout.Vertical) {
+
+                TextButton(
+                    onClick = {
+                        context.tryStartActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS))
+                    },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = LocalContentColor.current
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Alarm,
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = DateUtils.getRelativeTimeSpanString(
+                            it,
+                            time,
+                            DateUtils.MINUTE_IN_MILLIS
+                        )
+                            .toString(),
+                        style = MaterialTheme.typography.labelLarge
+                    )
+                }
+            } else {
+                TextButton(
+                    onClick = {
+                        context.tryStartActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS))
+                    },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = LocalContentColor.current
+                    )
+                ) {
+                    Icon(
+                        modifier = Modifier.padding(end = 8.dp).size(32.dp),
+                        imageVector = Icons.Rounded.Alarm,
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 12.dp),
+                        text = DateUtils.getRelativeTimeSpanString(
+                            it,
+                            time,
+                            DateUtils.MINUTE_IN_MILLIS
+                        )
+                            .toString(),
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                }
             }
         }
     }
