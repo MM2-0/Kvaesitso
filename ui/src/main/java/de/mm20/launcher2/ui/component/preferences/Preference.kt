@@ -26,7 +26,7 @@ fun Preference(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(enabled = enabled, onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 16.dp)
+            .padding(horizontal = 16.dp)
             .alpha(if (enabled) 1f else 0.38f),
     ) {
         Box(
@@ -38,7 +38,7 @@ fun Preference(
             icon()
         }
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
         ) {
             Text(text = title, style = MaterialTheme.typography.titleMedium)
             if (summary != null) {
