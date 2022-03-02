@@ -368,4 +368,17 @@
     <string name="turn_off">Deaktivieren</string>
     <string name="websearch_dialog_import_error">Die angegebene URL kann nicht automatisch importiert werden. Sie können es mit einer anderen URL versuchen oder die benötigten Daten manuell eingeben.</string>
     <string name="websearch_dialog_import_url">Von URL importieren</string>
+    <string name="battery_part_charging">Wird geladen</string>
+    <string name="preference_clockwidget_date_part">Datum</string>
+    <string name="preference_clockwidget_music_part_summary">Mediensteuerung anzeigen, wenn Medien wiedergegeben werden</string>
+    <string name="preference_clockwidget_battery_part">Akku</string>
+    <string name="preference_clockwidget_alarm_part">Wecker</string>
+    <string name="preference_clockwidget_alarm_part_summary">Wecker anzeigen, wenn diese in den nächsten 15 Minuten klingeln werden</string>
+    <string name="preference_clockwidget_music_part">Medien</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="one">Voll in %1$s Minute</item>
+        <item quantity="other">Voll in %1$s Minuten</item>
+    </plurals>
+    <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
+    <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen wenn der Akku fast leer ist oder geladen wird</string>
 </resources>
