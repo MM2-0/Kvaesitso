@@ -13,6 +13,8 @@ Additionally it includes some useful tools, for example a calculator and a unit 
 looking for a document or an information? Just search for it and Kvæsitso shows you the fastest way
 to it.
 
+[Screenshots](https://github.com/MM2-0/Kvaesitso/wiki/Screenshots)
+
 ## Installation
 
 ### Using the F-Droid application
