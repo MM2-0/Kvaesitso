@@ -478,6 +478,16 @@
     <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Select a clock</string>
+
+    <string name="preference_clockwidget_date_part">Date</string>
+    <string name="preference_clockwidget_date_part_summary">Show the current date</string>
+    <string name="preference_clockwidget_music_part">Music</string>
+    <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
+    <string name="preference_clockwidget_battery_part">Battery</string>
+    <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
+    <string name="preference_clockwidget_alarm_part">Alarms</string>
+    <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 15 minutes</string>
+
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_export_log">Export log file</string>

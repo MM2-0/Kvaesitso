@@ -37,4 +37,56 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val datePart = dataStore.data.map { it.clockWidget.datePart }.asLiveData()
+    fun setDatePart(datePart: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setDatePart(datePart)
+                    ).build()
+            }
+        }
+    }
+
+    val batteryPart = dataStore.data.map { it.clockWidget.batteryPart }.asLiveData()
+    fun setBatteryPart(batteryPart: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setBatteryPart(batteryPart)
+                    ).build()
+            }
+        }
+    }
+
+    val musicPart = dataStore.data.map { it.clockWidget.musicPart }.asLiveData()
+    fun setMusicPart(musicPart: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setMusicPart(musicPart)
+                    ).build()
+            }
+        }
+    }
+
+    val alarmPart = dataStore.data.map { it.clockWidget.alarmPart }.asLiveData()
+    fun setAlarmPart(alarmPart: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setAlarmPart(alarmPart)
+                    ).build()
+            }
+        }
+    }
 }

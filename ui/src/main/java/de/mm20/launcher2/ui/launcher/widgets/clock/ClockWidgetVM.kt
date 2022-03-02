@@ -8,12 +8,14 @@ import android.provider.AlarmClock
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.*
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -23,12 +25,16 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     private val partProviders = MutableStateFlow<List<PartProvider>>(emptyList())
 
     init {
-        partProviders.value = listOf(
-            DatePartProvider(),
-            MusicPartProvider(),
-            AlarmPartProvider(),
-            BatteryPartProvider(),
-        )
+        viewModelScope.launch {
+            dataStore.data.map { it.clockWidget }.distinctUntilChanged().collectLatest {
+                val providers = mutableListOf<PartProvider>()
+                if (it.datePart) providers += DatePartProvider()
+                if (it.musicPart) providers += MusicPartProvider()
+                if (it.batteryPart) providers += BatteryPartProvider()
+                if (it.alarmPart) providers += AlarmPartProvider()
+                partProviders.value = providers
+            }
+        }
     }
 
     val time = MutableStateFlow(System.currentTimeMillis())

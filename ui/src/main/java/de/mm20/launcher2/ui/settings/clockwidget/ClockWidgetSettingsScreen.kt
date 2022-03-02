@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.settings.clockwidget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -21,10 +23,7 @@ import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.Clock
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.preferences.ListPreference
-import de.mm20.launcher2.ui.component.preferences.Preference
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.*
 
 @Composable
 fun ClockWidgetSettingsScreen() {
@@ -52,6 +51,50 @@ fun ClockWidgetSettingsScreen() {
                     value = clockStyle,
                     onValueChanged = {
                         viewModel.setClockStyle(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
+                val datePart by viewModel.datePart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_date_part),
+                    summary = stringResource(R.string.preference_clockwidget_date_part_summary),
+                    icon = Icons.Rounded.CalendarToday,
+                    value = datePart == true,
+                    onValueChanged = {
+                        viewModel.setDatePart(it)
+                    }
+                )
+                val musicPart by viewModel.musicPart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_music_part),
+                    summary = stringResource(R.string.preference_clockwidget_music_part_summary),
+                    icon = Icons.Rounded.MusicNote,
+                    value = musicPart == true,
+                    onValueChanged = {
+                        viewModel.setMusicPart(it)
+                    }
+                )
+                val alarmPart by viewModel.alarmPart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_alarm_part),
+                    summary = stringResource(R.string.preference_clockwidget_alarm_part_summary),
+                    icon = Icons.Rounded.Alarm,
+                    value = alarmPart == true,
+                    onValueChanged = {
+                        viewModel.setAlarmPart(it)
+                    }
+                )
+                val batteryPart by viewModel.batteryPart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_battery_part),
+                    summary = stringResource(R.string.preference_clockwidget_battery_part_summary),
+                    icon = Icons.Rounded.BatteryFull,
+                    value = batteryPart == true,
+                    onValueChanged = {
+                        viewModel.setBatteryPart(it)
                     }
                 )
             }
@@ -111,7 +154,11 @@ fun ClockStylePreference(
                         state = pagerState,
                         modifier = Modifier.height(300.dp)
                     ) {
-                        Clock(style = styles[it], layout = layout, time = System.currentTimeMillis())
+                        Clock(
+                            style = styles[it],
+                            layout = layout,
+                            time = System.currentTimeMillis()
+                        )
                     }
                     HorizontalPagerIndicator(pagerState = pagerState)
                 }
