@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="unit_meter">
+        <item quantity="other">米</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="other">公里</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">厘米</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <plurals name="unit_millimeter">
+        <item quantity="other">毫米</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">英寸</item>
+    </plurals>
+    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_kilometer_symbol">km</string>
+    <string name="unit_centimeter_symbol">cm</string>
+    <string name="unit_meter_symbol">m</string>
+    <string name="unit_inch_symbol">in</string>
+    <plurals name="unit_foot">
+        <item quantity="other">英尺</item>
+    </plurals>
+</resources>
