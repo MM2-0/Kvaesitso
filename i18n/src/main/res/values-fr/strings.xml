@@ -145,7 +145,7 @@
     <string name="widget_add_widget">Ajouter un widget</string>
     <string name="widget_add_external">Plus</string>
     <string name="preference_category_system_bars">Barres du système</string>
-    <string name="preference_light_status_bar">Icônes de la barre de statut sombres</string>
+    <string name="preference_light_status_bar">Icônes de la barre d\'état sombres</string>
     <string name="preference_light_nav_bar">Icônes de la barre de navigation sombres</string>
     <string name="widget_name_music">Musique</string>
     <string name="menu_contacts_open_externally">Ouvrir dans l\'application de contacts</string>
@@ -390,11 +390,25 @@
     <string name="turn_off">Désactiver</string>
     <string name="file_meta_artist">Artiste : %1$s</string>
     <string name="weather_condition_wind">Vent</string>
-    <string name="preference_hide_status_bar">Cacher la barre de statuts</string>
+    <string name="preference_hide_status_bar">Cacher la barre d\'état</string>
     <string name="preference_hide_nav_bar">Cacher la barre de navigation</string>
     <string name="menu_launch">Lancer</string>
     <string name="menu_open_file">Ouvrir</string>
     <string name="preference_search_bar_auto_focus">Ouvrir le clavier</string>
     <string name="preference_search_bar_auto_focus_summary">Lancer automatiquement le clavier lors de l\'ouverture de la recherche</string>
     <string name="websearch_dialog_import_url">Importer depuis une URL</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="one">Pleine dans %1$s minute</item>
+        <item quantity="other">Pleine dans %1$s minutes</item>
+    </plurals>
+    <string name="preference_clockwidget_date_part">Date</string>
+    <string name="preference_clockwidget_date_part_summary">Afficher la date actuelle</string>
+    <string name="preference_clockwidget_music_part">Média</string>
+    <string name="preference_clockwidget_music_part_summary">Afficher les contrôles du média lorsqu\'il y a une session média active</string>
+    <string name="preference_clockwidget_battery_part">Batterie</string>
+    <string name="preference_clockwidget_battery_part_summary">Afficher le niveau de la batterie lorsque celle-ci est basse ou en chargement</string>
+    <string name="preference_clockwidget_alarm_part">Alarmes</string>
+    <string name="preference_clockwidget_alarm_part_summary">Afficher les alarmes qui vont sonner dans les 15 prochaines minutes</string>
+    <string name="battery_part_charging">Chargement</string>
+    <string name="websearch_dialog_import_error">L\'URL donnée ne peut pas être importée automatiquement. Vous pouvez essayer une URL différente ou entrer les données requises manuellement.</string>
 </resources>
