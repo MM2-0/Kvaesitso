@@ -38,7 +38,7 @@ abstract class SearchableItemVM(
         favoritesRepository.unhideItem(searchable)
     }
 
-    val badge = badgeRepository.getBadge(searchable.badgeKey)
+    val badge = badgeRepository.getBadge(searchable)
 
     fun getIcon(size: Int): Flow<LauncherIcon> {
         return iconRepository.getIcon(searchable, size)

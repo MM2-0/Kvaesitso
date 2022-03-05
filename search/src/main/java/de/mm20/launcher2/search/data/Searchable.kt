@@ -16,9 +16,6 @@ abstract class Searchable : Comparable<Searchable> {
     abstract val key: String
     abstract val label: String
 
-    open val badgeKey
-        get() = key
-
     open fun serialize(): String = ""
 
     open fun getLaunchIntent(context: Context): Intent? = null

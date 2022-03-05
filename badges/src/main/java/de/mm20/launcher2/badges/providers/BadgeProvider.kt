@@ -1,6 +1,7 @@
 package de.mm20.launcher2.badges.providers
 
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 
 interface BadgeProvider {
@@ -9,5 +10,5 @@ interface BadgeProvider {
      * BadgeRepository is waiting for values from every provider.
      * null must be emitted if no badge should be shown.
      */
-    fun getBadge(badgeKey: String): Flow<Badge?>
+    fun getBadge(searchable: Searchable): Flow<Badge?>
 }

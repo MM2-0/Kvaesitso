@@ -3,17 +3,20 @@ package de.mm20.launcher2.badges.providers
 import android.util.Log
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.R
+import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class CloudBadgeProvider: BadgeProvider {
-    override fun getBadge(badgeKey: String): Flow<Badge?> = flow {
-        when(badgeKey) {
-            "gdrive://" -> emit(Badge(iconRes = R.drawable.ic_badge_gdrive))
-            "onedrive://" -> emit(Badge(iconRes = R.drawable.ic_badge_onedrive))
-            "owncloud://" -> emit(Badge(iconRes = R.drawable.ic_badge_owncloud))
-            "nextcloud://" -> emit(Badge(iconRes = R.drawable.ic_badge_nextcloud))
-            else -> emit(null)
+    override fun getBadge(searchable: Searchable): Flow<Badge?> = flow {
+        if (searchable is File) {
+            val iconResId = searchable.providerIconRes
+            if (iconResId != null) {
+                emit(Badge(iconRes = iconResId))
+                return@flow
+            }
         }
+        emit(null)
     }
 }

@@ -19,9 +19,9 @@ class OneDriveFile(
         val webUrl: String
 ) : File(0, path, mimeType, size, isDirectory, metaData) {
 
-    override val badgeKey: String = "onedrive://"
-
     override val key: String = "onedrive://$fileId"
+
+    override val providerIconRes = R.drawable.ic_badge_onedrive
 
     override val isStoredInCloud = true
 

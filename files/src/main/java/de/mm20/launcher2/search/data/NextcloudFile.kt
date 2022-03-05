@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import de.mm20.launcher2.files.R
 
 class NextcloudFile(
     fileId: Long,
@@ -15,12 +16,12 @@ class NextcloudFile(
     val server: String,
     metaData: List<Pair<Int, String>>
 ) : File(fileId, path, mimeType, size, isDirectory, metaData) {
-    override val badgeKey: String = "nextcloud://"
-
     override val key: String = "nextcloud://$server/$fileId"
 
     override val isStoredInCloud: Boolean
         get() = true
+
+    override val providerIconRes = R.drawable.ic_badge_nextcloud
 
     override fun getLaunchIntent(context: Context): Intent? {
         return Intent(Intent.ACTION_VIEW).apply {

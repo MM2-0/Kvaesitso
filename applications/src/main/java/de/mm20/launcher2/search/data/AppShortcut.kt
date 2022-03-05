@@ -32,18 +32,13 @@ class AppShortcut(
 
 
     internal val userSerialNumber: Long = launcherShortcut.userHandle.getSerialNumber(context)
-    private val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
+    val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
 
     override val key: String
         get() = if (isMainProfile) {
             "shortcut://${launcherShortcut.`package`}/${launcherShortcut.id}"
         } else {
             "shortcut://${launcherShortcut.`package`}/${launcherShortcut.id}:${userSerialNumber}"
-        }
-
-    override val badgeKey: String
-        get() {
-            return if (isMainProfile) "shortcut://${launcherShortcut.activity?.flattenToShortString()}" else "profile://$userSerialNumber"
         }
 
     override fun getLaunchIntent(context: Context): Intent? {

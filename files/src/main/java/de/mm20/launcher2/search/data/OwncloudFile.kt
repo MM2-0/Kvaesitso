@@ -17,12 +17,12 @@ class OwncloudFile(
         val server: String,
         metaData: List<Pair<Int, String>>
 ) : File(fileId, path, mimeType, size, isDirectory, metaData) {
-    override val badgeKey: String = "owncloud://"
-
     override val key: String = "owncloud://$server/$fileId"
 
     override val isStoredInCloud: Boolean
         get() = true
+
+    override val providerIconRes = R.drawable.ic_badge_owncloud
 
     override fun getLaunchIntent(context: Context): Intent? {
         return Intent(Intent.ACTION_VIEW).apply {

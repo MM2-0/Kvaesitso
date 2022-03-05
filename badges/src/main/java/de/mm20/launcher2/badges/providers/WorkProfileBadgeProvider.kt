@@ -1,26 +1,21 @@
 package de.mm20.launcher2.badges.providers
 
-import android.content.Context
-import android.os.Process
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.R
-import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class WorkProfileBadgeProvider(private val context: Context) : BadgeProvider {
-    override fun getBadge(badgeKey: String): Flow<Badge?> = flow {
-        if (badgeKey.startsWith("profile://")) {
-            val serialNumber = badgeKey.substring(10).toLong()
-            if (serialNumber != Process.myUserHandle().getSerialNumber(context)) {
-                emit(
-                    Badge(
-                        iconRes = R.drawable.ic_badge_workprofile
-                    )
+class WorkProfileBadgeProvider : BadgeProvider {
+    override fun getBadge(searchable: Searchable): Flow<Badge?> = flow {
+        if (searchable is LauncherApp && !searchable.isMainProfile || searchable is AppShortcut && !searchable.isMainProfile) {
+            emit(
+                Badge(
+                    iconRes = R.drawable.ic_badge_workprofile
                 )
-            } else {
-                emit(null)
-            }
+            )
         } else {
             emit(null)
         }

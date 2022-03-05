@@ -17,6 +17,8 @@ abstract class File(
 ) : Searchable() {
     abstract val isStoredInCloud: Boolean
 
+    open val providerIconRes: Int? = null
+
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
         val (resId, bgColor) = when {
             isDirectory -> R.drawable.ic_file_folder to R.color.lightblue

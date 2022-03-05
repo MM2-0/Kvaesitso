@@ -57,10 +57,7 @@ class LauncherApp(
 ), KoinComponent {
 
     internal val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)
-    private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
-
-    override val badgeKey: String =
-        if (isMainProfile) "app://${`package`}" else "profile://$userSerialNumber"
+    val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
 
     override val key: String
         get() = if (isMainProfile) "app://$`package`:$activity" else "app://$`package`:$activity:${userSerialNumber}"

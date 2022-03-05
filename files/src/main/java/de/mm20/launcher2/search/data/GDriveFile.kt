@@ -23,10 +23,9 @@ class GDriveFile(
 
     override val key: String = "gdrive://$fileId"
 
-    override val badgeKey: String
-        get() = "gdrive://"
-
     override val isStoredInCloud = true
+
+    override val providerIconRes = R.drawable.ic_badge_gdrive
 
     override fun getLaunchIntent(context: Context): Intent? {
         return Intent(Intent.ACTION_VIEW).apply {

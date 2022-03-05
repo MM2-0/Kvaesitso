@@ -3,13 +3,14 @@ package de.mm20.launcher2.badges
 import android.content.Context
 import de.mm20.launcher2.badges.providers.*
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface BadgeRepository {
-    fun getBadge(badgeKey: String): Flow<Badge?>
+    fun getBadge(searchable: Searchable): Flow<Badge?>
 }
 
 internal class BadgeRepositoryImpl(private val context: Context) : BadgeRepository, KoinComponent {
@@ -23,6 +24,7 @@ internal class BadgeRepositoryImpl(private val context: Context) : BadgeReposito
         scope.launch {
             dataStore.data.map { it.badges }.distinctUntilChanged().collectLatest {
                 val providers = mutableListOf<BadgeProvider>()
+                providers += WorkProfileBadgeProvider()
                 if (it.notifications) {
                     providers += NotificationBadgeProvider()
                 }
@@ -35,20 +37,19 @@ internal class BadgeRepositoryImpl(private val context: Context) : BadgeReposito
                 if (it.suspendedApps) {
                     providers += SuspendedAppsBadgeProvider()
                 }
-                providers += WorkProfileBadgeProvider(context)
                 badgeProviders.value = providers
             }
         }
     }
 
-    override fun getBadge(badgeKey: String): Flow<Badge?> = channelFlow {
+    override fun getBadge(searchable: Searchable): Flow<Badge?> = channelFlow {
         withContext(Dispatchers.Default) {
             badgeProviders.collectLatest { providers ->
                 if (providers.isEmpty()) {
                     send(null)
                     return@collectLatest
                 }
-                combine(providers.map { it.getBadge(badgeKey) }) { badges ->
+                combine(providers.map { it.getBadge(searchable) }) { badges ->
                     if (badges.all { it == null }) {
                         return@combine null
                     }

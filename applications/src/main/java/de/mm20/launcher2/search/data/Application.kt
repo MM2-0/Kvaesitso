@@ -20,9 +20,6 @@ abstract class Application(
     val shortcuts: List<AppShortcut> = emptyList()
 ) : Searchable() {
 
-    override val badgeKey: String
-        get() = "app://${`package`}"
-
     override fun serialize(): String {
         val json = JSONObject()
         json.put("package", `package`)

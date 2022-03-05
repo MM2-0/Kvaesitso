@@ -26,9 +26,6 @@ class AppInstallation(
     override val key: String
         get() = "installer://${session.installerPackageName}:${session.appPackageName}"
 
-    override val badgeKey: String
-        get() = "app://${session.appPackageName}"
-
     override fun getLaunchIntent(context: Context): Intent? {
         return session.createDetailsIntent()
     }
