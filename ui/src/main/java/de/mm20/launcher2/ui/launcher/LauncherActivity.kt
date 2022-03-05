@@ -32,12 +32,12 @@ class LauncherActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val iconRepository: IconRepository by inject()
-        iconRepository.recreate()
-
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
+
+        val iconRepository: IconRepository by inject()
+        iconRepository.applyTheme(theme)
 
         binding = ActivityLauncherBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)

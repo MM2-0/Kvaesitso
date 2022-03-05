@@ -16,28 +16,10 @@ import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.Searchable
 
-class ThemedIconProvider(
-    private val context: Context
+internal class ThemedIconProvider(
+    private val context: Context,
+    private val colors: ThemeColors,
 ) : IconProvider {
-    private val fgColor: Int
-    private val bgColor: Int
-
-    init {
-        val theme = context.resources.newTheme()
-        theme.applyStyle(R.style.DefaultColors, true)
-        val typedValue = TypedValue()
-        val isDarkMode =
-            context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_YES != 0
-
-        val bgAttr = R.attr.colorPrimaryContainer
-        val fgAttr = R.attr.colorOnPrimaryContainer
-        bgColor = theme.resolveAttribute(bgAttr, typedValue, true).let {
-            typedValue.data
-        }
-        fgColor = theme.resolveAttribute(fgAttr, typedValue, true).let {
-            typedValue.data
-        }
-    }
 
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon? {
         if (searchable !is Application) return null
@@ -67,11 +49,11 @@ class ThemedIconProvider(
     private fun getStaticIcon(resources: Resources, resId: Int): LauncherIcon? {
         try {
             val fg = ResourcesCompat.getDrawable(resources, resId, null) ?: return null
-            fg.setTint(fgColor)
+            fg.setTint(colors.foreground)
             return LauncherIcon(
                 foreground = fg,
                 foregroundScale = 0.5f,
-                background = ColorDrawable(bgColor)
+                background = ColorDrawable(colors.background)
             )
         } catch (e: Resources.NotFoundException) {
             return null
@@ -103,10 +85,10 @@ class ThemedIconProvider(
                 i++
             }
             if (drawable != null && minuteIndex != null && hourIndex != null) {
-                drawable.setTint(fgColor)
+                drawable.setTint(colors.foreground)
                 return ClockDynamicLauncherIcon(
                     foreground = drawable,
-                    background = ColorDrawable(bgColor),
+                    background = ColorDrawable(colors.background),
                     foregroundScale = 1.5f,
                     backgroundScale = 1f,
                     hourLayer = hourIndex,
@@ -129,12 +111,12 @@ class ThemedIconProvider(
             if (array.length() != 31) return null
 
             return ThemedCalendarDynamicLauncherIcon(
-                background = ColorDrawable(bgColor),
+                background = ColorDrawable(colors.foreground),
                 packageName = iconProviderPackage,
                 foregroundIds = IntArray(31) {
                     array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
                 },
-                foregroundTint = fgColor,
+                foregroundTint = colors.background,
                 foregroundScale = 0.5f,
             )
 

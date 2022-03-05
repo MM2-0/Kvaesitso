@@ -4,7 +4,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Resources
 import android.util.LruCache
+import android.util.TypedValue
 import de.mm20.launcher2.icons.providers.*
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
@@ -29,6 +31,8 @@ class IconRepository(
 
     private val cache = LruCache<String, LauncherIcon>(200)
 
+    private val themeColors = MutableStateFlow(ThemeColors())
+
     private var iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
     private lateinit var placeholderProvider: IconProvider
 
@@ -44,8 +48,31 @@ class IconRepository(
         })
 
         scope.launch {
-            dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest {
-                recreate(it)
+            dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest { settings ->
+                themeColors.collectLatest { colors ->
+                    val placeholderProvider = if (settings.themedIcons) {
+                        ThemedPlaceholderIconProvider(context, colors)
+                    } else {
+                        PlaceholderIconProvider(context)
+                    }
+                    val providers = mutableListOf<IconProvider>()
+
+                    if (settings.themedIcons) {
+                        providers.add(ThemedIconProvider(context, colors))
+                    }
+
+                    if (settings.iconPack.isNotBlank()) {
+                        providers.add(IconPackIconProvider(context, settings.iconPack, settings.legacyIconBg))
+                    }
+                    providers.add(GoogleClockIconProvider(context))
+                    providers.add(CalendarIconProvider(context))
+                    providers.add(SystemIconProvider(context, settings.legacyIconBg))
+                    providers.add(placeholderProvider)
+                    cache.evictAll()
+
+                    this@IconRepository.placeholderProvider = placeholderProvider
+                    iconProviders.value = providers
+                }
             }
         }
     }
@@ -82,13 +109,6 @@ class IconRepository(
         }
     }
 
-    /**
-     * Returns the icon for the given Searchable if it was requested earlier and is still in cache.
-     * Returns `null` otherwise.
-     */
-    fun getIconIfCached(searchable: Searchable): LauncherIcon? {
-        return cache[searchable.key]
-    }
 
     fun requestIconPackListUpdate() {
         scope.launch {
@@ -100,34 +120,19 @@ class IconRepository(
         return iconPackManager.getInstalledIconPacks()
     }
 
-    fun recreate() {
-        scope.launch {
-            recreate(dataStore.data.map { it.icons }.first())
+    fun applyTheme(theme: Resources.Theme) {
+        val typedValue = TypedValue()
+        val bgColor = theme.resolveAttribute(R.attr.colorPrimaryContainer, typedValue, true).let {
+            typedValue.data
         }
-    }
-
-    private fun recreate(settings: Settings.IconSettings) {
-        val placeholderProvider = if (settings.themedIcons) {
-            ThemedPlaceholderIconProvider(context)
-        } else {
-            PlaceholderIconProvider(context)
+        val fgColor = theme.resolveAttribute(R.attr.colorOnPrimaryContainer, typedValue, true).let {
+            typedValue.data
         }
-        val providers = mutableListOf<IconProvider>()
-
-        if (settings.themedIcons) {
-            providers.add(ThemedIconProvider(context))
-        }
-
-        if (settings.iconPack.isNotBlank()) {
-            providers.add(IconPackIconProvider(context, settings.iconPack, settings.legacyIconBg))
-        }
-        providers.add(GoogleClockIconProvider(context))
-        providers.add(CalendarIconProvider(context))
-        providers.add(SystemIconProvider(context, settings.legacyIconBg))
-        providers.add(placeholderProvider)
-        cache.evictAll()
-
-        this@IconRepository.placeholderProvider = placeholderProvider
-        iconProviders.value = providers
+        themeColors.value = ThemeColors(foreground = fgColor, background = bgColor)
     }
 }
+
+internal data class ThemeColors(
+    val foreground: Int = 0xFFFFFFFF.toInt(),
+    val background: Int = 0xFF000000.toInt(),
+)
