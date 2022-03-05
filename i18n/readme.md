@@ -6,7 +6,7 @@ might need localization must go to this module.**
 
 ## Contribute
 
-![Translation status](https://i18n.mm20.de/widgets/kvaesitso/-/i18n/multi-auto.svg)
+![Translation status](https://i18n.mm20.de/widgets/kvaesitso/-/multi-auto.svg)
 
 Go to the [Weblate project instance](https://i18n.mm20.de/engage/kvaesitso/) and start translating.
 
