@@ -375,6 +375,10 @@ dependencyResolutionManagement {
             alias("koin.androidxcompose")
                 .to("io.insert-koin", "koin-androidx-compose")
                 .versionRef("koin")
+
+            alias("tinypinyin")
+                .to("com.github.promeg", "tinypinyin")
+                .version("2.0.2")
         }
     }
 }

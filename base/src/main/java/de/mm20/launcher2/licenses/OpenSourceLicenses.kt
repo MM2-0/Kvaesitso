@@ -194,4 +194,11 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://commons.apache.org/proper/commons-text/"
     ),
+    OpenSourceLibrary(
+        name = "TinyPinyin",
+        description = "A fast, low-memory Chinese character-to-pinyin library for Java and Android.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/promeG/TinyPinyin"
+    ),
 )

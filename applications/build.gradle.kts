@@ -44,6 +44,8 @@ dependencies {
 
     implementation(libs.commons.text)
 
+    implementation(libs.tinypinyin)
+
     implementation(project(":search"))
     implementation(project(":base"))
     implementation(project(":preferences"))

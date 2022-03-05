@@ -11,6 +11,7 @@ import android.os.Process
 import android.os.UserHandle
 import android.os.UserManager
 import android.util.Log
+import com.github.promeg.pinyinhelper.Pinyin
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
@@ -189,18 +190,17 @@ internal class AppRepositoryImpl(
     override fun search(query: String): Flow<List<Application>> = channelFlow {
 
         merge(installedApps, hiddenItems, installations).collectLatest {
-            withContext(Dispatchers.IO) {
-                val fuzzyScore = FuzzyScore(Locale.getDefault())
+            withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<Application>()
                 if (query.isEmpty()) {
                     appResults.addAll(installedApps.value)
                     appResults.addAll(installations.value)
                 } else {
                     appResults.addAll(installedApps.value.filter {
-                        fuzzyScore.fuzzyScore(it.label, query) >= query.length * 1.5
+                        matches(it.label, query)
                     })
                     appResults.addAll(installations.value.filter {
-                        fuzzyScore.fuzzyScore(it.label, query) >= query.length * 1.5
+                        matches(it.label, query)
                     })
                 }
 
@@ -214,6 +214,17 @@ internal class AppRepositoryImpl(
                 send(appResults)
             }
         }
+    }
+
+    private fun matches(label: String, query: String): Boolean {
+        val labelLatin = romanize(label)
+        val fuzzyScore = FuzzyScore(Locale.getDefault())
+        return fuzzyScore.fuzzyScore(label, query) >= query.length * 1.5 ||
+                fuzzyScore.fuzzyScore(labelLatin, query) >= query.length * 1.5
+    }
+
+    private fun romanize(label: String): String {
+        return Pinyin.toPinyin(label, "").lowercase(Locale.getDefault())
     }
 
     private fun getActivityByComponentName(componentName: ComponentName?): Application? {
