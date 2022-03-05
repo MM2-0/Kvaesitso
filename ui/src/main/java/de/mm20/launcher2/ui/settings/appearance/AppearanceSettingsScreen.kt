@@ -33,10 +33,11 @@ import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.getShape
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
-import de.mm20.launcher2.ui.legacy.view.LauncherIconView
 import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -347,26 +348,21 @@ fun IconShapePreference(
                                     .padding(8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                AndroidView(factory = { context ->
-                                    LauncherIconView(context).apply {
-                                        shape = it
-                                        icon = LauncherIcon(
-                                            foreground = AppCompatResources.getDrawable(
-                                                context,
-                                                R.mipmap.ic_launcher_foreground
-                                            )!!,
-                                            background = ColorDrawable(context.getColor(R.color.ic_launcher_background))
-                                        )
-                                        setOnClickListener { _ ->
-                                            onValueChanged(it)
-                                            showDialog = false
-                                        }
-                                        layoutParams = ViewGroup.LayoutParams(
-                                            (48 * context.dp).toInt(),
-                                            (48 * context.dp).toInt(),
-                                        )
-                                    }
-                                })
+                                ShapedLauncherIcon(
+                                    size = 48.dp,
+                                    icon = LauncherIcon(
+                                        foreground = AppCompatResources.getDrawable(
+                                            LocalContext.current,
+                                            R.mipmap.ic_launcher_foreground
+                                        )!!,
+                                        background = ColorDrawable(LocalContext.current.getColor(R.color.ic_launcher_background))
+                                    ),
+                                    onClick = {
+                                        onValueChanged(it)
+                                        showDialog = false
+                                    },
+                                    shape = getShape(it)
+                                )
                                 Text(
                                     getShapeName(it) ?: "",
                                     textAlign = TextAlign.Center,
@@ -430,31 +426,25 @@ fun LegacyIconBackgroundPreference(
                                     .padding(8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
-                                AndroidView(factory = { context ->
-                                    LauncherIconView(context).apply {
-                                        shape = iconShape
-                                        icon = LauncherIcon(
-                                            foreground = AppCompatResources.getDrawable(
-                                                context,
-                                                R.mipmap.ic_launcher_foreground
-                                            )!!,
-                                            background = null,
-                                            autoGenerateBackgroundMode = when (it) {
-                                                IconSettings.LegacyIconBackground.Dynamic -> LauncherIcon.BACKGROUND_DYNAMIC
-                                                IconSettings.LegacyIconBackground.None -> LauncherIcon.BACKGROUND_NONE
-                                                else -> LauncherIcon.BACKGROUND_WHITE
-                                            }
-                                        )
-                                        setOnClickListener { _ ->
-                                            onValueChanged(it)
-                                            showDialog = false
+                                ShapedLauncherIcon(
+                                    size = 48.dp,
+                                    icon = LauncherIcon(
+                                        foreground = AppCompatResources.getDrawable(
+                                            LocalContext.current,
+                                            R.mipmap.ic_launcher_foreground
+                                        )!!,
+                                        background = null,
+                                        autoGenerateBackgroundMode = when (it) {
+                                            IconSettings.LegacyIconBackground.Dynamic -> LauncherIcon.BACKGROUND_DYNAMIC
+                                            IconSettings.LegacyIconBackground.None -> LauncherIcon.BACKGROUND_NONE
+                                            else -> LauncherIcon.BACKGROUND_WHITE
                                         }
-                                        layoutParams = ViewGroup.LayoutParams(
-                                            (48 * context.dp).toInt(),
-                                            (48 * context.dp).toInt(),
-                                        )
+                                    ),
+                                    onClick = {
+                                        onValueChanged(it)
+                                        showDialog = false
                                     }
-                                })
+                                )
                             }
                         }
                     }

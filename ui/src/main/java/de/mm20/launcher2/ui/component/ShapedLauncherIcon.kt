@@ -165,9 +165,8 @@ fun ShapedLauncherIcon(
 
 val LocalIconShape = compositionLocalOf<Shape> { CircleShape }
 
-@Composable
-fun ProvideIconShape(iconShape: IconShape, content: @Composable () -> Unit) {
-    val shape = when (iconShape) {
+fun getShape(iconShape: IconShape): Shape {
+    return when (iconShape) {
         IconShape.PlatformDefault -> PlatformShape
         IconShape.Circle -> CircleShape
         IconShape.Square -> RectangleShape
@@ -179,6 +178,11 @@ fun ProvideIconShape(iconShape: IconShape, content: @Composable () -> Unit) {
         IconShape.EasterEgg -> EasterEggShape
         IconShape.UNRECOGNIZED -> CircleShape
     }
+}
+
+@Composable
+fun ProvideIconShape(iconShape: IconShape, content: @Composable () -> Unit) {
+    val shape = getShape(iconShape)
     CompositionLocalProvider(
         LocalIconShape provides shape,
         content = content
