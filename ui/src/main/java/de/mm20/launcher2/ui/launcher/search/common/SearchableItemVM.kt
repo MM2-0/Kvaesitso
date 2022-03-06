@@ -8,6 +8,7 @@ import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -58,7 +59,11 @@ abstract class SearchableItemVM(
         } else {
             ActivityOptionsCompat.makeBasic()
         }
-        if (searchable.launch(context, options.toBundle())) {
+        val bundle = options.toBundle()
+        if (isAtLeastApiLevel(31)) {
+            bundle?.putInt("android.activity.splashScreenStyle", 1)
+        }
+        if (searchable.launch(context, bundle)) {
             favoritesRepository.incrementLaunchCounter(searchable)
             return true
         }
