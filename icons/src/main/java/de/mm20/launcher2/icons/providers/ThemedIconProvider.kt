@@ -111,12 +111,12 @@ internal class ThemedIconProvider(
             if (array.length() != 31) return null
 
             return ThemedCalendarDynamicLauncherIcon(
-                background = ColorDrawable(colors.foreground),
+                background = ColorDrawable(colors.background),
                 packageName = iconProviderPackage,
                 foregroundIds = IntArray(31) {
                     array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
                 },
-                foregroundTint = colors.background,
+                foregroundTint = colors.foreground,
                 foregroundScale = 0.5f,
             )
 
