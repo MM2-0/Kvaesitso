@@ -58,8 +58,8 @@ internal class ContactRepositoryImpl(
                 ContactsContract.RawContacts.CONTACT_ID,
                 ContactsContract.RawContacts._ID
             )
-            val sel = "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ?"
-            val selArgs = arrayOf("%$query%")
+            val sel = "${ContactsContract.RawContacts.DISPLAY_NAME_PRIMARY} LIKE ? OR ${ContactsContract.RawContacts.DISPLAY_NAME_ALTERNATIVE} LIKE ? OR ${ContactsContract.RawContacts.PHONETIC_NAME} LIKE ?"
+            val selArgs = arrayOf("%$query%", "%$query%", "%$query%")
             val cursor = context.contentResolver.query(
                 ContactsContract.RawContacts.CONTENT_URI, proj, sel, selArgs, null
             ) ?: return@withContext mutableListOf()
