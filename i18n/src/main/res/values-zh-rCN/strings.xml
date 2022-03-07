@@ -24,7 +24,7 @@
     <string name="weather_widget_set_location">设置位置</string>
     <string name="preference_search_bar_style_summary">自定义搜索栏外观</string>
     <string name="menu_share_store_link">链接 %1$s</string>
-    <string name="default_websearch_3_name">Google Play</string>
+    <string name="default_websearch_3_name">Google Play商店</string>
     <string name="no_account_owncloud">您尚未连接Owncloud帐户</string>
     <string name="disclaimer_currency_converter">欧洲中央银行每天公布一次的汇率。所有信息均按\"原样\"提供，不提供任何保证。对于这些信息，我们不承担任何责任。
 \n
@@ -207,7 +207,7 @@
     <string name="weather_condition_heavyrainandthunder">重度雷雨</string>
     <string name="weather_condition_wind">刮风</string>
     <string name="weather_condition_unknown">未知</string>
-    <string name="weather_details_humidity">温度: %1$s</string>
+    <string name="weather_details_humidity">湿度: %1$s</string>
     <string name="weather_details_wind">风力: %1$s</string>
     <string name="weather_details_precipitation">降水: %1$s</string>
     <string name="weather_no_data">无可用的天气数据.</string>
@@ -293,7 +293,7 @@
     <string name="preference_nextcloud_signin">登陆到Nextcloud</string>
     <string name="preference_category_services_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin_summary">登陆以查找你的Owncloud服务</string>
-    <string name="preference_about_telegram">Telegram组</string>
+    <string name="preference_about_telegram">Telegram群组</string>
     <string name="preference_about_fdroid">F-Droid repository</string>
     <string name="preference_legacy_icon_bg">图标背景</string>
     <string name="preference_legacy_icon_bg_summary">经典图标风格</string>
@@ -330,10 +330,10 @@
     <string name="preference_search_calendar">日历</string>
     <string name="preference_search_calendar_summary">搜索即将到来的约会和事件</string>
     <string name="preference_search_calculator">计算器</string>
-    <string name="preference_search_calculator_summary">评估数学术语</string>
+    <string name="preference_search_calculator_summary">计算数学式子</string>
     <string name="preference_search_unitconverter">单位转换器</string>
-    <string name="preference_search_wikipedia">Wikipedia</string>
-    <string name="preference_search_wikipedia_summary">搜索百科全书</string>
+    <string name="preference_search_wikipedia">维基百科</string>
+    <string name="preference_search_wikipedia_summary">搜索免费的百科全书</string>
     <string name="preference_search_websites">网站</string>
     <string name="preference_search_websites_summary">如果搜索查询是 URL，则显示网站的预览</string>
     <string name="preference_search_websearch">Web搜索</string>
