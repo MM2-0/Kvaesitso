@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +24,8 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 fun PreferenceScreen(
     title: String,
     floatingActionButton: @Composable () -> Unit = {},
-    content: LazyListScope.() -> Unit
+    topBarActions: @Composable RowScope.() -> Unit = {},
+    content: LazyListScope.() -> Unit,
 ) {
     val navController = LocalNavController.current
     val systemUiController = rememberSystemUiController()
@@ -50,6 +52,7 @@ fun PreferenceScreen(
                             Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
                         }
                     },
+                    actions = topBarActions
                 )
             }) {
             LazyColumn(

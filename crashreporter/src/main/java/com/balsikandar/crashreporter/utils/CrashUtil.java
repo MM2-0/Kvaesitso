@@ -3,27 +3,29 @@ package com.balsikandar.crashreporter.utils;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
-
 import com.balsikandar.crashreporter.CrashReporter;
-import de.mm20.launcher2.crashreporter.R;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.content.ContextCompat;
+import de.mm20.launcher2.crashreporter.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 import static com.balsikandar.crashreporter.utils.Constants.CHANNEL_NOTIFICATION_ID;
@@ -47,7 +49,13 @@ public class CrashUtil {
         String filename = getCrashLogTime() + Constants.CRASH_SUFFIX + Constants.FILE_EXTENSION;
         writeToFile(crashReportPath, filename, getStackTrace(throwable));
 
-        showNotification(throwable.getLocalizedMessage(), true);
+        //if (crashReportPath.isEmpty()) crashReportPath = getDefaultPath();
+
+        try {
+            showNotification(throwable.getLocalizedMessage(), filename);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void logException(final Exception exception) {
@@ -91,7 +99,7 @@ public class CrashUtil {
         }
     }
 
-    private static void showNotification(String localisedMsg, boolean isCrash) {
+    private static void showNotification(String localisedMsg, String fileName) throws UnsupportedEncodingException {
 
         if (CrashReporter.isNotificationEnabled()) {
             Context context = CrashReporter.getContext();
@@ -101,8 +109,11 @@ public class CrashUtil {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_NOTIFICATION_ID);
             builder.setSmallIcon(R.drawable.ic_warning_black_24dp);
 
-            Intent intent = CrashReporter.getLaunchIntent();
-            intent.putExtra(Constants.LANDING, isCrash);
+            String filePath = new File(getDefaultPath(), fileName).getAbsolutePath();
+
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(context.getPackageName(), "de.mm20.launcher2.ui.settings.SettingsActivity"));
+            intent.putExtra("de.mm20.launcher2.settings.ROUTE", "settings/debug/crashreporter/report?fileName=" + URLEncoder.encode(filePath, "utf8"));
             intent.setAction(Long.toString(System.currentTimeMillis()));
 
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);

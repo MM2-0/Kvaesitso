@@ -1,8 +1,5 @@
 package com.balsikandar.crashreporter.utils;
 
-import android.Manifest;
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -10,8 +7,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
 import android.util.Log;
-
-import androidx.core.app.ActivityCompat;
 
 import java.util.TimeZone;
 import java.util.UUID;
@@ -40,9 +35,8 @@ public class AppUtils {
 
     public static String getDeviceDetails(Context context) {
 
-        return "Device Information\n"
-                + "\nDEVICE.ID : " + getDeviceId(context)
-                + "\nAPP.VERSION : " + getAppVersion(context)
+        return "APP.VERSION : " + getAppVersion(context)
+                + "\nAPP.VERSIONCODE : " + getAppVersionCode(context)
                 + "\nLAUNCHER.APP : " + getCurrentLauncherApp(context)
                 + "\nTIMEZONE : " + timeZone()
                 + "\nVERSION.RELEASE : " + Build.VERSION.RELEASE
@@ -61,12 +55,9 @@ public class AppUtils {
                 + "\nMANUFACTURER : " + Build.MANUFACTURER
                 + "\nMODEL : " + Build.MODEL
                 + "\nPRODUCT : " + Build.PRODUCT
-                + "\nSERIAL : " + Build.SERIAL
                 + "\nTAGS : " + Build.TAGS
                 + "\nTIME : " + Build.TIME
-                + "\nTYPE : " + Build.TYPE
-                + "\nUNKNOWN : " + Build.UNKNOWN
-                + "\nUSER : " + Build.USER;
+                + "\nTYPE : " + Build.TYPE;
     }
 
     private static String timeZone() {
@@ -94,11 +85,21 @@ public class AppUtils {
         return androidId;
     }
 
-    private static int getAppVersion(Context context) {
+    private static int getAppVersionCode(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
                     .getPackageInfo(context.getPackageName(), 0);
             return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
+
+    private static String getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {
             throw new RuntimeException("Could not get package name: " + e);
         }

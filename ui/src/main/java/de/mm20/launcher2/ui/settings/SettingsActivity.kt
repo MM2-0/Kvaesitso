@@ -6,10 +6,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -30,6 +27,8 @@ import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
+import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
+import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
@@ -55,6 +54,12 @@ class SettingsActivity : BaseActivity() {
 
         setContent {
             val navController = rememberAnimatedNavController()
+
+            LaunchedEffect(intent) {
+                intent.getStringExtra("de.mm20.launcher2.settings.ROUTE")
+                    ?.let { navController.navigate(it) }
+            }
+
             val cardStyle by remember {
                 dataStore.data.map { it.cards }.distinctUntilChanged()
             }.collectAsState(
@@ -126,6 +131,17 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/debug") {
                             DebugSettingsScreen()
+                        }
+                        composable("settings/debug/crashreporter") {
+                            CrashReporterScreen()
+                        }
+                        composable("settings/debug/crashreporter/report?fileName={fileName}",
+                            arguments = listOf(navArgument("fileName") {
+                                nullable = false
+                            })
+                        ) {
+                            val fileName = it.arguments?.getString("fileName")
+                            CrashReportScreen(fileName!!)
                         }
                         composable(
                             "settings/license?library={libraryName}",

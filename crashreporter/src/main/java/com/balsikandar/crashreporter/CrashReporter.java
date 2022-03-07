@@ -3,7 +3,6 @@ package com.balsikandar.crashreporter;
 import android.content.Context;
 import android.content.Intent;
 
-import com.balsikandar.crashreporter.ui.CrashReporterActivity;
 import com.balsikandar.crashreporter.utils.CrashReporterNotInitializedException;
 import com.balsikandar.crashreporter.utils.CrashReporterExceptionHandler;
 import com.balsikandar.crashreporter.utils.CrashUtil;
@@ -59,10 +58,6 @@ public class CrashReporter {
     //LOG Exception APIs
     public static void logException(Exception exception) {
         CrashUtil.logException(exception);
-    }
-
-    public static Intent getLaunchIntent() {
-        return new Intent(applicationContext, CrashReporterActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
     public static void disableNotification() {

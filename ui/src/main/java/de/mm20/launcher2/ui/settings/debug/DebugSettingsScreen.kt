@@ -12,6 +12,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -19,6 +20,7 @@ import java.io.File
 fun DebugSettingsScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    val navController = LocalNavController.current
     PreferenceScreen(
         stringResource(R.string.preference_screen_debug)
     ) {
@@ -27,7 +29,7 @@ fun DebugSettingsScreen() {
                 title = stringResource(R.string.preference_crash_reporter),
                 summary = stringResource(R.string.preference_crash_reporter_summary),
                 onClick = {
-                    context.startActivity(CrashReporter.getLaunchIntent())
+                    navController?.navigate("settings/debug/crashreporter")
                 })
 
             Preference(
