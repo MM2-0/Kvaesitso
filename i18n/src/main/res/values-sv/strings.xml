@@ -264,7 +264,7 @@
     <string name="preference_legacy_icon_bg">Ikonbakgrund</string>
     <string name="preference_legacy_icon_bg_summary">Äldre ikonstil</string>
     <string name="preference_category_license">Licens</string>
-    <string name="preference_about_license">Denna app är gratis mjukvara.</string>
+    <string name="preference_about_license">Denna app är fri programvara.</string>
     <string name="preference_about_license_summary">Licensierad under GNU General Public License 3.0</string>
     <string name="preference_category_grid">Rutnät</string>
     <string name="preference_grid_column_count">Antal kolumner</string>
@@ -350,7 +350,7 @@
         <item quantity="one">%1$s minut till fullt</item>
         <item quantity="other">%1$s minuter till fullt</item>
     </plurals>
-    <string name="default_websearch_1_url">https://google.se/</string>
+    <string name="default_websearch_1_url">https://google.se/search\?q=${1}</string>
     <string name="easter_egg_3">Jag säger det inte igen: här finns absolut inga påskägg gömda</string>
     <string name="owncloud_server_invalid_url">Denna URL hänvisar inte till en giltig Owncloud-installation</string>
     <string name="missing_permission_music_widget">Notifikationsåtkomst krävs för att styra uppspelning av media</string>
@@ -362,7 +362,7 @@
     <string name="missing_permission_file_search_settings_android10">Filhanteringsåtkomst krävs för att söka bland lokala filer</string>
     <string name="preference_screen_debug_summary">Felsökningsverktyg</string>
     <string name="menu_share_store_link">%1$s-länk</string>
-    <string name="default_websearch_2_url">https://www.youtube.se/</string>
+    <string name="default_websearch_2_url">https://www.youtube.se/results\?search_query=${1}</string>
     <string name="widget_action_adjust_height">Justera höjd</string>
     <string name="disclaimer_currency_converter">Valutakursen publiceras en gång per dag av den Europeiska centralbanken. All information anges därefter utan någon form av garanti. Vi frånsäger oss ansvaret för nämnd information.
 \n
@@ -376,7 +376,7 @@
     <string name="preference_screen_about_summary">App- och licensinformation</string>
     <string name="preference_clockwidget_music_part_summary">Visa mediareglage vid aktiv uppspelning</string>
     <string name="menu_open_file">Öppna</string>
-    <string name="default_websearch_3_url">https://play.google.com/</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="widget_action_settings">Inställningar</string>
     <string name="weather_condition_thunder">Åskväder</string>
     <string name="preference_automatic_location_summary">Använd GPS- och platstjänster för att automatiskt ange plats</string>
