@@ -167,7 +167,7 @@
         <item quantity="one">gibi-octet</item>
         <item quantity="other">gibi-octets</item>
     </plurals>
-    <string name="unit_tebibyte_symbol">TiB</string>
+    <string name="unit_tebibyte_symbol">Tio</string>
     <plurals name="unit_tebibyte">
         <item quantity="one">tebi-octet</item>
         <item quantity="other">tebi-octets</item>
