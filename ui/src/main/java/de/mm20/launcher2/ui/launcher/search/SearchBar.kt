@@ -61,19 +61,6 @@ fun SearchBar(
     val activityViewModel: LauncherActivityVM = viewModel()
     val viewModel: SearchBarVM = viewModel()
 
-    val lifecycle = LocalLifecycleOwner.current.lifecycle
-
-    LaunchedEffect(null) {
-
-        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            try {
-                awaitCancellation()
-            } finally {
-                viewModel.setFocused(false)
-            }
-        }
-    }
-
     val dataStore: LauncherDataStore by inject()
 
     val style by remember { dataStore.data.map { it.searchBar.searchBarStyle } }
