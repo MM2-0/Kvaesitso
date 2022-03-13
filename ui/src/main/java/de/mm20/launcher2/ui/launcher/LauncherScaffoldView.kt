@@ -20,6 +20,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.setPadding
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.transition.OneShotLayoutTransition
@@ -28,6 +31,8 @@ import de.mm20.launcher2.ui.databinding.ViewLauncherScaffoldBinding
 import de.mm20.launcher2.ui.launcher.search.SearchBarVM
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetsVM
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.launch
 
 @SuppressLint("ClickableViewAccessibility")
 class LauncherScaffoldView @JvmOverloads constructor(
@@ -105,6 +110,19 @@ class LauncherScaffoldView @JvmOverloads constructor(
             viewModel.closeSearch()
             widgetsViewModel.setEditMode(false)
             ObjectAnimator.ofInt(binding.scrollView, "scrollY", 0).setDuration(200).start()
+        }
+
+        context.lifecycleScope.launch {
+            context.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                if (viewModel.isSearchOpen.value == true && autoFocus) {
+                    searchBarViewModel.setFocused(true)
+                }
+                try {
+                    awaitCancellation()
+                } finally {
+                    searchBarViewModel.setFocused(false)
+                }
+            }
         }
 
         binding.scrollView.scrollY = viewModel.scrollY

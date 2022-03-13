@@ -32,8 +32,11 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -45,18 +48,31 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.settings.SettingsActivity
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
 import java.io.File
 
 @Composable
 fun SearchBar(
-    level: SearchBarLevel,
-    onFocus: () -> Unit = {}
+    level: SearchBarLevel
 ) {
     val searchViewModel: SearchVM = viewModel()
     val activityViewModel: LauncherActivityVM = viewModel()
     val viewModel: SearchBarVM = viewModel()
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect(null) {
+
+        lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            try {
+                awaitCancellation()
+            } finally {
+                viewModel.setFocused(false)
+            }
+        }
+    }
 
     val dataStore: LauncherDataStore by inject()
 

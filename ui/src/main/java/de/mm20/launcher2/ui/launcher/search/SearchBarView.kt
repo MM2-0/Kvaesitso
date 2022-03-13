@@ -16,8 +16,6 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.launcher.search.SearchBar
-import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -27,7 +25,7 @@ import org.koin.core.component.inject
 class SearchBarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.materialCardViewStyle
+    defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr), KoinComponent {
 
     var level: SearchBarLevel = SearchBarLevel.Resting
@@ -38,8 +36,6 @@ class SearchBarView @JvmOverloads constructor(
 
     private val dataStore: LauncherDataStore by inject()
     private val levelState = MutableLiveData(level)
-
-    var onFocus: (() -> Unit)? = null
 
     init {
         val view = ComposeView(context)
@@ -56,8 +52,7 @@ class SearchBarView @JvmOverloads constructor(
                 MdcLauncherTheme {
                     Box(contentAlignment = Alignment.TopCenter) {
                         SearchBar(
-                            level,
-                            onFocus = { onFocus?.invoke() }
+                            level
                         )
                     }
                 }
