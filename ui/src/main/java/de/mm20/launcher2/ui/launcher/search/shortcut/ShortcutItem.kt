@@ -2,15 +2,20 @@ package de.mm20.launcher2.ui.launcher.search.shortcut
 
 
 import androidx.compose.animation.*
-import androidx.compose.animation.core.snap
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
@@ -20,7 +25,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.*
+import de.mm20.launcher2.ui.animation.animateTextStyleAsState
+import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
@@ -30,86 +39,105 @@ import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun AppItem(
+fun AppShortcutItem(
     modifier: Modifier = Modifier,
     shortcut: AppShortcut,
+    showDetails: Boolean = false,
     onBack: () -> Unit
 ) {
     val viewModel = remember { ShortcutItemVM(shortcut) }
     val context = LocalContext.current
-    val scope = rememberCoroutineScope()
+
+    val transition = updateTransition(showDetails, label = "AppShortcutItem")
+
     Column(
         modifier = modifier
     ) {
         Row {
+            val topPadding by transition.animateDp(label = "topPadding") {
+                if (it) 16.dp else 14.dp
+            }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(16.dp)
+                    .padding(start = 16.dp, top = topPadding, bottom = 16.dp, end = 16.dp)
             ) {
-                Text(text = shortcut.label, style = MaterialTheme.typography.titleMedium)
+                val titleStyle by animateTextStyleAsState(if (showDetails) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleSmall)
+                Text(text = shortcut.label, style = titleStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                val textSpace by transition.animateDp(label = "textSpace") {
+                    if (it) 4.dp else 0.dp
+                }
                 Text(
                     text = stringResource(R.string.shortcut_summary, shortcut.appName),
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = textSpace),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
             val badge by viewModel.badge.collectAsState(null)
+            val size by animateDpAsState(if (showDetails) 84.dp else 48.dp)
             val iconSize = 84.dp.toPixels().toInt()
             val icon by remember(shortcut.key) { viewModel.getIcon(iconSize) }.collectAsState(null)
+
+            val padding by transition.animateDp(label = "iconPadding") {
+                if (it) 16.dp else 8.dp
+            }
             ShapedLauncherIcon(
-                size = 84.dp,
+                size = size,
                 modifier = Modifier
-                    .padding(16.dp),
+                    .padding(padding),
                 badge = badge,
                 icon = icon,
             )
         }
 
-        val toolbarActions = mutableListOf<ToolbarAction>()
 
-        if (LocalFavoritesEnabled.current) {
-            val isPinned by viewModel.isPinned.collectAsState(false)
-            val favAction = if (isPinned) {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_unpin),
-                    icon = Icons.Rounded.Star,
-                    action = {
-                        viewModel.unpin()
-                    }
-                )
-            } else {
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_favorites_pin),
-                    icon = Icons.Rounded.StarOutline,
-                    action = {
-                        viewModel.pin()
-                    })
-            }
-            toolbarActions.add(favAction)
-        }
+        AnimatedVisibility(showDetails) {
 
-        toolbarActions.add(
-            DefaultToolbarAction(
-                label = stringResource(R.string.menu_app_info),
-                icon = Icons.Rounded.Info
-            ) {
-                viewModel.openAppInfo(context)
-            })
+            val toolbarActions = mutableListOf<ToolbarAction>()
 
-        Toolbar(
-            leftActions = listOf(
-                DefaultToolbarAction(
-                    label = stringResource(id = R.string.menu_back),
-                    icon = Icons.Rounded.ArrowBack
-                ) {
-                    onBack()
+            if (LocalFavoritesEnabled.current) {
+                val isPinned by viewModel.isPinned.collectAsState(false)
+                val favAction = if (isPinned) {
+                    DefaultToolbarAction(
+                        label = stringResource(R.string.menu_favorites_unpin),
+                        icon = Icons.Rounded.Star,
+                        action = {
+                            viewModel.unpin()
+                        }
+                    )
+                } else {
+                    DefaultToolbarAction(
+                        label = stringResource(R.string.menu_favorites_pin),
+                        icon = Icons.Rounded.StarOutline,
+                        action = {
+                            viewModel.pin()
+                        })
                 }
-            ),
-            rightActions = toolbarActions
-        )
+                toolbarActions.add(favAction)
+            }
+
+            toolbarActions.add(
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_app_info),
+                    icon = Icons.Rounded.Info
+                ) {
+                    viewModel.openAppInfo(context)
+                })
+
+            Toolbar(
+                leftActions = listOf(
+                    DefaultToolbarAction(
+                        label = stringResource(id = R.string.menu_back),
+                        icon = Icons.Rounded.ArrowBack
+                    ) {
+                        onBack()
+                    }
+                ),
+                rightActions = toolbarActions
+            )
+        }
     }
 }
 
@@ -137,7 +165,7 @@ fun ShortcutItemGridPopup(
         }
     ) { targetState ->
         if (targetState) {
-            AppItem(
+            AppShortcutItem(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(
@@ -149,6 +177,7 @@ fun ShortcutItemGridPopup(
                         y = -16.dp * (1 - animationProgress),
                     ),
                 shortcut = shortcut,
+                showDetails = true,
                 onBack = onDismiss
             )
         } else {

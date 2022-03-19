@@ -26,14 +26,12 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Contact
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
 import de.mm20.launcher2.ui.launcher.search.files.FileItem
+import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 
@@ -168,6 +166,22 @@ fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
                             onLongClick = { showDetails = true }
                         ),
                         calendar = item,
+                        showDetails = showDetails,
+                        onBack = { showDetails = false }
+                    )
+                }
+                is AppShortcut -> {
+                    AppShortcutItem(
+                        shortcut = item,
+                        modifier = Modifier.combinedClickable(
+                            enabled = !showDetails,
+                            onClick = {
+                                if (!viewModel.launch(context, bounds)) {
+                                    showDetails = true
+                                }
+                            },
+                            onLongClick = { showDetails = true }
+                        ),
                         showDetails = showDetails,
                         onBack = { showDetails = false }
                     )
