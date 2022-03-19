@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
+import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.contacts.ContactRepository
@@ -36,6 +37,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val calendarRepository: CalendarRepository by inject()
     private val contactRepository: ContactRepository by inject()
     private val appRepository: AppRepository by inject()
+    private val appShortcutRepository: AppShortcutRepository by inject()
     private val wikipediaRepository: WikipediaRepository by inject()
     private val unitConverterRepository: UnitConverterRepository by inject()
     private val calculatorRepository: CalculatorRepository by inject()
@@ -52,6 +54,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     val appResults = MutableLiveData<List<Application>>(emptyList())
+    val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())
     val fileResults = MutableLiveData<List<File>>(emptyList())
     val contactResults = MutableLiveData<List<Contact>>(emptyList())
     val calendarResults = MutableLiveData<List<CalendarEvent>>(emptyList())
@@ -122,6 +125,11 @@ class SearchVM : ViewModel(), KoinComponent {
             jobs += async {
                 websearchRepository.search(query).collectLatest {
                     websearchResults.postValue(it)
+                }
+            }
+            jobs += async {
+                appShortcutRepository.search(query).collectLatest {
+                    appShortcutResults.postValue(it)
                 }
             }
             jobs.map { it.await() }

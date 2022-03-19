@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
+import de.mm20.launcher2.ui.launcher.search.appshortcuts.AppShortcutResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
@@ -44,6 +45,7 @@ class SearchView @JvmOverloads constructor(
                     ) {
                         FavoritesResults()
                         AppResults()
+                        AppShortcutResults()
                         UnitConverterResults()
                         CalculatorResults()
                         CalendarResults()
