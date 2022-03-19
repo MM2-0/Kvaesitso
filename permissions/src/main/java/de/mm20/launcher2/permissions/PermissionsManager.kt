@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -11,6 +12,7 @@ import android.os.Environment
 import android.provider.Settings
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.getSystemService
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -53,6 +55,7 @@ enum class PermissionGroup {
     Contacts,
     ExternalStorage,
     Notifications,
+    AppShortcuts,
 }
 
 internal class PermissionsManagerImpl(
@@ -74,6 +77,9 @@ internal class PermissionsManagerImpl(
         checkPermissionOnce(PermissionGroup.Location)
     )
     private val notificationsPermissionState = MutableStateFlow(false)
+    private val appShortcutsPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.AppShortcuts)
+    )
 
     override fun requestPermission(context: AppCompatActivity, permissionGroup: PermissionGroup) {
         when (permissionGroup) {
@@ -121,6 +127,10 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+            PermissionGroup.AppShortcuts -> {
+                context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
+                pendingPermissionRequests.add(PermissionGroup.AppShortcuts)
+            }
         }
     }
 
@@ -145,6 +155,9 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> {
                 notificationsPermissionState.value
             }
+            PermissionGroup.AppShortcuts -> {
+                context.getSystemService<LauncherApps>()?.hasShortcutHostPermission() == true
+            }
         }
     }
 
@@ -155,6 +168,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Contacts -> contactsPermissionState
             PermissionGroup.ExternalStorage -> externalStoragePermissionState
             PermissionGroup.Notifications -> notificationsPermissionState
+            PermissionGroup.AppShortcuts -> appShortcutsPermissionState
         }
     }
 
@@ -171,6 +185,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Contacts -> contactsPermissionState.value = granted
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
+            PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
         }
     }
 
@@ -181,6 +196,10 @@ internal class PermissionsManagerImpl(
                 PermissionGroup.ExternalStorage -> {
                     externalStoragePermissionState.value =
                         checkPermissionOnce(PermissionGroup.ExternalStorage)
+                }
+                PermissionGroup.AppShortcuts -> {
+                    appShortcutsPermissionState.value =
+                        checkPermissionOnce(PermissionGroup.AppShortcuts)
                 }
                 else -> {}
             }
