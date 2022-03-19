@@ -41,7 +41,6 @@
     <color name="settings_color_accent">@color/indigo</color>
     <color name="settings_color_primary">#fff</color>
     <color name="settings_color_primary_dark">#ccc</color>
-    <color name="badge">@color/cardview_dark_background</color>
 
     <color name="fake_card_resting_color">#ffffff</color>
     <color name="fake_card_elevated_color">#ffffff</color>
