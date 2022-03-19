@@ -25,35 +25,13 @@ import org.koin.core.component.KoinComponent
  */
 class LauncherApp(
     context: Context,
-    public val launcherActivityInfo: LauncherActivityInfo
+    val launcherActivityInfo: LauncherActivityInfo
 ) : Application(
     label = launcherActivityInfo.label.toString(),
     `package` = launcherActivityInfo.applicationInfo.packageName,
     activity = launcherActivityInfo.name,
     flags = launcherActivityInfo.applicationInfo.flags,
     version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
-    shortcuts = run {
-        val appShortcuts = mutableListOf<AppShortcut>()
-        val launcherApps = context.getSystemService<LauncherApps>()!!
-        if (!launcherApps.hasShortcutHostPermission()) return@run appShortcuts
-        val query = LauncherApps.ShortcutQuery()
-            .setPackage(launcherActivityInfo.applicationInfo.packageName)
-            .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
-        val shortcuts = try {
-            launcherApps.getShortcuts(query, launcherActivityInfo.user)
-        } catch (e: IllegalStateException) {
-            emptyList<ShortcutInfo>()
-        }
-        appShortcuts.addAll(shortcuts?.map {
-            AppShortcut(
-                context,
-                it,
-                launcherActivityInfo.label.toString()
-            )
-        }
-            ?: emptyList())
-        appShortcuts
-    }
 ), KoinComponent {
 
     internal val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)

@@ -17,7 +17,6 @@ abstract class Application(
     val activity: String,
     val flags: Int,
     val version: String?,
-    val shortcuts: List<AppShortcut> = emptyList()
 ) : Searchable() {
 
     override fun serialize(): String {

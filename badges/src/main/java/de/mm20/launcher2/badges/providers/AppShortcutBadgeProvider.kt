@@ -1,6 +1,5 @@
 package de.mm20.launcher2.badges.providers
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import de.mm20.launcher2.badges.Badge

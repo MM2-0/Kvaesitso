@@ -384,3 +384,4 @@ dependencyResolutionManagement {
 }
 include(":notifications")
 include(":accounts")
+include(":appshortcuts")

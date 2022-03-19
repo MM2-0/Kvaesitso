@@ -44,6 +44,7 @@ dependencies {
 
     implementation(project(":ktx"))
     implementation(project(":applications"))
+    implementation(project(":appshortcuts"))
     implementation(project(":notifications"))
     implementation(project(":preferences"))
     implementation(project(":base"))

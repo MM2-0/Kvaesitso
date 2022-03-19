@@ -112,7 +112,9 @@ fun AppItem(
                         )
                     }
 
-                    for (shortcut in app.shortcuts.subList(0, min(app.shortcuts.size, 5))) {
+                    val shortcuts by viewModel.shortcuts.collectAsState(emptyList())
+
+                    for (shortcut in shortcuts) {
                         val title =
                             shortcut.launcherShortcut.shortLabel
                                 ?: shortcut.launcherShortcut.longLabel

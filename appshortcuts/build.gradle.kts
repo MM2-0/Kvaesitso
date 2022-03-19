@@ -17,8 +17,8 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -29,7 +29,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 }
 
@@ -37,21 +37,15 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)
 
+    implementation(libs.commons.text)
+    implementation(libs.tinypinyin)
+
     implementation(project(":search"))
-    implementation(project(":calendar"))
-    implementation(project(":database"))
+    implementation(project(":base"))
     implementation(project(":preferences"))
-    implementation(project(":applications"))
-    implementation(project(":appshortcuts"))
-    implementation(project(":contacts"))
     implementation(project(":ktx"))
-    implementation(project(":files"))
-    implementation(project(":websites"))
-    implementation(project(":wikipedia"))
-    implementation(project(":badges"))
 
 }

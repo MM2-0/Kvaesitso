@@ -10,14 +10,17 @@ import android.provider.Settings
 import android.service.notification.StatusBarNotification
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
+import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Application
+import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
@@ -26,6 +29,7 @@ class AppItemVM(
     private val app: Application
 ) : SearchableItemVM(app) {
     private val notificationRepository: NotificationRepository by inject()
+    private val appShortcutRepository: AppShortcutRepository by inject()
 
 
     val notifications =
@@ -103,6 +107,12 @@ class AppItemVM(
     fun getShortcutIcon(context: Context, shortcut: ShortcutInfo) : Drawable? {
         val launcherApps = context.getSystemService<LauncherApps>() ?: return null
         return launcherApps.getShortcutIconDrawable(shortcut, 0)
+    }
+
+    val shortcuts = flow {
+        if (app is LauncherApp) {
+            emit(appShortcutRepository.getShortcutsForActivity(app.launcherActivityInfo, 5))
+        }
     }
 
     fun isShortcutPinned(shortcut: AppShortcut): Flow<Boolean> {

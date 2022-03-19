@@ -108,6 +108,7 @@ dependencies {
 
     implementation(project(":accounts"))
     implementation(project(":applications"))
+    implementation(project(":appshortcuts"))
     implementation(project(":badges"))
     implementation(project(":base"))
     implementation(project(":calculator"))

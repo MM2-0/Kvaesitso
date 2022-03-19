@@ -115,6 +115,7 @@ dependencies {
     implementation(project(":search"))
     implementation(project(":preferences"))
     implementation(project(":applications"))
+    implementation(project(":appshortcuts"))
     implementation(project(":calculator"))
     implementation(project(":files"))
     implementation(project(":widgets"))

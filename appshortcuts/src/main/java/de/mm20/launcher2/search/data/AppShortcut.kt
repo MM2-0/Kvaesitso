@@ -6,17 +6,13 @@ import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.os.Process
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.applications.R
+import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -63,7 +59,11 @@ class AppShortcut(
         )
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
+    override suspend fun loadIcon(
+        context: Context,
+        size: Int,
+        legacyIconBackground: LegacyIconBackground
+    ): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
             launcherApps.getShortcutIconDrawable(
