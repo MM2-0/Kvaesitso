@@ -44,10 +44,11 @@ class AppShortcutDeserializer(
             val userSerial = json.optLong("user")
             val query = LauncherApps.ShortcutQuery()
             query.setPackage(packageName)
-            query.setQueryFlags(
-                LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
-                        LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED
+            query.setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
             )
             query.setShortcutIds(mutableListOf(id))
             val userManager = context.getSystemService<UserManager>()!!
