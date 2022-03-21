@@ -54,18 +54,15 @@ fun AppShortcutItem(
         modifier = modifier
     ) {
         Row {
-            val topPadding by transition.animateDp(label = "topPadding") {
-                if (it) 16.dp else 14.dp
-            }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 16.dp, top = topPadding, bottom = 16.dp, end = 16.dp)
+                    .padding(16.dp)
             ) {
                 val titleStyle by animateTextStyleAsState(if (showDetails) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleSmall)
                 Text(text = shortcut.label, style = titleStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
                 val textSpace by transition.animateDp(label = "textSpace") {
-                    if (it) 4.dp else 0.dp
+                    if (it) 4.dp else 2.dp
                 }
                 Text(
                     text = stringResource(R.string.shortcut_summary, shortcut.appName),

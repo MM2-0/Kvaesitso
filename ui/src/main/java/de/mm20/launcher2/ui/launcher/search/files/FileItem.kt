@@ -53,13 +53,10 @@ fun FileItem(
         Row(
             verticalAlignment = Alignment.Top
         ) {
-            val textPadding by transition.animateDp(label = "textPadding") {
-                if (it) 16.dp else 12.dp
-            }
             Column(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 16.dp, top = textPadding, end = 16.dp)
+                    .padding(16.dp)
             ) {
                 val textStyle by animateTextStyleAsState(
                     if (showDetails) MaterialTheme.typography.titleMedium
@@ -76,7 +73,8 @@ fun FileItem(
                         file.getFileType(context),
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(top = 2.dp)
                     )
                 }
                 AnimatedVisibility(showDetails) {
