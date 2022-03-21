@@ -241,13 +241,13 @@ dependencyResolutionManagement {
 
             alias("materialcomponents.core")
                 .to("com.google.android.material", "material")
-                .version("1.6.0-alpha02")
+                .version("1.6.0-alpha03")
             alias("materialcomponents.composethemeadapter3")
                 .to("com.google.android.material", "compose-theme-adapter-3")
-                .version("1.0.4")
+                .version("1.0.5")
             alias("materialcomponents.composethemeadapter")
                 .to("com.google.android.material", "compose-theme-adapter")
-                .version("1.1.4")
+                .version("1.1.5")
 
             alias("okhttp")
                 .to("com.squareup.okhttp3", "okhttp")
