@@ -195,4 +195,23 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
+    val missingAppShortcutPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.AppShortcuts),
+        dataStore.data.map { it.appShortcutSearch.enabled }.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestAppShortcutPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.AppShortcuts)
+    }
+
+    fun disableAppShortcutSearch() {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppShortcutSearch(it.appShortcutSearch.toBuilder().setEnabled(false))
+                    .build()
+            }
+        }
+    }
+
 }
