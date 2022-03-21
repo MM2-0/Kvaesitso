@@ -381,4 +381,8 @@
     </plurals>
     <string name="preference_clockwidget_date_part_summary">Das aktuelle Datum anzeigen</string>
     <string name="preference_clockwidget_battery_part_summary">Den Akkustand anzeigen wenn der Akku fast leer ist oder geladen wird</string>
+    <string name="preference_search_appshortcuts">App-Shortcuts</string>
+    <string name="missing_permission_appshortcuts_search_settings">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts durchsuchen zu können</string>
+    <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
+    <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
 </resources>
