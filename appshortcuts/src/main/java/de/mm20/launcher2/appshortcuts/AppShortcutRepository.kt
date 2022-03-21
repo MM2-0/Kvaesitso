@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Process
 import androidx.core.content.getSystemService
 import com.github.promeg.pinyinhelper.Pinyin
+import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
@@ -65,15 +66,19 @@ internal class AppShortcutRepositoryImpl(
     }
 
     override fun search(query: String) = channelFlow<List<AppShortcut>> {
+        if (query.length < 3) {
+            send(emptyList())
+            return@channelFlow
+        }
         withContext(Dispatchers.IO) {
+            if (!permissionsManager.checkPermissionOnce(PermissionGroup.AppShortcuts)) {
+                send(emptyList())
+                return@withContext
+            }
             dataStore.data.map { it.appShortcutSearch.enabled }.collectLatest { enabled ->
                 if (!enabled) {
                     send(emptyList())
                     return@collectLatest
-                }
-
-                if (query.length < 3) {
-                    return@collectLatest send(emptyList())
                 }
 
                 val launcherApps =
