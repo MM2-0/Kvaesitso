@@ -6,10 +6,7 @@ import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Info
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -60,7 +57,12 @@ fun AppShortcutItem(
                     .padding(16.dp)
             ) {
                 val titleStyle by animateTextStyleAsState(if (showDetails) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleSmall)
-                Text(text = shortcut.label, style = titleStyle, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = shortcut.label,
+                    style = titleStyle,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
                 val textSpace by transition.animateDp(label = "textSpace") {
                     if (it) 4.dp else 2.dp
                 }
@@ -122,6 +124,27 @@ fun AppShortcutItem(
                 ) {
                     viewModel.openAppInfo(context)
                 })
+
+            val isHidden by viewModel.isHidden.collectAsState(false)
+            val hideAction = if (isHidden) {
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_unhide),
+                    icon = Icons.Rounded.Visibility,
+                    action = {
+                        viewModel.unhide()
+                        onBack()
+                    }
+                )
+            } else {
+                DefaultToolbarAction(
+                    label = stringResource(R.string.menu_hide),
+                    icon = Icons.Rounded.VisibilityOff,
+                    action = {
+                        viewModel.hide()
+                        onBack()
+                    })
+            }
+            toolbarActions.add(hideAction)
 
             Toolbar(
                 leftActions = listOf(

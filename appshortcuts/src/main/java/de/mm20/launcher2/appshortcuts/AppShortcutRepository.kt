@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.Process
 import androidx.core.content.getSystemService
 import com.github.promeg.pinyinhelper.Pinyin
+import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -32,6 +33,7 @@ interface AppShortcutRepository {
 internal class AppShortcutRepositoryImpl(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
+    private val hiddenItemsRepository: HiddenItemsRepository,
     private val dataStore: LauncherDataStore,
 ) : AppShortcutRepository {
 
@@ -107,18 +109,23 @@ internal class AppShortcutRepositoryImpl(
 
                 val pm = context.packageManager
 
-                send(shortcuts.map {
-                    val label = try {
-                        pm.getApplicationInfo(it.`package`, 0).loadLabel(pm).toString()
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        ""
-                    }
-                    AppShortcut(
-                        context,
-                        it,
-                        label
+
+                hiddenItemsRepository.hiddenItemsKeys.collectLatest { hidden ->
+                    send(
+                        shortcuts.mapNotNull {
+                            val label = try {
+                                pm.getApplicationInfo(it.`package`, 0).loadLabel(pm).toString()
+                            } catch (e: PackageManager.NameNotFoundException) {
+                                ""
+                            }
+                            AppShortcut(
+                                context,
+                                it,
+                                label
+                            ).takeIf { !hidden.contains(it.key) }
+                        }.sorted()
                     )
-                }.sorted())
+                }
             }
         }
     }
