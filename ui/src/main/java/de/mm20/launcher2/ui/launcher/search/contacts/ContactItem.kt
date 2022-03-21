@@ -81,6 +81,7 @@ fun ContactItem(
                 AnimatedVisibility(!showDetails) {
                     Text(
                         contact.summary,
+                        modifier = Modifier.padding(top = 2.dp),
                         style = MaterialTheme.typography.bodySmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis

@@ -91,7 +91,7 @@ fun MusicWidget() {
                         )
                         Text(
                             text = artist ?: "",
-                            modifier = Modifier.padding(vertical = 2.dp),
+                            modifier = Modifier.padding(vertical = 4.dp),
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis

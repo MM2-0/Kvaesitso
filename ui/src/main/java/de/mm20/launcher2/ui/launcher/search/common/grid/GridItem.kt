@@ -77,7 +77,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable) {
         Text(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp),
+                .padding(top = 8.dp),
             text = item.label,
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodySmall,

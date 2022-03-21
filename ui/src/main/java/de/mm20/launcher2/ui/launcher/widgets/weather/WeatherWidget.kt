@@ -131,6 +131,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
+                modifier = Modifier.padding(vertical = 8.dp),
                 text = convertTemperature(
                     imperialUnits = imperialUnits,
                     temp = forecast.temperature

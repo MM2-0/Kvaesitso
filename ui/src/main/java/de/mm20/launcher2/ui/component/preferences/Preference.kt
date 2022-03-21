@@ -45,7 +45,7 @@ fun Preference(
                 Text(
                     text = summary,
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 1.dp)
+                    modifier = Modifier.padding(top = 2.dp)
                 )
             }
         }

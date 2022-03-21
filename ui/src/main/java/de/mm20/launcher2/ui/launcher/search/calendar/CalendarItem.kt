@@ -71,6 +71,7 @@ fun CalendarItem(
                     Text(text = calendar.label, style = textStyle)
                     AnimatedVisibility(!showDetails) {
                         Text(
+                            modifier = Modifier.padding(top = 2.dp),
                             text = viewModel.getSummary(context),
                             style = MaterialTheme.typography.bodySmall
                         )
