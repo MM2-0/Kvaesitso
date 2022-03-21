@@ -94,6 +94,28 @@ fun SearchSettingsScreen() {
                     enabled = hasCalendarPermission == true
                 )
 
+                val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.observeAsState()
+                AnimatedVisibility(hasAppShortcutsPermission == false) {
+                    MissingPermissionBanner(
+                        text = stringResource(R.string.missing_permission_appshortcuts_search_settings, stringResource(R.string.app_name)),
+                        onClick = {
+                            viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
+                        },
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+                val appShortcuts by viewModel.appShortcuts.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_appshortcuts),
+                    summary = stringResource(R.string.preference_search_appshortcuts_summary),
+                    icon = Icons.Rounded.AppShortcut,
+                    value = appShortcuts == true && hasAppShortcutsPermission == true,
+                    onValueChanged = {
+                        viewModel.setAppShortcuts(it)
+                    },
+                    enabled = hasAppShortcutsPermission == true
+                )
+
                 val calculator by viewModel.calculator.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calculator),

@@ -9,6 +9,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.migrations.FactorySettingsMigration
 import de.mm20.launcher2.preferences.migrations.Migration_1_2
 import de.mm20.launcher2.preferences.migrations.Migration_2_3
+import de.mm20.launcher2.preferences.migrations.Migration_3_4
 
 typealias LauncherDataStore = DataStore<Settings>
 
@@ -19,7 +20,8 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
         listOf(
             FactorySettingsMigration(it),
             Migration_1_2(),
-            Migration_2_3()
+            Migration_2_3(),
+            Migration_3_4(),
         )
     },
     corruptionHandler = ReplaceFileCorruptionHandler {
@@ -29,4 +31,4 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     }
 )
 
-internal const val SchemaVersion = 3
+internal const val SchemaVersion = 4

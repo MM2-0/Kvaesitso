@@ -150,4 +150,23 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+
+    val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
+    val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }.asLiveData()
+    fun setAppShortcuts(appShortcuts: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppShortcutSearch(
+                        it.appShortcutSearch.toBuilder()
+                            .setEnabled(appShortcuts)
+                    )
+                    .build()
+            }
+        }
+    }
+    fun requestAppShortcutsPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
+    }
 }

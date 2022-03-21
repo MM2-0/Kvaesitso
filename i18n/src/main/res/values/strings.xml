@@ -356,6 +356,8 @@
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
+    <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
     <!-- Missing file permission in search settings screen -->
     <string name="missing_permission_file_search_settings">External storage permission is required to search local files</string>
     <!-- Missing file permission in search settings screen.
@@ -372,6 +374,8 @@
     <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <!-- Missing files permission, used in contact search results -->
     <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
+    <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
+    <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
     <!-- Appearance preference title -->
@@ -499,6 +503,8 @@
     <string name="preference_search_contacts_summary">Search contacts on this device</string>
     <string name="preference_search_calendar">Calendar</string>
     <string name="preference_search_calendar_summary">Search upcoming appointments and events</string>
+    <string name="preference_search_appshortcuts">App shortcuts</string>
+    <string name="preference_search_appshortcuts_summary">Search app shortcuts</string>
     <string name="preference_search_calculator">Calculator</string>
     <string name="preference_search_calculator_summary">Evaluate mathematical terms</string>
     <string name="preference_search_unitconverter">Unit converter</string>

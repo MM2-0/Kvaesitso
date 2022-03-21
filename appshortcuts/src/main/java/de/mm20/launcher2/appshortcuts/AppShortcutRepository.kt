@@ -7,10 +7,14 @@ import android.content.pm.PackageManager
 import android.os.Process
 import androidx.core.content.getSystemService
 import com.github.promeg.pinyinhelper.Pinyin
+import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.*
@@ -25,7 +29,9 @@ interface AppShortcutRepository {
 }
 
 internal class AppShortcutRepositoryImpl(
-    private val context: Context
+    private val context: Context,
+    private val permissionsManager: PermissionsManager,
+    private val dataStore: LauncherDataStore,
 ) : AppShortcutRepository {
 
     override suspend fun getShortcutsForActivity(
@@ -59,46 +65,56 @@ internal class AppShortcutRepositoryImpl(
     }
 
     override fun search(query: String) = channelFlow<List<AppShortcut>> {
-        val launcherApps = context.getSystemService<LauncherApps>() ?: return@channelFlow send(
-            emptyList()
-        )
-
-        if (query.length < 3) {
-            return@channelFlow send(emptyList())
-        }
-
         withContext(Dispatchers.IO) {
-            val shortcutQuery = LauncherApps.ShortcutQuery()
-            shortcutQuery.setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
-                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER)
-            val shortcuts = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
-                ?.filter {
-                    if (it.longLabel != null) {
-                        return@filter matches(it.longLabel.toString(), query)
-                    }
-                    if (it.shortLabel != null) {
-                        return@filter matches(it.shortLabel.toString(), query)
-                    }
-                    return@filter false
-                } ?: emptyList()
-
-            val pm = context.packageManager
-
-            send(shortcuts.map {
-                val label = try {
-                    pm.getApplicationInfo(it.`package`, 0).loadLabel(pm).toString()
-                } catch (e: PackageManager.NameNotFoundException) {
-                    ""
+            dataStore.data.map { it.appShortcutSearch.enabled }.collectLatest { enabled ->
+                if (!enabled) {
+                    send(emptyList())
+                    return@collectLatest
                 }
-                AppShortcut(
-                    context,
-                    it,
-                    label
+
+                if (query.length < 3) {
+                    return@collectLatest send(emptyList())
+                }
+
+                val launcherApps =
+                    context.getSystemService<LauncherApps>() ?: return@collectLatest send(
+                        emptyList()
+                    )
+
+                val shortcutQuery = LauncherApps.ShortcutQuery()
+                shortcutQuery.setQueryFlags(
+                    LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED or
+                            LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED_BY_ANY_LAUNCHER
                 )
-            }.sorted())
+                val shortcuts = launcherApps.getShortcuts(shortcutQuery, Process.myUserHandle())
+                    ?.filter {
+                        if (it.longLabel != null) {
+                            return@filter matches(it.longLabel.toString(), query)
+                        }
+                        if (it.shortLabel != null) {
+                            return@filter matches(it.shortLabel.toString(), query)
+                        }
+                        return@filter false
+                    } ?: emptyList()
+
+                val pm = context.packageManager
+
+                send(shortcuts.map {
+                    val label = try {
+                        pm.getApplicationInfo(it.`package`, 0).loadLabel(pm).toString()
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        ""
+                    }
+                    AppShortcut(
+                        context,
+                        it,
+                        label
+                    )
+                }.sorted())
+            }
         }
     }
 

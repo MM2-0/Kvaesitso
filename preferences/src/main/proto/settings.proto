@@ -180,4 +180,9 @@ message Settings {
     uint32 border_width = 3;
   }
   CardSettings cards = 24;
+
+  message AppShortcutSearchSettings {
+    bool enabled = 1;
+  }
+  AppShortcutSearchSettings app_shortcut_search = 25;
 }

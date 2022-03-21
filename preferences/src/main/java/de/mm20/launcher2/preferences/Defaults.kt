@@ -65,6 +65,11 @@ fun createFactorySettings(context: Context): Settings {
                 .newBuilder()
                 .setEnabled(true)
         )
+        .setAppShortcutSearch(
+            Settings.AppShortcutSearchSettings
+                .newBuilder()
+                .setEnabled(true)
+            )
         .setCalculatorSearch(
             Settings.CalculatorSearchSettings
                 .newBuilder()

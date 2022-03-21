@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.tinypinyin)
 
     implementation(project(":search"))
+    implementation(project(":permissions"))
     implementation(project(":base"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))
