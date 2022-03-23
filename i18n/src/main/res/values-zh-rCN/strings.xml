@@ -378,4 +378,8 @@
     <string name="owncloud_password">密码</string>
     <string name="weather_widget_show_details">展示详细信息</string>
     <string name="preference_theme_system">跟随系统</string>
+    <string name="missing_permission_appshortcuts_search_settings">%1$s必须设置成默认桌面以搜索应用快捷方式</string>
+    <string name="missing_permission_appshortcuts_search">设置 %1$s 成为默认桌面以搜索应用快捷方式.</string>
+    <string name="preference_search_appshortcuts">应用快捷方式</string>
+    <string name="preference_search_appshortcuts_summary">搜索应用快捷方式</string>
 </resources>
