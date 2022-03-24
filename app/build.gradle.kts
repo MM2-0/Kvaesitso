@@ -26,7 +26,7 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
-        versionName = "1.7.0"
+        versionName = "1.7.1"
         signingConfig = signingConfigs.getByName("debug")
     }
     buildTypes {
