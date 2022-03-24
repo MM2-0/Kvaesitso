@@ -5,16 +5,13 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.os.Build
 import android.util.AttributeSet
 import android.view.HapticFeedbackConstants
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewConfiguration
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bartoszlipinski.viewpropertyobjectanimator.ViewPropertyObjectAnimator
-import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.toRectF
@@ -69,12 +66,6 @@ class LauncherIconView : View, KoinComponent {
             foregroundScale = value?.foregroundScale ?: 1f
             backgroundScale = value?.backgroundScale ?: 1f
             value?.registerCallback(iconObserver)
-            invalidate()
-        }
-
-    var badge: Badge? = null
-        set(value) {
-            field = value
             invalidate()
         }
 
@@ -150,11 +141,6 @@ class LauncherIconView : View, KoinComponent {
         xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         isAntiAlias = true
         isFilterBitmap = true
-    }
-
-    private val badgePaint = Paint().apply {
-        color = ContextCompat.getColor(context, R.color.badge)
-        isAntiAlias = true
     }
 
     private val badgeTextPaint = Paint().apply {
@@ -441,53 +427,6 @@ class LauncherIconView : View, KoinComponent {
                     canvas.restore()
                 }
             }
-        }
-
-        val badgeSize = drawRect.width() * 0.30f
-        badgeRect.left = drawRect.right - badgeSize
-        badgeRect.top = drawRect.bottom - badgeSize
-        badgeRect.right = drawRect.right.toFloat()
-        badgeRect.bottom = drawRect.bottom.toFloat()
-
-        val badge = badge ?: return
-        val badgeNumber = badge.number
-        val badgeProgress = badge.progress
-        val badgeIcon = badge.icon ?: badge.iconRes?.let { ContextCompat.getDrawable(context, it) }
-
-        badgePaint.color = icon?.badgeColor ?: 0
-        canvas.drawOval(badgeRect, badgeShadowPaint)
-        canvas.drawOval(badgeRect, badgePaint)
-
-        badgeProgress?.let {
-            canvas.drawArc(badgeRect, 270f, it * 360, true, badgeProgressPaint)
-        }
-        badgeIcon?.let {
-            it.setBounds(
-                (drawRect.right - badgeSize * 0.9f).toInt(),
-                (drawRect.bottom - badgeSize * 0.9f).toInt(),
-                (drawRect.right - badgeSize * 0.1f).toInt(),
-                (drawRect.bottom - badgeSize * 0.1f).toInt()
-            )
-            it.setBounds(
-                badgeRect.left.roundToInt(),
-                badgeRect.top.roundToInt(),
-                badgeRect.right.roundToInt(),
-                badgeRect.bottom.roundToInt()
-            )
-            it.draw(canvas)
-            return
-        }
-        badgeNumber?.takeIf { it in 1..99 }?.let {
-            val text = it.toString()
-            val textSize = (1f - 0.1f - text.length * 0.1f) * badgeSize
-            badgeTextPaint.textSize = textSize
-            badgeTextPaint.getTextBounds(text, 0, text.length, textBounds)
-            canvas.drawText(
-                it.toString(),
-                badgeRect.centerX(),
-                badgeRect.centerY() - textBounds.exactCenterY(),
-                badgeTextPaint
-            )
         }
     }
 

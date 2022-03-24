@@ -39,7 +39,6 @@
     <color name="settings_color_accent">@color/blue</color>
     <color name="settings_color_primary">#333</color>
     <color name="settings_color_primary_dark">#222</color>
-    <color name="badge">@color/cardview_light_background</color>
 
     <color name="fake_card_resting_color">#222222</color>
     <color name="fake_card_elevated_color">#282828</color>
