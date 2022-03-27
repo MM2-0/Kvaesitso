@@ -50,4 +50,5 @@ dependencies {
     implementation(project(":database"))
     implementation(project(":preferences"))
     implementation(project(":crashreporter"))
+    implementation(project(":ktx"))
 }

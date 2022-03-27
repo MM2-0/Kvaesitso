@@ -25,5 +25,7 @@ fun Context.tryStartActivity(intent: Intent, bundle: Bundle? = null): Boolean {
         true
     } catch (e: ActivityNotFoundException) {
         false
+    } catch (e: SecurityException) {
+        false
     }
 }

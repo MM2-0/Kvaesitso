@@ -15,6 +15,7 @@ import android.os.UserHandle
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -80,7 +81,7 @@ class LauncherApp(
             val intent = Intent()
             intent.component = ComponentName(`package`, activity)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(intent, options)
+            return context.tryStartActivity(intent, options)
         } else {
             try {
                 launcherApps.startMainActivity(

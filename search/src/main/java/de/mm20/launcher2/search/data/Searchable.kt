@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.search.R
@@ -22,10 +23,9 @@ abstract class Searchable : Comparable<Searchable> {
 
     open fun launch(context: Context, options: Bundle?): Boolean {
         val intent = getLaunchIntent(context) ?: return false
-        return try {
-            context.startActivity(intent, options)
+        return if (context.tryStartActivity(intent, options)) {
             true
-        } catch (e: ActivityNotFoundException) {
+        } else {
             Toast.makeText(context, context.getString(R.string.error_activity_not_found, label), Toast.LENGTH_SHORT).show()
             false
         }

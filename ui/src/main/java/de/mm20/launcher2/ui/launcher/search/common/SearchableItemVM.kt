@@ -9,6 +9,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -46,7 +47,7 @@ abstract class SearchableItemVM(
     }
 
 
-    fun launch(context: Context, bounds: Rect? = null): Boolean {
+    open fun launch(context: Context, bounds: Rect? = null): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeClipRevealAnimation(
@@ -66,6 +67,8 @@ abstract class SearchableItemVM(
         if (searchable.launch(context, bundle)) {
             favoritesRepository.incrementLaunchCounter(searchable)
             return true
+        } else if (searchable is Application) {
+            favoritesRepository.unpinItem(searchable)
         }
         return false
     }
