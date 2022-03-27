@@ -3,6 +3,7 @@ package de.mm20.launcher2.search.data
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import androidx.core.content.ContextCompat
@@ -43,8 +44,12 @@ abstract class Application(
 
     open fun getStoreDetails(context: Context): StoreLink? {
         val pm = context.packageManager
-        val installSourceInfo = PackageManagerCompat.getInstallSource(pm, `package`)
-        return getStoreLinkForInstaller(installSourceInfo.initiatingPackageName, `package`)
+        return try {
+            val installSourceInfo = PackageManagerCompat.getInstallSource(pm, `package`)
+            getStoreLinkForInstaller(installSourceInfo.initiatingPackageName, `package`)
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
     }
 
     override val key: String
