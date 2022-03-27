@@ -58,6 +58,11 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
         dailyForecasts.postValue(value)
     }
 
+    val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
+    val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
+    val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
+    val currentDailyForecast = MutableLiveData<DailyForecast>(null)
+
     init {
         viewModelScope.launch {
             forecastsFlow.collectLatest {
@@ -65,11 +70,6 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
             }
         }
     }
-
-    val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
-    val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
-    val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
-    val currentDailyForecast = MutableLiveData<DailyForecast>(null)
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
     fun requestLocationPermission(context: AppCompatActivity) {
