@@ -53,29 +53,29 @@ class LauncherActivity : BaseActivity() {
         }
 
         viewModel.lightStatusBar.observe(this) {
-            val windowController = ViewCompat.getWindowInsetsController(binding.rootView)
-            windowController?.isAppearanceLightStatusBars = it
+            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
+            windowController.isAppearanceLightStatusBars = it
         }
 
         viewModel.lightNavBar.observe(this) {
-            val windowController = ViewCompat.getWindowInsetsController(binding.rootView)
-            windowController?.isAppearanceLightNavigationBars = it
+            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
+            windowController.isAppearanceLightNavigationBars = it
         }
 
         viewModel.hideStatusBar.observe(this) {
-            val windowController = ViewCompat.getWindowInsetsController(binding.rootView)
+            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
             if (it) {
-                windowController?.hide(WindowInsetsCompat.Type.statusBars())
+                windowController.hide(WindowInsetsCompat.Type.statusBars())
             } else {
-                windowController?.show(WindowInsetsCompat.Type.statusBars())
+                windowController.show(WindowInsetsCompat.Type.statusBars())
             }
         }
         viewModel.hideNavBar.observe(this) {
-            val windowController = ViewCompat.getWindowInsetsController(binding.rootView)
+            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
             if (it) {
-                windowController?.hide(WindowInsetsCompat.Type.navigationBars())
+                windowController.hide(WindowInsetsCompat.Type.navigationBars())
             } else {
-                windowController?.show(WindowInsetsCompat.Type.navigationBars())
+                windowController.show(WindowInsetsCompat.Type.navigationBars())
             }
         }
 
@@ -126,8 +126,8 @@ class LauncherActivity : BaseActivity() {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        val windowController = ViewCompat.getWindowInsetsController(binding.rootView)
-        windowController?.systemBarsBehavior =
+        val windowController = WindowCompat.getInsetsController(window, binding.rootView)
+        windowController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 

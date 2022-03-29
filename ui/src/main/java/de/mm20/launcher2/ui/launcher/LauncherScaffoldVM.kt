@@ -21,6 +21,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val dataStore: LauncherDataStore by inject()
 
+    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }.asLiveData()
+    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }.asLiveData()
+
     val autoFocus = dataStore.data.map { it.searchBar.autoFocus }.asLiveData()
 
     var scrollY = 0

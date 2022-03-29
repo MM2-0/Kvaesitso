@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -18,8 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import androidx.core.view.WindowInsetsControllerCompat
-import androidx.core.view.setPadding
+import androidx.core.view.*
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -239,8 +239,56 @@ class LauncherScaffoldView @JvmOverloads constructor(
             context.window.statusBarColor = it
         }
         viewModel.darkStatusBarIcons.observe(context) {
-            WindowInsetsControllerCompat(context.window, this).isAppearanceLightStatusBars = it
+            WindowCompat.getInsetsController(context.window, this).isAppearanceLightStatusBars = it
         }
+
+        viewModel.hideNavBar.observe(context) {
+            updateInsetPaddings()
+        }
+        viewModel.hideStatusBar.observe(context) {
+            updateInsetPaddings()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(this) { view, insets ->
+            updateInsetPaddings()
+            insets
+        }
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        updateInsetPaddings()
+    }
+
+    private fun updateInsetPaddings() {
+        val windowInsets = ViewCompat.getRootWindowInsets(this) ?: return
+        val hideStatusBar = viewModel.hideStatusBar.value == true
+        val hideNavBar = viewModel.hideNavBar.value == true
+
+        Log.d("MM20", "status: $hideStatusBar, nav: $hideNavBar")
+
+        var topPadding = 0
+        var leftPadding = 0
+        var rightPadding = 0
+        var bottomPadding = 0
+
+        if (!hideStatusBar) {
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.statusBars())
+            topPadding += insets.top
+            leftPadding += insets.left
+            rightPadding += insets.right
+            bottomPadding += insets.bottom
+        }
+
+        if (!hideNavBar) {
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            topPadding += insets.top
+            leftPadding += insets.left
+            rightPadding += insets.right
+            bottomPadding += insets.bottom
+        }
+
+        setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
