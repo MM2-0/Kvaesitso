@@ -173,7 +173,7 @@ class LauncherScaffoldView @JvmOverloads constructor(
         }
 
         widgetsViewModel.isEditMode.observe(context) {
-            OneShotLayoutTransition.run(binding.scrollContainer)
+            //OneShotLayoutTransition.run(binding.scrollContainer)
             if (it) {
                 binding.scrollView.setOnTouchListener(null)
                 binding.searchBar.visibility = View.INVISIBLE

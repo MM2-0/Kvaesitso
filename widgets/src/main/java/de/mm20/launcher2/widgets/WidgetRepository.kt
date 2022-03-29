@@ -1,40 +1,79 @@
 package de.mm20.launcher2.widgets
 
 import android.content.Context
-import de.mm20.launcher2.widgets.R
 import de.mm20.launcher2.database.AppDatabase
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
-import java.util.concurrent.Executors
 
-class WidgetRepository(
-        val context: Context
-) {
+interface WidgetRepository {
+    fun getWidgets(): Flow<List<Widget>>
+    fun getInternalWidgets(): List<Widget>
+    fun saveWidgets(widgets: List<Widget>)
+    fun addWidget(widget: Widget, position: Int)
+    fun removeWidget(widget: Widget)
+    fun setWidgetHeight(widget: Widget, newHeight: Int)
+}
+
+internal class WidgetRepositoryImpl(
+    private val context: Context,
+    private val database: AppDatabase,
+) : WidgetRepository {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    fun getWidgets(): Flow<List<Widget>> {
-        return AppDatabase.getInstance(context).widgetDao()
+    override fun getWidgets(): Flow<List<Widget>> {
+        return database.widgetDao()
             .getWidgets()
-            .map { it.map { Widget(it) } }
+            .map { it.mapNotNull { Widget.fromDatabaseEntity(context, it) } }
     }
 
-    fun getInternalWidgets(): List<Widget> {
-        return listOf(
-                Widget(WidgetType.INTERNAL, "weather", -1, context.getString(R.string.widget_name_weather)),
-                Widget(WidgetType.INTERNAL, "music", -1, context.getString(R.string.widget_name_music)),
-                Widget(WidgetType.INTERNAL, "calendar", -1, context.getString(R.string.widget_name_calendar)),
-        )
+    override fun getInternalWidgets(): List<Widget> {
+        return listOf(WeatherWidget, MusicWidget, CalendarWidget)
     }
 
 
-    fun saveWidgets(widgets: List<Widget>) {
+    override fun saveWidgets(widgets: List<Widget>) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).widgetDao().updateWidgets(widgets.mapIndexed { i, widget -> widget.toDatabaseEntity(i) })
+                database.widgetDao()
+                    .updateWidgets(widgets.mapIndexed { i, widget -> widget.toDatabaseEntity(i) })
             }
         }
     }
+
+    override fun addWidget(widget: Widget, position: Int) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                database.widgetDao()
+                    .insert(widget.toDatabaseEntity(position))
+            }
+        }
+    }
+
+    override fun removeWidget(widget: Widget) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val ent = widget.toDatabaseEntity()
+                database.widgetDao().deleteWidget(
+                    ent.type,
+                    ent.data
+                )
+            }
+        }
+    }
+
+    override fun setWidgetHeight(widget: Widget, newHeight: Int) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val ent = widget.toDatabaseEntity()
+                database.widgetDao().updateHeight(
+                    ent.type,
+                    ent.data,
+                    newHeight
+                )
+            }
+        }
+    }
+
 }
