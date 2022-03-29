@@ -144,7 +144,7 @@ dependencyResolutionManagement {
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
-                .version("1.7.0")
+                .version("1.8.0-alpha06")
 
             version("androidx.appcompat", "1.4.1")
             alias("androidx.appcompat")
