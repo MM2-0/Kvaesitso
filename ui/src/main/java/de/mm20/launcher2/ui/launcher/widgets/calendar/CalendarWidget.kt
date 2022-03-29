@@ -95,9 +95,9 @@ fun CalendarWidget() {
         val hasPermission by viewModel.hasPermission.observeAsState()
         Column(
             modifier = Modifier
+                .animateContentSize()
                 .padding(horizontal = 12.dp)
                 .padding(bottom = 12.dp)
-                .animateContentSize()
         ) {
             if (hasPermission == false) {
                 MissingPermissionBanner(
