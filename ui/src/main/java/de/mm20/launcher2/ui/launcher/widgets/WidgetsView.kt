@@ -273,6 +273,7 @@ class WidgetsView @JvmOverloads constructor(
                                                                     PickAppWidgetActivity::class.java
                                                                 )
                                                             )
+                                                            showAddDialog = false
                                                         }
                                                         .padding(
                                                             horizontal = 24.dp,
