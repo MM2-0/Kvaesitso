@@ -25,6 +25,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
+import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.widgets.*
@@ -119,6 +120,9 @@ fun WidgetItem(
                     }
                     is CalendarWidget -> {
                         CalendarWidget()
+                    }
+                    is FavoritesWidget -> {
+                        FavoritesWidget()
                     }
                     is ExternalWidget -> {
                         var height by remember(widget) { mutableStateOf(widget.height) }

@@ -24,6 +24,7 @@ sealed class Widget {
                     "weather" -> WeatherWidget
                     "music" -> MusicWidget
                     "calendar" -> CalendarWidget
+                    "favorites" -> FavoritesWidget
                     else -> null
                 }
             } else {
@@ -131,6 +132,24 @@ object CalendarWidget : Widget() {
         context.tryStartActivity(intent)
     }
 }
+
+object FavoritesWidget : Widget() {
+    override fun loadLabel(context: Context): String {
+        return context.getString(R.string.widget_name_favorites)
+    }
+
+    override fun toDatabaseEntity(position: Int): WidgetEntity {
+        return WidgetEntity(
+            type = WidgetType.INTERNAL.value,
+            data = "favorites",
+            height = -1,
+            position = position
+        )
+    }
+
+    override val isConfigurable: Boolean = false
+}
+
 
 class ExternalWidget(
     var height: Int,

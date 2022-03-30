@@ -7,6 +7,8 @@ import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridColumns
+import de.mm20.launcher2.widgets.WidgetRepository
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
@@ -16,6 +18,7 @@ fun ProvideSettings(
     content: @Composable () -> Unit
 ) {
     val dataStore: LauncherDataStore by inject()
+    val widgetRepository: WidgetRepository by inject()
 
     val cardStyle by remember {
         dataStore.data.map { it.cards }.distinctUntilChanged()
@@ -30,7 +33,10 @@ fun ProvideSettings(
     }.collectAsState(Settings.IconSettings.IconShape.Circle)
 
     val favoritesEnabled by remember {
-        dataStore.data.map { it.favorites.enabled }.distinctUntilChanged()
+        combine(
+            widgetRepository.isFavoritesWidgetEnabled(),
+            dataStore.data.map { it.favorites.enabled }
+        ) { a, b -> a || b }.distinctUntilChanged()
     }.collectAsState(true)
 
     val gridColumns by remember {
