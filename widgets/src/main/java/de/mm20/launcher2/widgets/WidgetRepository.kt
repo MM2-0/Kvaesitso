@@ -13,6 +13,7 @@ interface WidgetRepository {
     fun addWidget(widget: Widget, position: Int)
     fun removeWidget(widget: Widget)
     fun setWidgetHeight(widget: Widget, newHeight: Int)
+    fun isCalendarWidgetEnabled(): Flow<Boolean>
 }
 
 internal class WidgetRepositoryImpl(
@@ -74,6 +75,10 @@ internal class WidgetRepositoryImpl(
                 )
             }
         }
+    }
+
+    override fun isCalendarWidgetEnabled(): Flow<Boolean> {
+        return database.widgetDao().exists("internal", "calendar")
     }
 
 }

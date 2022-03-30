@@ -19,6 +19,7 @@ import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
+import de.mm20.launcher2.widgets.WidgetRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collectLatest
@@ -31,6 +32,7 @@ import org.koin.core.component.inject
 class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
+    private val widgetRepository: WidgetRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -49,9 +51,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = MutableLiveData("")
     val isSearchEmpty = MutableLiveData(true)
 
-    val favorites by lazy {
-        favoritesRepository.getFavorites().asLiveData()
-    }
+    val favorites = MutableLiveData<List<Searchable>>(emptyList())
 
     val appResults = MutableLiveData<List<Application>>(emptyList())
     val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())
@@ -68,6 +68,19 @@ class SearchVM : ViewModel(), KoinComponent {
 
     init {
         search("")
+        viewModelScope.launch {
+            dataStore.data.map { it.favorites.enabled }.collectLatest { enabled ->
+                if (!enabled) {
+                    favorites.value = emptyList()
+                    return@collectLatest
+                }
+                widgetRepository.isCalendarWidgetEnabled().collectLatest { excludeCalendar ->
+                    favoritesRepository.getFavorites(excludeCalendarEvents = excludeCalendar).collectLatest {
+                        favorites.value = it
+                    }
+                }
+            }
+        }
     }
 
     var searchJob: Job? = null

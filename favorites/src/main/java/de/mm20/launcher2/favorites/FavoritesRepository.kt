@@ -9,15 +9,13 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf
 
 interface FavoritesRepository {
-    fun getFavorites(): Flow<List<Searchable>>
+    fun getFavorites(excludeCalendarEvents: Boolean = false): Flow<List<Searchable>>
     fun getPinnedCalendarEvents(): Flow<List<Searchable>>
     fun isPinned(searchable: Searchable): Flow<Boolean>
     fun pinItem(searchable: Searchable)
@@ -39,21 +37,15 @@ internal class FavoritesRepositoryImpl(
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    override fun getFavorites(): Flow<List<Searchable>> = channelFlow {
+    override fun getFavorites(excludeCalendarEvents: Boolean): Flow<List<Searchable>> =
+        channelFlow {
 
-        withContext(Dispatchers.IO) {
+            withContext(Dispatchers.IO) {
 
-            val gridColumns = dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
-            val enableFavorites = dataStore.data.map { it.favorites.enabled}.distinctUntilChanged()
-            val dao = database.searchDao()
+                val gridColumns = dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
+                val dao = database.searchDao()
 
-            enableFavorites.collectLatest {
-                if (!it) {
-                    send(emptyList())
-                    return@collectLatest
-                }
-
-                val pinnedFavorites = dao.getFavorites().map {
+                val pinnedFavorites = dao.getFavorites(excludeCalendarEvents).map {
                     it.mapNotNull {
                         val item = fromDatabaseEntity(it).searchable
                         if (item == null) {
@@ -79,7 +71,6 @@ internal class FavoritesRepositoryImpl(
                 }
             }
         }
-    }
 
     override fun getPinnedCalendarEvents(): Flow<List<CalendarEvent>> {
         return database.searchDao().getPinnedCalendarEvents().map {

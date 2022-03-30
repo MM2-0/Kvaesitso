@@ -33,4 +33,7 @@ interface WidgetDao {
 
     @Query("UPDATE Widget SET height = :newHeight WHERE data = :data AND type = :type")
     fun updateHeight(type: String, data: String, newHeight: Int)
+
+    @Query("SELECT EXISTS(SELECT 1 FROM Widget WHERE type = :type AND data = :data)")
+    fun exists(type: String, data: String) : Flow<Boolean>
 }
