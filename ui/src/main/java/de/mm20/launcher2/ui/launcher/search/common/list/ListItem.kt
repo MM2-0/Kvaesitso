@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background

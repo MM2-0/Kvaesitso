@@ -102,7 +102,6 @@ class AlarmPartProvider : PartProvider {
                             DateUtils.MINUTE_IN_MILLIS
                         )
                             .toString(),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             } else {

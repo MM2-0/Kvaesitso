@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -25,7 +26,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
-import de.mm20.launcher2.ui.pluralResource
 import java.time.LocalDate
 import java.time.ZoneId
 
@@ -119,7 +119,7 @@ fun CalendarWidget() {
             val runningEvents by viewModel.hiddenPastEvents.observeAsState(0)
             if (runningEvents > 0) {
                 Info(
-                    text = pluralResource(
+                    text = pluralStringResource(
                         R.plurals.calendar_widget_running_events,
                         runningEvents,
                         runningEvents

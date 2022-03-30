@@ -12,8 +12,8 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextField
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -294,7 +294,8 @@ fun EditWebsearchDialog(
                                         onValueChange = {
                                             importUrl = it
                                             importError = false
-                                        }
+                                        },
+                                        textStyle = MaterialTheme.typography.bodyLarge,
                                     )
                                     if (loadingImport) {
                                         CircularProgressIndicator(
@@ -371,7 +372,6 @@ fun EditWebsearchDialog(
                             ) {
                                 Text(
                                     stringResource(R.string.websearch_dialog_replace_icon),
-                                    style = MaterialTheme.typography.labelLarge
                                 )
                             }
                             TextButton(
@@ -385,7 +385,6 @@ fun EditWebsearchDialog(
                             ) {
                                 Text(
                                     stringResource(R.string.websearch_dialog_delete_icon),
-                                    style = MaterialTheme.typography.labelLarge
                                 )
                             }
                         }
@@ -404,7 +403,6 @@ fun EditWebsearchDialog(
                         ) {
                             Text(
                                 stringResource(R.string.websearch_dialog_custom_icon),
-                                style = MaterialTheme.typography.labelLarge
                             )
                         }
 
@@ -420,7 +418,8 @@ fun EditWebsearchDialog(
                         },
                         label = {
                             Text(text = stringResource(R.string.websearch_dialog_name))
-                        }
+                        },
+                        textStyle = MaterialTheme.typography.bodyLarge,
                     )
                     OutlinedTextField(
                         modifier = Modifier
@@ -433,6 +432,7 @@ fun EditWebsearchDialog(
                         label = {
                             Text(text = stringResource(R.string.websearch_dialog_url))
                         },
+                        textStyle = MaterialTheme.typography.bodyLarge,
                     )
                     AnimatedVisibility(showError) {
                         Text(
@@ -538,7 +538,8 @@ private fun ColorPicker(
                             }
                         },
                         singleLine = true,
-                        modifier = Modifier.width(150.dp)
+                        modifier = Modifier.width(150.dp),
+                        textStyle = MaterialTheme.typography.bodyLarge,
                     )
                     TextButton(onClick = { showCustomColorPicker = false }) {
                         Text(

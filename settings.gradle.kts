@@ -61,7 +61,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-alpha05")
+            version("androidx.compose", "1.2.0-alpha06")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -94,7 +94,7 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-alpha07")
+                .version("1.0.0-alpha08")
 
             version("androidx.lifecycle", "2.4.1")
             alias("androidx.lifecycle.viewmodel")
@@ -241,13 +241,13 @@ dependencyResolutionManagement {
 
             alias("materialcomponents.core")
                 .to("com.google.android.material", "material")
-                .version("1.6.0-alpha03")
+                .version("1.6.0-beta01")
             alias("materialcomponents.composethemeadapter3")
                 .to("com.google.android.material", "compose-theme-adapter-3")
-                .version("1.0.5")
+                .version("1.0.6")
             alias("materialcomponents.composethemeadapter")
                 .to("com.google.android.material", "compose-theme-adapter")
-                .version("1.1.5")
+                .version("1.1.6")
 
             alias("okhttp")
                 .to("com.squareup.okhttp3", "okhttp")

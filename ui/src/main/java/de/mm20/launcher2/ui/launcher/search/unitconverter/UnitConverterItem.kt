@@ -137,7 +137,6 @@ fun UnitConverterItem(
                 ) {
                     Text(
                         text = stringResource(id = R.string.unit_converter_show_all),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             }

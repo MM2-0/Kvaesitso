@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.component
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -30,7 +29,6 @@ fun MissingPermissionBanner(
             ) {
                 Text(
                     stringResource(R.string.grant_permission),
-                    style = MaterialTheme.typography.labelLarge
                 )
             }
         },

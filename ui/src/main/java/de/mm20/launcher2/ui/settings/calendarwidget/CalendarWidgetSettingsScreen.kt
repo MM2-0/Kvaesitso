@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -25,7 +26,6 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.pluralResource
 
 @Composable
 fun CalendarWidgetSettingsScreen() {
@@ -76,9 +76,9 @@ fun ExcludedCalendarsPreference(
     var showDialog by remember { mutableStateOf(false) }
     Preference(
         title = stringResource(R.string.preference_calendar_calendars),
-        summary = pluralResource(
+        summary = pluralStringResource(
             R.plurals.preference_calendar_calendars_summary,
-            quantity = calendars.size - value.size,
+            count = calendars.size - value.size,
             calendars.size - value.size
         ),
         onClick = {
@@ -161,7 +161,6 @@ fun ExcludedCalendarsPreference(
                     ) {
                         Text(
                             text = stringResource(android.R.string.ok),
-                            style = MaterialTheme.typography.labelLarge
                         )
                     }
                 }

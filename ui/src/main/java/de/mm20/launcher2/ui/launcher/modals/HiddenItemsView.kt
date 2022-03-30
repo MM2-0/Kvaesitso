@@ -30,7 +30,7 @@ import androidx.compose.ui.window.DialogProperties
 import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
-import de.mm20.launcher2.ui.launcher.search.common.SearchResultGrid
+import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @OptIn(ExperimentalComposeUiApi::class)
 class HiddenItemsView @JvmOverloads constructor(
@@ -85,7 +85,6 @@ class HiddenItemsView @JvmOverloads constructor(
                                         TextButton(onClick = { onDismiss() }) {
                                             Text(
                                                 stringResource(id = R.string.close),
-                                                style = MaterialTheme.typography.labelLarge
                                             )
                                         }
                                     }

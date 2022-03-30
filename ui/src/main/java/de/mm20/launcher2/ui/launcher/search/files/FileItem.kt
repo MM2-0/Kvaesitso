@@ -192,14 +192,14 @@ fun FileItem(
                                     viewModel.delete()
                                     showConfirmDialog = false
                                 }) {
-                                    Text(stringResource(android.R.string.ok), style = MaterialTheme.typography.labelLarge)
+                                    Text(stringResource(android.R.string.ok))
                                 }
                             },
                             dismissButton = {
                                 TextButton(onClick = {
                                     showConfirmDialog = false
                                 }) {
-                                    Text(stringResource(android.R.string.cancel), style = MaterialTheme.typography.labelLarge)
+                                    Text(stringResource(android.R.string.cancel))
                                 }
                             },
                             text = {

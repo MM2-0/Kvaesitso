@@ -22,13 +22,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.icons.*
-import de.mm20.launcher2.ui.pluralResource
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
@@ -85,7 +85,7 @@ class BatteryPartProvider : PartProvider {
                             modifier = Modifier.padding(start = 8.dp),
                             text = it.fullIn?.let {
                                 val m = (it / 60000).toInt()
-                                pluralResource(R.plurals.battery_part_remaining_charge_time, m, m)
+                                pluralStringResource(R.plurals.battery_part_remaining_charge_time, m, m)
                             } ?: stringResource(R.string.battery_part_charging),
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -111,7 +111,7 @@ class BatteryPartProvider : PartProvider {
                             Text(
                                 text = it.fullIn?.let {
                                     val m = (it / 60000).toInt()
-                                    pluralResource(R.plurals.battery_part_remaining_charge_time, m, m)
+                                    pluralStringResource(R.plurals.battery_part_remaining_charge_time, m, m)
                                 } ?: stringResource(R.string.battery_part_charging),
                                 style = MaterialTheme.typography.bodyMedium
                             )

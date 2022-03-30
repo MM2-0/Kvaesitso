@@ -261,7 +261,6 @@ fun SearchBarStylePreference(
                 }) {
                     Text(
                         text = stringResource(android.R.string.ok),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             },
@@ -269,7 +268,6 @@ fun SearchBarStylePreference(
                 TextButton(onClick = { showDialog = false }) {
                     Text(
                         text = stringResource(android.R.string.cancel),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             },

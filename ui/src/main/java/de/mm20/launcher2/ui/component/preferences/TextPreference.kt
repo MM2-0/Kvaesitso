@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.component.preferences
 
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.TextButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -33,12 +33,12 @@ fun TextPreference(
             text = {
                 OutlinedTextField(
                     value = textFieldValue,
+                    textStyle = MaterialTheme.typography.bodyLarge,
                     onValueChange = { textFieldValue = it },
                     placeholder = placeholder?.let {
                         {
                             Text(
                                 text = it,
-                                style = MaterialTheme.typography.bodyLarge
                             )
                         }
                     },
@@ -51,7 +51,6 @@ fun TextPreference(
                 }) {
                     Text(
                         text = stringResource(android.R.string.ok),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             },
@@ -61,7 +60,6 @@ fun TextPreference(
                 }) {
                     Text(
                         text = stringResource(android.R.string.cancel),
-                        style = MaterialTheme.typography.labelLarge
                     )
                 }
             }

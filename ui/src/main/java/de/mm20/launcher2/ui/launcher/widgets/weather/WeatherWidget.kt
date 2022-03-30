@@ -73,7 +73,6 @@ fun WeatherWidget() {
                     }) {
                         Text(
                             stringResource(R.string.weather_widget_set_location),
-                            style = MaterialTheme.typography.labelLarge
                         )
                     }
                 }
