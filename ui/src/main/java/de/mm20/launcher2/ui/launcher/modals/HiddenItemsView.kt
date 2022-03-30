@@ -8,9 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.slideIn
+import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.FractionalThreshold
+import androidx.compose.material.rememberSwipeableState
+import androidx.compose.material.swipeable
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,9 +34,11 @@ import androidx.compose.ui.window.DialogProperties
 import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
+import kotlin.math.roundToInt
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, androidx.compose.material.ExperimentalMaterialApi::class)
 class HiddenItemsView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : FrameLayout(context, attrs) {
@@ -57,7 +63,26 @@ class HiddenItemsView @JvmOverloads constructor(
                             animationState,
                             enter = slideIn { IntOffset(0, it.height) }
                         ) {
-                            Surface(modifier = Modifier.fillMaxSize()) {
+                            val swipeState =
+                                rememberSwipeableState(initialValue = SwipeState.Default) {
+                                    if (it == SwipeState.Dismiss) onDismiss()
+                                    return@rememberSwipeableState true
+                                }
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .swipeable(
+                                        swipeState,
+                                        mapOf(
+                                            0f to SwipeState.Default,
+                                            600.dp.toPixels() to SwipeState.Dismiss
+                                        ),
+                                        orientation = Orientation.Vertical,
+                                        thresholds = { _, _ -> FractionalThreshold(0.5f) },
+                                    )
+                                    .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
+
+                            ) {
                                 Column(
                                     modifier = Modifier
                                         .fillMaxSize()
@@ -101,4 +126,8 @@ class HiddenItemsView @JvmOverloads constructor(
     }
 
     var onDismiss: () -> Unit = {}
+}
+
+private enum class SwipeState {
+    Default, Dismiss
 }
