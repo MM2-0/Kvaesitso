@@ -1,21 +1,41 @@
 package de.mm20.launcher2.favorites
 
 import android.content.Context
+import de.mm20.launcher2.appshortcuts.AppShortcutDeserializer
+import de.mm20.launcher2.appshortcuts.AppShortcutSerializer
+import de.mm20.launcher2.calendar.CalendarEventDeserializer
+import de.mm20.launcher2.calendar.CalendarEventSerializer
+import de.mm20.launcher2.contacts.ContactDeserializer
+import de.mm20.launcher2.contacts.ContactSerializer
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
+import de.mm20.launcher2.files.*
 import de.mm20.launcher2.ktx.ceilToInt
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.NullDeserializer
+import de.mm20.launcher2.search.NullSerializer
 import de.mm20.launcher2.search.SearchableDeserializer
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.websites.WebsiteDeserializer
+import de.mm20.launcher2.websites.WebsiteSerializer
+import de.mm20.launcher2.wikipedia.WikipediaDeserializer
+import de.mm20.launcher2.wikipedia.WikipediaSerializer
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf
 
 interface FavoritesRepository {
-    fun getFavorites(excludeCalendarEvents: Boolean = false): Flow<List<Searchable>>
+    fun getFavorites(
+        columns: Int,
+        maxRows: Int? = null,
+        excludeCalendarEvents: Boolean = false
+    ): Flow<List<Searchable>>
+
     fun getPinnedCalendarEvents(): Flow<List<Searchable>>
     fun isPinned(searchable: Searchable): Flow<Boolean>
     fun pinItem(searchable: Searchable)
@@ -32,42 +52,42 @@ interface FavoritesRepository {
 internal class FavoritesRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
-    private val dataStore: LauncherDataStore
 ) : FavoritesRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    override fun getFavorites(excludeCalendarEvents: Boolean): Flow<List<Searchable>> =
+    override fun getFavorites(
+        columns: Int,
+        maxRows: Int?,
+        excludeCalendarEvents: Boolean
+    ): Flow<List<Searchable>> =
         channelFlow {
-
             withContext(Dispatchers.IO) {
-
-                val gridColumns = dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
                 val dao = database.searchDao()
-
-                val pinnedFavorites = dao.getFavorites(excludeCalendarEvents).map {
-                    it.mapNotNull {
-                        val item = fromDatabaseEntity(it).searchable
-                        if (item == null) {
-                            dao.deleteByKey(it.key)
-                        }
-                        return@mapNotNull item
-                    }
-                }
-
-                pinnedFavorites.collectLatest { pinned ->
-                    gridColumns.collectLatest { columns ->
-                        var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
-                        if (pinned.size < columns) favCount += columns
-                        val autoFavs = dao.getAutoFavorites(favCount - pinned.size).mapNotNull {
+                val pinnedFavorites =
+                    dao.getFavorites(excludeCalendarEvents, columns * (maxRows ?: 20)).map {
+                        it.mapNotNull {
                             val item = fromDatabaseEntity(it).searchable
                             if (item == null) {
                                 dao.deleteByKey(it.key)
                             }
                             return@mapNotNull item
                         }
-                        send(pinned + autoFavs)
                     }
+
+                pinnedFavorites.collectLatest { pinned ->
+                    var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
+                    if (pinned.size < columns) favCount += columns
+                    val autoFavs = dao.getAutoFavorites(
+                        favCount.coerceAtMost((maxRows ?: 20) * columns) - pinned.size
+                    ).mapNotNull {
+                        val item = fromDatabaseEntity(it).searchable
+                        if (item == null) {
+                            dao.deleteByKey(it.key)
+                        }
+                        return@mapNotNull item
+                    }
+                    send(pinned + autoFavs)
                 }
             }
         }
@@ -173,7 +193,7 @@ internal class FavoritesRepositoryImpl(
 
 
     private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
-        val deserializer: SearchableDeserializer = get { parametersOf(entity.serializedSearchable) }
+        val deserializer: SearchableDeserializer = getDeserializer(context, entity.serializedSearchable)
         return FavoritesItem(
             key = entity.key,
             searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#")),

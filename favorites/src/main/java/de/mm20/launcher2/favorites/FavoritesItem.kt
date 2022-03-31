@@ -17,8 +17,8 @@ data class FavoritesItem(
     var launchCount: Int,
     var pinPosition: Int,
     var hidden: Boolean
-) : KoinComponent {
-    private val serializer: SearchableSerializer by inject { parametersOf(searchable) }
+) {
+    private val serializer: SearchableSerializer = getSerializer(searchable)
 
     fun toDatabaseEntity(): FavoritesItemEntity? {
         val serializer = serializer

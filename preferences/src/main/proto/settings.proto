@@ -56,6 +56,7 @@ message Settings {
     bool music_part = 4;
     bool battery_part = 5;
     bool alarm_part = 6;
+    bool favorites_part = 7;
   }
   ClockWidgetSettings clock_widget = 7;
 

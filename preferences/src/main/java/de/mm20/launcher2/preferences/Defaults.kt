@@ -39,6 +39,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setBatteryPart(true)
                 .setDatePart(true)
                 .setMusicPart(true)
+                .setFavoritesPart(false)
                 .build()
         )
         .setFavorites(

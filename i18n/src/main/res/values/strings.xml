@@ -485,6 +485,8 @@
     <string name="preference_clock_widget_style_summary">Select a clock</string>
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
+    <string name="preference_clockwidget_favorites_part">Favorites</string>
+    <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
     <string name="preference_clockwidget_battery_part">Battery</string>

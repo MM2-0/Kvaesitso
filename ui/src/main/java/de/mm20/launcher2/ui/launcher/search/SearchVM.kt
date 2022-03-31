@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.launcher.search
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
@@ -75,8 +74,13 @@ class SearchVM : ViewModel(), KoinComponent {
                     return@collectLatest
                 }
                 widgetRepository.isCalendarWidgetEnabled().collectLatest { excludeCalendar ->
-                    favoritesRepository.getFavorites(excludeCalendarEvents = excludeCalendar).collectLatest {
-                        favorites.value = it
+                    dataStore.data.map { it.grid.columnCount }.collectLatest { columns ->
+                        favoritesRepository.getFavorites(
+                            columns = columns,
+                            excludeCalendarEvents = excludeCalendar
+                        ).collectLatest {
+                            favorites.value = it
+                        }
                     }
                 }
             }

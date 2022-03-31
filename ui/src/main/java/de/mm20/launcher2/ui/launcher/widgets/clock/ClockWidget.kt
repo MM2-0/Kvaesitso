@@ -56,7 +56,6 @@ fun ClockWidget(
             if (layout == ClockWidgetLayout.Vertical) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.height(IntrinsicSize.Min),
                 ) {
                     Box(
                         modifier = Modifier.clickable(

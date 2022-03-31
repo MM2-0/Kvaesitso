@@ -35,8 +35,9 @@ fun ProvideSettings(
     val favoritesEnabled by remember {
         combine(
             widgetRepository.isFavoritesWidgetEnabled(),
-            dataStore.data.map { it.favorites.enabled }
-        ) { a, b -> a || b }.distinctUntilChanged()
+            dataStore.data.map { it.favorites.enabled },
+            dataStore.data.map { it.clockWidget.favoritesPart },
+        ) { a, b, c -> a || b || c }.distinctUntilChanged()
     }.collectAsState(true)
 
     val gridColumns by remember {

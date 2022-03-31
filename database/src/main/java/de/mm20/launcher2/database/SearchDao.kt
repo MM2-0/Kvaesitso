@@ -18,8 +18,8 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSkipExisting(items: FavoritesItemEntity)
 
-    @Query("SELECT * FROM Searchable WHERE pinned > 0 AND (NOT :excludeCalendarEvents OR NOT `key` LIKE 'calendar://%') ORDER BY pinned DESC, launchCount DESC")
-    fun getFavorites(excludeCalendarEvents: Boolean = false): Flow<List<FavoritesItemEntity>>
+    @Query("SELECT * FROM Searchable WHERE pinned > 0 AND (NOT :excludeCalendarEvents OR NOT `key` LIKE 'calendar://%') ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    fun getFavorites(excludeCalendarEvents: Boolean = false, limit: Int): Flow<List<FavoritesItemEntity>>
 
     @Query("SELECT * FROM Searchable WHERE pinned > 0 AND `key` LIKE 'calendar://%' ORDER BY pinned DESC, launchCount DESC")
     fun getPinnedCalendarEvents(): Flow<List<FavoritesItemEntity>>

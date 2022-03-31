@@ -16,13 +16,19 @@ import org.koin.core.component.inject
 class FavoritesWidgetVM: ViewModel(), KoinComponent {
     private val favoritesRepository: FavoritesRepository by inject()
     private val widgetRepository: WidgetRepository by inject()
+    private val dataStore: LauncherDataStore by inject()
     val favorites = MutableLiveData<List<Searchable>>(emptyList())
 
     init {
         viewModelScope.launch {
                 widgetRepository.isCalendarWidgetEnabled().collectLatest { excludeCalendar ->
-                    favoritesRepository.getFavorites(excludeCalendarEvents = excludeCalendar).collectLatest {
-                        favorites.value = it
+                    dataStore.data.map { it.grid.columnCount }.collectLatest { columns ->
+                        favoritesRepository.getFavorites(
+                            columns = columns,
+                            excludeCalendarEvents = excludeCalendar
+                        ).collectLatest {
+                            favorites.value = it
+                        }
                     }
                 }
         }

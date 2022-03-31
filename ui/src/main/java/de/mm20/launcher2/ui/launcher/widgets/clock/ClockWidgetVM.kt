@@ -32,6 +32,7 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
                 if (it.musicPart) providers += MusicPartProvider()
                 if (it.batteryPart) providers += BatteryPartProvider()
                 if (it.alarmPart) providers += AlarmPartProvider()
+                if (it.favoritesPart) providers += FavoritesPartProvider()
                 partProviders.value = providers
             }
         }
@@ -48,9 +49,11 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
             val rankings = providers.map { it.getRanking(context) }
             combine(rankings) { r ->
                 var prov = providers[0]
+                var ranking = r[0]
                 for (i in 1 until providers.size) {
-                    if (r[i - 1] < r[i]) {
+                    if (ranking < r[i]) {
                         prov = providers[i]
+                        ranking = r[i]
                     }
                 }
                 return@combine prov

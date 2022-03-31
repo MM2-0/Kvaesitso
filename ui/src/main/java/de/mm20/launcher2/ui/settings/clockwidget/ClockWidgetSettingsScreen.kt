@@ -66,6 +66,20 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setDatePart(it)
                     }
                 )
+                val favoritesPart by viewModel.favoritesPart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_favorites_part),
+                    summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
+                    icon = Icons.Rounded.Star,
+                    value = favoritesPart == true,
+                    onValueChanged = {
+                        viewModel.setFavoritesPart(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
                 val musicPart by viewModel.musicPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_music_part),

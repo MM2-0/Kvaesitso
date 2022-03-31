@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import androidx.activity.compose.BackHandler
-import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
@@ -42,7 +41,7 @@ import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun GridItem(modifier: Modifier = Modifier, item: Searchable) {
+fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolean = true) {
     val viewModel = remember(item.key) { GridItemVM(item) }
     val context = LocalContext.current
 
@@ -74,16 +73,18 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable) {
                 showPopup = true
             }
         )
-        Text(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 8.dp),
-            text = item.label,
-            textAlign = TextAlign.Center,
-            style = MaterialTheme.typography.bodySmall,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
+        if (showLabels) {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                text = item.label,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+        }
         if (showPopup) {
             ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
         }

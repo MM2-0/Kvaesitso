@@ -14,9 +14,9 @@ import kotlin.math.ceil
 fun SearchResultGrid(
     items: List<Searchable>,
     modifier: Modifier = Modifier,
+    showLabels: Boolean = true,
+    columns: Int = LocalGridColumns.current,
 ) {
-
-    val columns = LocalGridColumns.current
     Column(
         modifier = modifier
             .animateContentSize()
@@ -31,7 +31,9 @@ fun SearchResultGrid(
                         GridItem(
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(4.dp, 8.dp), item = item
+                                .padding(4.dp, 8.dp),
+                            item = item,
+                            showLabels = showLabels
                         )
                     } else {
                         Spacer(modifier = Modifier.weight(1f))
