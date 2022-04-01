@@ -27,7 +27,8 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
                 } else {
                     val badge = Badge(
                         number = it.sumOf {
-                            it.notification.number
+                            if(it.notification.shortcutId == null) 0
+                            else it.notification.number
                         },
                         progress = it.mapNotNull {
                             if (!it.notification.extras.containsKey(Notification.EXTRA_PROGRESS)) return@mapNotNull null
