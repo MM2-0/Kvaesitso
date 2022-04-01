@@ -386,4 +386,6 @@
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
     <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
     <string name="widget_name_favorites">Favoriten</string>
+    <string name="preference_clockwidget_favorites_part">Favoriten</string>
+    <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
 </resources>
