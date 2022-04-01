@@ -10,12 +10,16 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.*
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
 
@@ -27,6 +31,7 @@ class PickAppWidgetActivity : BaseActivity() {
     private lateinit var appWidgetManager: AppWidgetManager
 
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         widgetHost = AppWidgetHost(this, 44203)
@@ -37,24 +42,44 @@ class PickAppWidgetActivity : BaseActivity() {
         setContent {
             MdcLauncherTheme {
                 ProvideSettings {
-                    val available by availableWidgets.observeAsState()
-                    val selected by selectedAppWidget.observeAsState()
-                    val widgets = available
-                    if (selected == null) {
-                        if (widgets != null) {
-                            AppWidgetList(
-                                modifier = Modifier.fillMaxSize(),
-                                widgets = widgets,
-                                onWidgetSelected = {
-                                    selectAppWidget(it)
+                    Scaffold(
+                        topBar = {
+                            CenterAlignedTopAppBar(
+                                title = {
+                                    Text(stringResource(R.string.widget_add_widget))
+                                },
+                                navigationIcon = {
+                                    IconButton(onClick = { finish() }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.ArrowBack,
+                                            contentDescription = stringResource(
+                                                id = R.string.menu_back
+                                            )
+                                        )
+                                    }
                                 }
                             )
-                        } else {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator()
+                        }
+                    ) {
+                        val available by availableWidgets.observeAsState()
+                        val selected by selectedAppWidget.observeAsState()
+                        val widgets = available
+                        if (selected == null) {
+                            if (widgets != null) {
+                                AppWidgetList(
+                                    modifier = Modifier.fillMaxSize(),
+                                    widgets = widgets,
+                                    onWidgetSelected = {
+                                        selectAppWidget(it)
+                                    }
+                                )
+                            } else {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    CircularProgressIndicator()
+                                }
                             }
                         }
                     }

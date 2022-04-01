@@ -10,7 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
@@ -25,7 +24,7 @@ import de.mm20.launcher2.ui.ktx.toDp
 @Composable
 fun AppWidgetList(
     modifier: Modifier = Modifier,
-    widgets: List<AppWidgetProviderInfo>,
+    widgets: List<AppWidgetGroup>,
     onWidgetSelected: (AppWidgetProviderInfo) -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -33,8 +32,20 @@ fun AppWidgetList(
     LazyColumn(
         modifier = modifier
     ) {
-        items(widgets) {
-            key(it.provider.toShortString()) {
+        for (group in widgets) {
+            item() {
+                Text(
+                    modifier = Modifier.padding(
+                        top = 16.dp,
+                        start = 8.dp,
+                        end = 8.dp,
+                        bottom = 8.dp
+                    ),
+                    text = group.appName,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+            items(group.widgets) {
                 LauncherCard(
                     modifier = Modifier
                         .padding(8.dp)
@@ -81,10 +92,6 @@ fun AppWidgetList(
                                     modifier = mod
                                 ) {
                                     drawIntoCanvas {
-                                        val aspectRatio =
-                                            image.intrinsicWidth / image.intrinsicHeight
-
-
                                         image.setBounds(
                                             0,
                                             0,
@@ -106,5 +113,6 @@ fun AppWidgetList(
                 }
             }
         }
+
     }
 }
