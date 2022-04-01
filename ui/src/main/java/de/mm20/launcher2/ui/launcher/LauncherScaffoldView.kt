@@ -265,8 +265,6 @@ class LauncherScaffoldView @JvmOverloads constructor(
         val hideStatusBar = viewModel.hideStatusBar.value == true
         val hideNavBar = viewModel.hideNavBar.value == true
 
-        Log.d("MM20", "status: $hideStatusBar, nav: $hideNavBar")
-
         var topPadding = 0
         var leftPadding = 0
         var rightPadding = 0
@@ -289,6 +287,7 @@ class LauncherScaffoldView @JvmOverloads constructor(
         }
 
         setPadding(leftPadding, topPadding, rightPadding, bottomPadding)
+        binding.widgetContainer.setClockWidgetHeight(height - paddingTop - paddingBottom)
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
