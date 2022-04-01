@@ -136,10 +136,7 @@ fun WidgetItem(
                             if (resizeMode) {
                                 val density = LocalDensity.current
                                 val drgStt = rememberDraggableState {
-                                    height = max(
-                                        height + (it / density.density).roundToInt(),
-                                        widget.widgetProviderInfo.minResizeHeight
-                                    )
+                                    height += (it / density.density).roundToInt()
                                 }
                                 Icon(
                                     imageVector = Icons.Rounded.DragHandle,
