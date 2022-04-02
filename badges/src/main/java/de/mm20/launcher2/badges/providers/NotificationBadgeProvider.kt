@@ -26,7 +26,7 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
                     send(null)
                 } else {
                     val badge = Badge(
-                        number = it.sumOf {
+                        number = it.distinctBy { it.notification.shortcutId }.sumOf {
                             if(it.notification.shortcutId == null) 0
                             else it.notification.number
                         },
