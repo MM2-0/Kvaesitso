@@ -58,27 +58,29 @@ fun WeatherWidget() {
     val forecast = selectedForecast ?: run {
         val hasPermission by viewModel.hasLocationPermission.observeAsState()
         val autoLocation by viewModel.autoLocation.observeAsState()
-        AnimatedVisibility(hasPermission == false && autoLocation == true) {
-            MissingPermissionBanner(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 16.dp),
-                text = stringResource(id = R.string.missing_permission_auto_location),
-                onClick = {
-                    viewModel.requestLocationPermission(context as AppCompatActivity)
-                },
-                secondaryAction = {
-                    TextButton(onClick = {
-                        showLocationDialog = true
-                    }) {
-                        Text(
-                            stringResource(R.string.weather_widget_set_location),
-                        )
+        Column {
+            AnimatedVisibility(hasPermission == false && autoLocation == true) {
+                MissingPermissionBanner(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .padding(top = 16.dp),
+                    text = stringResource(id = R.string.missing_permission_auto_location),
+                    onClick = {
+                        viewModel.requestLocationPermission(context as AppCompatActivity)
+                    },
+                    secondaryAction = {
+                        TextButton(onClick = {
+                            showLocationDialog = true
+                        }) {
+                            Text(
+                                stringResource(R.string.weather_widget_set_location),
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
+            NoData()
         }
-        NoData()
         return
     }
 
@@ -86,7 +88,9 @@ fun WeatherWidget() {
         CurrentWeather(forecast, imperialUnits)
 
         Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 2.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
@@ -98,7 +102,9 @@ fun WeatherWidget() {
                     onDaySelected = {
                         viewModel.selectDay(it)
                     },
-                    modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(horizontal = 4.dp),
                     imperialUnits = imperialUnits
                 )
             }
@@ -110,7 +116,9 @@ fun WeatherWidget() {
                 onTimeSelected = {
                     viewModel.selectForecast(it)
                 },
-                modifier = Modifier.weight(1f).padding(horizontal = 4.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(horizontal = 4.dp),
             )
         }
     }
@@ -162,18 +170,27 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 ) {
                     if (forecast.humidity >= 0) {
                         Text(
-                            stringResource(id = R.string.weather_details_humidity, "${forecast.humidity.roundToInt()} %"),
+                            stringResource(
+                                id = R.string.weather_details_humidity,
+                                "${forecast.humidity.roundToInt()} %"
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
                     Text(
-                        stringResource(id = R.string.weather_details_wind, formatWindSpeed(imperialUnits, forecast)),
+                        stringResource(
+                            id = R.string.weather_details_wind,
+                            formatWindSpeed(imperialUnits, forecast)
+                        ),
                         style = MaterialTheme.typography.bodySmall,
                     )
                     val precipitation = formatPrecipitation(imperialUnits, forecast)
                     if (precipitation != null) {
                         Text(
-                            stringResource(id = R.string.weather_details_precipitation, precipitation),
+                            stringResource(
+                                id = R.string.weather_details_precipitation,
+                                precipitation
+                            ),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
