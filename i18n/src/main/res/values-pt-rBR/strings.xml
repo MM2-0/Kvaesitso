@@ -120,4 +120,46 @@
     <string name="nextcloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Nextcloud</string>
     <string name="owncloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Owncloud</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
+    <string name="unit_converter_show_all">Mostrar todoa</string>
+    <string name="weather_condition_unknown">Desconhecido</string>
+    <string name="weather_widget_show_details">Mostrar detalhes</string>
+    <string name="weather_widget_hide_details">Ocultar detalhes</string>
+    <string name="weather_details_precipitation">Precipitação: %1$s</string>
+    <string name="preference_category_links">Links</string>
+    <string name="preference_version">Versão</string>
+    <string name="preference_category_licenses">Licenças open-source</string>
+    <string name="preference_category_debug">Debug</string>
+    <string name="preference_imperial_units">Unidades imperiais</string>
+    <string name="preference_icon_shape_platform">Padrão do sistema</string>
+    <string name="owncloud_login_2fa_hint">Se a autenticação em dois passos estiver ativada, você deverá usar um aplicativo de senha aqui.</string>
+    <string name="disclaimer_currency_converter">Taxas de câmbio atualizadas conforme sejam publicadas pelo Banco Central Europeu. Todas as informações são fornecidas \"como estão\", sem qualquer tipo de garantia. Nenhuma responsabilidade é assumida por estas informações.
+\n
+\nÚltima atualização: %1$s</string>
+    <string name="weather_condition_snow">Neve</string>
+    <string name="weather_details_humidity">Umidade: %1$s</string>
+    <string name="weather_widget_set_location">Definir localização</string>
+    <string name="widget_name_favorites">Favoritos</string>
+    <string name="owncloud_login_failed">Falha no login: nome de usuário ou senha incorretos.</string>
+    <string name="owncloud_username_empty">Nome de usuário não deve estar vazio</string>
+    <string name="owncloud_password_empty">A senha não pode ser vazia</string>
+    <string name="login_flow_continue">Continuar</string>
+    <string name="login_flow_login">Conectar</string>
+    <string name="disclaimer">Isenção de responsabilidade</string>
+    <string name="date_today">Hoje</string>
+    <string name="date_tomorrow">Amanhã</string>
+    <string name="calendar_widget_pinned_events">Próximos</string>
+    <string name="calendar_widget_no_events">Sem eventos hoje</string>
+    <string name="calendar_widget_new_event">Novo evento</string>
+    <string name="music_widget_default_title">%1$s está reproduzindo mídia</string>
+    <string name="music_widget_no_data">Nenhuma mídia foi reproduzida</string>
+    <string name="weather_condition_lightrainshowersandthunder">Chuvas leves e trovões</string>
+    <string name="weather_condition_heavyrain">Chuva intensa</string>
+    <string name="weather_condition_lightrain">Chuva leve</string>
+    <string name="weather_condition_cloudy">Nublado</string>
+    <string name="weather_condition_heavysleet">Neve molhada intensola</string>
+    <string name="weather_details_wind">Velocidade do vento: %1$s</string>
+    <string name="open_webpage">Abrir site</string>
+    <string name="preference_category_icons">Ícones</string>
+    <string name="preference_cards_opacity">Opacidade</string>
+    <string name="preference_icon_shape_square">Quadrado</string>
 </resources>
