@@ -39,7 +39,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ui.ClockWidget
 import de.mm20.launcher2.ui.MdcLauncherTheme
 import de.mm20.launcher2.ui.R
@@ -47,6 +50,7 @@ import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.ExternalWidget
+import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalAnimationGraphicsApi::class)
@@ -76,6 +80,17 @@ class WidgetsView @JvmOverloads constructor(
             if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return@registerForActivityResult
             if (it.resultCode == Activity.RESULT_OK) {
                 viewModel.addAppWidget(context, widgetId)
+            }
+        }
+
+        context.lifecycleScope.launch {
+            context.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                widgetHost.startListening()
+                try {
+                    awaitCancellation()
+                } finally {
+                    widgetHost.stopListening()
+                }
             }
         }
 
