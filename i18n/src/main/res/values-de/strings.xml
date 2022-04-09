@@ -388,4 +388,5 @@
     <string name="widget_name_favorites">Favoriten</string>
     <string name="preference_clockwidget_favorites_part">Favoriten</string>
     <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
+    <string name="preference_grid_icon_size">Symbolgröße</string>
 </resources>
