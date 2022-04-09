@@ -35,8 +35,10 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
+import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
 import kotlinx.coroutines.delay
+import kotlin.math.pow
 
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -49,7 +51,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by viewModel.badge.collectAsState(null)
-        val iconSize = 48.dp.toPixels()
+        val iconSize = LocalGridIconSize.current.toPixels()
         val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
 
         // If item is one of these types, try to launch them on click; show details otherwise
@@ -61,7 +63,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
                 .onGloballyPositioned {
                     bounds = it.boundsInWindow()
                 },
-            size = 48.dp,
+            size = LocalGridIconSize.current,
             badge = badge,
             icon = icon,
             onClick = {

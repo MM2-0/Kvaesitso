@@ -85,6 +85,17 @@ fun AppearanceSettingsScreen() {
                 )
             }
             PreferenceCategory(title = stringResource(R.string.preference_category_grid)) {
+                val iconSize by viewModel.iconSize.observeAsState(48)
+                SliderPreference(
+                    title = stringResource(R.string.preference_grid_icon_size),
+                    value = iconSize,
+                    step = 8,
+                    min = 32,
+                    max = 64,
+                    onValueChanged = {
+                        viewModel.setIconSize(it)
+                    }
+                )
                 val columnCount by viewModel.columnCount.observeAsState(5)
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),

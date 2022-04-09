@@ -54,6 +54,17 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val iconSize = dataStore.data.map { it.grid.iconSize }.asLiveData()
+    fun setIconSize(iconSize: Int) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setGrid(it.grid.toBuilder().setIconSize(iconSize))
+                    .build()
+            }
+        }
+    }
+
     val dimWallpaper = dataStore.data.map { it.appearance.dimWallpaper }.asLiveData()
     fun setDimWallpaper(dimWallpaper: Boolean) {
         viewModelScope.launch {

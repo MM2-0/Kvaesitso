@@ -109,6 +109,7 @@ fun createFactorySettings(context: Context): Settings {
         .setGrid(
             Settings.GridSettings.newBuilder()
                 .setColumnCount(context.resources.getInteger(R.integer.config_columnCount))
+                .setIconSize(48)
                 .build()
         )
         .setSearchBar(

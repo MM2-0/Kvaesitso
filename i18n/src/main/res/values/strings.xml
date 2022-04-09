@@ -470,6 +470,7 @@
     <string name="preference_about_license">This app is free software.</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>
     <string name="preference_category_grid">Grid</string>
+    <string name="preference_grid_icon_size">Icon size</string>
     <string name="preference_grid_column_count">Number of columns</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>

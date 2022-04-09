@@ -127,6 +127,7 @@ message Settings {
 
   message GridSettings {
     uint32 column_count = 1;
+    uint32 icon_size = 2;
   }
   GridSettings grid = 19;
 

@@ -30,6 +30,7 @@ import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.modifier.scale
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -189,7 +190,7 @@ fun ShortcutItemGridPopup(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(
-                        1 - (1 - 48.dp / 84.dp) * (1 - animationProgress),
+                        1 - (1 - LocalGridIconSize.current / 84.dp) * (1 - animationProgress),
                         transformOrigin = TransformOrigin(1f, 0f)
                     )
                     .offset(

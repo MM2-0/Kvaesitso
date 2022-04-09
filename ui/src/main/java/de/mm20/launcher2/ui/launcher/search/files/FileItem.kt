@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -31,6 +32,8 @@ import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.modifier.scale
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -279,6 +282,10 @@ fun FileItemGridPopup(
             FileItem(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .scale(
+                        1 - (1 - LocalGridIconSize.current / 48.dp) * (1 - animationProgress),
+                        transformOrigin = TransformOrigin(1f, 0f)
+                    )
                     .offset(
                         x = 16.dp * (1 - animationProgress),
                         y = -16.dp * (1 - animationProgress)

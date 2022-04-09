@@ -6,10 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
 import androidx.datastore.dataStore
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.preferences.migrations.FactorySettingsMigration
-import de.mm20.launcher2.preferences.migrations.Migration_1_2
-import de.mm20.launcher2.preferences.migrations.Migration_2_3
-import de.mm20.launcher2.preferences.migrations.Migration_3_4
+import de.mm20.launcher2.preferences.migrations.*
 
 typealias LauncherDataStore = DataStore<Settings>
 
@@ -22,6 +19,7 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
             Migration_1_2(),
             Migration_2_3(),
             Migration_3_4(),
+            Migration_4_5(),
         )
     },
     corruptionHandler = ReplaceFileCorruptionHandler {
@@ -31,4 +29,4 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     }
 )
 
-internal const val SchemaVersion = 4
+internal const val SchemaVersion = 5

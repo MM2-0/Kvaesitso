@@ -1,12 +1,14 @@
 package de.mm20.launcher2.ui.base
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridColumns
+import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -44,10 +46,15 @@ fun ProvideSettings(
         dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
     }.collectAsState(5)
 
+    val gridIconSize by remember {
+        dataStore.data.map { it.grid.iconSize.dp }.distinctUntilChanged()
+    }.collectAsState(48.dp)
+
     CompositionLocalProvider(
         LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
         LocalGridColumns provides gridColumns,
+        LocalGridIconSize provides gridIconSize,
     ) {
         ProvideIconShape(iconShape) {
             content()

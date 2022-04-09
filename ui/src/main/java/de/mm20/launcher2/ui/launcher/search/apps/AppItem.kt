@@ -26,6 +26,7 @@ import de.mm20.launcher2.ui.component.*
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import kotlin.math.min
@@ -321,7 +322,7 @@ fun AppItemGridPopup(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(
-                        1 - (1 - 48.dp / 84.dp) * (1 - animationProgress),
+                        1 - (1 - LocalGridIconSize.current / 84.dp) * (1 - animationProgress),
                         transformOrigin = TransformOrigin(1f, 0f)
                     )
                     .offset(
