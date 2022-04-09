@@ -8,6 +8,7 @@ import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
 import android.provider.CalendarContract
+import android.text.format.DateFormat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
 import androidx.core.graphics.blue
@@ -18,6 +19,7 @@ import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.dp
 import java.text.SimpleDateFormat
+import java.util.*
 
 class CalendarEvent(
     override val label: String,
@@ -37,27 +39,15 @@ class CalendarEvent(
 
 
     override fun getPlaceholderIcon(context: Context): LauncherIcon {
-        val df = SimpleDateFormat("d")
-        val day = df.format(startTime)
-        df.applyPattern("MMM")
-        val month = df.format(startTime)
-        val fgLayers = arrayOf(
-            TextDrawable(
-                day,
-                color = Color.WHITE,
-                fontSize = 20 * context.dp,
-                typeface = Typeface.DEFAULT_BOLD
-            ),
-            TextDrawable(
-                month,
-                color = Color.WHITE,
-                fontSize = 13 * context.dp,
-                typeface = Typeface.DEFAULT_BOLD
-            )
+        val df = SimpleDateFormat("dd")
+        val s = (48 * context.dp).toInt()
+        val foreground = TextDrawable(
+            df.format(startTime),
+            color = Color.WHITE,
+            fontSize = 24 * context.dp,
+            typeface = Typeface.DEFAULT_BOLD,
+            height = s
         )
-        val foreground = LayerDrawable(fgLayers)
-        foreground.setLayerInset(0, 0, 0, 0, (13 * context.dp).toInt())
-        foreground.setLayerInset(1, 0, (20 * context.dp).toInt(), 0, 0)
         val background = ColorDrawable(getDisplayColor(context, color))
         return LauncherIcon(
             foreground = foreground,

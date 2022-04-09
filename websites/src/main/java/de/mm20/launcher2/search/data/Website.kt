@@ -12,6 +12,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
@@ -56,7 +57,8 @@ class Website(
             TextDrawable(
                 label[0].toString(),
                 typeface = Typeface.DEFAULT_BOLD,
-                fontSize = 40 * context.sp
+                fontSize = 40 * context.sp,
+                height = (48 * context.dp).toInt()
             )
         } else context.getDrawable(R.drawable.ic_website)!!
         return LauncherIcon(

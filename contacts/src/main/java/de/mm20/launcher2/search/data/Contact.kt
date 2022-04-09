@@ -15,6 +15,7 @@ import de.mm20.launcher2.contacts.R
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.asBitmap
+import de.mm20.launcher2.ktx.dp
 import de.mm20.launcher2.ktx.sp
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
@@ -51,6 +52,7 @@ class Contact(
                 iconText,
                 Color.WHITE,
                 fontSize = 20 * context.sp,
+                height = (48 * context.dp).toInt(),
                 typeface = Typeface.DEFAULT_BOLD
             ),
             background = ColorDrawable(ContextCompat.getColor(context, R.color.blue))
