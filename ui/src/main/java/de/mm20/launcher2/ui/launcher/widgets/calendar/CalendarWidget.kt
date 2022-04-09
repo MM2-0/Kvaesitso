@@ -133,7 +133,7 @@ fun CalendarWidget() {
             if (pinnedEvents.size > 0) {
                 Text(
                     stringResource(R.string.calendar_widget_pinned_events),
-                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 4.dp),
+                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
                     style = MaterialTheme.typography.titleMedium
                 )
                 SearchResultList(
