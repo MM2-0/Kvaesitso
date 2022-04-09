@@ -38,8 +38,8 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("sdk") {
             version("minSdk", "26")
-            version("compileSdk", "31")
-            version("targetSdk", "31")
+            version("compileSdk", "32")
+            version("targetSdk", "32")
         }
         create("libs") {
             version("kotlin", "1.6.10")
