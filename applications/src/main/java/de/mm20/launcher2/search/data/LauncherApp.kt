@@ -3,11 +3,9 @@ package de.mm20.launcher2.search.data
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
-import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
 import android.os.Process
@@ -15,7 +13,6 @@ import android.os.UserHandle
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -77,24 +74,17 @@ class LauncherApp(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         val launcherApps = context.getSystemService<LauncherApps>()!!
-        if (isMainProfile) {
-            val intent = Intent()
-            intent.component = ComponentName(`package`, activity)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-            return context.tryStartActivity(intent, options)
-        } else {
-            try {
-                launcherApps.startMainActivity(
-                    ComponentName(`package`, activity),
-                    launcherActivityInfo.user,
-                    null,
-                    options
-                )
-            } catch (e: SecurityException) {
-                return false
-            } catch (e: ActivityNotFoundException) {
-                return false
-            }
+        try {
+            launcherApps.startMainActivity(
+                ComponentName(`package`, activity),
+                launcherActivityInfo.user,
+                null,
+                options
+            )
+        } catch (e: SecurityException) {
+            return false
+        } catch (e: ActivityNotFoundException) {
+            return false
         }
         return true
     }
