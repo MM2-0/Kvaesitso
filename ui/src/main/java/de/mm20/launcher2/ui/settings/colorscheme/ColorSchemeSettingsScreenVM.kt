@@ -13,6 +13,8 @@ import org.koin.core.component.inject
 class ColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
+    val theme = dataStore.data.map { it.appearance.theme }.asLiveData()
+
     val colorScheme = dataStore.data.map { it.appearance.colorScheme }.asLiveData()
     fun setColorScheme(colorScheme: AppearanceSettings.ColorScheme) {
         viewModelScope.launch {
