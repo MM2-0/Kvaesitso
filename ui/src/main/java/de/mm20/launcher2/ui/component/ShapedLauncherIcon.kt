@@ -20,10 +20,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -76,10 +73,21 @@ fun ShapedLauncherIcon(
                 val fgScale = icon.foregroundScale
                 val bgScale = icon.backgroundScale
 
+                val themedFgColor = MaterialTheme.colorScheme.onPrimaryContainer
+                val themedBgColor = MaterialTheme.colorScheme.primaryContainer
+
+                val fg = remember(icon, icon.isThemeable, themedFgColor) {
+                    icon.foreground.also {
+                        if (icon.isThemeable) it.setTint(themedFgColor.toArgb())
+                    }
+                }
+                val bg = remember(icon, icon.isThemeable, themedBgColor) {
+                    icon.background?.also {
+                        if (icon.isThemeable) it.setTint(themedBgColor.toArgb())
+                    }
+                }
 
                 Canvas(modifier = Modifier.fillMaxSize()) {
-                    val fg = icon.foreground
-                    val bg = icon.background
                     drawIntoCanvas {
                         val paddingFg = (size * (1 - fgScale) * 0.5f).toPx()
                         val paddingBg = (size * (1 - bgScale) * 0.5f).toPx()

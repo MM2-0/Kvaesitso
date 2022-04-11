@@ -6,14 +6,12 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
-import android.util.Log
 import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -44,7 +42,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ui.ClockWidget
-import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.ktx.toDp
@@ -97,7 +95,7 @@ class WidgetsView @JvmOverloads constructor(
 
         val composeView = ComposeView(context)
         composeView.setContent {
-            MdcLauncherTheme {
+            LauncherTheme {
                 ProvideSettings {
                     Column(
                         modifier = Modifier

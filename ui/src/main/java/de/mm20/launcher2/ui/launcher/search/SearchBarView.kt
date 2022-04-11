@@ -14,8 +14,7 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.MdcLauncherTheme
-import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -49,7 +48,7 @@ class SearchBarView @JvmOverloads constructor(
             CompositionLocalProvider(
                 LocalCardStyle provides cardStyle
             ) {
-                MdcLauncherTheme {
+                LauncherTheme {
                     Box(contentAlignment = Alignment.TopCenter) {
                         SearchBar(
                             level

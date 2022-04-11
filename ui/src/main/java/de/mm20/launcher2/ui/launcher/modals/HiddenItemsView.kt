@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -48,7 +48,7 @@ class HiddenItemsView @JvmOverloads constructor(
         val composeView = ComposeView(context)
 
         composeView.setContent {
-            MdcLauncherTheme {
+            LauncherTheme {
                 ProvideSettings {
                     Dialog(
                         properties = DialogProperties(usePlatformDefaultWidth = false),

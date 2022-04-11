@@ -23,6 +23,7 @@ fun LauncherCard(
         border = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
             ?.let { BorderStroke(it.dp, MaterialTheme.colorScheme.surface) },
         content = content,
+        contentColor = MaterialTheme.colorScheme.onSurface,
         color = MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity.coerceIn(0f, 1f)),
         shadowElevation = if (backgroundOpacity == 1f) elevation else 0.dp,
         tonalElevation = elevation

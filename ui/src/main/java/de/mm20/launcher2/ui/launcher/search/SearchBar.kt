@@ -216,9 +216,9 @@ fun SearchBar(
             }
         }) {
         when {
-            style != SearchBarSettings.SearchBarStyle.Transparent -> LocalContentColor.current
+            style != SearchBarSettings.SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
             it == SearchBarLevel.Resting -> Color.White
-            else -> LocalContentColor.current
+            else -> MaterialTheme.colorScheme.onSurface
         }
     }
 

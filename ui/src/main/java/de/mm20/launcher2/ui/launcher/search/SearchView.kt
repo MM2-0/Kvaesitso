@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.appshortcuts.AppShortcutResults
@@ -35,7 +35,7 @@ class SearchView @JvmOverloads constructor(
             LayoutParams.WRAP_CONTENT
         )
         view.setContent {
-            MdcLauncherTheme {
+            LauncherTheme {
                 ProvideSettings {
                     Column(
                         modifier = Modifier

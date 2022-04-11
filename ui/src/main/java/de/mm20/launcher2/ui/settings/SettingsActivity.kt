@@ -15,7 +15,7 @@ import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -69,7 +69,7 @@ class SettingsActivity : BaseActivity() {
                 LocalNavController provides navController,
                 LocalCardStyle provides cardStyle
             ) {
-                MdcLauncherTheme {
+                LauncherTheme {
                     AnimatedNavHost(
                         navController = navController,
                         startDestination = "settings",

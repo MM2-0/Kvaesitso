@@ -18,7 +18,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import de.mm20.launcher2.ui.MdcLauncherTheme
+import de.mm20.launcher2.ui.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
@@ -40,7 +40,7 @@ class PickAppWidgetActivity : BaseActivity() {
         val availableWidgets = viewModel.getAvailableWidgets(this)
         val selectedAppWidget = viewModel.selectedAppWidget
         setContent {
-            MdcLauncherTheme {
+            LauncherTheme {
                 ProvideSettings {
                     Scaffold(
                         topBar = {
