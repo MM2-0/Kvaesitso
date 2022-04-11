@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.LauncherTheme
+import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.appshortcuts.AppShortcutResults

@@ -42,7 +42,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ui.ClockWidget
-import de.mm20.launcher2.ui.LauncherTheme
+import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.ktx.toDp

@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import de.mm20.launcher2.ui.LauncherTheme
+import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.ktx.toPixels
