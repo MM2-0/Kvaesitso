@@ -8,11 +8,12 @@ import androidx.palette.graphics.Palette
 import java.lang.ref.WeakReference
 
 open class LauncherIcon(
-        foreground: Drawable,
-        background: Drawable? = null,
-        foregroundScale: Float = 1f,
-        backgroundScale: Float = 1f,
-        var autoGenerateBackgroundMode: Int = BACKGROUND_WHITE
+    foreground: Drawable,
+    background: Drawable? = null,
+    foregroundScale: Float = 1f,
+    backgroundScale: Float = 1f,
+    var autoGenerateBackgroundMode: Int = BACKGROUND_WHITE,
+    val isThemeable: Boolean = false,
 ) {
 
     var foreground = foreground

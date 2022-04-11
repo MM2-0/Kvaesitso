@@ -3,11 +3,10 @@ package de.mm20.launcher2.icons.providers
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.LayerDrawable
-import android.util.TypedValue
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -18,7 +17,6 @@ import de.mm20.launcher2.search.data.Searchable
 
 internal class ThemedIconProvider(
     private val context: Context,
-    private val colors: ThemeColors,
 ) : IconProvider {
 
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon? {
@@ -49,11 +47,11 @@ internal class ThemedIconProvider(
     private fun getStaticIcon(resources: Resources, resId: Int): LauncherIcon? {
         try {
             val fg = ResourcesCompat.getDrawable(resources, resId, null) ?: return null
-            fg.setTint(colors.foreground)
             return LauncherIcon(
                 foreground = fg,
                 foregroundScale = 0.5f,
-                background = ColorDrawable(colors.background)
+                background = ColorDrawable(Color.WHITE),
+                isThemeable = true
             )
         } catch (e: Resources.NotFoundException) {
             return null
@@ -85,15 +83,15 @@ internal class ThemedIconProvider(
                 i++
             }
             if (drawable != null && minuteIndex != null && hourIndex != null) {
-                drawable.setTint(colors.foreground)
                 return ClockDynamicLauncherIcon(
                     foreground = drawable,
-                    background = ColorDrawable(colors.background),
+                    background = ColorDrawable(Color.WHITE),
                     foregroundScale = 1.5f,
                     backgroundScale = 1f,
                     hourLayer = hourIndex,
                     minuteLayer = minuteIndex,
                     secondLayer = -1,
+                    isThemeable = true,
                 )
             }
         } catch (e: Resources.NotFoundException) {
@@ -111,13 +109,12 @@ internal class ThemedIconProvider(
             if (array.length() != 31) return null
 
             return ThemedCalendarDynamicLauncherIcon(
-                background = ColorDrawable(colors.background),
+                foregroundScale = 0.5f,
                 packageName = iconProviderPackage,
                 foregroundIds = IntArray(31) {
                     array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
                 },
-                foregroundTint = colors.foreground,
-                foregroundScale = 0.5f,
+                background = ColorDrawable(Color.WHITE),
             )
 
         } catch (e: Resources.NotFoundException) {

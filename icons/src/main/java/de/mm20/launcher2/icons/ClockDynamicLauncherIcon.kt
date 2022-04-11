@@ -15,6 +15,7 @@ class ClockDynamicLauncherIcon(
     background: Drawable?,
     foregroundScale: Float,
     backgroundScale: Float,
+    isThemeable: Boolean = false,
     val hourLayer: Int,
     val minuteLayer: Int,
     val secondLayer: Int
@@ -22,7 +23,8 @@ class ClockDynamicLauncherIcon(
     foreground,
     background,
     foregroundScale,
-    backgroundScale
+    backgroundScale,
+    isThemeable = isThemeable
 ) {
 
 

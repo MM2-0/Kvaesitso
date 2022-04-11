@@ -7,13 +7,14 @@ abstract class DynamicLauncherIcon(
     foreground: Drawable,
     background: Drawable?,
     foregroundScale: Float,
-    backgroundScale: Float
-)
-    : LauncherIcon(
-        foreground,
-        background,
-        foregroundScale,
-        backgroundScale,
+    backgroundScale: Float,
+    isThemeable: Boolean = false
+) : LauncherIcon(
+    foreground,
+    background,
+    foregroundScale,
+    backgroundScale,
+    isThemeable = isThemeable
 ) {
 
     abstract fun update(context: Context)

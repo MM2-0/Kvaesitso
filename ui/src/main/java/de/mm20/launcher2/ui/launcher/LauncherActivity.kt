@@ -36,9 +36,6 @@ class LauncherActivity : BaseActivity() {
 
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
-        val iconRepository: IconRepository by inject()
-        iconRepository.applyTheme(theme)
-
         binding = ActivityLauncherBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 

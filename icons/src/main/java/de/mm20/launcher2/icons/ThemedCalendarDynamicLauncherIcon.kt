@@ -2,6 +2,7 @@ package de.mm20.launcher2.icons
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
@@ -14,13 +15,13 @@ class ThemedCalendarDynamicLauncherIcon(
     foregroundScale: Float,
     val packageName: String,
     val foregroundIds: IntArray,
-    val foregroundTint: Int,
     background: Drawable,
 ) : DynamicLauncherIcon(
     foreground = ColorDrawable(0),
     background = background,
     foregroundScale = foregroundScale,
     backgroundScale = 1f,
+    isThemeable = true,
 ) {
 
     var currentDay = 0
@@ -36,7 +37,6 @@ class ThemedCalendarDynamicLauncherIcon(
         Executors.newSingleThreadExecutor().execute {
             val currentDayDrawable = resources.getDrawableOrNull(foregroundIds[day - 1])
                     ?: return@execute
-            currentDayDrawable.setTint(foregroundTint)
             foreground = currentDayDrawable
         }
         currentDay = day
