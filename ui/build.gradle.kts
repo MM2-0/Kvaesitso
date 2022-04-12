@@ -104,6 +104,8 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
 
+    implementation(project(":material-color-utilities"))
+
     implementation(project(":base"))
     implementation(project(":i18n"))
     implementation(project(":compat"))

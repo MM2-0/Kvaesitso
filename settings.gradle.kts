@@ -385,3 +385,4 @@ dependencyResolutionManagement {
 include(":notifications")
 include(":accounts")
 include(":appshortcuts")
+include(":material-color-utilities")

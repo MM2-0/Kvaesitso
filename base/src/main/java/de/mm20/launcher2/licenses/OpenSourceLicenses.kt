@@ -201,4 +201,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://github.com/promeG/TinyPinyin"
     ),
+    OpenSourceLibrary(
+        name = "material-color-utilities",
+        copyrightNote = "Copyright 2021 Google LLC",
+        description = "Algorithms and utilities that power the Material Design 3 (M3) color system, including choosing theme colors from images and creating tones of colors; all in a new color space.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/material-foundation/material-color-utilities"
+    ),
 )
