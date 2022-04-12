@@ -8,7 +8,6 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
@@ -49,31 +48,38 @@ fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme): MutableStat
     val darkTheme =
         themePreference == Theme.Dark || themePreference == Theme.System && isSystemInDarkTheme()
 
-    val state = remember(colorScheme, darkTheme) {
-        mutableStateOf(
-            when (colorScheme) {
-                AppearanceSettings.ColorScheme.BlackAndWhite -> {
+
+    when (colorScheme) {
+        AppearanceSettings.ColorScheme.BlackAndWhite -> {
+            return remember(darkTheme) {
+                mutableStateOf(
                     if (darkTheme) DarkBlackAndWhiteColorScheme else LightBlackAndWhiteColorScheme
-                }
-                else -> {
-                    if (darkTheme) {
-                        if (isAtLeastApiLevel(31)) dynamicDarkColorScheme(context)
-                        else DarkPre31DefaultColorScheme
-                    } else {
-                        if (isAtLeastApiLevel(31)) dynamicLightColorScheme(context)
-                        else LightPre31DefaultColorScheme
-                    }
+                )
+            }
+        }
+        else -> {
+            if (Build.VERSION.SDK_INT >= 31) {
+                return remember(darkTheme) {
+                    mutableStateOf(
+                        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                    )
                 }
             }
-        )
-    }
 
-    if (colorScheme == AppearanceSettings.ColorScheme.Wallpaper && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-        val wallpaperColors by wallpaperColorsAsState()
-        LaunchedEffect(wallpaperColors, darkTheme) {
-            state.value = WallpaperColorScheme(wallpaperColors, darkTheme)
+            if (Build.VERSION.SDK_INT >= 27 && Build.VERSION.SDK_INT < 31) {
+                val wallpaperColors by wallpaperColorsAsState()
+                val state = remember(wallpaperColors, darkTheme) {
+                    mutableStateOf(
+                        wallpaperColors?.let { MaterialYouCompatScheme(it, darkTheme) }
+                            ?: if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
+                    )
+                }
+                return state
+            }
+
+            return remember { mutableStateOf(if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme) }
+
         }
     }
 
-    return state
 }

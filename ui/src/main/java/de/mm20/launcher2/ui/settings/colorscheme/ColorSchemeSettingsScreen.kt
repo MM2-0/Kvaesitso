@@ -1,8 +1,5 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
-import android.os.Build
-import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.RadioButtonChecked
@@ -15,11 +12,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -40,12 +35,6 @@ fun ColorSchemeSettingsScreen() {
                     AppearanceSettings.ColorScheme.Default to R.string.preference_colors_default,
                     AppearanceSettings.ColorScheme.BlackAndWhite to R.string.preference_colors_bw,
                 )
-
-                if (isAtLeastApiLevel(Build.VERSION_CODES.O_MR1)) {
-                    items.add(
-                        AppearanceSettings.ColorScheme.Wallpaper to R.string.preference_colors_wallpaper
-                    )
-                }
 
                 for (cs in items) {
                     val scheme by colorSchemeAsState(cs.first)

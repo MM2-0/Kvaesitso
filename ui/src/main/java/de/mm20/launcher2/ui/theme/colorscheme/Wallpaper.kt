@@ -7,63 +7,41 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import de.mm20.launcher2.ui.theme.WallpaperColors
 import palettes.TonalPalette
+import scheme.Scheme
 
-fun WallpaperColorScheme(wallpaperColors: WallpaperColors, darkTheme: Boolean): ColorScheme {
-    val primary = TonalPalette.fromInt(wallpaperColors.primary.toArgb())
-    val secondary = TonalPalette.fromInt((wallpaperColors.secondary ?: wallpaperColors.primary).toArgb())
-    val tertiary = TonalPalette.fromInt((wallpaperColors.tertiary ?: wallpaperColors.primary).toArgb())
-
-    val neutral1 = TonalPalette.fromInt(Color.Black.toArgb())
-    val neutral2 = TonalPalette.fromInt(Color.Black.toArgb())
-
-    return if(darkTheme) {
-         darkColorScheme(
-             primary = Color(primary.tone(80)),
-             onPrimary = Color(primary.tone(20)),
-             primaryContainer = Color(primary.tone(30)),
-             onPrimaryContainer = Color(primary.tone(90)),
-             secondary = Color(secondary.tone(80)),
-             onSecondary = Color(secondary.tone(20)),
-             secondaryContainer = Color(secondary.tone(30)),
-             onSecondaryContainer = Color(secondary.tone(90)),
-             tertiary = Color(tertiary.tone(80)),
-             onTertiary = Color(tertiary.tone(20)),
-             tertiaryContainer = Color(tertiary.tone(30)),
-             onTertiaryContainer = Color(tertiary.tone(90)),
-             background = Color(neutral1.tone(10)),
-             onBackground = Color(neutral1.tone(90)),
-             surface = Color(neutral1.tone(10)),
-             onSurface = Color(neutral1.tone(90)),
-             surfaceVariant = Color(neutral2.tone(30)),
-             onSurfaceVariant = Color(neutral2.tone(80)),
-             outline = Color(neutral2.tone(60)),
-             inverseSurface = Color(neutral1.tone(90)),
-             inverseOnSurface = Color(neutral1.tone(20)),
-             inversePrimary = Color(primary.tone(40)),
-         )
+fun MaterialYouCompatScheme(wallpaperColors: WallpaperColors, darkTheme: Boolean): ColorScheme {
+    val scheme = if (darkTheme) {
+        Scheme.dark(wallpaperColors.primary.toArgb())
     } else {
-        lightColorScheme(
-            primary = Color(primary.tone(40)),
-            onPrimary = Color(primary.tone(100)),
-            primaryContainer = Color(primary.tone(90)),
-            onPrimaryContainer = Color(primary.tone(10)),
-            secondary = Color(secondary.tone(40)),
-            onSecondary = Color(secondary.tone(100)),
-            secondaryContainer = Color(secondary.tone(90)),
-            onSecondaryContainer = Color(secondary.tone(10)),
-            tertiary = Color(tertiary.tone(40)),
-            onTertiary = Color(tertiary.tone(100)),
-            tertiaryContainer = Color(tertiary.tone(90)),
-            onTertiaryContainer = Color(tertiary.tone(10)),
-            background = Color(neutral1.tone(99)),
-            onBackground = Color(neutral1.tone(10)),
-            surface = Color(neutral1.tone(99)),
-            onSurface = Color(neutral1.tone(10)),
-            surfaceVariant = Color(neutral2.tone(90)),
-            onSurfaceVariant = Color(neutral2.tone(30)),
-            outline = Color(neutral2.tone(50)),
-            inverseSurface = Color(neutral1.tone(20)),
-            inverseOnSurface = Color(neutral1.tone(95)),
-            inversePrimary = Color(primary.tone(80)),)
+        Scheme.light(wallpaperColors.primary.toArgb())
     }
+    return ColorScheme(
+        primary = Color(scheme.primary),
+        onPrimary = Color(scheme.onPrimary),
+        primaryContainer = Color(scheme.primaryContainer),
+        onPrimaryContainer = Color(scheme.onPrimaryContainer),
+        secondary = Color(scheme.secondary),
+        onSecondary = Color(scheme.onSecondary),
+        secondaryContainer = Color(scheme.secondaryContainer),
+        onSecondaryContainer = Color(scheme.onSecondaryContainer),
+        tertiary = Color(scheme.tertiary),
+        onTertiary = Color(scheme.onTertiary),
+        tertiaryContainer = Color(scheme.tertiaryContainer),
+        onTertiaryContainer = Color(scheme.onTertiaryContainer),
+        background = Color(scheme.background),
+        onBackground = Color(scheme.onBackground),
+        surface = Color(scheme.surface),
+        onSurface = Color(scheme.onSurface),
+        surfaceVariant = Color(scheme.surfaceVariant),
+        onSurfaceVariant = Color(scheme.onSurfaceVariant),
+        outline = Color(scheme.outline),
+        inverseSurface = Color(scheme.inverseSurface),
+        inverseOnSurface = Color(scheme.inverseOnSurface),
+        inversePrimary = Color(scheme.inversePrimary),
+        surfaceTint = Color(scheme.primary),
+        error = Color(scheme.error),
+        onError = Color(scheme.onError),
+        errorContainer = Color(scheme.errorContainer),
+        onErrorContainer = Color(scheme.onErrorContainer),
+    )
 }

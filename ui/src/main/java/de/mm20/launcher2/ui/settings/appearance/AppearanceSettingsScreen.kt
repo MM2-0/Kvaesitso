@@ -71,7 +71,6 @@ fun AppearanceSettingsScreen() {
                     summary = when (colorScheme) {
                         ColorScheme.Default -> stringResource(R.string.preference_colors_default)
                         ColorScheme.BlackAndWhite -> stringResource(R.string.preference_colors_bw)
-                        ColorScheme.Wallpaper -> stringResource(R.string.preference_colors_wallpaper)
                         else -> null
                     },
                     onClick = {

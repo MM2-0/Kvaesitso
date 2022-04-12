@@ -387,7 +387,6 @@
     <string name="preference_screen_colors">Color scheme</string>
     <string name="preference_colors_default">Default</string>
     <string name="preference_colors_bw">Black and White</string>
-    <string name="preference_colors_wallpaper">From wallpaper</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>

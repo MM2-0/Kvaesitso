@@ -4,7 +4,7 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-val LightPre31DefaultColorScheme = lightColorScheme(
+val LightDefaultColorScheme = lightColorScheme(
     primary = Color(0xFF3C6089),
     onPrimary = Color(0xFFFFFFFF),
     primaryContainer = Color(0xFFD1E4FF),
@@ -33,7 +33,7 @@ val LightPre31DefaultColorScheme = lightColorScheme(
     outline = Color(0xFF6D778C),
 )
 
-val DarkPre31DefaultColorScheme = darkColorScheme(
+val DarkDefaultColorScheme = darkColorScheme(
     primary = Color(0xFFA6C9F8),
     onPrimary = Color(0xFF033259),
     primaryContainer = Color(0xFF234870),
