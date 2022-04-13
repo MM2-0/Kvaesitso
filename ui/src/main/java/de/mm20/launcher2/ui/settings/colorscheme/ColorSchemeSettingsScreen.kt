@@ -15,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
+import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -32,14 +34,18 @@ fun ColorSchemeSettingsScreen() {
                 val colorScheme by viewModel.colorScheme.observeAsState()
 
                 val items = mutableListOf(
-                    AppearanceSettings.ColorScheme.Default to R.string.preference_colors_default,
-                    AppearanceSettings.ColorScheme.BlackAndWhite to R.string.preference_colors_bw,
+                    AppearanceSettings.ColorScheme.Default to stringResource(R.string.preference_colors_default),
+                    AppearanceSettings.ColorScheme.BlackAndWhite to stringResource(R.string.preference_colors_bw),
                 )
+
+                if (BuildConfig.DEBUG && isAtLeastApiLevel(27)) {
+                    items.add(AppearanceSettings.ColorScheme.DebugMaterialYouCompat to "Material You Compat")
+                }
 
                 for (cs in items) {
                     val scheme by colorSchemeAsState(cs.first)
                     Preference(
-                        title = stringResource(cs.second),
+                        title = cs.second,
                         icon = if (colorScheme == cs.first) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
                         onClick = { viewModel.setColorScheme(cs.first) },
                         controls = {

@@ -15,6 +15,7 @@ message Settings {
     enum ColorScheme {
       Default = 0;
       BlackAndWhite = 1;
+      DebugMaterialYouCompat = 2;
     }
     ColorScheme color_scheme = 6;
     bool dim_wallpaper = 7;
