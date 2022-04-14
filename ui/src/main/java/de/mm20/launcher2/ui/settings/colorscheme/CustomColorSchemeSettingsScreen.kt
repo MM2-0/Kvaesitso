@@ -497,7 +497,7 @@ fun CustomColorSchemeSettingsScreen() {
                     )
                 }
 
-                PreferenceCategory(stringResource(R.string.preference_category_custom_colors_light)) {
+                PreferenceCategory(stringResource(R.string.preference_category_custom_colors_dark)) {
                     val darkScheme by viewModel.darkScheme.observeAsState()
                     ColorPreference(
                         title = "Primary",
