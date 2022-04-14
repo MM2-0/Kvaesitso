@@ -22,11 +22,13 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.colorSchemeAsState
 
 @Composable
 fun ColorSchemeSettingsScreen() {
     val viewModel: ColorSchemeSettingsScreenVM = viewModel()
+    val navController = LocalNavController.current
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_colors)) {
         item {
@@ -36,6 +38,7 @@ fun ColorSchemeSettingsScreen() {
                 val items = mutableListOf(
                     AppearanceSettings.ColorScheme.Default to stringResource(R.string.preference_colors_default),
                     AppearanceSettings.ColorScheme.BlackAndWhite to stringResource(R.string.preference_colors_bw),
+                    AppearanceSettings.ColorScheme.Custom to stringResource(R.string.preference_colors_custom),
                 )
 
                 if (BuildConfig.DEBUG && isAtLeastApiLevel(27)) {
@@ -47,7 +50,12 @@ fun ColorSchemeSettingsScreen() {
                     Preference(
                         title = cs.second,
                         icon = if (colorScheme == cs.first) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,
-                        onClick = { viewModel.setColorScheme(cs.first) },
+                        onClick = {
+                            viewModel.setColorScheme(cs.first)
+                            if (cs.first == AppearanceSettings.ColorScheme.Custom) {
+                                navController?.navigate("settings/appearance/colorscheme/custom")
+                            }
+                        },
                         controls = {
                             ColorSchemePreview(scheme)
                         }

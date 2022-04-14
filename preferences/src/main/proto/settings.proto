@@ -16,8 +16,52 @@ message Settings {
       Default = 0;
       BlackAndWhite = 1;
       DebugMaterialYouCompat = 2;
+      Custom = 3;
     }
     ColorScheme color_scheme = 6;
+    message CustomColors {
+      bool advanced_mode = 1;
+      message BaseColors {
+        uint32 accent1 = 1;
+        uint32 accent2 = 2;
+        uint32 accent3 = 3;
+        uint32 neutral1 = 4;
+        uint32 neutral2 = 5;
+        uint32 error = 6;
+      }
+      BaseColors base_colors = 2;
+      message Scheme {
+        uint32 primary = 1;
+        uint32 on_primary = 2;
+        uint32 primary_container = 3;
+        uint32 on_primary_container = 4;
+        uint32 secondary = 5;
+        uint32 on_secondary = 6;
+        uint32 secondary_container = 7;
+        uint32 on_secondary_container = 8;
+        uint32 tertiary = 9;
+        uint32 on_tertiary = 10;
+        uint32 tertiary_container = 11;
+        uint32 on_tertiary_container = 12;
+        uint32 background = 13;
+        uint32 on_background = 14;
+        uint32 surface = 15;
+        uint32 on_surface = 16;
+        uint32 surface_variant = 17;
+        uint32 on_surface_variant = 18;
+        uint32 outline = 19;
+        uint32 inverse_surface = 20;
+        uint32 inverse_on_surface = 21;
+        uint32 inverse_primary = 22;
+        uint32 error = 23;
+        uint32 on_error = 24;
+        uint32 error_container = 25;
+        uint32 on_error_container = 26;
+      }
+      Scheme light_scheme = 3;
+      Scheme dark_scheme = 4;
+    }
+    CustomColors custom_colors = 8;
     bool dim_wallpaper = 7;
   }
   AppearanceSettings appearance = 2;

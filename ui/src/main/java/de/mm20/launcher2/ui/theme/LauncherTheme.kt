@@ -57,6 +57,18 @@ fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme): MutableStat
                 )
             }
         }
+        AppearanceSettings.ColorScheme.Custom -> {
+            val colors by remember(darkTheme) {
+                dataStore.data.map { if (darkTheme) it.appearance.customColors.darkScheme else it.appearance.customColors.lightScheme }
+            }.collectAsState(null)
+            val state = remember(colors, darkTheme) {
+                mutableStateOf(
+                    colors?.let { CustomColorScheme(it) }
+                        ?: if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
+                )
+            }
+            return state
+        }
         else -> {
             if (Build.VERSION.SDK_INT >= 27 && (Build.VERSION.SDK_INT < 31 || colorScheme == AppearanceSettings.ColorScheme.DebugMaterialYouCompat)) {
                 val wallpaperColors by wallpaperColorsAsState()
@@ -71,7 +83,9 @@ fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme): MutableStat
             if (Build.VERSION.SDK_INT >= 31) {
                 return remember(darkTheme) {
                     mutableStateOf(
-                        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+                        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
+                            context
+                        )
                     )
                 }
             }

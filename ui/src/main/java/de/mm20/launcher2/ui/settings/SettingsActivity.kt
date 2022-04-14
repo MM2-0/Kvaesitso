@@ -28,6 +28,7 @@ import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.CustomColorSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -87,6 +88,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/appearance/colorscheme") {
                             ColorSchemeSettingsScreen()
+                        }
+                        composable("settings/appearance/colorscheme/custom") {
+                            CustomColorSchemeSettingsScreen()
                         }
                         composable("settings/appearance/cards") {
                             CardsSettingsScreen()

@@ -20,6 +20,7 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
             Migration_2_3(),
             Migration_3_4(),
             Migration_4_5(),
+            Migration_5_6(),
         )
     },
     corruptionHandler = ReplaceFileCorruptionHandler {
@@ -29,4 +30,4 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     }
 )
 
-internal const val SchemaVersion = 5
+internal const val SchemaVersion = 6

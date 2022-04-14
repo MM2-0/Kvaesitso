@@ -67,5 +67,6 @@ dependencies {
     implementation(project(":i18n"))
     implementation(project(":base"))
     implementation(project(":crashreporter"))
+    implementation(project(":material-color-utilities"))
 
 }
