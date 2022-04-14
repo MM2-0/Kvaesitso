@@ -389,4 +389,16 @@
     <string name="preference_clockwidget_favorites_part">Favoriten</string>
     <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
     <string name="preference_grid_icon_size">Symbolgröße</string>
+    <string name="preference_custom_colors_advanced_mode">Erweiterter Modus</string>
+    <string name="preference_custom_colors_a2">Sekundär</string>
+    <string name="preference_custom_colors_a3">Tertiär</string>
+    <string name="preference_custom_colors_a1">Primär</string>
+    <string name="preference_custom_colors_n1">Neutral</string>
+    <string name="preference_custom_colors_n2">Neutral / Variante</string>
+    <string name="preference_custom_colors_error">Fehler</string>
+    <string name="preference_custom_colors_simple_mode">Einfacher Modus</string>
+    <string name="preference_colors_auto_generate">Aus Primärfarbe generieren</string>
+    <string name="preference_category_custom_colors_light">Helles Farbschema</string>
+    <string name="preference_category_custom_colors_dark">Dunkles Farbschema</string>
+    <string name="preference_colors_custom">Benutzerdefiniert</string>
 </resources>
