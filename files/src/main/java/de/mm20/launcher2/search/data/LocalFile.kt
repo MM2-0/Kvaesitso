@@ -8,7 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.location.Geocoder
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
-import android.os.Build
+import android.net.Uri
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
@@ -18,7 +18,6 @@ import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -41,7 +40,11 @@ open class LocalFile(
 
     override val isStoredInCloud = false
 
-    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
+    override suspend fun loadIcon(
+        context: Context,
+        size: Int,
+        legacyIconBackground: LegacyIconBackground
+    ): LauncherIcon? {
         if (!JavaIOFile(path).exists()) return null
         when {
             mimeType.startsWith("image/") -> {
@@ -126,10 +129,14 @@ open class LocalFile(
 
 
     override fun getLaunchIntent(context: Context): Intent? {
-        val uri = FileProvider.getUriForFile(
-            context,
-            context.applicationContext.packageName + ".fileprovider", JavaIOFile(path)
-        )
+        val uri = if (isDirectory) {
+            Uri.parse(path)
+        } else {
+            FileProvider.getUriForFile(
+                context,
+                context.applicationContext.packageName + ".fileprovider", JavaIOFile(path)
+            )
+        }
         return Intent(Intent.ACTION_VIEW)
             .setDataAndType(uri, mimeType)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -152,13 +159,13 @@ open class LocalFile(
             context.contentResolver.delete(
                 MediaStore.Files.getContentUri("external"),
                 "${MediaStore.Files.FileColumns._ID} = ?",
-                arrayOf(id.toString()))
+                arrayOf(id.toString())
+            )
         }
     }
 
 
-
-    companion object: KoinComponent {
+    companion object : KoinComponent {
         internal fun getMimetypeByFileExtension(extension: String): String {
             return when (extension) {
                 "apk" -> "application/vnd.android.package-archive"

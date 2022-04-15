@@ -1,6 +1,7 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.ktx.jsonObjectOf
@@ -51,7 +52,7 @@ class LocalFileDeserializer(
             val directory = java.io.File(path).isDirectory
             val id = cursor.getLong(0)
             val mimeType = cursor.getStringOrNull(3)
-                ?: if (directory) "inode/directory" else LocalFile.getMimetypeByFileExtension(
+                ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
                     path.substringAfterLast(
                         '.'
                     )

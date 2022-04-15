@@ -1,6 +1,7 @@
 package de.mm20.launcher2.files.providers
 
 import android.content.Context
+import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -44,7 +45,7 @@ internal class LocalFileProvider(
             if (!java.io.File(path).exists()) continue
             val directory = java.io.File(path).isDirectory
             val mimeType = (cursor.getStringOrNull(4)
-                ?: if (directory) "inode/directory" else LocalFile.getMimetypeByFileExtension(
+                ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
                     path.substringAfterLast(
                         '.'
                     )
