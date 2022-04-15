@@ -32,7 +32,7 @@ fun CustomColorSchemeSettingsScreen() {
                 onDismissRequest = { showOverflowMenu = false }) {
                 if (advancedMode == false) {
                     DropdownMenuItem(
-                        text = { Text("Generate from primary color") },
+                        text = { Text(stringResource(R.string.preference_colors_auto_generate)) },
                         onClick = {
                             viewModel.generateFromPrimaryColor()
                             showOverflowMenu = false
