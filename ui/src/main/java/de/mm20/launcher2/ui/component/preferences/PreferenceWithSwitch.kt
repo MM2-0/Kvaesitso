@@ -2,10 +2,10 @@ package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Switch
-import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.Switch
+import androidx.compose.material.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,7 +48,13 @@ fun PreferenceWithSwitch(
             modifier = Modifier.padding(horizontal = 16.dp),
             checked = switchValue,
             enabled = enabled,
-            onCheckedChange = onSwitchChanged
+            onCheckedChange = onSwitchChanged,
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onSurface,
+                checkedTrackColor = MaterialTheme.colorScheme.primary,
+                uncheckedTrackColor = MaterialTheme.colorScheme.onSurface,
+            )
         )
     }
 }
