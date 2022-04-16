@@ -401,4 +401,6 @@
     <string name="preference_category_custom_colors_light">Helles Farbschema</string>
     <string name="preference_category_custom_colors_dark">Dunkles Farbschema</string>
     <string name="preference_colors_custom">Benutzerdefiniert</string>
+    <string name="preference_search_currencyconverter">Währungsumrechner</string>
+    <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
 </resources>
