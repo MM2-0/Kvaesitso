@@ -13,6 +13,8 @@ interface WidgetRepository {
     fun addWidget(widget: Widget, position: Int)
     fun removeWidget(widget: Widget)
     fun setWidgetHeight(widget: Widget, newHeight: Int)
+    fun isWeatherWidgetEnabled(): Flow<Boolean>
+    fun isMusicWidgetEnabled(): Flow<Boolean>
     fun isCalendarWidgetEnabled(): Flow<Boolean>
     fun isFavoritesWidgetEnabled(): Flow<Boolean>
 }
@@ -76,6 +78,14 @@ internal class WidgetRepositoryImpl(
                 )
             }
         }
+    }
+
+    override fun isWeatherWidgetEnabled(): Flow<Boolean> {
+        return database.widgetDao().exists("internal", "weather")
+    }
+
+    override fun isMusicWidgetEnabled(): Flow<Boolean> {
+        return database.widgetDao().exists("internal", "music")
     }
 
     override fun isCalendarWidgetEnabled(): Flow<Boolean> {
