@@ -38,6 +38,7 @@ import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
+import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
@@ -97,6 +98,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search") {
                             SearchSettingsScreen()
+                        }
+                        composable("settings/search/unitconverter") {
+                            UnitConverterSettingsScreen()
                         }
                         composable("settings/search/wikipedia") {
                             WikipediaSettingsScreen()

@@ -4,24 +4,36 @@ import android.content.Context
 import android.util.Log
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
-class CurrencyRepository(val context: Context) {
+class CurrencyRepository(
+    private val context: Context,
+) {
 
-    init {
-        val currencyWorker = PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 60, TimeUnit.MINUTES)
+    fun enableCurrencyUpdateWorker() {
+        val currencyWorker =
+            PeriodicWorkRequest.Builder(ExchangeRateWorker::class.java, 60, TimeUnit.MINUTES)
                 .build()
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork("ExchangeRates",
-                ExistingPeriodicWorkPolicy.REPLACE, currencyWorker)
+        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+            "ExchangeRates",
+            ExistingPeriodicWorkPolicy.REPLACE, currencyWorker
+        )
     }
 
-    suspend fun convertCurrency(fromCurrency: String, value: Double, toCurrency: String? = null): List<Pair<String, Double>> {
+    fun disableCurrencyUpdateWorker() {
+        WorkManager.getInstance(context).cancelUniqueWork("ExchangeRates")
+    }
+
+    suspend fun convertCurrency(
+        fromCurrency: String,
+        value: Double,
+        toCurrency: String? = null
+    ): List<Pair<String, Double>> {
 
         return withContext<List<Pair<String, Double>>>(Dispatchers.IO) {
             val dao = AppDatabase.getInstance(context)
-                    .currencyDao()
+                .currencyDao()
 
             val from = Currency(dao.getCurrency(fromCurrency) ?: return@withContext emptyList())
 
@@ -38,7 +50,10 @@ class CurrencyRepository(val context: Context) {
             } else {
                 val to = Currency(dao.getCurrency(toCurrency) ?: return@withContext emptyList())
                 if (from.lastUpdate != to.lastUpdate) {
-                    Log.w("MM20", "Exchange rate update dates do not match: $fromCurrency, $toCurrency")
+                    Log.w(
+                        "MM20",
+                        "Exchange rate update dates do not match: $fromCurrency, $toCurrency"
+                    )
                     return@withContext emptyList()
                 }
                 listOf(toCurrency to value * to.value / from.value)

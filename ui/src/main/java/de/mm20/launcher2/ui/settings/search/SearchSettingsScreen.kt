@@ -128,13 +128,16 @@ fun SearchSettingsScreen() {
                 )
 
                 val unitConverter by viewModel.unitConverter.observeAsState()
-                SwitchPreference(
+                PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_unitconverter),
                     summary = stringResource(R.string.preference_search_unitconverter_summary),
                     icon = Icons.Rounded.Loop,
-                    value = unitConverter == true,
-                    onValueChanged = {
+                    switchValue = unitConverter == true,
+                    onSwitchChanged = {
                         viewModel.setUnitConverter(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/unitconverter")
                     }
                 )
 

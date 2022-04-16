@@ -87,6 +87,7 @@ fun createFactorySettings(context: Context): Settings {
             Settings.UnitConverterSearchSettings
                 .newBuilder()
                 .setEnabled(true)
+                .setCurrencies(true)
         )
         .setWikipediaSearch(
             Settings.WikipediaSearchSettings

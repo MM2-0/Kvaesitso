@@ -12,14 +12,13 @@ import java.text.DecimalFormat
 import java.util.Locale
 import java.util.Currency as JCurrency
 import kotlin.math.abs
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class CurrencyConverter : Converter, KoinComponent {
+class CurrencyConverter(
+    private val repository: CurrencyRepository,
+) : Converter {
 
     override val dimension: Dimension = Dimension.Currency
 
-    private val repository: CurrencyRepository by inject()
 
     private val topCurrencies = arrayOf("USD", "EUR", "JPY", "GBP", "AUD")
 

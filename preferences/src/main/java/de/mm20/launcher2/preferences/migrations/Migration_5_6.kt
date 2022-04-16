@@ -15,6 +15,9 @@ class Migration_5_6: VersionedMigration(5, 6) {
                     .setLightScheme(DefaultLightCustomColorScheme)
                     .setDarkScheme(DefaultDarkCustomColorScheme)
                 )
+        ).setUnitConverterSearch(
+            builder.unitConverterSearch.toBuilder()
+                .setCurrencies(true)
         )
     }
 }

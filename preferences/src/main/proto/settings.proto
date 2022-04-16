@@ -136,6 +136,7 @@ message Settings {
 
   message UnitConverterSearchSettings {
     bool enabled = 1;
+    bool currencies = 2;
   }
   UnitConverterSearchSettings unit_converter_search = 13;
 

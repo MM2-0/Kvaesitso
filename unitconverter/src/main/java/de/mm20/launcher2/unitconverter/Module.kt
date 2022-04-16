@@ -7,5 +7,5 @@ import org.koin.dsl.module
 
 val unitConverterModule = module {
     single { CurrencyRepository(androidContext()) }
-    single<UnitConverterRepository> { UnitConverterRepositoryImpl(androidContext()) }
+    single<UnitConverterRepository> { UnitConverterRepositoryImpl(androidContext(), get()) }
 }
