@@ -1,11 +1,13 @@
 package de.mm20.launcher2.ui.launcher.search.apps
 
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Process
 import android.provider.Settings
 import android.service.notification.StatusBarNotification
 import androidx.core.content.FileProvider
@@ -40,23 +42,39 @@ class AppItemVM(
     }
 
     fun openAppInfo(context: Context) {
-        context.tryStartActivity(
-            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.parse("package:${app.`package`}")
-                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-        )
+        val launcherApps = context.getSystemService<LauncherApps>()!!
+
+        if (app is LauncherApp) {
+            launcherApps.startAppDetailsActivity(
+                ComponentName(app.`package`, app.activity),
+                app.getUser(),
+                null,
+                null
+            )
+        } else {
+            context.tryStartActivity(
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.parse("package:${app.`package`}")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+            )
+        }
     }
 
     suspend fun shareApkFile(context: Context) {
+        val launcherApps = context.getSystemService<LauncherApps>()!!
         val fileCopy = java.io.File(
             context.cacheDir,
             "${app.`package`}-${app.version}.apk"
         )
         withContext(Dispatchers.IO) {
             try {
-                val info = context.packageManager
-                    .getApplicationInfo(app.`package`, 0)
+                val user = (app as? LauncherApp)?.getUser()
+                val info = if (user != null) {
+                    launcherApps.getApplicationInfo(app.`package`, 0, user)
+                } else {
+                    context.packageManager.getApplicationInfo(app.`package`, 0)
+                }
                 val file = java.io.File(info.publicSourceDir)
 
                 try {
@@ -89,7 +107,7 @@ class AppItemVM(
         context.startActivity(Intent.createChooser(shareIntent, null))
     }
 
-    val canUninstall = app.flags and ApplicationInfo.FLAG_SYSTEM == 0
+    val canUninstall = app.flags and ApplicationInfo.FLAG_SYSTEM == 0 && (app as LauncherApp).getUser() == Process.myUserHandle()
 
     fun uninstall(context: Context) {
         val intent = Intent(Intent.ACTION_DELETE)
