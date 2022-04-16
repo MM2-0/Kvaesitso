@@ -386,4 +386,16 @@
     <string name="preference_clockwidget_favorites_part_summary">显示已固定项目的第一行</string>
     <string name="widget_name_favorites">收藏夹</string>
     <string name="preference_grid_icon_size">图标大小</string>
+    <string name="preference_custom_colors_advanced_mode">高级模式</string>
+    <string name="preference_colors_custom">自定义</string>
+    <string name="preference_custom_colors_a1">主色</string>
+    <string name="preference_custom_colors_a2">辅色</string>
+    <string name="preference_custom_colors_a3">点缀色</string>
+    <string name="preference_custom_colors_simple_mode">简易模式</string>
+    <string name="preference_custom_colors_n1">中性色</string>
+    <string name="preference_custom_colors_n2">中性变体色</string>
+    <string name="preference_colors_auto_generate">从主色中生成色彩方案</string>
+    <string name="preference_custom_colors_error">错误色</string>
+    <string name="preference_category_custom_colors_light">亮色方案</string>
+    <string name="preference_category_custom_colors_dark">暗色方案</string>
 </resources>
