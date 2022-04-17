@@ -35,7 +35,7 @@ internal class AppRepositoryImpl(
     private val launcherApps =
         context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
-    private val installedApps = MutableStateFlow<List<Application>>(emptyList())
+    private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
     private val installations = MutableStateFlow<MutableList<AppInstallation>>(mutableListOf())
     private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
     private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
@@ -85,7 +85,7 @@ internal class AppRepositoryImpl(
             }
 
             override fun onPackageRemoved(packageName: String, user: UserHandle) {
-                installedApps.value = installedApps.value.filter { packageName != (it.`package`) }
+                installedApps.value = installedApps.value.filter { packageName != (it.`package`) || it.getUser() != user }
             }
 
             override fun onShortcutsChanged(
@@ -167,7 +167,7 @@ internal class AppRepositoryImpl(
         return suspendedPackages
     }
 
-    private fun getApplications(packageName: String): List<Application> {
+    private fun getApplications(packageName: String): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
         return profiles.map { p ->
@@ -179,7 +179,7 @@ internal class AppRepositoryImpl(
     private fun getApplication(
         launcherActivityInfo: LauncherActivityInfo,
         profile: UserHandle
-    ): Application? {
+    ): LauncherApp? {
         if (launcherActivityInfo.applicationInfo.packageName == context.packageName && !context.packageName.endsWith(
                 ".debug"
             )
