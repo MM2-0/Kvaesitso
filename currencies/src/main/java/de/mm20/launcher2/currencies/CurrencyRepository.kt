@@ -17,7 +17,7 @@ class CurrencyRepository(
                 .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "ExchangeRates",
-            ExistingPeriodicWorkPolicy.REPLACE, currencyWorker
+            ExistingPeriodicWorkPolicy.KEEP, currencyWorker
         )
     }
 
