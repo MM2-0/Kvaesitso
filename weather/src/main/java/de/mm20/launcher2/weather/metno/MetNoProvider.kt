@@ -149,7 +149,7 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
             digest.update(signature.toByteArray())
             Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
         } else "null"
-        return "${context.packageName}[signature:$signatureHash] $contactData"
+        return "${context.packageName}/signature:$signatureHash $contactData"
     }
 
     override fun isAvailable(): Boolean {
