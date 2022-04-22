@@ -1,33 +1,42 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.WallpaperManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.core.view.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.icons.DynamicIconController
-import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
-import de.mm20.launcher2.ui.databinding.ActivityLauncherBinding
+import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
-import de.mm20.launcher2.ui.launcher.modals.HiddenItemsView
+import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
+import de.mm20.launcher2.ui.theme.LauncherTheme
 import org.koin.android.ext.android.inject
 
 
 class LauncherActivity : BaseActivity() {
 
     private val viewModel: LauncherActivityVM by viewModels()
-
-    private lateinit var binding: ActivityLauncherBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,43 +45,46 @@ class LauncherActivity : BaseActivity() {
 
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
-        binding = ActivityLauncherBinding.inflate(LayoutInflater.from(this))
-        setContentView(binding.root)
+        setContent {
+            LauncherTheme {
+                ProvideSettings {
+                    val lightStatus by viewModel.lightStatusBar.observeAsState(false)
+                    val lightNav by viewModel.lightNavBar.observeAsState(false)
+                    val hideStatus by viewModel.hideStatusBar.observeAsState(false)
+                    val hideNav by viewModel.hideNavBar.observeAsState(false)
+                    val dimBackground by viewModel.dimBackground.observeAsState(false)
 
-        viewModel.dimBackground.observe(this) { dim ->
-            window.attributes = window.attributes.also {
-                if (dim) {
-                    binding.rootView.setBackgroundColor(0x4C000000)
-                } else {
-                    binding.rootView.setBackgroundColor(0)
+                    val systemUiController = rememberSystemUiController()
+
+                    LaunchedEffect(hideStatus) {
+                        systemUiController.isStatusBarVisible = !hideStatus
+                    }
+                    LaunchedEffect(hideNav) {
+                        systemUiController.isNavigationBarVisible = !hideNav
+                    }
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
+                        contentAlignment = Alignment.BottomCenter
+                    ) {
+                        NavBarEffects(modifier = Modifier.fillMaxSize())
+                        PullDownScaffold(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .systemBarsPadding(),
+                            darkStatusBarIcons = lightStatus,
+                            darkNavBarIcons = lightNav,
+                        )
+                    }
+                    val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
+                    if (showHiddenItems) {
+                        HiddenItemsSheet(onDismiss = {
+                            viewModel.hideHiddenItems()
+                        })
+                    }
                 }
-            }
-        }
-
-        viewModel.lightStatusBar.observe(this) {
-            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
-            windowController.isAppearanceLightStatusBars = it
-        }
-
-        viewModel.lightNavBar.observe(this) {
-            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
-            windowController.isAppearanceLightNavigationBars = it
-        }
-
-        viewModel.hideStatusBar.observe(this) {
-            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
-            if (it) {
-                windowController.hide(WindowInsetsCompat.Type.statusBars())
-            } else {
-                windowController.show(WindowInsetsCompat.Type.statusBars())
-            }
-        }
-        viewModel.hideNavBar.observe(this) {
-            val windowController = WindowCompat.getInsetsController(window, binding.rootView)
-            if (it) {
-                windowController.hide(WindowInsetsCompat.Type.navigationBars())
-            } else {
-                windowController.show(WindowInsetsCompat.Type.navigationBars())
             }
         }
 
@@ -99,23 +111,6 @@ class LauncherActivity : BaseActivity() {
             }
         }
 
-        var hiddenItemsView: HiddenItemsView? = null
-        viewModel.isHiddenItemsShown.observe(this) {
-            if (it) {
-                if (hiddenItemsView != null) return@observe
-                hiddenItemsView = HiddenItemsView(this).apply {
-                    onDismiss = {
-                        viewModel.hideHiddenItems()
-                    }
-                }
-                binding.rootView.addView(hiddenItemsView)
-            } else {
-                if (hiddenItemsView == null) return@observe
-                binding.rootView.removeView(hiddenItemsView)
-                hiddenItemsView = null
-            }
-        }
-
         val dynamicIconController: DynamicIconController by inject()
 
         lifecycle.addObserver(dynamicIconController)
@@ -123,18 +118,17 @@ class LauncherActivity : BaseActivity() {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        val windowController = WindowCompat.getInsetsController(window, binding.rootView)
+        val windowController = WindowCompat.getInsetsController(window, window.decorView.rootView)
         windowController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     override fun onResume() {
         super.onResume()
-        binding.activityStartOverlay.visibility = View.INVISIBLE
 
-        binding.container.doOnNextLayout {
+        /*binding.container.doOnNextLayout {
             WallpaperManager.getInstance(this).setWallpaperOffsets(it.windowToken, 0.5f, 0.5f)
-        }
+        }*/
     }
 
     override fun onNewIntent(intent: Intent?) {

@@ -18,13 +18,7 @@ import org.koin.core.component.inject
 class WidgetsVM : ViewModel(), KoinComponent {
     private val widgetRepository: WidgetRepository by inject()
 
-    val isEditMode = MutableLiveData(false)
-
     val widgets = widgetRepository.getWidgets().asLiveData()
-
-    fun setEditMode(editMode: Boolean) {
-        isEditMode.value = editMode
-    }
 
     fun addWidget(widget: Widget) {
         widgetRepository.addWidget(widget, widgets.value?.size ?: 0)

@@ -23,7 +23,7 @@ import kotlin.math.roundToInt
 
 @Composable
 fun NavBarEffects(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
 
@@ -91,7 +91,7 @@ fun NavBarEffects(
                 val bubble = newBubbles[i]
                 val oldBubble = bubbles[i]
                 if (oldBubble.lifetime <= 0f) {
-                    bubble.posX = (Math.random() * 64 - 32).toFloat() * dp
+                    bubble.posX = (Math.random() * 48 - 24).toFloat() * dp
                     bubble.posY = 0f
                     bubble.deltaX = (Math.random() - 0.5).toFloat() * 1f * dp
                     bubble.deltaY = Math.random().toFloat() * 3f * dp

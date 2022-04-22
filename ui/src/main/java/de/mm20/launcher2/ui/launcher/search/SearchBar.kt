@@ -55,34 +55,43 @@ import java.io.File
 
 @Composable
 fun SearchBar(
-    level: SearchBarLevel
+    modifier: Modifier = Modifier,
+    level: SearchBarLevel,
+    focused: Boolean,
+    onFocusChange: (Boolean) -> Unit
 ) {
     val searchViewModel: SearchVM = viewModel()
     val activityViewModel: LauncherActivityVM = viewModel()
-    val viewModel: SearchBarVM = viewModel()
 
     val dataStore: LauncherDataStore by inject()
 
     val style by remember { dataStore.data.map { it.searchBar.searchBarStyle } }
         .collectAsState(SearchBarSettings.SearchBarStyle.Hidden)
 
-    val focused by viewModel.focused.observeAsState(false)
-
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    LaunchedEffect(focused) {
-        if (focused) focusRequester.requestFocus()
-        else focusManager.clearFocus()
-    }
-
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(focused) {
+        val f = focused
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            try {
+                if (f) focusRequester.requestFocus()
+                awaitCancellation()
+            } finally {
+                focusManager.clearFocus()
+            }
+        }
+    }
 
     val query by searchViewModel.searchQuery.observeAsState("")
 
     val websearches by searchViewModel.websearchResults.observeAsState(emptyList())
 
     SearchBar(
+        modifier,
         level,
         websearches,
         value = query,
@@ -137,10 +146,10 @@ fun SearchBar(
         },
         focusRequester = focusRequester,
         onFocus = {
-            viewModel.setFocused(true)
+            onFocusChange(true)
         },
         onUnfocus = {
-            viewModel.setFocused(false)
+            onFocusChange(false)
         }
     )
 }
@@ -148,6 +157,7 @@ fun SearchBar(
 @OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun SearchBar(
+    modifier: Modifier = Modifier,
     level: SearchBarLevel,
     websearches: List<Websearch>,
     overflowMenu: @Composable (show: Boolean, onDismissRequest: () -> Unit) -> Unit = { _, _ -> },
@@ -230,7 +240,7 @@ fun SearchBar(
     val rightIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
 
     LauncherCard(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
             .alpha(opacity)
@@ -259,7 +269,6 @@ fun SearchBar(
                             color = contentColor
                         )
                     }
-                    val focusManager = LocalFocusManager.current
                     LaunchedEffect(level) {
                         if (level == SearchBarLevel.Resting) onUnfocus()
                     }
