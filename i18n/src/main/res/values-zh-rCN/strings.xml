@@ -398,4 +398,6 @@
     <string name="preference_custom_colors_error">错误色</string>
     <string name="preference_category_custom_colors_light">亮色方案</string>
     <string name="preference_category_custom_colors_dark">暗色方案</string>
+    <string name="preference_search_currencyconverter">货币转换器</string>
+    <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
 </resources>
