@@ -44,6 +44,7 @@ import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
@@ -99,7 +100,7 @@ fun PullDownScaffold(
 
     val dp = LocalDensity.current.density
 
-    val offsetY = remember { Animatable(0.dp, Dp.VectorConverter) }
+    val offsetY = remember { mutableStateOf(0.dp) }
     var searchBarOffset by remember { mutableStateOf(0.dp) }
 
     val blurWallpaper = isSearchOpen || offsetY.value > 48.dp || widgetsScrollState.value > 0
@@ -127,24 +128,18 @@ fun PullDownScaffold(
                 val consumed = when {
                     isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && searchScrollState.value - available.y < 0) -> {
                         val consumed = available.y - searchScrollState.value
-                        scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp))
-                        }
+                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp)
                         consumed
                     }
                     isSearchOpen && (offsetY.value < 0.dp || source == NestedScrollSource.Drag && searchScrollState.value - available.y > searchScrollState.maxValue) -> {
                         val consumed =
                             available.y - (searchScrollState.maxValue - searchScrollState.value)
-                        scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(-64.dp, 0.dp))
-                        }
+                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(-64.dp, 0.dp)
                         consumed
                     }
                     !isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && widgetsScrollState.value - available.y < 0) -> {
                         val consumed = available.y - widgetsScrollState.value
-                        scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp))
-                        }
+                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp)
                         consumed
                     }
                     else -> {
