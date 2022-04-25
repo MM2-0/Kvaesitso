@@ -128,7 +128,7 @@ fun PullDownScaffold(
                     isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && searchScrollState.value - available.y < 0) -> {
                         val consumed = available.y - searchScrollState.value
                         scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp..64.dp))
+                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp))
                         }
                         consumed
                     }
@@ -136,14 +136,14 @@ fun PullDownScaffold(
                         val consumed =
                             available.y - (searchScrollState.maxValue - searchScrollState.value)
                         scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(-64.dp..0.dp))
+                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(-64.dp, 0.dp))
                         }
                         consumed
                     }
                     !isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && widgetsScrollState.value - available.y < 0) -> {
                         val consumed = available.y - widgetsScrollState.value
                         scope.launch {
-                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp..64.dp))
+                            offsetY.snapTo((offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp))
                         }
                         consumed
                     }
