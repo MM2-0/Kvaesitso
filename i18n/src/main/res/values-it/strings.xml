@@ -367,4 +367,5 @@
     <string name="no_account_owncloud">Non sei ancora connesso a un account Owncloud</string>
     <string name="no_account_microsoft">Non sei ancora connesso a un account Microsoft</string>
     <string name="no_account_google">Non sei ancora connesso a un account Google</string>
+    <string name="widget_name_favorites">Preferiti</string>
 </resources>
