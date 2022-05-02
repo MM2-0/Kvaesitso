@@ -287,9 +287,8 @@ internal class MusicRepositoryImpl(
     override fun openPlayerChooser(context: Context) {
         context.startActivity(
             Intent.createChooser(
-                Intent(Intent.ACTION_MAIN)
+                Intent("android.intent.action.MUSIC_PLAYER")
                     .apply {
-                        addCategory(Intent.CATEGORY_APP_MUSIC)
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK
                     },
                 null
