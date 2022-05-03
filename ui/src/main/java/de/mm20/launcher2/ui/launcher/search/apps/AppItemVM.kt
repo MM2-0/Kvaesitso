@@ -107,7 +107,7 @@ class AppItemVM(
         context.startActivity(Intent.createChooser(shareIntent, null))
     }
 
-    val canUninstall = app.flags and ApplicationInfo.FLAG_SYSTEM == 0 && (app as LauncherApp).getUser() == Process.myUserHandle()
+    val canUninstall = app.flags and ApplicationInfo.FLAG_SYSTEM == 0 && (app as? LauncherApp)?.getUser() == Process.myUserHandle()
 
     fun uninstall(context: Context) {
         val intent = Intent(Intent.ACTION_DELETE)
