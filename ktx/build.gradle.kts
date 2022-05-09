@@ -31,6 +31,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    namespace = "de.mm20.launcher2.ktx"
 }
 
 dependencies {

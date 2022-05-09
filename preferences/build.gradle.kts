@@ -34,6 +34,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    namespace = "de.mm20.launcher2.preferences"
 }
 
 protobuf {
