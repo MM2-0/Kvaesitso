@@ -298,6 +298,7 @@ fun SearchBarStylePreference(
                             .background(MaterialTheme.colorScheme.secondary)
                     ) {
                         SearchBar(
+                            modifier = Modifier.padding(8.dp),
                             level = level,
                             style = styles[it],
                             websearches = emptyList(),
