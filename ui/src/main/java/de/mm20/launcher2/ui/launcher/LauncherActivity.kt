@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -73,7 +74,8 @@ class LauncherActivity : BaseActivity() {
                         PullDownScaffold(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .systemBarsPadding(),
+                                .systemBarsPadding()
+                                .imePadding(),
                             darkStatusBarIcons = lightStatus,
                             darkNavBarIcons = lightNav,
                         )
