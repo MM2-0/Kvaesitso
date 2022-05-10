@@ -46,6 +46,7 @@ import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
+import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.awaitCancellation
@@ -58,7 +59,8 @@ fun SearchBar(
     modifier: Modifier = Modifier,
     level: SearchBarLevel,
     focused: Boolean,
-    onFocusChange: (Boolean) -> Unit
+    onFocusChange: (Boolean) -> Unit,
+    reverse: Boolean = false,
 ) {
     val searchViewModel: SearchVM = viewModel()
     val activityViewModel: LauncherActivityVM = viewModel()
@@ -150,7 +152,8 @@ fun SearchBar(
         },
         onUnfocus = {
             onFocusChange(false)
-        }
+        },
+        reverse = reverse
     )
 }
 
@@ -166,7 +169,8 @@ fun SearchBar(
     onValueChange: (String) -> Unit,
     onFocus: () -> Unit = {},
     onUnfocus: () -> Unit = {},
-    focusRequester: FocusRequester = remember { FocusRequester() }
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    reverse: Boolean = false,
 ) {
     val context = LocalContext.current
 
@@ -241,14 +245,13 @@ fun SearchBar(
 
     LauncherCard(
         modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
-            .alpha(opacity)
-            .padding(8.dp),
+            .alpha(opacity),
         backgroundOpacity = backgroundOpacity,
         elevation = elevation
     ) {
-        Column {
+        Column(
+            verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
+        ) {
             Row(
                 modifier = Modifier.height(48.dp),
                 verticalAlignment = Alignment.CenterVertically

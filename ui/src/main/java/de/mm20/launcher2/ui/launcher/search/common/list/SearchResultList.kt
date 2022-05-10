@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -9,14 +9,17 @@ import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.layout.BottomReversed
 
 @Composable
 fun SearchResultList(
     items: List<Searchable>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    reverse: Boolean = false
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
     ) {
         for (item in items) {
             key(item.key) {

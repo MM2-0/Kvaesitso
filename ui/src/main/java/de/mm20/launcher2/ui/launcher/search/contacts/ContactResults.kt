@@ -24,7 +24,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 
 @Composable
-fun ColumnScope.ContactResults() {
+fun ColumnScope.ContactResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val context = LocalContext.current
     val contacts by viewModel.contactResults.observeAsState(emptyList())
@@ -34,7 +34,7 @@ fun ColumnScope.ContactResults() {
     AnimatedVisibility(contacts.isNotEmpty() || (!isSearchEmpty && missingPermission)) {
         LauncherCard(
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
                 .fillMaxWidth()
         ) {
             Column {
@@ -58,7 +58,8 @@ fun ColumnScope.ContactResults() {
                     items = contacts,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp)
+                        .padding(12.dp),
+                    reverse = reverse
                 )
             }
         }

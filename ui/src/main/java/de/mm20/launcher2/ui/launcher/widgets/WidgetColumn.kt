@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 fun WidgetColumn(
     modifier: Modifier = Modifier,
     clockHeight: Dp = 0.dp,
+    clockBottomPadding: Dp = 0.dp,
     editMode: Boolean = false,
     onEditModeChange: (Boolean) -> Unit,
 ) {
@@ -91,7 +92,8 @@ fun WidgetColumn(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(clockHeight),
+                    .height(clockHeight)
+                    .padding(bottom = clockBottomPadding),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 ClockWidget(

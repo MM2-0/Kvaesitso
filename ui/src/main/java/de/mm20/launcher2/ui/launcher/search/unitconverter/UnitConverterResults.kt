@@ -14,13 +14,14 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.search.UnitConverterItem
 
 @Composable
-fun ColumnScope.UnitConverterResults() {
+fun ColumnScope.UnitConverterResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val unitConverter by viewModel.unitConverterResult.observeAsState(null)
 
     AnimatedVisibility(unitConverter != null) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
             unitConverter?.let { UnitConverterItem(unitConverter = it) }
         }

@@ -71,7 +71,7 @@ class LauncherActivity : BaseActivity() {
                         contentAlignment = Alignment.BottomCenter
                     ) {
                         NavBarEffects(modifier = Modifier.fillMaxSize())
-                        PullDownScaffold(
+                        PagerScaffold(
                             modifier = Modifier
                                 .fillMaxSize()
                                 .systemBarsPadding()

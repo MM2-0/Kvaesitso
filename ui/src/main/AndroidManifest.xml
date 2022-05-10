@@ -10,7 +10,7 @@
             android:exported="true"
             android:launchMode="singleTask"
             android:theme="@style/LauncherTheme"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden|adjustNothing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

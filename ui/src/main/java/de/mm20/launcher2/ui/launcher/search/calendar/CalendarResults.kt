@@ -24,7 +24,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 
 @Composable
-fun ColumnScope.CalendarResults() {
+fun ColumnScope.CalendarResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val calendarEvents by viewModel.calendarResults.observeAsState(emptyList())
     val context = LocalContext.current
@@ -34,7 +34,7 @@ fun ColumnScope.CalendarResults() {
     AnimatedVisibility(calendarEvents.isNotEmpty() || (!isSearchEmpty && missingPermission)) {
         LauncherCard(
             modifier = Modifier
-                .padding(bottom = 8.dp)
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
                 .fillMaxWidth()
         ) {
             Column {
@@ -59,7 +59,8 @@ fun ColumnScope.CalendarResults() {
                     items = calendarEvents,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(12.dp)
+                        .padding(12.dp),
+                    reverse = reverse
                 )
             }
         }

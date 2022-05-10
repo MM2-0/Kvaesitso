@@ -14,7 +14,9 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
-fun ColumnScope.FavoritesResults() {
+fun ColumnScope.FavoritesResults(
+    reverse: Boolean = false,
+) {
     val viewModel: SearchVM = viewModel()
     val favorites by viewModel.favorites.observeAsState(emptyList())
 
@@ -22,9 +24,10 @@ fun ColumnScope.FavoritesResults() {
 
     AnimatedVisibility(!hide && favorites.isNotEmpty()) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
-            SearchResultGrid(items = favorites)
+            SearchResultGrid(items = favorites, reverse = reverse)
         }
     }
 }

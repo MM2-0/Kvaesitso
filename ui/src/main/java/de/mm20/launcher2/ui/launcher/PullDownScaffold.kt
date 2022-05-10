@@ -7,10 +7,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -298,7 +295,10 @@ fun PullDownScaffold(
         SearchBar(
             level = searchBarLevel,
             modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
                 .clipToBounds()
+                .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
                 .offset(y = editModeSearchBarOffset),
             focused = searchBarFocused,

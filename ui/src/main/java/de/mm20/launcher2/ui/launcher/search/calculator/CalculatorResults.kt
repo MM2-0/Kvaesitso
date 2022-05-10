@@ -14,13 +14,14 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.search.CalculatorItem
 
 @Composable
-fun ColumnScope.CalculatorResults() {
+fun ColumnScope.CalculatorResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val calculator by viewModel.calculatorResult.observeAsState(null)
 
     AnimatedVisibility(calculator != null) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
             calculator?.let { CalculatorItem(calculator = it) }
         }

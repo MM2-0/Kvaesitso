@@ -13,13 +13,14 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 
 @Composable
-fun ColumnScope.WikipediaResults() {
+fun ColumnScope.WikipediaResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val wikipedia by viewModel.wikipediaResult.observeAsState(null)
 
     AnimatedVisibility(wikipedia != null) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
             wikipedia?.let { WikipediaItem(wikipedia = it) }
         }

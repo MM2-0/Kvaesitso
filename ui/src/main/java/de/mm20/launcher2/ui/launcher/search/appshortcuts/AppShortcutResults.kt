@@ -24,7 +24,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 
 @Composable
-fun ColumnScope.AppShortcutResults() {
+fun ColumnScope.AppShortcutResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val shortcuts by viewModel.appShortcutResults.observeAsState(emptyList())
     val context = LocalContext.current
@@ -34,7 +34,8 @@ fun ColumnScope.AppShortcutResults() {
 
     AnimatedVisibility(shortcuts.isNotEmpty() || (!isSearchEmpty && missingPermission)) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
             Column {
                 AnimatedVisibility(!isSearchEmpty && missingPermission) {
@@ -58,7 +59,8 @@ fun ColumnScope.AppShortcutResults() {
                 items = shortcuts,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(12.dp)
+                    .padding(12.dp),
+                reverse = reverse
             )
         }
     }

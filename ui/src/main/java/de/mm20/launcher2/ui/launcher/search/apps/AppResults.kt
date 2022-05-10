@@ -14,15 +14,16 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
-fun ColumnScope.AppResults() {
+fun ColumnScope.AppResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val apps by viewModel.appResults.observeAsState(emptyList())
 
     AnimatedVisibility(apps.isNotEmpty()) {
         LauncherCard(
-            modifier = Modifier.padding(bottom = 8.dp)
+            modifier = Modifier
+                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
         ) {
-            SearchResultGrid(items = apps)
+            SearchResultGrid(items = apps, reverse = reverse)
         }
     }
 

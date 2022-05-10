@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.launcher.search.common.GridItem
+import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlin.math.ceil
 
@@ -16,12 +17,14 @@ fun SearchResultGrid(
     modifier: Modifier = Modifier,
     showLabels: Boolean = true,
     columns: Int = LocalGridColumns.current,
+    reverse: Boolean = false
 ) {
     Column(
         modifier = modifier
             .animateContentSize()
             .fillMaxWidth()
-            .padding(4.dp)
+            .padding(4.dp),
+        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
     ) {
         for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
             Row {

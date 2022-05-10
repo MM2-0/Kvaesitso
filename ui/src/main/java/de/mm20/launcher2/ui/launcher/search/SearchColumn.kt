@@ -1,9 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -17,23 +14,26 @@ import de.mm20.launcher2.ui.launcher.search.files.FileResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaResults
+import de.mm20.launcher2.ui.layout.BottomReversed
 
 @Composable
 fun SearchColumn(
     modifier: Modifier = Modifier,
+    reverse: Boolean = false,
 ) {
     Column(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
     ) {
-        FavoritesResults()
-        AppResults()
-        AppShortcutResults()
-        UnitConverterResults()
-        CalculatorResults()
-        CalendarResults()
-        ContactResults()
-        WikipediaResults()
-        WebsiteResults()
-        FileResults()
+        FavoritesResults(reverse)
+        AppResults(reverse)
+        AppShortcutResults(reverse)
+        UnitConverterResults(reverse)
+        CalculatorResults(reverse)
+        CalendarResults(reverse)
+        ContactResults(reverse)
+        WikipediaResults(reverse)
+        WebsiteResults(reverse)
+        FileResults(reverse)
     }
 }
