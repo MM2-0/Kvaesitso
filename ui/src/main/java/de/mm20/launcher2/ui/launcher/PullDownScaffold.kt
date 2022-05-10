@@ -4,8 +4,6 @@ import android.app.Activity
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
@@ -22,20 +20,22 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollDispatcher
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.*
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.Velocity
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.VerticalPager
@@ -51,10 +51,8 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
-import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
-import kotlin.ranges.coerceIn
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -66,6 +64,8 @@ fun PullDownScaffold(
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
     val context = LocalContext.current
+
+    val density = LocalDensity.current
 
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
@@ -98,18 +98,25 @@ fun PullDownScaffold(
         )
     }
 
-    val dp = LocalDensity.current.density
+    val offsetY = remember { mutableStateOf(0f) }
 
-    val offsetY = remember { mutableStateOf(0.dp) }
-    var searchBarOffset by remember { mutableStateOf(0.dp) }
+    val maxOffset = with(density) { 64.dp.toPx() }
+    val toggleSearchThreshold = with(density) { 48.dp.toPx() }
 
-    val blurWallpaper = isSearchOpen || offsetY.value > 48.dp || widgetsScrollState.value > 0
+    val searchBarOffset = remember { mutableStateOf(0f) }
+
+    val maxSearchBarOffset = with(density) { 96.dp.toPx() }
+
+    val blurWallpaper by derivedStateOf {
+        isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0
+    }
+
 
     LaunchedEffect(blurWallpaper) {
         if (!isAtLeastApiLevel(31)) return@LaunchedEffect
         (context as Activity).window.attributes = context.window.attributes.also {
             if (blurWallpaper) {
-                it.blurBehindRadius = (32 * dp).toInt()
+                it.blurBehindRadius = with(density) { 32.dp.toPx().toInt() }
                 it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
             } else {
                 it.blurBehindRadius = 0
@@ -119,62 +126,17 @@ fun PullDownScaffold(
     }
 
 
-    val nestedScrollDispatcher = remember { NestedScrollDispatcher() }
     val scope = rememberCoroutineScope()
 
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val consumed = when {
-                    isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && searchScrollState.value - available.y < 0) -> {
-                        val consumed = available.y - searchScrollState.value
-                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp)
-                        consumed
-                    }
-                    isSearchOpen && (offsetY.value < 0.dp || source == NestedScrollSource.Drag && searchScrollState.value - available.y > searchScrollState.maxValue) -> {
-                        val consumed =
-                            available.y - (searchScrollState.maxValue - searchScrollState.value)
-                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(-64.dp, 0.dp)
-                        consumed
-                    }
-                    !isSearchOpen && (offsetY.value > 0.dp || source == NestedScrollSource.Drag && widgetsScrollState.value - available.y < 0) -> {
-                        val consumed = available.y - widgetsScrollState.value
-                        offsetY.value = (offsetY.value + (consumed * 0.5f / dp).dp).coerceIn(0.dp, 64.dp)
-                        consumed
-                    }
-                    else -> {
-                        0f
-                    }
-                }
-
-                searchBarOffset =
-                    ((searchBarOffset) + ((available.y - consumed) / dp).dp).coerceIn(-128.dp, 0.dp)
-
-                return Offset(0f, consumed)
-            }
-
-            override suspend fun onPreFling(available: Velocity): Velocity {
-                if (offsetY.value > 48.dp || offsetY.value < -48.dp) {
-                    viewModel.toggleSearch()
-                }
-                if (offsetY.value != 0.dp) {
-                    offsetY.animateTo(0.dp)
-                    return available
-                }
-                return Velocity.Zero
-            }
-        }
-    }
-
     LaunchedEffect(isSearchOpen) {
-        searchScrollState.scrollTo(0)
+        if (isSearchOpen) searchScrollState.scrollTo(0)
         if (!isSearchOpen) searchVM.search("")
-        searchBarOffset = 0.dp
         pagerState.animateScrollToPage(if (isSearchOpen) 1 else 0)
+        searchBarOffset.animateTo(0f)
     }
 
     LaunchedEffect(isWidgetEditMode) {
-        if (!isWidgetEditMode) searchBarOffset = 0.dp
+        if (!isWidgetEditMode) searchBarOffset.value = 0f
     }
 
     BackHandler {
@@ -194,22 +156,65 @@ fun PullDownScaffold(
         }
     }
 
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val diff =
+                    (if (isSearchOpen) searchScrollState.value else widgetsScrollState.value) - available.y
+                val consumed = when {
+                    (offsetY.value > 0 || source == NestedScrollSource.Drag && diff < 0) -> {
+                        val consumed = -diff
+                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
+                        consumed
+                    }
+                    isSearchOpen && (offsetY.value < 0 || source == NestedScrollSource.Drag && diff > searchScrollState.maxValue) -> {
+                        val consumed =
+                            available.y - (searchScrollState.maxValue - searchScrollState.value)
+                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
+                        consumed
+                    }
+                    else -> {
+                        0f
+                    }
+                }
+
+                searchBarOffset.value =
+                    (searchBarOffset.value + (available.y - consumed)).coerceIn(
+                        -maxSearchBarOffset,
+                        0f
+                    )
+
+                return Offset(0f, consumed)
+            }
+
+            override suspend fun onPreFling(available: Velocity): Velocity {
+                if (offsetY.value > toggleSearchThreshold || offsetY.value < -toggleSearchThreshold) {
+                    viewModel.toggleSearch()
+                }
+                if (offsetY.value != 0f) {
+                    offsetY.animateTo(0f)
+                    return available
+                }
+                return Velocity.Zero
+            }
+        }
+    }
+
     var size by remember { mutableStateOf(IntSize.Zero) }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .clipToBounds()
             .onSizeChanged {
                 size = it
             }
-            .offset(y = offsetY.value),
+            .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
         VerticalPager(
             state = pagerState,
             modifier = Modifier
-                .nestedScroll(nestedScrollConnection, nestedScrollDispatcher),
+                .nestedScroll(nestedScrollConnection),
             count = 2,
             reverseLayout = true,
             userScrollEnabled = false,
@@ -222,8 +227,12 @@ fun PullDownScaffold(
                 val offset = calculateCurrentOffsetForPage(1).absoluteValue
                 SearchColumn(
                     modifier = Modifier
-                        .alpha(1 - offset)
-                        .scale(1 - offset, TransformOrigin.Center)
+                        .graphicsLayer {
+                            transformOrigin = TransformOrigin.Center
+                            scaleX = 1 - offset
+                            scaleY = 1 - offset
+                            alpha = 1 - offset
+                        }
                         .fillMaxSize()
                         .verticalScroll(searchScrollState)
                         .padding(8.dp)
@@ -238,8 +247,12 @@ fun PullDownScaffold(
                 WidgetColumn(
                     modifier =
                     Modifier
-                        .alpha(1 - offset)
-                        .scale(1 - offset, TransformOrigin.Center)
+                        .graphicsLayer {
+                            transformOrigin = TransformOrigin.Center
+                            scaleX = 1 - offset
+                            scaleY = 1 - offset
+                            alpha = 1 - offset
+                        }
                         .fillMaxSize()
                         .verticalScroll(widgetsScrollState)
                         .padding(8.dp)
@@ -252,20 +265,6 @@ fun PullDownScaffold(
                 )
             }
         }
-
-        val searchBarLevel = when {
-            offsetY.value != 0.dp -> SearchBarLevel.Raised
-            isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
-            isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
-            widgetsScrollState.value > 0 -> SearchBarLevel.Raised
-            else -> SearchBarLevel.Resting
-        }
-        val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)
-
-
-        val editModeSearchBarOffset by animateDpAsState(
-            if (isWidgetEditMode) -128.dp else 0.dp
-        )
         AnimatedVisibility(visible = isWidgetEditMode,
             enter = slideIn { IntOffset(0, -it.height) },
             exit = slideOut { IntOffset(0, -it.height) }
@@ -281,9 +280,27 @@ fun PullDownScaffold(
                 }
             )
         }
+
+        val searchBarLevel by derivedStateOf {
+            when {
+                offsetY.value != 0f -> SearchBarLevel.Raised
+                isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
+                isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
+                widgetsScrollState.value > 0 -> SearchBarLevel.Raised
+                else -> SearchBarLevel.Resting
+            }
+        }
+        val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)
+        val editModeSearchBarOffset by animateDpAsState(
+            if (isWidgetEditMode) -128.dp else 0.dp
+        )
+
         SearchBar(
             level = searchBarLevel,
-            modifier = Modifier.offset(y = searchBarOffset + editModeSearchBarOffset),
+            modifier = Modifier
+                .clipToBounds()
+                .offset { IntOffset(0, searchBarOffset.value.toInt()) }
+                .offset(y = editModeSearchBarOffset),
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
