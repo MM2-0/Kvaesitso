@@ -11,6 +11,8 @@ import android.util.Log;
 import java.util.TimeZone;
 import java.util.UUID;
 
+import static com.balsikandar.crashreporter.utils.AppUtilsKt.getAppSignature;
+
 /**
  * Created by bali on 12/08/17.
  */
@@ -37,6 +39,7 @@ public class AppUtils {
 
         return "APP.VERSION : " + getAppVersion(context)
                 + "\nAPP.VERSIONCODE : " + getAppVersionCode(context)
+                + "\nAPP.SIGNATURE : " + getAppSignature(context)
                 + "\nLAUNCHER.APP : " + getCurrentLauncherApp(context)
                 + "\nTIMEZONE : " + timeZone()
                 + "\nVERSION.RELEASE : " + Build.VERSION.RELEASE
