@@ -15,14 +15,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -34,6 +32,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
@@ -61,6 +60,29 @@ fun PagerScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchScrollState = rememberScrollState()
 
+    val systemUiController = rememberSystemUiController()
+
+    val colorSurface = MaterialTheme.colorScheme.surface
+    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface) {
+        if (isWidgetEditMode) {
+            systemUiController.setStatusBarColor(
+                colorSurface
+            )
+        } else {
+            systemUiController.setStatusBarColor(
+                Color.Transparent,
+                darkIcons = darkStatusBarIcons
+            )
+        }
+    }
+
+    LaunchedEffect(darkNavBarIcons) {
+        systemUiController.setNavigationBarColor(
+            Color.Transparent,
+            darkIcons = darkNavBarIcons,
+            navigationBarContrastEnforced = false
+        )
+    }
 
     val blurWallpaper by derivedStateOf {
         isSearchOpen || pagerState.currentPage == 0 && pagerState.currentPageOffset > 0.5f ||
