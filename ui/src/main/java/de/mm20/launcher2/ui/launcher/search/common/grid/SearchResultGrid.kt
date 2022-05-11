@@ -24,7 +24,7 @@ fun SearchResultGrid(
             .animateContentSize()
             .fillMaxWidth()
             .padding(4.dp),
-        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
+        verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
     ) {
         for (i in 0 until ceil(items.size / columns.toFloat()).toInt()) {
             Row {

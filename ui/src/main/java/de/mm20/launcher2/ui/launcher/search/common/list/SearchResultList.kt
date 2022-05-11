@@ -19,7 +19,7 @@ fun SearchResultList(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
+        verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
     ) {
         for (item in items) {
             key(item.key) {
