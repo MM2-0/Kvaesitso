@@ -1,23 +1,31 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.app.Activity
+import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material3.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -26,6 +34,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.SearchBar
@@ -51,6 +60,29 @@ fun PagerScaffold(
     val pagerState = rememberPagerState()
     val widgetsScrollState = rememberScrollState()
     val searchScrollState = rememberScrollState()
+
+
+    val blurWallpaper by derivedStateOf {
+        isSearchOpen || pagerState.currentPage == 0 && pagerState.currentPageOffset > 0.5f ||
+                pagerState.currentPage == 1 && pagerState.currentPageOffset <= 0.5f ||
+                widgetsScrollState.value > 0
+    }
+
+    val density = LocalDensity.current
+
+
+    LaunchedEffect(blurWallpaper) {
+        if (!isAtLeastApiLevel(31)) return@LaunchedEffect
+        (context as Activity).window.attributes = context.window.attributes.also {
+            if (blurWallpaper) {
+                it.blurBehindRadius = with(density) { 32.dp.toPx().toInt() }
+                it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
+            } else {
+                it.blurBehindRadius = 0
+                it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+            }
+        }
+    }
 
     val currentPage = pagerState.currentPage
     LaunchedEffect(currentPage) {
