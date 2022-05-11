@@ -42,8 +42,8 @@ dependencyResolutionManagement {
             version("targetSdk", "32")
         }
         create("libs") {
-            version("kotlin", "1.6.10")
-            version("kotlinx.coroutines", "1.6.0")
+            version("kotlin", "1.6.21")
+            version("kotlinx.coroutines", "1.6.1")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
                 .versionRef("kotlin")
@@ -61,7 +61,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-alpha07")
+            version("androidx.compose", "1.2.0-beta01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -94,7 +94,7 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-alpha09")
+                .version("1.0.0-alpha10")
 
             version("androidx.lifecycle", "2.4.1")
             alias("androidx.lifecycle.viewmodel")
@@ -122,7 +122,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.24.6-alpha")
+            version("accompanist", "0.24.7-alpha")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
@@ -144,7 +144,7 @@ dependencyResolutionManagement {
 
             alias("androidx.core")
                 .to("androidx.core", "core-ktx")
-                .version("1.8.0-alpha06")
+                .version("1.8.0-rc01")
 
             version("androidx.appcompat", "1.4.1")
             alias("androidx.appcompat")
@@ -368,7 +368,7 @@ dependencyResolutionManagement {
                 .to("com.google.protobuf", "protobuf-javalite")
                 .versionRef("protobuf")
 
-            version("koin", "3.1.4")
+            version("koin", "3.1.6")
             alias("koin.android")
                 .to("io.insert-koin", "koin-android")
                 .versionRef("koin")

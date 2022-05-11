@@ -12,6 +12,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -29,6 +30,7 @@ import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 import java.time.LocalDate
 import java.time.ZoneId
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CalendarWidget() {
     val viewModel: CalendarWidgetVM = viewModel()
