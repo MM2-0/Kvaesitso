@@ -158,7 +158,8 @@ fun PagerScaffold(
                         }
                         .verticalScroll(searchScrollState, reverseScrolling = true)
                         .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 56.dp)
-                        .padding(bottom = webSearchPadding)
+                        .padding(bottom = webSearchPadding),
+                    reverse = true,
                 )
             }
 

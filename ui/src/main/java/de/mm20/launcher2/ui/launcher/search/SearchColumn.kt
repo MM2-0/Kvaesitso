@@ -23,7 +23,7 @@ fun SearchColumn(
 ) {
     Column(
         modifier = modifier,
-        verticalArrangement = if (reverse) Arrangement.Top else Arrangement.BottomReversed
+        verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
     ) {
         FavoritesResults(reverse)
         AppResults(reverse)
