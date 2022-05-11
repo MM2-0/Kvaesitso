@@ -209,4 +209,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://github.com/material-foundation/material-color-utilities"
     ),
+    OpenSourceLibrary(
+        name = "Launcher3",
+        copyrightNote = "Copyright (C) 2020 The Android Open Source Project",
+        description = "The AOSP launcher",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://source.android.com/"
+    ),
 )
