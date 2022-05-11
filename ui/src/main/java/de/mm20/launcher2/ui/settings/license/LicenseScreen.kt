@@ -32,9 +32,6 @@ fun LicenseScreen(library: OpenSourceLibrary) {
     val context = LocalContext.current
     val viewModel: LicenseScreenVM = viewModel()
     val navController = LocalNavController.current
-    /*PreferenceScreen(title = stringResource(id = R.string.preference_category_license)) {
-
-    }*/
 
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberSplineBasedDecay())
@@ -74,7 +71,7 @@ fun LicenseScreen(library: OpenSourceLibrary) {
         },
     ) {
         LazyColumn(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection)
+            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection).padding(it)
         ) {
             library.description?.let {
                 item {
