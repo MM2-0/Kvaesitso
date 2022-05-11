@@ -17,6 +17,7 @@ message Settings {
       BlackAndWhite = 1;
       DebugMaterialYouCompat = 2;
       Custom = 3;
+      EasterEgg = 4;
     }
     ColorScheme color_scheme = 6;
     message CustomColors {

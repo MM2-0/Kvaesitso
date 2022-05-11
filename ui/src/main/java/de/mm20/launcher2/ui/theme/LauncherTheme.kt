@@ -9,6 +9,7 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.theme.colorscheme.*
@@ -24,7 +25,12 @@ fun LauncherTheme(
 
     val dataStore: LauncherDataStore by inject()
 
-    val colorSchemePreference by remember { dataStore.data.map { it.appearance.colorScheme } }.collectAsState(
+    val colorSchemePreference by remember {
+        dataStore.data.map {
+            if (it.easterEgg) Settings.AppearanceSettings.ColorScheme.EasterEgg
+            else it.appearance.colorScheme
+        }
+    }.collectAsState(
         AppearanceSettings.ColorScheme.Default
     )
 
@@ -54,6 +60,13 @@ fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme): MutableStat
             return remember(darkTheme) {
                 mutableStateOf(
                     if (darkTheme) DarkBlackAndWhiteColorScheme else LightBlackAndWhiteColorScheme
+                )
+            }
+        }
+        AppearanceSettings.ColorScheme.EasterEgg -> {
+            return remember(darkTheme) {
+                mutableStateOf(
+                    if (darkTheme) DarkEasterEggColorScheme else LightEasterEggColorScheme
                 )
             }
         }

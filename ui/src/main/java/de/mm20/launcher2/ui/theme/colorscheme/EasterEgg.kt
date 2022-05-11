@@ -1,0 +1,63 @@
+package de.mm20.launcher2.ui.theme.colorscheme
+
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
+import androidx.compose.ui.graphics.Color
+
+val LightEasterEggColorScheme = lightColorScheme(
+    primary = Color(0xFFB30080),
+    onPrimary = Color(0xFFFFFFFF),
+    primaryContainer = Color(0xFFFFD8EB),
+    onPrimaryContainer = Color(0xFF3C002A),
+    inversePrimary = Color(0xFFFFAEDA),
+    secondary = Color(0xFF9E00C6),
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = Color(0xFFFED6FF),
+    onSecondaryContainer = Color(0xFF340044),
+    tertiary = Color(0xFF8F4E00),
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = Color(0xFFFFDCBE),
+    onTertiaryContainer = Color(0xFF2E1500),
+    background = Color(0xFFFCFCF6),
+    onBackground = Color(0xFF1A1C19),
+    surface = Color(0xFFFCFCF6),
+    onSurface = Color(0xFF1A1C19),
+    surfaceVariant = Color(0xFFFFD6F5),
+    onSurfaceVariant = Color(0xFF6F2E67),
+    inverseSurface = Color(0xFF2F312D),
+    inverseOnSurface = Color(0xFFF1F1EB),
+    error = Color(0xFFB4271F),
+    onError = Color(0xFFFFFFFF),
+    errorContainer = Color(0xFFFFDAD3),
+    onErrorContainer = Color(0xFF410001),
+    outline = Color(0xFFA55E9A),
+)
+
+val DarkEasterEggColorScheme = darkColorScheme(
+    primary = Color(0xFFFFAEDA),
+    onPrimary = Color(0xFF620044),
+    primaryContainer = Color(0xFF890061),
+    onPrimaryContainer = Color(0xFFFFD8EB),
+    inversePrimary = Color(0xFFB30080),
+    secondary = Color(0xFFF5ADFF),
+    onSecondary = Color(0xFF55006C),
+    secondaryContainer = Color(0xFF780097),
+    onSecondaryContainer = Color(0xFFFED6FF),
+    tertiary = Color(0xFFFFB773),
+    onTertiary = Color(0xFF4C2700),
+    tertiaryContainer = Color(0xFF6D3A00),
+    onTertiaryContainer = Color(0xFFFFDCBE),
+    background = Color(0xFF1A1C19),
+    onBackground = Color(0xFFE2E3DC),
+    surface = Color(0xFF1A1C19),
+    onSurface = Color(0xFFE2E3DC),
+    surfaceVariant = Color(0xFF6F2E67),
+    onSurfaceVariant = Color(0xFFFEACEE),
+    inverseSurface = Color(0xFFE2E3DC),
+    inverseOnSurface = Color(0xFF2F312D),
+    error = Color(0xFFFFB4A8),
+    onError = Color(0xFF690001),
+    errorContainer = Color(0xFF910809),
+    onErrorContainer = Color(0xFFFFB4A8),
+    outline = Color(0xFFC277B5),
+)
