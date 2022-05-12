@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -23,6 +24,7 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
+import com.android.launcher3.GestureNavContract
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.ui.R
@@ -31,6 +33,8 @@ import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
+import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
+import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import org.koin.android.ext.android.inject
 
@@ -38,6 +42,8 @@ import org.koin.android.ext.android.inject
 class LauncherActivity : BaseActivity() {
 
     private val viewModel: LauncherActivityVM by viewModels()
+
+    private val homeTransitionManager = HomeTransitionManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,44 +53,47 @@ class LauncherActivity : BaseActivity() {
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         setContent {
-            LauncherTheme {
-                ProvideSettings {
-                    val lightStatus by viewModel.lightStatusBar.observeAsState(false)
-                    val lightNav by viewModel.lightNavBar.observeAsState(false)
-                    val hideStatus by viewModel.hideStatusBar.observeAsState(false)
-                    val hideNav by viewModel.hideNavBar.observeAsState(false)
-                    val dimBackground by viewModel.dimBackground.observeAsState(false)
+            CompositionLocalProvider(
+                LocalHomeTransitionManager provides homeTransitionManager
+            ) {
+                LauncherTheme {
+                    ProvideSettings {
+                        val lightStatus by viewModel.lightStatusBar.observeAsState(false)
+                        val lightNav by viewModel.lightNavBar.observeAsState(false)
+                        val hideStatus by viewModel.hideStatusBar.observeAsState(false)
+                        val hideNav by viewModel.hideNavBar.observeAsState(false)
+                        val dimBackground by viewModel.dimBackground.observeAsState(false)
 
-                    val systemUiController = rememberSystemUiController()
+                        val systemUiController = rememberSystemUiController()
 
-                    LaunchedEffect(hideStatus) {
-                        systemUiController.isStatusBarVisible = !hideStatus
-                    }
-                    LaunchedEffect(hideNav) {
-                        systemUiController.isNavigationBarVisible = !hideNav
-                    }
+                        LaunchedEffect(hideStatus) {
+                            systemUiController.isStatusBarVisible = !hideStatus
+                        }
+                        LaunchedEffect(hideNav) {
+                            systemUiController.isNavigationBarVisible = !hideNav
+                        }
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
-                        contentAlignment = Alignment.BottomCenter
-                    ) {
-                        NavBarEffects(modifier = Modifier.fillMaxSize())
-                        PagerScaffold(
+                        Box(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .systemBarsPadding()
-                                .imePadding(),
-                            darkStatusBarIcons = lightStatus,
-                            darkNavBarIcons = lightNav,
-                        )
-                    }
-                    val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
-                    if (showHiddenItems) {
-                        HiddenItemsSheet(onDismiss = {
-                            viewModel.hideHiddenItems()
-                        })
+                                .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
+                            contentAlignment = Alignment.BottomCenter
+                        ) {
+                            NavBarEffects(modifier = Modifier.fillMaxSize())
+                            PagerScaffold(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .systemBarsPadding(),
+                                darkStatusBarIcons = lightStatus,
+                                darkNavBarIcons = lightNav,
+                            )
+                        }
+                        val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
+                        if (showHiddenItems) {
+                            HiddenItemsSheet(onDismiss = {
+                                viewModel.hideHiddenItems()
+                            })
+                        }
                     }
                 }
             }
@@ -135,6 +144,11 @@ class LauncherActivity : BaseActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        onBackPressed()
+        val navContract = intent?.let { GestureNavContract.fromIntent(it) }
+        if (navContract != null) {
+            homeTransitionManager.resolve(navContract)
+        } else {
+            onBackPressed()
+        }
     }
 }

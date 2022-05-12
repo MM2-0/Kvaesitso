@@ -235,6 +235,7 @@ fun PullDownScaffold(
                         .padding(8.dp)
                         .padding(top = 56.dp)
                         .padding(top = webSearchPadding)
+                        .imePadding()
                 )
             }
 
