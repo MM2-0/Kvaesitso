@@ -6,7 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Searchable
-import de.mm20.launcher2.ui.launcher.search.common.GridItem
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlin.math.ceil

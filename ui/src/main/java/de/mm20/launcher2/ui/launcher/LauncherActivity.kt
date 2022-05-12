@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -35,6 +37,7 @@ import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
+import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import org.koin.android.ext.android.inject
 
@@ -48,13 +51,18 @@ class LauncherActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val windowSize = Resources.getSystem().displayMetrics.let {
+            Size(it.widthPixels.toFloat(), it.heightPixels.toFloat())
+        }
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         setContent {
             CompositionLocalProvider(
-                LocalHomeTransitionManager provides homeTransitionManager
+                LocalHomeTransitionManager provides homeTransitionManager,
+                LocalWindowSize provides windowSize
             ) {
                 LauncherTheme {
                     ProvideSettings {

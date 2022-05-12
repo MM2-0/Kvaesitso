@@ -1,10 +1,10 @@
-package de.mm20.launcher2.ui.launcher.search.common
+package de.mm20.launcher2.ui.launcher.search.common.grid
 
+import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,19 +29,19 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.apps.AppItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItemGridPopup
-import de.mm20.launcher2.ui.launcher.search.common.grid.GridItemVM
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
+import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
+import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
+import de.mm20.launcher2.ui.locals.LocalWindowSize
 import kotlinx.coroutines.delay
-import kotlin.math.pow
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolean = true) {
     val viewModel = remember(item.key) { GridItemVM(item) }
@@ -57,6 +57,22 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
         // If item is one of these types, try to launch them on click; show details otherwise
         val launchOnPress =
             item is File || item is Application || item is AppShortcut || item is Website || item is Wikipedia
+
+        val windowSize = LocalWindowSize.current
+
+        if (item is Application) {
+            HandleHomeTransition {
+                val cn = ComponentName(item.`package`, item.activity)
+                if (
+                    it.componentName == cn &&
+                    bounds.right > 0f && bounds.left < windowSize.width &&
+                    bounds.bottom > 0f && bounds.top < windowSize.height
+                ) {
+                    return@HandleHomeTransition HomeTransitionParams(bounds)
+                }
+                return@HandleHomeTransition null
+            }
+        }
 
         ShapedLauncherIcon(
             modifier = Modifier
