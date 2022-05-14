@@ -29,10 +29,9 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
-import de.mm20.launcher2.preferences.Settings.IconSettings
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
@@ -78,6 +77,10 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/colorscheme")
                     }
                 )
+                val layout by viewModel.layout.observeAsState()
+                LayoutPreference(title = "Layout", value = layout, onValueChanged = {
+                    viewModel.setLayout(it)
+                })
                 Preference(
                     title = stringResource(R.string.preference_cards),
                     summary = stringResource(R.string.preference_cards_summary),
@@ -463,6 +466,77 @@ fun LegacyIconBackgroundPreference(
             }
         }
     }
+}
+
+@OptIn(ExperimentalPagerApi::class)
+@Composable
+fun LayoutPreference(
+    title: String,
+    summary: String? = null,
+    value: AppearanceSettings.Layout?,
+    onValueChanged: (AppearanceSettings.Layout) -> Unit
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    Preference(title = title, summary = summary, onClick = { showDialog = true })
+
+    if (showDialog && value != null) {
+        val layouts = remember {
+            AppearanceSettings.Layout.values()
+                .filter { it != AppearanceSettings.Layout.UNRECOGNIZED }
+        }
+        val pagerState = rememberPagerState(layouts.indexOf(value))
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDialog = false
+                    onValueChanged(layouts[pagerState.currentPage])
+                }) {
+                    Text(
+                        text = stringResource(android.R.string.ok),
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDialog = false }) {
+                    Text(
+                        text = stringResource(android.R.string.cancel),
+                    )
+                }
+            },
+
+            text = {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    HorizontalPager(
+                        count = layouts.size,
+                        state = pagerState,
+                        modifier = Modifier
+                            .height(150.dp)
+                            .padding(bottom = 16.dp)
+                            .background(MaterialTheme.colorScheme.secondary)
+                    ) {
+                        when (layouts[it]) {
+                            AppearanceSettings.Layout.PullDown -> PullDownLayoutPreview()
+                            AppearanceSettings.Layout.Pager -> PagerLayoutPreview()
+                            else -> {}
+                        }
+                    }
+                    HorizontalPagerIndicator(pagerState = pagerState)
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun PullDownLayoutPreview() {
+}
+
+
+@Composable
+fun PagerLayoutPreview() {
 }
 
 

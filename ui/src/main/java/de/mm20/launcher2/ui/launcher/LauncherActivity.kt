@@ -29,6 +29,7 @@ import com.afollestad.materialdialogs.customview.customView
 import com.android.launcher3.GestureNavContract
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.icons.DynamicIconController
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
@@ -71,6 +72,7 @@ class LauncherActivity : BaseActivity() {
                         val hideStatus by viewModel.hideStatusBar.observeAsState(false)
                         val hideNav by viewModel.hideNavBar.observeAsState(false)
                         val dimBackground by viewModel.dimBackground.observeAsState(false)
+                        val layout by viewModel.layout.observeAsState(null)
 
                         val systemUiController = rememberSystemUiController()
 
@@ -88,13 +90,27 @@ class LauncherActivity : BaseActivity() {
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             NavBarEffects(modifier = Modifier.fillMaxSize())
-                            PagerScaffold(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .systemBarsPadding(),
-                                darkStatusBarIcons = lightStatus,
-                                darkNavBarIcons = lightNav,
-                            )
+                            when(layout) {
+                                Settings.AppearanceSettings.Layout.PullDown -> {
+                                    PullDownScaffold(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .systemBarsPadding(),
+                                        darkStatusBarIcons = lightStatus,
+                                        darkNavBarIcons = lightNav,
+                                    )
+                                }
+                                Settings.AppearanceSettings.Layout.Pager -> {
+                                    PagerScaffold(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .systemBarsPadding(),
+                                        darkStatusBarIcons = lightStatus,
+                                        darkNavBarIcons = lightNav,
+                                    )
+                                }
+                                else -> {}
+                            }
                         }
                         val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
                         if (showHiddenItems) {

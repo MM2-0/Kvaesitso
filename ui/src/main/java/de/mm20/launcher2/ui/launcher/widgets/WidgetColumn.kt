@@ -39,6 +39,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.ClockWidget
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.ExternalWidget
 import kotlinx.coroutines.awaitCancellation
@@ -106,10 +107,11 @@ fun WidgetColumn(
             val swapThresholds = remember(widgets) {
                 Array(widgets.size) { floatArrayOf(0f, 0f) }
             }
-            for ((i, widget) in widgets.withIndex()) {
+            val widgetsWithIndex = remember(widgets) { widgets.withIndex() }
+            for ((i, widget) in widgetsWithIndex) {
                 key(if (widget is ExternalWidget) widget.widgetId else widget) {
                     var dragOffsetAfterSwap = remember<Float?> { null }
-                    val offsetY = remember(widgets) { Animatable(dragOffsetAfterSwap ?: 0f) }
+                    val offsetY = remember(widgets) { mutableStateOf(dragOffsetAfterSwap ?: 0f) }
 
                     LaunchedEffect(widgets) {
                         dragOffsetAfterSwap = null
@@ -141,7 +143,7 @@ fun WidgetColumn(
                         draggableState = rememberDraggableState {
                             scope.launch {
                                 val newOffset = offsetY.value + it
-                                offsetY.snapTo(newOffset)
+                                offsetY.value = newOffset
                                 if (i > 0 && newOffset < (swapThresholds[i - 1][0] - swapThresholds[i - 1][1])) {
                                     if (dragOffsetAfterSwap == null) {
                                         dragOffsetAfterSwap =

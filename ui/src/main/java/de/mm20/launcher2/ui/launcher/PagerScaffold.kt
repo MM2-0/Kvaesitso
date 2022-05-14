@@ -150,9 +150,6 @@ fun PagerScaffold(
                 SearchColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .onSizeChanged {
-                            size = it
-                        }
                         .verticalScroll(searchScrollState, reverseScrolling = true)
                         .imePadding()
                         .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
@@ -174,6 +171,9 @@ fun PagerScaffold(
                     modifier =
                     Modifier
                         .fillMaxSize()
+                        .onSizeChanged {
+                            size = it
+                        }
                         .verticalScroll(widgetsScrollState)
                         .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
                         .padding(top = editModePadding),

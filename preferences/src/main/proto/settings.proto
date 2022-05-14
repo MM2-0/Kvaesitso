@@ -64,6 +64,12 @@ message Settings {
     }
     CustomColors custom_colors = 8;
     bool dim_wallpaper = 7;
+
+    enum Layout {
+      PullDown = 0;
+      Pager = 1;
+    }
+    Layout layout = 9;
   }
   AppearanceSettings appearance = 2;
 

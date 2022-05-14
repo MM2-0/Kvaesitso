@@ -63,4 +63,6 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
     fun hideHiddenItems() {
         isHiddenItemsShown.value = false
     }
+
+    val layout = dataStore.data.map { it.appearance.layout }.asLiveData()
 }
