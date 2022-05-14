@@ -32,7 +32,6 @@ import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -56,6 +55,12 @@ fun PagerScaffold(
     val pagerState = rememberPagerState()
     val widgetsScrollState = rememberScrollState()
     val searchScrollState = rememberScrollState()
+
+    val isWidgetsScrollZero by remember {
+        derivedStateOf {
+            widgetsScrollState.value == 0
+        }
+    }
 
     val systemUiController = rememberSystemUiController()
 
@@ -81,10 +86,12 @@ fun PagerScaffold(
         )
     }
 
-    val blurWallpaper by derivedStateOf {
-        isSearchOpen || pagerState.currentPage == 0 && pagerState.currentPageOffset > 0.5f ||
-                pagerState.currentPage == 1 && pagerState.currentPageOffset <= 0.5f ||
-                widgetsScrollState.value > 0
+    val blurWallpaper by remember {
+        derivedStateOf {
+            isSearchOpen || pagerState.currentPage == 0 && pagerState.currentPageOffset > 0.5f ||
+                    pagerState.currentPage == 1 && pagerState.currentPageOffset <= 0.5f ||
+                    !isWidgetsScrollZero
+        }
     }
 
     val density = LocalDensity.current
@@ -133,7 +140,6 @@ fun PagerScaffold(
     Box(
         modifier = modifier
     ) {
-        var size by remember { mutableStateOf(IntSize.Zero) }
 
         HorizontalPager(
             count = 2,
@@ -161,15 +167,19 @@ fun PagerScaffold(
             if (it == 0) {
                 val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
 
-                val showClockPadding by derivedStateOf {
-                    widgetsScrollState.value == 0
-                }
                 val clockPadding by animateDpAsState(
-                    if (showClockPadding) 64.dp else 0.dp
+                    if (isWidgetsScrollZero) 64.dp else 0.dp
                 )
+                var size by remember { mutableStateOf(IntSize.Zero) }
+
+                val clockHeight by remember {
+                    derivedStateOf {
+                        with(density) { size.height.toDp() } - (64.dp - clockPadding)
+                    }
+                }
+
                 WidgetColumn(
-                    modifier =
-                    Modifier
+                    modifier = Modifier
                         .fillMaxSize()
                         .onSizeChanged {
                             size = it
@@ -177,8 +187,8 @@ fun PagerScaffold(
                         .verticalScroll(widgetsScrollState)
                         .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
                         .padding(top = editModePadding),
-                    clockHeight = size.height.toDp() - (64.dp - clockPadding),
-                    clockBottomPadding = clockPadding,
+                    clockHeight = { clockHeight },
+                    clockBottomPadding = { clockPadding },
                     editMode = isWidgetEditMode,
                     onEditModeChange = {
                         viewModel.setWidgetEditMode(it)
@@ -202,12 +212,14 @@ fun PagerScaffold(
             )
         }
 
-        val searchBarLevel by derivedStateOf {
-            when {
-                pagerState.isScrollInProgress -> SearchBarLevel.Raised
-                !isSearchOpen && widgetsScrollState.value == 0 -> SearchBarLevel.Resting
-                isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
-                else -> SearchBarLevel.Raised
+        val searchBarLevel by remember {
+            derivedStateOf {
+                when {
+                    pagerState.isScrollInProgress -> SearchBarLevel.Raised
+                    !isSearchOpen && isWidgetsScrollZero -> SearchBarLevel.Resting
+                    isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
+                    else -> SearchBarLevel.Raised
+                }
             }
         }
 

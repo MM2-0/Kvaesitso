@@ -42,7 +42,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -104,8 +103,10 @@ fun PullDownScaffold(
 
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
-    val blurWallpaper by derivedStateOf {
-        isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0
+    val blurWallpaper by remember {
+        derivedStateOf {
+            isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0
+        }
     }
 
 
@@ -242,6 +243,13 @@ fun PullDownScaffold(
             if (it == 0) {
                 val offset = calculateCurrentOffsetForPage(0).absoluteValue
                 val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
+                val clockHeight by remember {
+                    derivedStateOf {
+                        with(density) {
+                            size.height.toDp()
+                        }
+                    }
+                }
                 WidgetColumn(
                     modifier =
                     Modifier
@@ -255,7 +263,7 @@ fun PullDownScaffold(
                         .verticalScroll(widgetsScrollState)
                         .padding(8.dp)
                         .padding(top = editModePadding),
-                    clockHeight = size.height.toDp(),
+                    clockHeight = { clockHeight },
                     editMode = isWidgetEditMode,
                     onEditModeChange = {
                         viewModel.setWidgetEditMode(it)
@@ -279,13 +287,15 @@ fun PullDownScaffold(
             )
         }
 
-        val searchBarLevel by derivedStateOf {
-            when {
-                offsetY.value != 0f -> SearchBarLevel.Raised
-                isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
-                isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
-                widgetsScrollState.value > 0 -> SearchBarLevel.Raised
-                else -> SearchBarLevel.Resting
+        val searchBarLevel by remember {
+            derivedStateOf {
+                when {
+                    offsetY.value != 0f -> SearchBarLevel.Raised
+                    isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
+                    isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
+                    widgetsScrollState.value > 0 -> SearchBarLevel.Raised
+                    else -> SearchBarLevel.Resting
+                }
             }
         }
         val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)

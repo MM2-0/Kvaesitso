@@ -7,7 +7,6 @@ import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
@@ -49,8 +48,8 @@ import kotlinx.coroutines.launch
 @Composable
 fun WidgetColumn(
     modifier: Modifier = Modifier,
-    clockHeight: Dp = 0.dp,
-    clockBottomPadding: Dp = 0.dp,
+    clockHeight: () -> Dp = { 0.dp },
+    clockBottomPadding: () -> Dp = { 0.dp },
     editMode: Boolean = false,
     onEditModeChange: (Boolean) -> Unit,
 ) {
@@ -93,8 +92,8 @@ fun WidgetColumn(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(clockHeight)
-                    .padding(bottom = clockBottomPadding),
+                    .height(clockHeight())
+                    .padding(bottom = clockBottomPadding()),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 ClockWidget(
@@ -102,8 +101,8 @@ fun WidgetColumn(
                 )
             }
         }
-        val widgets by viewModel.widgets.observeAsState(emptyList())
         Column {
+            val widgets by viewModel.widgets.observeAsState(emptyList())
             val swapThresholds = remember(widgets) {
                 Array(widgets.size) { floatArrayOf(0f, 0f) }
             }
