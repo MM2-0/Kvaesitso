@@ -403,4 +403,6 @@
     <string name="preference_colors_custom">Benutzerdefiniert</string>
     <string name="preference_search_currencyconverter">Währungsumrechner</string>
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
+    <string name="preference_layout">Layout</string>
+    <string name="preference_layout_summary">Generelle Anordnung von Suchleiste, Widgets und Suchergebnissen</string>
 </resources>
