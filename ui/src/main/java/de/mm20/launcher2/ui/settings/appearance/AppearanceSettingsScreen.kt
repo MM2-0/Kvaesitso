@@ -3,12 +3,11 @@ package de.mm20.launcher2.ui.settings.appearance
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -18,12 +17,16 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.airbnb.lottie.LottieProperty
+import com.airbnb.lottie.compose.*
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -50,6 +53,13 @@ fun AppearanceSettingsScreen() {
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
+                val layout by viewModel.layout.observeAsState()
+                LayoutPreference(
+                    title = stringResource(id = R.string.preference_layout),
+                    summary = stringResource(id = R.string.preference_layout_summary),
+                    value = layout, onValueChanged = {
+                    viewModel.setLayout(it)
+                })
                 val theme by viewModel.theme.observeAsState()
                 ListPreference(
                     title = stringResource(id = R.string.preference_theme),
@@ -77,10 +87,6 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/colorscheme")
                     }
                 )
-                val layout by viewModel.layout.observeAsState()
-                LayoutPreference(title = "Layout", value = layout, onValueChanged = {
-                    viewModel.setLayout(it)
-                })
                 Preference(
                     title = stringResource(R.string.preference_cards),
                     summary = stringResource(R.string.preference_cards_summary),
@@ -513,14 +519,74 @@ fun LayoutPreference(
                         count = layouts.size,
                         state = pagerState,
                         modifier = Modifier
-                            .height(150.dp)
+                            .fillMaxWidth()
                             .padding(bottom = 16.dp)
-                            .background(MaterialTheme.colorScheme.secondary)
                     ) {
-                        when (layouts[it]) {
-                            AppearanceSettings.Layout.PullDown -> PullDownLayoutPreview()
-                            AppearanceSettings.Layout.Pager -> PagerLayoutPreview()
-                            else -> {}
+                        Box(
+                            modifier = Modifier
+                                .height(250.dp)
+                                .width(141.dp)
+                                .background(MaterialTheme.colorScheme.secondary)
+                        ) {
+
+                            val composition by rememberLottieComposition(
+                                LottieCompositionSpec.RawRes(
+                                    when (layouts[it]) {
+                                        AppearanceSettings.Layout.PullDown -> R.raw.lottie_scaffold_pulldown
+                                        AppearanceSettings.Layout.Pager -> R.raw.lottie_scaffold_pager
+                                        else -> 0
+                                    }
+                                )
+                            )
+
+                            val dynamicProperties = rememberLottieDynamicProperties(
+                                rememberLottieDynamicProperty(
+                                    property = LottieProperty.COLOR,
+                                    value = MaterialTheme.colorScheme.primaryContainer.toArgb(),
+                                    keyPath = arrayOf("Pointer", "**")
+                                ),
+                                rememberLottieDynamicProperty(
+                                    property = LottieProperty.COLOR,
+                                    value = MaterialTheme.colorScheme.surface.toArgb(),
+                                    keyPath = arrayOf("SearchBar", "**")
+                                ),
+                                rememberLottieDynamicProperty(
+                                    property = LottieProperty.COLOR,
+                                    value = MaterialTheme.colorScheme.surface.toArgb(),
+                                    keyPath = arrayOf("Favorites", "**")
+                                ),
+                                rememberLottieDynamicProperty(
+                                    property = LottieProperty.COLOR,
+                                    value = MaterialTheme.colorScheme.surface.toArgb(),
+                                    keyPath = arrayOf("Apps", "**")
+                                ),
+                                rememberLottieDynamicProperty(
+                                    property = LottieProperty.COLOR,
+                                    value = Color.White.toArgb(),
+                                    keyPath = arrayOf("ClockWidget", "**")
+                                )
+                            )
+
+                            /*LaunchedEffect(null) {
+                                val drw = LottieDrawable()
+                                drw.composition = composition
+                                val list = drw.resolveKeyPath(KeyPath("**"))
+                                list.forEach {
+                                    Log.d("MM20", it.keysToString())
+                                }
+                            }*/
+
+
+                            val progress by animateLottieCompositionAsState(
+                                composition,
+                                iterations = LottieConstants.IterateForever
+                            )
+
+                            LottieAnimation(
+                                composition = composition,
+                                progress = progress,
+                                dynamicProperties = dynamicProperties
+                            )
                         }
                     }
                     HorizontalPagerIndicator(pagerState = pagerState)
@@ -528,15 +594,6 @@ fun LayoutPreference(
             }
         )
     }
-}
-
-@Composable
-fun PullDownLayoutPreview() {
-}
-
-
-@Composable
-fun PagerLayoutPreview() {
 }
 
 

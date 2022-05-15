@@ -381,6 +381,8 @@
     <string name="grant_permission">Grant</string>
     <!-- Appearance preference title -->
     <string name="preference_screen_appearance">Appearance</string>
+    <string name="preference_layout">Layout</string>
+    <string name="preference_layout_summary">General arrangement of search bar, widgets and search results</string>
     <string name="preference_theme">Theme</string>
     <string name="preference_theme_light">Light</string>
     <string name="preference_theme_dark">Dark</string>

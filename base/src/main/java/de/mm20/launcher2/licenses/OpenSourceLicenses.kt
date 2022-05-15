@@ -217,4 +217,12 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://source.android.com/"
     ),
+    OpenSourceLibrary(
+        name = "Lottie",
+        copyrightNote = "Copyright (c) 2017 Airbnb",
+        description = "Lottie is a library for Android, iOS, Web, and Windows that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile and on the web",
+        licenseName = R.string.mit_license_name,
+        licenseText = R.raw.license_mit,
+        url = "https://airbnb.design/lottie/"
+    ),
 )

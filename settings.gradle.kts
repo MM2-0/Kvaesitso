@@ -379,6 +379,10 @@ dependencyResolutionManagement {
             alias("tinypinyin")
                 .to("com.github.promeg", "tinypinyin")
                 .version("2.0.2")
+
+            alias("lottie")
+                .to("com.airbnb.android", "lottie-compose")
+                .version("5.0.3")
         }
     }
 }

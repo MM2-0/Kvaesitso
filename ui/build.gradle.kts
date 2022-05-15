@@ -105,6 +105,8 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
 
+    implementation(libs.lottie)
+
     implementation(project(":material-color-utilities"))
 
     implementation(project(":base"))
