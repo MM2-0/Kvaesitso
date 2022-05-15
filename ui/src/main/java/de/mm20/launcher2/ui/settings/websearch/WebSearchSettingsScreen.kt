@@ -269,7 +269,7 @@ fun EditWebsearchDialog(
                     )
                 }
             ) {
-                Column(modifier = Modifier.padding(16.dp)) {
+                Column(modifier = Modifier.padding(it).padding(16.dp)) {
 
                     AnimatedVisibility(showImport) {
                         Card(
