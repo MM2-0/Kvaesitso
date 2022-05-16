@@ -216,7 +216,6 @@ fun PullDownScaffold(
             val height by remember {
                 derivedStateOf { maxHeight }
             }
-            Log.d("MM20", "PullDownScaffold recompose, $maxHeight")
             CompositionLocalProvider(
                 LocalOverScrollConfiguration provides null
             ) {
