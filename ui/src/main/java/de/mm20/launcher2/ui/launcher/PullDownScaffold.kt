@@ -157,6 +157,7 @@ fun PullDownScaffold(
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                if (isWidgetEditMode) return Offset.Zero
                 val diff =
                     (if (isSearchOpen) searchScrollState.value else widgetsScrollState.value) - available.y
                 val consumed = when {
