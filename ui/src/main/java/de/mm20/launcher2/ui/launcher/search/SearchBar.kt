@@ -57,7 +57,7 @@ import java.io.File
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    level: SearchBarLevel,
+    level: () -> SearchBarLevel,
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     reverse: Boolean = false,
@@ -94,7 +94,7 @@ fun SearchBar(
 
     SearchBar(
         modifier,
-        level,
+        level(),
         websearches,
         value = query,
         onValueChange = {

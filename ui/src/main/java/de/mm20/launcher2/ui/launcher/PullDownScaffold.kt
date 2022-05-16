@@ -1,12 +1,16 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.Activity
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -25,18 +29,14 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.VerticalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -48,9 +48,9 @@ import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
-import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun PullDownScaffold(
     modifier: Modifier = Modifier,
@@ -129,7 +129,7 @@ fun PullDownScaffold(
     LaunchedEffect(isSearchOpen) {
         if (isSearchOpen) searchScrollState.scrollTo(0)
         if (!isSearchOpen) searchVM.search("")
-        pagerState.animateScrollToPage(if (isSearchOpen) 1 else 0)
+        //pagerState.animateScrollToPage(if (isSearchOpen) 1 else 0)
         searchBarOffset.animateTo(0f)
     }
 
@@ -198,79 +198,88 @@ fun PullDownScaffold(
         }
     }
 
-    var size by remember { mutableStateOf(IntSize.Zero) }
 
     Box(
         modifier = modifier
             .fillMaxSize()
-            .onSizeChanged {
-                size = it
-            }
+            .clipToBounds()
+            .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
-        VerticalPager(
-            state = pagerState,
-            modifier = Modifier
-                .nestedScroll(nestedScrollConnection),
-            count = 2,
-            reverseLayout = true,
-            userScrollEnabled = false,
+
+        BoxWithConstraints(
+            modifier = modifier
+                .fillMaxSize()
         ) {
-            if (it == 1) {
-                val websearches by searchVM.websearchResults.observeAsState(emptyList())
-                val webSearchPadding by animateDpAsState(
-                    if (websearches.isEmpty()) 0.dp else 48.dp
-                )
-                val offset = calculateCurrentOffsetForPage(1).absoluteValue
-                SearchColumn(
+            val height by remember {
+                derivedStateOf { maxHeight }
+            }
+            Log.d("MM20", "PullDownScaffold recompose, $maxHeight")
+            CompositionLocalProvider(
+                LocalOverScrollConfiguration provides null
+            ) {
+                val offset by animateFloatAsState(if (isSearchOpen) 1f else 0f)
+                Column(
                     modifier = Modifier
-                        .graphicsLayer {
-                            transformOrigin = TransformOrigin.Center
-                            scaleX = 1 - offset
-                            scaleY = 1 - offset
-                            alpha = 1 - offset
+                        .fillMaxWidth()
+                        .requiredHeight(height * 2)
+                        .offset {
+                            IntOffset(
+                                0,
+                                ((-0.5f + offset) * height.toPx()).roundToInt()
+                            )
                         }
-                        .fillMaxSize()
-                        .verticalScroll(searchScrollState)
-                        .padding(8.dp)
-                        .padding(top = 56.dp)
-                        .padding(top = webSearchPadding)
-                        .imePadding()
-                )
+                ) {
+
+                    val websearches by searchVM.websearchResults.observeAsState(emptyList())
+                    val webSearchPadding by animateDpAsState(
+                        if (websearches.isEmpty()) 0.dp else 48.dp
+                    )
+                    SearchColumn(
+                        modifier = Modifier
+                            .graphicsLayer {
+                                transformOrigin = TransformOrigin.Center
+                                scaleX = offset
+                                scaleY = offset
+                                alpha = offset
+                            }
+                            .fillMaxWidth()
+                            .requiredHeight(height)
+                            .verticalScroll(searchScrollState)
+                            .padding(8.dp)
+                            .padding(top = 56.dp)
+                            .padding(top = webSearchPadding)
+                            .imePadding()
+                    )
+                    val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
+                    WidgetColumn(
+                        modifier =
+                        Modifier
+                            .graphicsLayer {
+                                transformOrigin = TransformOrigin.Center
+                                scaleX = 1 - offset
+                                scaleY = 1 - offset
+                                alpha = 1 - offset
+                            }
+                            .fillMaxWidth()
+                            .requiredHeight(height)
+                            .verticalScroll(widgetsScrollState)
+                            .padding(8.dp)
+                            .padding(top = editModePadding),
+                        clockHeight = { height },
+                        editMode = isWidgetEditMode,
+                        onEditModeChange = {
+                            viewModel.setWidgetEditMode(it)
+                        }
+                    )
+                }
+
             }
 
-            if (it == 0) {
-                val offset = calculateCurrentOffsetForPage(0).absoluteValue
-                val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
-                val clockHeight by remember {
-                    derivedStateOf {
-                        with(density) {
-                            size.height.toDp()
-                        }
-                    }
-                }
-                WidgetColumn(
-                    modifier =
-                    Modifier
-                        .graphicsLayer {
-                            transformOrigin = TransformOrigin.Center
-                            scaleX = 1 - offset
-                            scaleY = 1 - offset
-                            alpha = 1 - offset
-                        }
-                        .fillMaxSize()
-                        .verticalScroll(widgetsScrollState)
-                        .padding(8.dp)
-                        .padding(top = editModePadding),
-                    clockHeight = { clockHeight },
-                    editMode = isWidgetEditMode,
-                    onEditModeChange = {
-                        viewModel.setWidgetEditMode(it)
-                    }
-                )
-            }
         }
+
+
         AnimatedVisibility(visible = isWidgetEditMode,
             enter = slideIn { IntOffset(0, -it.height) },
             exit = slideOut { IntOffset(0, -it.height) }
@@ -304,11 +313,10 @@ fun PullDownScaffold(
         )
 
         SearchBar(
-            level = searchBarLevel,
+            level = { searchBarLevel },
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .clipToBounds()
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
                 .offset(y = editModeSearchBarOffset),

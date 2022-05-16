@@ -235,7 +235,7 @@ fun PagerScaffold(
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                 .imePadding()
                 .offset(y = widgetEditModeOffset),
-            level = searchBarLevel, focused = focusSearchBar, onFocusChange = {
+            level = { searchBarLevel }, focused = focusSearchBar, onFocusChange = {
                 if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
             },
