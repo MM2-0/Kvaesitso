@@ -214,7 +214,7 @@
     <string name="missing_permission_music_widget">需要通知访问权限以便控制媒体播放</string>
     <string name="missing_permission_contact_search_settings">需要联系人权限以便搜索联系人</string>
     <string name="missing_permission_calendar_search_settings">需要日历权限以便搜索日历</string>
-    <string name="missing_permission_calendar_widget_settings">此部件需要日历权限</string>
+    <string name="missing_permission_calendar_widget_settings">此组件需要日历权限</string>
     <string name="missing_permission_file_search_settings">需要外部存储权限以便搜索本地文件</string>
     <string name="missing_permission_notification_badges">需要通知访问权限以便显示通知角标</string>
     <string name="missing_permission_calendar_widget">授予日历权限以在此处显示即将到来的约会和事件。</string>
@@ -400,4 +400,6 @@
     <string name="preference_category_custom_colors_dark">暗色方案</string>
     <string name="preference_search_currencyconverter">货币转换器</string>
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
+    <string name="preference_layout">布局</string>
+    <string name="preference_layout_summary">搜索栏、组件和搜索结果的常规布局</string>
 </resources>
