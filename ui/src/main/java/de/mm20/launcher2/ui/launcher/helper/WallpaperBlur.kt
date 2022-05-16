@@ -1,0 +1,29 @@
+package de.mm20.launcher2.ui.launcher.helper
+
+import android.app.Activity
+import android.view.WindowManager
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
+
+@Composable
+fun WallpaperBlur(blur: () -> Boolean) {
+    val context = LocalContext.current
+    val density = LocalDensity.current
+    val blurWallpaper = blur()
+    LaunchedEffect(blurWallpaper) {
+        if (!isAtLeastApiLevel(31)) return@LaunchedEffect
+        (context as Activity).window.attributes = context.window.attributes.also {
+            if (blurWallpaper) {
+                it.blurBehindRadius = with(density) { 32.dp.toPx().toInt() }
+                it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
+            } else {
+                it.blurBehindRadius = 0
+                it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
+            }
+        }
+    }
+}

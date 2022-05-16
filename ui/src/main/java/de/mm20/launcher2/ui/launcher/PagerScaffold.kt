@@ -36,6 +36,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -102,21 +103,8 @@ fun PagerScaffold(
         }
     }
 
-    val density = LocalDensity.current
-
-
-
-    LaunchedEffect(blurWallpaper) {
-        if (!isAtLeastApiLevel(31)) return@LaunchedEffect
-        (context as Activity).window.attributes = context.window.attributes.also {
-            if (blurWallpaper) {
-                it.blurBehindRadius = with(density) { 32.dp.toPx().toInt() }
-                it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
-            } else {
-                it.blurBehindRadius = 0
-                it.flags = it.flags and WindowManager.LayoutParams.FLAG_BLUR_BEHIND.inv()
-            }
-        }
+    WallpaperBlur {
+        blurWallpaper
     }
 
     val currentPage = swipeableState.currentValue
