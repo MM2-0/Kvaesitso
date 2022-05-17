@@ -59,6 +59,7 @@ fun ClockWidget(
                 ) {
                     Box(
                         modifier = Modifier.clickable(
+                            enabled = clockStyle != ClockStyle.EmptyClock,
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         ) {
@@ -106,6 +107,7 @@ fun ClockWidget(
                         )
                         Box(
                             modifier = Modifier.clickable(
+                                enabled = clockStyle != ClockStyle.EmptyClock,
                                 indication = null,
                                 interactionSource = remember { MutableInteractionSource() }
                             ) {
