@@ -6,9 +6,7 @@ import android.content.Intent
 import android.provider.CalendarContract
 import android.text.format.DateFormat
 import android.text.format.DateUtils
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -42,7 +40,11 @@ class DatePartProvider: PartProvider {
         val time by this.time.collectAsState(System.currentTimeMillis())
         val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
         val context = LocalContext.current
-        TextButton(onClick = {
+        TextButton(
+            colors = ButtonDefaults.textButtonColors(
+                contentColor = LocalContentColor.current
+            ),
+            onClick = {
             val startMillis = System.currentTimeMillis()
             val builder = CalendarContract.CONTENT_URI.buildUpon()
             builder.appendPath("time")
@@ -60,8 +62,7 @@ class DatePartProvider: PartProvider {
                         time,
                         DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
                     ),
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White
+                    style = MaterialTheme.typography.titleMedium
                 )
             } else {
                 val line1Format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEEE")
@@ -72,8 +73,7 @@ class DatePartProvider: PartProvider {
                     lineHeight = 1.2.em,
                     style = MaterialTheme.typography.titleLarge.copy(
                         fontWeight = FontWeight.Medium
-                    ),
-                    color = Color.White
+                    )
                 )
             }
         }
