@@ -1,8 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.Activity
-import android.util.Log
-import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -36,10 +33,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
@@ -51,7 +45,7 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun PullDownScaffold(
     modifier: Modifier = Modifier,
@@ -67,7 +61,6 @@ fun PullDownScaffold(
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
 
-    val pagerState = rememberPagerState()
     val widgetsScrollState = rememberScrollState()
     val searchScrollState = rememberScrollState()
 
@@ -309,7 +302,15 @@ fun PullDownScaffold(
                 .wrapContentHeight()
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
-                .offset(y = editModeSearchBarOffset),
+                .offset {
+                    IntOffset(
+                        0,
+                        with(density) {
+                            editModeSearchBarOffset
+                                .toPx()
+                                .roundToInt()
+                        })
+                },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
