@@ -120,7 +120,6 @@ fun PullDownScaffold(
     LaunchedEffect(isSearchOpen) {
         if (isSearchOpen) searchScrollState.scrollTo(0)
         if (!isSearchOpen) searchVM.search("")
-        //pagerState.animateScrollToPage(if (isSearchOpen) 1 else 0)
         searchBarOffset.animateTo(0f)
     }
 
