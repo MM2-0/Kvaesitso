@@ -12,7 +12,7 @@
             android:theme="@style/LauncherTheme"
             android:stateNotNeeded="true"
             android:resumeWhilePausing="true"
-            android:windowSoftInputMode="stateHidden|adjustNothing">
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
