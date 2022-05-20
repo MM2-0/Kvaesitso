@@ -61,7 +61,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-beta01")
+            version("androidx.compose", "1.2.0-beta02")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -94,7 +94,7 @@ dependencyResolutionManagement {
                 .versionRef("androidx.compose")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-alpha11")
+                .version("1.0.0-alpha12")
 
             version("androidx.lifecycle", "2.4.1")
             alias("androidx.lifecycle.viewmodel")
@@ -122,7 +122,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.24.8-beta")
+            version("accompanist", "0.24.9-beta")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
