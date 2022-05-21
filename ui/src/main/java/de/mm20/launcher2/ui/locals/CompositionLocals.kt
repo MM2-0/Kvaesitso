@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.locals
 
 import android.appwidget.AppWidgetHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.platform.LocalContext
@@ -21,6 +22,8 @@ val LocalFavoritesEnabled = compositionLocalOf { true }
 val LocalGridColumns = compositionLocalOf { 5 }
 
 val LocalGridIconSize = compositionLocalOf { 48.dp }
+
+val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
 
 /**
  * Workaround a bug in Jetpack Compose which incorrectly places popups

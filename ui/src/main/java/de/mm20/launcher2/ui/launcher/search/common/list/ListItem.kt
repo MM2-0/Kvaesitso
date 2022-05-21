@@ -16,6 +16,7 @@ import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,8 +25,12 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
@@ -33,6 +38,8 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
@@ -44,6 +51,9 @@ fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
     val isPinned by viewModel.isPinned.collectAsState(false)
     val isHidden by viewModel.isHidden.collectAsState(false)
 
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val snackbarHostState = LocalSnackbarHostState.current
+
     val dismissState = rememberDismissState(
         confirmStateChange = {
             when (it) {
@@ -54,7 +64,19 @@ fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
                 }
                 DismissValue.DismissedToStart -> {
                     if (isHidden) viewModel.unhide()
-                    else viewModel.hide()
+                    else {
+                        viewModel.hide()
+                        lifecycleOwner.lifecycleScope.launch {
+                            val result = snackbarHostState.showSnackbar(
+                                message = context.getString(R.string.msg_item_hidden, item.label),
+                                actionLabel = context.getString(R.string.action_undo),
+
+                            )
+                            if(result == SnackbarResult.ActionPerformed) {
+                                viewModel.unhide()
+                            }
+                        }
+                    }
                 }
             }
             it == DismissValue.DismissedToStart

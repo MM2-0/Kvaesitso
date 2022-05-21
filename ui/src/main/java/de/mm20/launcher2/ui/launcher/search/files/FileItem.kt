@@ -8,20 +8,19 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
@@ -33,7 +32,9 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -47,6 +48,9 @@ fun FileItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(file.key) { FileItemVM(file) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val snackbarHostState = LocalSnackbarHostState.current
 
     val transition = updateTransition(showDetails, label = "ContactItem")
 
@@ -235,6 +239,17 @@ fun FileItem(
                         action = {
                             viewModel.hide()
                             onBack()
+                            lifecycleOwner.lifecycleScope.launch {
+                                val result = snackbarHostState.showSnackbar(
+                                    message = context.getString(R.string.msg_item_hidden, file.label),
+                                    actionLabel = context.getString(R.string.action_undo),
+
+                                    )
+                                if(result == SnackbarResult.ActionPerformed) {
+                                    viewModel.unhide()
+                                }
+                            }
+
                         })
                 }
                 toolbarActions.add(hideAction)

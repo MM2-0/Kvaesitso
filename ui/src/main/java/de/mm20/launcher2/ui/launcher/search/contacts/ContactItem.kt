@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -22,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
@@ -36,7 +39,9 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalUnitApi::class)
 @Composable
@@ -48,6 +53,9 @@ fun ContactItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(contact) { ContactItemVM(contact) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val snackbarHostState = LocalSnackbarHostState.current
 
     val transition = updateTransition(showDetails, label = "ContactItem")
 
@@ -257,6 +265,16 @@ fun ContactItem(
                         action = {
                             viewModel.hide()
                             onBack()
+                            lifecycleOwner.lifecycleScope.launch {
+                                val result = snackbarHostState.showSnackbar(
+                                    message = context.getString(R.string.msg_item_hidden, contact.label),
+                                    actionLabel = context.getString(R.string.action_undo),
+
+                                    )
+                                if(result == SnackbarResult.ActionPerformed) {
+                                    viewModel.unhide()
+                                }
+                            }
                         })
                 }
                 toolbarActions.add(hideAction)

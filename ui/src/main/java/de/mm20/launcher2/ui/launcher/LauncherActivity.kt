@@ -7,14 +7,14 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.imePadding
-import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
@@ -38,6 +38,7 @@ import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import org.koin.android.ext.android.inject
@@ -61,9 +62,11 @@ class LauncherActivity : BaseActivity() {
         viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         setContent {
+            val snackbarHostState = remember { SnackbarHostState() }
             CompositionLocalProvider(
                 LocalHomeTransitionManager provides homeTransitionManager,
-                LocalWindowSize provides windowSize
+                LocalWindowSize provides windowSize,
+                LocalSnackbarHostState provides snackbarHostState
             ) {
                 LauncherTheme {
                     ProvideSettings {
@@ -111,6 +114,10 @@ class LauncherActivity : BaseActivity() {
                                 }
                                 else -> {}
                             }
+                            SnackbarHost(
+                                snackbarHostState,
+                                modifier = Modifier.navigationBarsPadding().imePadding()
+                            )
                         }
                         val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
                         if (showHiddenItems) {

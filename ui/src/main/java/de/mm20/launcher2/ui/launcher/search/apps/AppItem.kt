@@ -8,16 +8,19 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
+import androidx.lifecycle.lifecycleScope
 import coil.compose.rememberImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import de.mm20.launcher2.search.data.Application
@@ -27,6 +30,7 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import kotlin.math.min
@@ -42,6 +46,9 @@ fun AppItem(
 ) {
     val viewModel = remember { AppItemVM(app) }
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val snackbarHostState = LocalSnackbarHostState.current
+
     val scope = rememberCoroutineScope()
     Column(
         modifier = modifier
@@ -275,6 +282,16 @@ fun AppItem(
                 action = {
                     viewModel.hide()
                     onBack()
+                    lifecycleOwner.lifecycleScope.launch {
+                        val result = snackbarHostState.showSnackbar(
+                            message = context.getString(R.string.msg_item_hidden, app.label),
+                            actionLabel = context.getString(R.string.action_undo),
+
+                            )
+                        if(result == SnackbarResult.ActionPerformed) {
+                            viewModel.unhide()
+                        }
+                    }
                 })
         }
 
