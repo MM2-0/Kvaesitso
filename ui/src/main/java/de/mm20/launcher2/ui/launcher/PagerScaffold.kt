@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.Activity
+import android.util.Log
 import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -10,6 +11,8 @@ import androidx.compose.animation.slideOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,11 +27,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -42,6 +51,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlin.math.roundToInt
 
 @OptIn(
@@ -133,6 +143,42 @@ fun PagerScaffold(
         }
     }
 
+    val notificationDragThreshold = with(LocalDensity.current) {200.dp.toPx()}
+    val notificationShadeController = rememberNotificationShadeController()
+
+    val nestedScrollConnection = remember {
+        object: NestedScrollConnection {
+            private var pullDownTotalY: Float? = 0f
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                if (widgetsScrollState.value == 0 && source == NestedScrollSource.Drag) {
+                    val diff = widgetsScrollState.value - available.y
+                    var totalY = pullDownTotalY
+                    if (totalY != null) {
+                        totalY += diff
+                        if (totalY < -notificationDragThreshold) {
+                            notificationShadeController.expandNotifications()
+                            pullDownTotalY = null
+                        } else {
+                            pullDownTotalY = totalY
+                        }
+                        return Offset(0f, -diff)
+                    } else {
+                        return available
+                    }
+                }
+                return super.onPreScroll(available, source)
+            }
+
+            override suspend fun onPreFling(available: Velocity): Velocity {
+                if (pullDownTotalY == null) {
+                    pullDownTotalY = 0f
+                    return available
+                }
+                return super.onPreFling(available)
+            }
+        }
+    }
+
     Box(
         modifier = modifier
     ) {
@@ -193,6 +239,7 @@ fun PagerScaffold(
                         modifier = Modifier
                             .requiredWidth(width)
                             .fillMaxHeight()
+                            .nestedScroll(nestedScrollConnection)
                             .verticalScroll(widgetsScrollState)
                             .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
                             .padding(top = editModePadding),
