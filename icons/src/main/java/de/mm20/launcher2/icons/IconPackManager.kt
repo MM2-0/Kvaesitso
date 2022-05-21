@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.content.res.XmlResourceParser
-import android.graphics.*
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -49,8 +48,11 @@ class UpdateIconPacksWorker(val context: Context) {
 
     fun doWork() {
         val packs = loadInstalledPacks(context).map { it.activityInfo.packageName }
+        val grayscaleProviders = loadInstalledGreyscaleProviders(context)
         val iconDao = AppDatabase.getInstance(context).iconDao()
-        iconDao.uninstallIconPacksExcept(packs)
+        iconDao.uninstallIconPacksExcept(
+            packs.union(grayscaleProviders).toList()
+        )
 
         for (pack in packs) {
             try {
@@ -69,6 +71,18 @@ class UpdateIconPacksWorker(val context: Context) {
 
         val supportedGrayscaleMapPackages = SUPPORTED_GRAYSCALE_MAP_PROVIDERS
         supportedGrayscaleMapPackages.forEach { installGrayscaleIconMap(it) }
+    }
+
+    private fun loadInstalledGreyscaleProviders(context: Context): List<String> {
+        val pm = context.packageManager
+        return SUPPORTED_GRAYSCALE_MAP_PROVIDERS.filter {
+            try {
+                pm.getPackageInfo(it, 0)
+                true
+            } catch (e: PackageManager.NameNotFoundException) {
+                false
+            }
+        }
     }
 
     private fun loadInstalledPacks(context: Context): List<ResolveInfo> {
