@@ -150,22 +150,19 @@ fun PagerScaffold(
         object: NestedScrollConnection {
             private var pullDownTotalY: Float? = 0f
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (widgetsScrollState.value == 0 && source == NestedScrollSource.Drag) {
-                    val diff = widgetsScrollState.value - available.y
-                    var totalY = pullDownTotalY
-                    if (totalY != null) {
-                        totalY += diff
-                        if (totalY < -notificationDragThreshold) {
-                            notificationShadeController.expandNotifications()
-                            pullDownTotalY = null
-                        } else {
-                            pullDownTotalY = totalY
-                        }
-                        return Offset(0f, -diff)
-                    } else {
-                        return available
-                    }
+                val diff = widgetsScrollState.value - available.y
+                var totalY = pullDownTotalY ?: return available
+                if (diff >= 0) return super.onPreScroll(available, source)
+
+                totalY += diff
+
+                if (totalY < -notificationDragThreshold) {
+                    notificationShadeController.expandNotifications()
+                    pullDownTotalY = null
+                    return available
                 }
+                pullDownTotalY = totalY
+
                 return super.onPreScroll(available, source)
             }
 
