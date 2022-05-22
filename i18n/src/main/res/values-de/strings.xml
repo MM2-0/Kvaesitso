@@ -405,4 +405,6 @@
     <string name="preference_search_currencyconverter_summary">Regelmäßig Wechselkurse herunterladen um Währungen umzurechnen</string>
     <string name="preference_layout">Layout</string>
     <string name="preference_layout_summary">Generelle Anordnung von Suchleiste, Widgets und Suchergebnissen</string>
+    <string name="msg_item_hidden">%1$s wurde ausgeblendet.</string>
+    <string name="action_undo">Rückgängig</string>
 </resources>
