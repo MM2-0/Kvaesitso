@@ -10,17 +10,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
@@ -34,9 +34,11 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
+import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
+import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWindowSize
@@ -79,6 +81,18 @@ class LauncherActivity : BaseActivity() {
 
                         val systemUiController = rememberSystemUiController()
 
+                        val enterTransition = remember { mutableStateOf(1f) }
+
+                        LaunchedEffect(null) {
+                            homeTransitionManager
+                                .currentTransition
+                                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                                .collect {
+                                    enterTransition.value = 0f
+                                    enterTransition.animateTo(1f)
+                                }
+                        }
+
                         LaunchedEffect(hideStatus) {
                             systemUiController.isStatusBarVisible = !hideStatus
                         }
@@ -93,12 +107,17 @@ class LauncherActivity : BaseActivity() {
                             contentAlignment = Alignment.BottomCenter
                         ) {
                             NavBarEffects(modifier = Modifier.fillMaxSize())
-                            when(layout) {
+                            when (layout) {
                                 Settings.AppearanceSettings.Layout.PullDown -> {
                                     PullDownScaffold(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .systemBarsPadding(),
+                                            .systemBarsPadding()
+                                            .graphicsLayer {
+                                                scaleX = 0.5f + enterTransition.value * 0.5f
+                                                scaleY = 0.5f + enterTransition.value * 0.5f
+                                                alpha = enterTransition.value
+                                            },
                                         darkStatusBarIcons = lightStatus,
                                         darkNavBarIcons = lightNav,
                                     )
@@ -107,7 +126,12 @@ class LauncherActivity : BaseActivity() {
                                     PagerScaffold(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .systemBarsPadding(),
+                                            .systemBarsPadding()
+                                            .graphicsLayer {
+                                                scaleX = enterTransition.value
+                                                scaleY = enterTransition.value
+                                                alpha = enterTransition.value
+                                            },
                                         darkStatusBarIcons = lightStatus,
                                         darkNavBarIcons = lightNav,
                                     )
@@ -116,7 +140,9 @@ class LauncherActivity : BaseActivity() {
                             }
                             SnackbarHost(
                                 snackbarHostState,
-                                modifier = Modifier.navigationBarsPadding().imePadding()
+                                modifier = Modifier
+                                    .navigationBarsPadding()
+                                    .imePadding()
                             )
                         }
                         val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)

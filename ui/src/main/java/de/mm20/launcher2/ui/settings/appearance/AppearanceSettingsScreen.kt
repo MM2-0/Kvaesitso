@@ -375,6 +375,7 @@ fun IconShapePreference(
                                             LocalContext.current,
                                             R.mipmap.ic_launcher_foreground
                                         )!!,
+                                        foregroundScale = 1.5f,
                                         background = ColorDrawable(LocalContext.current.getColor(R.color.ic_launcher_background))
                                     ),
                                     onClick = {

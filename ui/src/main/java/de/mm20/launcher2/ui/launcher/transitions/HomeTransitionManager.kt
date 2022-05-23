@@ -1,12 +1,16 @@
 package de.mm20.launcher2.ui.launcher.transitions
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.toAndroidRectF
 import com.android.launcher3.GestureNavContract
+import kotlinx.coroutines.flow.MutableSharedFlow
 
 class HomeTransitionManager {
+
+    val currentTransition = MutableSharedFlow<HomeTransitionParams?>(1)
 
     private val handlers = mutableSetOf<HomeTransitionHandler>()
 
@@ -15,13 +19,11 @@ class HomeTransitionManager {
             val result = handler.handle(gestureNavContract)
             if (result != null) {
                 gestureNavContract.sendEndPosition(result.targetBounds.toAndroidRectF())
-                break
+                currentTransition.tryEmit(result)
+                return
             }
         }
-    }
-
-    private fun dispatch(params: HomeTransitionParams) {
-
+        currentTransition.tryEmit(null)
     }
 
     fun registerHandler(handler: HomeTransitionHandler) {
