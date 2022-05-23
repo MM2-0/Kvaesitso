@@ -344,4 +344,6 @@
     <string name="preference_wikipedia_customurl">Adres URL Wikipedii</string>
     <string name="preference_search_bar_auto_focus_summary">Automatycznie pokaż klawiaturę gdy otwierasz pasek wyszukiwania</string>
     <string name="preference_search_bar_style_summary">Dostosuj wygląd paska wyszukiwania</string>
+    <string name="msg_item_hidden">%1$s został ukryty.</string>
+    <string name="action_undo">Cofnij</string>
 </resources>
