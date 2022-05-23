@@ -402,4 +402,6 @@
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
     <string name="preference_layout">布局</string>
     <string name="preference_layout_summary">搜索栏、组件和搜索结果的常规布局</string>
+    <string name="msg_item_hidden">%1$s已被隐藏.</string>
+    <string name="action_undo">撤销</string>
 </resources>
