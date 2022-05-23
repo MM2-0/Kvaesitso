@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -141,17 +142,16 @@ fun PullDownScaffold(
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (isWidgetEditMode) return Offset.Zero
-                val diff =
-                    (if (isSearchOpen) searchScrollState.value else widgetsScrollState.value) - available.y
+                val value = if (isSearchOpen) searchScrollState.value else widgetsScrollState.value
+                val newValue = value - available.y
                 val consumed = when {
-                    (offsetY.value > 0 || source == NestedScrollSource.Drag && diff < 0) -> {
-                        val consumed = -diff
+                    (offsetY.value > 0 || source == NestedScrollSource.Drag && newValue < 0) -> {
+                        val consumed = available.y - value
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
                         consumed
                     }
-                    isSearchOpen && (offsetY.value < 0 || source == NestedScrollSource.Drag && diff > searchScrollState.maxValue) -> {
-                        val consumed =
-                            available.y - (searchScrollState.maxValue - searchScrollState.value)
+                    isSearchOpen && (offsetY.value < 0 || source == NestedScrollSource.Drag && newValue > searchScrollState.maxValue) -> {
+                        val consumed = available.y - (value- searchScrollState.maxValue)
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
                         consumed
                     }
