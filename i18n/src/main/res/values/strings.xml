@@ -275,6 +275,8 @@
     <string name="date_tomorrow">Tomorrow</string>
     <!-- Headline used in calendar widget for pinned events -->
     <string name="calendar_widget_pinned_events">Upcoming</string>
+    <!-- Headline used in calendar widget for the next event, if there is no event today -->
+    <string name="calendar_widget_next_events">Next event</string>
     <string name="calendar_widget_no_events">No events today</string>
     <string name="calendar_widget_open_app">Open calendar app</string>
     <string name="calendar_widget_new_event">New event</string>

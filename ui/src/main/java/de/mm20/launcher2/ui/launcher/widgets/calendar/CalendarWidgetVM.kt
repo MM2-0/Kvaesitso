@@ -31,6 +31,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val calendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesRepository.getPinnedCalendarEvents().asLiveData(viewModelScope.coroutineContext)
+    val nextEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     var availableDates = listOf(LocalDate.now())
 
     private val permissionsManager: PermissionsManager by inject()
@@ -133,6 +134,12 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
         }
 
         calendarEvents.postValue(events)
+        val e = this.upcomingEvents
+        if (events.isEmpty() && e.isNotEmpty()) {
+            nextEvents.postValue(listOf(e[0]))
+        } else {
+            nextEvents.postValue(emptyList())
+        }
     }
 
     suspend fun onActive() {

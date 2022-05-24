@@ -131,6 +131,19 @@ fun CalendarWidget() {
                     }
                 )
             }
+            val nextEvents by viewModel.nextEvents.observeAsState(emptyList())
+            if (nextEvents.isNotEmpty()) {
+                Text(
+                    stringResource(R.string.calendar_widget_next_events),
+                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                SearchResultList(
+                    nextEvents,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
             val pinnedEvents by viewModel.pinnedCalendarEvents.observeAsState(emptyList())
             if (pinnedEvents.size > 0) {
                 Text(
