@@ -407,4 +407,5 @@
     <string name="preference_layout_summary">Generelle Anordnung von Suchleiste, Widgets und Suchergebnissen</string>
     <string name="msg_item_hidden">%1$s wurde ausgeblendet.</string>
     <string name="action_undo">Rückgängig</string>
+    <string name="calendar_widget_next_events">Nächstes Ereignis</string>
 </resources>
