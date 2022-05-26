@@ -37,10 +37,9 @@ android {
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.media2)
 
     implementation(libs.koin.android)
+    implementation(libs.coil.core)
 
     implementation(project(":ktx"))
     implementation(project(":preferences"))

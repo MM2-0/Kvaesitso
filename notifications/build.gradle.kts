@@ -38,8 +38,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
 
-    implementation(libs.androidx.media2)
-
     implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)

@@ -89,7 +89,6 @@ dependencies {
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.core)
     implementation(libs.androidx.exifinterface)
-    implementation(libs.androidx.media2)
     implementation(libs.materialcomponents.core)
     implementation(libs.androidx.constraintlayout)
 

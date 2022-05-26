@@ -38,7 +38,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.media2)
     implementation(libs.androidx.constraintlayout)
 
     implementation(libs.bundles.androidx.lifecycle)
