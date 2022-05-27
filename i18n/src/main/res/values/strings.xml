@@ -24,8 +24,6 @@
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
-    <string name="menu_hidden_apps">Hidden apps</string>
-    <string name="menu_hidden_results">Hidden results</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <!-- Open a contact in the contacts app -->
