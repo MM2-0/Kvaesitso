@@ -449,7 +449,6 @@ internal class MusicRepositoryImpl(
         intent = Intent("android.intent.action.MUSIC_PLAYER")
         apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
             .map { it.activityInfo.packageName })
-        Log.d("MM20", apps.joinToString())
         return apps
     }
 
