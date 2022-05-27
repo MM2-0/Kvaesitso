@@ -114,15 +114,6 @@ fun SearchBar(
                 )
                 DropdownMenuItem(
                     onClick = {
-                        activityViewModel.showHiddenItems()
-                        onDismissRequest()
-                    },
-                    text = {
-                        Text(stringResource(R.string.menu_hidden_items))
-                    }
-                )
-                DropdownMenuItem(
-                    onClick = {
                         context.startActivity(
                             Intent.createChooser(
                                 Intent(Intent.ACTION_SET_WALLPAPER),

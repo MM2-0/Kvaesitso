@@ -145,12 +145,6 @@ class LauncherActivity : BaseActivity() {
                                     .imePadding()
                             )
                         }
-                        val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
-                        if (showHiddenItems) {
-                            HiddenItemsSheet(onDismiss = {
-                                viewModel.hideHiddenItems()
-                            })
-                        }
                     }
                 }
             }

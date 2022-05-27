@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -34,6 +35,7 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
+import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
@@ -58,9 +60,8 @@ class SettingsActivity : BaseActivity() {
         setContent {
             val navController = rememberAnimatedNavController()
 
-            LaunchedEffect(intent) {
-                intent.getStringExtra("de.mm20.launcher2.settings.ROUTE")
-                    ?.let { navController.navigate(it) }
+            val initialRoute = remember {
+                intent.getStringExtra("de.mm20.launcher2.settings.ROUTE") ?: "settings"
             }
 
             val cardStyle by remember {
@@ -75,7 +76,7 @@ class SettingsActivity : BaseActivity() {
                 LauncherTheme {
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = "settings",
+                        startDestination = initialRoute,
                         exitTransition = { fadeOut(tween(300, 300)) },
                         enterTransition = { fadeIn(tween(200)) },
                         popEnterTransition = { fadeIn(tween(0)) },
@@ -110,6 +111,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search/websearch") {
                             WebSearchSettingsScreen()
+                        }
+                        composable("settings/search/hiddenitems") {
+                            HiddenItemsSettingsScreen()
                         }
                         composable("settings/widgets") {
                             WidgetsSettingsScreen()
@@ -175,5 +179,9 @@ class SettingsActivity : BaseActivity() {
                 }
             }
         }
+    }
+
+    companion object {
+        const val EXTRA_ROUTE = "de.mm20.launcher2.settings.ROUTE"
     }
 }

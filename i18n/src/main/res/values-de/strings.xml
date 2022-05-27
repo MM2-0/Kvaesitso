@@ -130,7 +130,6 @@
     <string name="file_type_ebook">E-Book</string>
     <string name="file_type_form">Formular</string>
     <string name="menu_hide">Ausblenden</string>
-    <string name="menu_hidden_items">Ausgeblendete Elemente</string>
     <string name="menu_delete">Löschen</string>
     <string name="menu_unhide">Nicht ausblenden</string>
     <string name="menu_calendar_open_externally">In Kalender-App anzeigen</string>

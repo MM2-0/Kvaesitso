@@ -16,7 +16,6 @@
     <string name="menu_launch">Iniciar</string>
     <string name="menu_hide">Ocultar</string>
     <string name="menu_unhide">No ocultar</string>
-    <string name="menu_hidden_items">Elementos ocultos</string>
     <string name="menu_delete">Eliminar</string>
     <string name="menu_contacts_open_externally">Abrir en la aplicación de contactos</string>
     <string name="search_bar_placeholder">Buscar</string>

@@ -10,7 +10,6 @@
     <string name="menu_open_file">Otwórz</string>
     <string name="menu_hide">Ukryj</string>
     <string name="menu_unhide">Nie ukrywaj</string>
-    <string name="menu_hidden_items">Ukryte elementy</string>
     <string name="menu_contacts_open_externally">Otwórz w aplikacji do kontaktów</string>
     <string name="menu_calendar_open_externally">Otwórz w aplikacji kalendarza</string>
     <string name="app_info_version">Wersja %1$s</string>

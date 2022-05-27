@@ -63,7 +63,6 @@
     <string name="menu_open_file">Apri</string>
     <string name="menu_hide">Nascondi</string>
     <string name="menu_unhide">Non nascondere</string>
-    <string name="menu_hidden_items">Elementi nascosti</string>
     <string name="menu_delete">Elimina</string>
     <string name="menu_calendar_open_externally">Apri nell\'app calendario</string>
     <string name="search_bar_placeholder">Cerca</string>

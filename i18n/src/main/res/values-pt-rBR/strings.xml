@@ -4,7 +4,6 @@
     <string name="menu_back">Voltar</string>
     <string name="menu_unhide">Não ocultar</string>
     <string name="menu_hide">Ocultar</string>
-    <string name="menu_hidden_items">Itens ocultados</string>
     <string name="menu_delete">Deletar</string>
     <string name="menu_contacts_open_externally">Abrir no aplicativo de contatos</string>
     <string name="menu_calendar_open_externally">Abrir no aplicativo de calendário</string>

@@ -191,6 +191,13 @@ fun SearchSettingsScreen() {
                     onValueChanged = {
                     viewModel.setAutoFocus(it)
                 })
+                Preference(
+                    title = stringResource(R.string.preference_hidden_items),
+                    summary = stringResource(R.string.preference_hidden_items_summary),
+                    onClick = {
+                        navController?.navigate("settings/search/hiddenitems")
+                    }
+                )
             }
         }
     }

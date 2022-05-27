@@ -11,7 +11,6 @@
     <string name="menu_launch">Öppna</string>
     <string name="menu_hide">Göm</string>
     <string name="menu_unhide">Göm ej</string>
-    <string name="menu_hidden_items">Gömda objekt</string>
     <string name="menu_delete">Radera</string>
     <string name="menu_contacts_open_externally">Öppna i Kontakter</string>
     <string name="menu_calendar_open_externally">Öppna i Kalender</string>

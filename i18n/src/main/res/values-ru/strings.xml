@@ -10,7 +10,6 @@
     <string name="menu_launch">Запустить</string>
     <string name="menu_hide">Скрыть</string>
     <string name="menu_unhide">Не скрывать</string>
-    <string name="menu_hidden_items">Скрытые</string>
     <string name="menu_delete">Убрать</string>
     <string name="menu_contacts_open_externally">Открыть в Контактах</string>
     <string name="menu_calendar_open_externally">Открыть в Календаре</string>

@@ -9,7 +9,6 @@ import android.content.pm.PackageInstaller
 import android.content.pm.ShortcutInfo
 import android.os.Process
 import android.os.UserHandle
-import android.os.UserManager
 import android.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
 import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
@@ -24,6 +23,7 @@ import java.util.*
 
 interface AppRepository {
     fun search(query: String): Flow<List<Application>>
+    fun getAllInstalledApps(includeHidden: Boolean = false): Flow<List<Application>>
     fun getSuspendedPackages(): Flow<List<String>>
 }
 
@@ -85,7 +85,8 @@ internal class AppRepositoryImpl(
             }
 
             override fun onPackageRemoved(packageName: String, user: UserHandle) {
-                installedApps.value = installedApps.value.filter { packageName != (it.`package`) || it.getUser() != user }
+                installedApps.value =
+                    installedApps.value.filter { packageName != (it.`package`) || it.getUser() != user }
             }
 
             override fun onShortcutsChanged(
@@ -109,7 +110,8 @@ internal class AppRepositoryImpl(
             ) {
                 super.onPackagesUnsuspended(packageNames, user)
                 packageNames ?: return
-                suspendedPackages.value = suspendedPackages.value.filter { packageNames.contains(it) }
+                suspendedPackages.value =
+                    suspendedPackages.value.filter { packageNames.contains(it) }
             }
 
         })
@@ -213,6 +215,20 @@ internal class AppRepositoryImpl(
 
                 send(appResults)
             }
+        }
+    }
+
+    override fun getAllInstalledApps(includeHidden: Boolean): Flow<List<Application>> {
+        return if (!includeHidden) {
+            channelFlow {
+                hiddenItems.collectLatest { hidden ->
+                    installedApps.collectLatest { apps ->
+                        send(apps.filter { !hidden.contains(it.key) })
+                    }
+                }
+            }
+        } else {
+            installedApps
         }
     }
 

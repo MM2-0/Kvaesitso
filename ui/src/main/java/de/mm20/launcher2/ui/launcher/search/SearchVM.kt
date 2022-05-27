@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,6 +18,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -229,6 +232,22 @@ class SearchVM : ViewModel(), KoinComponent {
                     .build()
             }
         }
+    }
+
+    fun showHiddenItems(context: Context) {
+        context.startActivity(
+            Intent(context, SettingsActivity::class.java).apply {
+                putExtra(SettingsActivity.EXTRA_ROUTE, "settings/search/hiddenitems")
+            }
+        )
+    }
+
+    fun openSearchSettings(context: Context) {
+        context.startActivity(
+            Intent(context, SettingsActivity::class.java).apply {
+                putExtra(SettingsActivity.EXTRA_ROUTE, "settings/search")
+            }
+        )
     }
 
 }

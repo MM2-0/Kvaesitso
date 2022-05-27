@@ -52,7 +52,6 @@
     <string name="menu_open_file">打开</string>
     <string name="menu_hide">隐藏</string>
     <string name="menu_unhide">禁止隐藏</string>
-    <string name="menu_hidden_items">隐藏项目</string>
     <string name="menu_delete">删除</string>
     <string name="menu_contacts_open_externally">在“联系人”应用中打开</string>
     <string name="menu_calendar_open_externally">在\"日历\"应用中打开</string>

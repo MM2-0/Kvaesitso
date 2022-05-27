@@ -163,7 +163,6 @@
     <string name="file_type_form">Formulaire</string>
     <string name="menu_hide">Cacher</string>
     <string name="menu_unhide">Ne pas cacher</string>
-    <string name="menu_hidden_items">Applications cachées</string>
     <string name="menu_delete">Supprimer</string>
     <string name="menu_calendar_open_externally">Ouvrir dans l\'application de calendrier</string>
     <string name="preference_search_wikipedia_pictures">Voir les photos</string>
