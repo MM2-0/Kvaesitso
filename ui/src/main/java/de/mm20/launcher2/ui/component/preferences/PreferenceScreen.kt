@@ -14,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -41,7 +43,12 @@ fun PreferenceScreen(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Text(title)
+                        Text(
+                            title,
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.padding(horizontal = 16.dp),
+                            maxLines = 1
+                        )
                     },
                     navigationIcon = {
                         IconButton(onClick = {
