@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,7 +15,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.insets.systemBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ui.locals.LocalNavController
 
@@ -35,40 +33,36 @@ fun PreferenceScreen(
     systemUiController.setNavigationBarColor(Color.Black)
 
     val activity = LocalContext.current as? AppCompatActivity
-    Box(
-        modifier = Modifier.systemBarsPadding()
-    ) {
-        Scaffold(
-            floatingActionButton = floatingActionButton,
-            topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            title,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            maxLines = 1
-                        )
-                    },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            if (navController?.navigateUp() != true) {
-                                activity?.onBackPressed()
-                            }
-                        }) {
-                            Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+    Scaffold(
+        floatingActionButton = floatingActionButton,
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        title,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        maxLines = 1
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        if (navController?.navigateUp() != true) {
+                            activity?.onBackPressed()
                         }
-                    },
-                    actions = topBarActions
-                )
-            }) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-                content = content,
+                    }) {
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                    }
+                },
+                actions = topBarActions
             )
-        }
+        }) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it),
+            content = content,
+        )
     }
 
 }
