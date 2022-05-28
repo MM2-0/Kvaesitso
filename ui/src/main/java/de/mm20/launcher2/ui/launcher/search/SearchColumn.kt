@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -50,7 +51,7 @@ fun SearchColumn(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 4.dp),
+                .padding(vertical = 8.dp, horizontal = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
@@ -73,7 +74,7 @@ fun SearchColumn(
                 }
 
             }
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(16.dp))
             Surface(
                 shadowElevation = 2.dp,
                 color = MaterialTheme.colorScheme.secondaryContainer,
