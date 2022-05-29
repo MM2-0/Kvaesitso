@@ -131,7 +131,9 @@ fun HiddenItemsSheet(
                 shape = MaterialTheme.shapes.large.copy(
                     bottomEnd = CornerSize(0f),
                     bottomStart = CornerSize(0f),
-                    )
+                    ),
+                tonalElevation = 16.dp,
+                shadowElevation = 16.dp,
             ) {
                 Column(
                     modifier = Modifier
