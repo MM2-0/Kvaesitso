@@ -161,7 +161,7 @@ fun HiddenItemsSheet(
                         }
                     )
 
-                    val items by viewModel.hiddenItems.collectAsState(emptyList())
+                    val items by remember { viewModel.hiddenItems }.collectAsState(emptyList())
                     SearchResultGrid(
                         items,
                         modifier = Modifier
