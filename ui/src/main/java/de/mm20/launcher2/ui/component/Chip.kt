@@ -27,7 +27,7 @@ fun Chip(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier,
         color = Color.Transparent,
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.17f)),
         contentColor = MaterialTheme.colorScheme.onSurface,
         onClick = onClick
     ) {

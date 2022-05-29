@@ -106,7 +106,7 @@ fun ContactItem(
 
                 if (contact.phones.isNotEmpty()) {
                     Row(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Rounded.Call, contentDescription = null)
@@ -130,7 +130,7 @@ fun ContactItem(
                 }
                 if (contact.emails.isNotEmpty()) {
                     Row(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Rounded.Email, contentDescription = null)
@@ -154,7 +154,7 @@ fun ContactItem(
                 }
                 if (contact.telegram.isNotEmpty()) {
                     Row(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Rounded.Telegram, contentDescription = null)
@@ -178,7 +178,7 @@ fun ContactItem(
                 }
                 if (contact.whatsapp.isNotEmpty()) {
                     Row(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Rounded.WhatsApp, contentDescription = null)
@@ -202,7 +202,7 @@ fun ContactItem(
                 }
                 if (contact.postals.isNotEmpty()) {
                     Row(
-                        modifier = Modifier.padding(vertical = 12.dp, horizontal = 16.dp),
+                        modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(Icons.Rounded.Place, contentDescription = null)

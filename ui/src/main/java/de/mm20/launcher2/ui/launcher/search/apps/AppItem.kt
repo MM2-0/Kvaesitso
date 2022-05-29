@@ -82,7 +82,7 @@ fun AppItem(
                         .padding(top = 16.dp)
                         .animateContentSize(),
                     mainAxisSpacing = 16.dp,
-                    crossAxisSpacing = 8.dp
+                    crossAxisSpacing = 0.dp
                 ) {
                     val notifications by viewModel.notifications.collectAsState(initial = emptyList())
 
