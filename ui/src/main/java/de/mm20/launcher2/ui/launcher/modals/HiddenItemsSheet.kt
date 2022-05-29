@@ -28,6 +28,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
@@ -47,6 +48,8 @@ fun HiddenItemsSheet(
     onDismiss: () -> Unit
 ) {
     val viewModel: HiddenItemsSheetVM = viewModel()
+
+    val context = LocalContext.current
 
     Dialog(
         properties = DialogProperties(usePlatformDefaultWidth = false),
@@ -145,7 +148,7 @@ fun HiddenItemsSheet(
                             )
                         },
                         actions = {
-                            IconButton(onClick = { /*TODO*/ }) {
+                            IconButton(onClick = { viewModel.showHiddenItems(context) }) {
                                 Icon(
                                     imageVector = Icons.Rounded.Settings,
                                     contentDescription = stringResource(
