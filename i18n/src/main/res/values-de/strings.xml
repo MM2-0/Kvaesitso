@@ -409,4 +409,5 @@
     <string name="calendar_widget_next_events">Nächstes Ereignis</string>
     <string name="preference_hidden_items">Ausgeblendete Suchergebnisse</string>
     <string name="preference_hidden_items_summary">Ausgeblendete Apps und Suchergebnisse verwalten</string>
+    <string name="show_hidden_items">Ausgeblendete anzeigen</string>
 </resources>
