@@ -36,6 +36,7 @@ import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
+import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -142,6 +143,13 @@ class LauncherActivity : BaseActivity() {
                                     .navigationBarsPadding()
                                     .imePadding()
                             )
+
+                            val showHiddenItems by viewModel.isHiddenItemsShown.observeAsState(false)
+                            if (showHiddenItems) {
+                                HiddenItemsSheet(onDismiss = {
+                                    viewModel.hideHiddenItems()
+                                })
+                            }
                         }
                     }
                 }
