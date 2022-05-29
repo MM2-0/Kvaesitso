@@ -185,7 +185,6 @@ fun PullDownScaffold(
 
     Box(
         modifier = modifier
-            .fillMaxSize()
             .clipToBounds()
             .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
