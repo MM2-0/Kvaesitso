@@ -35,9 +35,11 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import kotlinx.coroutines.launch
+import palettes.TonalPalette
 
 @Composable
 fun CalendarItem(
@@ -52,10 +54,15 @@ fun CalendarItem(
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
 
+    val darkMode = LocalDarkTheme.current
+
     Row(
         modifier = modifier
             .drawBehind {
-                drawRect(Color(calendar.color), Offset.Zero, this.size.copy(width = 8.dp.toPx()))
+                val color = TonalPalette.fromInt(calendar.color).tone(
+                    if (darkMode) 80 else 40
+                )
+                drawRect(Color(color), Offset.Zero, this.size.copy(width = 8.dp.toPx()))
             }
             .padding(start = 8.dp),
     ) {

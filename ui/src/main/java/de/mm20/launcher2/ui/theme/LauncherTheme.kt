@@ -12,6 +12,7 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import kotlinx.coroutines.flow.map
@@ -34,26 +35,29 @@ fun LauncherTheme(
         AppearanceSettings.ColorScheme.Default
     )
 
-    val colorScheme by colorSchemeAsState(colorSchemePreference)
-
-    MaterialTheme(
-        colorScheme = colorScheme,
-        typography = DefaultTypography,
-        content = content
-    )
-}
-
-@Composable
-fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme): MutableState<ColorScheme> {
-    val context = LocalContext.current
-    val dataStore: LauncherDataStore by inject()
-
     val themePreference by remember { dataStore.data.map { it.appearance.theme } }.collectAsState(
         Theme.System
     )
     val darkTheme =
         themePreference == Theme.Dark || themePreference == Theme.System && isSystemInDarkTheme()
 
+    val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
+
+    CompositionLocalProvider(
+        LocalDarkTheme provides darkTheme
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography = DefaultTypography,
+            content = content
+        )
+    }
+}
+
+@Composable
+fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme, darkTheme: Boolean): MutableState<ColorScheme> {
+    val context = LocalContext.current
+    val dataStore: LauncherDataStore by inject()
 
     when (colorScheme) {
         AppearanceSettings.ColorScheme.BlackAndWhite -> {

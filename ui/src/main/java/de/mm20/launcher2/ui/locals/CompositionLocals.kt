@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import de.mm20.launcher2.preferences.Settings
@@ -24,6 +23,8 @@ val LocalGridColumns = compositionLocalOf { 5 }
 val LocalGridIconSize = compositionLocalOf { 48.dp }
 
 val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
+
+val LocalDarkTheme = compositionLocalOf { false }
 
 /**
  * Workaround a bug in Jetpack Compose which incorrectly places popups

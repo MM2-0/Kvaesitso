@@ -22,6 +22,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.colorSchemeAsState
 
@@ -46,7 +47,7 @@ fun ColorSchemeSettingsScreen() {
                 }
 
                 for (cs in items) {
-                    val scheme by colorSchemeAsState(cs.first)
+                    val scheme by colorSchemeAsState(cs.first, LocalDarkTheme.current)
                     Preference(
                         title = cs.second,
                         icon = if (colorScheme == cs.first) Icons.Rounded.RadioButtonChecked else Icons.Rounded.RadioButtonUnchecked,

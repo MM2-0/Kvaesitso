@@ -18,6 +18,9 @@ import de.mm20.launcher2.calendar.R
 import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.dp
+import hct.Hct
+import palettes.TonalPalette
+import scheme.Scheme
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -48,7 +51,7 @@ class CalendarEvent(
             typeface = Typeface.DEFAULT_BOLD,
             height = s
         )
-        val background = ColorDrawable(getDisplayColor(context, color))
+        val background = ColorDrawable(getDisplayColor())
         return LauncherIcon(
             foreground = foreground,
             background = background,
@@ -61,50 +64,9 @@ class CalendarEvent(
         return Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
-    companion object {
-        fun getDisplayColor(context: Context, color: Int): Int {
-            val hsl = FloatArray(3).let {
-                ColorUtils.RGBToHSL(color.red, color.green, color.blue, it)
-                it
-            }
-            return if (context.resources.getBoolean(R.bool.is_dark_theme)) {
-                if (ColorUtils.calculateContrast(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.calendar_foreground_color
-                        ), color
-                    ) < 2.5 || true
-                ) {
-                    if (color.red == color.green && color.red == color.blue) {
-                        val level = 0xFF - ((0xFF - color.red) * 0.7f).toInt()
-                        Color.rgb(level, level, level)
-                    } else {
-                        hsl[2] = hsl[2] + (1 - hsl[2]) * 0.2f
-                        hsl[1] = 1 - (1 - hsl[1]) * 0.9f
-                        ColorUtils.HSLToColor(hsl)
-                    }
-                } else return color
-            } else {
-                if (ColorUtils.calculateContrast(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.calendar_foreground_color
-                        ), color
-                    ) < 1.8
-                ) {
-                    if (color.red == color.green && color.red == color.blue) {
-                        val level = (color.red * 0.7f).toInt()
-                        Color.rgb(level, level, level)
-                    } else {
-                        hsl[2] = (0.5f - hsl[2]) * 0.8f + hsl[2]
-                        hsl[1] = 1 - (1 - hsl[1]) * 0.8f
-                        ColorUtils.HSLToColor(hsl)
-                    }
-                } else return color
-            }
-        }
-
-
+    fun getDisplayColor(): Int {
+        val palette = TonalPalette.fromInt(color)
+        return palette.tone(70)
     }
 }
 
