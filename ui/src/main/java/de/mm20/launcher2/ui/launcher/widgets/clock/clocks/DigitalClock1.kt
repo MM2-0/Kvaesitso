@@ -31,6 +31,7 @@ fun DigitalClock1(
         Locale.getDefault()
     )
     Text(
+        modifier = Modifier.offset(0.dp, if (verticalLayout) 16.dp else 0.dp),
         text = format.format(time),
         style = MaterialTheme.typography.displayLarge.copy(
             fontSize = if (verticalLayout) 100.sp else 48.sp,
