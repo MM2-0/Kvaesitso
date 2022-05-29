@@ -60,8 +60,9 @@ class SettingsActivity : BaseActivity() {
         setContent {
             val navController = rememberAnimatedNavController()
 
-            val initialRoute = remember {
-                intent.getStringExtra("de.mm20.launcher2.settings.ROUTE") ?: "settings"
+            LaunchedEffect(intent) {
+                intent.getStringExtra(EXTRA_ROUTE)
+                    ?.let { navController.navigate(it) }
             }
 
             val cardStyle by remember {
@@ -76,7 +77,7 @@ class SettingsActivity : BaseActivity() {
                 LauncherTheme {
                     AnimatedNavHost(
                         navController = navController,
-                        startDestination = initialRoute,
+                        startDestination = "settings",
                         exitTransition = { fadeOut(tween(300, 300)) },
                         enterTransition = { fadeIn(tween(200)) },
                         popEnterTransition = { fadeIn(tween(0)) },
