@@ -32,7 +32,7 @@ class IconRepository(
     private val cache = LruCache<String, LauncherIcon>(200)
 
     private var iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
-    private lateinit var placeholderProvider: IconProvider
+    private var placeholderProvider: IconProvider? = null
 
     init {
         requestIconPackListUpdate()
@@ -88,7 +88,7 @@ class IconRepository(
                 return@collectLatest
             }
 
-            val placeholder = placeholderProvider.getIcon(searchable, size)
+            val placeholder = placeholderProvider?.getIcon(searchable, size)
             placeholder?.let { send(it) }
 
             for (provider in providers) {
@@ -103,9 +103,6 @@ class IconRepository(
             }
             if (icon != null) {
                 cache.put(searchable.key, icon)
-                send(icon)
-            } else {
-                icon = placeholderProvider.getIcon(searchable, size)
                 send(icon)
             }
         }
