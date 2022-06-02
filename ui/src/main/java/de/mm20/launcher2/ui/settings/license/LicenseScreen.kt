@@ -34,7 +34,10 @@ fun LicenseScreen(library: OpenSourceLibrary) {
     val navController = LocalNavController.current
 
     val scrollBehavior =
-        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(rememberSplineBasedDecay())
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            rememberSplineBasedDecay(),
+            rememberTopAppBarScrollState()
+        )
     Scaffold(
         topBar = {
             LargeTopAppBar(
@@ -71,7 +74,9 @@ fun LicenseScreen(library: OpenSourceLibrary) {
         },
     ) {
         LazyColumn(
-            modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection).padding(it)
+            modifier = Modifier
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .padding(it)
         ) {
             library.description?.let {
                 item {
