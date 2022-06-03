@@ -1,2 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="unit_meter">
+        <item quantity="one">metru</item>
+        <item quantity="few">metrii</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_kilometer_symbol">km</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometru</item>
+        <item quantity="few">kilometrii</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centimetru</item>
+        <item quantity="few">centimetrii</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetru</item>
+        <item quantity="few">milimetrii</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_inch_symbol">inch</string>
+    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_meter_symbol">m</string>
+    <plurals name="unit_inch">
+        <item quantity="one">inch</item>
+        <item quantity="few"></item>
+        <item quantity="other"></item>
+    </plurals>
+</resources>
