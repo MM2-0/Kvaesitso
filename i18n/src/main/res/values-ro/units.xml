@@ -3,32 +3,150 @@
     <plurals name="unit_meter">
         <item quantity="one">metru</item>
         <item quantity="few">metrii</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
         <item quantity="one">kilometru</item>
         <item quantity="few">kilometrii</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centimetru</item>
         <item quantity="few">centimetrii</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_millimeter">
         <item quantity="one">milimetru</item>
         <item quantity="few">milimetrii</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_inch_symbol">inch</string>
     <string name="unit_foot_symbol">ft</string>
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_inch">
         <item quantity="one">inch</item>
-        <item quantity="few"></item>
+        <item quantity="few"/>
+        <item quantity="other"/>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">picior</item>
+        <item quantity="few">picioare</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_yard_symbol">iard</string>
+    <plurals name="unit_yard">
+        <item quantity="one">iard</item>
+        <item quantity="few">iarzi</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_mile_symbol">mi</string>
+    <plurals name="unit_mile">
+        <item quantity="one">milă</item>
+        <item quantity="few">mile</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">centimetru pătrat</item>
+        <item quantity="few">centimetrii pătrați</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milimetru pătrat</item>
+        <item quantity="few">milimetrii pătrați</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_hectare_symbol">ha</string>
+    <plurals name="unit_hectare">
+        <item quantity="one">hectar</item>
+        <item quantity="few">hectare</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_second">
+        <item quantity="one">secundă</item>
+        <item quantity="few">secunde</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_millisecond_symbol">ms</string>
+    <string name="unit_minute_symbol">min</string>
+    <plurals name="unit_minute">
+        <item quantity="one">minut</item>
+        <item quantity="few">minute</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_hour_symbol">h</string>
+    <plurals name="unit_hour">
+        <item quantity="one">oră</item>
+        <item quantity="few">ore</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_day_symbol">z</string>
+    <plurals name="unit_day">
+        <item quantity="one">zi</item>
+        <item quantity="few">zile</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">an</item>
+        <item quantity="few">ani</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_byte">
+        <item quantity="one">bit</item>
+        <item quantity="few">biți</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">kB</string>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilobit</item>
+        <item quantity="few">kilobiți</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_megabyte_symbol">MB</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabit</item>
+        <item quantity="few">megabiți</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">GB</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabit</item>
+        <item quantity="few">gigabiți</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_terabyte_symbol">TB</string>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabit</item>
+        <item quantity="few">terabiți</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_kibibyte_symbol">kiB</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metru pătrat</item>
+        <item quantity="few">metrii pătrați</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilometru pătrat</item>
+        <item quantity="few">kilometri pătrați</item>
+        <item quantity="other"></item>
+    </plurals>
+    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">milă nautică</item>
+        <item quantity="few">mile nautice</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisecundă</item>
+        <item quantity="few">milisecunde</item>
         <item quantity="other"></item>
     </plurals>
 </resources>
