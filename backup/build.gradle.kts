@@ -17,8 +17,8 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -31,27 +31,19 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "de.mm20.launcher2.widgets"
+    namespace = "de.mm20.launcher2.backup"
 }
 
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-
-    implementation(libs.bundles.androidx.lifecycle)
 
     implementation(libs.koin.android)
 
-    implementation(project(":weather"))
-    implementation(project(":calendar"))
-    implementation(project(":music"))
-    implementation(project(":ktx"))
-    implementation(project(":transition"))
-    implementation(project(":base"))
+    implementation(project(":favorites"))
+    implementation(project(":search"))
+    implementation(project(":widgets"))
     implementation(project(":preferences"))
-    implementation(project(":database"))
-    implementation(project(":crashreporter"))
+    implementation(project(":ktx"))
 
 }

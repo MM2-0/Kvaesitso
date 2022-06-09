@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.ktx
 
-import androidx.compose. animation.core.Animatable
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationVector
 import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.animation.core.VectorConverter

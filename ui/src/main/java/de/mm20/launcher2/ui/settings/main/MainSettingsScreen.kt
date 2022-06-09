@@ -63,6 +63,14 @@ fun MainSettingsScreen() {
                         }
                     )
                     Preference(
+                        icon = Icons.Rounded.SettingsBackupRestore,
+                        title = stringResource(id = R.string.preference_screen_backup),
+                        summary = stringResource(id = R.string.preference_screen_backup_summary),
+                        onClick = {
+                            navController?.navigate("settings/backup")
+                        }
+                    )
+                    Preference(
                         icon = Icons.Rounded.BugReport,
                         title = stringResource(id = R.string.preference_screen_debug),
                         summary = stringResource(id = R.string.preference_screen_debug_summary),

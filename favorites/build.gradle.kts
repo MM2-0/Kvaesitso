@@ -54,5 +54,6 @@ dependencies {
     implementation(project(":websites"))
     implementation(project(":wikipedia"))
     implementation(project(":badges"))
+    implementation(project(":crashreporter"))
 
 }

@@ -24,6 +24,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun iconDao(): IconDao
     abstract fun widgetDao(): WidgetDao
     abstract fun currencyDao(): CurrencyDao
+    abstract fun backupDao(): BackupRestoreDao
 
     companion object {
         private var _instance: AppDatabase? = null

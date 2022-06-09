@@ -60,6 +60,7 @@ fun HiddenItemsSheet(
             }
         }
 
+
         val swipeState =
             rememberSwipeableState(initialValue = SwipeState.Default) {
                 if (it == SwipeState.Dismiss) onDismiss()

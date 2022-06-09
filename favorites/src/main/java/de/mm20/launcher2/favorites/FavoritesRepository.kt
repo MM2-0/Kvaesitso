@@ -1,33 +1,23 @@
 package de.mm20.launcher2.favorites
 
 import android.content.Context
-import de.mm20.launcher2.appshortcuts.AppShortcutDeserializer
-import de.mm20.launcher2.appshortcuts.AppShortcutSerializer
-import de.mm20.launcher2.calendar.CalendarEventDeserializer
-import de.mm20.launcher2.calendar.CalendarEventSerializer
-import de.mm20.launcher2.contacts.ContactDeserializer
-import de.mm20.launcher2.contacts.ContactSerializer
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
-import de.mm20.launcher2.files.*
 import de.mm20.launcher2.ktx.ceilToInt
-import de.mm20.launcher2.search.NullDeserializer
-import de.mm20.launcher2.search.NullSerializer
+import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SearchableDeserializer
-import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.*
-import de.mm20.launcher2.websites.WebsiteDeserializer
-import de.mm20.launcher2.websites.WebsiteSerializer
-import de.mm20.launcher2.wikipedia.WikipediaDeserializer
-import de.mm20.launcher2.wikipedia.WikipediaSerializer
+import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import org.json.JSONArray
+import org.json.JSONException
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
-import org.koin.core.parameter.parametersOf
+import java.io.File
 
 interface FavoritesRepository {
     fun getFavorites(
@@ -47,6 +37,9 @@ interface FavoritesRepository {
     suspend fun getAllFavoriteItems(): List<FavoritesItem>
     fun saveFavorites(favorites: List<FavoritesItem>)
     fun getHiddenItems(): Flow<List<Searchable>>
+
+    suspend fun export(toDir: File)
+    suspend fun import(fromDir: File)
 }
 
 internal class FavoritesRepositoryImpl(
@@ -193,7 +186,8 @@ internal class FavoritesRepositoryImpl(
 
 
     private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
-        val deserializer: SearchableDeserializer = getDeserializer(context, entity.serializedSearchable)
+        val deserializer: SearchableDeserializer =
+            getDeserializer(context, entity.serializedSearchable)
         return FavoritesItem(
             key = entity.key,
             searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#")),
@@ -201,5 +195,62 @@ internal class FavoritesRepositoryImpl(
             pinPosition = entity.pinPosition,
             hidden = entity.hidden
         )
+    }
+
+    override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        var page = 0
+        do {
+            val favorites = dao.exportFavorites(limit = 100, offset = page * 100)
+            val jsonArray = JSONArray()
+            for (fav in favorites) {
+                jsonArray.put(
+                    jsonObjectOf(
+                        "key" to fav.key,
+                        "hidden" to fav.hidden,
+                        "launchCount" to fav.launchCount,
+                        "pinPosition" to fav.pinPosition,
+                        "searchable" to fav.serializedSearchable
+                    )
+                )
+            }
+
+            val file = File(toDir, "favorites.${page.toString().padStart(4, '0')}")
+            file.bufferedWriter().use {
+                it.write(jsonArray.toString())
+            }
+            page++
+        } while (favorites.size == 100)
+    }
+
+    override suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        dao.wipeFavorites()
+
+        val files = fromDir.listFiles { _, name -> name.startsWith("favorites.") } ?: return@withContext
+
+        for (file in files) {
+            val favorites = mutableListOf<FavoritesItemEntity>()
+            try {
+                val jsonArray = JSONArray(file.inputStream().reader().readText())
+
+                for (i in 0 until jsonArray.length()) {
+                    val json = jsonArray.getJSONObject(i)
+                    val entity = FavoritesItemEntity(
+                        key = json.getString("key"),
+                        serializedSearchable = json.getString("searchable"),
+                        launchCount = json.getInt("launchCount"),
+                        hidden = json.getBoolean("hidden"),
+                        pinPosition = json.getInt("pinPosition")
+                    )
+                    favorites.add(entity)
+                }
+
+                dao.importFavorites(favorites)
+
+            } catch (e: JSONException) {
+                CrashReporter.logException(e)
+            }
+        }
     }
 }

@@ -514,6 +514,12 @@
     <string name="preference_clockwidget_battery_part_summary">Show the current battery level when the battery is low or charging</string>
     <string name="preference_clockwidget_alarm_part">Alarms</string>
     <string name="preference_clockwidget_alarm_part_summary">Show alarms that will ring within the next 15 minutes</string>
+    <string name="preference_screen_backup">Backup &amp; Restore</string>
+    <string name="preference_screen_backup_summary">Export and import launcher data</string>
+    <string name="preference_backup">Backup</string>
+    <string name="preference_backup_summary">Export preferences and launcher data</string>
+    <string name="preference_restore">Restore</string>
+    <string name="preference_restore_summary">Import a previously created backup</string>
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
     <string name="preference_export_log">Export log file</string>
@@ -587,4 +593,24 @@
         <item quantity="one">Full in %1$s minute</item>
         <item quantity="other">Full in %1$s minutes</item>
     </plurals>
+
+    <string name="backup_select_components">Select what to backup:</string>
+    <string name="backup_not_included">Not included:</string>
+    <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
+    <string name="backup_component_settings">Settings</string>
+    <string name="backup_component_websearches">Web search shortcuts</string>
+    <string name="backup_component_widgets">Built-in widgets</string>
+    <string name="backup_component_accounts">Connected accounts</string>
+    <string name="backup_component_3rdparty_widgets">3rd party app widgets</string>
+    <string name="backup_complete">The backup has been completed.</string>
+
+    <string name="restore_invalid_file">The selected file does not appear to be a backup. Are you sure you selected the right file?</string>
+    <!-- %1$s: app name -->
+    <string name="restore_incompatible_file">This backup has been created with a different version of %1$s and cannot be restored with this version.</string>
+    <!-- %1$s: app name -->
+    <string name="restore_different_minor_version">This backup has been created with a different version of %1$s. Some data might not be restored correctly.</string>
+    <!-- %1$s: date and time of backup creation, %s$s: name of the device this backup has been created on, %s$s app name and version of creating app-->
+    <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
+    <string name="restore_select_components">Select what to restore. Existing data will be overwritten!</string>
+    <string name="restore_complete">The backup has been restored.</string>
 </resources>

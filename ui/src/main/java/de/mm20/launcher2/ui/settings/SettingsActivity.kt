@@ -23,6 +23,7 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
+import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.badges.BadgeSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
@@ -148,6 +149,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/debug") {
                             DebugSettingsScreen()
+                        }
+                        composable("settings/backup") {
+                            BackupSettingsScreen()
                         }
                         composable("settings/debug/crashreporter") {
                             CrashReporterScreen()

@@ -11,6 +11,9 @@ import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.database.entities.WebsearchEntity
+import de.mm20.launcher2.database.entities.WidgetEntity
+import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Websearch
 import kotlinx.coroutines.*
@@ -20,6 +23,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import org.json.JSONArray
+import org.json.JSONException
 import org.jsoup.Jsoup
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -40,6 +45,9 @@ interface WebsearchRepository {
 
     suspend fun importWebsearch(url: String, iconSize: Int): Websearch?
     suspend fun createIcon(uri: Uri, size: Int): String?
+
+    suspend fun export(toDir: File)
+    suspend fun import(fromDir: File)
 }
 
 internal class WebsearchRepositoryImpl(
@@ -207,5 +215,90 @@ internal class WebsearchRepositoryImpl(
         scaledIcon.compress(Bitmap.CompressFormat.PNG, 100, out)
         out.close()
         return@withContext file.absolutePath
+    }
+
+    override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        var page = 0
+        var iconCounter = 0
+        do {
+            val websearches = dao.exportWebsearches(limit = 100, offset = page * 100)
+            val jsonArray = JSONArray()
+            for (websearch in websearches) {
+                var icon = websearch.icon
+                if (icon != null) {
+                    val fileName = "asset.websearch.${iconCounter.toString().padStart(4, '0')}"
+                    val iconAssetFile = File(toDir, fileName)
+                    File(icon).inputStream().use { inStream ->
+                        iconAssetFile.outputStream().use { outStream ->
+                            inStream.copyTo(outStream)
+                        }
+                    }
+                    icon = fileName
+
+                    iconCounter++
+                }
+                jsonArray.put(
+                    jsonObjectOf(
+                        "color" to websearch.color,
+                        "label" to websearch.label,
+                        "template" to websearch.urlTemplate,
+                        "icon" to icon,
+                    )
+                )
+            }
+
+            val file = File(toDir, "websearches.${page.toString().padStart(4, '0')}")
+            file.bufferedWriter().use {
+                it.write(jsonArray.toString())
+            }
+            page++
+        } while (websearches.size == 100)
+    }
+
+    override suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        dao.wipeWebsearches()
+
+        val files = fromDir.listFiles { _, name -> name.startsWith("websearches.") } ?: return@withContext
+
+        for (file in files) {
+            val websearches = mutableListOf<WebsearchEntity>()
+            try {
+                val jsonArray = JSONArray(file.inputStream().reader().readText())
+
+                for (i in 0 until jsonArray.length()) {
+                    val json = jsonArray.getJSONObject(i)
+
+                    val icon = json.optString("icon").takeIf { it.isNotEmpty() }
+
+                    var iconFile: File? = null
+
+                    if (icon != null) {
+                        val asset = File(fromDir, icon)
+                        iconFile = File(context.filesDir, icon)
+                        asset.inputStream().use { inStream ->
+                            iconFile.outputStream().use { outStream ->
+                                inStream.copyTo(outStream)
+                            }
+                        }
+                    }
+
+                    val entity = WebsearchEntity(
+                        urlTemplate = json.getString("template"),
+                        color = json.optInt("color", 0),
+                        label = json.getString("label"),
+                        icon = iconFile?.absolutePath,
+                        id = null
+                    )
+                    websearches.add(entity)
+                }
+
+                dao.importWebsearches(websearches)
+
+            } catch (e: JSONException) {
+                CrashReporter.logException(e)
+            }
+        }
     }
 }

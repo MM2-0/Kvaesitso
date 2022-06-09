@@ -1,10 +1,16 @@
 package de.mm20.launcher2.widgets
 
 import android.content.Context
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.database.entities.WidgetEntity
+import de.mm20.launcher2.ktx.jsonObjectOf
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.File
 
 interface WidgetRepository {
     fun getWidgets(): Flow<List<Widget>>
@@ -17,6 +23,9 @@ interface WidgetRepository {
     fun isMusicWidgetEnabled(): Flow<Boolean>
     fun isCalendarWidgetEnabled(): Flow<Boolean>
     fun isFavoritesWidgetEnabled(): Flow<Boolean>
+
+    suspend fun export(toDir: File)
+    suspend fun import(fromDir: File)
 }
 
 internal class WidgetRepositoryImpl(
@@ -96,4 +105,57 @@ internal class WidgetRepositoryImpl(
         return database.widgetDao().exists("internal", "favorites")
     }
 
+    override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        var page = 0
+        do {
+            val widgets = dao.exportWidgets(limit = 100, offset = page * 100)
+            val jsonArray = JSONArray()
+            for (widget in widgets) {
+                if (widget.type != WidgetType.INTERNAL.value) continue
+                jsonArray.put(
+                    jsonObjectOf(
+                        "data" to widget.data,
+                        "position" to widget.position,
+                    )
+                )
+            }
+
+            val file = File(toDir, "widgets.${page.toString().padStart(4, '0')}")
+            file.bufferedWriter().use {
+                it.write(jsonArray.toString())
+            }
+            page++
+        } while (widgets.size == 100)
+    }
+
+    override suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.backupDao()
+        dao.wipeWidgets()
+
+        val files = fromDir.listFiles { _, name -> name.startsWith("widgets.") } ?: return@withContext
+
+        for (file in files) {
+            val widgets = mutableListOf<WidgetEntity>()
+            try {
+                val jsonArray = JSONArray(file.inputStream().reader().readText())
+
+                for (i in 0 until jsonArray.length()) {
+                    val json = jsonArray.getJSONObject(i)
+                    val entity = WidgetEntity(
+                        type = WidgetType.INTERNAL.value,
+                        position = json.getInt("position"),
+                        data = json.getString("data"),
+                        height = -1,
+                    )
+                    widgets.add(entity)
+                }
+
+                dao.importWidgets(widgets)
+
+            } catch (e: JSONException) {
+                CrashReporter.logException(e)
+            }
+        }
+    }
 }
