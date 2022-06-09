@@ -119,7 +119,7 @@ fun CreateBackupSheet(
                     SmallMessage(
                         modifier = Modifier.padding(top = 8.dp),
                         icon = Icons.Rounded.Warning,
-                        text = "Connected accounts and 3rd party app widgets will not be backed up."
+                        text = stringResource(R.string.backup_not_included)
                     )
                 }
             }

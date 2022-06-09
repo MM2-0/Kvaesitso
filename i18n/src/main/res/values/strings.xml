@@ -595,13 +595,11 @@
     </plurals>
 
     <string name="backup_select_components">Select what to backup:</string>
-    <string name="backup_not_included">Not included:</string>
+    <string name="backup_not_included">Connected accounts and 3rd party app widgets will not be backed up.</string>
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>
     <string name="backup_component_widgets">Built-in widgets</string>
-    <string name="backup_component_accounts">Connected accounts</string>
-    <string name="backup_component_3rdparty_widgets">3rd party app widgets</string>
     <string name="backup_complete">The backup has been completed.</string>
 
     <string name="restore_invalid_file">The selected file does not appear to be a backup. Are you sure you selected the right file?</string>
