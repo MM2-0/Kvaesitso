@@ -417,5 +417,16 @@
     <string name="preference_screen_backup_summary">Launcherdaten exportieren und importieren</string>
     <string name="preference_backup">Sichern</string>
     <string name="backup_select_components">Auswählen, was gesichert werden soll:</string>
-    <string name="backup_not_included">Nicht enthalten:</string>
+    <string name="backup_not_included">Verbundene Konten und Drittanbieter-App-Widgets werden nicht mitgesichert.</string>
+    <string name="restore_meta">Erstellt um %1$s auf %2$s mit %3$s.</string>
+    <string name="restore_select_components">Auswählen, was wiederhergestellt werden soll. Bestehende Daten werden überschrieben!</string>
+    <string name="restore_complete">Die Sicherung wurde wiederhergestellt.</string>
+    <string name="restore_different_minor_version">Diese Sicherung wurde mit einer anderen Version von %1$s erstellt. Einige Daten werden möglicherweise nicht richtig wiederhergestellt.</string>
+    <string name="restore_invalid_file">Die gewählte Datei scheint keine Sicherung zu sein. Sind Sie sicher, dass Sie die richtige Datei ausgewählt haben\?</string>
+    <string name="restore_incompatible_file">Diese Sicherung wurde mit einer anderen Version von %1$s erstellt und kann mit dieser Version nicht wiederhergestellt werden.</string>
+    <string name="backup_complete">Die Sicherung wurde abgeschlossen.</string>
+    <string name="backup_component_favorites">Favoriten und ausgeblendete Apps</string>
+    <string name="backup_component_settings">Einstellungen</string>
+    <string name="backup_component_websearches">Websuchen-Shortcuts</string>
+    <string name="backup_component_widgets">Launchereigene Widgets</string>
 </resources>
