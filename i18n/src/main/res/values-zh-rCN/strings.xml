@@ -407,4 +407,23 @@
     <string name="calendar_widget_next_events">下一个事件</string>
     <string name="preference_hidden_items">隐藏搜索结果</string>
     <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>
+    <string name="preference_screen_backup">备份&amp;恢复</string>
+    <string name="preference_screen_backup_summary">导出和导入日历数据</string>
+    <string name="preference_backup">备份</string>
+    <string name="preference_backup_summary">导出设置和日历数据</string>
+    <string name="preference_restore">恢复</string>
+    <string name="preference_restore_summary">导入以前创建的备份</string>
+    <string name="backup_select_components">选择要备份的项目:</string>
+    <string name="backup_not_included">已连接的账户信息和第三方应用的组件将不会被备份。</string>
+    <string name="backup_component_favorites">收藏夹&amp;隐藏应用</string>
+    <string name="backup_component_settings">设置</string>
+    <string name="backup_component_websearches">Web搜索快捷方式</string>
+    <string name="backup_component_widgets">内置组件</string>
+    <string name="backup_complete">备份已完成.</string>
+    <string name="restore_invalid_file">所选择的文件不是备份文件.你是否确定选择了正确的文件？</string>
+    <string name="restore_incompatible_file">此备份在不一致的版本%1$s下创建且不能在当前版本恢复.</string>
+    <string name="restore_different_minor_version">此备份在不一致的版本%1$s下创建.一些数据可能不会被正确恢复。</string>
+    <string name="restore_meta">由%3$s于%1$s在%2$s中创建.</string>
+    <string name="restore_select_components">选择要恢复的项目. 现有的数据将被覆盖!</string>
+    <string name="restore_complete">备份已恢复.</string>
 </resources>
