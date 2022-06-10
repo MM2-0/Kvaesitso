@@ -306,7 +306,7 @@ fun SearchBar(
                 ) {
                     items(websearches) {
                         Surface(
-                            shape = RoundedCornerShape(4.dp),
+                            shape = MaterialTheme.shapes.extraSmall,
                             modifier = Modifier.padding(horizontal = 8.dp)
                         ) {
                             Row(

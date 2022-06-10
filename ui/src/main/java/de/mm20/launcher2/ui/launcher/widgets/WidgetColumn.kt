@@ -214,7 +214,7 @@ fun WidgetColumn(
                 Surface(
                     tonalElevation = 16.dp,
                     shadowElevation = 16.dp,
-                    shape = RoundedCornerShape(16.dp),
+                    shape = MaterialTheme.shapes.extraLarge,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 16.dp),

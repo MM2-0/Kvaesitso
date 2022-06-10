@@ -158,7 +158,7 @@ fun BottomSheetDialog(
                         .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
                         .fillMaxWidth()
                         .weight(1f, false),
-                    shape = MaterialTheme.shapes.large.copy(
+                    shape = MaterialTheme.shapes.extraLarge.copy(
                         bottomStart = CornerSize(0),
                         bottomEnd = CornerSize(0),
                     ),

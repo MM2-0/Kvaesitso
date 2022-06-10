@@ -341,7 +341,7 @@ fun IconShapePreference(
             Surface(
                 tonalElevation = 16.dp,
                 shadowElevation = 16.dp,
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
@@ -420,7 +420,7 @@ fun LegacyIconBackgroundPreference(
             Surface(
                 tonalElevation = 16.dp,
                 shadowElevation = 16.dp,
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.extraLarge,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),

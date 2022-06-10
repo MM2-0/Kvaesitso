@@ -37,7 +37,7 @@ fun WeatherLocationSearchDialog(
         Surface(
             tonalElevation = 16.dp,
             shadowElevation = 16.dp,
-            shape = RoundedCornerShape(16.dp),
+            shape = MaterialTheme.shapes.extraLarge,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(vertical = 16.dp),

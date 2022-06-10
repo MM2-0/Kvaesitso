@@ -9,6 +9,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
@@ -209,7 +210,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             )
             Spacer(modifier = Modifier.weight(1f))
             Surface(
-                shape = RoundedCornerShape(topStartPercent = 50, bottomStartPercent = 50),
+                shape = MaterialTheme.shapes.extraSmall.copy(bottomEnd = CornerSize(0), topEnd = CornerSize(0)),
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
                 modifier = Modifier.align(Alignment.End)
 

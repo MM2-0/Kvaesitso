@@ -55,7 +55,7 @@ fun InnerCard(
         if (it) 1f else 0f
     }
 
-    val shape = RoundedCornerShape(LocalCardStyle.current.radius.dp)
+    val shape = MaterialTheme.shapes.small
 
     val bgColor = MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
 

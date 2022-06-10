@@ -94,7 +94,7 @@ fun ExcludedCalendarsPreference(
                 modifier = Modifier
                     .fillMaxWidth()
                     .heightIn(max = 400.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = MaterialTheme.shapes.extraLarge,
                 tonalElevation = 16.dp,
                 shadowElevation = 16.dp,
             ) {

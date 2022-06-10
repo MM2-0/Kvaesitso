@@ -54,7 +54,7 @@ fun CrashReportScreen(fileName: String) {
                 } else {
                     MaterialTheme.colorScheme.primaryContainer
                 },
-                shape = RoundedCornerShape(8.dp)
+                shape = MaterialTheme.shapes.small,
             ) {
                 Box(
                     modifier = Modifier

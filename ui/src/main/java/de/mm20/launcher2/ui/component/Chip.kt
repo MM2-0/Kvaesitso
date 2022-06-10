@@ -24,7 +24,7 @@ fun Chip(
     content: @Composable RowScope.() -> Unit
 ) {
     Surface(
-        shape = RoundedCornerShape(8.dp),
+        shape = MaterialTheme.shapes.small,
         modifier = modifier,
         color = Color.Transparent,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.17f)),

@@ -48,7 +48,7 @@ fun UnitConverterItem(
                     .padding(12.dp)
                     .size(48.dp),
                 color = MaterialTheme.colorScheme.primaryContainer,
-                shape = RoundedCornerShape(8.dp)
+                shape = MaterialTheme.shapes.small
             ) {
                 Box(
                     contentAlignment = Alignment.Center
