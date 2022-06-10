@@ -14,11 +14,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.backup.BackupCompatibility
@@ -59,14 +56,23 @@ fun RestoreBackupSheet(
                     onClick = { viewModel.restore() }) {
                     Text(stringResource(R.string.preference_restore))
                 }
-            } else if (state == RestoreBackupState.InvalidFile || state == RestoreBackupState.Restored) {
+            } else if (state == RestoreBackupState.InvalidFile || state == RestoreBackupState.Restored || state == RestoreBackupState.Ready) {
                 OutlinedButton(
                     onClick = onDismissRequest
                 ) {
                     Text(stringResource(R.string.close))
                 }
             }
-        }
+        },
+        dismissButton = if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
+            {
+                OutlinedButton(
+                    onClick = onDismissRequest
+                ) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        } else null
     ) {
         when (state) {
             RestoreBackupState.Parsing -> {

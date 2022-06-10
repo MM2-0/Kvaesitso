@@ -74,7 +74,14 @@ fun CreateBackupSheet(
                     Text(stringResource(R.string.close))
                 }
             }
-        }
+        },
+        dismissButton = if (state == CreateBackupState.Ready) {{
+            OutlinedButton(
+                onClick = onDismissRequest
+            ) {
+                Text(stringResource(android.R.string.cancel))
+            }
+        }} else null
     ) {
         when (state) {
             CreateBackupState.Ready -> {
