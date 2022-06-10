@@ -47,7 +47,7 @@ fun InnerCard(
         if (it) 0.dp else 1.dp
     }
     val borderColor by transition.animateColor(label = "borderColor", transitionSpec = { tween(500) }) {
-        MaterialTheme.colorScheme.outline.copy(alpha = if (it) 0f else 0.17f)
+        MaterialTheme.colorScheme.outline.copy(alpha = if (it) 0f else 0.7f)
     }
     val bgAlpha by transition.animateFloat(label = "bgAlpha", transitionSpec = {
         tween(250, if (targetState) 0 else 250)
