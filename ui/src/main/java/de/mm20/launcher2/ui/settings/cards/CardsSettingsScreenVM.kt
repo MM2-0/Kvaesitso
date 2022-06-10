@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -43,6 +44,18 @@ class CardsSettingsScreenVM: ViewModel(), KoinComponent {
                 it.toBuilder()
                     .setCards(it.cards.toBuilder()
                         .setBorderWidth(borderWidth)
+                    ).build()
+            }
+        }
+    }
+
+    val shape = dataStore.data.map { it.cards.shape }.asLiveData()
+    fun setShape(shape: Settings.CardSettings.Shape) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setCards(it.cards.toBuilder()
+                        .setShape(shape)
                     ).build()
             }
         }

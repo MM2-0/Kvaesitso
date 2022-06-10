@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -44,6 +46,15 @@ fun LauncherTheme(
         dataStore.data.map { it.cards.radius.dp }
     }.collectAsState(8.dp)
 
+    val baseShape by remember {
+        dataStore.data.map {
+            when(it.cards.shape) {
+                Settings.CardSettings.Shape.Cut -> CutCornerShape(0f)
+                else -> RoundedCornerShape(0f)
+            }
+        }
+    }.collectAsState(RoundedCornerShape(0f))
+
     val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
 
     CompositionLocalProvider(
@@ -53,11 +64,11 @@ fun LauncherTheme(
             colorScheme = colorScheme,
             typography = DefaultTypography,
             shapes = Shapes(
-                extraSmall = RoundedCornerShape(cornerRadius / 3f),
-                small = RoundedCornerShape(cornerRadius / 3f * 2f),
-                medium = RoundedCornerShape(cornerRadius),
-                large = RoundedCornerShape(cornerRadius / 3f * 4f),
-                extraLarge = RoundedCornerShape(cornerRadius / 3f * 7f),
+                extraSmall = baseShape.copy(CornerSize(cornerRadius / 3f)),
+                small = baseShape.copy(CornerSize(cornerRadius / 3f * 2f)),
+                medium = baseShape.copy(CornerSize(cornerRadius)),
+                large = baseShape.copy(CornerSize(cornerRadius / 3f * 4f)),
+                extraLarge = baseShape.copy(CornerSize(cornerRadius / 3f * 7f)),
             ),
             content = content
         )

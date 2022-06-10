@@ -233,6 +233,11 @@ message Settings {
     float opacity = 1;
     uint32 radius = 2;
     uint32 border_width = 3;
+    Shape shape = 4;
+    enum Shape {
+      Rounded = 0;
+      Cut = 1;
+    }
   }
   CardSettings cards = 24;
 
