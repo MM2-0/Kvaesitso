@@ -1,8 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.Activity
-import android.util.Log
-import android.view.WindowManager
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -11,8 +8,6 @@ import androidx.compose.animation.slideOut
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -27,6 +22,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -42,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
@@ -55,7 +50,7 @@ import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlin.math.roundToInt
 
 @OptIn(
-    ExperimentalPagerApi::class, ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class,
+    ExperimentalMaterialApi::class,
     ExperimentalFoundationApi::class
 )
 @Composable
@@ -236,9 +231,11 @@ fun PagerScaffold(
                         modifier = Modifier
                             .requiredWidth(width)
                             .fillMaxHeight()
+                            .padding(horizontal = 8.dp)
+                            .clip(MaterialTheme.shapes.medium)
                             .nestedScroll(nestedScrollConnection)
                             .verticalScroll(widgetsScrollState)
-                            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
+                            .padding(top = 8.dp, bottom = 64.dp)
                             .padding(top = editModePadding),
                         clockHeight = { clockHeight },
                         clockBottomPadding = { clockPadding },
@@ -257,9 +254,11 @@ fun PagerScaffold(
                         modifier = Modifier
                             .requiredWidth(width)
                             .fillMaxHeight()
+                            .padding(horizontal = 8.dp)
+                            .clip(MaterialTheme.shapes.medium)
                             .verticalScroll(searchScrollState, reverseScrolling = true)
                             .imePadding()
-                            .padding(start = 8.dp, end = 8.dp, top = 8.dp, bottom = 64.dp)
+                            .padding(top = 8.dp, bottom = 64.dp)
                             .padding(bottom = webSearchPadding),
                         reverse = true,
                     )

@@ -19,7 +19,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -185,7 +185,8 @@ fun PullDownScaffold(
 
     Box(
         modifier = modifier
-            .clipToBounds()
+            .padding(horizontal = 8.dp)
+            .clip(MaterialTheme.shapes.medium)
             .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
@@ -229,7 +230,7 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(searchScrollState)
-                            .padding(8.dp)
+                            .padding(vertical = 8.dp)
                             .padding(top = 56.dp)
                             .padding(top = webSearchPadding)
                             .imePadding()
@@ -247,7 +248,7 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(widgetsScrollState)
-                            .padding(8.dp)
+                            .padding(vertical = 8.dp)
                             .padding(top = editModePadding),
                         clockHeight = { height },
                         editMode = isWidgetEditMode,
@@ -299,7 +300,7 @@ fun PullDownScaffold(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(8.dp)
+                .padding(vertical = 8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
                 .offset {
                     IntOffset(
