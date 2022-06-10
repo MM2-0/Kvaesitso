@@ -122,7 +122,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.24.9-beta")
+            version("accompanist", "0.24.10-beta")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
