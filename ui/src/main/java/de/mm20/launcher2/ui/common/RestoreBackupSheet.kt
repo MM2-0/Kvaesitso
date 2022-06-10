@@ -4,6 +4,8 @@ import android.net.Uri
 import android.text.format.DateUtils
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -74,146 +76,155 @@ fun RestoreBackupSheet(
             }
         } else null
     ) {
-        when (state) {
-            RestoreBackupState.Parsing -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(48.dp)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight()
+                .verticalScroll(rememberScrollState())
+        ) {
+            when (state) {
+                RestoreBackupState.Parsing -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+                }
+                RestoreBackupState.InvalidFile -> {
+                    LargeMessage(
+                        modifier = Modifier.aspectRatio(1f),
+                        icon = Icons.Rounded.ErrorOutline,
+                        text = stringResource(id = R.string.restore_invalid_file)
                     )
                 }
-            }
-            RestoreBackupState.InvalidFile -> {
-                LargeMessage(
-                    modifier = Modifier.aspectRatio(1f),
-                    icon = Icons.Rounded.ErrorOutline,
-                    text = stringResource(id = R.string.restore_invalid_file)
-                )
-            }
-            RestoreBackupState.Ready -> {
-                val metadata by viewModel.metadata.observeAsState(null)
+                RestoreBackupState.Ready -> {
+                    val metadata by viewModel.metadata.observeAsState(null)
 
-                if (metadata != null) {
-                    Column {
-                        SmallMessage(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(bottom = 16.dp),
-                            icon = Icons.Rounded.Info,
-                            text = stringResource(
-                                R.string.restore_meta,
-                                DateUtils.formatDateTime(
-                                    LocalContext.current,
-                                    metadata!!.timestamp,
-                                    DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
-                                ),
-                                metadata!!.deviceName,
-                                stringResource(R.string.app_name) + " " + metadata!!.appVersionName,
-                            )
-                        )
-                        if (compatibility == BackupCompatibility.Incompatible) {
-                            LargeMessage(
-                                modifier = Modifier.aspectRatio(1f),
-                                icon = Icons.Rounded.ErrorOutline,
+                    if (metadata != null) {
+                        Column {
+                            SmallMessage(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight()
+                                    .padding(bottom = 16.dp),
+                                icon = Icons.Rounded.Info,
                                 text = stringResource(
-                                    id = R.string.restore_incompatible_file,
-                                    stringResource(R.string.app_name)
+                                    R.string.restore_meta,
+                                    DateUtils.formatDateTime(
+                                        LocalContext.current,
+                                        metadata!!.timestamp,
+                                        DateUtils.FORMAT_ABBREV_ALL or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+                                    ),
+                                    metadata!!.deviceName,
+                                    stringResource(R.string.app_name) + " " + metadata!!.appVersionName,
                                 )
                             )
-                        } else {
-                            if (compatibility == BackupCompatibility.PartiallyCompatible) {
-                                SmallMessage(
-                                    color = MaterialTheme.colorScheme.secondary,
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(bottom = 16.dp),
-                                    icon = Icons.Rounded.Warning,
-                                    text =
-                                    stringResource(
-                                        R.string.restore_different_minor_version,
+                            if (compatibility == BackupCompatibility.Incompatible) {
+                                LargeMessage(
+                                    modifier = Modifier.aspectRatio(1f),
+                                    icon = Icons.Rounded.ErrorOutline,
+                                    text = stringResource(
+                                        id = R.string.restore_incompatible_file,
                                         stringResource(R.string.app_name)
                                     )
                                 )
-                            }
-                            Text(
-                                stringResource(R.string.restore_select_components),
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
-                            )
-                            val components by viewModel.availableComponents.observeAsState(emptyList())
-                            for (component in components) {
-                                Row(
-                                    modifier = Modifier
-                                        .clickable {
-                                            viewModel.toggleComponent(
-                                                component
-                                            )
-                                        }
-                                        .padding(vertical = 4.dp),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = when (component) {
-                                            BackupComponent.Favorites -> Icons.Rounded.Star
-                                            BackupComponent.Settings -> Icons.Rounded.Settings
-                                            BackupComponent.Websearches -> Icons.Rounded.TravelExplore
-                                            BackupComponent.Widgets -> Icons.Rounded.Widgets
-                                        },
-                                        contentDescription = null
-                                    )
-                                    Text(
-                                        text = stringResource(
-                                            when (component) {
-                                                BackupComponent.Favorites -> R.string.backup_component_favorites
-                                                BackupComponent.Settings -> R.string.backup_component_settings
-                                                BackupComponent.Websearches -> R.string.backup_component_websearches
-                                                BackupComponent.Widgets -> R.string.backup_component_widgets
-                                            }
-                                        ),
-                                        style = MaterialTheme.typography.titleMedium,
+                            } else {
+                                if (compatibility == BackupCompatibility.PartiallyCompatible) {
+                                    SmallMessage(
+                                        color = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier
-                                            .weight(1f)
-                                            .padding(horizontal = 16.dp)
+                                            .fillMaxWidth()
+                                            .padding(bottom = 16.dp),
+                                        icon = Icons.Rounded.Warning,
+                                        text =
+                                        stringResource(
+                                            R.string.restore_different_minor_version,
+                                            stringResource(R.string.app_name)
+                                        )
                                     )
-                                    Checkbox(
-                                        checked = selectedComponents.contains(
-                                            component
-                                        ),
-                                        onCheckedChange = {
-                                            viewModel.toggleComponent(component)
-                                        }
-                                    )
+                                }
+                                Text(
+                                    stringResource(R.string.restore_select_components),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
+                                )
+                                val components by viewModel.availableComponents.observeAsState(
+                                    emptyList()
+                                )
+                                for (component in components) {
+                                    Row(
+                                        modifier = Modifier
+                                            .clickable {
+                                                viewModel.toggleComponent(
+                                                    component
+                                                )
+                                            }
+                                            .padding(vertical = 4.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Icon(
+                                            imageVector = when (component) {
+                                                BackupComponent.Favorites -> Icons.Rounded.Star
+                                                BackupComponent.Settings -> Icons.Rounded.Settings
+                                                BackupComponent.Websearches -> Icons.Rounded.TravelExplore
+                                                BackupComponent.Widgets -> Icons.Rounded.Widgets
+                                            },
+                                            contentDescription = null
+                                        )
+                                        Text(
+                                            text = stringResource(
+                                                when (component) {
+                                                    BackupComponent.Favorites -> R.string.backup_component_favorites
+                                                    BackupComponent.Settings -> R.string.backup_component_settings
+                                                    BackupComponent.Websearches -> R.string.backup_component_websearches
+                                                    BackupComponent.Widgets -> R.string.backup_component_widgets
+                                                }
+                                            ),
+                                            style = MaterialTheme.typography.titleMedium,
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .padding(horizontal = 16.dp)
+                                        )
+                                        Checkbox(
+                                            checked = selectedComponents.contains(
+                                                component
+                                            ),
+                                            onCheckedChange = {
+                                                viewModel.toggleComponent(component)
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            RestoreBackupState.Restoring -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .aspectRatio(1f),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(48.dp)
+                RestoreBackupState.Restoring -> {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(1f),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(48.dp)
+                        )
+                    }
+                }
+                RestoreBackupState.Restored -> {
+                    LargeMessage(
+                        modifier = Modifier.aspectRatio(1f),
+                        icon = Icons.Rounded.CheckCircleOutline,
+                        text = stringResource(
+                            id = R.string.restore_complete
+                        )
                     )
                 }
-            }
-            RestoreBackupState.Restored -> {
-                LargeMessage(
-                    modifier = Modifier.aspectRatio(1f),
-                    icon = Icons.Rounded.CheckCircleOutline,
-                    text = stringResource(
-                        id = R.string.restore_complete
-                    )
-                )
             }
         }
     }

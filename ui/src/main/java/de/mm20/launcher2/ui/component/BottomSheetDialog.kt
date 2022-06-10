@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
@@ -39,8 +40,6 @@ fun BottomSheetDialog(
     dismissButton: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
-    val scrollState = rememberScrollState()
-
     val swipeState = remember {
         SwipeableState(
             initialValue = SwipeState.Dismiss,
@@ -151,7 +150,7 @@ fun BottomSheetDialog(
                             },
                             resistance = null
                         )
-                        //.animateContentSize()
+                        .animateContentSize()
                         .onSizeChanged {
                             height = it.height.toFloat()
                         }
@@ -172,7 +171,6 @@ fun BottomSheetDialog(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight()
-                                .verticalScroll(scrollState)
                                 .padding(horizontal = 24.dp, vertical = 8.dp),
                             propagateMinConstraints = true,
                             contentAlignment = Alignment.Center
