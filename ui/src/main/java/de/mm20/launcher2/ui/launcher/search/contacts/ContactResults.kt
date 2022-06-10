@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -44,7 +45,7 @@ fun ColumnScope.ContactResults(reverse: Boolean = false) {
                         onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
                         modifier = Modifier.padding(16.dp),
                         secondaryAction = {
-                            TextButton(onClick = {
+                            OutlinedButton(onClick = {
                                 viewModel.disableContactsSearch()
                             }) {
                                 Text(

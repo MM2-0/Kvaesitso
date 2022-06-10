@@ -2,10 +2,7 @@ package de.mm20.launcher2.ui.component
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +10,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Banner(
     modifier: Modifier = Modifier,
@@ -21,12 +19,9 @@ fun Banner(
     primaryAction: @Composable () -> Unit,
     secondaryAction: @Composable () -> Unit = {}
 ) {
-    Surface(
+    Card(
         modifier = modifier,
-        color = MaterialTheme.colorScheme.secondaryContainer,
-        shape = RoundedCornerShape(8.dp),
-        shadowElevation = 2.dp,
-        tonalElevation = 2.dp
+        shape = MaterialTheme.shapes.small,
     ) {
         Column {
             Row(
@@ -44,7 +39,7 @@ fun Banner(
                         .weight(1f)
                         .padding(vertical = 16.dp)
                         .padding(end = 16.dp),
-                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Medium)
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
             Row(

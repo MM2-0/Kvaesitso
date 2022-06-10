@@ -69,7 +69,7 @@ fun WeatherWidget() {
                         viewModel.requestLocationPermission(context as AppCompatActivity)
                     },
                     secondaryAction = {
-                        TextButton(onClick = {
+                        OutlinedButton(onClick = {
                             showLocationDialog = true
                         }) {
                             Text(
