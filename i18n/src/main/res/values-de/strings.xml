@@ -429,4 +429,7 @@
     <string name="backup_component_settings">Einstellungen</string>
     <string name="backup_component_websearches">Websuchen-Shortcuts</string>
     <string name="backup_component_widgets">Launchereigene Widgets</string>
+    <string name="preference_cards_shape">Form</string>
+    <string name="preference_cards_shape_rounded">Abgerundet</string>
+    <string name="preference_cards_shape_cut">Abgeschnitten</string>
 </resources>
