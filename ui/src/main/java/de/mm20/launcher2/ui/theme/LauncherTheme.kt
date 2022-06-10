@@ -2,12 +2,11 @@ package de.mm20.launcher2.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
@@ -41,6 +40,10 @@ fun LauncherTheme(
     val darkTheme =
         themePreference == Theme.Dark || themePreference == Theme.System && isSystemInDarkTheme()
 
+    val cornerRadius by remember {
+        dataStore.data.map { it.cards.radius.dp }
+    }.collectAsState(8.dp)
+
     val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
 
     CompositionLocalProvider(
@@ -49,6 +52,13 @@ fun LauncherTheme(
         MaterialTheme(
             colorScheme = colorScheme,
             typography = DefaultTypography,
+            shapes = Shapes(
+                extraSmall = RoundedCornerShape(cornerRadius / 3f),
+                small = RoundedCornerShape(cornerRadius / 3f * 2f),
+                medium = RoundedCornerShape(cornerRadius),
+                large = RoundedCornerShape(cornerRadius / 3f * 4f),
+                extraLarge = RoundedCornerShape(cornerRadius / 3f * 7f),
+            ),
             content = content
         )
     }

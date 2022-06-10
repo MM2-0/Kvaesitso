@@ -19,7 +19,7 @@ fun LauncherCard(
 ) {
     Surface(
         modifier = modifier,
-        shape = RoundedCornerShape(LocalCardStyle.current.radius.dp),
+        shape = MaterialTheme.shapes.medium,
         border = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
             ?.let { BorderStroke(it.dp, MaterialTheme.colorScheme.surface) },
         content = content,
