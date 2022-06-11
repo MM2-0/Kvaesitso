@@ -4,9 +4,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.MaterialTheme
@@ -28,7 +26,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
-import kotlinx.coroutines.delay
 import kotlin.math.roundToInt
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class)
@@ -36,6 +33,7 @@ import kotlin.math.roundToInt
 fun BottomSheetDialog(
     onDismissRequest: () -> Unit,
     title: @Composable () -> Unit,
+    actions: @Composable RowScope.() -> Unit = {},
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit,
@@ -165,7 +163,8 @@ fun BottomSheetDialog(
                 ) {
                     Column {
                         CenterAlignedTopAppBar(
-                            title = title
+                            title = title,
+                            actions = actions,
                         )
                         Box(
                             modifier = Modifier
