@@ -2,27 +2,25 @@ package de.mm20.launcher2.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Error
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.SmallMessage
 import kotlinx.coroutines.launch
 
 @Composable
@@ -30,31 +28,34 @@ fun WeatherLocationSearchDialog(
     onDismissRequest: () -> Unit
 ) {
     val scope = rememberCoroutineScope()
-    val viewModel : WeatherLocationSearchDialogVM = viewModel()
+    val viewModel: WeatherLocationSearchDialogVM = viewModel()
     val isSearching by viewModel.isSearchingLocation.observeAsState(initial = false)
     val locations by viewModel.locationResults.observeAsState(emptyList())
-    Dialog(onDismissRequest = onDismissRequest) {
-        Surface(
-            tonalElevation = 16.dp,
-            shadowElevation = 16.dp,
-            shape = MaterialTheme.shapes.extraLarge,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(vertical = 16.dp),
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
+
+    BottomSheetDialog(
+        onDismissRequest = onDismissRequest,
+        title = {
+            Text(
+                text = stringResource(R.string.preference_location),
+            )
+        },
+        confirmButton = {
+            TextButton(
+                onClick = onDismissRequest,
             ) {
                 Text(
-                    text = stringResource(R.string.preference_location),
-                    style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp
-                        )
+                    text = stringResource(android.R.string.cancel),
                 )
-                var query by remember { mutableStateOf("") }
+            }
+        }
+    ) {
+        var query by remember { mutableStateOf("") }
+        Column(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                Modifier.padding(bottom = 16.dp)
+            ) {
                 OutlinedTextField(
                     singleLine = true,
                     value = query,
@@ -64,54 +65,47 @@ fun WeatherLocationSearchDialog(
                         scope.launch {
                             viewModel.searchLocation(it)
                         }
-                    }, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(24.dp)
-                )
-                if (isSearching) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .align(Alignment.CenterHorizontally)
-                            .weight(1f)
-                            .padding(vertical = 16.dp)
-                    )
-                } else {
-                    LazyColumn(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1f)
-                            .padding(bottom = 16.dp)
-                    ) {
-                        items(locations) {
-                            Text(
-                                text = it.name,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        viewModel.setLocation(it)
-                                        onDismissRequest()
-                                    }
-                                    .padding(
-                                        horizontal = 24.dp,
-                                        vertical = 16.dp
-                                    )
-                            )
-                        }
-                    }
-
-                }
-                TextButton(
-                    onClick = onDismissRequest,
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
+                    },
                     modifier = Modifier
-                        .align(Alignment.End)
-                        .padding(24.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.close),
-                    )
-                }
+                        .weight(1f)
+                )
             }
+            if (isSearching) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally)
+                )
+            } else if (locations.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    items(locations) {
+                        Text(
+                            text = it.name,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
+                                    viewModel.setLocation(it)
+                                    onDismissRequest()
+                                }
+                                .padding(
+                                    vertical = 16.dp
+                                )
+                        )
+                    }
+                }
 
+            } else if (query.isNotEmpty()) {
+                SmallMessage(
+                    modifier = Modifier.fillMaxWidth(),
+                    icon = Icons.Rounded.Error,
+                    text = stringResource(R.string.weather_location_search_no_result)
+                )
+            }
         }
     }
 }
