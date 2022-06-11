@@ -22,21 +22,17 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -61,7 +57,6 @@ fun PagerScaffold(
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
-    val context = LocalContext.current
 
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
@@ -69,6 +64,25 @@ fun PagerScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchScrollState = rememberScrollState()
     val swipeableState = rememberSwipeableState(if (isSearchOpen) Page.Search else Page.Widgets)
+
+    val showStatusBarScrim by remember {
+        derivedStateOf {
+            if (isSearchOpen) {
+                searchScrollState.value < searchScrollState.maxValue
+            } else {
+                widgetsScrollState.value > 0
+            }
+        }
+    }
+    val showNavBarScrim by remember {
+        derivedStateOf {
+            if (isSearchOpen) {
+                searchScrollState.value > 0
+            } else {
+                widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
+            }
+        }
+    }
 
     val isWidgetsScrollZero by remember {
         derivedStateOf {
@@ -79,10 +93,14 @@ fun PagerScaffold(
     val systemUiController = rememberSystemUiController()
 
     val colorSurface = MaterialTheme.colorScheme.surface
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface) {
+    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
+            )
+        } else if (showStatusBarScrim) {
+            systemUiController.setStatusBarColor(
+                colorSurface.copy(0.75f),
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -92,12 +110,18 @@ fun PagerScaffold(
         }
     }
 
-    LaunchedEffect(darkNavBarIcons) {
-        systemUiController.setNavigationBarColor(
-            Color.Transparent,
-            darkIcons = darkNavBarIcons,
-            navigationBarContrastEnforced = false
-        )
+    LaunchedEffect(darkNavBarIcons, showNavBarScrim) {
+        if (showNavBarScrim) {
+            systemUiController.setNavigationBarColor(
+                colorSurface.copy(0.75f),
+            )
+        } else {
+            systemUiController.setNavigationBarColor(
+                Color.Transparent,
+                darkIcons = darkNavBarIcons,
+                navigationBarContrastEnforced = false
+            )
+        }
     }
 
     val blurWallpaper by remember {
@@ -138,11 +162,11 @@ fun PagerScaffold(
         }
     }
 
-    val notificationDragThreshold = with(LocalDensity.current) {200.dp.toPx()}
+    val notificationDragThreshold = with(LocalDensity.current) { 200.dp.toPx() }
     val notificationShadeController = rememberNotificationShadeController()
 
     val nestedScrollConnection = remember {
-        object: NestedScrollConnection {
+        object : NestedScrollConnection {
             private var pullDownTotalY: Float? = 0f
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val diff = widgetsScrollState.value - available.y
@@ -170,6 +194,8 @@ fun PagerScaffold(
             }
         }
     }
+
+    val insets = WindowInsets.systemBars.asPaddingValues()
 
     Box(
         modifier = modifier
@@ -218,12 +244,12 @@ fun PagerScaffold(
                     val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
 
                     val clockPadding by animateDpAsState(
-                        if (isWidgetsScrollZero) 64.dp else 0.dp
+                        if (isWidgetsScrollZero) 64.dp + insets.calculateBottomPadding() else 0.dp
                     )
 
                     val clockHeight by remember {
                         derivedStateOf {
-                            height - (64.dp - clockPadding)
+                            height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
                         }
                     }
 
@@ -231,10 +257,10 @@ fun PagerScaffold(
                         modifier = Modifier
                             .requiredWidth(width)
                             .fillMaxHeight()
-                            .padding(horizontal = 8.dp)
-                            .clip(MaterialTheme.shapes.medium)
                             .nestedScroll(nestedScrollConnection)
                             .verticalScroll(widgetsScrollState)
+                            .systemBarsPadding()
+                            .padding(horizontal = 8.dp)
                             .padding(top = 8.dp, bottom = 64.dp)
                             .padding(top = editModePadding),
                         clockHeight = { clockHeight },
@@ -254,10 +280,10 @@ fun PagerScaffold(
                         modifier = Modifier
                             .requiredWidth(width)
                             .fillMaxHeight()
-                            .padding(horizontal = 8.dp)
-                            .clip(MaterialTheme.shapes.medium)
                             .verticalScroll(searchScrollState, reverseScrolling = true)
                             .imePadding()
+                            .systemBarsPadding()
+                            .padding(horizontal = 8.dp)
                             .padding(top = 8.dp, bottom = 64.dp)
                             .padding(bottom = webSearchPadding),
                         reverse = true,
@@ -302,6 +328,7 @@ fun PagerScaffold(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                .systemBarsPadding()
                 .imePadding()
                 .offset(y = widgetEditModeOffset),
             level = { searchBarLevel }, focused = focusSearchBar, onFocusChange = {

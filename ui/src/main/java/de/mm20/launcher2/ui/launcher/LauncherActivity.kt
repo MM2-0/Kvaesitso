@@ -14,9 +14,11 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -111,7 +113,6 @@ class LauncherActivity : BaseActivity() {
                                     PullDownScaffold(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .systemBarsPadding()
                                             .graphicsLayer {
                                                 scaleX = 0.5f + enterTransition.value * 0.5f
                                                 scaleY = 0.5f + enterTransition.value * 0.5f
@@ -125,7 +126,6 @@ class LauncherActivity : BaseActivity() {
                                     PagerScaffold(
                                         modifier = Modifier
                                             .fillMaxSize()
-                                            .systemBarsPadding()
                                             .graphicsLayer {
                                                 scaleX = enterTransition.value
                                                 scaleY = enterTransition.value

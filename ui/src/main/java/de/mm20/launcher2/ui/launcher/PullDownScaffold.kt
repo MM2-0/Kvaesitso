@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -19,7 +18,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -43,6 +41,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.modifier.verticalFadingEdges
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -55,7 +54,6 @@ fun PullDownScaffold(
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
-    val context = LocalContext.current
 
     val density = LocalDensity.current
 
@@ -67,11 +65,40 @@ fun PullDownScaffold(
 
     val systemUiController = rememberSystemUiController()
 
+    val isWidgetsScrollZero by remember {
+        derivedStateOf {
+            widgetsScrollState.value == 0
+        }
+    }
+
+    val showStatusBarScrim by remember {
+        derivedStateOf {
+            if (isSearchOpen) {
+                searchScrollState.value > 0
+            } else {
+                widgetsScrollState.value > 0
+            }
+        }
+    }
+    val showNavBarScrim by remember {
+        derivedStateOf {
+            if (isSearchOpen) {
+                searchScrollState.value < searchScrollState.maxValue
+            } else {
+                widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
+            }
+        }
+    }
+
     val colorSurface = MaterialTheme.colorScheme.surface
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface) {
+    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
+            )
+        } else if (showStatusBarScrim) {
+            systemUiController.setStatusBarColor(
+                colorSurface.copy(0.75f),
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -81,12 +108,18 @@ fun PullDownScaffold(
         }
     }
 
-    LaunchedEffect(darkNavBarIcons) {
-        systemUiController.setNavigationBarColor(
-            Color.Transparent,
-            darkIcons = darkNavBarIcons,
-            navigationBarContrastEnforced = false
-        )
+    LaunchedEffect(darkNavBarIcons, showNavBarScrim) {
+        if (showNavBarScrim) {
+            systemUiController.setNavigationBarColor(
+                colorSurface.copy(0.75f),
+            )
+        } else {
+            systemUiController.setNavigationBarColor(
+                Color.Transparent,
+                darkIcons = darkNavBarIcons,
+                navigationBarContrastEnforced = false
+            )
+        }
     }
 
     val offsetY = remember { mutableStateOf(0f) }
@@ -151,7 +184,7 @@ fun PullDownScaffold(
                         consumed
                     }
                     isSearchOpen && (offsetY.value < 0 || source == NestedScrollSource.Drag && newValue > searchScrollState.maxValue) -> {
-                        val consumed = available.y - (value- searchScrollState.maxValue)
+                        val consumed = available.y - (value - searchScrollState.maxValue)
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
                         consumed
                     }
@@ -182,11 +215,13 @@ fun PullDownScaffold(
         }
     }
 
-
+    val insets = WindowInsets.systemBars.asPaddingValues()
     Box(
         modifier = modifier
-            .padding(horizontal = 8.dp)
-            .clip(MaterialTheme.shapes.medium)
+            .verticalFadingEdges(
+                top = insets.calculateTopPadding(),
+                amount = 0.85f
+            )
             .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
@@ -230,12 +265,21 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(searchScrollState)
-                            .padding(vertical = 8.dp)
+                            .systemBarsPadding()
+                            .padding(8.dp)
                             .padding(top = 56.dp)
                             .padding(top = webSearchPadding)
                             .imePadding()
                     )
                     val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
+                    val clockPadding by animateDpAsState(
+                        if (isWidgetsScrollZero) insets.calculateBottomPadding() else 0.dp
+                    )
+                    val clockHeight by remember {
+                        derivedStateOf {
+                            height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                        }
+                    }
                     WidgetColumn(
                         modifier =
                         Modifier
@@ -248,9 +292,11 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(widgetsScrollState)
-                            .padding(vertical = 8.dp)
+                            .systemBarsPadding()
+                            .padding(8.dp)
                             .padding(top = editModePadding),
-                        clockHeight = { height },
+                        clockHeight = { clockHeight },
+                        clockBottomPadding = { clockPadding },
                         editMode = isWidgetEditMode,
                         onEditModeChange = {
                             viewModel.setWidgetEditMode(it)
@@ -268,6 +314,8 @@ fun PullDownScaffold(
             exit = slideOut { IntOffset(0, -it.height) }
         ) {
             CenterAlignedTopAppBar(
+                modifier = Modifier
+                    .systemBarsPadding(),
                 title = {
                     Text(stringResource(R.string.menu_edit_widgets))
                 },
@@ -285,7 +333,7 @@ fun PullDownScaffold(
                     offsetY.value != 0f -> SearchBarLevel.Raised
                     isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
                     isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
-                    widgetsScrollState.value > 0 -> SearchBarLevel.Raised
+                    !isWidgetsScrollZero -> SearchBarLevel.Raised
                     else -> SearchBarLevel.Resting
                 }
             }
@@ -300,7 +348,8 @@ fun PullDownScaffold(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .padding(vertical = 8.dp)
+                .systemBarsPadding()
+                .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
                 .offset {
                     IntOffset(
