@@ -1,18 +1,17 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.appshortcuts.AppShortcutResults
@@ -48,16 +47,16 @@ fun SearchColumn(
         FileResults(reverse)
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 4.dp),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
             val viewModel: LauncherActivityVM = viewModel()
             Surface(
                 shadowElevation = 2.dp,
-                color = MaterialTheme.colorScheme.secondaryContainer,
-                contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                tonalElevation = 2.dp,
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 shape = MaterialTheme.shapes.medium,
                 onClick = { viewModel.showHiddenItems() }
             ) {
@@ -66,12 +65,9 @@ fun SearchColumn(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Icon(
+                        modifier = Modifier.padding(start = 12.dp, end = 12.dp),
                         imageVector = Icons.Rounded.VisibilityOff,
                         contentDescription = null,
-                    )
-                    Text(stringResource(R.string.show_hidden_items),
-                        modifier = Modifier.padding(start = 12.dp, end = 4.dp),
-                        style = MaterialTheme.typography.labelMedium
                     )
                 }
 
