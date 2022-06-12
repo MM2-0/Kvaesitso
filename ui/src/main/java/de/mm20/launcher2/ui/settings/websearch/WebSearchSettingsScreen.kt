@@ -3,17 +3,12 @@ package de.mm20.launcher2.ui.settings.websearch
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -25,16 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberImagePainter
 import com.godaddy.android.colorpicker.ClassicColorPicker
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -139,7 +132,7 @@ fun WebsearchPreference(
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditWebsearchDialog(
     title: String,
@@ -149,7 +142,6 @@ fun EditWebsearchDialog(
     onCancel: () -> Unit,
     enableImport: Boolean = false
 ) {
-    val context = LocalContext.current
     var showDropdown by remember { mutableStateOf(false) }
 
     var label by remember { mutableStateOf(value.label) }
@@ -179,279 +171,264 @@ fun EditWebsearchDialog(
     }
 
 
-
-    Dialog(
-        onDismissRequest = onCancel,
-        properties = DialogProperties(usePlatformDefaultWidth = false)
-    ) {
-        Surface(
-            shape = RectangleShape,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Scaffold(
-                topBar = {
-                    SmallTopAppBar(
-                        navigationIcon = {
-                            IconButton(onClick = {
-                                if (icon != value.icon) {
-                                    icon?.let { viewModel.deleteIcon(it) }
-                                }
-                                onCancel()
-                            }) {
-                                Icon(imageVector = Icons.Rounded.Close, contentDescription = null)
-                            }
-                        },
-                        title = {
-                            Text(
-                                text = title
-                            )
-                        },
-                        actions = {
-                            IconButton(onClick = {
-                                if (urlTemplate.contains("\${1}")) {
-                                    value.label = label
-                                    value.urlTemplate = urlTemplate
-                                    if (value.icon != icon) {
-                                        value.icon?.let {
-                                            viewModel.deleteIcon(it)
-                                        }
-                                    }
-                                    value.icon = icon
-                                    value.color = color
-                                    onValueSaved(value)
-                                } else {
-                                    showError = true
-                                }
-                            }) {
-                                Icon(imageVector = Icons.Rounded.Save, contentDescription = null)
-                            }
-                            if (enableImport) {
-                                Box {
-                                    IconButton(onClick = {
-                                        showImport = !showImport
-                                        importError = false
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Download,
-                                            contentDescription = null
-                                        )
-                                    }
-
-                                }
-                            }
-                            if (onValueDeleted != null) {
-                                Box {
-                                    IconButton(onClick = {
-                                        showDropdown = true
-                                    }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.MoreVert,
-                                            contentDescription = null
-                                        )
-                                    }
-                                    DropdownMenu(
-                                        expanded = showDropdown,
-                                        onDismissRequest = { showDropdown = false }) {
-                                        DropdownMenuItem(
-                                            text = {
-                                                Text(
-                                                    text = stringResource(R.string.menu_delete)
-                                                )
-                                            },
-                                            onClick = {
-                                                onValueDeleted(value)
-                                                onCancel()
-                                            })
-                                    }
-                                }
-                            }
-                        }
-                    )
-                }
-            ) {
-                Column(modifier = Modifier.padding(it).padding(16.dp)) {
-
-                    AnimatedVisibility(showImport) {
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 24.dp)
-                        ) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(horizontal = 16.dp)
-                            ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    var importUrl by remember { mutableStateOf("") }
-                                    OutlinedTextField(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                            .padding(bottom = 16.dp, top = 8.dp, end = 8.dp),
-                                        label = { Text(stringResource(R.string.websearch_dialog_import_url)) },
-                                        value = importUrl,
-                                        onValueChange = {
-                                            importUrl = it
-                                            importError = false
-                                        },
-                                        textStyle = MaterialTheme.typography.bodyLarge,
-                                    )
-                                    if (loadingImport) {
-                                        CircularProgressIndicator(
-                                            modifier = Modifier
-                                                .padding(12.dp)
-                                                .size(24.dp)
-                                        )
-                                    } else {
-                                        IconButton(onClick = {
-                                            scope.launch {
-                                                loadingImport = true
-                                                val websearch =
-                                                    viewModel.importWebsearch(
-                                                        importUrl,
-                                                        iconSizePx
-                                                    )
-                                                if (websearch != null) {
-                                                    label = websearch.label
-                                                    icon = websearch.icon
-                                                    urlTemplate = websearch.urlTemplate
-                                                    color = websearch.color
-                                                    showImport = false
-                                                } else {
-                                                    importError = true
-                                                }
-                                                loadingImport = false
-                                            }
-                                        }) {
-                                            Icon(
-                                                imageVector = Icons.Rounded.ArrowForward,
-                                                contentDescription = null
-                                            )
-                                        }
-                                    }
-                                }
-                                AnimatedVisibility(importError) {
-                                    Column(
-                                        modifier = Modifier.padding(bottom = 8.dp)
-                                    ) {
-                                        Text(
-                                            text = stringResource(R.string.websearch_dialog_import_error),
-                                            style = MaterialTheme.typography.labelSmall
-                                        )
-                                        TextButton(
-                                            modifier = Modifier.align(Alignment.End),
-                                            onClick = { showImport = false }) {
-                                            Text(
-                                                text = stringResource(android.R.string.ok),
-                                                style = MaterialTheme.typography.labelMedium
-                                            )
-                                        }
-                                    }
-                                }
-                            }
-                        }
+    BottomSheetDialog(onDismissRequest = onCancel,
+        title = { Text(title) },
+        actions = {
+            if (enableImport) {
+                Box {
+                    IconButton(onClick = {
+                        showImport = !showImport
+                        importError = false
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.CloudDownload,
+                            contentDescription = null
+                        )
                     }
 
-                    if (icon != null) {
+                }
+            }
+            if (onValueDeleted != null) {
+                Box {
+                    IconButton(onClick = {
+                        showDropdown = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.MoreVert,
+                            contentDescription = null
+                        )
+                    }
+                    DropdownMenu(
+                        expanded = showDropdown,
+                        onDismissRequest = { showDropdown = false }) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = stringResource(R.string.menu_delete)
+                                )
+                            },
+                            onClick = {
+                                onValueDeleted(value)
+                                onCancel()
+                            })
+                    }
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = {
+                if (urlTemplate.contains("\${1}")) {
+                    value.label = label
+                    value.urlTemplate = urlTemplate
+                    if (value.icon != icon) {
+                        value.icon?.let {
+                            viewModel.deleteIcon(it)
+                        }
+                    }
+                    value.icon = icon
+                    value.color = color
+                    onValueSaved(value)
+                } else {
+                    showError = true
+                }
+            }) {
+                Text("Save")
+            }
+        },
+        dismissButton = {
+            OutlinedButton(onClick = {
+                if (icon != value.icon) {
+                    icon?.let { viewModel.deleteIcon(it) }
+                }
+                onCancel()
+            }) {
+                Text(stringResource(android.R.string.cancel))
+            }
+        }
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .verticalScroll(rememberScrollState())
+        ) {
+            AnimatedVisibility(showImport) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 24.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                    ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Image(
-                                painter = rememberImagePainter(icon?.let { File(it) }),
-                                contentDescription = null,
+                            var importUrl by remember { mutableStateOf("") }
+                            OutlinedTextField(
                                 modifier = Modifier
-                                    .padding(end = 16.dp)
-                                    .size(48.dp)
+                                    .weight(1f)
+                                    .padding(bottom = 16.dp, top = 8.dp, end = 8.dp),
+                                label = { Text(stringResource(R.string.websearch_dialog_import_url)) },
+                                value = importUrl,
+                                onValueChange = {
+                                    importUrl = it
+                                    importError = false
+                                },
+                                textStyle = MaterialTheme.typography.bodyLarge,
                             )
-                            TextButton(
-                                onClick = {
-                                    chooseIconLauncher.launch("image/*")
-                                },
-                                modifier = Modifier.padding(4.dp)
-                            ) {
-                                Text(
-                                    stringResource(R.string.websearch_dialog_replace_icon),
+                            if (loadingImport) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(12.dp)
+                                        .size(24.dp)
                                 )
-                            }
-                            TextButton(
-                                onClick = {
-                                    icon = null
-                                },
-                                modifier = Modifier.padding(4.dp),
-                                colors = ButtonDefaults.textButtonColors(
-                                    contentColor = MaterialTheme.colorScheme.error
-                                )
-                            ) {
-                                Text(
-                                    stringResource(R.string.websearch_dialog_delete_icon),
-                                )
+                            } else {
+                                IconButton(onClick = {
+                                    scope.launch {
+                                        loadingImport = true
+                                        val websearch =
+                                            viewModel.importWebsearch(
+                                                importUrl,
+                                                iconSizePx
+                                            )
+                                        if (websearch != null) {
+                                            label = websearch.label
+                                            icon = websearch.icon
+                                            urlTemplate = websearch.urlTemplate
+                                            color = websearch.color
+                                            showImport = false
+                                        } else {
+                                            importError = true
+                                        }
+                                        loadingImport = false
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.ArrowForward,
+                                        contentDescription = null
+                                    )
+                                }
                             }
                         }
-                    } else {
-                        ColorPicker(
-                            value = color,
-                            onColorSelected = { color = it }
-                        )
-                        TextButton(
-                            onClick = {
-                                chooseIconLauncher.launch("image/*")
-                            },
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .align(Alignment.End)
-                        ) {
-                            Text(
-                                stringResource(R.string.websearch_dialog_custom_icon),
-                            )
+                        AnimatedVisibility(importError) {
+                            Column(
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.websearch_dialog_import_error),
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                                TextButton(
+                                    modifier = Modifier.align(Alignment.End),
+                                    onClick = { showImport = false }) {
+                                    Text(
+                                        text = stringResource(android.R.string.ok),
+                                        style = MaterialTheme.typography.labelMedium
+                                    )
+                                }
+                            }
                         }
-
                     }
-
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 24.dp),
-                        value = label,
-                        onValueChange = {
-                            label = it
-                        },
-                        label = {
-                            Text(text = stringResource(R.string.websearch_dialog_name))
-                        },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                    )
-                    OutlinedTextField(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp),
-                        value = urlTemplate,
-                        onValueChange = {
-                            urlTemplate = it
-                        },
-                        label = {
-                            Text(text = stringResource(R.string.websearch_dialog_url))
-                        },
-                        textStyle = MaterialTheme.typography.bodyLarge,
-                    )
-                    AnimatedVisibility(showError) {
-                        Text(
-                            modifier = Modifier.padding(top = 8.dp),
-                            text = stringResource(R.string.websearch_dialog_url_error),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = MaterialTheme.colorScheme.error
-                        )
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = 8.dp),
-                        text = stringResource(R.string.websearch_dialog_url_description),
-                        style = MaterialTheme.typography.labelMedium
-                    )
                 }
             }
+
+            if (icon != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = rememberImagePainter(icon?.let { File(it) }),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(end = 16.dp)
+                            .size(48.dp)
+                    )
+                    TextButton(
+                        onClick = {
+                            chooseIconLauncher.launch("image/*")
+                        },
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(
+                            stringResource(R.string.websearch_dialog_replace_icon),
+                        )
+                    }
+                    TextButton(
+                        onClick = {
+                            icon = null
+                        },
+                        modifier = Modifier.padding(4.dp),
+                        colors = ButtonDefaults.textButtonColors(
+                            contentColor = MaterialTheme.colorScheme.error
+                        )
+                    ) {
+                        Text(
+                            stringResource(R.string.websearch_dialog_delete_icon),
+                        )
+                    }
+                }
+            } else {
+                ColorPicker(
+                    value = color,
+                    onColorSelected = { color = it }
+                )
+                TextButton(
+                    onClick = {
+                        chooseIconLauncher.launch("image/*")
+                    },
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .align(Alignment.End)
+                ) {
+                    Text(
+                        stringResource(R.string.websearch_dialog_custom_icon),
+                    )
+                }
+
+            }
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
+                value = label,
+                onValueChange = {
+                    label = it
+                },
+                label = {
+                    Text(text = stringResource(R.string.websearch_dialog_name))
+                },
+                textStyle = MaterialTheme.typography.bodyLarge,
+            )
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                value = urlTemplate,
+                onValueChange = {
+                    urlTemplate = it
+                },
+                label = {
+                    Text(text = stringResource(R.string.websearch_dialog_url))
+                },
+                textStyle = MaterialTheme.typography.bodyLarge,
+            )
+            AnimatedVisibility(showError) {
+                Text(
+                    modifier = Modifier.padding(top = 8.dp),
+                    text = stringResource(R.string.websearch_dialog_url_error),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                text = stringResource(R.string.websearch_dialog_url_description),
+                style = MaterialTheme.typography.labelMedium
+            )
         }
     }
-
 }
 
 @Composable
