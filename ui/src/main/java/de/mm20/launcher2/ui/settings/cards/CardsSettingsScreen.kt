@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.BorderStyle
-import androidx.compose.material.icons.rounded.LineWeight
-import androidx.compose.material.icons.rounded.Opacity
-import androidx.compose.material.icons.rounded.RoundedCorner
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,7 +45,7 @@ fun CardsSettingsScreen() {
             PreferenceCategory {
                 val shape by viewModel.shape.observeAsState()
                 ListPreference(
-                    icon = Icons.Rounded.BorderStyle,
+                    icon = Icons.Rounded.Rectangle,
                     title = stringResource(R.string.preference_cards_shape),
                     items = listOf(
                         stringResource(R.string.preference_cards_shape_rounded) to Settings.CardSettings.Shape.Rounded,
