@@ -98,7 +98,7 @@ fun PullDownScaffold(
             )
         } else if (showStatusBarScrim) {
             systemUiController.setStatusBarColor(
-                colorSurface.copy(0.75f),
+                colorSurface.copy(0.7f),
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -111,7 +111,7 @@ fun PullDownScaffold(
     LaunchedEffect(darkNavBarIcons, showNavBarScrim) {
         if (showNavBarScrim) {
             systemUiController.setNavigationBarColor(
-                colorSurface.copy(0.75f),
+                colorSurface.copy(0.7f),
             )
         } else {
             systemUiController.setNavigationBarColor(
