@@ -36,15 +36,12 @@ internal class AppRepositoryImpl(
         context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
     private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
-    private val installations = MutableStateFlow<MutableList<AppInstallation>>(mutableListOf())
     private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
 
 
     private val profiles: List<UserHandle> =
         launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
 
-
-    private val installingPackages = mutableMapOf<Int, String>()
 
     init {
         launcherApps.registerCallback(object : LauncherApps.Callback() {
@@ -118,49 +115,6 @@ internal class AppRepositoryImpl(
             launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
         }.flatten()
         installedApps.value = apps
-
-        val packageInstaller = context.packageManager.packageInstaller
-
-        packageInstaller.registerSessionCallback(object : PackageInstaller.SessionCallback() {
-            override fun onProgressChanged(sessionId: Int, progress: Float) {
-                val session = packageInstaller.getSessionInfo(sessionId) ?: return
-            }
-
-            override fun onActiveChanged(sessionId: Int, active: Boolean) {
-                if (active) onCreated(sessionId)
-                else onFinished(sessionId, false)
-            }
-
-            override fun onFinished(sessionId: Int, success: Boolean) {
-                val pkg = installingPackages[sessionId]
-                installingPackages.remove(sessionId)
-                val inst = installations.value
-                inst.removeAll {
-                    it.session.sessionId == sessionId
-                }
-                installations.value = inst
-
-            }
-
-            override fun onBadgingChanged(sessionId: Int) {
-                val inst = installations.value ?: mutableListOf()
-                inst.removeAll {
-                    it.session.sessionId == sessionId
-                }
-                onCreated(sessionId)
-            }
-
-            override fun onCreated(sessionId: Int) {
-                val session = packageInstaller.getSessionInfo(sessionId) ?: return
-                installingPackages[sessionId] = session.appPackageName ?: return
-                if (installedApps.value.any { it.`package` == session.appPackageName }) return
-                if (session.appLabel.isNullOrBlank() || !session.isActive) return
-                val appInstallation = AppInstallation(session)
-                val inst = installations.value ?: mutableListOf()
-                inst.add(appInstallation)
-                installations.value = inst
-            }
-        }, Handler(Looper.getMainLooper()))
     }
 
 
@@ -190,17 +144,13 @@ internal class AppRepositoryImpl(
 
     override fun search(query: String): Flow<List<Application>> = channelFlow {
 
-        merge(installedApps, installations).collectLatest {
+        installedApps.collectLatest { apps ->
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<Application>()
                 if (query.isEmpty()) {
-                    appResults.addAll(installedApps.value)
-                    appResults.addAll(installations.value)
+                    appResults.addAll(apps)
                 } else {
-                    appResults.addAll(installedApps.value.filter {
-                        matches(it.label, query)
-                    })
-                    appResults.addAll(installations.value.filter {
+                    appResults.addAll(apps.filter {
                         matches(it.label, query)
                     })
 
