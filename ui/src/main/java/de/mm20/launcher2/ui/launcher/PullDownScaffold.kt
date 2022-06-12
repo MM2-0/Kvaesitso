@@ -218,10 +218,6 @@ fun PullDownScaffold(
     val insets = WindowInsets.systemBars.asPaddingValues()
     Box(
         modifier = modifier
-            .verticalFadingEdges(
-                top = insets.calculateTopPadding(),
-                amount = 0.85f
-            )
             .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
