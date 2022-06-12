@@ -6,7 +6,8 @@ import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.os.Process
 import androidx.core.content.getSystemService
-import com.github.promeg.pinyinhelper.Pinyin
+import de.mm20.launcher2.ktx.normalize
+import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -128,13 +129,9 @@ internal class AppShortcutRepositoryImpl(
 
 
     private fun matches(label: String, query: String): Boolean {
-        val labelLatin = romanize(label)
+        val labelLatin = label.normalize()
         val fuzzyScore = FuzzyScore(Locale.getDefault())
         return fuzzyScore.fuzzyScore(label, query) >= query.length * 1.5 ||
-                fuzzyScore.fuzzyScore(labelLatin, query) >= query.length * 1.5
-    }
-
-    private fun romanize(label: String): String {
-        return Pinyin.toPinyin(label, "").lowercase(Locale.getDefault())
+                fuzzyScore.fuzzyScore(labelLatin, query.normalize()) >= query.length * 1.5
     }
 }

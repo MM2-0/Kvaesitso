@@ -1,13 +1,12 @@
 package de.mm20.launcher2.search.data
 
-import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.search.R
 import java.text.Collator
@@ -26,16 +25,26 @@ abstract class Searchable : Comparable<Searchable> {
         return if (context.tryStartActivity(intent, options)) {
             true
         } else {
-            Toast.makeText(context, context.getString(R.string.error_activity_not_found, label), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                context.getString(R.string.error_activity_not_found, label),
+                Toast.LENGTH_SHORT
+            ).show()
             false
         }
     }
 
-    open suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? = null
+    open suspend fun loadIcon(
+        context: Context,
+        size: Int,
+        legacyIconBackground: LegacyIconBackground
+    ): LauncherIcon? = null
+
     abstract fun getPlaceholderIcon(context: Context): LauncherIcon
 
     override fun compareTo(other: Searchable): Int {
-        return Collator.getInstance().apply { strength = Collator.SECONDARY }.compare(label, other.label)
+        return Collator.getInstance().apply { strength = Collator.SECONDARY }
+            .compare(label.romanize(), other.label.romanize())
     }
 
     override fun equals(other: Any?): Boolean {

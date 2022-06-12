@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
 
     implementation(libs.androidx.core)
+    implementation(libs.tinypinyin)
     implementation(libs.androidx.appcompat)
     implementation(libs.bundles.androidx.lifecycle)
 

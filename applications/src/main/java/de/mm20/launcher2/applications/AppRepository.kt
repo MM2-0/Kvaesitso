@@ -5,15 +5,13 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
-import android.content.pm.PackageInstaller
 import android.content.pm.ShortcutInfo
 import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
 import android.util.Log
-import com.github.promeg.pinyinhelper.Pinyin
-import de.mm20.launcher2.search.data.AppInstallation
+import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
@@ -170,14 +168,10 @@ internal class AppRepositoryImpl(
     }
 
     private fun matches(label: String, query: String): Boolean {
-        val labelLatin = romanize(label)
+        val normalizedLabel = label.normalize()
         val fuzzyScore = FuzzyScore(Locale.getDefault())
         return fuzzyScore.fuzzyScore(label, query) >= query.length * 1.5 ||
-                fuzzyScore.fuzzyScore(labelLatin, query) >= query.length * 1.5
-    }
-
-    private fun romanize(label: String): String {
-        return Pinyin.toPinyin(label, "").lowercase(Locale.getDefault())
+                fuzzyScore.fuzzyScore(normalizedLabel, query.normalize()) >= query.length * 1.5
     }
 
     private fun getActivityByComponentName(componentName: ComponentName?): Application? {
