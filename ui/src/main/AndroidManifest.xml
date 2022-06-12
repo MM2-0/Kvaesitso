@@ -37,7 +37,6 @@
             android:label="@string/settings"
             android:launchMode="singleTask"
             android:parentActivityName=".launcher.LauncherActivity"
-            android:screenOrientation="portrait"
             android:taskAffinity="de.mm20.launcher2.settings"
             android:theme="@style/SettingsTheme.NoActionBar">
             <intent-filter>
