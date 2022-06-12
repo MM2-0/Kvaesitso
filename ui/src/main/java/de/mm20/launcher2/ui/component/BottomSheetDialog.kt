@@ -57,7 +57,7 @@ fun BottomSheetDialog(
                     return super.onPreScroll(available, source)
                 }
                 val c = swipeState.performDrag(available.y)
-                return Offset(available.x, c)
+                return Offset(0f, c)
             }
 
             override fun onPostScroll(
@@ -69,7 +69,7 @@ fun BottomSheetDialog(
                     return super.onPreScroll(available, source)
                 }
                 val c = swipeState.performDrag(available.y)
-                return Offset(available.x, c)
+                return Offset(0f, c)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
@@ -77,7 +77,7 @@ fun BottomSheetDialog(
                     return super.onPreFling(available)
                 }
                 swipeState.performFling(available.y)
-                return available
+                return available.copy(x = 0f)
             }
 
             override suspend fun onPostFling(
@@ -88,7 +88,7 @@ fun BottomSheetDialog(
                     return super.onPreFling(available)
                 }
                 swipeState.performFling(available.y)
-                return available
+                return available.copy(x = 0f)
             }
         }
     }
