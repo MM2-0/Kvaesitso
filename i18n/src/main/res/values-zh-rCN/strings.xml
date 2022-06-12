@@ -426,4 +426,5 @@
     <string name="restore_meta">由%3$s于%1$s在%2$s中创建.</string>
     <string name="restore_select_components">选择要恢复的项目. 现有的数据将被覆盖!</string>
     <string name="restore_complete">备份已恢复.</string>
+    <string name="weather_location_search_no_result">位置未找到.</string>
 </resources>
