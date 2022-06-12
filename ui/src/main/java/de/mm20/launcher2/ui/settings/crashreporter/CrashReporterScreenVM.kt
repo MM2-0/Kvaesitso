@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.crashreporter.BuildConfig
 import de.mm20.launcher2.crashreporter.CrashReport
 import de.mm20.launcher2.crashreporter.CrashReportType
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -29,7 +30,7 @@ class CrashReporterScreenVM: ViewModel() {
         }
     }
 
-    val showExceptions = MutableLiveData(true)
+    val showExceptions = MutableLiveData(BuildConfig.DEBUG)
     val showCrashes = MutableLiveData(true)
 
     val reports = MutableLiveData<List<CrashReport>?>(null)
