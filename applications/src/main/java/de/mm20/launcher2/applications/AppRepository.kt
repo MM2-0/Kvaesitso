@@ -11,7 +11,6 @@ import android.os.Process
 import android.os.UserHandle
 import android.util.Log
 import com.github.promeg.pinyinhelper.Pinyin
-import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.search.data.AppInstallation
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
@@ -23,13 +22,12 @@ import java.util.*
 
 interface AppRepository {
     fun search(query: String): Flow<List<Application>>
-    fun getAllInstalledApps(includeHidden: Boolean = false): Flow<List<Application>>
+    fun getAllInstalledApps(): Flow<List<Application>>
     fun getSuspendedPackages(): Flow<List<String>>
 }
 
 internal class AppRepositoryImpl(
     private val context: Context,
-    hiddenItemsRepository: HiddenItemsRepository,
 ) : AppRepository {
 
     private val launcherApps =
@@ -37,7 +35,6 @@ internal class AppRepositoryImpl(
 
     private val installedApps = MutableStateFlow<List<LauncherApp>>(emptyList())
     private val installations = MutableStateFlow<MutableList<AppInstallation>>(mutableListOf())
-    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
     private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
 
 
@@ -191,7 +188,7 @@ internal class AppRepositoryImpl(
 
     override fun search(query: String): Flow<List<Application>> = channelFlow {
 
-        merge(installedApps, hiddenItems, installations).collectLatest {
+        merge(installedApps, installations).collectLatest {
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<Application>()
                 if (query.isEmpty()) {
@@ -204,12 +201,10 @@ internal class AppRepositoryImpl(
                     appResults.addAll(installations.value.filter {
                         matches(it.label, query)
                     })
+
+                    val componentName = ComponentName.unflattenFromString(query)
+                    getActivityByComponentName(componentName)?.let { appResults.add(it) }
                 }
-
-                val componentName = ComponentName.unflattenFromString(query)
-                getActivityByComponentName(componentName)?.let { appResults.add(it) }
-
-                appResults.removeAll { hiddenItems.value.contains(it.key) }
 
                 appResults.sort()
 
@@ -218,18 +213,8 @@ internal class AppRepositoryImpl(
         }
     }
 
-    override fun getAllInstalledApps(includeHidden: Boolean): Flow<List<Application>> {
-        return if (!includeHidden) {
-            channelFlow {
-                hiddenItems.collectLatest { hidden ->
-                    installedApps.collectLatest { apps ->
-                        send(apps.filter { !hidden.contains(it.key) })
-                    }
-                }
-            }
-        } else {
-            installedApps
-        }
+    override fun getAllInstalledApps(): Flow<List<Application>> {
+        return installedApps
     }
 
     private fun matches(label: String, query: String): Boolean {

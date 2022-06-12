@@ -46,7 +46,6 @@ dependencies {
     implementation(project(":preferences"))
     implementation(project(":ktx"))
     implementation(project(":base"))
-    implementation(project(":hiddenitems"))
     implementation(project(":permissions"))
     implementation(project(":material-color-utilities"))
 

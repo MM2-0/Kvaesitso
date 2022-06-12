@@ -1,12 +1,9 @@
 package de.mm20.launcher2.calendar
 
-import android.Manifest
 import android.content.ContentUris
 import android.content.Context
 import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
-import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
-import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -29,23 +26,21 @@ interface CalendarRepository {
 
 internal class CalendarRepositoryImpl(
     private val context: Context,
-    hiddenItemsRepository: HiddenItemsRepository
 ) : CalendarRepository, KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
-
-    override fun search(query: String): Flow<List<CalendarEvent>> = channelFlow {
+    override fun search(query: String): Flow<List<CalendarEvent>> {
         if (query.isBlank() || query.length < 3) {
-            send(emptyList())
-            return@channelFlow
+            return flow {
+                emit(emptyList())
+            }
         }
 
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         val searchCalendar = dataStore.data.map { it.calendarSearch.enabled }
-        combine(hasPermission, searchCalendar) { permission, search ->
+        return combine(hasPermission, searchCalendar) { permission, search ->
             permission && search
         }.map {
             if (it) {
@@ -58,12 +53,6 @@ internal class CalendarRepositoryImpl(
             } else {
                 emptyList()
             }
-        }.flatMapLatest { events ->
-            hiddenItems.map { hidden ->
-                events.filter { !hidden.contains(it.key) }
-            }
-        }.collectLatest {
-            send(it)
         }
 
     }
@@ -160,23 +149,19 @@ internal class CalendarRepositoryImpl(
         hasPermission.collectLatest {
             if (it) {
                 dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
-                    hiddenItems.collectLatest { hidden ->
-                        val now = System.currentTimeMillis()
-                        val end = now + 14 * 24 * 60 * 60 * 1000L
-                        val events = withContext(Dispatchers.IO) {
-                            queryCalendarEvents(
-                                query = "",
-                                intervalStart = now,
-                                intervalEnd = end,
-                                limit = 700,
-                                excludeAllDayEvents = settings.hideAlldayEvents,
-                                excludeCalendars = settings.excludeCalendarsList
-                            ).filter {
-                                !hiddenItems.value.contains(it.key)
-                            }
-                        }
-                        send(events)
+                    val now = System.currentTimeMillis()
+                    val end = now + 14 * 24 * 60 * 60 * 1000L
+                    val events = withContext(Dispatchers.IO) {
+                        queryCalendarEvents(
+                            query = "",
+                            intervalStart = now,
+                            intervalEnd = end,
+                            limit = 700,
+                            excludeAllDayEvents = settings.hideAlldayEvents,
+                            excludeCalendars = settings.excludeCalendarsList
+                        )
                     }
+                    send(events)
                 }
             } else {
                 send(emptyList())

@@ -2,7 +2,6 @@ package de.mm20.launcher2.contacts
 
 import android.content.Context
 import android.provider.ContactsContract
-import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -19,23 +18,22 @@ interface ContactRepository {
 
 internal class ContactRepositoryImpl(
     private val context: Context,
-    hiddenItemsRepository: HiddenItemsRepository
 ) : ContactRepository, KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
-    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
 
-    override fun search(query: String): Flow<List<Contact>> = channelFlow {
+    override fun search(query: String): Flow<List<Contact>> {
         val searchContacts = dataStore.data.map { it.contactsSearch.enabled }
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
         if (query.length < 3) {
-            send(emptyList())
-            return@channelFlow
+            return flow {
+                emit(emptyList())
+            }
         }
 
-        combine(searchContacts, hasPermission) { search, permission ->
+        return combine(searchContacts, hasPermission) { search, permission ->
             search && permission
         }.map {
             if (it) {
@@ -43,12 +41,6 @@ internal class ContactRepositoryImpl(
             } else {
                 emptyList()
             }
-        }.flatMapLatest { contacts ->
-            hiddenItems.map { hidden ->
-                contacts.filter { !hidden.contains(it.key) }
-            }
-        }.collectLatest {
-            send(it)
         }
     }
 

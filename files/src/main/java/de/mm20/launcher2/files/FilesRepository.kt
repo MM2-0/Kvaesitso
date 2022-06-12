@@ -1,9 +1,7 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
-import android.util.Log
 import de.mm20.launcher2.files.providers.*
-import de.mm20.launcher2.hiddenitems.HiddenItemsRepository
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -22,14 +20,12 @@ interface FileRepository {
 
 internal class FileRepositoryImpl(
     private val context: Context,
-    hiddenItemsRepository: HiddenItemsRepository,
     private val dataStore: LauncherDataStore,
     private val permissionsManager: PermissionsManager,
 ) : FileRepository {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    private val hiddenItems = hiddenItemsRepository.hiddenItemsKeys
 
     private val providers = MutableStateFlow<List<FileProvider>>(emptyList())
 
@@ -75,12 +71,10 @@ internal class FileRepositoryImpl(
                 send(emptyList())
                 return@collectLatest
             }
-            hiddenItems.collectLatest { hiddenItems ->
-                val results = mutableListOf<File>()
-                for (provider in providers) {
-                    results.addAll(provider.search(query))
-                    send(results.toList())
-                }
+            val results = mutableListOf<File>()
+            for (provider in providers) {
+                results.addAll(provider.search(query))
+                send(results.toList())
             }
         }
     }

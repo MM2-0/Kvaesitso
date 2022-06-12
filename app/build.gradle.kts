@@ -120,7 +120,6 @@ dependencies {
     implementation(project(":favorites"))
     implementation(project(":files"))
     implementation(project(":g-services"))
-    implementation(project(":hiddenitems"))
     implementation(project(":i18n"))
     implementation(project(":icons"))
     implementation(project(":ktx"))

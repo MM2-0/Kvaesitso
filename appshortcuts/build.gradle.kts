@@ -46,7 +46,6 @@ dependencies {
 
     implementation(project(":search"))
     implementation(project(":permissions"))
-    implementation(project(":hiddenitems"))
     implementation(project(":base"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))

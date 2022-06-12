@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val appShortcutsModule = module {
-    single<AppShortcutRepository> { AppShortcutRepositoryImpl(androidContext(), get(), get(), get()) }
+    single<AppShortcutRepository> { AppShortcutRepositoryImpl(androidContext(), get(), get()) }
 }

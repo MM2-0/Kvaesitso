@@ -45,7 +45,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":search"))
-    implementation(project(":hiddenitems"))
     implementation(project(":preferences"))
     implementation(project(":base"))
     implementation(project(":ktx"))

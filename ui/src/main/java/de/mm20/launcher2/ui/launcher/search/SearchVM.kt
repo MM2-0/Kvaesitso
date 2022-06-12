@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,10 +22,7 @@ import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.widgets.WidgetRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -65,6 +63,10 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val hideFavorites = MutableLiveData(false)
 
+    private val hiddenItemKeys = favoritesRepository
+        .getHiddenItemKeys()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+
     init {
         search("")
         viewModelScope.launch {
@@ -100,18 +102,24 @@ class SearchVM : ViewModel(), KoinComponent {
             isSearching.postValue(true)
             val jobs = mutableListOf<Deferred<Any>>()
             jobs += async {
-                appRepository.search(query).collectLatest {
-                    appResults.postValue(it)
+                appRepository.search(query).collectLatest { apps ->
+                    hiddenItemKeys.collectLatest { hidden ->
+                        appResults.postValue(apps.filter { !hidden.contains(it.key) })
+                    }
                 }
             }
             jobs += async {
-                contactRepository.search(query).collectLatest {
-                    contactResults.postValue(it)
+                contactRepository.search(query).collectLatest { contacts ->
+                    hiddenItemKeys.collectLatest { hidden ->
+                        contactResults.postValue(contacts.filter { !hidden.contains(it.key) })
+                    }
                 }
             }
             jobs += async {
-                calendarRepository.search(query).collectLatest {
-                    calendarResults.postValue(it)
+                calendarRepository.search(query).collectLatest { events ->
+                    hiddenItemKeys.collectLatest { hidden ->
+                        calendarResults.postValue(events.filter { !hidden.contains(it.key) })
+                    }
                 }
             }
             jobs += async {
@@ -135,8 +143,10 @@ class SearchVM : ViewModel(), KoinComponent {
                 }
             }
             jobs += async {
-                fileRepository.search(query).collectLatest {
-                    fileResults.postValue(it)
+                fileRepository.search(query).collectLatest { files ->
+                    hiddenItemKeys.collectLatest { hidden ->
+                        fileResults.postValue(files.filter { !hidden.contains(it.key) })
+                    }
                 }
             }
             jobs += async {
@@ -145,8 +155,10 @@ class SearchVM : ViewModel(), KoinComponent {
                 }
             }
             jobs += async {
-                appShortcutRepository.search(query).collectLatest {
-                    appShortcutResults.postValue(it)
+                appShortcutRepository.search(query).collectLatest { shortcuts ->
+                    hiddenItemKeys.collectLatest { hidden ->
+                        appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
+                    }
                 }
             }
             jobs.map { it.await() }

@@ -34,7 +34,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     private val favoritesRepository: FavoritesRepository by inject()
     private val iconRepository: IconRepository by inject()
 
-    val allApps = appRepository.getAllInstalledApps(true).map {
+    val allApps = appRepository.getAllInstalledApps().map {
         withContext(Dispatchers.Default) { it.sorted() }
     }.asLiveData()
     val hiddenItems: LiveData<List<Searchable>> = liveData {

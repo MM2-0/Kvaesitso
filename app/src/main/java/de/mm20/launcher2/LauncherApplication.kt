@@ -15,7 +15,6 @@ import de.mm20.launcher2.contacts.contactsModule
 import de.mm20.launcher2.debug.Debug
 import de.mm20.launcher2.favorites.favoritesModule
 import de.mm20.launcher2.files.filesModule
-import de.mm20.launcher2.hiddenitems.hiddenItemsModule
 import de.mm20.launcher2.icons.iconsModule
 import de.mm20.launcher2.music.musicModule
 import de.mm20.launcher2.search.searchModule
@@ -61,7 +60,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     databaseModule,
                     favoritesModule,
                     filesModule,
-                    hiddenItemsModule,
                     iconsModule,
                     musicModule,
                     notificationsModule,

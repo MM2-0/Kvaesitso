@@ -27,6 +27,7 @@ interface FavoritesRepository {
     ): Flow<List<Searchable>>
 
     fun getPinnedCalendarEvents(): Flow<List<Searchable>>
+    fun getHiddenCalendarEventKeys(): Flow<List<String>>
     fun isPinned(searchable: Searchable): Flow<Boolean>
     fun pinItem(searchable: Searchable)
     fun unpinItem(searchable: Searchable)
@@ -37,6 +38,7 @@ interface FavoritesRepository {
     suspend fun getAllFavoriteItems(): List<FavoritesItem>
     fun saveFavorites(favorites: List<FavoritesItem>)
     fun getHiddenItems(): Flow<List<Searchable>>
+    fun getHiddenItemKeys(): Flow<List<String>>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -89,6 +91,10 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().getPinnedCalendarEvents().map {
             it.mapNotNull { fromDatabaseEntity(it).searchable as? CalendarEvent }
         }
+    }
+
+    override fun getHiddenCalendarEventKeys(): Flow<List<String>> {
+        return database.searchDao().getHiddenCalendarEventKeys()
     }
 
     override fun isPinned(searchable: Searchable): Flow<Boolean> {
@@ -182,6 +188,10 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().getHiddenItems().map {
             it.mapNotNull { fromDatabaseEntity(it).searchable }
         }
+    }
+
+    override fun getHiddenItemKeys(): Flow<List<String>> {
+        return database.searchDao().getHiddenItemKeys()
     }
 
 

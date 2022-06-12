@@ -24,6 +24,9 @@ interface SearchDao {
     @Query("SELECT * FROM Searchable WHERE pinned > 0 AND `key` LIKE 'calendar://%' ORDER BY pinned DESC, launchCount DESC")
     fun getPinnedCalendarEvents(): Flow<List<FavoritesItemEntity>>
 
+    @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND `key` LIKE 'calendar://%'")
+    fun getHiddenCalendarEventKeys(): Flow<List<String>>
+
 
     @Query("SELECT COUNT(key) as count FROM Searchable WHERE pinned = 1;")
     fun getPinCount(): Int

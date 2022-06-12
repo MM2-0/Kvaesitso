@@ -5,5 +5,5 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val applicationsModule = module {
-    single<AppRepository> { AppRepositoryImpl(androidContext(), get()) }
+    single<AppRepository> { AppRepositoryImpl(androidContext()) }
 }
