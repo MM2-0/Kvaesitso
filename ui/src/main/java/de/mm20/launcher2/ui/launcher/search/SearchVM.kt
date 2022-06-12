@@ -106,7 +106,7 @@ class SearchVM : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             isSearching.postValue(true)
             val jobs = mutableListOf<Deferred<Any>>()
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 appRepository.search(query).collectLatest { apps ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val results = apps.partition { !hiddenKeys.contains(it.key) }
@@ -117,7 +117,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 contactRepository.search(query).collectLatest { contacts ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val results = contacts.partition { !hiddenKeys.contains(it.key) }
@@ -128,7 +128,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 calendarRepository.search(query).collectLatest { events ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val results = events.partition { !hiddenKeys.contains(it.key) }
@@ -139,27 +139,27 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 wikipediaRepository.search(query).collectLatest {
                     wikipediaResult.postValue(it)
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 unitConverterRepository.search(query).collectLatest {
                     unitConverterResult.postValue(it)
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 calculatorRepository.search(query).collectLatest {
                     calculatorResult.postValue(it)
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 websiteRepository.search(query).collectLatest {
                     websiteResult.postValue(it)
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 fileRepository.search(query).collectLatest { files ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val results = files.partition { !hiddenKeys.contains(it.key) }
@@ -170,19 +170,19 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 websearchRepository.search(query).collectLatest {
                     websearchResults.postValue(it)
                 }
             }
-            jobs += async {
+            jobs += async(Dispatchers.Default) {
                 appShortcutRepository.search(query).collectLatest { shortcuts ->
                     hiddenItemKeys.collectLatest { hidden ->
                         appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
                     }
                 }
             }
-            launch {
+            launch(Dispatchers.Default) {
                 hiddenItems.collectLatest {
                     hiddenResults.postValue(it.joinToList())
                 }

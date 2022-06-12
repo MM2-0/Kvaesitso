@@ -7,6 +7,8 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageInstaller
 import android.content.pm.ShortcutInfo
+import android.os.Handler
+import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
 import android.util.Log
@@ -111,7 +113,7 @@ internal class AppRepositoryImpl(
                     suspendedPackages.value.filter { packageNames.contains(it) }
             }
 
-        })
+        }, Handler(Looper.getMainLooper()))
         val apps = profiles.map { p ->
             launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
         }.flatten()
@@ -158,7 +160,7 @@ internal class AppRepositoryImpl(
                 inst.add(appInstallation)
                 installations.value = inst
             }
-        })
+        }, Handler(Looper.getMainLooper()))
     }
 
 
