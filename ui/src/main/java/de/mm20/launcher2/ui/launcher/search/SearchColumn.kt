@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.VisibilityOff
@@ -8,6 +9,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,6 +23,7 @@ import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
 import de.mm20.launcher2.ui.launcher.search.favorites.FavoritesResults
 import de.mm20.launcher2.ui.launcher.search.files.FileResults
+import de.mm20.launcher2.ui.launcher.search.hidden.HiddenResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaResults
@@ -45,33 +49,6 @@ fun SearchColumn(
         WikipediaResults(reverse)
         WebsiteResults(reverse)
         FileResults(reverse)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.End
-        ) {
-            val viewModel: LauncherActivityVM = viewModel()
-            Surface(
-                shadowElevation = 2.dp,
-                tonalElevation = 2.dp,
-                color = MaterialTheme.colorScheme.surfaceVariant,
-                contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                shape = MaterialTheme.shapes.medium,
-                onClick = { viewModel.showHiddenItems() }
-            ) {
-                Row(
-                    modifier = Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier.padding(start = 12.dp, end = 12.dp),
-                        imageVector = Icons.Rounded.VisibilityOff,
-                        contentDescription = null,
-                    )
-                }
-
-            }
-        }
+        HiddenResults()
     }
 }

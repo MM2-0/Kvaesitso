@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -61,6 +60,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResult = MutableLiveData<UnitConverter?>(null)
     val websearchResults = MutableLiveData<List<Websearch>>(emptyList())
 
+    val hiddenResults = MutableLiveData<List<Searchable>>(emptyList())
+
     val hideFavorites = MutableLiveData(false)
 
     private val hiddenItemKeys = favoritesRepository
@@ -93,6 +94,10 @@ class SearchVM : ViewModel(), KoinComponent {
     fun search(query: String) {
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
+        hiddenResults.value = emptyList()
+
+        val hiddenItems = MutableStateFlow(HiddenItemResults())
+
         try {
             searchJob?.cancel()
         } catch (e: CancellationException) {
@@ -103,22 +108,34 @@ class SearchVM : ViewModel(), KoinComponent {
             val jobs = mutableListOf<Deferred<Any>>()
             jobs += async {
                 appRepository.search(query).collectLatest { apps ->
-                    hiddenItemKeys.collectLatest { hidden ->
-                        appResults.postValue(apps.filter { !hidden.contains(it.key) })
+                    hiddenItemKeys.collectLatest { hiddenKeys ->
+                        val results = apps.partition { !hiddenKeys.contains(it.key) }
+                        appResults.postValue(results.first)
+                        hiddenItems.update {
+                            it.copy(apps = results.second)
+                        }
                     }
                 }
             }
             jobs += async {
                 contactRepository.search(query).collectLatest { contacts ->
-                    hiddenItemKeys.collectLatest { hidden ->
-                        contactResults.postValue(contacts.filter { !hidden.contains(it.key) })
+                    hiddenItemKeys.collectLatest { hiddenKeys ->
+                        val results = contacts.partition { !hiddenKeys.contains(it.key) }
+                        contactResults.postValue(results.first)
+                        hiddenItems.update {
+                            it.copy(contacts = results.second)
+                        }
                     }
                 }
             }
             jobs += async {
                 calendarRepository.search(query).collectLatest { events ->
-                    hiddenItemKeys.collectLatest { hidden ->
-                        calendarResults.postValue(events.filter { !hidden.contains(it.key) })
+                    hiddenItemKeys.collectLatest { hiddenKeys ->
+                        val results = events.partition { !hiddenKeys.contains(it.key) }
+                        calendarResults.postValue(results.first)
+                        hiddenItems.update {
+                            it.copy(calendarEvents = results.second)
+                        }
                     }
                 }
             }
@@ -144,8 +161,12 @@ class SearchVM : ViewModel(), KoinComponent {
             }
             jobs += async {
                 fileRepository.search(query).collectLatest { files ->
-                    hiddenItemKeys.collectLatest { hidden ->
-                        fileResults.postValue(files.filter { !hidden.contains(it.key) })
+                    hiddenItemKeys.collectLatest { hiddenKeys ->
+                        val results = files.partition { !hiddenKeys.contains(it.key) }
+                        fileResults.postValue(results.first)
+                        hiddenItems.update {
+                            it.copy(files = results.second)
+                        }
                     }
                 }
             }
@@ -159,6 +180,11 @@ class SearchVM : ViewModel(), KoinComponent {
                     hiddenItemKeys.collectLatest { hidden ->
                         appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
                     }
+                }
+            }
+            launch {
+                hiddenItems.collectLatest {
+                    hiddenResults.postValue(it.joinToList())
                 }
             }
             jobs.map { it.await() }
@@ -243,4 +269,16 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
+}
+
+private data class HiddenItemResults(
+    val apps: List<Application> = emptyList(),
+    val contacts: List<Contact> = emptyList(),
+    val calendarEvents: List<CalendarEvent> = emptyList(),
+    val files: List<File> = emptyList(),
+    val appShortcuts: List<AppShortcut> = emptyList(),
+) {
+    fun joinToList(): List<Searchable> {
+        return apps + contacts + calendarEvents + files + appShortcuts
+    }
 }

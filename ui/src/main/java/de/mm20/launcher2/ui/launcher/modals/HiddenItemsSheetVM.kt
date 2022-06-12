@@ -9,12 +9,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class HiddenItemsSheetVM: ViewModel(), KoinComponent {
-    private val repository: FavoritesRepository by inject()
-
-    val hiddenItems = repository.getHiddenItems().map {
-        it.sorted()
-    }
+class HiddenItemsSheetVM: ViewModel() {
 
     fun showHiddenItems(context: Context) {
         context.startActivity(

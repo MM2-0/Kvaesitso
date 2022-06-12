@@ -22,12 +22,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
 fun HiddenItemsSheet(
+    items: List<Searchable>,
     onDismiss: () -> Unit
 ) {
     val viewModel: HiddenItemsSheetVM = viewModel()
@@ -56,16 +58,10 @@ fun HiddenItemsSheet(
         }
     ) {
 
-
-        val items by remember { viewModel.hiddenItems }.collectAsState(emptyList())
         SearchResultGrid(
             items,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
         )
     }
-}
-
-private enum class SwipeState {
-    Default, Dismiss
 }
