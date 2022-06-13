@@ -227,7 +227,7 @@ class GoogleApiHelper private constructor(private val context: Context) {
             return instance
         }
 
-        val SCOPES = setOf("https://www.googleapis.com/auth/drive", "profile")
+        val SCOPES = setOf("https://www.googleapis.com/auth/drive.metadata.readonly", "profile")
         const val USER_ID = "google-user"
         const val PREFS = "google-account"
         const val PREF_ACCOUNT_NAME = "name"
