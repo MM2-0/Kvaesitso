@@ -232,7 +232,7 @@ fun EditWebsearchDialog(
                     showError = true
                 }
             }) {
-                Text("Save")
+                Text(stringResource(R.string.save))
             }
         },
         dismissButton = {

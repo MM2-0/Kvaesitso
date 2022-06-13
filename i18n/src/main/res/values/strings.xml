@@ -228,6 +228,7 @@
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
+    <string name="save">Saveg</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
     <string name="widget_action_adjust_height">Adjust height</string>
