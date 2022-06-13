@@ -433,4 +433,6 @@
     <string name="preference_cards_shape_rounded">Abgerundet</string>
     <string name="preference_cards_shape_cut">Abgeschnitten</string>
     <string name="weather_location_search_no_result">Standort nicht gefunden.</string>
+    <string name="save">Speichern</string>
+    <string name="file_type_launcherbackup">%1$s-Backup</string>
 </resources>
