@@ -165,7 +165,7 @@ open class LocalFile(
     }
 
 
-    companion object : KoinComponent {
+    companion object {
         internal fun getMimetypeByFileExtension(extension: String): String {
             return when (extension) {
                 "apk" -> "application/vnd.android.package-archive"
@@ -187,6 +187,7 @@ open class LocalFile(
                 "ogg" -> "audio/ogg"
                 "wav" -> "audio/wav"
                 "mp4" -> "video/mp4"
+                "kvaesitso" -> "application/vendor.de.mm20.launcher2.backup"
                 else -> "application/octet-stream"
             }
         }

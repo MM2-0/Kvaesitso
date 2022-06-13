@@ -56,6 +56,9 @@ abstract class File(
 
     fun getFileType(context: Context): String {
         if (isDirectory) return context.getString(R.string.file_type_directory)
+        if (mimeType == "application/vendor.de.mm20.launcher2.backup") {
+            return context.getString(R.string.file_type_launcherbackup, context.getString(R.string.app_name))
+        }
         val resource = when (mimeType) {
             "application/zip",
             "application/x-zip-compressed",
@@ -104,6 +107,7 @@ abstract class File(
         }
         if (resource == R.string.file_type_none && label.matches(Regex(".+\\..+"))) {
             val extension = label.substringAfterLast(".").toUpperCase(Locale.getDefault())
+            if (extension == "kvaesitso") return context.getString(R.string.file_type_launcherbackup, context.getString(R.string.app_name))
             return context.getString(R.string.file_type_generic, extension)
         }
         return context.getString(resource)
