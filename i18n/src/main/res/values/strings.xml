@@ -228,7 +228,7 @@
     <string name="easter_egg_text">Well, you found me. Congratulations. Was it worth it\?</string>
     <!-- Close a dialog -->
     <string name="close">Close</string>
-    <string name="save">Saveg</string>
+    <string name="save">Save</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
     <string name="widget_action_adjust_height">Adjust height</string>
@@ -600,7 +600,6 @@
         <item quantity="one">Full in %1$s minute</item>
         <item quantity="other">Full in %1$s minutes</item>
     </plurals>
-
     <string name="backup_select_components">Select what to backup:</string>
     <string name="backup_not_included">Connected accounts and 3rd party app widgets will not be backed up.</string>
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
@@ -608,7 +607,6 @@
     <string name="backup_component_websearches">Web search shortcuts</string>
     <string name="backup_component_widgets">Built-in widgets</string>
     <string name="backup_complete">The backup has been completed.</string>
-
     <string name="restore_invalid_file">The selected file does not appear to be a backup. Are you sure you selected the right file?</string>
     <!-- %1$s: app name -->
     <string name="restore_incompatible_file">This backup has been created with a different version of %1$s and cannot be restored with this version.</string>
