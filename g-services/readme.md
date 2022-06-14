@@ -16,6 +16,10 @@ In order to use Google APIs, you need to setup a new project in the Google Cloud
 1. Enable the Drive API:
     1. Go to APIs & Services > Library and search for the Google Drive API.
     1. Enable this API for your project.
+1. Setup your OAuth consent screen
+    1. Go to APIs & Services > OAuth consent screen
+    1. On the Oauth consent screen page, fill out all the required fields
+    1. On the Scopes page, click add or remove scopes and add the following scopes: `userinfo.profile` and `drive.metadata.readonly`
 1. Create a new Oauth 2.0 client (you need to do this twice, for debug builds and for release builds)
     1. Go to APIs & Services > Credentials
     1. Click on Create Credentials > OAuth client ID
