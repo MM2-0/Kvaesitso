@@ -34,6 +34,14 @@ https://raw.githubusercontent.com/MM2-0/fdroid/main/fdroid/repo/?fingerprint=156
 You can also download the latest release from
 the [releases page](https://github.com/MM2-0/Kvaesitso/releases) and install it manually.
 
+### IzzyOnDroid F-Droid compatible repo
+
+If you enabled the IzzyOnDroid F-Droid compatible repo, you can get the app there. Just click the button below.
+
+[<img src="https://gitlab.com/IzzyOnDroid/repo/-/raw/master/assets/IzzyOnDroid.png"
+     alt="Get it on IzzyOnDroid"
+     height="70">](https://apt.izzysoft.de/fdroid/index/apk/net.exclaimindustries.geohashdroid)
+
 ## Report issues
 
 If you notice any bugs or issues create a new issue in
