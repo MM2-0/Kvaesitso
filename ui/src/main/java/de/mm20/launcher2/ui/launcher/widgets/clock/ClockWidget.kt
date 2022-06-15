@@ -14,13 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
@@ -31,15 +29,12 @@ fun ClockWidget(
 ) {
     val viewModel: ClockWidgetVM = viewModel()
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val time by viewModel.time.collectAsState(System.currentTimeMillis())
     val layout by viewModel.layout.observeAsState()
     val clockStyle by viewModel.clockStyle.observeAsState()
+    val time = LocalTime.current
 
-    LaunchedEffect(null) {
-        lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.onActive(context)
-        }
+    LaunchedEffect(time) {
+        viewModel.updateTime(time)
     }
 
     val partProvider by viewModel.getActivePart(LocalContext.current).collectAsState(null)
@@ -66,7 +61,7 @@ fun ClockWidget(
                             viewModel.launchClockApp(context)
                         }
                     ) {
-                        Clock(clockStyle, ClockWidgetLayout.Vertical, time)
+                        Clock(clockStyle, ClockWidgetLayout.Vertical)
                     }
 
                     DynamicZone(
@@ -114,7 +109,7 @@ fun ClockWidget(
                                 viewModel.launchClockApp(context)
                             }
                         ) {
-                            Clock(clockStyle, ClockWidgetLayout.Horizontal, time)
+                            Clock(clockStyle, ClockWidgetLayout.Horizontal)
                         }
                     }
                 }
@@ -128,8 +123,8 @@ fun ClockWidget(
 fun Clock(
     style: ClockStyle?,
     layout: ClockWidgetLayout,
-    time: Long
 ) {
+    val time = LocalTime.current
     when (style) {
         ClockStyle.DigitalClock1 -> DigitalClock1(time, layout)
         ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)

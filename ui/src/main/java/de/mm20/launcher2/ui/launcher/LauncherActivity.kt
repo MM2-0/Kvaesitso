@@ -35,6 +35,7 @@ import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
+import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
@@ -72,77 +73,79 @@ class LauncherActivity : BaseActivity() {
                 LocalSnackbarHostState provides snackbarHostState
             ) {
                 LauncherTheme {
-                    ProvideSettings {
-                        val lightStatus by viewModel.lightStatusBar.observeAsState(false)
-                        val lightNav by viewModel.lightNavBar.observeAsState(false)
-                        val hideStatus by viewModel.hideStatusBar.observeAsState(false)
-                        val hideNav by viewModel.hideNavBar.observeAsState(false)
-                        val dimBackground by viewModel.dimBackground.observeAsState(false)
-                        val layout by viewModel.layout.observeAsState(null)
+                    ProvideCurrentTime {
+                        ProvideSettings {
+                            val lightStatus by viewModel.lightStatusBar.observeAsState(false)
+                            val lightNav by viewModel.lightNavBar.observeAsState(false)
+                            val hideStatus by viewModel.hideStatusBar.observeAsState(false)
+                            val hideNav by viewModel.hideNavBar.observeAsState(false)
+                            val dimBackground by viewModel.dimBackground.observeAsState(false)
+                            val layout by viewModel.layout.observeAsState(null)
 
-                        val systemUiController = rememberSystemUiController()
+                            val systemUiController = rememberSystemUiController()
 
-                        val enterTransition = remember { mutableStateOf(1f) }
+                            val enterTransition = remember { mutableStateOf(1f) }
 
-                        LaunchedEffect(null) {
-                            homeTransitionManager
-                                .currentTransition
-                                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                                .collect {
-                                    enterTransition.value = 0f
-                                    enterTransition.animateTo(1f)
-                                }
-                        }
-
-                        LaunchedEffect(hideStatus) {
-                            systemUiController.isStatusBarVisible = !hideStatus
-                        }
-                        LaunchedEffect(hideNav) {
-                            systemUiController.isNavigationBarVisible = !hideNav
-                        }
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
-                            contentAlignment = Alignment.BottomCenter
-                        ) {
-                            NavBarEffects(modifier = Modifier.fillMaxSize())
-                            when (layout) {
-                                Settings.AppearanceSettings.Layout.PullDown -> {
-                                    PullDownScaffold(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .graphicsLayer {
-                                                scaleX = 0.5f + enterTransition.value * 0.5f
-                                                scaleY = 0.5f + enterTransition.value * 0.5f
-                                                alpha = enterTransition.value
-                                            },
-                                        darkStatusBarIcons = lightStatus,
-                                        darkNavBarIcons = lightNav,
-                                    )
-                                }
-                                Settings.AppearanceSettings.Layout.Pager -> {
-                                    PagerScaffold(
-                                        modifier = Modifier
-                                            .fillMaxSize()
-                                            .graphicsLayer {
-                                                scaleX = enterTransition.value
-                                                scaleY = enterTransition.value
-                                                alpha = enterTransition.value
-                                            },
-                                        darkStatusBarIcons = lightStatus,
-                                        darkNavBarIcons = lightNav,
-                                    )
-                                }
-                                else -> {}
+                            LaunchedEffect(null) {
+                                homeTransitionManager
+                                    .currentTransition
+                                    .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                                    .collect {
+                                        enterTransition.value = 0f
+                                        enterTransition.animateTo(1f)
+                                    }
                             }
-                            SnackbarHost(
-                                snackbarHostState,
+
+                            LaunchedEffect(hideStatus) {
+                                systemUiController.isStatusBarVisible = !hideStatus
+                            }
+                            LaunchedEffect(hideNav) {
+                                systemUiController.isNavigationBarVisible = !hideNav
+                            }
+
+                            Box(
                                 modifier = Modifier
-                                    .navigationBarsPadding()
-                                    .imePadding()
-                            )
+                                    .fillMaxSize()
+                                    .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                NavBarEffects(modifier = Modifier.fillMaxSize())
+                                when (layout) {
+                                    Settings.AppearanceSettings.Layout.PullDown -> {
+                                        PullDownScaffold(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .graphicsLayer {
+                                                    scaleX = 0.5f + enterTransition.value * 0.5f
+                                                    scaleY = 0.5f + enterTransition.value * 0.5f
+                                                    alpha = enterTransition.value
+                                                },
+                                            darkStatusBarIcons = lightStatus,
+                                            darkNavBarIcons = lightNav,
+                                        )
+                                    }
+                                    Settings.AppearanceSettings.Layout.Pager -> {
+                                        PagerScaffold(
+                                            modifier = Modifier
+                                                .fillMaxSize()
+                                                .graphicsLayer {
+                                                    scaleX = enterTransition.value
+                                                    scaleY = enterTransition.value
+                                                    alpha = enterTransition.value
+                                                },
+                                            darkStatusBarIcons = lightStatus,
+                                            darkNavBarIcons = lightNav,
+                                        )
+                                    }
+                                    else -> {}
+                                }
+                                SnackbarHost(
+                                    snackbarHostState,
+                                    modifier = Modifier
+                                        .navigationBarsPadding()
+                                        .imePadding()
+                                )
+                            }
                         }
                     }
                 }

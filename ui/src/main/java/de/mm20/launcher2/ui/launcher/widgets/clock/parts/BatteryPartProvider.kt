@@ -53,13 +53,6 @@ class BatteryPartProvider : PartProvider {
         }
     }
 
-    private val time = MutableStateFlow(System.currentTimeMillis())
-
-    override fun setTime(time: Long) {
-        super.setTime(time)
-        this.time.value = time
-    }
-
     @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {

@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -29,15 +30,9 @@ class DatePartProvider: PartProvider {
         emit(1)
     }
 
-    private val time = MutableStateFlow(System.currentTimeMillis())
-
-    override fun setTime(time: Long) {
-        this.time.value = time
-    }
-
     @Composable
     override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {
-        val time by this.time.collectAsState(System.currentTimeMillis())
+        val time = LocalTime.current
         val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
         val context = LocalContext.current
         TextButton(

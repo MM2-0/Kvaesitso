@@ -67,23 +67,7 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     val layout = dataStore.data.map { it.clockWidget.layout }.asLiveData()
     val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }.asLiveData()
 
-    private fun getTime(context: Context): Flow<Long> = callbackFlow {
-        trySendBlocking(System.currentTimeMillis())
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                trySendBlocking(System.currentTimeMillis())
-            }
-        }
-        context.registerReceiver(receiver, IntentFilter().apply {
-            addAction(Intent.ACTION_TIME_TICK)
-            addAction(Intent.ACTION_TIME_CHANGED)
-        })
-        awaitClose {
-            context.unregisterReceiver(receiver)
-        }
-    }
-
-    private fun updatePartsTime(time: Long) {
+    fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }
     }
 
@@ -91,12 +75,5 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         context.tryStartActivity(Intent(AlarmClock.ACTION_SHOW_ALARMS).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         })
-    }
-
-    suspend fun onActive(context: Context) {
-        getTime(context).collectLatest {
-            time.value = it
-            updatePartsTime(it)
-        }
     }
 }

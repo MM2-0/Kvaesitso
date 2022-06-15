@@ -167,8 +167,7 @@ fun ClockStylePreference(
                     ) {
                         Clock(
                             style = styles[it],
-                            layout = layout,
-                            time = System.currentTimeMillis()
+                            layout = layout
                         )
                     }
                     HorizontalPagerIndicator(pagerState = pagerState)
