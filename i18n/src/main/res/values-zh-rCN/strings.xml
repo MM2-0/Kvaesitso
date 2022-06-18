@@ -406,9 +406,9 @@
     <string name="preference_hidden_items">隐藏搜索结果</string>
     <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>
     <string name="preference_screen_backup">备份&amp;恢复</string>
-    <string name="preference_screen_backup_summary">导出和导入日历数据</string>
+    <string name="preference_screen_backup_summary">导出和导入启动器数据</string>
     <string name="preference_backup">备份</string>
-    <string name="preference_backup_summary">导出设置和日历数据</string>
+    <string name="preference_backup_summary">导出设置和启动器数据</string>
     <string name="preference_restore">恢复</string>
     <string name="preference_restore_summary">导入以前创建的备份</string>
     <string name="backup_select_components">选择要备份的项目:</string>
@@ -425,4 +425,9 @@
     <string name="restore_select_components">选择要恢复的项目. 现有的数据将被覆盖!</string>
     <string name="restore_complete">备份已恢复.</string>
     <string name="weather_location_search_no_result">位置未找到.</string>
+    <string name="save">保存</string>
+    <string name="preference_cards_shape_rounded">圆角</string>
+    <string name="preference_cards_shape_cut">切角</string>
+    <string name="preference_cards_shape">形状</string>
+    <string name="file_type_launcherbackup">%1$s备份</string>
 </resources>
