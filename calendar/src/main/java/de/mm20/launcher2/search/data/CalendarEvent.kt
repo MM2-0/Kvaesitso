@@ -37,20 +37,15 @@ class CalendarEvent(
         return StaticLauncherIcon(
             foregroundLayer = TextLayer(
                 text = df.format(startTime),
-                color = Color.WHITE
+                color = color
             ),
-            backgroundLayer = ColorLayer(getDisplayColor())
+            backgroundLayer = ColorLayer(color)
         )
     }
 
     override fun getLaunchIntent(context: Context): Intent {
         val uri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id)
         return Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-    }
-
-    fun getDisplayColor(): Int {
-        val palette = TonalPalette.fromInt(color)
-        return palette.tone(70)
     }
 }
 

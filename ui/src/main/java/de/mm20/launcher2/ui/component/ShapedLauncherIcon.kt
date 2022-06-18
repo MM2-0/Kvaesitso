@@ -99,13 +99,13 @@ fun ShapedLauncherIcon(
                 IconLayer(
                     it.backgroundLayer,
                     size,
-                    colorTone = if (!LocalDarkTheme.current) 30 else 90,
+                    colorTone = if (LocalDarkTheme.current) 30 else 90,
                     MaterialTheme.colorScheme.primaryContainer
                 )
                 IconLayer(
                     it.foregroundLayer,
                     size,
-                    colorTone = if (!LocalDarkTheme.current) 90 else 10,
+                    colorTone = if (LocalDarkTheme.current) 90 else 10,
                     MaterialTheme.colorScheme.onPrimaryContainer
                 )
             }

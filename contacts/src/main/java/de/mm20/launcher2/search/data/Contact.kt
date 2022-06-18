@@ -43,8 +43,8 @@ class Contact(
             if (firstName.isNotEmpty()) firstName[0].toString() else "" + if (lastName.isNotEmpty()) lastName[0].toString() else ""
 
         return StaticLauncherIcon(
-            foregroundLayer = TextLayer(text = iconText, color = Color.WHITE),
-            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.blue))
+            foregroundLayer = TextLayer(text = iconText, color = 0xFF2364AA.toInt()),
+            backgroundLayer = ColorLayer(0xFF2364AA.toInt())
         )
     }
 
@@ -64,7 +64,7 @@ class Contact(
             foregroundLayer = StaticIconLayer(
                 icon = bmp.toDrawable(context.resources),
             ),
-            backgroundLayer = ColorLayer()
+            backgroundLayer = ColorLayer(0xFF2364AA.toInt())
         )
     }
 

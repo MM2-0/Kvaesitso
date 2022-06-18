@@ -54,11 +54,11 @@ class AppShortcut(
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                color = Color.WHITE,
+                color = 0xFF3DDA84.toInt(),
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
                 scale = 0.5f,
             ),
-            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.green)),
+            backgroundLayer = ColorLayer(0xFF3DDA84.toInt()),
         )
     }
 

@@ -53,7 +53,7 @@ abstract class File(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, resId)!!,
                 scale = 0.5f,
-                color = Color.WHITE
+                color = ContextCompat.getColor(context, bgColor)
             ),
             backgroundLayer = ColorLayer(ContextCompat.getColor(context, bgColor))
         )

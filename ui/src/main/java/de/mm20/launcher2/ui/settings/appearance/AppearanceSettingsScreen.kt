@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -374,7 +375,11 @@ fun IconShapePreference(
                                             )!!,
                                             scale = 1.5f,
                                         ),
-                                        ColorLayer(LocalContext.current.getColor(R.color.ic_launcher_background))
+                                        backgroundLayer = StaticIconLayer(
+                                            icon = ColorDrawable(
+                                                LocalContext.current.getColor(R.color.ic_launcher_background)
+                                            )
+                                        )
                                     ),
                                     onClick = {
                                         onValueChanged(it)

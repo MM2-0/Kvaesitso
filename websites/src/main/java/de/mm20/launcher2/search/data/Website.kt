@@ -38,9 +38,9 @@ class Website(
             return StaticLauncherIcon(
                 foregroundLayer = StaticIconLayer(
                     icon = icon,
-                    scale = 0.7f,
+                    scale = 1f,
                 ),
-                backgroundLayer = ColorLayer(color)
+                backgroundLayer = TransparentLayer
             )
         } catch (e: ExecutionException) {
             return null
@@ -49,19 +49,21 @@ class Website(
     }
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        val color = if (color != 0) color else 0xFFF76F8E.toInt()
         if (label.isNotBlank()) {
             return StaticLauncherIcon(
-                foregroundLayer = TextLayer(text = label[0].toString(), color = Color.WHITE),
-                backgroundLayer = ColorLayer(Color.LTGRAY)
+                foregroundLayer = TextLayer(text = label[0].toString(), color = color),
+                backgroundLayer = ColorLayer(color)
             )
         }
 
         return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(
+            foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_website)!!,
                 scale = 0.5f,
+                color = color,
             ),
-            backgroundLayer = ColorLayer(if (color != 0) color else Color.LTGRAY)
+            backgroundLayer = ColorLayer(color)
         )
     }
 

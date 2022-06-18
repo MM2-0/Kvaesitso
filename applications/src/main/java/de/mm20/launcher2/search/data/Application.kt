@@ -40,9 +40,9 @@ abstract class Application(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
                 scale = 0.5f,
-                color = Color.WHITE,
+                color = 0xff3dda84.toInt(),
             ),
-            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.android_green))
+            backgroundLayer = ColorLayer(0xff3dda84.toInt())
         )
     }
 

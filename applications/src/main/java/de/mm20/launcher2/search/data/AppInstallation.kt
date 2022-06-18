@@ -3,7 +3,6 @@ package de.mm20.launcher2.search.data
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
-import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.BitmapDrawable
@@ -33,9 +32,9 @@ class AppInstallation(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
                 scale = 0.5f,
-                color = Color.WHITE
+                color = 0xFF757575.toInt()
             ),
-            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.grey))
+            backgroundLayer = ColorLayer(0xFF757575.toInt())
         )
     }
 
@@ -52,7 +51,7 @@ class AppInstallation(
             foregroundLayer = StaticIconLayer(
                 icon = foreground,
             ),
-            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.grey))
+            backgroundLayer = ColorLayer(0xFF757575.toInt())
         )
     }
 

@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.wikipedia.R
 
 class Wikipedia(
@@ -22,11 +23,12 @@ class Wikipedia(
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(
+            foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_wikipedia)!!,
-                scale = 1f
+                scale = 1f,
+                color = 0xFFC1C2C4.toInt(),
             ),
-            backgroundLayer = ColorLayer(0xFFF0F0F0.toInt())
+            backgroundLayer = ColorLayer(0xFFC1C2C4.toInt())
         )
     }
 
