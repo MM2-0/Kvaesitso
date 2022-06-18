@@ -210,12 +210,7 @@ message Settings {
     IconShape shape = 1;
     bool themed_icons = 2;
     string icon_pack = 3;
-    enum LegacyIconBackground {
-      Dynamic = 0;
-      None = 1;
-      White = 2;
-    }
-    LegacyIconBackground legacyIconBg = 4;
+    bool adaptify = 5;
   }
   IconSettings icons = 21;
 

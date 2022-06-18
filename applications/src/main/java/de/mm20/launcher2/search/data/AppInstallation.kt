@@ -3,24 +3,22 @@ package de.mm20.launcher2.search.data
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
+import android.graphics.Color
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.applications.R
-import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
+import de.mm20.launcher2.icons.*
 
 class AppInstallation(
-        val session: PackageInstaller.SessionInfo
+    val session: PackageInstaller.SessionInfo
 ) : Application(
-        label = session.appLabel?.toString() ?: "",
-        `package` = session.appPackageName ?: "",
-        activity = "",
-        flags = 0,
-        version = null
+    label = session.appLabel?.toString() ?: "",
+    `package` = session.appPackageName ?: "",
+    activity = "",
+    flags = 0,
+    version = null
 ) {
 
     override val key: String
@@ -30,22 +28,31 @@ class AppInstallation(
         return session.createDetailsIntent()
     }
 
-    override fun getPlaceholderIcon(context: Context): LauncherIcon {
-        return LauncherIcon(
-                foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-                background = ColorDrawable(ContextCompat.getColor(context, R.color.grey)),
-                foregroundScale = 0.5f)
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        return StaticLauncherIcon(
+            foregroundLayer = TintedIconLayer(
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+                scale = 0.5f,
+                color = Color.WHITE
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.grey))
+        )
     }
 
-    override suspend fun loadIcon(context: Context, size: Int, legacyIconBackground: LegacyIconBackground): LauncherIcon? {
+    override suspend fun loadIcon(
+        context: Context,
+        size: Int,
+    ): LauncherIcon {
         val icon = session.appIcon ?: return getPlaceholderIcon(context)
         val foreground = BitmapDrawable(context.resources, icon)
         foreground.colorFilter = ColorMatrixColorFilter(ColorMatrix().apply {
             setSaturation(0f)
         })
-        return LauncherIcon(
-                foreground = foreground,
-                background = ColorDrawable(ContextCompat.getColor(context, R.color.grey))
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = foreground,
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.grey))
         )
     }
 

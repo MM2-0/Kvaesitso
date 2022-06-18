@@ -1,14 +1,11 @@
 package de.mm20.launcher2.ui.component
 
+import android.graphics.*
 import android.graphics.Matrix
 import android.graphics.Path
-import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.combinedClickable
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,15 +22,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
+import de.mm20.launcher2.ui.base.LocalTime
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import palettes.TonalPalette
+import java.time.Instant
+import java.time.ZoneId
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -48,6 +56,25 @@ fun ShapedLauncherIcon(
     onLongClick: (() -> Unit)? = null,
     shape: Shape = LocalIconShape.current
 ) {
+
+    val time = LocalTime.current
+
+    var currentIcon by remember(icon) {
+        mutableStateOf(
+            when (icon) {
+                is DynamicLauncherIcon -> null
+                is StaticLauncherIcon -> icon
+                null -> null
+            }
+        )
+    }
+
+    if (icon is DynamicLauncherIcon) {
+        LaunchedEffect(time) {
+            currentIcon = icon.getIcon(time)
+        }
+    }
+
     Box(
         modifier = modifier
             .size(size)
@@ -56,7 +83,7 @@ fun ShapedLauncherIcon(
             modifier = Modifier
                 .fillMaxSize()
                 .graphicsLayer {
-                    clip = true
+                    clip = currentIcon?.backgroundLayer !is TransparentLayer
                     this.shape = shape
                 }
                 .combinedClickable(
@@ -68,45 +95,19 @@ fun ShapedLauncherIcon(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            if (icon != null) {
-
-                val fgScale = icon.foregroundScale
-                val bgScale = icon.backgroundScale
-
-                val themedFgColor = MaterialTheme.colorScheme.onPrimaryContainer
-                val themedBgColor = MaterialTheme.colorScheme.primaryContainer
-
-                val fg = remember(icon, icon.isThemeable, themedFgColor) {
-                    icon.foreground.also {
-                        if (icon.isThemeable) it.setTint(themedFgColor.toArgb())
-                    }
-                }
-                val bg = remember(icon, icon.isThemeable, themedBgColor) {
-                    icon.background?.also {
-                        if (icon.isThemeable) it.setTint(themedBgColor.toArgb())
-                    }
-                }
-
-                Canvas(modifier = Modifier.fillMaxSize()) {
-                    drawIntoCanvas {
-                        val paddingFg = (size * (1 - fgScale) * 0.5f).toPx()
-                        val paddingBg = (size * (1 - bgScale) * 0.5f).toPx()
-                        bg?.setBounds(
-                            paddingBg.toInt(),
-                            paddingBg.toInt(),
-                            (this.size.width - paddingBg).toInt(),
-                            (this.size.height - paddingBg).toInt()
-                        )
-                        bg?.draw(it.nativeCanvas)
-                        fg.setBounds(
-                            paddingFg.toInt(),
-                            paddingFg.toInt(),
-                            (this.size.width - paddingFg).toInt(),
-                            (this.size.height - paddingFg).toInt()
-                        )
-                        fg.draw(it.nativeCanvas)
-                    }
-                }
+            currentIcon?.let {
+                IconLayer(
+                    it.backgroundLayer,
+                    size,
+                    colorTone = if (!LocalDarkTheme.current) 30 else 90,
+                    MaterialTheme.colorScheme.primaryContainer
+                )
+                IconLayer(
+                    it.foregroundLayer,
+                    size,
+                    colorTone = if (!LocalDarkTheme.current) 90 else 10,
+                    MaterialTheme.colorScheme.onPrimaryContainer
+                )
             }
         }
         if (badge != null) {
@@ -138,12 +139,18 @@ fun ShapedLauncherIcon(
                     val number = badge.number
                     if (badgeIconRes != null) {
                         Image(
-                            modifier = Modifier.fillMaxSize().padding(size / 48),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(size / 48),
                             painter = painterResource(badgeIconRes),
                             contentDescription = null
                         )
                     } else if (badgeIcon != null) {
-                        Canvas(modifier = Modifier.fillMaxSize().padding(size / 48)) {
+                        Canvas(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(size / 48)
+                        ) {
                             badgeIcon.setBounds(
                                 0,
                                 0,
@@ -164,6 +171,172 @@ fun ShapedLauncherIcon(
                                 }
                             ),
                         )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun IconLayer(
+    layer: LauncherIconLayer,
+    size: Dp,
+    colorTone: Int,
+    defaultTintColor: Color
+) {
+    when (layer) {
+        is ClockLayer -> {
+            ClockLayer(layer.sublayers, scale = layer.scale, tintColor = null)
+        }
+        is TintedClockLayer -> {
+            ClockLayer(
+                layer.sublayers,
+                scale = layer.scale,
+                tintColor = if (layer.color == 0) defaultTintColor
+                else Color(getTone(layer.color, colorTone))
+            )
+
+        }
+        is ColorLayer -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(
+                        if (layer.color == 0) {
+                            defaultTintColor
+                        } else {
+                            Color(getTone(layer.color, colorTone))
+                        }
+                    )
+            )
+        }
+        is StaticIconLayer -> {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                withTransform({
+                    this.scale(layer.scale)
+                }) {
+                    drawIntoCanvas {
+                        layer.icon.bounds = this.size.toRect().toAndroidRect()
+                        layer.icon.draw(it.nativeCanvas)
+                    }
+                }
+            }
+        }
+        is TextLayer -> {
+            Text(
+                text = layer.text,
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontSize = 20.sp * (size / 48.dp)
+                ),
+                color = if (layer.color == 0) {
+                    defaultTintColor
+                } else {
+                    Color(getTone(layer.color, colorTone))
+                },
+            )
+        }
+        is TintedIconLayer -> {
+            val color =
+                if (layer.color == 0) defaultTintColor.toArgb()
+                else getTone(layer.color, colorTone)
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                withTransform({
+                    this.scale(layer.scale)
+                }) {
+                    drawIntoCanvas {
+                        layer.icon.bounds = this.size.toRect().toAndroidRect()
+                        layer.icon.drawWithColorFilter(
+                            it.nativeCanvas,
+                            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+                        )
+                    }
+                }
+            }
+        }
+        is TransparentLayer -> {}
+    }
+}
+
+private fun getTone(argb: Int, tone: Int): Int {
+    return TonalPalette
+        .fromInt(argb)
+        .tone(tone)
+}
+
+@Composable
+private fun ClockLayer(
+    sublayers: List<ClockSublayer>,
+    scale: Float,
+    tintColor: Color?,
+) {
+    val time = remember {
+        Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
+    }
+    val transition = rememberInfiniteTransition()
+
+    val minute by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 60f,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(durationMillis = 60 * 60 * 1000, easing = LinearEasing),
+            initialStartOffset = StartOffset(
+                offsetMillis = time.minute * 60 * 1000 + time.second * 1000,
+                offsetType = StartOffsetType.FastForward
+            )
+        )
+    )
+
+    val hour by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 12f,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(durationMillis = 12 * 60 * 60 * 1000, easing = LinearEasing),
+            initialStartOffset = StartOffset(
+                offsetMillis = (time.hour % 12) * 60 * 60 * 1000 + time.minute * 60 * 1000 + time.second * 1000,
+                offsetType = StartOffsetType.FastForward
+            )
+        )
+    )
+
+
+    val second by transition.animateFloat(
+        initialValue = 0f,
+        targetValue = 60f,
+        animationSpec = InfiniteRepeatableSpec(
+            animation = tween(durationMillis = 60000, easing = LinearEasing),
+            initialStartOffset = StartOffset(
+                offsetMillis = time.second * 1000,
+                offsetType = StartOffsetType.FastForward
+            )
+        )
+    )
+
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        val colorFilter = tintColor?.let {
+            PorterDuffColorFilter(tintColor.toArgb(), PorterDuff.Mode.SRC_IN)
+        }
+        withTransform({
+            this.scale(scale)
+        }) {
+            for (sublayer in sublayers) {
+                withTransform({
+                    when (sublayer.role) {
+                        ClockSublayerRole.Hour -> {
+                            rotate(hour / 12f * 360f)
+                        }
+                        ClockSublayerRole.Minute -> {
+                            rotate(minute / 60f * 360f)
+                        }
+                        ClockSublayerRole.Second -> {
+                            rotate(second / 60f * 360f)
+                        }
+                        ClockSublayerRole.Static -> {}
+                    }
+                }) {
+                    drawIntoCanvas {
+                        sublayer.drawable.bounds = this.size.toRect().toAndroidRect()
+                        sublayer.drawable.drawWithColorFilter(it.nativeCanvas, colorFilter)
                     }
                 }
             }

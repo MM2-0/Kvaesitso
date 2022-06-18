@@ -1,7 +1,7 @@
 package de.mm20.launcher2.icons.providers
 
 import android.content.Context
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.search.data.Searchable
 
 internal class ThemedPlaceholderIconProvider(
@@ -11,13 +11,30 @@ internal class ThemedPlaceholderIconProvider(
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon {
         val icon = searchable.getPlaceholderIcon(context)
 
-        return LauncherIcon(
-            foreground = icon.foreground,
-            foregroundScale = icon.foregroundScale,
-            background = icon.background,
-            backgroundScale = icon.backgroundScale,
-            isThemeable = true
+        return StaticLauncherIcon(
+            foregroundLayer = asThemed(icon.foregroundLayer),
+            backgroundLayer = asThemed(icon.backgroundLayer),
         )
+    }
+
+    private fun asThemed(layer: LauncherIconLayer): LauncherIconLayer {
+        return when (layer) {
+            is ClockLayer -> TintedClockLayer(
+                scale = layer.scale,
+                color = 0,
+                sublayers = layer.sublayers,
+            )
+            is ColorLayer -> layer.copy(color = 0)
+            is StaticIconLayer -> TintedIconLayer(
+                icon = layer.icon,
+                color = 0,
+                scale = layer.scale,
+            )
+            is TextLayer -> layer.copy(color = 0)
+            is TintedIconLayer -> layer.copy(color = 0)
+            is TintedClockLayer -> return layer.copy(color = 0)
+            is TransparentLayer -> return layer
+        }
     }
 
 }

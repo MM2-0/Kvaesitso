@@ -4,12 +4,13 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.ColorDrawable
-import android.util.Log
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.applications.R
 import de.mm20.launcher2.compat.PackageManagerCompat
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TintedIconLayer
 import org.json.JSONObject
 
 abstract class Application(
@@ -34,11 +35,14 @@ abstract class Application(
         return intent
     }
 
-    override fun getPlaceholderIcon(context: Context): LauncherIcon {
-        return LauncherIcon(
-            foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-            background = ColorDrawable(ContextCompat.getColor(context, R.color.lightgreen)),
-            foregroundScale = 0.5f
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        return StaticLauncherIcon(
+            foregroundLayer = TintedIconLayer(
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+                scale = 0.5f,
+                color = Color.WHITE,
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.android_green))
         )
     }
 
@@ -56,7 +60,10 @@ abstract class Application(
         get() = "app://$`package`:$activity"
 
     companion object {
-        internal fun getStoreLinkForInstaller(installerPackage: String?, packageName: String?): StoreLink? {
+        internal fun getStoreLinkForInstaller(
+            installerPackage: String?,
+            packageName: String?
+        ): StoreLink? {
             if (packageName == null) return null
             return when (installerPackage) {
                 "de.amazon.mShop.android", "com.amazon.venezia" -> {

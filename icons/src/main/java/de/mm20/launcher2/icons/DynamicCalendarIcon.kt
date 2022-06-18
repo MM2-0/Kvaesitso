@@ -1,0 +1,66 @@
+package de.mm20.launcher2.icons
+
+import android.content.res.Resources
+import android.graphics.drawable.AdaptiveIconDrawable
+import androidx.core.content.res.ResourcesCompat
+import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
+import java.time.Instant
+import java.time.ZoneId
+
+internal class DynamicCalendarIcon(
+    val resources: Resources,
+    val resourceIds: IntArray,
+    val isThemed: Boolean = false,
+    private val transformations: List<LauncherIconTransformation> = emptyList(),
+) : DynamicLauncherIcon {
+
+    init {
+        if (resourceIds.size < 31) throw IllegalArgumentException("DynamicCalendarIcon resourceIds must at least have 31 items")
+    }
+
+    override suspend fun getIcon(time: Long): StaticLauncherIcon {
+        val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
+        val resId = resourceIds[day - 1]
+
+        val drawable = try {
+            ResourcesCompat.getDrawable(resources, resId, null)
+        } catch (e: Resources.NotFoundException) {
+            null
+        } ?: return StaticLauncherIcon(
+            foregroundLayer = TextLayer(day.toString()),
+            backgroundLayer = ColorLayer()
+        )
+
+        var icon = if (isThemed) {
+            StaticLauncherIcon(
+                foregroundLayer = TintedIconLayer(
+                    icon = drawable,
+                    scale = 0.5f,
+                ),
+                backgroundLayer = ColorLayer()
+            )
+        } else if (drawable is AdaptiveIconDrawable) {
+            StaticLauncherIcon(
+                foregroundLayer = StaticIconLayer(
+                    icon = drawable.foreground,
+                    scale = 1.5f
+                ),
+                backgroundLayer = StaticIconLayer(
+                    icon = drawable.background,
+                    scale = 1.5f
+                )
+            )
+        } else StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = drawable,
+                scale = 1f,
+            ),
+            backgroundLayer = TransparentLayer
+        )
+
+        for (transformation in transformations) {
+            icon = transformation.transform(icon)
+        }
+        return icon
+    }
+}

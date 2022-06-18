@@ -3,7 +3,7 @@ package de.mm20.launcher2.icons
 import android.content.ComponentName
 import de.mm20.launcher2.database.entities.IconEntity
 
-data class Icon(
+data class IconPackIcon(
         val type: String,
         val componentName: ComponentName?,
         val drawable: String?,

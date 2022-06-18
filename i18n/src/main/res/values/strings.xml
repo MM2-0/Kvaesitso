@@ -491,8 +491,8 @@
     <string name="preference_owncloud_signin_summary">Sign in to search your Owncloud server</string>
     <string name="preference_about_telegram">Telegram group</string>
     <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_legacy_icon_bg">Icon background</string>
-    <string name="preference_legacy_icon_bg_summary">Legacy icon style</string>
+    <string name="preference_enforce_icon_shape">Enforce shape</string>
+    <string name="preference_enforce_icon_shape_summary">Apply shape to all icons including those that would normally not support it</string>
     <string name="preference_category_license">License</string>
     <string name="preference_about_license">This app is free software.</string>
     <string name="preference_about_license_summary">Licensed under the GNU General Public License 3.0</string>

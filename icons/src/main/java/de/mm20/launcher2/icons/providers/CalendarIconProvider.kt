@@ -4,7 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.ColorDrawable
-import de.mm20.launcher2.icons.CalendarDynamicLauncherIcon
+import de.mm20.launcher2.icons.DynamicCalendarIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.search.data.Application
@@ -35,13 +35,9 @@ class CalendarIconProvider(val context: Context): IconProvider {
             drawableIds[i] = typedArray.getResourceId(i, 0)
         }
         typedArray.recycle()
-        return CalendarDynamicLauncherIcon(
-            foreground = ColorDrawable(0),
-            background = ColorDrawable(0),
-            foregroundScale = 1.5f,
-            backgroundScale = 1.5f,
-            packageName = component.packageName,
-            drawableIds = drawableIds
+        return DynamicCalendarIcon(
+            resources = resources,
+            resourceIds = drawableIds
         )
     }
 }

@@ -188,8 +188,6 @@
     <string name="weather_condition_heavyrainandthunder">Starkregen und Gewitter</string>
     <string name="weather_condition_wind">Wind</string>
     <string name="weather_condition_unknown">Unbekannt</string>
-    <string name="preference_legacy_icon_bg">Symbol-Hintergrund</string>
-    <string name="preference_legacy_icon_bg_summary">Stil von Legacy-Icons</string>
     <string name="easter_egg_1">Hier gibt es keine Easter Eggs, es sei denn Ihr hättet sie mitgebracht.</string>
     <string name="easter_egg_2">Bitte, hör auf, du verschwendest deine Zeit</string>
     <string name="easter_egg_3">Ich werde es nicht noch einmal sagen: hier sind definitiv keine Easter Eggs versteckt</string>

@@ -1,17 +1,12 @@
 package de.mm20.launcher2.ui.settings.appearance
 
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -24,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.airbnb.lottie.LottieProperty
 import com.airbnb.lottie.compose.*
@@ -31,7 +27,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
@@ -58,8 +56,8 @@ fun AppearanceSettingsScreen() {
                     title = stringResource(id = R.string.preference_layout),
                     summary = stringResource(id = R.string.preference_layout_summary),
                     value = layout, onValueChanged = {
-                    viewModel.setLayout(it)
-                })
+                        viewModel.setLayout(it)
+                    })
                 val theme by viewModel.theme.observeAsState()
                 ListPreference(
                     title = stringResource(id = R.string.preference_theme),
@@ -147,6 +145,15 @@ fun AppearanceSettingsScreen() {
                         viewModel.setIconShape(it)
                     }
                 )
+                val adaptifyLegacyIcons by viewModel.adaptifyLegacyIcons.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_enforce_icon_shape),
+                    summary = stringResource(R.string.preference_enforce_icon_shape_summary),
+                    value = adaptifyLegacyIcons == true,
+                    onValueChanged = {
+                        viewModel.setAdaptifyLegacyIcons(it)
+                    }
+                )
                 val themedIcons by viewModel.themedIcons.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_themed_icons),
@@ -175,17 +182,6 @@ fun AppearanceSettingsScreen() {
                     onValueChanged = {
                         if (it != null) viewModel.setIconPack(it)
                     }
-                )
-
-                val legacyIconBackground by viewModel.legacyIconBackground.observeAsState()
-                LegacyIconBackgroundPreference(
-                    title = stringResource(R.string.preference_legacy_icon_bg),
-                    summary = stringResource(R.string.preference_legacy_icon_bg_summary),
-                    value = legacyIconBackground,
-                    onValueChanged = {
-                        viewModel.setLegacyIconBackground(it)
-                    },
-                    iconShape = iconShape
                 )
             }
             PreferenceCategory(stringResource(R.string.preference_category_searchbar)) {
@@ -370,13 +366,15 @@ fun IconShapePreference(
                             ) {
                                 ShapedLauncherIcon(
                                     size = 48.dp,
-                                    icon = LauncherIcon(
-                                        foreground = AppCompatResources.getDrawable(
-                                            LocalContext.current,
-                                            R.mipmap.ic_launcher_foreground
-                                        )!!,
-                                        foregroundScale = 1.5f,
-                                        background = ColorDrawable(LocalContext.current.getColor(R.color.ic_launcher_background))
+                                    icon = StaticLauncherIcon(
+                                        foregroundLayer = StaticIconLayer(
+                                            icon = ContextCompat.getDrawable(
+                                                LocalContext.current,
+                                                R.mipmap.ic_launcher_foreground
+                                            )!!,
+                                            scale = 1.5f,
+                                        ),
+                                        ColorLayer(LocalContext.current.getColor(R.color.ic_launcher_background))
                                     ),
                                     onClick = {
                                         onValueChanged(it)
@@ -389,82 +387,6 @@ fun IconShapePreference(
                                     textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.labelMedium,
                                     modifier = Modifier.padding(top = 4.dp)
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun LegacyIconBackgroundPreference(
-    title: String,
-    summary: String? = null,
-    value: IconSettings.LegacyIconBackground?,
-    onValueChanged: (IconSettings.LegacyIconBackground) -> Unit,
-    iconShape: IconSettings.IconShape
-) {
-    var showDialog by remember { mutableStateOf(false) }
-    Preference(title = title, summary = summary, onClick = { showDialog = true })
-
-    if (showDialog && value != null) {
-        val colors = remember {
-            IconSettings.LegacyIconBackground.values()
-                .filter { it != IconSettings.LegacyIconBackground.UNRECOGNIZED }
-        }
-        Dialog(onDismissRequest = { showDialog = false }) {
-            Surface(
-                tonalElevation = 16.dp,
-                shadowElevation = 16.dp,
-                shape = MaterialTheme.shapes.extraLarge,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = title,
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.padding(
-                            start = 24.dp, end = 24.dp, top = 16.dp, bottom = 8.dp
-                        )
-                    )
-                    LazyVerticalGrid(
-                        columns = GridCells.Adaptive(96.dp),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
-                    ) {
-                        items(colors) {
-                            Column(
-                                modifier = Modifier
-                                    .padding(8.dp),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                ShapedLauncherIcon(
-                                    size = 48.dp,
-                                    icon = LauncherIcon(
-                                        foreground = AppCompatResources.getDrawable(
-                                            LocalContext.current,
-                                            R.mipmap.ic_launcher_foreground
-                                        )!!,
-                                        background = null,
-                                        autoGenerateBackgroundMode = when (it) {
-                                            IconSettings.LegacyIconBackground.Dynamic -> LauncherIcon.BACKGROUND_DYNAMIC
-                                            IconSettings.LegacyIconBackground.None -> LauncherIcon.BACKGROUND_NONE
-                                            else -> LauncherIcon.BACKGROUND_WHITE
-                                        }
-                                    ),
-                                    onClick = {
-                                        onValueChanged(it)
-                                        showDialog = false
-                                    }
                                 )
                             }
                         }

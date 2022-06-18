@@ -11,9 +11,8 @@ import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -45,7 +44,6 @@ class LauncherApp(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
-        legacyIconBackground: LegacyIconBackground
     ): LauncherIcon? {
         try {
             val icon =
@@ -54,17 +52,23 @@ class LauncherApp(
 
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
-                return LauncherIcon(
-                    foreground = icon.foreground ?: return null,
-                    background = icon.background,
-                    foregroundScale = 1.5f,
-                    backgroundScale = 1.5f
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = icon.foreground,
+                        scale = 1.5f,
+                    ),
+                    backgroundLayer = StaticIconLayer(
+                        icon = icon.background,
+                        scale = 1.5f,
+                    )
                 )
             } else {
-                return LauncherIcon(
-                    foreground = icon,
-                    foregroundScale = 0.7f,
-                    autoGenerateBackgroundMode = legacyIconBackground.number
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = icon,
+                        scale = 1f,
+                    ),
+                    backgroundLayer = TransparentLayer
                 )
             }
         } catch (e: PackageManager.NameNotFoundException) {

@@ -128,7 +128,7 @@ fun createFactorySettings(context: Context): Settings {
         )
         .setIcons(
             Settings.IconSettings.newBuilder()
-                .setLegacyIconBg(Settings.IconSettings.LegacyIconBackground.Dynamic)
+                .setAdaptify(true)
                 .setShape(Settings.IconSettings.IconShape.PlatformDefault)
                 .setThemedIcons(false)
                 .setIconPack("")

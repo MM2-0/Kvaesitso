@@ -15,10 +15,12 @@ import android.util.Size
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.files.R
+import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -43,7 +45,6 @@ open class LocalFile(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
-        legacyIconBackground: LegacyIconBackground
     ): LauncherIcon? {
         if (!JavaIOFile(path).exists()) return null
         when {
@@ -55,9 +56,12 @@ open class LocalFile(
                     )
                 } ?: return null
 
-                return LauncherIcon(
-                    foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = legacyIconBackground.number
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = BitmapDrawable(context.resources, thumbnail),
+                        scale = 1f,
+                    ),
+                    backgroundLayer = ColorLayer()
                 )
             }
             mimeType.startsWith("video/") -> {
@@ -67,9 +71,13 @@ open class LocalFile(
                         Size(size, size)
                     )
                 } ?: return null
-                return LauncherIcon(
-                    foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = legacyIconBackground.number
+
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = BitmapDrawable(context.resources, thumbnail),
+                        scale = 1f,
+                    ),
+                    backgroundLayer = ColorLayer()
                 )
             }
             mimeType.startsWith("audio/") -> {
@@ -94,9 +102,13 @@ open class LocalFile(
 
                 }
                 thumbnail ?: return null
-                return LauncherIcon(
-                    foreground = BitmapDrawable(context.resources, thumbnail),
-                    autoGenerateBackgroundMode = legacyIconBackground.number
+
+                return StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = BitmapDrawable(context.resources, thumbnail),
+                        scale = 1f,
+                    ),
+                    backgroundLayer = ColorLayer()
                 )
 
             }
@@ -107,18 +119,24 @@ open class LocalFile(
                 } ?: return null
                 when {
                     icon is AdaptiveIconDrawable -> {
-                        return LauncherIcon(
-                            foreground = icon.foreground,
-                            background = icon.background,
-                            foregroundScale = 1.5f,
-                            backgroundScale = 1.5f
+                        return StaticLauncherIcon(
+                            foregroundLayer = StaticIconLayer(
+                                icon = icon.foreground,
+                                scale = 1.5f,
+                            ),
+                            backgroundLayer = StaticIconLayer(
+                                icon = icon.background,
+                                scale = 1.5f,
+                            )
                         )
                     }
                     else -> {
-                        return LauncherIcon(
-                            foreground = icon,
-                            foregroundScale = 0.7f,
-                            autoGenerateBackgroundMode = legacyIconBackground.number
+                        return StaticLauncherIcon(
+                            foregroundLayer = StaticIconLayer(
+                                icon = icon,
+                                scale = 0.7f,
+                            ),
+                            backgroundLayer = ColorLayer()
                         )
                     }
                 }

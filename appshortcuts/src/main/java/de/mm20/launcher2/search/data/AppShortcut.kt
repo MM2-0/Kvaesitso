@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
+import android.graphics.Color
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,9 +12,8 @@ import android.os.Process
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.R
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -51,18 +51,20 @@ class AppShortcut(
         return true
     }
 
-    override fun getPlaceholderIcon(context: Context): LauncherIcon {
-        return LauncherIcon(
-            foreground = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-            background = ColorDrawable(ContextCompat.getColor(context, R.color.green)),
-            foregroundScale = 0.5f
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        return StaticLauncherIcon(
+            foregroundLayer = TintedIconLayer(
+                color = Color.WHITE,
+                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
+                scale = 0.5f,
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.green)),
         )
     }
 
     override suspend fun loadIcon(
         context: Context,
         size: Int,
-        legacyIconBackground: LegacyIconBackground
     ): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
@@ -72,17 +74,23 @@ class AppShortcut(
             )
         } ?: return null
         if (icon is AdaptiveIconDrawable) {
-            return LauncherIcon(
-                foreground = icon.foreground,
-                background = icon.background,
-                foregroundScale = 1.5f,
-                backgroundScale = 1.5f
+            return StaticLauncherIcon(
+                foregroundLayer = StaticIconLayer(
+                    icon = icon.foreground,
+                    scale = 1.5f,
+                ),
+                backgroundLayer = StaticIconLayer(
+                    icon = icon.background,
+                    scale = 1.5f,
+                )
             )
         }
-        return LauncherIcon(
-            foreground = icon,
-            foregroundScale = 1f,
-            autoGenerateBackgroundMode = legacyIconBackground.number
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = icon,
+                scale = 1f
+            ),
+            backgroundLayer = TransparentLayer
         )
     }
 }

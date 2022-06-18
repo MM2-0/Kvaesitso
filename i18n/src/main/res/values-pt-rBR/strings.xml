@@ -294,7 +294,6 @@
     <string name="preference_category_services_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin_summary">Autenticar para pesquisar no seu servidor Owncloud</string>
     <string name="preference_about_fdroid">Repositório F-Droid</string>
-    <string name="preference_legacy_icon_bg">Fundo do ícone</string>
     <string name="preference_category_license">Licença</string>
     <string name="preference_about_license">Este aplicativo é um software livre.</string>
     <string name="preference_about_license_summary">Licenciado sob a GNU General Public License 3.0</string>

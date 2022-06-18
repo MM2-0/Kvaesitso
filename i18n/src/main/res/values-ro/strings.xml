@@ -278,8 +278,6 @@
     <string name="preference_owncloud_signin_summary">Conectează-te pentru a căuta în serverul tău Owncloud</string>
     <string name="preference_about_telegram">Grup Telegram</string>
     <string name="preference_about_fdroid">Repository F-Droid</string>
-    <string name="preference_legacy_icon_bg">Fundal pictogramă</string>
-    <string name="preference_legacy_icon_bg_summary">Stilul pictogramei clasice</string>
     <string name="preference_category_license">Licență</string>
     <string name="preference_about_license">Această aplicație este un software gratuit.</string>
     <string name="preference_category_grid">Grilă</string>

@@ -9,7 +9,6 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -108,14 +107,14 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val legacyIconBackground = dataStore.data.map { it.icons.legacyIconBg }.asLiveData()
-    fun setLegacyIconBackground(legacyIconBackground: LegacyIconBackground) {
+    val adaptifyLegacyIcons = dataStore.data.map { it.icons.adaptify }.asLiveData()
+    fun setAdaptifyLegacyIcons(adaptify: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
                     .setIcons(
                         it.icons.toBuilder()
-                            .setLegacyIconBg(legacyIconBackground)
+                            .setAdaptify(adaptify)
                     )
                     .build()
             }

@@ -173,8 +173,6 @@
     <string name="shortcut_summary">Par %1$s</string>
     <string name="installation_in_progress">Installation en cours… (%1$s)</string>
     <string name="error_activity_not_found">Impossible d\'ouvrir %1$s</string>
-    <string name="preference_legacy_icon_bg">Arrière-plan de l\'icône</string>
-    <string name="preference_legacy_icon_bg_summary">Style d\'icône legacy</string>
     <!-- Easter egg preference toasts -->
     <string name="easter_egg_1">Il n\'y a pas d\'easter egg ici, à moins que vous ne l\'ayez amené avec vous.</string>
     <string name="easter_egg_2">Par pitié, arrêtez, vous perdez votre temps</string>

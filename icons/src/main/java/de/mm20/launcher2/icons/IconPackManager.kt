@@ -124,7 +124,7 @@ class UpdateIconPacksWorker(val context: Context) {
                 parser.setInput(inStream)
             }
 
-            val icons = mutableListOf<Icon>()
+            val icons = mutableListOf<IconPackIcon>()
             val iconDao = AppDatabase.getInstance(context).iconDao()
 
             loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
@@ -143,7 +143,7 @@ class UpdateIconPacksWorker(val context: Context) {
                             )
                         )
                             ?: continue@loop
-                        val icon = Icon(
+                        val icon = IconPackIcon(
                             componentName = componentName,
                             drawable = drawable,
                             iconPack = pkgName,
@@ -164,7 +164,7 @@ class UpdateIconPacksWorker(val context: Context) {
                         )
                             ?: continue@loop
 
-                        val icon = Icon(
+                        val icon = IconPackIcon(
                             componentName = componentName,
                             drawable = drawable,
                             iconPack = pkgName,
@@ -176,7 +176,7 @@ class UpdateIconPacksWorker(val context: Context) {
                         for (i in 0 until parser.attributeCount) {
                             if (parser.getAttributeName(i).startsWith("img")) {
                                 val drawable = parser.getAttributeValue(i)
-                                val icon = Icon(
+                                val icon = IconPackIcon(
                                     componentName = null,
                                     drawable = drawable,
                                     iconPack = pkgName,
@@ -190,7 +190,7 @@ class UpdateIconPacksWorker(val context: Context) {
                         for (i in 0 until parser.attributeCount) {
                             if (parser.getAttributeName(i).startsWith("img")) {
                                 val drawable = parser.getAttributeValue(i)
-                                val icon = Icon(
+                                val icon = IconPackIcon(
                                     componentName = null,
                                     drawable = drawable,
                                     iconPack = pkgName,
@@ -204,7 +204,7 @@ class UpdateIconPacksWorker(val context: Context) {
                         for (i in 0 until parser.attributeCount) {
                             if (parser.getAttributeName(i).startsWith("img")) {
                                 val drawable = parser.getAttributeValue(i)
-                                val icon = Icon(
+                                val icon = IconPackIcon(
                                     componentName = null,
                                     drawable = drawable,
                                     iconPack = pkgName,
@@ -246,7 +246,7 @@ class UpdateIconPacksWorker(val context: Context) {
                 iconDao.deleteIcons(packageName)
                 return
             }
-            val icons = mutableListOf<Icon>()
+            val icons = mutableListOf<IconPackIcon>()
             val parser = resources.getXml(resId)
             loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
                 if (parser.eventType != XmlPullParser.START_TAG) continue
@@ -256,7 +256,7 @@ class UpdateIconPacksWorker(val context: Context) {
                             parser.getAttributeResourceValue(null, "drawable", 0).toString()
                         val pkg = parser.getAttributeValue(null, "package")
                         val componentName = ComponentName(pkg, pkg)
-                        val icon = Icon(
+                        val icon = IconPackIcon(
                             drawable = drawable,
                             componentName = componentName,
                             iconPack = packageName,

@@ -196,7 +196,6 @@
     <string name="preference_owncloud_signin">Zaloguj się do Owncloud</string>
     <string name="preference_about_telegram">Grupa Telegram</string>
     <string name="preference_about_fdroid">Repozytorium F-Droid</string>
-    <string name="preference_legacy_icon_bg">Tło ikon</string>
     <string name="preference_owncloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Owncloud</string>
     <string name="preference_about_license">Ta aplikacja jest wolnym oprogramowaniem.</string>
     <string name="preference_category_grid">Siatka</string>
@@ -212,7 +211,6 @@
     <string name="preference_clockwidget_layout">Układ</string>
     <string name="preference_clockwidget_layout_vertical">Pionowy</string>
     <string name="preference_clockwidget_layout_horizontal">Poziomy</string>
-    <string name="preference_legacy_icon_bg_summary">Przestarzały styl ikon</string>
     <string name="preference_clock_widget_style_summary">Wybierz typ zegara</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Pokaż aktualną datę</string>

@@ -294,8 +294,6 @@
     <string name="preference_owncloud_signin_summary">登陆以查找你的Owncloud服务</string>
     <string name="preference_about_telegram">Telegram群组</string>
     <string name="preference_about_fdroid">F-Droid repository</string>
-    <string name="preference_legacy_icon_bg">图标背景</string>
-    <string name="preference_legacy_icon_bg_summary">经典图标风格</string>
     <string name="preference_category_license">许可证</string>
     <string name="preference_about_license_summary">根据 GNU 通用公共许可证 3.0 授权</string>
     <string name="preference_category_grid">网格</string>

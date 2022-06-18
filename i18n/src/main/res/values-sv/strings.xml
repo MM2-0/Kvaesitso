@@ -260,8 +260,6 @@
     <string name="preference_owncloud_signin">Logga in på Owncloud</string>
     <string name="preference_about_telegram">Telegram-grupp</string>
     <string name="preference_about_fdroid">F-Droid-kodförråd</string>
-    <string name="preference_legacy_icon_bg">Ikonbakgrund</string>
-    <string name="preference_legacy_icon_bg_summary">Äldre ikonstil</string>
     <string name="preference_category_license">Licens</string>
     <string name="preference_about_license">Denna app är fri programvara.</string>
     <string name="preference_about_license_summary">Licensierad under GNU General Public License 3.0</string>

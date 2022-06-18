@@ -9,13 +9,11 @@ import android.graphics.*
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.icons.CalendarDynamicLauncherIcon
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.randomElementOrNull
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.data.LauncherApp
@@ -24,9 +22,8 @@ import kotlin.math.roundToInt
 
 class IconPackIconProvider(
     private val context: Context,
-    private val iconPack: String,
-    private val legacyIconBackground: Settings.IconSettings.LegacyIconBackground
-    ): IconProvider {
+    private val iconPack: String
+): IconProvider {
     override suspend fun getIcon(searchable: Searchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
         val res = try {
@@ -49,25 +46,31 @@ class IconPackIconProvider(
         val drawable = ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
         return when {
             drawable is AdaptiveIconDrawable -> {
-                LauncherIcon(
-                    foreground = drawable.foreground,
-                    background = drawable.background,
-                    foregroundScale = 1.5f,
-                    backgroundScale = 1.5f
+                StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = drawable.foreground,
+                        scale = 1.5f
+                    ),
+                    backgroundLayer = StaticIconLayer(
+                        icon = drawable.background,
+                        scale = 1.5f
+                    )
                 )
             }
             else -> {
-                LauncherIcon(
-                    foreground = drawable,
-                    foregroundScale = getScale(),
-                    autoGenerateBackgroundMode = legacyIconBackground.number
+                StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = drawable,
+                        scale = getScale()
+                    ),
+                    backgroundLayer = TransparentLayer
                 )
             }
         }
     }
 
     private fun getScale(): Float {
-        return 0.7f
+        return 1f
     }
 
     private suspend fun generateIcon(
@@ -147,10 +150,12 @@ class IconPackIconProvider(
             }
         }
 
-        return LauncherIcon(
-            foreground = BitmapDrawable(context.resources, bitmap),
-            foregroundScale = getScale(),
-            autoGenerateBackgroundMode = legacyIconBackground.number
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = BitmapDrawable(context.resources, bitmap),
+                scale = getScale(),
+            ),
+            backgroundLayer = TransparentLayer
         )
     }
 
@@ -180,7 +185,7 @@ class IconPackIconProvider(
     private fun getIconPackCalendarIcon(
         context: Context,
         baseIconName: String
-    ): CalendarDynamicLauncherIcon? {
+    ): DynamicCalendarIcon? {
         val resources = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -192,13 +197,9 @@ class IconPackIconProvider(
             if (id == 0) return null
             id
         }.toIntArray()
-        return CalendarDynamicLauncherIcon(
-            foreground = ColorDrawable(0),
-            background = ColorDrawable(0),
-            foregroundScale = 1.5f,
-            backgroundScale = 1.5f,
-            packageName = iconPack,
-            drawableIds = drawableIds,
+        return DynamicCalendarIcon(
+            resources = resources,
+            resourceIds = drawableIds
         )
     }
 }

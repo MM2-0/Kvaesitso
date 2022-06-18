@@ -1,10 +1,12 @@
 package de.mm20.launcher2.search.data
 
 import android.content.Context
-import android.graphics.drawable.ColorDrawable
+import android.graphics.Color
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TintedIconLayer
 import java.util.*
 
 abstract class File(
@@ -19,7 +21,7 @@ abstract class File(
 
     open val providerIconRes: Int? = null
 
-    override fun getPlaceholderIcon(context: Context): LauncherIcon {
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when {
             isDirectory -> R.drawable.ic_file_folder to R.color.lightblue
             mimeType.startsWith("image/") -> R.drawable.ic_file_picture to R.color.teal
@@ -47,17 +49,23 @@ abstract class File(
                 else -> R.drawable.ic_file_generic to R.color.bluegrey
             }
         }
-        return LauncherIcon(
-            foreground = context.getDrawable(resId)!!,
-            background = ColorDrawable(ContextCompat.getColor(context, bgColor)),
-            foregroundScale = 0.5f
+        return StaticLauncherIcon(
+            foregroundLayer = TintedIconLayer(
+                icon = ContextCompat.getDrawable(context, resId)!!,
+                scale = 0.5f,
+                color = Color.WHITE
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, bgColor))
         )
     }
 
     fun getFileType(context: Context): String {
         if (isDirectory) return context.getString(R.string.file_type_directory)
         if (mimeType == "application/vendor.de.mm20.launcher2.backup") {
-            return context.getString(R.string.file_type_launcherbackup, context.getString(R.string.app_name))
+            return context.getString(
+                R.string.file_type_launcherbackup,
+                context.getString(R.string.app_name)
+            )
         }
         val resource = when (mimeType) {
             "application/zip",
@@ -107,7 +115,10 @@ abstract class File(
         }
         if (resource == R.string.file_type_none && label.matches(Regex(".+\\..+"))) {
             val extension = label.substringAfterLast(".").toUpperCase(Locale.getDefault())
-            if (extension == "kvaesitso") return context.getString(R.string.file_type_launcherbackup, context.getString(R.string.app_name))
+            if (extension == "kvaesitso") return context.getString(
+                R.string.file_type_launcherbackup,
+                context.getString(R.string.app_name)
+            )
             return context.getString(R.string.file_type_generic, extension)
         }
         return context.getString(resource)

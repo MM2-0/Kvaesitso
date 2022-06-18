@@ -291,7 +291,6 @@
     <string name="preference_owncloud_signin_summary">Accedi per cercare sul tuo server Owncloud</string>
     <string name="preference_about_telegram">Gruppo Telegram</string>
     <string name="preference_about_fdroid">Repository F-Droid</string>
-    <string name="preference_legacy_icon_bg">Sfondo icona</string>
     <string name="preference_category_license">Licenza</string>
     <string name="preference_category_grid">Griglia</string>
     <string name="preference_grid_column_count">Numero di colonne</string>
@@ -303,7 +302,6 @@
     <string name="preference_screen_musicwidget">Musica</string>
     <string name="preference_screen_clockwidget">Orologio</string>
     <string name="preference_clockwidget_layout_vertical">Verticale</string>
-    <string name="preference_legacy_icon_bg_summary">Stile icone legacy</string>
     <string name="preference_about_license_summary">Concesso in licenza sotto la GNU General Public License 3.0</string>
     <string name="preference_clock_widget_style">Stile</string>
     <string name="preference_clock_widget_style_summary">Seleziona un orologio</string>

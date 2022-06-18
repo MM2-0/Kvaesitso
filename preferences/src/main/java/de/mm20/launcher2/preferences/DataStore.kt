@@ -19,12 +19,11 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     },
     corruptionHandler = ReplaceFileCorruptionHandler {
         CrashReporter.logException(it)
-        Log.d("MM20", "corruptionHandler")
         Settings.getDefaultInstance()
     }
 )
 
-internal const val SchemaVersion = 6
+internal const val SchemaVersion = 7
 
 internal fun getMigrations(context: Context): List<DataMigration<Settings>> {
     return listOf(
@@ -34,5 +33,6 @@ internal fun getMigrations(context: Context): List<DataMigration<Settings>> {
         Migration_3_4(),
         Migration_4_5(),
         Migration_5_6(),
+        Migration_6_7(),
     )
 }

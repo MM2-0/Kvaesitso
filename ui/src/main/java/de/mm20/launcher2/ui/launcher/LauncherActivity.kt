@@ -31,7 +31,6 @@ import com.afollestad.materialdialogs.callbacks.onDismiss
 import com.afollestad.materialdialogs.customview.customView
 import com.android.launcher3.GestureNavContract
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.icons.DynamicIconController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
@@ -45,7 +44,6 @@ import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
-import org.koin.android.ext.android.inject
 
 
 class LauncherActivity : BaseActivity() {
@@ -174,10 +172,6 @@ class LauncherActivity : BaseActivity() {
                 editFavoritesDialog = null
             }
         }
-
-        val dynamicIconController: DynamicIconController by inject()
-
-        lifecycle.addObserver(dynamicIconController)
     }
 
     override fun onAttachedToWindow() {

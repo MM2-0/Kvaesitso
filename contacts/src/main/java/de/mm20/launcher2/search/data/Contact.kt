@@ -4,20 +4,14 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
 import androidx.core.database.getStringOrNull
 import androidx.core.graphics.drawable.toDrawable
 import de.mm20.launcher2.contacts.R
-import de.mm20.launcher2.graphics.TextDrawable
-import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.asBitmap
-import de.mm20.launcher2.ktx.dp
-import de.mm20.launcher2.ktx.sp
-import de.mm20.launcher2.preferences.Settings.IconSettings.LegacyIconBackground
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URLEncoder
@@ -44,25 +38,19 @@ class Contact(
             return phones.union(emails).joinToString(separator = ", ") { it.label }
         }
 
-    override fun getPlaceholderIcon(context: Context): LauncherIcon {
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val iconText =
             if (firstName.isNotEmpty()) firstName[0].toString() else "" + if (lastName.isNotEmpty()) lastName[0].toString() else ""
-        return LauncherIcon(
-            foreground = TextDrawable(
-                iconText,
-                Color.WHITE,
-                fontSize = 20 * context.sp,
-                height = (48 * context.dp).toInt(),
-                typeface = Typeface.DEFAULT_BOLD
-            ),
-            background = ColorDrawable(ContextCompat.getColor(context, R.color.blue))
+
+        return StaticLauncherIcon(
+            foregroundLayer = TextLayer(text = iconText, color = Color.WHITE),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, R.color.blue))
         )
     }
 
     override suspend fun loadIcon(
         context: Context,
         size: Int,
-        legacyIconBackground: LegacyIconBackground
     ): LauncherIcon? {
         val contentResolver = context.contentResolver
         val bmp = withContext(Dispatchers.IO) {
@@ -71,10 +59,12 @@ class Contact(
             ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri, false)
                 ?.asBitmap()
         } ?: return null
-        return LauncherIcon(
-            foreground = bmp.toDrawable(context.resources),
-            background = null,
-            autoGenerateBackgroundMode = legacyIconBackground.number
+
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = bmp.toDrawable(context.resources),
+            ),
+            backgroundLayer = ColorLayer()
         )
     }
 
@@ -160,7 +150,10 @@ class Contact(
                         val data3 = dataCursor.getStringOrNull(data3Column)
                             ?: continue@loop
                         telegram.add(
-                            ContactInfo(data3.substringAfterLast(" "), "tg:openmessage?user_id=$data1")
+                            ContactInfo(
+                                data3.substringAfterLast(" "),
+                                "tg:openmessage?user_id=$data1"
+                            )
                         )
                     }
                     "vnd.android.cursor.item/vnd.com.whatsapp.profile" -> {
