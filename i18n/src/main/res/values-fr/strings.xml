@@ -200,7 +200,7 @@
     <string name="preference_suspended_badges">Applications suspendues</string>
     <string name="preference_cloud_badges">Badges du cloud</string>
     <string name="preference_cloud_badges_summary">Afficher un badge pour les fichiers stockés dans le cloud</string>
-    <string name="preference_shortcut_badges">Badges de raccourci</string>
+    <string name="preference_shortcut_badges">Badges de raccourcis</string>
     <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
     <string name="preference_icon_shape_platform">Suivre le système</string>
     <string name="preference_category_services_microsoft">Microsoft</string>
@@ -365,8 +365,8 @@
     <string name="preference_calendar_calendars">Calendriers</string>
     <string name="preference_calendar_hide_allday">Cacher les évènements qui durent toute la journée</string>
     <plurals name="preference_calendar_calendars_summary">
-        <item quantity="one">%1$d calendrier sélectioné</item>
-        <item quantity="other">%1$d calendriers sélectionés</item>
+        <item quantity="one">%1$d calendrier sélectionné</item>
+        <item quantity="other">%1$d calendriers sélectionnés</item>
     </plurals>
     <string name="preference_screen_buildinfo">Informations sur la version</string>
     <string name="preference_screen_buildinfo_summary">Plus d\'informations à propos de la version de cette application</string>
@@ -460,4 +460,7 @@
     <string name="preference_colors_auto_generate">Générer depuis la couleur primaire</string>
     <string name="preference_custom_colors_n2">Variant neutre</string>
     <string name="preference_custom_colors_a2">Secondaire</string>
+    <string name="save">Enregistrer</string>
+    <string name="file_type_launcherbackup">Sauvegarde %1$s</string>
+    <string name="weather_location_search_no_result">Emplacement inconnu.</string>
 </resources>
