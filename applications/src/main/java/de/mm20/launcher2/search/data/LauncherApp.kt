@@ -53,14 +53,18 @@ class LauncherApp(
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
                 return StaticLauncherIcon(
-                    foregroundLayer = StaticIconLayer(
-                        icon = icon.foreground,
-                        scale = 1.5f,
-                    ),
-                    backgroundLayer = StaticIconLayer(
-                        icon = icon.background,
-                        scale = 1.5f,
-                    )
+                    foregroundLayer = icon.foreground?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                    backgroundLayer = icon.background?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
                 )
             } else {
                 return StaticLauncherIcon(

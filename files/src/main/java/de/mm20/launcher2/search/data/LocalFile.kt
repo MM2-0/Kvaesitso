@@ -15,10 +15,7 @@ import android.util.Size
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.icons.ColorLayer
-import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.StaticIconLayer
-import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
 import kotlinx.coroutines.Dispatchers
@@ -120,14 +117,18 @@ open class LocalFile(
                 when {
                     icon is AdaptiveIconDrawable -> {
                         return StaticLauncherIcon(
-                            foregroundLayer = StaticIconLayer(
-                                icon = icon.foreground,
-                                scale = 1.5f,
-                            ),
-                            backgroundLayer = StaticIconLayer(
-                                icon = icon.background,
-                                scale = 1.5f,
-                            )
+                            foregroundLayer = icon.foreground?.let {
+                                StaticIconLayer(
+                                    icon = it,
+                                    scale = 1.5f,
+                                )
+                            } ?: TransparentLayer,
+                            backgroundLayer = icon.background?.let {
+                                StaticIconLayer(
+                                    icon = it,
+                                    scale = 1.5f,
+                                )
+                            } ?: TransparentLayer,
                         )
                     }
                     else -> {

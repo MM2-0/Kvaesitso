@@ -40,15 +40,19 @@ internal class DynamicCalendarIcon(
                 backgroundLayer = ColorLayer()
             )
         } else if (drawable is AdaptiveIconDrawable) {
-            StaticLauncherIcon(
-                foregroundLayer = StaticIconLayer(
-                    icon = drawable.foreground,
-                    scale = 1.5f
-                ),
-                backgroundLayer = StaticIconLayer(
-                    icon = drawable.background,
-                    scale = 1.5f
-                )
+            return StaticLauncherIcon(
+                foregroundLayer = drawable.foreground?.let {
+                    StaticIconLayer(
+                        icon = it,
+                        scale = 1.5f,
+                    )
+                } ?: TransparentLayer,
+                backgroundLayer = drawable.background?.let {
+                    StaticIconLayer(
+                        icon = it,
+                        scale = 1.5f,
+                    )
+                } ?: TransparentLayer,
             )
         } else StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(
