@@ -270,47 +270,43 @@ private fun ClockLayer(
     scale: Float,
     tintColor: Color?,
 ) {
-    val time = remember {
+    val transition = rememberInfiniteTransition()
+    val time = remember(LocalTime.current) {
         Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
     }
-    val transition = rememberInfiniteTransition()
 
-    val minute by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 60f,
-        animationSpec = InfiniteRepeatableSpec(
-            animation = tween(durationMillis = 60 * 60 * 1000, easing = LinearEasing),
-            initialStartOffset = StartOffset(
-                offsetMillis = time.minute * 60 * 1000 + time.second * 1000,
-                offsetType = StartOffsetType.FastForward
-            )
+    val second = remember {
+        Animatable(time.second.toFloat())
+    }
+
+    val minute = remember {
+        Animatable(time.minute.toFloat() + time.second.toFloat() / 60f)
+    }
+
+    val hour = remember {
+        Animatable(time.hour.toFloat() + time.minute.toFloat() / 60f)
+    }
+
+    LaunchedEffect(time) {
+        val h = time.hour.toFloat() + time.minute.toFloat() / 60f
+        hour.snapTo(h)
+        hour.animateTo(
+            h + 1f / 60f,
+            tween(60000, easing = LinearEasing)
         )
-    )
+    }
 
-    val hour by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 12f,
-        animationSpec = InfiniteRepeatableSpec(
-            animation = tween(durationMillis = 12 * 60 * 60 * 1000, easing = LinearEasing),
-            initialStartOffset = StartOffset(
-                offsetMillis = (time.hour % 12) * 60 * 60 * 1000 + time.minute * 60 * 1000 + time.second * 1000,
-                offsetType = StartOffsetType.FastForward
-            )
-        )
-    )
+    LaunchedEffect(time) {
+        val m = time.minute.toFloat() + time.second.toFloat() / 60f
+        minute.snapTo(m)
+        minute.animateTo(m + 1f, tween(60000, easing = LinearEasing))
+    }
 
-
-    val second by transition.animateFloat(
-        initialValue = 0f,
-        targetValue = 60f,
-        animationSpec = InfiniteRepeatableSpec(
-            animation = tween(durationMillis = 60000, easing = LinearEasing),
-            initialStartOffset = StartOffset(
-                offsetMillis = time.second * 1000,
-                offsetType = StartOffsetType.FastForward
-            )
-        )
-    )
+    LaunchedEffect(time) {
+        val s = time.second.toFloat()
+        second.snapTo(s)
+        second.animateTo(s + 60f, tween(60000, easing = LinearEasing))
+    }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
         val colorFilter = tintColor?.let {
@@ -323,13 +319,13 @@ private fun ClockLayer(
                 withTransform({
                     when (sublayer.role) {
                         ClockSublayerRole.Hour -> {
-                            rotate(hour / 12f * 360f)
+                            rotate(hour.value / 12f * 360f)
                         }
                         ClockSublayerRole.Minute -> {
-                            rotate(minute / 60f * 360f)
+                            rotate(minute.value / 60f * 360f)
                         }
                         ClockSublayerRole.Second -> {
-                            rotate(second / 60f * 360f)
+                            rotate(second.value / 60f * 360f)
                         }
                         ClockSublayerRole.Static -> {}
                     }
