@@ -293,7 +293,7 @@
     <string name="preference_category_services_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin_summary">登陆以查找你的Owncloud服务</string>
     <string name="preference_about_telegram">Telegram群组</string>
-    <string name="preference_about_fdroid">F-Droid repository</string>
+    <string name="preference_about_fdroid">F-Droid 储存库</string>
     <string name="preference_category_license">许可证</string>
     <string name="preference_about_license_summary">根据 GNU 通用公共许可证 3.0 授权</string>
     <string name="preference_category_grid">网格</string>
@@ -430,4 +430,6 @@
     <string name="preference_cards_shape_cut">切角</string>
     <string name="preference_cards_shape">形状</string>
     <string name="file_type_launcherbackup">%1$s备份</string>
+    <string name="preference_enforce_icon_shape">强制形状</string>
+    <string name="preference_enforce_icon_shape_summary">给所有包括正常情况下不支持调整形状的图标设置形状</string>
 </resources>
