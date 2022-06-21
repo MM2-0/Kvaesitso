@@ -39,6 +39,7 @@ class BadgeDrawable(context: Context, drawable: Drawable) : Drawable() {
     override fun setAlpha(alpha: Int) {
     }
 
+    @Deprecated("Deprecated in super class")
     override fun getOpacity(): Int {
         return PixelFormat.TRANSLUCENT
     }

@@ -41,8 +41,8 @@ dependencyResolutionManagement {
             version("targetSdk", "32")
         }
         create("libs") {
-            version("kotlin", "1.6.21")
-            version("kotlinx.coroutines", "1.6.1")
+            version("kotlin", "1.7.0")
+            version("kotlinx.coroutines", "1.6.3")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
                 .versionRef("kotlin")
@@ -60,7 +60,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-beta03")
+            version("androidx.compose", "1.2.0-rc01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -121,7 +121,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.24.10-beta")
+            version("accompanist", "0.24.11-rc")
             alias("accompanist.insets")
                 .to("com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
@@ -236,7 +236,7 @@ dependencyResolutionManagement {
 
             alias("androidx.navigation.compose")
                 .to("androidx.navigation", "navigation-compose")
-                .version("2.4.1")
+                .version("2.5.0-rc02")
 
             alias("materialcomponents.core")
                 .to("com.google.android.material", "material")
