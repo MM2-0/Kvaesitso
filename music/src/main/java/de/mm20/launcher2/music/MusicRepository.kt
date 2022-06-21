@@ -51,7 +51,7 @@ interface MusicRepository {
 
 internal class MusicRepositoryImpl(
     private val context: Context,
-    private val notificationRepository: NotificationRepository
+    notificationRepository: NotificationRepository
 ) : MusicRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)

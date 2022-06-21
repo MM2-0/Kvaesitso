@@ -40,7 +40,6 @@ import kotlinx.coroutines.launch
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AppShortcutItem(
     modifier: Modifier = Modifier,

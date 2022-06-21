@@ -6,7 +6,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -46,8 +46,7 @@ import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlin.math.roundToInt
 
 @OptIn(
-    ExperimentalMaterialApi::class,
-    ExperimentalFoundationApi::class
+    ExperimentalMaterialApi::class, ExperimentalFoundationApi::class
 )
 @Composable
 fun PagerScaffold(
@@ -216,7 +215,7 @@ fun PagerScaffold(
 
 
             CompositionLocalProvider(
-                LocalOverScrollConfiguration provides null
+                LocalOverscrollConfiguration provides null
             ) {
 
                 Row(

@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.crashreporter
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.crashreporter.BuildConfig
 import de.mm20.launcher2.crashreporter.CrashReport

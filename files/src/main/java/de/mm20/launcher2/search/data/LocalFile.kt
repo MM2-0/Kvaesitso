@@ -114,8 +114,8 @@ open class LocalFile(
                 val icon = withContext(Dispatchers.IO) {
                     pkgInfo?.applicationInfo?.loadIcon(context.packageManager)
                 } ?: return null
-                when {
-                    icon is AdaptiveIconDrawable -> {
+                when (icon) {
+                    is AdaptiveIconDrawable -> {
                         return StaticLauncherIcon(
                             foregroundLayer = icon.foreground?.let {
                                 StaticIconLayer(

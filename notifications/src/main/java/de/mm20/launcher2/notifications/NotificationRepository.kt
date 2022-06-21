@@ -31,7 +31,7 @@ interface NotificationRepository {
     fun cancelNotification(notification: StatusBarNotification)
 }
 
-internal class NotificationRepositoryImpl() : NotificationRepository {
+internal class NotificationRepositoryImpl : NotificationRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
     override val notifications: MutableStateFlow<List<StatusBarNotification>> = MutableStateFlow(
         emptyList()

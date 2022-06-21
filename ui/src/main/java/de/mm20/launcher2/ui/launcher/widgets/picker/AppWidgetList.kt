@@ -33,7 +33,7 @@ fun AppWidgetList(
         modifier = modifier
     ) {
         for (group in widgets) {
-            item() {
+            item {
                 Text(
                     modifier = Modifier.padding(
                         top = 16.dp,

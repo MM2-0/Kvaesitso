@@ -1,9 +1,6 @@
 package de.mm20.launcher2.ui.launcher.modals
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import de.mm20.launcher2.favorites.FavoritesItem
 import de.mm20.launcher2.favorites.FavoritesRepository
 import org.koin.core.component.KoinComponent

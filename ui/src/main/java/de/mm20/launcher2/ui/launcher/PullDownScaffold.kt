@@ -7,7 +7,7 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.gestures.LocalOverScrollConfiguration
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -231,7 +231,7 @@ fun PullDownScaffold(
                 derivedStateOf { maxHeight }
             }
             CompositionLocalProvider(
-                LocalOverScrollConfiguration provides null
+                LocalOverscrollConfiguration provides null
             ) {
                 val offset by animateFloatAsState(if (isSearchOpen) 1f else 0f)
                 Column(

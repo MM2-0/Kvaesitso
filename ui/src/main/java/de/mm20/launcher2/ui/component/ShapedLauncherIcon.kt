@@ -42,6 +42,7 @@ import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import palettes.TonalPalette
 import java.time.Instant
 import java.time.ZoneId
+import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -389,12 +390,12 @@ private val SquircleShape: Shape
         for (x in -radius.roundToInt()..radius.roundToInt())
             lineTo(
                 x.toFloat(),
-                Math.cbrt(radiusToPow - Math.abs(x * x * x)).toFloat()
+                Math.cbrt(radiusToPow - abs(x * x * x)).toFloat()
             )
         for (x in radius.roundToInt() downTo -radius.roundToInt())
             lineTo(
                 x.toFloat(),
-                (-Math.cbrt(radiusToPow - Math.abs(x * x * x))).toFloat()
+                (-Math.cbrt(radiusToPow - abs(x * x * x))).toFloat()
             )
         translate(Offset(size.width / 2f, size.height / 2f))
     }

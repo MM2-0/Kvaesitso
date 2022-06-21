@@ -37,7 +37,6 @@ import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AppItem(
     modifier: Modifier = Modifier,

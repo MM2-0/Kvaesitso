@@ -9,8 +9,6 @@ import de.mm20.launcher2.owncloud.OwncloudClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 interface AccountsRepository {
@@ -26,7 +24,7 @@ interface AccountsRepository {
 }
 
 internal class AccountsRepositoryImpl(
-    private val context: Context
+    context: Context
 ) : AccountsRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 

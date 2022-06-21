@@ -38,7 +38,6 @@ import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun FileItem(
     modifier: Modifier = Modifier,

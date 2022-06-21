@@ -1,12 +1,8 @@
 package de.mm20.launcher2.favorites
 
-import android.content.Context
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.Searchable
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
 
 data class FavoritesItem(
     val key: String,

@@ -43,7 +43,6 @@ import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun ContactItem(
     modifier: Modifier = Modifier,

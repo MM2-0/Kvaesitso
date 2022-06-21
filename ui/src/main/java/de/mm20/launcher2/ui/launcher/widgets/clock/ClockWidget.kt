@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui
+package de.mm20.launcher2.ui.launcher.widgets.clock
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,7 +19,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
-import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 

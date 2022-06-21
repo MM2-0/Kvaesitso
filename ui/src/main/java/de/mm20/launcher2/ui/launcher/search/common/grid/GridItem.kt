@@ -109,7 +109,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
     }
 }
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalAnimationApi::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit) {
     var show by remember { mutableStateOf(false) }

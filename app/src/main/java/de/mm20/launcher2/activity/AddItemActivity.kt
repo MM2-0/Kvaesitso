@@ -1,4 +1,4 @@
-package de.mm20.launcher2.activity;
+package de.mm20.launcher2.activity
 
 import android.app.Activity
 import android.content.Context

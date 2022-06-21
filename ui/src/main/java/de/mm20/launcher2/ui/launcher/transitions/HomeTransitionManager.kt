@@ -1,9 +1,6 @@
 package de.mm20.launcher2.ui.launcher.transitions
 
-import android.util.Log
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.toAndroidRectF
 import com.android.launcher3.GestureNavContract
 import kotlinx.coroutines.flow.MutableSharedFlow

@@ -4,7 +4,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import kotlin.coroutines.CoroutineContext
 
 val View.dp: Float
     get() = context.dp

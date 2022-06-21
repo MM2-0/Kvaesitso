@@ -3,10 +3,7 @@ package de.mm20.launcher2.search.data
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import de.mm20.launcher2.msservices.DriveItem
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.msservices.MicrosoftGraphApiHelper
-import de.mm20.launcher2.icons.LauncherIcon
 
 class OneDriveFile(
         val fileId: String,

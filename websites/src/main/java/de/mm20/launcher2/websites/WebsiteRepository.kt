@@ -94,8 +94,8 @@ internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, 
                 if (favicon.isBlank()) favicon = doc.select("link[rel=icon]").attr("href")
                 if (favicon.isBlank()) favicon =
                     doc.head().select("link[href~=.*\\.(ico|png)]").attr("href")
-                if (!favicon.isBlank()) favicon = resolveUrl(response.request.url, favicon)
-                if (!image.isBlank()) image = resolveUrl(response.request.url, image)
+                if (favicon.isNotBlank()) favicon = resolveUrl(response.request.url, favicon)
+                if (image.isNotBlank()) image = resolveUrl(response.request.url, image)
                 return@withContext Website(
                     label = title,
                     url = url,

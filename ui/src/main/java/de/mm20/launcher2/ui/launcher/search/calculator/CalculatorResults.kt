@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.search.SearchVM
-import de.mm20.launcher2.ui.search.CalculatorItem
 
 @Composable
 fun ColumnScope.CalculatorResults(reverse: Boolean = false) {

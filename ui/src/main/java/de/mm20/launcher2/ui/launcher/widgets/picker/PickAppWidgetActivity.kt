@@ -10,6 +10,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.*
@@ -67,7 +68,7 @@ class PickAppWidgetActivity : BaseActivity() {
                         if (selected == null) {
                             if (widgets != null) {
                                 AppWidgetList(
-                                    modifier = Modifier.fillMaxSize(),
+                                    modifier = Modifier.fillMaxSize().padding(it),
                                     widgets = widgets,
                                     onWidgetSelected = {
                                         selectAppWidget(it)
@@ -75,7 +76,7 @@ class PickAppWidgetActivity : BaseActivity() {
                                 )
                             } else {
                                 Box(
-                                    modifier = Modifier.fillMaxSize(),
+                                    modifier = Modifier.fillMaxSize().padding(it),
                                     contentAlignment = Alignment.Center
                                 ) {
                                     CircularProgressIndicator()

@@ -3,16 +3,10 @@ package de.mm20.launcher2.search.data
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
-import android.graphics.drawable.ColorDrawable
 import android.provider.CalendarContract
-import de.mm20.launcher2.graphics.TextDrawable
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
-import de.mm20.launcher2.ktx.dp
-import palettes.TonalPalette
 import java.text.SimpleDateFormat
 
 class CalendarEvent(

@@ -26,7 +26,7 @@ data class DriveFile(
                             width = file.imageMediaMetadata?.width ?: file.videoMediaMetadata?.width,
                             height = file.imageMediaMetadata?.height ?: file.videoMediaMetadata?.height
                     ),
-                    directoryColor = file.folderColorRgb?.toLowerCase(Locale.ROOT),
+                    directoryColor = file.folderColorRgb.lowercase(Locale.ROOT),
                     viewUri = file.webViewLink ?: ""
             )
         }

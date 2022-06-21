@@ -44,8 +44,8 @@ class IconPackIconProvider(
         val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
             ?: return generateIcon(context, searchable.launcherActivityInfo, size)
         val drawable = ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
-        return when {
-            drawable is AdaptiveIconDrawable -> {
+        return when (drawable) {
+            is AdaptiveIconDrawable -> {
                 return StaticLauncherIcon(
                     foregroundLayer = drawable.foreground?.let {
                         StaticIconLayer(
@@ -135,7 +135,7 @@ class IconPackIconProvider(
         }
         if (upon != null) {
             res.getIdentifier(upon, "drawable", pack).takeIf { it != 0 }?.let {
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER);
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
                 val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
@@ -145,7 +145,7 @@ class IconPackIconProvider(
         }
         if (back != null) {
             res.getIdentifier(back, "drawable", pack).takeIf { it != 0 }?.let {
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER);
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
                 val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)

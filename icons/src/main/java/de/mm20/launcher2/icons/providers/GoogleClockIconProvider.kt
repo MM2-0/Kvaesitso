@@ -69,10 +69,10 @@ class GoogleClockIconProvider(val context: Context) : IconProvider {
                     }
                     ClockSublayer(
                         drawable = drw,
-                        role = when {
-                            it == hourLayer -> ClockSublayerRole.Hour
-                            it == minuteLayer -> ClockSublayerRole.Minute
-                            it == secondLayer -> ClockSublayerRole.Second
+                        role = when (it) {
+                            hourLayer -> ClockSublayerRole.Hour
+                            minuteLayer -> ClockSublayerRole.Minute
+                            secondLayer -> ClockSublayerRole.Second
                             else -> ClockSublayerRole.Static
                         }
                     )

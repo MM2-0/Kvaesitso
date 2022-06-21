@@ -1,7 +1,5 @@
 package de.mm20.launcher2.icons
 
-import android.content.res.Resources
-
 sealed interface LauncherIcon
 
 data class StaticLauncherIcon(

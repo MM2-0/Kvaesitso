@@ -16,7 +16,7 @@ import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
 import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 
-@OptIn(ExperimentalMaterialApi::class, androidx.compose.foundation.ExperimentalFoundationApi::class)
+@OptIn(androidx.compose.foundation.ExperimentalFoundationApi::class)
 @Composable
 fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
     var showDetails by remember { mutableStateOf(false) }

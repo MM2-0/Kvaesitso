@@ -1,3 +1,5 @@
+@file:Suppress("ClassName")
+
 package de.mm20.launcher2.database
 
 import android.content.Context

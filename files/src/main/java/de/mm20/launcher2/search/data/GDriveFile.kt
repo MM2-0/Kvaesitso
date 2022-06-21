@@ -4,10 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import de.mm20.launcher2.files.R
-import de.mm20.launcher2.gservices.DriveFileMeta
-import de.mm20.launcher2.gservices.GoogleApiHelper
-import de.mm20.launcher2.helper.NetworkUtils
-import de.mm20.launcher2.icons.LauncherIcon
 
 class GDriveFile(
     val fileId: String,

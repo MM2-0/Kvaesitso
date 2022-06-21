@@ -1,7 +1,5 @@
 package de.mm20.launcher2.ktx
 
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 
 val Fragment.dp: Float

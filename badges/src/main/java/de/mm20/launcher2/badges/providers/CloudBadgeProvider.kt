@@ -1,8 +1,6 @@
 package de.mm20.launcher2.badges.providers
 
-import android.util.Log
 import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.badges.R
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow

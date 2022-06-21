@@ -48,7 +48,7 @@ class Calculator(
             }
             formattedOctString = s.toString()
 
-            s = StringBuffer(solution.roundToInt().toString(16).toUpperCase())
+            s = StringBuffer(solution.roundToInt().toString(16).uppercase(Locale.getDefault()))
             while (s.length % 2 != 0) {
                 s = s.insert(0, '0')
             }
@@ -62,7 +62,7 @@ class Calculator(
 
     fun getBeatifiedTerm(): String {
         if(term.matches(Regex("0x[0-9a-fA-F]+"))) {
-            return term.substring(2).toUpperCase(Locale.ROOT) + "₁₆"
+            return term.substring(2).uppercase(Locale.ROOT) + "₁₆"
         }
         if(term.matches(Regex("0b[01]+"))) {
             return term.substring(2) + "₂"

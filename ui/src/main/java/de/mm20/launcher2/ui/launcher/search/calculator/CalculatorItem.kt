@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.search
+package de.mm20.launcher2.ui.launcher.search.calculator
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.component.preferences
 
 import androidx.compose.material3.Switch
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.vector.ImageVector
 

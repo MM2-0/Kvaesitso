@@ -41,7 +41,7 @@ dependencyResolutionManagement {
             version("targetSdk", "32")
         }
         create("libs") {
-            version("kotlin", "1.7.0")
+            version("kotlin", "1.6.21")
             version("kotlinx.coroutines", "1.6.3")
             alias("kotlin.stdlib")
                 .to("org.jetbrains.kotlin", "kotlin-stdlib")
@@ -60,7 +60,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose", "1.2.0-rc01")
+            version("androidx.compose", "1.2.0-rc02")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .versionRef("androidx.compose")
@@ -206,7 +206,7 @@ dependencyResolutionManagement {
                 .to("androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.4.2")
+            version("androidx.room", "2.5.0-alpha02")
             alias("androidx.roomruntime")
                 .to("androidx.room", "room-runtime")
                 .versionRef("androidx.room")

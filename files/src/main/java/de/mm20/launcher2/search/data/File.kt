@@ -114,7 +114,7 @@ abstract class File(
             }
         }
         if (resource == R.string.file_type_none && label.matches(Regex(".+\\..+"))) {
-            val extension = label.substringAfterLast(".").toUpperCase(Locale.getDefault())
+            val extension = label.substringAfterLast(".").uppercase(Locale.getDefault())
             if (extension == "kvaesitso") return context.getString(
                 R.string.file_type_launcherbackup,
                 context.getString(R.string.app_name)

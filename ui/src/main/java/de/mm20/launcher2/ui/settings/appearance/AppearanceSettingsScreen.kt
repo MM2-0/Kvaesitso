@@ -318,7 +318,6 @@ fun SearchBarStylePreference(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun IconShapePreference(
     title: String,

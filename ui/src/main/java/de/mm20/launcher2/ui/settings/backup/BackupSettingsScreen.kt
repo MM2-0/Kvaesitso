@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.settings.backup
 
-import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*

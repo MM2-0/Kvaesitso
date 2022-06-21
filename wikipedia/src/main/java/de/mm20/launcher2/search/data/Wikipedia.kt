@@ -7,7 +7,6 @@ import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.icons.ColorLayer
-import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.wikipedia.R
@@ -42,9 +41,5 @@ class Wikipedia(
         val uri = "${wikipediaUrl}/wiki?curid=$id"
         intent.intent.data = Uri.parse(uri)
         return intent.intent
-    }
-
-    companion object {
-
     }
 }

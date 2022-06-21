@@ -6,7 +6,6 @@ import android.os.Build
 import android.os.CancellationSignal
 import android.provider.MediaStore
 import android.util.Size
-import androidx.core.content.ContentResolverCompat
 import java.io.File
 import java.io.IOException
 

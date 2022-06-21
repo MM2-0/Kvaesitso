@@ -31,7 +31,7 @@ class CurrencyRepository(
         toCurrency: String? = null
     ): List<Pair<String, Double>> {
 
-        return withContext<List<Pair<String, Double>>>(Dispatchers.IO) {
+        return withContext(Dispatchers.IO) {
             val dao = AppDatabase.getInstance(context)
                 .currencyDao()
 

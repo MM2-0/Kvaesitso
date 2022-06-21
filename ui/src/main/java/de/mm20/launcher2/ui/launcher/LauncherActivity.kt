@@ -181,14 +181,6 @@ class LauncherActivity : BaseActivity() {
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        /*binding.container.doOnNextLayout {
-            WallpaperManager.getInstance(this).setWallpaperOffsets(it.windowToken, 0.5f, 0.5f)
-        }*/
-    }
-
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         val navContract = intent?.let { GestureNavContract.fromIntent(it) }

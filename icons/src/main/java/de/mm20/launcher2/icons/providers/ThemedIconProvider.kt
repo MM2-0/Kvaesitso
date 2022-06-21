@@ -112,9 +112,9 @@ internal class ThemedIconProvider(
                             }
                             ClockSublayer(
                                 drawable = drw,
-                                role = when {
-                                    it == hourIndex -> ClockSublayerRole.Hour
-                                    it == minuteIndex -> ClockSublayerRole.Minute
+                                role = when (it) {
+                                    hourIndex -> ClockSublayerRole.Hour
+                                    minuteIndex -> ClockSublayerRole.Minute
                                     else -> ClockSublayerRole.Static
                                 }
                             )

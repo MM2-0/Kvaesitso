@@ -613,6 +613,7 @@ private fun Precipitation(icon: WeatherIcon) {
                         tint = colorResource(id = R.color.weather_snow)
                     )
                 }
+                else -> {}
             }
         }
     }

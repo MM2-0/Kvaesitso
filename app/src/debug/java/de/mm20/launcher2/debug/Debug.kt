@@ -2,7 +2,6 @@ package de.mm20.launcher2.debug
 
 import android.os.StrictMode
 import android.util.Log
-import de.mm20.launcher2.BuildConfig
 
 class Debug {
     init {

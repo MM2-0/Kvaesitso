@@ -9,7 +9,6 @@ import android.os.Build;
 import android.util.Log;
 
 import java.util.TimeZone;
-import java.util.UUID;
 
 import static com.balsikandar.crashreporter.utils.AppUtilsKt.getAppSignature;
 
@@ -66,26 +65,6 @@ public class AppUtils {
     private static String timeZone() {
         TimeZone tz = TimeZone.getDefault();
         return tz.getID();
-    }
-
-    private static String getDeviceId(Context context) {
-        String androidDeviceId = getAndroidDeviceId(context);
-        if (androidDeviceId == null)
-            androidDeviceId = UUID.randomUUID().toString();
-        return androidDeviceId;
-
-    }
-
-    private static String getAndroidDeviceId(Context context) {
-        final String INVALID_ANDROID_ID = "9774d56d682e549c";
-        final String androidId = android.provider.Settings.Secure.getString(
-                context.getContentResolver(),
-                android.provider.Settings.Secure.ANDROID_ID);
-        if (androidId == null
-                || androidId.toLowerCase().equals(INVALID_ANDROID_ID)) {
-            return null;
-        }
-        return androidId;
     }
 
     private static int getAppVersionCode(Context context) {

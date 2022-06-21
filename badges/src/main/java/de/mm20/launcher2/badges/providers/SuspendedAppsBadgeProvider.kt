@@ -4,7 +4,6 @@ import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.R
 import de.mm20.launcher2.search.data.Application
-import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow

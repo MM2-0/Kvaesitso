@@ -39,7 +39,6 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WeatherWidget() {
     val viewModel: WeatherWidgetWM = viewModel()

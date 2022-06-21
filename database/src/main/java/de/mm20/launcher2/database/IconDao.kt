@@ -1,6 +1,5 @@
 package de.mm20.launcher2.database
 
-import android.content.ComponentName
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.IconEntity

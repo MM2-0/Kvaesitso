@@ -145,7 +145,7 @@ fun CalendarWidget() {
                 )
             }
             val pinnedEvents by viewModel.pinnedCalendarEvents.observeAsState(emptyList())
-            if (pinnedEvents.size > 0) {
+            if (pinnedEvents.isNotEmpty()) {
                 Text(
                     stringResource(R.string.calendar_widget_pinned_events),
                     modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),

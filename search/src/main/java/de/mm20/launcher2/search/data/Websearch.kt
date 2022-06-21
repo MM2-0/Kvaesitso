@@ -3,7 +3,6 @@ package de.mm20.launcher2.search.data
 import android.content.Intent
 import android.net.Uri
 import de.mm20.launcher2.database.entities.WebsearchEntity
-import java.net.URLEncoder
 
 class Websearch(
         var urlTemplate: String,

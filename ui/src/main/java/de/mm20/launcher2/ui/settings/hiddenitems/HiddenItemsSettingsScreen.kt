@@ -82,7 +82,7 @@ fun HiddenItemsSettingsScreen() {
                     DropdownMenuItem(
                         text = { Text(stringResource(R.string.menu_app_info)) },
                         onClick = {
-                            viewModel.openAppInfo(context, searchable as Application)
+                            viewModel.openAppInfo(context, searchable)
                             showPopup = false
                         })
 

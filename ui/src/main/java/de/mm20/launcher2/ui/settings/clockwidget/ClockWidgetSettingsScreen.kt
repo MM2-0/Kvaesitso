@@ -20,7 +20,7 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
-import de.mm20.launcher2.ui.Clock
+import de.mm20.launcher2.ui.launcher.widgets.clock.Clock
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.*
 
