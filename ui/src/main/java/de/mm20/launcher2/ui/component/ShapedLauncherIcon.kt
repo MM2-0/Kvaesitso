@@ -4,7 +4,10 @@ import android.graphics.*
 import android.graphics.Matrix
 import android.graphics.Path
 import android.graphics.drawable.AdaptiveIconDrawable
-import androidx.compose.animation.core.*
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,6 +42,7 @@ import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import kotlinx.coroutines.launch
 import palettes.TonalPalette
 import java.time.Instant
 import java.time.ZoneId
@@ -58,8 +62,6 @@ fun ShapedLauncherIcon(
     shape: Shape = LocalIconShape.current
 ) {
 
-    val time = LocalTime.current
-
     var currentIcon by remember(icon) {
         mutableStateOf(
             when (icon) {
@@ -71,6 +73,7 @@ fun ShapedLauncherIcon(
     }
 
     if (icon is DynamicLauncherIcon) {
+        val time = LocalTime.current
         LaunchedEffect(time) {
             currentIcon = icon.getIcon(time)
         }
@@ -271,7 +274,6 @@ private fun ClockLayer(
     scale: Float,
     tintColor: Color?,
 ) {
-    val transition = rememberInfiniteTransition()
     val time = remember(LocalTime.current) {
         Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
     }
@@ -290,23 +292,20 @@ private fun ClockLayer(
 
     LaunchedEffect(time) {
         val h = time.hour.toFloat() + time.minute.toFloat() / 60f
-        hour.snapTo(h)
-        hour.animateTo(
-            h + 1f / 60f,
-            tween(60000, easing = LinearEasing)
-        )
-    }
-
-    LaunchedEffect(time) {
         val m = time.minute.toFloat() + time.second.toFloat() / 60f
-        minute.snapTo(m)
-        minute.animateTo(m + 1f, tween(60000, easing = LinearEasing))
-    }
-
-    LaunchedEffect(time) {
-        val s = time.second.toFloat()
+        val s = time.second.toFloat() + (time.nano / 1000000f) / 1000f
         second.snapTo(s)
-        second.animateTo(s + 60f, tween(60000, easing = LinearEasing))
+        hour.snapTo(h)
+        minute.snapTo(m)
+        launch {
+            hour.animateTo(h + 1.5f / 60f, tween(90000, easing = LinearEasing))
+        }
+        launch {
+            minute.animateTo(m + 1.5f, tween(90000, easing = LinearEasing))
+        }
+        launch {
+            second.animateTo(s + 90f, tween(90000, easing = LinearEasing))
+        }
     }
 
     Canvas(modifier = Modifier.fillMaxSize()) {
