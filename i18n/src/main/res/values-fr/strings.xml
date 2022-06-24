@@ -463,4 +463,6 @@
     <string name="save">Enregistrer</string>
     <string name="file_type_launcherbackup">Sauvegarde %1$s</string>
     <string name="weather_location_search_no_result">Emplacement inconnu.</string>
+    <string name="preference_enforce_icon_shape">Imposer la forme</string>
+    <string name="preference_enforce_icon_shape_summary">Appliquer la forme à toutes les icônes, y compris celles qui ne la supporteraient pas normalement</string>
 </resources>
