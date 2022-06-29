@@ -187,7 +187,7 @@
     <string name="preference_category_debug">Отладка</string>
     <string name="preference_cards">Карточки</string>
     <string name="preference_cards_corner_radius">Угловой радиус</string>
-    <string name="preference_cards_stroke_width">Ширина отступа</string>
+    <string name="preference_cards_stroke_width">Ширина рамки</string>
     <string name="preference_cards_opacity">Прозрачность</string>
     <string name="preference_icon_shape">Форма</string>
     <string name="preference_icon_shape_platform">Из системы по умолчанию</string>
@@ -305,7 +305,7 @@
     <string name="preference_clock_widget_style">Стиль</string>
     <string name="preference_clock_widget_style_summary">Выберите часы</string>
     <string name="save">Сохранить</string>
-    <string name="preference_colors_auto_generate">Генерировать из основного цвета</string>
+    <string name="preference_colors_auto_generate">Сгенерировать из основного цвета</string>
     <string name="calendar_widget_next_events">Следующее событие</string>
     <string name="missing_permission_appshortcuts_search_settings">Для поиска ярлыков приложений %1$s должно быть установлено главным экраном по умолчанию</string>
     <string name="missing_permission_appshortcuts_search">Для поиска ярлыков приложений установите %1$s главным экраном по умолчанию</string>
