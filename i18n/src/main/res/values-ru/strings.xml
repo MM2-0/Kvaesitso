@@ -333,4 +333,5 @@
     <string name="preference_icon_pack">Набор иконок</string>
     <string name="preference_icon_pack_summary_empty">Наборы иконок не установлены</string>
     <string name="file_type_launcherbackup">Резервная копия %1$s</string>
+    <string name="preference_category_system_bars">Системные панели</string>
 </resources>
