@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.math.max
 import kotlin.math.min
 
 class WeatherWidgetWM : ViewModel(), KoinComponent {
@@ -22,6 +23,9 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
 
+    /**
+     * Index of the currently selected day in [dailyForecasts]
+     */
     private var selectedDayIndex = 0
         set(value) {
             field = min(value, forecasts.lastIndex)
@@ -38,6 +42,9 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
             currentForecast.postValue(getCurrentlySelectedForecast())
         }
 
+    /**
+     * Index of the currently selected forecast in [currentDayForecasts]
+     */
     private var selectedForecastIndex = 0
     set(value) {
         if (selectedDayIndex < 0)  {
@@ -50,6 +57,9 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private val forecastsFlow = weatherRepository.forecasts
 
+    /**
+     * All available forecasts, grouped by day
+     */
     private var forecasts: List<DailyForecast> = emptyList()
     set(value) {
         field = value
@@ -58,15 +68,32 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
         dailyForecasts.postValue(value)
     }
 
+    /**
+     * Currently selected forecast, one of [currentDayForecasts]
+     */
     val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
+
+    /**
+     * List of forecast summaries for each day
+     */
     val dailyForecasts = MutableLiveData<List<DailyForecast>>(emptyList())
+
+    /**
+     * Forecasts of the currently selected day (hourly in most cases).
+     * This is [DailyForecast.hourlyForecasts] of [currentDailyForecast]
+     */
     val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
+
+    /**
+     * Daily forecast summary for the currently selected day, one of [dailyForecasts] or null
+     */
     val currentDailyForecast = MutableLiveData<DailyForecast>(null)
 
     init {
         viewModelScope.launch {
             forecastsFlow.collectLatest {
                 forecasts = it
+                selectNow()
             }
         }
     }
@@ -89,5 +116,15 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     private fun getCurrentlySelectedForecast(): Forecast? {
         return forecasts.getOrNull(selectedDayIndex)?.hourlyForecasts?.getOrNull(selectedForecastIndex)
+    }
+
+    fun selectNow() {
+        if (forecasts.isEmpty()) return
+        val now = System.currentTimeMillis()
+        val dayIndex = max(0, forecasts.indexOfLast { it.timestamp < now })
+        val day = forecasts[dayIndex]
+        val forecastIndex = max(0, day.hourlyForecasts.indexOfLast { it.timestamp < now })
+        selectDay(dayIndex)
+        selectForecast(forecastIndex)
     }
 }
