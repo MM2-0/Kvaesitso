@@ -185,7 +185,7 @@
     <string name="preference_signin_user">Zalogowany jako %1$s</string>
     <string name="preference_signin_logout">Wyloguj się</string>
     <string name="preference_summary_not_logged_in">Nie jesteś zalogowany</string>
-    <string name="preference_icon_shape_pentagon">Pentagon</string>
+    <string name="preference_icon_shape_pentagon">Pięciokąt</string>
     <string name="preference_category_wallpaper">Tapeta</string>
     <string name="preference_dim_wallpaper">Przyciemniona tapeta</string>
     <string name="preference_dim_wallpaper_summary">W ciemnych motywach, przyciemnij tapetę</string>
@@ -346,4 +346,32 @@
     <string name="show_hidden_items">Pokaż ukryte</string>
     <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
     <string name="preference_hidden_items">Ukryte elementy</string>
+    <string name="wind_east_south_east">Wschodni południowy wschód</string>
+    <string name="wind_south_south_east">Południowy południowy zachód</string>
+    <string name="wind_west_south_west">Zachodni południowy zachód</string>
+    <string name="wind_west_north_west">Zachodni północny zachód</string>
+    <string name="music_widget_no_data">Nie odtworzono jeszcze żadnych mediów</string>
+    <string name="wind_north_north_east">Północny północny wschód</string>
+    <string name="missing_permission_auto_location">Dostęp do lokalizacji jest wymagany, by aktualizować położenie automatycznie</string>
+    <string name="wind_east_north_east">Wschodni północny wschód</string>
+    <string name="websearch_dialog_create_title">Dodawanie wyszukiwarki internetowej</string>
+    <string name="websearch_dialog_url_error">W tym adresie URL brakuje wyrazu \'${1}\'</string>
+    <plurals name="calendar_widget_running_events">
+        <item quantity="one">+%1$d wydarzenie w toku z poprzednich dni</item>
+        <item quantity="few">+%1$d wydarzenia w toku z poprzednich dni</item>
+        <item quantity="many">+%1$d wydarzeń w toku z poprzednich dni</item>
+        <item quantity="other">+%1$d wydarzeń w toku z poprzednich dni</item>
+    </plurals>
+    <string name="save">Zapisz</string>
+    <string name="missing_permission_calendar_widget_settings">Ten widżet potrzebuje uprawnień dostępu do kalendarza</string>
+    <string name="file_type_launcherbackup">Kopia zapasowa %1$s</string>
+    <string name="websearch_dialog_edit_title">Edytowanie wyszukiwarki internetowej</string>
+    <string name="wind_south_south_west">Południowy południowy zachód</string>
+    <string name="wind_north_north_west">Północny północny zachód</string>
+    <string name="calendar_widget_next_events">Następne wydarzenie</string>
+    <string name="music_widget_default_title">%1$s odtwarza media</string>
+    <string name="weather_location_search_no_result">Nie znaleziono położenia.</string>
+    <string name="missing_permission_music_widget">Dostęp do powiadomień jest wymagany do sterowania odtwarzaniem mediów</string>
+    <string name="missing_permission_calendar_search_settings">Dostęp do kalendarza jest wymagany do przeszukiwania kalendarza</string>
+    <string name="missing_permission_contact_search_settings">Dostęp do kontaktów jest wymagany do wyszukiwania kontaktów</string>
 </resources>
