@@ -343,7 +343,6 @@
     <string name="preference_search_bar_style_summary">Dostosuj wygląd paska wyszukiwania</string>
     <string name="msg_item_hidden">%1$s został ukryty.</string>
     <string name="action_undo">Cofnij</string>
-    <string name="show_hidden_items">Pokaż ukryte</string>
     <string name="preference_hidden_items_summary">Zarządzaj ukrytymi aplikacjami i wynikami wyszukiwania</string>
     <string name="preference_hidden_items">Ukryte elementy</string>
     <string name="wind_east_south_east">Wschodni południowy wschód</string>

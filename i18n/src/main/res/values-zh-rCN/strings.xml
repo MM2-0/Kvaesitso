@@ -401,7 +401,6 @@
     <string name="preference_layout_summary">搜索栏、组件和搜索结果的常规布局</string>
     <string name="msg_item_hidden">%1$s已被隐藏.</string>
     <string name="action_undo">撤销</string>
-    <string name="show_hidden_items">显示隐藏项</string>
     <string name="calendar_widget_next_events">下一个事件</string>
     <string name="preference_hidden_items">隐藏搜索结果</string>
     <string name="preference_hidden_items_summary">管理隐藏应用和搜索结果</string>

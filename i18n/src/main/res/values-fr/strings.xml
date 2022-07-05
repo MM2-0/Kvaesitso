@@ -434,7 +434,6 @@
     <string name="backup_component_widgets">Widgets intégrés</string>
     <string name="backup_complete">La sauvegarde a bien été réalisée.</string>
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
-    <string name="show_hidden_items">Tout afficher</string>
     <string name="preference_category_custom_colors_dark">Palette sombre</string>
     <string name="calendar_widget_next_events">Événement suivant</string>
     <string name="preference_layout">Disposition</string>

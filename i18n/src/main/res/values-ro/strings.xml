@@ -83,7 +83,6 @@
     <string name="menu_share_store_link">link %1$s</string>
     <string name="menu_open_file">Deschide</string>
     <string name="default_websearch_1_name">Google</string>
-    <string name="show_hidden_items">Arata ascunse</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="msg_item_hidden">"%1$s  au fost ascunse"</string>
     <string name="widget_name_weather">Vreme</string>

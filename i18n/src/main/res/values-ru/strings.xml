@@ -324,7 +324,6 @@
     <string name="preference_cards_shape">Форма</string>
     <string name="preference_cards_shape_cut">Срезанная</string>
     <string name="weather_location_search_no_result">Местоположение не найдено.</string>
-    <string name="show_hidden_items">Показать скрытые</string>
     <string name="msg_item_hidden">Приложение %1$s было скрыто.</string>
     <string name="action_undo">Отменить</string>
     <string name="preference_custom_colors_advanced_mode">Расширенный режим</string>
