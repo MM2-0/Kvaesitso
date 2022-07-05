@@ -143,6 +143,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     }
 
     suspend fun onActive() {
+        selectDate(LocalDate.now())
         calendarRepository.getUpcomingEvents().collectLatest { events ->
             favoritesRepository.getHiddenCalendarEventKeys().collectLatest { hidden ->
                 upcomingEvents = events.filter { !hidden.contains(it.key) }
