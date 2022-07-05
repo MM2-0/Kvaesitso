@@ -433,4 +433,8 @@
     <string name="weather_location_search_no_result">Standort nicht gefunden.</string>
     <string name="save">Speichern</string>
     <string name="file_type_launcherbackup">%1$s-Backup</string>
+    <string name="preference_enforce_icon_shape">Form erzwingen</string>
+    <string name="preference_enforce_icon_shape_summary">Form auch auf Symbole anwenden, die dies normalerweise nicht unterstützen</string>
+    <string name="preference_font">Schriftart</string>
+    <string name="preference_font_system">Systemstandard</string>
 </resources>
