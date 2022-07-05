@@ -17,6 +17,7 @@ fun createFactorySettings(context: Context): Settings {
                     .setLightScheme(DefaultLightCustomColorScheme)
                     .setDarkScheme(DefaultDarkCustomColorScheme)
                 )
+                .setFont(Settings.AppearanceSettings.Font.Poppins)
                 .build()
         )
         .setWeather(

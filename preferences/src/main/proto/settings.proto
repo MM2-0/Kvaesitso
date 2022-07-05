@@ -70,6 +70,12 @@ message Settings {
       Pager = 1;
     }
     Layout layout = 9;
+
+    enum Font {
+      Poppins = 0;
+      SystemDefault = 1;
+    }
+    Font font = 10;
   }
   AppearanceSettings appearance = 2;
 

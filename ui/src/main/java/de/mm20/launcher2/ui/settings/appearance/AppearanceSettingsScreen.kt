@@ -41,6 +41,7 @@ import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.theme.getTypography
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 
@@ -86,6 +87,25 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/colorscheme")
                     }
                 )
+                val font by viewModel.font.observeAsState()
+                ListPreference(
+                    title = stringResource(R.string.preference_font),
+                    items = listOf(
+                        "Poppins" to AppearanceSettings.Font.Poppins,
+                        stringResource(R.string.preference_font_system) to AppearanceSettings.Font.SystemDefault,
+                    ),
+                    value = font,
+                    onValueChanged = {
+                        if (it != null) viewModel.setFont(it)
+                    },
+                    itemLabel = {
+                        val typography = remember(it.value) {
+                            getTypography(context, it.value)
+                        }
+                        Text(it.first, style = typography.titleMedium)
+                    }
+                )
+
                 Preference(
                     title = stringResource(R.string.preference_cards),
                     summary = stringResource(R.string.preference_cards_summary),

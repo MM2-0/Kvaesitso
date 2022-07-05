@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.theme
 
+import android.content.Context
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.CornerSize
@@ -16,6 +17,7 @@ import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
+import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
 
@@ -25,6 +27,7 @@ fun LauncherTheme(
     content: @Composable () -> Unit
 ) {
 
+    val context = LocalContext.current
     val dataStore: LauncherDataStore by inject()
 
     val colorSchemePreference by remember {
@@ -48,7 +51,7 @@ fun LauncherTheme(
 
     val baseShape by remember {
         dataStore.data.map {
-            when(it.cards.shape) {
+            when (it.cards.shape) {
                 Settings.CardSettings.Shape.Cut -> CutCornerShape(0f)
                 else -> RoundedCornerShape(0f)
             }
@@ -57,12 +60,20 @@ fun LauncherTheme(
 
     val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
 
+    val font by remember { dataStore.data.map { it.appearance.font } }.collectAsState(
+        AppearanceSettings.Font.Poppins
+    )
+
+    val typography = remember(font) {
+        getTypography(context, font)
+    }
+
     CompositionLocalProvider(
         LocalDarkTheme provides darkTheme
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
-            typography = DefaultTypography,
+            typography = typography,
             shapes = Shapes(
                 extraSmall = baseShape.copy(CornerSize(cornerRadius / 3f)),
                 small = baseShape.copy(CornerSize(cornerRadius / 3f * 2f)),
@@ -76,7 +87,10 @@ fun LauncherTheme(
 }
 
 @Composable
-fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme, darkTheme: Boolean): MutableState<ColorScheme> {
+fun colorSchemeAsState(
+    colorScheme: AppearanceSettings.ColorScheme,
+    darkTheme: Boolean
+): MutableState<ColorScheme> {
     val context = LocalContext.current
     val dataStore: LauncherDataStore by inject()
 
@@ -133,4 +147,11 @@ fun colorSchemeAsState(colorScheme: AppearanceSettings.ColorScheme, darkTheme: B
         }
     }
 
+}
+
+fun getTypography(context: Context, font: AppearanceSettings.Font?): Typography {
+    return when (font) {
+        AppearanceSettings.Font.SystemDefault -> getDeviceDefaultTypography(context)
+        else -> DefaultTypography
+    }
 }

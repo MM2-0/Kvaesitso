@@ -7,8 +7,7 @@ import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.*
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -37,6 +36,17 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
             dataStore.updateData {
                 it.toBuilder()
                     .setAppearance(it.appearance.toBuilder().setColorScheme(colorScheme))
+                    .build()
+            }
+        }
+    }
+
+    val font = dataStore.data.map { it.appearance.font }.asLiveData()
+    fun setFont(font: Font) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppearance(it.appearance.toBuilder().setFont(font))
                     .build()
             }
         }
