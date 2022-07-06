@@ -19,7 +19,6 @@ fun ProvideCurrentTime(content: @Composable () -> Unit) {
         val receiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 time = System.currentTimeMillis()
-                Log.d("MM20", "Time Changed: $time")
             }
         }
         context.registerReceiver(receiver, IntentFilter().apply {
