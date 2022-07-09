@@ -39,6 +39,7 @@ interface FavoritesRepository {
     fun saveFavorites(favorites: List<FavoritesItem>)
     fun getHiddenItems(): Flow<List<Searchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
+    fun remove(searchable: Searchable)
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -192,6 +193,14 @@ internal class FavoritesRepositoryImpl(
 
     override fun getHiddenItemKeys(): Flow<List<String>> {
         return database.searchDao().getHiddenItemKeys()
+    }
+
+    override fun remove(searchable: Searchable) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                database.searchDao().deleteByKey(searchable.key)
+            }
+        }
     }
 
 

@@ -68,7 +68,7 @@ abstract class SearchableItemVM(
             favoritesRepository.incrementLaunchCounter(searchable)
             return true
         } else if (searchable is Application) {
-            favoritesRepository.unpinItem(searchable)
+            favoritesRepository.remove(searchable)
         }
         return false
     }
