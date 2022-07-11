@@ -470,7 +470,7 @@
     <string name="preference_dim_wallpaper">Dim wallpaper</string>
     <string name="preference_dim_wallpaper_summary">In dark themes, darken wallpaper</string>
     <string name="preference_blur_wallpaper">Blur wallpaper</string>
-    <string name="preference_blur_wallpaper_summary">Use a blur effect for the wallpaper</string>
+    <string name="preference_blur_wallpaper_summary">Use a blur effect on the wallpaper</string>
     <string name="preference_blur_wallpaper_unsupported">Not supported on this device</string>
     <string name="preference_wallpaper_summary">Choose a wallpaper</string>
     <string name="preference_screen_badges">Badges</string>
