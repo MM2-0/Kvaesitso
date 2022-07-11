@@ -122,7 +122,8 @@ class LauncherActivity : BaseActivity() {
                                             darkNavBarIcons = lightNav,
                                         )
                                     }
-                                    Settings.AppearanceSettings.Layout.Pager -> {
+                                    Settings.AppearanceSettings.Layout.Pager,
+                                    Settings.AppearanceSettings.Layout.PagerReversed -> {
                                         PagerScaffold(
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -133,6 +134,7 @@ class LauncherActivity : BaseActivity() {
                                                 },
                                             darkStatusBarIcons = lightStatus,
                                             darkNavBarIcons = lightNav,
+                                            reverse = layout == Settings.AppearanceSettings.Layout.PagerReversed
                                         )
                                     }
                                     else -> {}

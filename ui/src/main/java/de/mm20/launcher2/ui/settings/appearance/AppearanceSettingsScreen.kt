@@ -481,6 +481,7 @@ fun LayoutPreference(
                                     when (layouts[it]) {
                                         AppearanceSettings.Layout.PullDown -> R.raw.lottie_scaffold_pulldown
                                         AppearanceSettings.Layout.Pager -> R.raw.lottie_scaffold_pager
+                                        AppearanceSettings.Layout.PagerReversed -> R.raw.lottie_scaffold_pager_reverse
                                         else -> 0
                                     }
                                 )

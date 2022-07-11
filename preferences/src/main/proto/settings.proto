@@ -68,6 +68,7 @@ message Settings {
     enum Layout {
       PullDown = 0;
       Pager = 1;
+      PagerReversed = 2;
     }
     Layout layout = 9;
 

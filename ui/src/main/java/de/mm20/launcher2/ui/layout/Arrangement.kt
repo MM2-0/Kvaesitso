@@ -29,6 +29,7 @@ internal fun placeRightOrBottom(
         current += it
     }
 }
+
 private inline fun IntArray.forEachIndexed(reversed: Boolean, action: (Int, Int) -> Unit) {
     if (!reversed) {
         forEachIndexed(action)

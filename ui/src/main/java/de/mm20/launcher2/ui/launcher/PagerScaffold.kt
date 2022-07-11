@@ -28,8 +28,10 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -53,6 +55,7 @@ fun PagerScaffold(
     modifier: Modifier = Modifier,
     darkStatusBarIcons: Boolean = false,
     darkNavBarIcons: Boolean = false,
+    reverse: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -213,9 +216,11 @@ fun PagerScaffold(
 
             val widthPx = width.toPixels()
 
+            val originalLayoutDirection = LocalLayoutDirection.current
 
             CompositionLocalProvider(
-                LocalOverscrollConfiguration provides null
+                LocalOverscrollConfiguration provides null,
+                LocalLayoutDirection provides if (reverse) LayoutDirection.Rtl else LayoutDirection.Ltr
             ) {
 
                 Row(
@@ -232,61 +237,67 @@ fun PagerScaffold(
                             thresholds = { _, _ ->
                                 FractionalThreshold(0.5f)
                             },
-                            enabled = !isWidgetEditMode
+                            enabled = !isWidgetEditMode,
+                            reverseDirection = reverse,
                         )
                         .offset {
                             IntOffset(swipeableState.offset.value.roundToInt(), 0)
-                        }
+                        },
                 ) {
 
+                    CompositionLocalProvider(
+                        LocalLayoutDirection provides originalLayoutDirection
+                    ) {
 
-                    val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
 
-                    val clockPadding by animateDpAsState(
-                        if (isWidgetsScrollZero) 64.dp + insets.calculateBottomPadding() else 0.dp
-                    )
+                        val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
 
-                    val clockHeight by remember {
-                        derivedStateOf {
-                            height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                        val clockPadding by animateDpAsState(
+                            if (isWidgetsScrollZero) 64.dp + insets.calculateBottomPadding() else 0.dp
+                        )
+
+                        val clockHeight by remember {
+                            derivedStateOf {
+                                height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                            }
                         }
+
+                        WidgetColumn(
+                            modifier = Modifier
+                                .requiredWidth(width)
+                                .fillMaxHeight()
+                                .nestedScroll(nestedScrollConnection)
+                                .verticalScroll(widgetsScrollState)
+                                .windowInsetsPadding(WindowInsets.safeDrawing)
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp, bottom = 64.dp)
+                                .padding(top = editModePadding),
+                            clockHeight = { clockHeight },
+                            clockBottomPadding = { clockPadding },
+                            editMode = isWidgetEditMode,
+                            onEditModeChange = {
+                                viewModel.setWidgetEditMode(it)
+                            }
+                        )
+
+
+                        val websearches by searchVM.websearchResults.observeAsState(emptyList())
+                        val webSearchPadding by animateDpAsState(
+                            if (websearches.isEmpty()) 0.dp else 48.dp
+                        )
+                        SearchColumn(
+                            modifier = Modifier
+                                .requiredWidth(width)
+                                .fillMaxHeight()
+                                .verticalScroll(searchScrollState, reverseScrolling = true)
+                                .imePadding()
+                                .windowInsetsPadding(WindowInsets.safeDrawing)
+                                .padding(horizontal = 8.dp)
+                                .padding(top = 8.dp, bottom = 64.dp)
+                                .padding(bottom = webSearchPadding),
+                            reverse = true,
+                        )
                     }
-
-                    WidgetColumn(
-                        modifier = Modifier
-                            .requiredWidth(width)
-                            .fillMaxHeight()
-                            .nestedScroll(nestedScrollConnection)
-                            .verticalScroll(widgetsScrollState)
-                            .windowInsetsPadding(WindowInsets.safeDrawing)
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp, bottom = 64.dp)
-                            .padding(top = editModePadding),
-                        clockHeight = { clockHeight },
-                        clockBottomPadding = { clockPadding },
-                        editMode = isWidgetEditMode,
-                        onEditModeChange = {
-                            viewModel.setWidgetEditMode(it)
-                        }
-                    )
-
-
-                    val websearches by searchVM.websearchResults.observeAsState(emptyList())
-                    val webSearchPadding by animateDpAsState(
-                        if (websearches.isEmpty()) 0.dp else 48.dp
-                    )
-                    SearchColumn(
-                        modifier = Modifier
-                            .requiredWidth(width)
-                            .fillMaxHeight()
-                            .verticalScroll(searchScrollState, reverseScrolling = true)
-                            .imePadding()
-                            .windowInsetsPadding(WindowInsets.safeDrawing)
-                            .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp, bottom = 64.dp)
-                            .padding(bottom = webSearchPadding),
-                        reverse = true,
-                    )
                 }
             }
         }
