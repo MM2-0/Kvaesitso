@@ -9,6 +9,9 @@ import de.mm20.launcher2.ktx.putDouble
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import kotlin.math.abs
+import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 /**
  * A WeatherProvider that uses lat/lon locations only (instead of provider specific location IDs)
@@ -21,7 +24,12 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
         val geocoder = Geocoder(context)
         val locations =
             withContext(Dispatchers.IO) {
-                geocoder.getFromLocationName(query, 10)
+                try {
+                    geocoder.getFromLocationName(query, 10)
+                } catch (e: IOException) {
+                    CrashReporter.logException(e)
+                    emptyList()
+                }
             }
         return locations.mapNotNull {
             LatLonWeatherLocation(
@@ -37,9 +45,7 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
         lon: Double
     ): WeatherUpdateResult<LatLonWeatherLocation>? {
         return try {
-            val locationName = Geocoder(context).getFromLocation(lat, lon, 1)
-                .firstOrNull()
-                ?.formatToString() ?: "$lat/$lon"
+            val locationName = getLocationName(lat, lon)
             loadWeatherData(
                 LatLonWeatherLocation(
                     name = locationName,
@@ -51,6 +57,39 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
             CrashReporter.logException(e)
             null
         }
+    }
+
+    private suspend fun getLocationName(lat: Double, lon: Double): String {
+        if (!Geocoder.isPresent()) return formatLatLon(lat, lon)
+        return withContext(Dispatchers.IO) {
+            try {
+                Geocoder(context).getFromLocation(lat, lon, 1)
+                    .firstOrNull()
+                    ?.formatToString() ?: formatLatLon(lat, lon)
+            } catch (e: IOException) {
+                CrashReporter.logException(e)
+                formatLatLon(lat, lon)
+            }
+        }
+    }
+
+    private fun formatLatLon(lat: Double, lon: Double): String {
+        val absLat = lat.absoluteValue
+        val absLon = lon.absoluteValue
+
+        val dLat = absLat.toInt()
+        val dLon = absLon.toInt()
+
+        val mLat = ((absLat - dLat) * 60).roundToInt()
+
+        val mLon = ((absLon - dLon) * 60).roundToInt()
+
+
+        val dmsLat = "$dLat°$mLat'${if (lat >= 0) "N" else "S"}"
+
+        val dmsLon = "$dLon°$mLon'${if (lat >= 0) "E" else "W"}"
+
+        return "$dmsLat $dmsLon"
     }
 
     override fun setLocation(location: WeatherLocation?) {
