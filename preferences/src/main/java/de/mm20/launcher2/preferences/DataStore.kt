@@ -22,7 +22,7 @@ internal val Context.dataStore: LauncherDataStore by dataStore(
     }
 )
 
-internal const val SchemaVersion = 7
+internal const val SchemaVersion = 8
 
 internal fun getMigrations(context: Context): List<DataMigration<Settings>> {
     return listOf(
@@ -33,5 +33,6 @@ internal fun getMigrations(context: Context): List<DataMigration<Settings>> {
         Migration_4_5(),
         Migration_5_6(),
         Migration_6_7(),
+        Migration_7_8(),
     )
 }

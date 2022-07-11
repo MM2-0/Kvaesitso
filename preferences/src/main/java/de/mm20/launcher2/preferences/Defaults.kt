@@ -11,6 +11,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setTheme(Settings.AppearanceSettings.Theme.System)
                 .setColorScheme(Settings.AppearanceSettings.ColorScheme.Default)
                 .setDimWallpaper(false)
+                .setBlurWallpaper(true)
                 .setCustomColors(Settings.AppearanceSettings.CustomColors.newBuilder()
                     .setAdvancedMode(false)
                     .setBaseColors(DefaultCustomColorsBase)

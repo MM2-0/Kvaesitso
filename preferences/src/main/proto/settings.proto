@@ -77,6 +77,8 @@ message Settings {
       SystemDefault = 1;
     }
     Font font = 10;
+
+    bool blur_wallpaper = 11;
   }
   AppearanceSettings appearance = 2;
 

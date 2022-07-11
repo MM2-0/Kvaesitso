@@ -131,9 +131,11 @@ fun PullDownScaffold(
 
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
+    val blurEnabled by viewModel.wallpaperBlur.observeAsState(false)
+
     val blurWallpaper by remember {
         derivedStateOf {
-            isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0
+            blurEnabled && (isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0)
         }
     }
 

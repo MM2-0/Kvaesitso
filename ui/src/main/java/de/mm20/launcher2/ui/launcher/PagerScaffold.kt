@@ -126,11 +126,14 @@ fun PagerScaffold(
         }
     }
 
+    val blurEnabled by viewModel.wallpaperBlur.observeAsState(false)
+
     val blurWallpaper by remember {
         derivedStateOf {
-            isSearchOpen || swipeableState.progress.to == Page.Widgets && swipeableState.progress.fraction <= 0.5f ||
-                    swipeableState.progress.to == Page.Search && swipeableState.progress.fraction > 0.5f ||
-                    !isWidgetsScrollZero
+            blurEnabled && (
+                    isSearchOpen || swipeableState.progress.to == Page.Widgets && swipeableState.progress.fraction <= 0.5f ||
+                            swipeableState.progress.to == Page.Search && swipeableState.progress.fraction > 0.5f ||
+                            !isWidgetsScrollZero)
         }
     }
 

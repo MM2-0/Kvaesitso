@@ -1,10 +1,14 @@
 package de.mm20.launcher2.ui.settings.appearance
 
+import android.content.Context
 import android.content.Intent
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.getSystemService
 import androidx.lifecycle.*
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.*
@@ -80,6 +84,22 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
             dataStore.updateData {
                 it.toBuilder()
                     .setAppearance(it.appearance.toBuilder().setDimWallpaper(dimWallpaper))
+                    .build()
+            }
+        }
+    }
+
+    fun isBlurAvailable(context: Context): Boolean {
+        if (!isAtLeastApiLevel(31)) return false
+        return context.getSystemService<WindowManager>()?.isCrossWindowBlurEnabled == true
+    }
+
+    val blurWallpaper = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
+    fun setBlurWallpaper(blurWallpaper: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppearance(it.appearance.toBuilder().setBlurWallpaper(blurWallpaper))
                     .build()
             }
         }

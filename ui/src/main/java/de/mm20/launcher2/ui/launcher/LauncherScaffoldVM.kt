@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.first
@@ -47,4 +48,6 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         isSearchOpen.value = false
         isWidgetEditMode.value = editMode
     }
+
+    val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
 }

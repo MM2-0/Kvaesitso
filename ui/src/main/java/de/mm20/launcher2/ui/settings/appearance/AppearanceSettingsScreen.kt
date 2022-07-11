@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -28,9 +27,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
@@ -155,6 +154,22 @@ fun AppearanceSettingsScreen() {
                         viewModel.setDimWallpaper(it)
                     }
                 )
+                if (isAtLeastApiLevel(31)) {
+                    val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
+                    val blurWallpaper by viewModel.blurWallpaper.observeAsState()
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_blur_wallpaper),
+                        summary = stringResource(
+                            if (isBlurSupported) R.string.preference_blur_wallpaper_summary
+                            else R.string.preference_blur_wallpaper_unsupported
+                        ),
+                        value = blurWallpaper == true && isBlurSupported,
+                        onValueChanged = {
+                            viewModel.setBlurWallpaper(it)
+                        },
+                        enabled = isBlurSupported
+                    )
+                }
             }
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
                 val iconShape by viewModel.iconShape.observeAsState(IconSettings.IconShape.PlatformDefault)
