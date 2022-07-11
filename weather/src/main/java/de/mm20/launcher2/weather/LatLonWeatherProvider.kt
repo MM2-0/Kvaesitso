@@ -9,7 +9,6 @@ import de.mm20.launcher2.ktx.putDouble
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
-import kotlin.math.abs
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
@@ -20,6 +19,15 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
 
 
     override suspend fun lookupLocation(query: String): List<LatLonWeatherLocation> {
+        val parts = query.split(" ", limit = 3)
+        val lat = parts.getOrNull(0)?.toDoubleOrNull()
+        val lon = parts.getOrNull(1)?.toDoubleOrNull()
+        if (lat != null && lon != null && lat >= -90 && lat <= 90 && lon >= -180 && lon <= 180) {
+            val name = parts.getOrElse(2) { getLocationName(lat, lon) }
+            return listOf(
+                LatLonWeatherLocation(name, lat, lon)
+            )
+        }
         if (!Geocoder.isPresent()) return emptyList()
         val geocoder = Geocoder(context)
         val locations =
