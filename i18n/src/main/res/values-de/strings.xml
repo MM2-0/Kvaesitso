@@ -436,4 +436,7 @@
     <string name="preference_enforce_icon_shape_summary">Form auch auf Symbole anwenden, die dies normalerweise nicht unterstützen</string>
     <string name="preference_font">Schriftart</string>
     <string name="preference_font_system">Systemstandard</string>
+    <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
+    <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
+    <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
 </resources>
