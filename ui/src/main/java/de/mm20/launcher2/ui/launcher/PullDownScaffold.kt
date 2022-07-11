@@ -215,7 +215,7 @@ fun PullDownScaffold(
         }
     }
 
-    val insets = WindowInsets.systemBars.asPaddingValues()
+    val insets = WindowInsets.safeDrawing.asPaddingValues()
     Box(
         modifier = modifier
             .nestedScroll(nestedScrollConnection)
@@ -261,7 +261,7 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(searchScrollState)
-                            .systemBarsPadding()
+                            .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
                             .padding(top = 56.dp)
                             .padding(top = webSearchPadding)
@@ -288,7 +288,7 @@ fun PullDownScaffold(
                             .fillMaxWidth()
                             .requiredHeight(height)
                             .verticalScroll(widgetsScrollState)
-                            .systemBarsPadding()
+                            .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
                             .padding(top = editModePadding),
                         clockHeight = { clockHeight },
@@ -311,7 +311,7 @@ fun PullDownScaffold(
         ) {
             CenterAlignedTopAppBar(
                 modifier = Modifier
-                    .systemBarsPadding(),
+                    .windowInsetsPadding(WindowInsets.safeDrawing),
                 title = {
                     Text(stringResource(R.string.menu_edit_widgets))
                 },
@@ -344,7 +344,7 @@ fun PullDownScaffold(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .systemBarsPadding()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset.value.toInt()) }
                 .offset {

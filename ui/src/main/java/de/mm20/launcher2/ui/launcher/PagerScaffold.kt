@@ -194,7 +194,7 @@ fun PagerScaffold(
         }
     }
 
-    val insets = WindowInsets.systemBars.asPaddingValues()
+    val insets = WindowInsets.safeDrawing.asPaddingValues()
 
     Box(
         modifier = modifier
@@ -258,7 +258,7 @@ fun PagerScaffold(
                             .fillMaxHeight()
                             .nestedScroll(nestedScrollConnection)
                             .verticalScroll(widgetsScrollState)
-                            .systemBarsPadding()
+                            .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp, bottom = 64.dp)
                             .padding(top = editModePadding),
@@ -281,7 +281,7 @@ fun PagerScaffold(
                             .fillMaxHeight()
                             .verticalScroll(searchScrollState, reverseScrolling = true)
                             .imePadding()
-                            .systemBarsPadding()
+                            .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(horizontal = 8.dp)
                             .padding(top = 8.dp, bottom = 64.dp)
                             .padding(bottom = webSearchPadding),
@@ -327,7 +327,7 @@ fun PagerScaffold(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
-                .systemBarsPadding()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
                 .imePadding()
                 .offset(y = widgetEditModeOffset),
             level = { searchBarLevel }, focused = focusSearchBar, onFocusChange = {
