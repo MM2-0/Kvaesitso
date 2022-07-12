@@ -283,7 +283,7 @@ dependencyResolutionManagement {
 
             alias("leakcanary")
                 .to("com.squareup.leakcanary", "leakcanary-android")
-                .version("2.7")
+                .version("2.9.1")
 
             alias("suncalc")
                 .to("org.shredzone.commons", "commons-suncalc")
