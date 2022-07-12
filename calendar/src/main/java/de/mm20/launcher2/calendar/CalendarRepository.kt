@@ -110,8 +110,11 @@ internal class CalendarRepositoryImpl(
                 ) ?: return@withContext mutableListOf()
                 val attendees = mutableListOf<String>()
                 while (cur.moveToNext()) {
-                    attendees.add(cur.getString(1).takeUnless { it.isNullOrBlank() }
-                        ?: cur.getString(2))
+                    attendees.add(
+                        cur.getStringOrNull(1).takeUnless { it.isNullOrBlank() }
+                            ?: cur.getStringOrNull(2)
+                            ?: continue
+                    )
                 }
                 cur.close()
                 val allday = cursor.getInt(4) > 0
@@ -123,13 +126,13 @@ internal class CalendarRepositoryImpl(
                     0
                 }
                 val event = CalendarEvent(
-                    label = cursor.getString(1) ?: "",
+                    label = cursor.getStringOrNull(1) ?: "",
                     id = cursor.getLong(0),
                     color = cursor.getInt(5),
                     startTime = begin - tzOffset,
                     endTime = cursor.getLong(3) - tzOffset - if (allday) 1 else 0,
                     allDay = allday,
-                    location = cursor.getString(6) ?: "",
+                    location = cursor.getStringOrNull(6) ?: "",
                     attendees = attendees,
                     description = cursor.getStringOrNull(8)
                         ?: "",
@@ -189,8 +192,8 @@ internal class CalendarRepositoryImpl(
                     calendars.add(
                         UserCalendar(
                             id = cursor.getLong(0),
-                            name = cursor.getString(5) ?: cursor.getString(1) ?: "",
-                            owner = cursor.getString(2),
+                            name = cursor.getStringOrNull(5) ?: cursor.getStringOrNull(1) ?: "",
+                            owner = cursor.getStringOrNull(2) ?: "",
                             color = cursor.getInt(3)
                         )
                     )

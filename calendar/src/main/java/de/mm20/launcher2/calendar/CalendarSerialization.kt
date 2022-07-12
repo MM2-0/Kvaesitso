@@ -51,12 +51,12 @@ class CalendarEventDeserializer(val context: Context): SearchableDeserializer {
         val cursor = context.contentResolver.query(uri, projection, selection, selArgs, null)
             ?: return null
         if (cursor.moveToNext()) {
-            val title = cursor.getString(1)
+            val title = cursor.getStringOrNull(1) ?: ""
             val begin = cursor.getLong(2)
             val end = cursor.getLong(3)
             val allday = cursor.getInt(4) != 0
             val color = cursor.getInt(5)
-            val location = cursor.getString(6)
+            val location = cursor.getStringOrNull(6)
             val calendar = cursor.getLong(7)
             val description = cursor.getStringOrNull(8)
                 ?: ""
@@ -74,8 +74,11 @@ class CalendarEventDeserializer(val context: Context): SearchableDeserializer {
             ) ?: return null
             val attendees = mutableListOf<String>()
             while (cur.moveToNext()) {
-                attendees.add(cur.getString(1).takeUnless { it.isNullOrBlank() }
-                    ?: cur.getString(2))
+                attendees.add(
+                    cur.getStringOrNull(1).takeUnless { it.isNullOrBlank() }
+                    ?: cur.getStringOrNull(2)
+                    ?: continue
+                )
             }
             cur.close()
             val tzOffset = if (allday) {
