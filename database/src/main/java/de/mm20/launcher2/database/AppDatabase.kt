@@ -17,7 +17,8 @@ import de.mm20.launcher2.database.entities.*
     CurrencyEntity::class,
     IconEntity::class,
     IconPackEntity::class,
-    WidgetEntity::class], version = 15, exportSchema = true)
+    WidgetEntity::class,
+    CustomAttributeEntity::class], version = 16, exportSchema = true)
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -57,7 +58,8 @@ abstract class AppDatabase : RoomDatabase() {
                                     Migration_11_12(),
                                     Migration_12_13(),
                                     Migration_13_14(),
-                                    Migration_14_15()
+                                    Migration_14_15(),
+                                    Migration_15_16(),
                             ).build()
             if (_instance == null) _instance = instance
             return instance
@@ -149,5 +151,17 @@ class Migration_13_14 : Migration(13, 14) {
 }
 class Migration_14_15 : Migration(14, 15) {
     override fun migrate(database: SupportSQLiteDatabase) {
+    }
+}
+class Migration_15_16 : Migration(15, 16) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("""
+            CREATE TABLE IF NOT EXISTS `CustomAttributes` (
+                `key` TEXT NOT NULL,
+                `type` TEXT NOT NULL,
+                `value` TEXT NOT NULL,
+                `id` INTEGER PRIMARY KEY AUTOINCREMENT
+            )
+            """.trimIndent())
     }
 }
