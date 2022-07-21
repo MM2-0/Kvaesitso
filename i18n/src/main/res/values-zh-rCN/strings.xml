@@ -357,7 +357,7 @@
     <string name="file_meta_app_pkgname">安装包名称: %1$s</string>
     <string name="preference_music_filter_sources_summary">忽略那些非音乐应用的媒体会话</string>
     <string name="preference_search_bar_style">风格</string>
-    <string name="preference_search_bar_auto_focus">弹出键盘</string>
+    <string name="preference_search_bar_auto_focus">打开键盘</string>
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="no_account_nextcloud">您尚未连接Nextcloud帐户</string>
