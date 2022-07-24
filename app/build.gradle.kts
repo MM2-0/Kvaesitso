@@ -117,6 +117,7 @@ dependencies {
     implementation(project(":contacts"))
     implementation(project(":crashreporter"))
     implementation(project(":currencies"))
+    implementation(project(":customattrs"))
     implementation(project(":favorites"))
     implementation(project(":files"))
     implementation(project(":g-services"))

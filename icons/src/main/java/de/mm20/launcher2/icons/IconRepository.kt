@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.util.LruCache
+import de.mm20.launcher2.customattrs.AdaptifiedLegacyIcon
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
+import de.mm20.launcher2.customattrs.CustomIcon
 import de.mm20.launcher2.icons.providers.*
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
@@ -19,7 +22,8 @@ import kotlinx.coroutines.launch
 class IconRepository(
     val context: Context,
     private val iconPackManager: IconPackManager,
-    private val dataStore: LauncherDataStore
+    private val dataStore: LauncherDataStore,
+    private val customAttributesRepository: CustomAttributesRepository,
 ) {
 
     private val appReceiver = object : BroadcastReceiver() {
@@ -93,34 +97,52 @@ class IconRepository(
     fun getIcon(searchable: Searchable, size: Int): Flow<LauncherIcon> = channelFlow {
         iconProviders.collectLatest { providers ->
             transformations.collectLatest { transformations ->
-                var icon = cache.get(searchable.key)
-                if (icon != null) {
-                    send(icon)
-                    return@collectLatest
-                }
+                customAttributesRepository.getCustomIcon(searchable).collectLatest { customIcon ->
 
-                val placeholder = placeholderProvider?.getIcon(searchable, size)
-                placeholder?.let { send(it) }
+                    val transforms = getTransformations(customIcon) ?: transformations
 
-                for (provider in providers) {
-                    val ic = provider.getIcon(searchable, size)
-                    if (ic != null) {
-                        icon = ic
-                        break
+                    var icon = cache.get(searchable.key + customIcon.hashCode())
+                    if (icon != null) {
+                        send(icon)
+                        return@collectLatest
                     }
-                }
-                if (icon != null) {
-                    if (icon is StaticLauncherIcon) {
-                        for (transformation in transformations) {
-                            icon = transformation.transform(icon as StaticLauncherIcon)
+
+                    val placeholder = placeholderProvider?.getIcon(searchable, size)
+                    placeholder?.let { send(it) }
+
+                    for (provider in providers) {
+                        val ic = provider.getIcon(searchable, size)
+                        if (ic != null) {
+                            icon = ic
+                            break
                         }
                     }
+                    if (icon != null) {
+                        if (icon is StaticLauncherIcon) {
+                            for (transformation in transforms) {
+                                icon = transformation.transform(icon as StaticLauncherIcon)
+                            }
+                        }
 
-                    cache.put(searchable.key, icon)
-                    send(icon)
+                        cache.put(searchable.key + customIcon.hashCode(), icon)
+                        send(icon)
+                    }
                 }
             }
         }
+    }
+
+    private fun getTransformations(customIcon: CustomIcon?): List<LauncherIconTransformation>? {
+        customIcon ?: return null
+        if (customIcon is AdaptifiedLegacyIcon) {
+            return listOf(
+                LegacyToAdaptiveTransformation(
+                    foregroundScale = customIcon.fgScale,
+                    backgroundColor = customIcon.bgColor
+                )
+            )
+        }
+        return null
     }
 
 

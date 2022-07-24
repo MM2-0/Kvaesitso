@@ -60,7 +60,7 @@ dependencyResolutionManagement {
                 listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
             )
 
-            version("androidx.compose.compiler", "1.2.0")
+            version("androidx.compose.compiler", "1.3.0-beta01")
             alias("androidx.compose.runtime")
                 .to("androidx.compose.runtime", "runtime")
                 .version("1.2.0-rc03")

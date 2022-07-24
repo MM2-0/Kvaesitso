@@ -7,13 +7,16 @@ import de.mm20.launcher2.icons.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-internal class LegacyToAdaptiveTransformation: LauncherIconTransformation {
+internal class LegacyToAdaptiveTransformation(
+    private val foregroundScale: Float = 0.7f,
+    private val backgroundColor: Int = 1,
+): LauncherIconTransformation {
     override suspend fun transform(icon: StaticLauncherIcon): StaticLauncherIcon {
         if (icon.backgroundLayer !is TransparentLayer) return icon
 
-        val bgColor = extractColor(icon.foregroundLayer)
+        val bgColor = if (backgroundColor == 1) extractColor(icon.foregroundLayer) else backgroundColor
         return StaticLauncherIcon(
-            foregroundLayer = scale(icon.foregroundLayer, 0.7f),
+            foregroundLayer = scale(icon.foregroundLayer, foregroundScale),
             backgroundLayer = ColorLayer(bgColor)
         )
     }

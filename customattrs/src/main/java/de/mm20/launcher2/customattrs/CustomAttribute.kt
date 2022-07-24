@@ -10,7 +10,8 @@ sealed interface CustomAttribute {
     fun toDatabaseEntity(key: String): CustomAttributeEntity
 
     companion object {
-        internal fun fromDatabaseEntity(entity: CustomAttributeEntity): CustomAttribute? {
+        internal fun fromDatabaseEntity(entity: CustomAttributeEntity?): CustomAttribute? {
+            if (entity == null) return null
             return when (entity.type) {
                 CustomAttributeType.Label.value -> CustomLabel(
                     label = entity.value
