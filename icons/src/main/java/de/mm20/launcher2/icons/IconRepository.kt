@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.util.LruCache
 import de.mm20.launcher2.customattrs.AdaptifiedLegacyIcon
 import de.mm20.launcher2.customattrs.CustomAttributesRepository
@@ -118,11 +119,7 @@ class IconRepository(
                         }
                     }
                     if (icon != null) {
-                        if (icon is StaticLauncherIcon) {
-                            for (transformation in transforms) {
-                                icon = transformation.transform(icon as StaticLauncherIcon)
-                            }
-                        }
+                        icon = applyTransformations(icon, transforms)
 
                         cache.put(searchable.key + customIcon.hashCode(), icon)
                         send(icon)
@@ -156,4 +153,77 @@ class IconRepository(
         return iconPackManager.getInstalledIconPacks()
     }
 
+    suspend fun getCustomIconSuggestions(
+        searchable: Searchable,
+        size: Int
+    ): List<CustomIconSuggestion> {
+        val suggestions = mutableListOf<CustomIconSuggestion>()
+
+        var rawIcon = iconProviders.first().firstNotNullOfOrNull {
+            it.getIcon(searchable, size)
+        }
+
+        if (rawIcon == null) {
+            rawIcon = placeholderProvider?.getIcon(searchable, size)
+        }
+
+        if (rawIcon == null) {
+            return emptyList()
+        }
+
+        val defaultTransformations = transformations.first()
+
+        val defaultTransformedIcon = applyTransformations(rawIcon, defaultTransformations)
+
+        suggestions.add(CustomIconSuggestion(
+            defaultTransformedIcon,
+            null,
+        ))
+
+        if (rawIcon is StaticLauncherIcon && rawIcon.backgroundLayer is TransparentLayer) {
+            val adaptifyOptions = listOf(
+                AdaptifiedLegacyIcon(
+                    fgScale = 1.25f,
+                    bgColor = 1
+                ),
+                AdaptifiedLegacyIcon(
+                    fgScale = 0.7f,
+                    bgColor = 0
+                ),
+                AdaptifiedLegacyIcon(
+                    fgScale = 0.7f,
+                    bgColor = Color.WHITE,
+                )
+            )
+            suggestions.addAll(
+                adaptifyOptions.mapNotNull {
+                    val transformation = getTransformations(it)?.firstOrNull() ?: return@mapNotNull null
+                    CustomIconSuggestion(
+                        icon = transformation.transform(rawIcon),
+                        data = it,
+                    )
+
+                }
+            )
+        }
+
+        return suggestions
+
+    }
+
+    private suspend fun applyTransformations(icon: LauncherIcon, transformations: List<LauncherIconTransformation>): LauncherIcon {
+        var icon = icon
+        if (icon is StaticLauncherIcon) {
+            for (transformation in transformations) {
+                icon = transformation.transform(icon as StaticLauncherIcon)
+            }
+        }
+        return icon
+    }
+
 }
+
+data class CustomIconSuggestion(
+    val icon: LauncherIcon,
+    val data: CustomIcon?,
+)
