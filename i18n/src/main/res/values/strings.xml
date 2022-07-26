@@ -17,6 +17,7 @@
     <string name="menu_app_info">App info</string>
     <!-- Launch an app -->
     <string name="menu_launch">Launch</string>
+    <string name="menu_customize">Customize</string>
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
     <string name="menu_hide">Hide</string>
@@ -619,4 +620,6 @@
     <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
     <string name="restore_select_components">Select what to restore. Existing data will be overwritten!</string>
     <string name="restore_complete">The backup has been restored.</string>
+
+    <string name="icon_picker_title">Pick icon</string>
 </resources>

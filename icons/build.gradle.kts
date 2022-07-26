@@ -53,6 +53,6 @@ dependencies {
     implementation(project(":search"))
     implementation(project(":applications"))
     implementation(project(":crashreporter"))
-    implementation(project(":customattrs"))
+    api(project(":customattrs"))
 
 }
