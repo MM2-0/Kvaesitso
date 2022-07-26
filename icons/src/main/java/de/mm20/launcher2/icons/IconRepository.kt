@@ -73,7 +73,8 @@ class IconRepository(
                     providers.add(
                         IconPackIconProvider(
                             context,
-                            settings.iconPack
+                            settings.iconPack,
+                            iconPackManager
                         )
                     )
                 }

@@ -5,16 +5,25 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
+import android.content.res.Resources
 import android.content.res.XmlResourceParser
+import android.graphics.*
+import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
 import java.io.InputStreamReader
+import kotlin.math.roundToInt
 
 private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
     "com.google.android.apps.nexuslauncher", // Pixel Launcher
@@ -25,22 +34,203 @@ private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
 
 
 class IconPackManager(
-    val context: Context
+    private val context: Context,
+    private val appDatabase: AppDatabase,
 ) {
     suspend fun getInstalledIconPacks(): List<IconPack> {
         return withContext(Dispatchers.IO) {
-            AppDatabase.getInstance(context).iconDao().getInstalledIconPacks().map {
+            appDatabase.iconDao().getInstalledIconPacks().map {
                 IconPack(it)
             }
         }
     }
 
-    @Synchronized
     suspend fun updateIconPacks() {
         withContext(Dispatchers.IO) {
             UpdateIconPacksWorker(context).doWork()
         }
     }
+
+    suspend fun getIcon(iconPack: String, componentName: ComponentName, size: Int): LauncherIcon? {
+        val res = try {
+            context.packageManager.getResourcesForApplication(iconPack)
+        } catch (e: PackageManager.NameNotFoundException) {
+            Log.e("MM20", "Icon pack package $iconPack not found!")
+            return null
+        }
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val icon = iconDao.getIcon(componentName.flattenToString(), iconPack)
+            ?: return null
+
+        val drawableName = icon.drawable ?: return null
+
+        if (icon.type == "calendar") {
+            return getIconPackCalendarIcon(context, iconPack, drawableName)
+        }
+        val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
+            ?: return null
+        val drawable = ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
+        return when (drawable) {
+            is AdaptiveIconDrawable -> {
+                return StaticLauncherIcon(
+                    foregroundLayer = drawable.foreground?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                    backgroundLayer = drawable.background?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                )
+            }
+            else -> {
+                StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = drawable,
+                        scale = 1f
+                    ),
+                    backgroundLayer = TransparentLayer
+                )
+            }
+        }
+    }
+
+    suspend fun generateIcon(
+        context: Context,
+        iconPack: String,
+        baseIcon: Drawable,
+        size: Int
+    ): LauncherIcon? {
+        val back = getIconBack(iconPack)
+        val upon = getIconUpon(iconPack)
+        val mask = getIconMask(iconPack)
+        val scale = getPackScale(iconPack)
+
+        if (back == null && upon == null && mask == null) {
+            return null
+        }
+
+        val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
+
+        val canvas = Canvas(bitmap)
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.isFilterBitmap = true
+        paint.isDither = true
+
+
+        var inBounds: Rect
+        var outBounds: Rect
+
+        val icon = baseIcon.toBitmap(width = size, height = size)
+
+        inBounds = Rect(0, 0, icon.width, icon.height)
+        outBounds = Rect(
+            (bitmap.width * (1 - scale) * 0.5).roundToInt(),
+            (bitmap.height * (1 - scale) * 0.5).roundToInt(),
+            (bitmap.width - bitmap.width * (1 - scale) * 0.5).roundToInt(),
+            (bitmap.height - bitmap.height * (1 - scale) * 0.5).roundToInt()
+        )
+        canvas.drawBitmap(icon, inBounds, outBounds, paint)
+
+        val pack = iconPack
+        val pm = context.packageManager
+        val res = try {
+            pm.getResourcesForApplication(pack)
+        } catch (e: Resources.NotFoundException) {
+            return null
+        }
+
+        if (mask != null) {
+            res.getIdentifier(mask, "drawable", pack).takeIf { it != 0 }?.let {
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
+                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskBmp = maskDrawable.toBitmap(size, size)
+                inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
+                outBounds = Rect(0, 0, bitmap.width, bitmap.height)
+                canvas.drawBitmap(maskBmp, inBounds, outBounds, paint)
+            }
+        }
+        if (upon != null) {
+            res.getIdentifier(upon, "drawable", pack).takeIf { it != 0 }?.let {
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
+                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskBmp = maskDrawable.toBitmap(size, size)
+                inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
+                outBounds = Rect(0, 0, bitmap.width, bitmap.height)
+                canvas.drawBitmap(maskBmp, inBounds, outBounds, paint)
+            }
+        }
+        if (back != null) {
+            res.getIdentifier(back, "drawable", pack).takeIf { it != 0 }?.let {
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
+                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskBmp = maskDrawable.toBitmap(size, size)
+                inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
+                outBounds = Rect(0, 0, bitmap.width, bitmap.height)
+                canvas.drawBitmap(maskBmp, inBounds, outBounds, paint)
+            }
+        }
+
+        return StaticLauncherIcon(
+            foregroundLayer = StaticIconLayer(
+                icon = BitmapDrawable(context.resources, bitmap),
+                scale = 1f,
+            ),
+            backgroundLayer = TransparentLayer
+        )
+    }
+
+    private suspend fun getIconBack(iconPack: String): String? {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconbacks = iconDao.getIconBacks(iconPack)
+        return iconbacks.randomElementOrNull()
+    }
+
+    private suspend fun getIconUpon(iconPack: String): String? {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconupons = iconDao.getIconUpons(iconPack)
+        return iconupons.randomElementOrNull()
+    }
+
+    private suspend fun getIconMask(iconPack: String): String? {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconmasks = iconDao.getIconMasks(iconPack)
+        return iconmasks.randomElementOrNull()
+    }
+
+    private suspend fun getPackScale(iconPack: String): Float {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        return iconDao.getScale(iconPack) ?: 1f
+    }
+
+    private fun getIconPackCalendarIcon(
+        context: Context,
+        iconPack: String,
+        baseIconName: String
+    ): DynamicCalendarIcon? {
+        val resources = try {
+            context.packageManager.getResourcesForApplication(iconPack)
+        } catch (e: PackageManager.NameNotFoundException) {
+            return null
+        }
+        val drawableIds = (1..31).map {
+            val drawableName = baseIconName + it
+            val id = resources.getIdentifier(drawableName, "drawable", iconPack)
+            if (id == 0) return null
+            id
+        }.toIntArray()
+        return DynamicCalendarIcon(
+            resources = resources,
+            resourceIds = drawableIds
+        )
+    }
+
+
 }
 
 

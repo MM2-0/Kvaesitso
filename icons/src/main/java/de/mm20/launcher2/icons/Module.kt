@@ -4,6 +4,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val iconsModule = module {
-    single { IconPackManager(androidContext()) }
+    single { IconPackManager(androidContext(), get()) }
     single { IconRepository(androidContext(), get(), get(), get()) }
 }
