@@ -51,14 +51,14 @@ class IconPackManager(
         }
     }
 
-    suspend fun getIcon(iconPack: String, componentName: ComponentName, size: Int): LauncherIcon? {
+    suspend fun getIcon(iconPack: String, componentName: ComponentName): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
             Log.e("MM20", "Icon pack package $iconPack not found!")
             return null
         }
-        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconDao = appDatabase.iconDao()
         val icon = iconDao.getIcon(componentName.flattenToString(), iconPack)
             ?: return null
 
@@ -185,26 +185,32 @@ class IconPackManager(
         )
     }
 
+    suspend fun getIcons(componentName: ComponentName): List<IconPackIcon> {
+        val iconDao = appDatabase.iconDao()
+        return iconDao.getIconsFromAllPacks(componentName.flattenToString())
+            .map { IconPackIcon(it) }
+    }
+
     private suspend fun getIconBack(iconPack: String): String? {
-        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconDao = appDatabase.iconDao()
         val iconbacks = iconDao.getIconBacks(iconPack)
         return iconbacks.randomElementOrNull()
     }
 
     private suspend fun getIconUpon(iconPack: String): String? {
-        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconDao = appDatabase.iconDao()
         val iconupons = iconDao.getIconUpons(iconPack)
         return iconupons.randomElementOrNull()
     }
 
     private suspend fun getIconMask(iconPack: String): String? {
-        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconDao = appDatabase.iconDao()
         val iconmasks = iconDao.getIconMasks(iconPack)
         return iconmasks.randomElementOrNull()
     }
 
     private suspend fun getPackScale(iconPack: String): Float {
-        val iconDao = AppDatabase.getInstance(context).iconDao()
+        val iconDao = appDatabase.iconDao()
         return iconDao.getScale(iconPack) ?: 1f
     }
 

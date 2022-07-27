@@ -1,6 +1,5 @@
 package de.mm20.launcher2.customattrs
 
-import android.graphics.Color
 import android.util.Log
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
@@ -76,7 +75,7 @@ sealed class CustomIcon : CustomAttribute {
             return when (type) {
                 "custom_icon_pack_icon" -> {
                     CustomIconPackIcon(
-                        iconName = payload.getString("icon"),
+                        iconComponentName = payload.getString("icon"),
                         iconPackPackage = payload.getString("icon_pack")
                     )
                 }
@@ -85,6 +84,9 @@ sealed class CustomIcon : CustomAttribute {
                         iconName = payload.getString("icon"),
                         iconPackPackage = payload.getString("icon_pack")
                     )
+                }
+                "default_icon" -> {
+                    UnmodifiedSystemDefaultIcon
                 }
                 "adaptified_legacy_icon" -> {
                     AdaptifiedLegacyIcon(
@@ -100,12 +102,12 @@ sealed class CustomIcon : CustomAttribute {
 
 data class CustomIconPackIcon(
     val iconPackPackage: String,
-    val iconName: String,
+    val iconComponentName: String,
 ) : CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "custom_icon_pack_icon",
-            "icon" to iconName,
+            "icon" to iconComponentName,
             "icon_pack" to iconPackPackage,
         ).toString()
     }
@@ -151,4 +153,16 @@ data class CustomThemedIcon(
             "icon_pack" to iconPackPackage,
         ).toString()
     }
+}
+
+/**
+ * Use default icon, ignore any icon pack, themed icon or force adaptive settings.
+ */
+object UnmodifiedSystemDefaultIcon: CustomIcon() {
+    override fun toDatabaseValue(): String {
+        return jsonObjectOf(
+            "type" to "default_icon"
+        ).toString()
+    }
+
 }
