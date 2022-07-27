@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
 import de.mm20.launcher2.database.entities.WidgetEntity
@@ -37,4 +38,13 @@ interface BackupRestoreDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun importWebsearches(items: List<WebsearchEntity>)
+
+    @Query("DELETE FROM CustomAttributes")
+    suspend fun wipeCustomAttributes()
+
+    @Query("SELECT * FROM CustomAttributes LIMIT :limit OFFSET :offset")
+    suspend fun exportCustomAttributes(limit: Int, offset: Int): List<CustomAttributeEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun importCustomAttributes(items: List<CustomAttributeEntity>)
 }

@@ -45,5 +45,6 @@ dependencies {
     implementation(project(":widgets"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))
+    implementation(project(":customattrs"))
 
 }

@@ -4,6 +4,7 @@ enum class BackupComponent(val value: String) {
     Settings("settings"),
     Favorites("favorites"),
     Widgets("widgets"),
+    Customizations("customizations"),
     Websearches("websearches");
 
     companion object {

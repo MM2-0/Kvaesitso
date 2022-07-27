@@ -3,6 +3,7 @@ package de.mm20.launcher2.backup
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.export
@@ -25,6 +26,7 @@ class BackupManager(
     private val favoritesRepository: FavoritesRepository,
     private val widgetRepository: WidgetRepository,
     private val websearchRepository: WebsearchRepository,
+    private val customAttrsRepository: CustomAttributesRepository,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -74,6 +76,10 @@ class BackupManager(
                 websearchRepository.export(backupDir)
             }
 
+            if (include.contains(BackupComponent.Customizations)) {
+                customAttrsRepository.export(backupDir)
+            }
+
             createArchive(backupDir, outputStream)
             outputStream.close()
 
@@ -109,6 +115,10 @@ class BackupManager(
 
                 if (include.contains(BackupComponent.Websearches)) {
                     websearchRepository.import(restoreDir)
+                }
+
+                if (include.contains(BackupComponent.Customizations)) {
+                    customAttrsRepository.import(restoreDir)
                 }
             }
         }
@@ -175,7 +185,7 @@ class BackupManager(
 
     companion object {
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 0
+        private const val BackupFormatMinor = 1
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }

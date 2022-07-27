@@ -173,6 +173,7 @@ fun RestoreBackupSheet(
                                                 BackupComponent.Settings -> Icons.Rounded.Settings
                                                 BackupComponent.Websearches -> Icons.Rounded.TravelExplore
                                                 BackupComponent.Widgets -> Icons.Rounded.Widgets
+                                                BackupComponent.Customizations -> Icons.Rounded.Edit
                                             },
                                             contentDescription = null
                                         )
@@ -183,6 +184,7 @@ fun RestoreBackupSheet(
                                                     BackupComponent.Settings -> R.string.backup_component_settings
                                                     BackupComponent.Websearches -> R.string.backup_component_websearches
                                                     BackupComponent.Widgets -> R.string.backup_component_widgets
+                                                    BackupComponent.Customizations -> R.string.backup_component_customizations
                                                 }
                                             ),
                                             style = MaterialTheme.typography.titleMedium,
