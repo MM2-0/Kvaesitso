@@ -191,6 +191,12 @@ class IconPackManager(
             .map { IconPackIcon(it) }
     }
 
+    suspend fun getIcons(iconPack: String, offset: Int, limit: Int): List<IconPackIcon> {
+        val iconDao = appDatabase.iconDao()
+        return iconDao.getIcons(iconPack, offset, limit)
+            .map { IconPackIcon(it) }
+    }
+
     private suspend fun getIconBack(iconPack: String): String? {
         val iconDao = appDatabase.iconDao()
         val iconbacks = iconDao.getIconBacks(iconPack)

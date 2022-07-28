@@ -19,6 +19,9 @@ interface IconDao {
     @Query("SELECT * FROM Icons WHERE componentName = :componentName AND (type = 'app' OR type = 'calendar')")
     suspend fun getIconsFromAllPacks(componentName: String): List<IconEntity>
 
+    @Query("SELECT * FROM Icons WHERE iconPack = :iconPack AND (type = 'app' OR type = 'calendar') LIMIT :limit OFFSET :offset")
+    suspend fun getIcons(iconPack: String, offset: Int, limit: Int): List<IconEntity>
+
     @Query("DELETE FROM Icons WHERE iconPack = :iconPack")
     fun deleteIcons(iconPack: String)
 

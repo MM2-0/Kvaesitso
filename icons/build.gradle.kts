@@ -39,7 +39,8 @@ dependencies {
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.palette)
-    implementation(libs.androidx.paging.runtime)
+
+    implementation(libs.androidx.paging.common)
 
     implementation(libs.materialcomponents.core)
 

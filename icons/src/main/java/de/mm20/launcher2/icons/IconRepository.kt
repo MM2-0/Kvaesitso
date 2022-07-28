@@ -6,10 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.util.LruCache
+import androidx.paging.PagingSource
 import de.mm20.launcher2.customattrs.*
 import de.mm20.launcher2.icons.providers.*
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
+import de.mm20.launcher2.icons.transformations.apply
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
@@ -112,10 +114,10 @@ class IconRepository(
                     val placeholder = placeholderProvider?.getIcon(searchable, size)
                     placeholder?.let { send(it) }
 
-                    icon = getFirstIcon(searchable, size, provs)
+                    icon = provs.getFirstIcon(searchable, size)
 
                     if (icon != null) {
-                        icon = applyTransformations(icon, transforms)
+                        icon = transforms.apply(icon)
 
                         cache.put(searchable.key + customIcon.hashCode(), icon)
                         send(icon)
@@ -172,21 +174,17 @@ class IconRepository(
     suspend fun getCustomIconSuggestions(
         searchable: Searchable,
         size: Int
-    ): List<CustomIconSuggestion> {
-        val suggestions = mutableListOf<CustomIconSuggestion>()
+    ): List<CustomIconWithPreview> {
+        val suggestions = mutableListOf<CustomIconWithPreview>()
 
-        var rawIcon = getFirstIcon(searchable, size, iconProviders.first())
-
-        if (rawIcon == null) {
-            return emptyList()
-        }
+        val rawIcon = iconProviders.first().getFirstIcon(searchable, size) ?: return emptyList()
 
         val defaultTransformations = transformations.first()
 
-        val defaultTransformedIcon = applyTransformations(rawIcon, defaultTransformations)
+        val defaultTransformedIcon = defaultTransformations.apply(rawIcon)
 
         suggestions.add(
-            CustomIconSuggestion(
+            CustomIconWithPreview(
                 defaultTransformedIcon,
                 null,
             )
@@ -229,11 +227,11 @@ class IconRepository(
                 val transformations = getTransformations(it) ?: defaultTransformations
                 val providers = getProviders(it)
 
-                val icon = getFirstIcon(searchable, size, providers) ?: rawIcon
+                val icon = providers.getFirstIcon(searchable, size) ?: rawIcon
 
-                CustomIconSuggestion(
-                    icon = applyTransformations(icon, transformations),
-                    data = it,
+                CustomIconWithPreview(
+                    preview = transformations.apply(icon),
+                    customIcon = it,
                 )
 
             }
@@ -261,11 +259,11 @@ class IconRepository(
             providerOptions.mapNotNull {
                 val providers = getProviders(it)
 
-                val icon = getFirstIcon(searchable, size, providers) ?: return@mapNotNull null
+                val icon = providers.getFirstIcon(searchable, size) ?: return@mapNotNull null
 
-                CustomIconSuggestion(
-                    icon = applyTransformations(icon, defaultTransformations),
-                    data = it,
+                CustomIconWithPreview(
+                    preview = defaultTransformations.apply(icon),
+                    customIcon = it,
                 )
 
             }
@@ -275,31 +273,8 @@ class IconRepository(
 
     }
 
-    private suspend fun getFirstIcon(
-        searchable: Searchable,
-        size: Int,
-        providers: List<IconProvider>
-    ): LauncherIcon? {
-        for (provider in providers) {
-            val icon = provider.getIcon(searchable, size)
-            if (icon != null) {
-                return icon
-            }
-        }
-        return null
-    }
-
-    private suspend fun applyTransformations(
-        icon: LauncherIcon,
-        transformations: List<LauncherIconTransformation>
-    ): LauncherIcon {
-        var transformedIcon = icon
-        if (transformedIcon is StaticLauncherIcon) {
-            for (transformation in transformations) {
-                transformedIcon = transformation.transform(transformedIcon as StaticLauncherIcon)
-            }
-        }
-        return transformedIcon
+    suspend fun getAllIconsFromPack(iconPack: String): PagingSource<Int, CustomIconWithPreview> {
+        return IconPackPagingSource(iconPackManager, iconPack, transformations.first())
     }
 
     fun setCustomIcon(searchable: Searchable, icon: CustomIcon?) {
@@ -308,7 +283,7 @@ class IconRepository(
 
 }
 
-data class CustomIconSuggestion(
-    val icon: LauncherIcon,
-    val data: CustomIcon?,
+data class CustomIconWithPreview(
+    val preview: LauncherIcon,
+    val customIcon: CustomIcon?,
 )

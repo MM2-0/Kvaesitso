@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.paging.compose.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -24,6 +28,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
@@ -108,6 +114,15 @@ fun CustomizeSearchableSheet(
             val suggestions by
             remember { viewModel.getIconSuggestions(iconSizePx.toInt()) }
                 .observeAsState(emptyList())
+
+            val iconPackIcons by remember {
+                viewModel.getAllIconsFromAllIconPacks()
+            }.observeAsState(emptyList())
+
+            val pagingItems = iconPackIcons.map {
+                it.flow.collectAsLazyPagingItems()
+            }
+
             LazyVerticalGrid(columns = GridCells.Fixed(LocalGridColumns.current)) {
                 items(suggestions) {
                     Box(
@@ -116,15 +131,49 @@ fun CustomizeSearchableSheet(
                     ) {
                         ShapedLauncherIcon(
                             size = iconSize,
-                            icon = it.icon,
+                            icon = it.preview,
                             onClick = {
-                                viewModel.pickIcon(it.data)
+                                viewModel.pickIcon(it.customIcon)
                             }
                         )
+                    }
+                }
+                for (pager in pagingItems) {
+                    itemsIndexed(pager) { index, item ->
+                        Box(
+                            contentAlignment = Alignment.Center,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        ) {
+                            ShapedLauncherIcon(
+                                size = iconSize,
+                                icon = item?.preview,
+                                onClick = {
+                                    viewModel.pickIcon(item?.customIcon)
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
     }
+}
 
+fun <T : Any> LazyGridScope.itemsIndexed(
+    items: LazyPagingItems<T>,
+    key: ((index: Int, item: T) -> Any)? = null,
+    itemContent: @Composable LazyGridScope.(index: Int, value: T?) -> Unit
+) {
+    items(
+        count = items.itemCount,
+        key = if (key == null) null else { index ->
+            val item = items.peek(index)
+            if (item == null) {
+            } else {
+                key(index, item)
+            }
+        }
+    ) { index ->
+        this@itemsIndexed.itemContent(index, items[index])
+    }
 }
