@@ -3,6 +3,7 @@ package de.mm20.launcher2.icons
 import android.content.res.Resources
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.Transformations
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import java.time.Instant
 import java.time.ZoneId
@@ -11,8 +12,8 @@ internal class DynamicCalendarIcon(
     val resources: Resources,
     val resourceIds: IntArray,
     val isThemed: Boolean = false,
-    private val transformations: List<LauncherIconTransformation> = emptyList(),
-) : DynamicLauncherIcon {
+    private var transformations: List<LauncherIconTransformation> = emptyList(),
+) : DynamicLauncherIcon, TransformableDynamicLauncherIcon {
 
     init {
         if (resourceIds.size < 31) throw IllegalArgumentException("DynamicCalendarIcon resourceIds must at least have 31 items")
@@ -66,5 +67,9 @@ internal class DynamicCalendarIcon(
             icon = transformation.transform(icon)
         }
         return icon
+    }
+
+    override fun setTransformations(transformations: List<LauncherIconTransformation>) {
+        this.transformations = transformations
     }
 }
