@@ -1,7 +1,10 @@
 package de.mm20.launcher2.ui.launcher.search.common.customattrs
 
 import android.graphics.drawable.InsetDrawable
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -16,6 +19,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -48,6 +52,7 @@ fun CustomizeSearchableSheet(
             Text(stringResource(if (pickIcon) R.string.icon_picker_title else R.string.menu_customize))
         },
         swipeToDismiss = { !pickIcon },
+        dismissOnBackPress = { !pickIcon },
         confirmButton = {
             if (pickIcon) {
                 OutlinedButton(onClick = { viewModel.closeIconPicker() }) {
@@ -94,8 +99,14 @@ fun CustomizeSearchableSheet(
                     modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp),
-                    value = "",
+                        .padding(top = 24.dp)
+                        .clickable {
+                            Toast
+                                .makeText(context, "Soon™", Toast.LENGTH_SHORT)
+                                .show()
+                        },
+                    enabled = false,
+                    value = searchable.label,
                     onValueChange = {},
                     placeholder = {
                         Text(searchable.label)

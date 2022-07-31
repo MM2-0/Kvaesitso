@@ -37,6 +37,7 @@ fun BottomSheetDialog(
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
     swipeToDismiss: () -> Boolean = { true },
+    dismissOnBackPress: () -> Boolean = { true },
     content: @Composable () -> Unit,
 ) {
     val swipeState = remember {
@@ -102,7 +103,8 @@ fun BottomSheetDialog(
     Dialog(
         properties = DialogProperties(
             usePlatformDefaultWidth = false,
-            dismissOnClickOutside = true
+            dismissOnClickOutside = true,
+            dismissOnBackPress = dismissOnBackPress()
         ),
         onDismissRequest = onDismissRequest,
     ) {
