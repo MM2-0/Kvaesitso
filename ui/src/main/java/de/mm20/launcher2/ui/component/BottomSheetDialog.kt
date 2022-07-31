@@ -36,13 +36,17 @@ fun BottomSheetDialog(
     actions: @Composable RowScope.() -> Unit = {},
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
+    swipeToDismiss: () -> Boolean = { true },
     content: @Composable () -> Unit,
 ) {
     val swipeState = remember {
         SwipeableState(
             initialValue = SwipeState.Dismiss,
             confirmStateChange = {
-                if (it == SwipeState.Dismiss) onDismissRequest()
+                if (it == SwipeState.Dismiss) {
+                    if (swipeToDismiss()) onDismissRequest()
+                    else return@SwipeableState false
+                }
                 return@SwipeableState true
             }
         )
