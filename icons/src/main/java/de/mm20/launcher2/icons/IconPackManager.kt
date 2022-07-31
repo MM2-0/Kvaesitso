@@ -69,7 +69,11 @@ class IconPackManager(
         }
         val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
             ?: return null
-        val drawable = ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
+        val drawable = try {
+            ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
+        } catch (e: Resources.NotFoundException) {
+            return null
+        }
         return when (drawable) {
             is AdaptiveIconDrawable -> {
                 return StaticLauncherIcon(
@@ -148,7 +152,11 @@ class IconPackManager(
         if (mask != null) {
             res.getIdentifier(mask, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
-                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskDrawable = try {
+                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                } catch (e: Resources.NotFoundException) {
+                    return null
+                }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
                 outBounds = Rect(0, 0, bitmap.width, bitmap.height)
@@ -158,7 +166,11 @@ class IconPackManager(
         if (upon != null) {
             res.getIdentifier(upon, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
-                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskDrawable = try {
+                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                } catch (e: Resources.NotFoundException) {
+                    return null
+                }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
                 outBounds = Rect(0, 0, bitmap.width, bitmap.height)
@@ -168,7 +180,11 @@ class IconPackManager(
         if (back != null) {
             res.getIdentifier(back, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
-                val maskDrawable = ResourcesCompat.getDrawable(res, it, null) ?: return null
+                val maskDrawable = try {
+                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                } catch (e: Resources.NotFoundException) {
+                    return null
+                }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
                 outBounds = Rect(0, 0, bitmap.width, bitmap.height)
