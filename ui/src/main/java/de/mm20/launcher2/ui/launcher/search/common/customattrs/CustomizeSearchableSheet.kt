@@ -186,10 +186,6 @@ fun CustomizeSearchableSheet(
                     }
                 } else {
 
-                    item(span = { GridItemSpan(columns) }) {
-                        Separator(stringResource(R.string.icon_picker_packs))
-                    }
-
                     items(iconResults) {
                         IconPreview(
                             it,
