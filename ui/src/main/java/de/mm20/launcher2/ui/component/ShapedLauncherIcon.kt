@@ -120,7 +120,14 @@ fun ShapedLauncherIcon(
                 tonalElevation = 1.dp,
                 modifier = Modifier
                     .size(size * 0.33f)
-                    .align(Alignment.BottomEnd),
+                    .align(Alignment.BottomEnd)
+                    .combinedClickable(
+                        enabled = onClick != null || onLongClick != null,
+                        onClick = {
+                            onClick?.invoke()
+                        },
+                        onLongClick = onLongClick,
+                    ),
                 color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {

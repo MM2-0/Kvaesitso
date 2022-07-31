@@ -89,7 +89,7 @@ fun BottomSheetDialog(
                 available: Velocity
             ): Velocity {
                 if (available.y < 0) {
-                    return super.onPreFling(available)
+                    return super.onPostFling(consumed, available)
                 }
                 swipeState.performFling(available.y)
                 return available.copy(x = 0f)
