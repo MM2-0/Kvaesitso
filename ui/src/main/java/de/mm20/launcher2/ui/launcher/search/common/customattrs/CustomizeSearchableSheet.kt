@@ -2,41 +2,34 @@ package de.mm20.launcher2.ui.launcher.search.common.customattrs
 
 import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyGridScope
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.paging.compose.itemsIndexed
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridColumns
+import kotlinx.coroutines.launch
 
 @Composable
 fun CustomizeSearchableSheet(
@@ -111,69 +104,146 @@ fun CustomizeSearchableSheet(
         } else {
             val iconSize = 48.dp
             val iconSizePx = iconSize.toPixels()
-            val suggestions by
-            remember { viewModel.getIconSuggestions(iconSizePx.toInt()) }
+
+            val scope = rememberCoroutineScope()
+
+            val suggestions by remember { viewModel.getIconSuggestions(iconSizePx.toInt()) }
                 .observeAsState(emptyList())
 
-            val iconPackIcons by remember {
-                viewModel.getAllIconsFromAllIconPacks()
-            }.observeAsState(emptyList())
+            val defaultIcon by remember {
+                viewModel.getDefaultIcon(iconSizePx.toInt())
+            }.observeAsState()
 
-            val pagingItems = iconPackIcons.map {
-                it.flow.collectAsLazyPagingItems()
-            }
+            var query by remember { mutableStateOf("") }
+            val isSearching by viewModel.isSearchingIcons.observeAsState(initial = false)
+            val iconResults by viewModel.iconSearchResults.observeAsState(emptyList())
 
-            LazyVerticalGrid(columns = GridCells.Fixed(LocalGridColumns.current)) {
-                items(suggestions) {
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier.padding(vertical = 8.dp)
-                    ) {
-                        ShapedLauncherIcon(
-                            size = iconSize,
-                            icon = it.preview,
-                            onClick = {
-                                viewModel.pickIcon(it.customIcon)
+            val columns = LocalGridColumns.current
+
+            LazyVerticalGrid(
+                modifier = Modifier.fillMaxSize(),
+                columns = GridCells.Fixed(columns)
+            ) {
+
+                item(span = { GridItemSpan(columns) }) {
+                    OutlinedTextField(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Search,
+                                contentDescription = null
+                            )
+                        },
+                        trailingIcon = {
+                            if (query.isNotEmpty()) {
+                                IconButton(onClick = {
+                                    query = ""
+                                    scope.launch {
+                                        viewModel.searchIcon("")
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Clear,
+                                        contentDescription = null
+                                    )
+                                }
                             }
+                        },
+                        value = query,
+                        onValueChange = {
+                            query = it
+                            scope.launch {
+                                viewModel.searchIcon(query)
+                            }
+                        },
+                        label = {
+                            Text(stringResource(R.string.icon_picker_search_icon))
+                        }
+                    )
+                }
+
+                if (query.isEmpty()) {
+                    if (defaultIcon != null) {
+                        item(span = { GridItemSpan(columns) }) {
+                            Separator(stringResource(R.string.icon_picker_default_icon))
+                        }
+                        item {
+                            IconPreview(item = defaultIcon, iconSize = iconSize, onClick = {
+                                viewModel.pickIcon(null)
+                            })
+                        }
+                    }
+                    item(span = { GridItemSpan(columns) }) {
+                        Separator(stringResource(R.string.icon_picker_suggestions))
+                    }
+
+                    items(suggestions) {
+                        IconPreview(
+                            it,
+                            iconSize,
+                            onClick = { viewModel.pickIcon(it.customIcon) }
                         )
                     }
-                }
-                for (pager in pagingItems) {
-                    itemsIndexed(pager) { index, item ->
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.padding(vertical = 8.dp)
-                        ) {
-                            ShapedLauncherIcon(
-                                size = iconSize,
-                                icon = item?.preview,
-                                onClick = {
-                                    viewModel.pickIcon(item?.customIcon)
-                                }
-                            )
+                } else {
+
+                    item(span = { GridItemSpan(columns) }) {
+                        Separator(stringResource(R.string.icon_picker_packs))
+                    }
+
+                    items(iconResults) {
+                        IconPreview(
+                            it,
+                            iconSize,
+                            onClick = { viewModel.pickIcon(it.customIcon) }
+                        )
+                    }
+
+                    if (isSearching) {
+                        item(span = { GridItemSpan(columns) }) {
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .padding(12.dp)
+                                        .size(24.dp)
+                                )
+                            }
                         }
                     }
                 }
+
             }
         }
     }
 }
 
-fun <T : Any> LazyGridScope.itemsIndexed(
-    items: LazyPagingItems<T>,
-    key: ((index: Int, item: T) -> Any)? = null,
-    itemContent: @Composable LazyGridScope.(index: Int, value: T?) -> Unit
+@Composable
+fun IconPreview(
+    item: CustomIconWithPreview?,
+    iconSize: Dp,
+    onClick: () -> Unit,
 ) {
-    items(
-        count = items.itemCount,
-        key = if (key == null) null else { index ->
-            val item = items.peek(index)
-            if (item == null) {
-            } else {
-                key(index, item)
-            }
-        }
-    ) { index ->
-        this@itemsIndexed.itemContent(index, items[index])
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
+        ShapedLauncherIcon(
+            size = iconSize,
+            icon = item?.preview,
+            onClick = onClick
+        )
     }
+}
+
+@Composable
+fun Separator(label: String) {
+    Text(
+        label,
+        textAlign = TextAlign.Center,
+        style = MaterialTheme.typography.titleSmall,
+        modifier = Modifier
+            .padding(top = 16.dp, bottom = 8.dp)
+            .fillMaxWidth()
+    )
 }

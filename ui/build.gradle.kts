@@ -64,7 +64,6 @@ dependencies {
     implementation(libs.androidx.compose.animationgraphics)
 
     implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.paging.compose)
 
     implementation(libs.composecolorpicker)
 

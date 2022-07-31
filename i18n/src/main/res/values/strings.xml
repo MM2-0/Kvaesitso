@@ -623,4 +623,8 @@
     <string name="restore_complete">The backup has been restored.</string>
 
     <string name="icon_picker_title">Pick icon</string>
+    <string name="icon_picker_default_icon">Default</string>
+    <string name="icon_picker_suggestions">Suggestions</string>
+    <string name="icon_picker_packs">Icon packs</string>
+    <string name="icon_picker_search_icon">Search icon</string>
 </resources>

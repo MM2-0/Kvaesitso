@@ -6,12 +6,11 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.util.LruCache
-import androidx.paging.PagingSource
 import de.mm20.launcher2.customattrs.*
 import de.mm20.launcher2.icons.providers.*
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
-import de.mm20.launcher2.icons.transformations.apply
+import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
@@ -117,7 +116,7 @@ class IconRepository(
                     icon = provs.getFirstIcon(searchable, size)
 
                     if (icon != null) {
-                        icon = transforms.apply(icon)
+                        icon = icon.transform(transforms)
 
                         cache.put(searchable.key + customIcon.hashCode(), icon)
                         send(icon)
@@ -181,15 +180,6 @@ class IconRepository(
 
         val defaultTransformations = transformations.first()
 
-        val defaultTransformedIcon = defaultTransformations.apply(rawIcon)
-
-        suggestions.add(
-            CustomIconWithPreview(
-                defaultTransformedIcon,
-                null,
-            )
-        )
-
         val customIcons = mutableListOf<CustomIcon>(UnmodifiedSystemDefaultIcon)
 
         if (rawIcon is StaticLauncherIcon && rawIcon.backgroundLayer is TransparentLayer) {
@@ -230,7 +220,7 @@ class IconRepository(
                 val icon = providers.getFirstIcon(searchable, size) ?: rawIcon
 
                 CustomIconWithPreview(
-                    preview = transformations.apply(icon),
+                    preview = icon.transform(transformations),
                     customIcon = it,
                 )
 
@@ -240,7 +230,7 @@ class IconRepository(
         val providerOptions = mutableListOf<CustomIcon>()
 
         if (searchable is LauncherApp) {
-            val iconPackIcons = iconPackManager.getIcons(
+            val iconPackIcons = iconPackManager.getAllIconPackIcons(
                 searchable.launcherActivityInfo.componentName
             )
 
@@ -262,7 +252,7 @@ class IconRepository(
                 val icon = providers.getFirstIcon(searchable, size) ?: return@mapNotNull null
 
                 CustomIconWithPreview(
-                    preview = defaultTransformations.apply(icon),
+                    preview = icon.transform(defaultTransformations),
                     customIcon = it,
                 )
 
@@ -273,8 +263,28 @@ class IconRepository(
 
     }
 
-    suspend fun getAllIconsFromPack(iconPack: String): PagingSource<Int, CustomIconWithPreview> {
-        return IconPackPagingSource(iconPackManager, iconPack, transformations.first())
+    suspend fun getUncustomizedDefaultIcon(searchable: Searchable, size: Int): CustomIconWithPreview? {
+        val icon = iconProviders.first().getFirstIcon(searchable, size)
+            ?.transform(transformations.first()) ?: return null
+        return CustomIconWithPreview(
+            customIcon = null,
+            preview = icon
+        )
+    }
+
+    suspend fun searchIconPackIcon(query: String): List<CustomIconWithPreview> {
+        val transformations = this.transformations.first()
+        return iconPackManager.searchIconPackIcon(query).mapNotNull {
+            val componentName = it.componentName ?: return@mapNotNull null
+
+            CustomIconWithPreview(
+                customIcon = CustomIconPackIcon(
+                    iconPackPackage = it.iconPack,
+                    iconComponentName = componentName.flattenToString(),
+                ),
+                preview = iconPackManager.getIcon(it.iconPack, componentName)?.transform(transformations) ?: return@mapNotNull null
+            )
+        }
     }
 
     fun setCustomIcon(searchable: Searchable, icon: CustomIcon?) {

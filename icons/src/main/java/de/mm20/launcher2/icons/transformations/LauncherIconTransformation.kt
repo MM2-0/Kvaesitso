@@ -8,17 +8,17 @@ internal interface LauncherIconTransformation {
     suspend fun transform(icon: StaticLauncherIcon): StaticLauncherIcon
 }
 
-internal suspend fun Iterable<LauncherIconTransformation>.apply(icon: LauncherIcon): LauncherIcon {
-    if (icon is StaticLauncherIcon) {
-        var transformedIcon = icon
-        for (transformation in this) {
+internal suspend fun LauncherIcon.transform(transformations: Iterable<LauncherIconTransformation>): LauncherIcon {
+    if (this is StaticLauncherIcon) {
+        var transformedIcon = this
+        for (transformation in transformations) {
             transformedIcon = transformation.transform(transformedIcon as StaticLauncherIcon)
         }
         return transformedIcon
     }
-    if (icon is TransformableDynamicLauncherIcon) {
-        icon.setTransformations(this.toList())
-        return icon
+    if (this is TransformableDynamicLauncherIcon) {
+        this.setTransformations(transformations.toList())
+        return this
     }
-    return icon
+    return this
 }

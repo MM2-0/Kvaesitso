@@ -238,14 +238,6 @@ dependencyResolutionManagement {
                 .to("androidx.navigation", "navigation-compose")
                 .version("2.5.0-rc02")
 
-            alias("androidx.paging.common")
-                .to("androidx.paging", "paging-common-ktx")
-                .version("3.2.0-alpha01")
-            alias("androidx.paging.compose")
-                .to("androidx.paging", "paging-compose")
-                .version("1.0.0-alpha15")
-
-
             alias("materialcomponents.core")
                 .to("com.google.android.material", "material")
                 .version("1.6.0-beta01")

@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.customattrs.CustomIconPackIcon
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
@@ -185,15 +186,9 @@ class IconPackManager(
         )
     }
 
-    suspend fun getIcons(componentName: ComponentName): List<IconPackIcon> {
+    suspend fun getAllIconPackIcons(componentName: ComponentName): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
         return iconDao.getIconsFromAllPacks(componentName.flattenToString())
-            .map { IconPackIcon(it) }
-    }
-
-    suspend fun getIcons(iconPack: String, offset: Int, limit: Int): List<IconPackIcon> {
-        val iconDao = appDatabase.iconDao()
-        return iconDao.getIcons(iconPack, offset, limit)
             .map { IconPackIcon(it) }
     }
 
@@ -240,6 +235,13 @@ class IconPackManager(
             resources = resources,
             resourceIds = drawableIds
         )
+    }
+
+    suspend fun searchIconPackIcon(query: String): List<IconPackIcon> {
+        val iconDao = appDatabase.iconDao()
+        return iconDao.searchIconPackIcons("%$query%").map {
+            IconPackIcon(it)
+        }
     }
 
 
