@@ -57,11 +57,12 @@ fun BottomSheetDialog(
         object : NestedScrollConnection {
 
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (available.y > 0) {
-                    return super.onPreScroll(available, source)
+                val delta = available.toFloat()
+                return if (delta < 0 && source == NestedScrollSource.Drag) {
+                    swipeState.performDrag(delta).toOffset()
+                } else {
+                    Offset.Zero
                 }
-                val c = swipeState.performDrag(available.y)
-                return Offset(0f, c)
             }
 
             override fun onPostScroll(
@@ -69,31 +70,32 @@ fun BottomSheetDialog(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (available.y < 0) {
-                    return super.onPreScroll(available, source)
+                return if (source == NestedScrollSource.Drag) {
+                    swipeState.performDrag(available.toFloat()).toOffset()
+                } else {
+                    Offset.Zero
                 }
-                val c = swipeState.performDrag(available.y)
-                return Offset(0f, c)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                if (available.y > 0) {
-                    return super.onPreFling(available)
+                val toFling = Offset(available.x, available.y).toFloat()
+                return if (toFling < 0 && swipeState.offset.value > 0) {
+                    swipeState.performFling(velocity = toFling)
+                    // since we go to the anchor with tween settling, consume all for the best UX
+                    available
+                } else {
+                    Velocity.Zero
                 }
-                swipeState.performFling(available.y)
-                return available.copy(x = 0f)
             }
 
-            override suspend fun onPostFling(
-                consumed: Velocity,
-                available: Velocity
-            ): Velocity {
-                if (available.y < 0) {
-                    return super.onPostFling(consumed, available)
-                }
-                swipeState.performFling(available.y)
-                return available.copy(x = 0f)
+            override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+                swipeState.performFling(velocity = Offset(available.x, available.y).toFloat())
+                return available
             }
+
+            private fun Float.toOffset(): Offset = Offset(0f, this)
+
+            private fun Offset.toFloat(): Float = this.y
         }
     }
 
