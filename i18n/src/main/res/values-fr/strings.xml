@@ -466,4 +466,7 @@
     <string name="preference_enforce_icon_shape_summary">Appliquer la forme à toutes les icônes, y compris celles qui ne la supporteraient pas normalement</string>
     <string name="preference_font">Police de caractères</string>
     <string name="preference_font_system">Police par défaut du système, dépendante du fournisseur (Google Sans sur les téléphones Google Pixel, Roboto sur AOSP)</string>
+    <string name="preference_blur_wallpaper">Flouter le fond d\'écran</string>
+    <string name="preference_blur_wallpaper_summary">Ajouter un effet de flou sur le fond d\'écran</string>
+    <string name="preference_blur_wallpaper_unsupported">Non supporté sur cet appareil</string>
 </resources>

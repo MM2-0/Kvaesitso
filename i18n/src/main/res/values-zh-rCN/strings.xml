@@ -357,7 +357,7 @@
     <string name="file_meta_app_pkgname">安装包名称: %1$s</string>
     <string name="preference_music_filter_sources_summary">忽略那些非音乐应用的媒体会话</string>
     <string name="preference_search_bar_style">风格</string>
-    <string name="preference_search_bar_auto_focus">弹出键盘</string>
+    <string name="preference_search_bar_auto_focus">打开键盘</string>
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="no_account_nextcloud">您尚未连接Nextcloud帐户</string>
@@ -429,6 +429,11 @@
     <string name="preference_cards_shape_cut">切角</string>
     <string name="preference_cards_shape">形状</string>
     <string name="file_type_launcherbackup">%1$s备份</string>
-    <string name="preference_enforce_icon_shape">强制形状</string>
+    <string name="preference_enforce_icon_shape">强制设置形状</string>
     <string name="preference_enforce_icon_shape_summary">给所有包括正常情况下不支持调整形状的图标设置形状</string>
+    <string name="preference_blur_wallpaper">模糊壁纸</string>
+    <string name="preference_blur_wallpaper_summary">在壁纸上 使用模糊效果</string>
+    <string name="preference_blur_wallpaper_unsupported">在此设备上不受支持</string>
+    <string name="preference_font">字体</string>
+    <string name="preference_font_system">系统默认</string>
 </resources>
