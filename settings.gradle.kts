@@ -250,7 +250,7 @@ dependencyResolutionManagement {
 
             alias("okhttp")
                 .to("com.squareup.okhttp3", "okhttp")
-                .version("4.9.1")
+                .version("4.10.0")
 
             alias("retrofit.core")
                 .to("com.squareup.retrofit2", "retrofit")
@@ -266,7 +266,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("coil", "1.4.0")
+            version("coil", "2.1.0")
             alias("coil.core")
                 .to("io.coil-kt", "coil")
                 .versionRef("coil")

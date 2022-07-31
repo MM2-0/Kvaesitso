@@ -23,7 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import com.godaddy.android.colorpicker.ClassicColorPicker
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
@@ -107,8 +107,8 @@ fun WebsearchPreference(
                         ?: MaterialTheme.colorScheme.primary,
                 )
             } else {
-                Image(
-                    painter = rememberImagePainter(File(icon)),
+                AsyncImage(
+                    model = File(icon),
                     contentDescription = null,
                     modifier = Modifier.sizeIn(maxWidth = 24.dp, maxHeight = 24.dp),
                     contentScale = ContentScale.Inside
@@ -337,8 +337,8 @@ fun EditWebsearchDialog(
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Image(
-                        painter = rememberImagePainter(icon?.let { File(it) }),
+                    AsyncImage(
+                        model = icon?.let { File(it) },
                         contentDescription = null,
                         modifier = Modifier
                             .padding(end = 16.dp)

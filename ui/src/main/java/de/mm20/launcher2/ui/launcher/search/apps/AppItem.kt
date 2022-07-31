@@ -21,7 +21,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.lifecycleScope
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.ui.R
@@ -101,11 +101,8 @@ fun AppItem(
 
                         val icon =
                             remember { not.notification.smallIcon?.loadDrawable(context) }?.let {
-                                rememberImagePainter(
-                                    it,
-                                    builder = {
-                                        crossfade(false)
-                                    }
+                                rememberAsyncImagePainter(
+                                    it
                                 )
                             }
 
@@ -141,10 +138,7 @@ fun AppItem(
                                 )
                             }
                                 ?.let {
-                                    rememberImagePainter(it,
-                                        builder = {
-                                            crossfade(false)
-                                        })
+                                    rememberAsyncImagePainter(it)
                                 }
 
                         Chip(

@@ -80,8 +80,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(applicationContext)
-            .componentRegistry {
-                add(SvgDecoder(applicationContext))
+            .components {
+                add(SvgDecoder.Factory())
             }
             .crossfade(true)
             .crossfade(200)

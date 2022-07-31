@@ -23,7 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
@@ -47,15 +47,14 @@ fun WebsiteItem(
         }
     ) {
         if (website.image.isNotBlank()) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .background(MaterialTheme.colorScheme.secondaryContainer),
-                painter = rememberImagePainter(website.image),
+                model = website.image,
                 contentScale = ContentScale.Crop,
-                contentDescription = null
-            )
+                contentDescription = null)
         }
         Column(
             modifier = Modifier.padding(16.dp),

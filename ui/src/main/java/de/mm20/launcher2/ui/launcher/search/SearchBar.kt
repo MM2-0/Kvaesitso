@@ -38,7 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
@@ -332,9 +332,9 @@ fun SearchBar(
                                         )
                                     )
                                 } else {
-                                    Image(
+                                    AsyncImage(
                                         modifier = Modifier.size(24.dp),
-                                        painter = rememberImagePainter(File(icon)),
+                                        model = File(icon),
                                         contentDescription = null
                                     )
                                 }

@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.search.wikipedia
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,7 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImage
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -48,12 +47,12 @@ fun WikipediaItem(
         }
     ) {
         if (!wikipedia.image.isNullOrEmpty()) {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .background(MaterialTheme.colorScheme.secondaryContainer),
-                painter = rememberImagePainter(wikipedia.image),
+                model = wikipedia.image,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
             )
