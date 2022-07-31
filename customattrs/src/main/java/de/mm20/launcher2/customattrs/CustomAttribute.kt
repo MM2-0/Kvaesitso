@@ -81,8 +81,7 @@ sealed class CustomIcon : CustomAttribute {
                 }
                 "custom_themed_icon" -> {
                     CustomThemedIcon(
-                        iconName = payload.getString("icon"),
-                        iconPackPackage = payload.getString("icon_pack")
+                        iconPackageName = payload.getString("icon"),
                     )
                 }
                 "default_icon" -> {
@@ -143,14 +142,12 @@ data class AdaptifiedLegacyIcon(
 }
 
 data class CustomThemedIcon(
-    val iconPackPackage: String,
-    val iconName: String,
+    val iconPackageName: String,
 ) : CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "custom_themed_icon",
-            "icon" to iconName,
-            "icon_pack" to iconPackPackage,
+            "icon" to iconPackageName,
         ).toString()
     }
 }

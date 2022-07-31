@@ -165,6 +165,20 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val forceThemedIcons = dataStore.data.map { it.icons.forceThemed }.asLiveData()
+    fun setForceThemedIcons(forceThemedIcons: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons.toBuilder()
+                            .setForceThemed(forceThemedIcons)
+                    )
+                    .build()
+            }
+        }
+    }
+
     val installedIconPacks: LiveData<List<IconPack>> = liveData {
         emit(
             listOf(

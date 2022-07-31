@@ -219,7 +219,9 @@ message Settings {
     IconShape shape = 1;
     bool themed_icons = 2;
     string icon_pack = 3;
+    reserved 4;
     bool adaptify = 5;
+    bool force_themed = 6;
   }
   IconSettings icons = 21;
 

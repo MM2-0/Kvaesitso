@@ -19,8 +19,11 @@ interface IconDao {
     @Query("SELECT * FROM Icons WHERE componentName = :componentName AND (type = 'app' OR type = 'calendar')")
     suspend fun getIconsFromAllPacks(componentName: String): List<IconEntity>
 
-    @Query("SELECT * FROM Icons WHERE (type = 'app' OR type = 'calendar') AND drawable LIKE :query ORDER BY iconPack, drawable LIMIT :limit")
+    @Query("SELECT * FROM Icons WHERE (type = 'app' OR type = 'calendar') AND (drawable LIKE :query OR componentName LIKE :query) ORDER BY iconPack, drawable LIMIT :limit")
     suspend fun searchIconPackIcons(query: String, limit: Int = 100): List<IconEntity>
+
+    @Query("SELECT * FROM Icons WHERE (type = 'greyscale_icon') AND componentName LIKE :query GROUP BY componentName ORDER BY drawable LIMIT :limit")
+    suspend fun searchGreyscaleIcons(query: String, limit: Int = 100): List<IconEntity>
 
     @Query("DELETE FROM Icons WHERE iconPack = :iconPack")
     fun deleteIcons(iconPack: String)

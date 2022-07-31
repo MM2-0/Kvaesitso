@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.util.LruCache
 import de.mm20.launcher2.customattrs.*
 import de.mm20.launcher2.icons.providers.*
+import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
@@ -66,7 +67,7 @@ class IconRepository(
                 val providers = mutableListOf<IconProvider>()
 
                 if (settings.themedIcons) {
-                    providers.add(ThemedIconProvider(context))
+                    providers.add(ThemedIconProvider(iconPackManager))
                 }
 
                 if (settings.iconPack.isNotBlank()) {
@@ -87,6 +88,7 @@ class IconRepository(
                 val transformations = mutableListOf<LauncherIconTransformation>()
 
                 if (settings.adaptify) transformations.add(LegacyToAdaptiveTransformation())
+                if (settings.themedIcons && settings.forceThemed) transformations.add(ForceThemedIconTransformation())
 
                 this@IconRepository.placeholderProvider = placeholderProvider
                 iconProviders.value = providers
@@ -135,6 +137,14 @@ class IconRepository(
         if (customIcon is CustomIconPackIcon) {
             return listOf(
                 CustomIconPackIconProvider(
+                    customIcon,
+                    iconPackManager
+                )
+            )
+        }
+        if (customIcon is CustomThemedIcon) {
+            return listOf(
+                CustomThemedIconProvider(
                     customIcon,
                     iconPackManager
                 )
@@ -243,6 +253,15 @@ class IconRepository(
                     )
                 }
             )
+
+            val themedIcon = iconPackManager.getGreyscaleIcon(searchable.`package`)
+            if (themedIcon != null && themedIcon.componentName?.packageName != null) {
+                providerOptions.add(
+                    CustomThemedIcon(
+                        iconPackageName = themedIcon.componentName.packageName,
+                    )
+                )
+            }
         }
 
         suggestions.addAll(
@@ -272,9 +291,9 @@ class IconRepository(
         )
     }
 
-    suspend fun searchIconPackIcon(query: String): List<CustomIconWithPreview> {
+    suspend fun searchCustomIcons(query: String): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
-        return iconPackManager.searchIconPackIcon(query).mapNotNull {
+        val iconPackIcons =  iconPackManager.searchIconPackIcon(query).mapNotNull {
             val componentName = it.componentName ?: return@mapNotNull null
 
             CustomIconWithPreview(
@@ -285,6 +304,19 @@ class IconRepository(
                 preview = iconPackManager.getIcon(it.iconPack, componentName)?.transform(transformations) ?: return@mapNotNull null
             )
         }
+
+        val themedIcons = iconPackManager.searchThemedIcons(query).mapNotNull {
+            val componentName = it.componentName ?: return@mapNotNull null
+
+            CustomIconWithPreview(
+                customIcon = CustomThemedIcon(
+                    iconPackageName = componentName.packageName,
+                ),
+                preview = iconPackManager.getThemedIcon(componentName.packageName)?.transform(transformations) ?: return@mapNotNull null
+            )
+        }
+
+        return iconPackIcons + themedIcons
     }
 
     fun setCustomIcon(searchable: Searchable, icon: CustomIcon?) {

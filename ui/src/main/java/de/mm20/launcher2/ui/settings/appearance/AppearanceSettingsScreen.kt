@@ -199,6 +199,16 @@ fun AppearanceSettingsScreen() {
                         viewModel.setThemedIcons(it)
                     }
                 )
+                val forceThemedIcons by viewModel.forceThemedIcons.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_force_themed_icons),
+                    summary = stringResource(R.string.preference_force_themed_icons_summary),
+                    value = forceThemedIcons == true,
+                    enabled = themedIcons == true,
+                    onValueChanged = {
+                        viewModel.setForceThemedIcons(it)
+                    }
+                )
 
                 val iconPack by viewModel.iconPack.observeAsState()
                 val installedIconPacks by viewModel.installedIconPacks.observeAsState(emptyList())

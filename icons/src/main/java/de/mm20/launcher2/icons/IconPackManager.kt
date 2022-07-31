@@ -8,15 +8,14 @@ import android.content.pm.ResolveInfo
 import android.content.res.Resources
 import android.content.res.XmlResourceParser
 import android.graphics.*
-import android.graphics.drawable.AdaptiveIconDrawable
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.graphics.drawable.*
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.customattrs.CustomIconPackIcon
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -237,6 +236,138 @@ class IconPackManager(
         )
     }
 
+    suspend fun getThemedIcon(packageName: String): LauncherIcon? {
+        val icon = getGreyscaleIcon(packageName) ?: return null
+        val resId = icon.drawable?.toIntOrNull() ?: return null
+        try {
+            val resources = context.packageManager.getResourcesForApplication(icon.iconPack)
+            return getThemedClockIcon(resources, resId) ?: getThemedCalendarIcon(
+                resources,
+                resId,
+                iconProviderPackage = icon.iconPack
+            ) ?: getThemedStaticIcon(resources, resId)
+        } catch (e: PackageManager.NameNotFoundException) {
+            CrashReporter.logException(e)
+        }
+        return null
+    }
+
+
+
+
+    suspend fun getGreyscaleIcon(packageName: String): IconPackIcon? {
+        val iconDao = AppDatabase.getInstance(context).iconDao()
+        return iconDao.getGreyscaleIcon(ComponentName(packageName, packageName).flattenToString())
+            ?.let { IconPackIcon(it) }
+
+    }
+
+    private fun getThemedStaticIcon(resources: Resources, resId: Int): LauncherIcon? {
+        try {
+            val fg = ResourcesCompat.getDrawable(resources, resId, null) ?: return null
+            return StaticLauncherIcon(
+                foregroundLayer = TintedIconLayer(
+                    icon = fg,
+                    scale = 0.5f,
+                ),
+                backgroundLayer = ColorLayer()
+            )
+        } catch (e: Resources.NotFoundException) {
+            return null
+        }
+    }
+
+    private fun getThemedClockIcon(resources: Resources, resId: Int): LauncherIcon? {
+        try {
+            val array = resources.obtainTypedArrayOrNull(resId) ?: return null
+            var i = 0
+            var drawable: LayerDrawable? = null
+            var minuteIndex: Int? = null
+            var defaultMinute = 0
+            var hourIndex: Int? = null
+            var defaultHour = 0
+            while (i < array.length()) {
+                when (array.getString(i)) {
+                    "com.android.launcher3.LEVEL_PER_TICK_ICON_ROUND" -> {
+                        i++
+                        drawable = array.getDrawable(i) as? LayerDrawable
+                    }
+                    "com.android.launcher3.HOUR_LAYER_INDEX" -> {
+                        i++
+                        hourIndex = array.getInt(i, -1).takeIf { it != -1 }
+                    }
+                    "com.android.launcher3.MINUTE_LAYER_INDEX" -> {
+                        i++
+                        minuteIndex = array.getInt(i, -1).takeIf { it != -1 }
+                    }
+                    "com.android.launcher3.DEFAULT_HOUR" -> {
+                        i++
+                        defaultHour = array.getInt(i, 0)
+                    }
+                    "com.android.launcher3.DEFAULT_MINUTE" -> {
+                        i++
+                        defaultMinute = array.getInt(i, 0)
+                    }
+                }
+                i++
+            }
+            if (drawable != null && minuteIndex != null && hourIndex != null) {
+
+                return StaticLauncherIcon(
+                    foregroundLayer = TintedClockLayer(
+                        sublayers = (0 until drawable.numberOfLayers).map {
+                            val drw =  drawable.getDrawable(it)
+                            if (drw is RotateDrawable) {
+                                drw.level = when (it) {
+                                    hourIndex -> {
+                                        (12 - defaultHour) * 60
+                                    }
+                                    minuteIndex -> {
+                                        (60 - defaultMinute)
+                                    }
+                                    else -> 0
+                                }
+                            }
+                            ClockSublayer(
+                                drawable = drw,
+                                role = when (it) {
+                                    hourIndex -> ClockSublayerRole.Hour
+                                    minuteIndex -> ClockSublayerRole.Minute
+                                    else -> ClockSublayerRole.Static
+                                }
+                            )
+                        },
+                        scale = 1.5f,
+                    ),
+                    backgroundLayer = ColorLayer()
+                )
+            }
+        } catch (e: Resources.NotFoundException) {
+        }
+        return null
+    }
+
+    private fun getThemedCalendarIcon(
+        resources: Resources,
+        resId: Int,
+        iconProviderPackage: String
+    ): LauncherIcon? {
+        try {
+            val array = resources.obtainTypedArrayOrNull(resId) ?: return null
+            if (array.length() != 31) return null
+
+            return DynamicCalendarIcon(
+                resources = resources,
+                resourceIds = IntArray(31) {
+                    array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
+                },
+                isThemed = true
+            )
+        } catch (e: Resources.NotFoundException) {
+        }
+        return null
+    }
+
     suspend fun searchIconPackIcon(query: String): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
         return iconDao.searchIconPackIcons("%$query%").map {
@@ -244,6 +375,12 @@ class IconPackManager(
         }
     }
 
+    suspend fun searchThemedIcons(query: String): List<IconPackIcon> {
+        val iconDao = appDatabase.iconDao()
+        return iconDao.searchGreyscaleIcons("%$query%").map {
+            IconPackIcon(it)
+        }
+    }
 
 }
 

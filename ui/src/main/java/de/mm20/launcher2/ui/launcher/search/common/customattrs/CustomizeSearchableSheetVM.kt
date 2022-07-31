@@ -60,7 +60,7 @@ class CustomizeSearchableSheetVM(
             debounceSearchJob = launch {
                 delay(1000)
                 isSearchingIcons.value = true
-                iconSearchResults.value = iconRepository.searchIconPackIcon(query)
+                iconSearchResults.value = iconRepository.searchCustomIcons(query)
                 isSearchingIcons.value = false
             }
         }
