@@ -93,6 +93,7 @@ sealed class CustomIcon : CustomAttribute {
                         bgColor = payload.getInt("bg_color")
                     )
                 }
+                "force_themed_icon" -> ForceThemedIcon
                 else -> null
             }
         }
@@ -148,6 +149,14 @@ data class CustomThemedIcon(
         return jsonObjectOf(
             "type" to "custom_themed_icon",
             "icon" to iconPackageName,
+        ).toString()
+    }
+}
+
+object ForceThemedIcon : CustomIcon() {
+    override fun toDatabaseValue(): String {
+        return jsonObjectOf(
+            "type" to "force_themed_icon"
         ).toString()
     }
 }
