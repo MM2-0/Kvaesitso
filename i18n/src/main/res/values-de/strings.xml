@@ -439,4 +439,12 @@
     <string name="preference_blur_wallpaper">Hintergrund weichzeichnen</string>
     <string name="preference_blur_wallpaper_summary">Einen Unschärfeeffekt für das Hintergrundbild verwenden</string>
     <string name="preference_blur_wallpaper_unsupported">Auf diesem Gerät nicht unterstützt</string>
+    <string name="preference_force_themed_icons">Eingefärbte Symbole erzwingen</string>
+    <string name="preference_force_themed_icons_summary">Das Anwendungsfarbschema auf alle Symbole anwenden, einschließlich nicht unterstützter (nicht empfohlen)</string>
+    <string name="backup_component_customizations">Anpassungen</string>
+    <string name="icon_picker_title">Icon wählen</string>
+    <string name="icon_picker_default_icon">Vorgabe</string>
+    <string name="icon_picker_suggestions">Vorschläge</string>
+    <string name="icon_picker_search_icon">Symbol suchen</string>
+    <string name="menu_customize">Anpassen</string>
 </resources>
