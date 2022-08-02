@@ -9,6 +9,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
@@ -78,8 +79,8 @@ fun LauncherTheme(
                 extraSmall = baseShape.copy(CornerSize(cornerRadius / 3f)),
                 small = baseShape.copy(CornerSize(cornerRadius / 3f * 2f)),
                 medium = baseShape.copy(CornerSize(cornerRadius)),
-                large = baseShape.copy(CornerSize(cornerRadius / 3f * 4f)),
-                extraLarge = baseShape.copy(CornerSize(cornerRadius / 3f * 7f)),
+                large = baseShape.copy(CornerSize((cornerRadius / 3f * 4f).coerceAtMost(16.dp))),
+                extraLarge = baseShape.copy(CornerSize((cornerRadius / 3f * 7f).coerceAtMost(28.dp))),
             ),
             content = content
         )
