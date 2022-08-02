@@ -10,10 +10,7 @@ import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
@@ -32,6 +29,7 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -52,6 +50,8 @@ fun AppShortcutItem(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
+
+    var edit by remember { mutableStateOf(false) }
 
     val transition = updateTransition(showDetails, label = "AppShortcutItem")
 
@@ -133,6 +133,14 @@ fun AppShortcutItem(
                     viewModel.openAppInfo(context)
                 })
 
+
+
+            toolbarActions.add(DefaultToolbarAction(
+                label = stringResource(R.string.menu_customize),
+                icon = Icons.Rounded.Edit,
+                action = { edit = true }
+            ))
+
             val isHidden by viewModel.isHidden.collectAsState(false)
             val hideAction = if (isHidden) {
                 DefaultToolbarAction(
@@ -177,6 +185,13 @@ fun AppShortcutItem(
                 rightActions = toolbarActions
             )
         }
+    }
+
+    if (edit) {
+        CustomizeSearchableSheet(
+            searchable = shortcut,
+            onDismiss = { edit = false }
+        )
     }
 }
 
