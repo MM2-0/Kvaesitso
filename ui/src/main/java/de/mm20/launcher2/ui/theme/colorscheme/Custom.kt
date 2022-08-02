@@ -33,5 +33,7 @@ fun CustomColorScheme(colors: Settings.AppearanceSettings.CustomColors.Scheme) :
         onError = Color(colors.onError),
         errorContainer = Color(colors.errorContainer),
         onErrorContainer = Color(colors.onErrorContainer),
+        outlineVariant = Color(colors.outlineVariant),
+        scrim = Color(colors.scrim),
     )
 }

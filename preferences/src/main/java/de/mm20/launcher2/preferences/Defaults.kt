@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import android.graphics.Color
 import scheme.Scheme
 
 fun createFactorySettings(context: Context): Settings {
@@ -195,6 +196,9 @@ internal val DefaultLightCustomColorScheme: Settings.AppearanceSettings.CustomCo
             .setInverseOnSurface(scheme.inverseOnSurface)
             .setInversePrimary(scheme.inversePrimary)
             .setOutline(scheme.outline)
+            //TODO: handle outline variant and scrim properly
+            .setScrim(Color.BLACK)
+            .setOutlineVariant(scheme.surfaceVariant)
             .build()
     }
 
@@ -228,5 +232,8 @@ internal val DefaultDarkCustomColorScheme: Settings.AppearanceSettings.CustomCol
             .setInverseOnSurface(scheme.inverseOnSurface)
             .setInversePrimary(scheme.inversePrimary)
             .setOutline(scheme.outline)
+            //TODO: handle outline variant and scrim properly
+            .setScrim(Color.BLACK)
+            .setOutlineVariant(scheme.surfaceVariant)
             .build()
     }

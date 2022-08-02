@@ -58,6 +58,8 @@ message Settings {
         uint32 on_error = 24;
         uint32 error_container = 25;
         uint32 on_error_container = 26;
+        uint32 outline_variant = 27;
+        uint32 scrim = 28;
       }
       Scheme light_scheme = 3;
       Scheme dark_scheme = 4;
