@@ -170,7 +170,8 @@ fun CustomizeSearchableSheet(
                         },
                         label = {
                             Text(stringResource(R.string.icon_picker_search_icon))
-                        }
+                        },
+                        singleLine = true,
                     )
                 }
 
