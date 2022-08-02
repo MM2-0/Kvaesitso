@@ -36,7 +36,7 @@ fun LicenseScreen(library: OpenSourceLibrary) {
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
             rememberSplineBasedDecay(),
-            rememberTopAppBarScrollState()
+            rememberTopAppBarState()
         )
     Scaffold(
         topBar = {

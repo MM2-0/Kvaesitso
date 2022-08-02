@@ -35,6 +35,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomizeSearchableSheet(
     searchable: Searchable,

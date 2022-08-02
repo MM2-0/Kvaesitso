@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.godaddy.android.colorpicker.ClassicColorPicker
 import de.mm20.launcher2.ui.ktx.toHexString
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColorPreference(
     title: String,

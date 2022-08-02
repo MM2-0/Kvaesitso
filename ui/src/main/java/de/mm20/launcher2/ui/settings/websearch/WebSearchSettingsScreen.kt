@@ -431,6 +431,7 @@ fun EditWebsearchDialog(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColorPicker(
     value: Int,

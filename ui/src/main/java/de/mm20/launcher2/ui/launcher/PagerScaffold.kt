@@ -48,7 +48,8 @@ import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlin.math.roundToInt
 
 @OptIn(
-    ExperimentalMaterialApi::class, ExperimentalFoundationApi::class
+    ExperimentalMaterialApi::class, ExperimentalFoundationApi::class,
+    ExperimentalMaterial3Api::class
 )
 @Composable
 fun PagerScaffold(

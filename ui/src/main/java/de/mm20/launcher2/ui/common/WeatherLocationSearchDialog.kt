@@ -23,6 +23,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.SmallMessage
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WeatherLocationSearchDialog(
     onDismissRequest: () -> Unit
