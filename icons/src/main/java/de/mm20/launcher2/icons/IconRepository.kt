@@ -150,6 +150,9 @@ class IconRepository(
                 )
             )
         }
+        if (customIcon is DefaultPlaceholderIcon) {
+            return placeholderProvider?.let { listOf(it) } ?: emptyList()
+        }
         return emptyList()
     }
 
@@ -262,6 +265,8 @@ class IconRepository(
                 ForceThemedIcon
             )
         }
+
+        providerOptions.add(DefaultPlaceholderIcon)
 
         suggestions.addAll(
             transformationOptions.map {

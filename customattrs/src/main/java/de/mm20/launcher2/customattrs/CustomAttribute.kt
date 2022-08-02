@@ -94,6 +94,7 @@ sealed class CustomIcon : CustomAttribute {
                     )
                 }
                 "force_themed_icon" -> ForceThemedIcon
+                "default_placeholder_icon" -> DefaultPlaceholderIcon
                 else -> null
             }
         }
@@ -171,4 +172,15 @@ object UnmodifiedSystemDefaultIcon: CustomIcon() {
         ).toString()
     }
 
+}
+
+/**
+ * Use the default placeholder icon
+ */
+object DefaultPlaceholderIcon: CustomIcon() {
+    override fun toDatabaseValue(): String {
+        return jsonObjectOf(
+            "type" to "default_placeholder_icon"
+        ).toString()
+    }
 }
