@@ -30,6 +30,7 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -47,6 +48,8 @@ fun FileItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(file.key) { FileItemVM(file) }
+
+    var edit by remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -221,6 +224,12 @@ fun FileItem(
                     }
                 }
 
+                toolbarActions.add(DefaultToolbarAction(
+                    label = stringResource(R.string.menu_customize),
+                    icon = Icons.Rounded.Edit,
+                    action = { edit = true }
+                ))
+
                 val isHidden by viewModel.isHidden.collectAsState(false)
                 val hideAction = if (isHidden) {
                     DefaultToolbarAction(
@@ -266,6 +275,13 @@ fun FileItem(
                 )
             }
         }
+    }
+
+    if (edit) {
+        CustomizeSearchableSheet(
+            searchable = file,
+            onDismiss = { edit = false }
+        )
     }
 }
 

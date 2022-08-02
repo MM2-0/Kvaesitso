@@ -6,16 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.Share
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
@@ -29,6 +23,7 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.utils.htmlToAnnotatedString
 
@@ -40,6 +35,8 @@ fun WikipediaItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(wikipedia) { WikipediaItemVM(wikipedia) }
+
+    var edit by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.clickable {
@@ -111,6 +108,12 @@ fun WikipediaItem(
             )
         )
 
+        toolbarActions.add(DefaultToolbarAction(
+            label = stringResource(R.string.menu_customize),
+            icon = Icons.Rounded.Edit,
+            action = { edit = true }
+        ))
+
         Toolbar(
             leftActions = if (onBack != null) listOf(
                 DefaultToolbarAction(
@@ -120,6 +123,13 @@ fun WikipediaItem(
                 )
             ) else emptyList(),
             rightActions = toolbarActions
+        )
+    }
+
+    if (edit) {
+        CustomizeSearchableSheet(
+            searchable = wikipedia,
+            onDismiss = { edit = false }
         )
     }
 }

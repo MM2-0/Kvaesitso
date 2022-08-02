@@ -14,10 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -37,6 +34,7 @@ import de.mm20.launcher2.ui.icons.Telegram
 import de.mm20.launcher2.ui.icons.WhatsApp
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -55,6 +53,8 @@ fun ContactItem(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
+
+    var edit by remember { mutableStateOf(false) }
 
     val transition = updateTransition(showDetails, label = "ContactItem")
 
@@ -276,7 +276,6 @@ fun ContactItem(
                             }
                         })
                 }
-                toolbarActions.add(hideAction)
 
                 toolbarActions.add(
                     DefaultToolbarAction(
@@ -287,6 +286,15 @@ fun ContactItem(
                         }
                     )
                 )
+
+                toolbarActions.add(DefaultToolbarAction(
+                    label = stringResource(R.string.menu_customize),
+                    icon = Icons.Rounded.Edit,
+                    action = { edit = true }
+                ))
+
+                toolbarActions.add(hideAction)
+
                 Toolbar(
                     leftActions = listOf(
                         DefaultToolbarAction(
@@ -300,6 +308,13 @@ fun ContactItem(
                 )
             }
         }
+    }
+
+    if (edit) {
+        CustomizeSearchableSheet(
+            searchable = contact,
+            onDismiss = { edit = false }
+        )
     }
 }
 
