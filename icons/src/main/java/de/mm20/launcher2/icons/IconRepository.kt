@@ -257,6 +257,10 @@ class IconRepository(
                     ForceThemedIcon
                 )
             }
+        } else {
+            transformationOptions.add(
+                ForceThemedIcon
+            )
         }
 
         suggestions.addAll(
