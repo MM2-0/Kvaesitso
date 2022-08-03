@@ -5,6 +5,8 @@ import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.Transformations
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.time.Instant
 import java.time.ZoneId
 
@@ -19,7 +21,7 @@ internal class DynamicCalendarIcon(
         if (resourceIds.size < 31) throw IllegalArgumentException("DynamicCalendarIcon resourceIds must at least have 31 items")
     }
 
-    override suspend fun getIcon(time: Long): StaticLauncherIcon {
+    override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(Dispatchers.IO) {
         val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
         val resId = resourceIds[day - 1]
 
@@ -27,7 +29,7 @@ internal class DynamicCalendarIcon(
             ResourcesCompat.getDrawable(resources, resId, null)
         } catch (e: Resources.NotFoundException) {
             null
-        } ?: return StaticLauncherIcon(
+        } ?: return@withContext StaticLauncherIcon(
             foregroundLayer = TextLayer(day.toString()),
             backgroundLayer = ColorLayer()
         )
@@ -41,7 +43,7 @@ internal class DynamicCalendarIcon(
                 backgroundLayer = ColorLayer()
             )
         } else if (drawable is AdaptiveIconDrawable) {
-            return StaticLauncherIcon(
+            return@withContext StaticLauncherIcon(
                 foregroundLayer = drawable.foreground?.let {
                     StaticIconLayer(
                         icon = it,
@@ -66,7 +68,7 @@ internal class DynamicCalendarIcon(
         for (transformation in transformations) {
             icon = transformation.transform(icon)
         }
-        return icon
+        return@withContext icon
     }
 
     override fun setTransformations(transformations: List<LauncherIconTransformation>) {
