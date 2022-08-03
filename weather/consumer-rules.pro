@@ -1,0 +1,2 @@
+-keep class de.mm20.launcher2.weather.** { *; }
+-keep class kotlin.coroutines.Continuation
