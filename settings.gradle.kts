@@ -354,10 +354,10 @@ dependencyResolutionManagement {
 
             alias("microsoft.graph")
                 .to("com.microsoft.graph", "microsoft-graph")
-                .version("5.13.0")
+                .version("5.31.0")
             alias("microsoft.identity")
                 .to("com.microsoft.identity.client", "msal")
-                .version("2.2.0")
+                .version("4.0.0")
 
             version("protobuf", "3.14.0")
             alias("protobuf.protoc")
