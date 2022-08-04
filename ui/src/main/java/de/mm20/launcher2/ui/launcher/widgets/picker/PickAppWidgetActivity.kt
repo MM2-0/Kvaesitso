@@ -111,9 +111,6 @@ class PickAppWidgetActivity : BaseActivity() {
 
     private fun configureAppWidget(widget: AppWidgetProviderInfo, appWidgetId: Int) {
         if (widget.configure != null) {
-            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
-            intent.component = widget.configure
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
             widgetHost.startAppWidgetConfigureActivityForResult(
                 this,
                 appWidgetId,
