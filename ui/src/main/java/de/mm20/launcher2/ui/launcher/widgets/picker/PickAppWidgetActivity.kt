@@ -19,10 +19,10 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.theme.LauncherTheme
 
 class PickAppWidgetActivity : BaseActivity() {
 
@@ -39,7 +39,6 @@ class PickAppWidgetActivity : BaseActivity() {
         appWidgetManager = AppWidgetManager.getInstance(this)
 
         val availableWidgets = viewModel.getAvailableWidgets(this)
-        val selectedAppWidget = viewModel.selectedAppWidget
         setContent {
             LauncherTheme {
                 ProvideSettings {
@@ -63,24 +62,25 @@ class PickAppWidgetActivity : BaseActivity() {
                         }
                     ) {
                         val available by availableWidgets.observeAsState()
-                        val selected by selectedAppWidget.observeAsState()
                         val widgets = available
-                        if (selected == null) {
-                            if (widgets != null) {
-                                AppWidgetList(
-                                    modifier = Modifier.fillMaxSize().padding(it),
-                                    widgets = widgets,
-                                    onWidgetSelected = {
-                                        selectAppWidget(it)
-                                    }
-                                )
-                            } else {
-                                Box(
-                                    modifier = Modifier.fillMaxSize().padding(it),
-                                    contentAlignment = Alignment.Center
-                                ) {
-                                    CircularProgressIndicator()
+                        if (widgets != null) {
+                            AppWidgetList(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(it),
+                                widgets = widgets,
+                                onWidgetSelected = {
+                                    selectAppWidget(it)
                                 }
+                            )
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .padding(it),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                CircularProgressIndicator()
                             }
                         }
                     }
@@ -91,30 +91,14 @@ class PickAppWidgetActivity : BaseActivity() {
 
     private fun selectAppWidget(widget: AppWidgetProviderInfo) {
         val appWidgetId = widgetHost.allocateAppWidgetId()
-        viewModel.selectAppWidget(widget, appWidgetId)
-        configureWidget()
+        bindAppWidget(widget, appWidgetId)
     }
 
-    private fun configureWidget() {
-        val appWidgetId = viewModel.appWidgetId.value ?: return
-        val widget = viewModel.selectedAppWidget.value ?: return
+    private fun bindAppWidget(widget: AppWidgetProviderInfo, appWidgetId: Int) {
         val canBind = appWidgetManager.bindAppWidgetIdIfAllowed(appWidgetId, widget.provider)
         Log.d("MM20", "Can bind: $canBind")
         if (canBind) {
-            if (widget.configure != null) {
-                val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
-                intent.component = widget.configure
-                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
-                widgetHost.startAppWidgetConfigureActivityForResult(
-                    this,
-                    appWidgetId,
-                    0,
-                    RequestCodeConfigure,
-                    null
-                )
-            } else {
-                finishWithResult(appWidgetId)
-            }
+            configureAppWidget(widget, appWidgetId)
         } else {
             startActivityForResult(
                 Intent(AppWidgetManager.ACTION_APPWIDGET_BIND).apply {
@@ -125,24 +109,45 @@ class PickAppWidgetActivity : BaseActivity() {
         }
     }
 
+    private fun configureAppWidget(widget: AppWidgetProviderInfo, appWidgetId: Int) {
+        if (widget.configure != null) {
+            val intent = Intent(AppWidgetManager.ACTION_APPWIDGET_CONFIGURE)
+            intent.component = widget.configure
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId)
+            widgetHost.startAppWidgetConfigureActivityForResult(
+                this,
+                appWidgetId,
+                0,
+                RequestCodeConfigure,
+                null
+            )
+        } else {
+            finishWithResult(appWidgetId)
+        }
+    }
+
     @Deprecated("Deprecated in super class")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             RequestCodeBind -> {
+                val appWidgetId =
+                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return
                 if (resultCode == RESULT_OK) {
-                    configureWidget()
+                    val widget = appWidgetManager.getAppWidgetInfo(appWidgetId)
+                    configureAppWidget(widget, appWidgetId)
                 } else {
-                    viewModel.appWidgetId.value?.let { widgetHost.deleteAppWidgetId(it) }
+                    widgetHost.deleteAppWidgetId(appWidgetId)
                     cancel()
                 }
             }
             RequestCodeConfigure -> {
-                val widgetId = viewModel.appWidgetId.value ?: return cancel()
+                val appWidgetId =
+                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return cancel()
                 if (resultCode == RESULT_OK) {
-                    finishWithResult(widgetId)
+                    finishWithResult(appWidgetId)
                 } else {
-                    widgetHost.deleteAppWidgetId(widgetId)
+                    widgetHost.deleteAppWidgetId(appWidgetId)
                     cancel()
                 }
             }

@@ -21,14 +21,6 @@ inline val AppWidgetGroup.widgets: List<AppWidgetProviderInfo>
     get() = this.second
 
 class PickAppWidgetVM : ViewModel() {
-    var appWidgetId: MutableLiveData<Int?> = MutableLiveData(null)
-    val selectedAppWidget: MutableLiveData<AppWidgetProviderInfo?> = MutableLiveData(null)
-
-    fun selectAppWidget(appWidget: AppWidgetProviderInfo, appWidgetId: Int) {
-        this.appWidgetId.value = appWidgetId
-        this.selectedAppWidget.value = appWidget
-    }
-
     fun getAvailableWidgets(context: Context): LiveData<List<AppWidgetGroup>?> = liveData {
         emit(null)
         val appWidgetManager = AppWidgetManager.getInstance(context)
