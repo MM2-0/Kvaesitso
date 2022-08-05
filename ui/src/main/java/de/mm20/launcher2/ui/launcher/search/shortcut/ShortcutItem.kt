@@ -141,6 +141,14 @@ fun AppShortcutItem(
                 action = { edit = true }
             ))
 
+            if (viewModel.canDelete) {
+                toolbarActions.add(DefaultToolbarAction(
+                    label = stringResource(R.string.menu_delete),
+                    icon = Icons.Rounded.Delete,
+                    action = { viewModel.deleteShortcut() }
+                ))
+            }
+
             val isHidden by viewModel.isHidden.collectAsState(false)
             val hideAction = if (isHidden) {
                 DefaultToolbarAction(

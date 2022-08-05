@@ -5,9 +5,9 @@ import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.os.Process
+import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -28,6 +28,8 @@ interface AppShortcutRepository {
     ): List<AppShortcut>
 
     fun search(query: String): Flow<List<AppShortcut>>
+
+    fun removePinnedShortcut(shortcut: AppShortcut)
 }
 
 internal class AppShortcutRepositoryImpl(
@@ -125,6 +127,27 @@ internal class AppShortcutRepositoryImpl(
                 )
             }
         }
+    }
+
+    override fun removePinnedShortcut(shortcut: AppShortcut) {
+        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        if (!launcherApps.hasShortcutHostPermission()) return
+        val pinnedShortcutsQuery = LauncherApps.ShortcutQuery().apply {
+            setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
+        }
+        val userHandle = shortcut.launcherShortcut.userHandle
+        val allPinned = launcherApps.getShortcuts(pinnedShortcutsQuery, userHandle)
+
+        if (allPinned == null) {
+            Log.e("MM20", "Could not remove shortcut ${shortcut.key}: shortcut query returned null")
+            return
+        }
+
+        launcherApps.pinShortcuts(
+            shortcut.launcherShortcut.`package`,
+            allPinned.filter { it.id != shortcut.launcherShortcut.id }.map { it.id },
+            userHandle
+        )
     }
 
 
