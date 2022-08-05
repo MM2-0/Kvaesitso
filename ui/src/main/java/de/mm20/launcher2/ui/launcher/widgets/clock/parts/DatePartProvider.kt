@@ -8,24 +8,18 @@ import android.text.format.DateFormat
 import android.text.format.DateUtils
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
-import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.base.LocalTime
-import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidgetVM
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DatePartProvider: PartProvider {
+class DatePartProvider : PartProvider {
     override fun getRanking(context: Context): Flow<Int> = flow {
         emit(1)
     }
@@ -40,16 +34,16 @@ class DatePartProvider: PartProvider {
                 contentColor = LocalContentColor.current
             ),
             onClick = {
-            val startMillis = System.currentTimeMillis()
-            val builder = CalendarContract.CONTENT_URI.buildUpon()
-            builder.appendPath("time")
-            ContentUris.appendId(builder, startMillis)
-            val intent = Intent(Intent.ACTION_VIEW)
-                .setData(builder.build())
-                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                val startMillis = System.currentTimeMillis()
+                val builder = CalendarContract.CONTENT_URI.buildUpon()
+                builder.appendPath("time")
+                ContentUris.appendId(builder, startMillis)
+                val intent = Intent(Intent.ACTION_VIEW)
+                    .setData(builder.build())
+                    .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
-            context.startActivity(intent)
-        }) {
+                context.tryStartActivity(intent)
+            }) {
             if (verticalLayout) {
                 Text(
                     text = DateUtils.formatDateTime(
@@ -61,7 +55,8 @@ class DatePartProvider: PartProvider {
                 )
             } else {
                 val line1Format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEEE")
-                val line2Format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMMM dd yyyy")
+                val line2Format =
+                    DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMMM dd yyyy")
                 val format = SimpleDateFormat("$line1Format\n$line2Format")
                 Text(
                     text = format.format(time),
