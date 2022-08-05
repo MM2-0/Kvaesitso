@@ -9,6 +9,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
@@ -67,7 +68,7 @@ abstract class SearchableItemVM(
         if (searchable.launch(context, bundle)) {
             favoritesRepository.incrementLaunchCounter(searchable)
             return true
-        } else if (searchable is Application) {
+        } else if (searchable is Application || searchable is AppShortcut) {
             favoritesRepository.remove(searchable)
         }
         return false
