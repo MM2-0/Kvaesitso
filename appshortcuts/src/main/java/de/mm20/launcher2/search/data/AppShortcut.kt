@@ -1,5 +1,6 @@
 package de.mm20.launcher2.search.data
 
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
@@ -46,6 +47,8 @@ class AppShortcut(
         try {
             launcherApps.startShortcut(launcherShortcut, null, options)
         } catch (e: IllegalStateException) {
+            return false
+        } catch (e: ActivityNotFoundException) {
             return false
         }
         return true
