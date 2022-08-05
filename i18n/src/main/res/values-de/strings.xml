@@ -447,4 +447,5 @@
     <string name="icon_picker_suggestions">Vorschläge</string>
     <string name="icon_picker_search_icon">Symbol suchen</string>
     <string name="menu_customize">Anpassen</string>
+    <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
 </resources>
