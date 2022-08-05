@@ -5,6 +5,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -50,7 +52,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
     var showPopup by remember { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val badge by viewModel.badge.collectAsState(null)
+        val badge by remember { viewModel.badge }.collectAsState(null)
         val iconSize = LocalGridIconSize.current.toPixels()
         val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
 

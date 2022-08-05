@@ -18,7 +18,7 @@ fun ColumnScope.AppResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val apps by viewModel.appResults.observeAsState(emptyList())
 
-    AnimatedVisibility(apps.isNotEmpty()) {
+    if (apps.isNotEmpty()) {
         LauncherCard(
             modifier = Modifier
                 .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
