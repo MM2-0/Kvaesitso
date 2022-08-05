@@ -28,6 +28,7 @@ class ShortcutItemVM(private val shortcut: AppShortcut) : SearchableItemVM(short
     }
 
     fun deleteShortcut() {
+        if (!canDelete) return
         shortcutRepository.removePinnedShortcut(shortcut)
         favoritesRepository.unpinItem(shortcut)
     }

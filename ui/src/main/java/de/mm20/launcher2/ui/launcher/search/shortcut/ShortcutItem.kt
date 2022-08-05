@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -51,6 +49,7 @@ fun AppShortcutItem(
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
 
+    var requestDelete by remember { mutableStateOf(false) }
     var edit by remember { mutableStateOf(false) }
 
     val transition = updateTransition(showDetails, label = "AppShortcutItem")
@@ -145,7 +144,7 @@ fun AppShortcutItem(
                 toolbarActions.add(DefaultToolbarAction(
                     label = stringResource(R.string.menu_delete),
                     icon = Icons.Rounded.Delete,
-                    action = { viewModel.deleteShortcut() }
+                    action = { requestDelete = true }
                 ))
             }
 
@@ -193,6 +192,28 @@ fun AppShortcutItem(
                 rightActions = toolbarActions
             )
         }
+    }
+
+    if (requestDelete) {
+        AlertDialog(
+            onDismissRequest = { requestDelete = false },
+            text = { Text(stringResource(R.string.alert_delete_shortcut, shortcut.label)) },
+            confirmButton = {
+                TextButton(onClick = {
+                    viewModel.deleteShortcut()
+                    requestDelete = false
+                }) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = {
+                    requestDelete = false
+                }) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
     }
 
     if (edit) {

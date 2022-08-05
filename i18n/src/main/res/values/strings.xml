@@ -149,6 +149,8 @@
     <string name="alert_delete_directory">The directory %1$s and all its content will be deleted permanently. Proceed\?</string>
     <!-- Warning message that is shown when a user attempts to delete a file -->
     <string name="alert_delete_file">The file %1$s will be deleted permanently. Proceed\?</string>
+    <!-- Warning message that is shown when a user attempts to delete a pinned shortcut -->
+    <string name="alert_delete_shortcut">The shortcut %1$s will be removed permanently. Proceed\?</string>
     <!-- A somewhat generic error message that is shown when something (a file of a specific file, an app, …)
     could not be opened because there was no app installed that could handle the request  -->
     <string name="error_activity_not_found">Couldn\'t open %1$s</string>
