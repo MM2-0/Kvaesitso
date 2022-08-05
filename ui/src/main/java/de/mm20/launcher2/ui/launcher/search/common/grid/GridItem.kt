@@ -52,7 +52,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
     var showPopup by remember { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val badge by remember { viewModel.badge }.collectAsState(null)
+        val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
         val iconSize = LocalGridIconSize.current.toPixels()
         val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
 
