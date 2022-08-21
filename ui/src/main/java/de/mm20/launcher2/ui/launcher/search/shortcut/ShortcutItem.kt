@@ -224,7 +224,6 @@ fun AppShortcutItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ShortcutItemGridPopup(
     shortcut: AppShortcut,

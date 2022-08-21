@@ -29,9 +29,6 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterialApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
 fun BottomSheetDialog(
     onDismissRequest: () -> Unit,

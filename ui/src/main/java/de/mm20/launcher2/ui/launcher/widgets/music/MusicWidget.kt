@@ -37,10 +37,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
 
-@OptIn(
-    ExperimentalFoundationApi::class,
-    ExperimentalAnimationGraphicsApi::class
-)
 @Composable
 fun MusicWidget() {
 

@@ -318,7 +318,6 @@ fun ContactItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ContactItemGridPopup(
     contact: Contact,

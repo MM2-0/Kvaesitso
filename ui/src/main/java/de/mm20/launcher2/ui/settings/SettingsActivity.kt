@@ -54,7 +54,6 @@ class SettingsActivity : BaseActivity() {
 
     private val dataStore: LauncherDataStore by inject()
 
-    @OptIn(ExperimentalAnimationApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

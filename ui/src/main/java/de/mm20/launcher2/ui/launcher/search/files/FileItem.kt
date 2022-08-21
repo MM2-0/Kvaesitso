@@ -285,7 +285,6 @@ fun FileItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun FileItemGridPopup(
     file: File,

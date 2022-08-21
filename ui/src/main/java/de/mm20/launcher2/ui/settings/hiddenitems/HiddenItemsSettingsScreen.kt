@@ -26,7 +26,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HiddenItemsSettingsScreen() {
     val viewModel: HiddenItemsSettingsScreenVM = viewModel()

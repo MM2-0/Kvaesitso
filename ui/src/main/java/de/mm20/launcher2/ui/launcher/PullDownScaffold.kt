@@ -45,7 +45,6 @@ import de.mm20.launcher2.ui.modifier.verticalFadingEdges
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun PullDownScaffold(
     modifier: Modifier = Modifier,

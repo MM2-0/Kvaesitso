@@ -8,7 +8,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 
 object TextUnitConverter : TwoWayConverter<TextUnit, AnimationVector2D> {
-    @OptIn(ExperimentalUnitApi::class)
     override val convertFromVector: (AnimationVector2D) -> TextUnit
         get() = {
             TextUnit(

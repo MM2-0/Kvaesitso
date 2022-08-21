@@ -134,7 +134,6 @@ fun WikipediaItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WikipediaItemGridPopup(
     wikipedia: Wikipedia,

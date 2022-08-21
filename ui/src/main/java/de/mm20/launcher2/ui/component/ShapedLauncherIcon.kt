@@ -50,7 +50,6 @@ import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ShapedLauncherIcon(
     modifier: Modifier = Modifier,

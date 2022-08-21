@@ -261,7 +261,6 @@ fun CalendarItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun CalendarItemGridPopup(
     calendar: CalendarEvent,

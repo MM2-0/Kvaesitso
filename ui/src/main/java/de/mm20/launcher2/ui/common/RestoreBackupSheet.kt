@@ -27,7 +27,6 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.SmallMessage
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestoreBackupSheet(
     uri: Uri,

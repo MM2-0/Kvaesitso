@@ -28,7 +28,6 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalNavController
 import java.net.URLEncoder
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CrashReporterScreen() {
     val viewModel: CrashReporterScreenVM = viewModel()

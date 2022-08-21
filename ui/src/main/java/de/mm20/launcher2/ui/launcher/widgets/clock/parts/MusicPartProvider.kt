@@ -48,10 +48,6 @@ class MusicPartProvider : PartProvider, KoinComponent {
         }
     }
 
-    @OptIn(
-        ExperimentalAnimationGraphicsApi::class,
-        ExperimentalFoundationApi::class
-    )
     @Composable
     override fun Component(layout: ClockWidgetLayout) {
         val context = LocalContext.current

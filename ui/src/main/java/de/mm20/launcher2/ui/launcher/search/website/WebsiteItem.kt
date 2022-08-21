@@ -127,7 +127,6 @@ fun WebsiteItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WebsiteItemGridPopup(
     website: Website,

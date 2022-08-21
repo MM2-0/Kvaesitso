@@ -32,7 +32,6 @@ class PickAppWidgetActivity : BaseActivity() {
     private lateinit var appWidgetManager: AppWidgetManager
 
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         widgetHost = AppWidgetHost(this, 44203)

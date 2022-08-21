@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.font.*
 
-@OptIn(ExperimentalTextApi::class)
 fun getDeviceHeadlineFontFamily(context: Context): FontFamily {
     val configResId = context.resources
         .getIdentifier("config_headlineFontFamily", "string", "android")

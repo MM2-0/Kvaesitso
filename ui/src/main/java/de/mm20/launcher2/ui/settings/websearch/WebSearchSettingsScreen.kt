@@ -132,7 +132,6 @@ fun WebsearchPreference(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EditWebsearchDialog(
     title: String,
@@ -431,7 +430,6 @@ fun EditWebsearchDialog(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun ColorPicker(
     value: Int,

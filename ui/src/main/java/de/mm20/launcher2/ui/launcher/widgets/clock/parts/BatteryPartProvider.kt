@@ -53,7 +53,6 @@ class BatteryPartProvider : PartProvider {
         }
     }
 
-    @OptIn(ExperimentalComposeUiApi::class)
     @Composable
     override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {
 

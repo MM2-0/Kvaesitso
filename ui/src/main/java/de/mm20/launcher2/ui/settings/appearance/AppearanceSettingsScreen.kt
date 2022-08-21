@@ -279,7 +279,6 @@ fun AppearanceSettingsScreen() {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun SearchBarStylePreference(
     title: String,
@@ -446,7 +445,6 @@ fun IconShapePreference(
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun LayoutPreference(
     title: String,

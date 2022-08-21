@@ -115,7 +115,6 @@ fun ClockWidgetSettingsScreen() {
     }
 }
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ClockStylePreference(
     layout: ClockWidgetLayout,

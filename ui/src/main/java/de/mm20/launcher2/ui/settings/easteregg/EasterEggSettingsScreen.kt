@@ -25,7 +25,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun EasterEggSettingsScreen() {
     val viewModel: EasterEggSettingsScreenVM = viewModel()

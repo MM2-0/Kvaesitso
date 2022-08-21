@@ -60,7 +60,6 @@ fun AnimatedWeatherIcon(
     }
 }
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 private fun SunMoon(icon: WeatherIcon, night: Boolean) {
     val sunMoonIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_weather_sun_moon)

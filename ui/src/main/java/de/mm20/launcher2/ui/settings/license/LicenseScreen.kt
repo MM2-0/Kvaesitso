@@ -26,7 +26,6 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.locals.LocalNavController
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LicenseScreen(library: OpenSourceLibrary) {
     val context = LocalContext.current

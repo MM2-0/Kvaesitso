@@ -30,7 +30,6 @@ import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
 import java.time.LocalDate
 import java.time.ZoneId
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CalendarWidget() {
     val viewModel: CalendarWidgetVM = viewModel()

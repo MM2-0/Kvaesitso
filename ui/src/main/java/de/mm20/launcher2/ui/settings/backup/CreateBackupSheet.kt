@@ -175,7 +175,6 @@ fun CreateBackupSheet(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BackupableComponent(
     title: String,

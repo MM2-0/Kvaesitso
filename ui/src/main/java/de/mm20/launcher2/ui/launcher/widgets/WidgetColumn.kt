@@ -43,7 +43,6 @@ import de.mm20.launcher2.widgets.ExternalWidget
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun WidgetColumn(
     modifier: Modifier = Modifier,

@@ -18,7 +18,6 @@ import de.mm20.launcher2.ui.launcher.LauncherActivityVM
 import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ColumnScope.HiddenResults() {
     val viewModel: SearchVM = viewModel()

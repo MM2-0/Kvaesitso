@@ -320,7 +320,6 @@ fun AppItem(
     }
 }
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun AppItemGridPopup(
     app: Application,

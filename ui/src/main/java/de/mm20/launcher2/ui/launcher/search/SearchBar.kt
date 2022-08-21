@@ -148,7 +148,6 @@ fun SearchBar(
     )
 }
 
-@OptIn(ExperimentalAnimationGraphicsApi::class)
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,

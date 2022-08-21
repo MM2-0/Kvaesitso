@@ -47,10 +47,6 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlin.math.roundToInt
 
-@OptIn(
-    ExperimentalMaterialApi::class, ExperimentalFoundationApi::class,
-    ExperimentalMaterial3Api::class
-)
 @Composable
 fun PagerScaffold(
     modifier: Modifier = Modifier,

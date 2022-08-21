@@ -19,7 +19,6 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PreferenceScreen(
     title: String,
