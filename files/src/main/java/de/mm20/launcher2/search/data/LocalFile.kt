@@ -269,7 +269,7 @@ open class LocalFile(
                                 loc.indexOf('/')
                             ).toDouble()
                             val list = Geocoder(context).getFromLocation(lon, lat, 1)
-                            if (list.size > 0) {
+                            if (list != null && list.size > 0) {
                                 metaData.add(R.string.file_meta_location to list[0].formatToString())
                             }
                         }
@@ -290,7 +290,7 @@ open class LocalFile(
                         val loc = exif.latLong
                         if (loc != null && Geocoder.isPresent()) {
                             val list = Geocoder(context).getFromLocation(loc[0], loc[1], 1)
-                            if (list.size > 0) {
+                            if (list != null && list.size > 0) {
                                 metaData.add(R.string.file_meta_location to list[0].formatToString())
                             }
                         }

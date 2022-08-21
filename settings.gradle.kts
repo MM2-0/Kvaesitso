@@ -37,8 +37,8 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("sdk") {
             version("minSdk", "26")
-            version("compileSdk", "32")
-            version("targetSdk", "32")
+            version("compileSdk", "33")
+            version("targetSdk", "33")
         }
         create("libs") {
             version("kotlin", "1.7.10")

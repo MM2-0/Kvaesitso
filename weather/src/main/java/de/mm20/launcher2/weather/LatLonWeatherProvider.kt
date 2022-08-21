@@ -38,7 +38,7 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
                     CrashReporter.logException(e)
                     emptyList()
                 }
-            }
+            } ?: emptyList()
         return locations.mapNotNull {
             LatLonWeatherLocation(
                 lat = it.latitude,
@@ -72,7 +72,7 @@ abstract class LatLonWeatherProvider : WeatherProvider<LatLonWeatherLocation>() 
         return withContext(Dispatchers.IO) {
             try {
                 Geocoder(context).getFromLocation(lat, lon, 1)
-                    .firstOrNull()
+                    ?.firstOrNull()
                     ?.formatToString() ?: formatLatLon(lat, lon)
             } catch (e: IOException) {
                 CrashReporter.logException(e)
