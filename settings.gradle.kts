@@ -55,9 +55,17 @@ dependencyResolutionManagement {
             alias("kotlinx.coroutines.android")
                 .to("org.jetbrains.kotlinx", "kotlinx-coroutines-android")
                 .versionRef("kotlinx.coroutines")
+            alias("kotlinx.collections.immutable")
+                .to("org.jetbrains.kotlinx", "kotlinx-collections-immutable")
+                .version("0.3.5")
             bundle(
                 "kotlin",
-                listOf("kotlin.stdlib", "kotlinx.coroutines.core", "kotlinx.coroutines.android")
+                listOf(
+                    "kotlin.stdlib",
+                    "kotlinx.coroutines.core",
+                    "kotlinx.coroutines.android",
+                    "kotlinx.collections.immutable"
+                )
             )
 
             version("androidx.compose.compiler", "1.3.0-rc01")
