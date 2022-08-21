@@ -74,18 +74,10 @@ fun SearchBar(
     val focusRequester = remember { FocusRequester() }
 
     val context = LocalContext.current
-    val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(focused) {
-        val f = focused
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            try {
-                if (f) focusRequester.requestFocus()
-                awaitCancellation()
-            } finally {
-                focusManager.clearFocus()
-            }
-        }
+        if (focused) focusRequester.requestFocus()
+        else focusManager.clearFocus()
     }
 
     val query by searchViewModel.searchQuery.observeAsState("")
