@@ -1,11 +1,13 @@
 package com.balsikandar.crashreporter.utils;
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -103,6 +105,9 @@ public class CrashUtil {
 
         if (CrashReporter.isNotificationEnabled()) {
             Context context = CrashReporter.getContext();
+            if (context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
             NotificationManager notificationManager = (NotificationManager) context.
                     getSystemService(NOTIFICATION_SERVICE);
             createNotificationChannel(notificationManager, context);
