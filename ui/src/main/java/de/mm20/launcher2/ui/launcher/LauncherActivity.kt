@@ -1,12 +1,16 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.app.WallpaperManager
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -20,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -54,6 +59,8 @@ class LauncherActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val wallpaperManager = WallpaperManager.getInstance(this)
 
         val windowSize = Resources.getSystem().displayMetrics.let {
             Size(it.widthPixels.toFloat(), it.heightPixels.toFloat())
@@ -104,6 +111,18 @@ class LauncherActivity : BaseActivity() {
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
+                                    .pointerInput(null) {
+                                        detectTapGestures {
+                                            wallpaperManager?.sendWallpaperCommand(
+                                                window.decorView.applicationWindowToken,
+                                                WallpaperManager.COMMAND_TAP,
+                                                it.x.toInt(),
+                                                it.y.toInt(),
+                                                0,
+                                                null
+                                            )
+                                        }
+                                    }
                                     .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
                                 contentAlignment = Alignment.BottomCenter
                             ) {
