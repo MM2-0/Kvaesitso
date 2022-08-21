@@ -447,4 +447,5 @@
     <string name="preference_font_system">Predefinito del sistema</string>
     <string name="preference_colors_auto_generate">Genera dal colore primario</string>
     <string name="preference_enforce_icon_shape_summary">Applica la forma a tutte le icone comprese quelle che normalmente non la supporterebbero</string>
+    <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedo\?</string>
 </resources>
