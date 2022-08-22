@@ -66,7 +66,7 @@ fun ShapedLauncherIcon(
             when (icon) {
                 is DynamicLauncherIcon -> null
                 is StaticLauncherIcon -> icon
-                null -> null
+                else -> null
             }
         )
     }
