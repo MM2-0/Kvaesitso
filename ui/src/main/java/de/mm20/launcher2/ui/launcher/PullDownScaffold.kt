@@ -372,7 +372,8 @@ fun PullDownScaffold(
                 .wrapContentHeight()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
-                .offset { IntOffset(0, searchBarOffset.value.toInt()) }
+                .offset { IntOffset(0,
+                    if (searchBarFocused) 0 else searchBarOffset.value.toInt()) }
                 .offset {
                     IntOffset(
                         0,
