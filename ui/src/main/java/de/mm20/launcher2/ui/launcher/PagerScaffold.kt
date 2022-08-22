@@ -1,17 +1,17 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
@@ -61,13 +61,26 @@ fun PagerScaffold(
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
 
     val widgetsScrollState = rememberScrollState()
-    val searchScrollState = rememberScrollState()
+    val searchState = rememberLazyListState()
     val swipeableState = rememberSwipeableState(if (isSearchOpen) Page.Search else Page.Widgets)
+
+    val isSearchAtStart by remember {
+        derivedStateOf {
+            searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+        }
+    }
+
+    val isSearchAtEnd by remember {
+        derivedStateOf {
+            val lastItem = searchState.layoutInfo.visibleItemsInfo.last()
+            lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+        }
+    }
 
     val showStatusBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                searchScrollState.value < searchScrollState.maxValue
+                !isSearchAtEnd
             } else {
                 widgetsScrollState.value > 0
             }
@@ -76,7 +89,7 @@ fun PagerScaffold(
     val showNavBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                searchScrollState.value > 0
+                !isSearchAtStart
             } else {
                 widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
             }
@@ -285,17 +298,21 @@ fun PagerScaffold(
                         val webSearchPadding by animateDpAsState(
                             if (websearches.isEmpty()) 0.dp else 48.dp
                         )
+                        val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                         SearchColumn(
                             modifier = Modifier
                                 .requiredWidth(width)
                                 .fillMaxHeight()
-                                .verticalScroll(searchScrollState, reverseScrolling = true)
-                                .imePadding()
-                                .windowInsetsPadding(WindowInsets.safeDrawing)
-                                .padding(horizontal = 8.dp)
-                                .padding(top = 8.dp, bottom = 64.dp)
-                                .padding(bottom = webSearchPadding),
+                                .padding(
+                                    start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
+                                    end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
+                                ),
                             reverse = true,
+                            state = searchState,
+                            paddingValues = PaddingValues(
+                                top = 4.dp + windowInsets.calculateTopPadding(),
+                                bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
+                            )
                         )
                     }
                 }
@@ -306,6 +323,7 @@ fun PagerScaffold(
             exit = slideOut { IntOffset(0, -it.height) }
         ) {
             CenterAlignedTopAppBar(
+                modifier = Modifier.systemBarsPadding(),
                 title = {
                     Text(stringResource(R.string.menu_edit_widgets))
                 },
@@ -322,7 +340,7 @@ fun PagerScaffold(
                 when {
                     swipeableState.direction != 0f -> SearchBarLevel.Raised
                     !isSearchOpen && isWidgetsScrollZero -> SearchBarLevel.Resting
-                    isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
+                    isSearchOpen && isSearchAtStart -> SearchBarLevel.Active
                     else -> SearchBarLevel.Raised
                 }
             }

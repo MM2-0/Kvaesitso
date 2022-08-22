@@ -14,7 +14,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
-fun ColumnScope.AppResults(reverse: Boolean = false) {
+fun AppResults(reverse: Boolean = false) {
     val viewModel: SearchVM = viewModel()
     val apps by viewModel.appResults.observeAsState(emptyList())
 

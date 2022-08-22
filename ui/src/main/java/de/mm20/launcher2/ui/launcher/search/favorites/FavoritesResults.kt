@@ -14,7 +14,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
-fun ColumnScope.FavoritesResults(
+fun FavoritesResults(
     reverse: Boolean = false,
 ) {
     val viewModel: SearchVM = viewModel()

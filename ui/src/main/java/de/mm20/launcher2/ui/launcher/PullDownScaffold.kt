@@ -6,9 +6,9 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -25,8 +25,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
@@ -41,7 +41,6 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
-import de.mm20.launcher2.ui.modifier.verticalFadingEdges
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -60,20 +59,39 @@ fun PullDownScaffold(
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
 
     val widgetsScrollState = rememberScrollState()
-    val searchScrollState = rememberScrollState()
+    val searchState = rememberLazyListState()
+
+    val isSearchAtStart by remember {
+        derivedStateOf {
+            searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+        }
+    }
+
+    val isSearchAtEnd by remember {
+        derivedStateOf {
+            val lastItem = searchState.layoutInfo.visibleItemsInfo.last()
+            lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+        }
+    }
 
     val systemUiController = rememberSystemUiController()
 
-    val isWidgetsScrollZero by remember {
+    val isWidgetsAtStart by remember {
         derivedStateOf {
             widgetsScrollState.value == 0
+        }
+    }
+
+    val isWidgetsAtEnd by remember {
+        derivedStateOf {
+            widgetsScrollState.value >= widgetsScrollState.maxValue
         }
     }
 
     val showStatusBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                searchScrollState.value > 0
+                !isSearchAtStart
             } else {
                 widgetsScrollState.value > 0
             }
@@ -82,7 +100,7 @@ fun PullDownScaffold(
     val showNavBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                searchScrollState.value < searchScrollState.maxValue
+                !isSearchAtEnd
             } else {
                 widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
             }
@@ -146,7 +164,7 @@ fun PullDownScaffold(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(isSearchOpen) {
-        if (isSearchOpen) searchScrollState.scrollTo(0)
+        if (isSearchOpen) searchState.scrollToItem(0)
         if (!isSearchOpen) searchVM.search("")
         searchBarOffset.animateTo(0f)
     }
@@ -176,22 +194,25 @@ fun PullDownScaffold(
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (isWidgetEditMode) return Offset.Zero
-                val value = if (isSearchOpen) searchScrollState.value else widgetsScrollState.value
-                val newValue = value - available.y
+                val canPullDown = if (isSearchOpen) {
+                    isSearchAtStart
+                } else {
+                    isWidgetsAtStart
+                }
+                val canPullUp = isSearchOpen && isSearchAtEnd
+
                 val consumed = when {
-                    (offsetY.value > 0 || source == NestedScrollSource.Drag && newValue < 0) -> {
-                        val consumed = available.y - value
-                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
-                        consumed
-                    }
-                    isSearchOpen && (offsetY.value < 0 || source == NestedScrollSource.Drag && newValue > searchScrollState.maxValue) -> {
-                        val consumed = available.y - (value - searchScrollState.maxValue)
+                    canPullUp && available.y < 0 || offsetY.value < 0 -> {
+                        val consumed = available.y
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
                         consumed
                     }
-                    else -> {
-                        0f
+                    canPullDown && available.y > 0 || offsetY.value > 0 -> {
+                        val consumed = available.y
+                        offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
+                        consumed
                     }
+                    else -> 0f
                 }
 
                 searchBarOffset.value =
@@ -246,11 +267,11 @@ fun PullDownScaffold(
                             )
                         }
                 ) {
-
                     val websearches by searchVM.websearchResults.observeAsState(emptyList())
                     val webSearchPadding by animateDpAsState(
                         if (websearches.isEmpty()) 0.dp else 48.dp
                     )
+                    val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                     SearchColumn(
                         modifier = Modifier
                             .graphicsLayer {
@@ -261,16 +282,20 @@ fun PullDownScaffold(
                             }
                             .fillMaxWidth()
                             .requiredHeight(height)
-                            .verticalScroll(searchScrollState)
-                            .windowInsetsPadding(WindowInsets.safeDrawing)
-                            .padding(8.dp)
-                            .padding(top = 56.dp)
-                            .padding(top = webSearchPadding)
-                            .imePadding()
+                            .padding(
+                                start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
+                                end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
+                            ),
+                        paddingValues = PaddingValues(
+                            top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding(),
+                            bottom = 4.dp + windowInsets.calculateBottomPadding()
+                        ),
+                        state = searchState,
+
                     )
                     val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
                     val clockPadding by animateDpAsState(
-                        if (isWidgetsScrollZero) insets.calculateBottomPadding() else 0.dp
+                        if (isWidgetsAtStart) insets.calculateBottomPadding() else 0.dp
                     )
                     val clockHeight by remember {
                         derivedStateOf {
@@ -328,9 +353,9 @@ fun PullDownScaffold(
             derivedStateOf {
                 when {
                     offsetY.value != 0f -> SearchBarLevel.Raised
-                    isSearchOpen && searchScrollState.value == 0 -> SearchBarLevel.Active
-                    isSearchOpen && searchScrollState.value > 0 -> SearchBarLevel.Raised
-                    !isWidgetsScrollZero -> SearchBarLevel.Raised
+                    isSearchOpen && isSearchAtStart -> SearchBarLevel.Active
+                    isSearchOpen && !isSearchAtStart -> SearchBarLevel.Raised
+                    !isWidgetsAtStart -> SearchBarLevel.Raised
                     else -> SearchBarLevel.Resting
                 }
             }

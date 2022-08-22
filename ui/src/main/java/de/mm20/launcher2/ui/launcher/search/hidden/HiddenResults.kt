@@ -19,7 +19,7 @@ import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 
 @Composable
-fun ColumnScope.HiddenResults() {
+fun HiddenResults() {
     val viewModel: SearchVM = viewModel()
     val hiddenResults by viewModel.hiddenResults.observeAsState(
         emptyList()
@@ -27,7 +27,7 @@ fun ColumnScope.HiddenResults() {
 
     var showHiddenItems by remember { mutableStateOf(false) }
 
-    AnimatedVisibility(visible = hiddenResults.isNotEmpty()) {
+    if(hiddenResults.isNotEmpty()) {
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
