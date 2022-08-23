@@ -27,10 +27,11 @@ fun HiddenResults() {
 
     var showHiddenItems by remember { mutableStateOf(false) }
 
-    if(hiddenResults.isNotEmpty()) {
+    if (hiddenResults.isNotEmpty()) {
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.End
         ) {
@@ -39,7 +40,7 @@ fun HiddenResults() {
                 tonalElevation = 2.dp,
                 color = MaterialTheme.colorScheme.surfaceVariant,
                 contentColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                shape = MaterialTheme.shapes.medium,
+                shape = MaterialTheme.shapes.large,
                 onClick = { showHiddenItems = true }
             ) {
                 Row(
