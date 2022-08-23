@@ -26,7 +26,7 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
-        versionName = "1.14.2"
+        versionName = "1.14.3"
         signingConfig = signingConfigs.getByName("debug")
     }
     buildTypes {
