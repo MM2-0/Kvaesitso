@@ -29,7 +29,7 @@ interface IconDao {
     fun deleteIcons(iconPack: String)
 
     @Transaction
-    fun installIconPack(iconPack: IconPackEntity, icons: List<IconEntity>) {
+    suspend fun installIconPack(iconPack: IconPackEntity, icons: List<IconEntity>) {
         deleteIconPack(iconPack)
         deleteIcons(iconPack.packageName)
         insertAll(icons)
@@ -37,7 +37,7 @@ interface IconDao {
     }
 
     @Transaction
-    fun installGrayscaleIconMap(packageName: String, icons: List<IconEntity>) {
+    suspend fun installGrayscaleIconMap(packageName: String, icons: List<IconEntity>) {
         deleteIcons(packageName)
         insertAll(icons)
     }
