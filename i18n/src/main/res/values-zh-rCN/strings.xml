@@ -436,4 +436,13 @@
     <string name="preference_blur_wallpaper_unsupported">在此设备上不受支持</string>
     <string name="preference_font">字体</string>
     <string name="preference_font_system">系统默认</string>
+    <string name="alert_delete_shortcut">快捷方式%1$s将被永久移除. 继续\?</string>
+    <string name="preference_force_themed_icons_summary">将应用程序的配色方案应用于所有的图标，包括不支持的图标(不建议)</string>
+    <string name="backup_component_customizations">定制化</string>
+    <string name="icon_picker_title">选择器图标</string>
+    <string name="icon_picker_default_icon">默认</string>
+    <string name="icon_picker_suggestions">建议</string>
+    <string name="icon_picker_search_icon">搜索图标</string>
+    <string name="preference_force_themed_icons">强制执行有主题的图标</string>
+    <string name="menu_customize">自定义</string>
 </resources>
