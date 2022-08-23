@@ -484,6 +484,9 @@ class UpdateIconPacksWorker(val context: Context) {
             val icons = mutableListOf<IconPackIcon>()
             val iconDao = AppDatabase.getInstance(context).iconDao()
 
+            iconDao.deleteIconPack(iconPack.toDatabaseEntity())
+            iconDao.deleteIcons(iconPack.packageName)
+
             loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
                 if (parser.eventType != XmlPullParser.START_TAG) continue
                 when (parser.name) {
@@ -577,11 +580,16 @@ class UpdateIconPacksWorker(val context: Context) {
                         iconPack.scale = scale
                     }
                 }
+                if (icons.size >= 100) {
+                    iconDao.insertAll(icons.map { it.toDatabaseEntity() })
+                    icons.clear()
+                }
             }
 
-            iconDao.installIconPack(
-                iconPack.toDatabaseEntity(),
-                icons.map { it.toDatabaseEntity() })
+            if (icons.isNotEmpty()) {
+                iconDao.insertAll(icons.map { it.toDatabaseEntity() })
+            }
+            iconDao.installIconPack(iconPack.toDatabaseEntity())
 
             (parser as? XmlResourceParser)?.close()
             inStream?.close()
