@@ -85,7 +85,7 @@ private fun CardMiddlePiece(
     val absoluteElevation = LocalAbsoluteTonalElevation.current + elevation
     Box(
         modifier = modifier
-            .shadow(elevation, RectangleShape, true)
+            .shadow(if (backgroundOpacity < 1f) 0.dp else elevation, RectangleShape, true)
             .background(
                 if (backgroundOpacity == 1f) {
                     MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteElevation)
@@ -149,7 +149,7 @@ private fun CardEndPiece(
     val absoluteElevation = LocalAbsoluteTonalElevation.current + elevation
     Box(
         modifier = modifier
-            .shadow(elevation, shape, true)
+            .shadow(if (backgroundOpacity < 1f) 0.dp else elevation, shape, true)
             .background(
                 if (backgroundOpacity == 1f) {
                     MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteElevation)
@@ -170,6 +170,7 @@ private fun CardEndPiece(
                     Density(density, fontScale)
                 )
                 onDrawBehind {
+                    if (borderWidth == 0.dp) return@onDrawBehind
                     withTransform({
                         translate(0f, if (isBottom) -border else 0f)
                     }) {
