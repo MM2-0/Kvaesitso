@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.PartialLauncherCard
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
@@ -127,25 +128,15 @@ fun GridRow(
         modifier = modifier
             .clipToBounds()
     ) {
-        LauncherCard(
+        PartialLauncherCard(
             modifier = Modifier.padding(
                 start = 8.dp,
                 end = 8.dp,
                 top = if (isFirst) 4.dp else 0.dp,
                 bottom = if (isLast) 4.dp else 0.dp,
             ),
-            shape = when {
-                isFirst && isLast -> MaterialTheme.shapes.medium
-                isFirst -> MaterialTheme.shapes.medium.copy(
-                    bottomEnd = CornerSize(0),
-                    bottomStart = CornerSize(0),
-                )
-                isLast -> MaterialTheme.shapes.medium.copy(
-                    topEnd = CornerSize(0),
-                    topStart = CornerSize(0),
-                )
-                else -> RectangleShape
-            }
+            isTop = isFirst,
+            isBottom = isLast,
         ) {
             Row {
                 for (item in items) {
@@ -190,25 +181,15 @@ fun ListRow(
         modifier = modifier
             .clipToBounds()
     ) {
-        LauncherCard(
+        PartialLauncherCard(
             modifier = Modifier.padding(
                 start = 8.dp,
                 end = 8.dp,
                 top = if (isFirst) 4.dp else 0.dp,
                 bottom = if (isLast) 4.dp else 0.dp,
             ),
-            shape = when {
-                isFirst && isLast -> MaterialTheme.shapes.medium
-                isFirst -> MaterialTheme.shapes.medium.copy(
-                    bottomEnd = CornerSize(0),
-                    bottomStart = CornerSize(0),
-                )
-                isLast -> MaterialTheme.shapes.medium.copy(
-                    topEnd = CornerSize(0),
-                    topStart = CornerSize(0),
-                )
-                else -> RectangleShape
-            }
+            isTop = isFirst,
+            isBottom = isLast,
         ) {
             Box(
                 modifier = Modifier.padding(
