@@ -26,7 +26,7 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         versionCode = versionCodeDate()
-        versionName = "1.14.3"
+        versionName = "1.14.4"
         signingConfig = signingConfigs.getByName("debug")
     }
     buildTypes {
@@ -73,7 +73,7 @@ fun buildTime(): String {
 }
 
 fun versionCodeDate(): Int {
-    val df = SimpleDateFormat("yyyyMMdd00")
+    val df = SimpleDateFormat("yyyyMMdd01")
     return df.format(Date()).toInt()
 }
 
