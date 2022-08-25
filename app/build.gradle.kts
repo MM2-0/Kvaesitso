@@ -51,6 +51,7 @@ android {
     configurations.all {
         //Fixes Error: Duplicate class: com.google.common.util.concurrent.ListenableFuture
         exclude(group = "com.google.guava", module = "listenablefuture")
+        exclude(group = "org.apache.httpcomponents", module = "httpclient")
     }
 
     compileOptions {
