@@ -8,6 +8,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -288,7 +289,7 @@ fun AppItem(
                         val result = snackbarHostState.showSnackbar(
                             message = context.getString(R.string.msg_item_hidden, app.label),
                             actionLabel = context.getString(R.string.action_undo),
-
+                            duration = SnackbarDuration.Short,
                             )
                         if(result == SnackbarResult.ActionPerformed) {
                             viewModel.unhide()

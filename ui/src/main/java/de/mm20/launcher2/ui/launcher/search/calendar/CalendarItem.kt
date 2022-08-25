@@ -9,10 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarResult
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -209,7 +206,7 @@ fun CalendarItem(
                                     val result = snackbarHostState.showSnackbar(
                                         message = context.getString(R.string.msg_item_hidden, calendar.label),
                                         actionLabel = context.getString(R.string.action_undo),
-
+                                        duration = SnackbarDuration.Short,
                                         )
                                     if(result == SnackbarResult.ActionPerformed) {
                                         viewModel.unhide()

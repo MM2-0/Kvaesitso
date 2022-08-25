@@ -251,7 +251,7 @@ fun FileItem(
                                 val result = snackbarHostState.showSnackbar(
                                     message = context.getString(R.string.msg_item_hidden, file.label),
                                     actionLabel = context.getString(R.string.action_undo),
-
+                                    duration = SnackbarDuration.Short,
                                     )
                                 if(result == SnackbarResult.ActionPerformed) {
                                     viewModel.unhide()
