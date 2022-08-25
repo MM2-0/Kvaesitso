@@ -45,6 +45,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
@@ -173,6 +174,11 @@ fun PagerScaffold(
             }
             isWidgetEditMode -> {
                 viewModel.setWidgetEditMode(false)
+            }
+            widgetsScrollState.value != 0 -> {
+                scope.launch {
+                    widgetsScrollState.animateScrollTo(0)
+                }
             }
         }
     }
