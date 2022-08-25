@@ -166,6 +166,7 @@ fun PagerScaffold(
         }
     }
 
+    val scope = rememberCoroutineScope()
     BackHandler {
         when {
             isSearchOpen -> {
