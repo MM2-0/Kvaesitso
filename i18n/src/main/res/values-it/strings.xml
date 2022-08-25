@@ -339,7 +339,7 @@
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_screen_calendarwidget">Calendario</string>
     <string name="preference_search_favorites_summary">Mostra elementi appuntati e usati di frequente sopra la griglia delle app</string>
-    <string name="preference_search_calculator_summary">Valuta espressione matematica</string>
+    <string name="preference_search_calculator_summary">Valuta termini matematici</string>
     <string name="preference_google_signin">Accedi a Google</string>
     <string name="preference_google_signin_summary">Accedi per cercare su Google Drive</string>
     <string name="preference_crash_reporter_summary">Errori e rapporti di crash</string>
@@ -417,7 +417,7 @@
     <string name="restore_different_minor_version">Questo backup è stato creato con una versione diversa di %1$s. Alcuni dati potrebbero non essere ripristinati correttamente.</string>
     <string name="preference_screen_backup_summary">Esporta e importa i dati del launcher</string>
     <string name="preference_backup">Backup</string>
-    <string name="preference_screen_backup">Backup &amp; Ripristino</string>
+    <string name="preference_screen_backup">Backup e ripristino</string>
     <string name="action_undo">Annulla</string>
     <string name="msg_item_hidden">%1$s è stato nascosto.</string>
     <string name="weather_location_search_no_result">Posizione non trovata.</string>
