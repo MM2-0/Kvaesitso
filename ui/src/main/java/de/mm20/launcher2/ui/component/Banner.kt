@@ -9,6 +9,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
+import com.google.accompanist.flowlayout.FlowRow
+import com.google.accompanist.flowlayout.MainAxisAlignment
 
 @Composable
 fun Banner(
@@ -41,10 +44,13 @@ fun Banner(
                     style = MaterialTheme.typography.labelMedium
                 )
             }
-            Row(
+            FlowRow(
                 Modifier
                     .align(Alignment.End)
-                    .padding(8.dp)
+                    .padding(8.dp),
+                crossAxisSpacing = 8.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.End,
+                mainAxisAlignment = MainAxisAlignment.End
             ) {
                 Box {
                     secondaryAction()
