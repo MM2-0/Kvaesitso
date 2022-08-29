@@ -22,7 +22,7 @@
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="missing_permission_calendar_search_settings">Accesso al calendario necessario per cercare nel calendario</string>
     <string name="missing_permission_file_search_settings_android10">Accesso tutti i file necessario per cercare file locali</string>
-    <string name="missing_permission_contact_search">Concedi l\'autorizzazione ai contatti per cercare tra i tuoi contatti.</string>
+    <string name="missing_permission_contact_search">Concedi l\'autorizzazione ai contatti per cercare all\'interno dei tuoi contatti.</string>
     <string name="preference_calendar_hide_allday">Nascondi eventi di tutto il giorno</string>
     <string name="open_webpage">Apri sito web</string>
     <string name="preference_automatic_location_summary">Usa il GPS e i servizi di localizzazione per determinare automaticamente la tua posizione</string>
@@ -125,7 +125,7 @@
     <string name="websearch_dialog_edit_title">Modifica motore di ricerca</string>
     <string name="websearch_dialog_name">Nome</string>
     <string name="websearch_dialog_url">URL</string>
-    <string name="websearch_dialog_url_description">\'${1}\' sarà sostituto dal termine cercato</string>
+    <string name="websearch_dialog_url_description">\'${1}\' sarà sostituito dall\'effettivo termine di ricerca.</string>
     <string name="websearch_dialog_url_error">Segnaposto \'${1}\' mancante in questo URL</string>
     <string name="websearch_dialog_replace_icon">Sostituisci icona</string>
     <string name="websearch_dialog_delete_icon">Rimuovi icona</string>
@@ -208,8 +208,8 @@
     <string name="missing_permission_calendar_widget_settings">Questo widget necessita di accesso al calendario</string>
     <string name="missing_permission_file_search_settings">L\'accesso all\'archiviazione esterna è necessario per cercare i file locali</string>
     <string name="missing_permission_notification_badges">L\'accesso alle notifiche è necessario per visualizzare gli indicatori di notifica</string>
-    <string name="missing_permission_calendar_widget">Concedi al calendario l\'autorizzazione per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
-    <string name="missing_permission_calendar_search">Concedi al calendario l\'autorizzazione per cercare nel tuo calendario.</string>
+    <string name="missing_permission_calendar_widget">Concedi l\'autorizzazione al calendario per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
+    <string name="missing_permission_calendar_search">Concedi l\'autorizzazione al calendario per cercare all\'interno del tuo calendario.</string>
     <string name="missing_permission_files_search">Concedi l\'autorizzazione all\'archiviazione per cercare foto, file multimediali e documenti su questo dispositivo.</string>
     <string name="weather_condition_fair">Soleggiato</string>
     <string name="weather_condition_heavyrainandthunder">Forti piogge e temporale</string>

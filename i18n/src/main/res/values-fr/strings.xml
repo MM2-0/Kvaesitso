@@ -469,4 +469,13 @@
     <string name="preference_blur_wallpaper">Flouter le fond d\'écran</string>
     <string name="preference_blur_wallpaper_summary">Ajouter un effet de flou sur le fond d\'écran</string>
     <string name="preference_blur_wallpaper_unsupported">Non supporté sur cet appareil</string>
+    <string name="preference_force_themed_icons">Forcer les icônes avec thème</string>
+    <string name="icon_picker_title">Choisir une icône</string>
+    <string name="backup_component_customizations">Personnalisations</string>
+    <string name="icon_picker_suggestions">Suggestions</string>
+    <string name="icon_picker_default_icon">Défault</string>
+    <string name="preference_force_themed_icons_summary">Appliquer le schéma de couleur de l\'application sur toutes les icônes, même celles non supportées (non recommandé)</string>
+    <string name="alert_delete_shortcut">Le raccourci %1$s va être supprimé. Continuer \?</string>
+    <string name="menu_customize">Personnaliser</string>
+    <string name="icon_picker_search_icon">Rechercher une icône</string>
 </resources>
