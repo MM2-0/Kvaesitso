@@ -38,7 +38,7 @@ class Wikipedia(
             .enableUrlBarHiding()
             .setShowTitle(true)
             .build()
-        val uri = "${wikipediaUrl}/wiki?curid=$id"
+        val uri = "${wikipediaUrl.padEnd(1, '/')}wiki?curid=$id"
         intent.intent.data = Uri.parse(uri)
         return intent.intent
     }
