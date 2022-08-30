@@ -22,6 +22,7 @@ import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.*
@@ -303,7 +304,9 @@ internal class MusicRepositoryImpl(
                 .build()
             context.imageLoader.execute(request).drawable?.toBitmap()
         } catch (e: IOException) {
+            CrashReporter.logException(e)
         } catch (e: SecurityException) {
+            CrashReporter.logException(e)
         }
         return null
     }
