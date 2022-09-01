@@ -166,7 +166,7 @@
     <string name="date_tomorrow">Domani</string>
     <string name="calendar_widget_pinned_events">Prossimi</string>
     <string name="calendar_widget_no_events">Nessun evento oggi</string>
-    <string name="calendar_widget_open_app">Apri nell\'app calendario</string>
+    <string name="calendar_widget_open_app">Apri l\'app calendario</string>
     <string name="calendar_widget_new_event">Nuovo evento</string>
     <string name="calendar_event_allday">tutto il giorno</string>
     <string name="music_widget_default_title">%1$s in riproduzione</string>
