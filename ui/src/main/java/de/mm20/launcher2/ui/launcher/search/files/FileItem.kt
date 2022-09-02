@@ -132,8 +132,8 @@ fun FileItem(
                 size = 48.dp,
                 modifier = Modifier
                     .padding(end = padding, top = padding, bottom = padding),
-                icon = icon,
-                badge = badge
+                icon = { icon },
+                badge = { badge }
             )
 
         }

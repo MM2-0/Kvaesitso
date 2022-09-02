@@ -87,10 +87,12 @@ fun CustomizeSearchableSheet(
 
                 ShapedLauncherIcon(
                     size = iconSize,
-                    icon = icon,
-                    badge = Badge(
-                        icon = badgeDrawable
-                    ),
+                    icon = { icon },
+                    badge = {
+                        Badge(
+                            icon = badgeDrawable
+                        )
+                    },
                     onClick = {
                         viewModel.openIconPicker()
                     }
@@ -239,7 +241,7 @@ fun IconPreview(
     ) {
         ShapedLauncherIcon(
             size = iconSize,
-            icon = item?.preview,
+            icon = { item?.preview },
             onClick = onClick
         )
     }

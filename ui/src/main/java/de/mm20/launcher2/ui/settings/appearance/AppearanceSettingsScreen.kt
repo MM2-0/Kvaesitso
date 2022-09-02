@@ -408,22 +408,25 @@ fun IconShapePreference(
                                     .padding(8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
+                                val context = LocalContext.current
                                 ShapedLauncherIcon(
                                     size = 48.dp,
-                                    icon = StaticLauncherIcon(
-                                        foregroundLayer = StaticIconLayer(
-                                            icon = ContextCompat.getDrawable(
-                                                LocalContext.current,
-                                                R.mipmap.ic_launcher_foreground
-                                            )!!,
-                                            scale = 1.5f,
-                                        ),
-                                        backgroundLayer = StaticIconLayer(
-                                            icon = ColorDrawable(
-                                                LocalContext.current.getColor(R.color.ic_launcher_background)
+                                    icon = {
+                                        StaticLauncherIcon(
+                                            foregroundLayer = StaticIconLayer(
+                                                icon = ContextCompat.getDrawable(
+                                                    context,
+                                                    R.mipmap.ic_launcher_foreground
+                                                )!!,
+                                                scale = 1.5f,
+                                            ),
+                                            backgroundLayer = StaticIconLayer(
+                                                icon = ColorDrawable(
+                                                    context.getColor(R.color.ic_launcher_background)
+                                                )
                                             )
                                         )
-                                    ),
+                                    },
                                     onClick = {
                                         onValueChanged(it)
                                         showDialog = false

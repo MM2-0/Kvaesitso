@@ -54,27 +54,29 @@ import kotlin.math.roundToInt
 fun ShapedLauncherIcon(
     modifier: Modifier = Modifier,
     size: Dp,
-    icon: LauncherIcon? = null,
-    badge: Badge? = null,
+    icon: () -> LauncherIcon? = { null },
+    badge: () -> Badge? = { null },
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
     shape: Shape = LocalIconShape.current
 ) {
 
-    var currentIcon by remember(icon) {
+    val _icon = icon()
+
+    var currentIcon by remember(_icon) {
         mutableStateOf(
-            when (icon) {
+            when (_icon) {
                 is DynamicLauncherIcon -> null
-                is StaticLauncherIcon -> icon
+                is StaticLauncherIcon -> _icon
                 else -> null
             }
         )
     }
 
-    if (icon is DynamicLauncherIcon) {
+    if (_icon is DynamicLauncherIcon) {
         val time = LocalTime.current
         LaunchedEffect(time) {
-            currentIcon = icon.getIcon(time)
+            currentIcon = _icon.getIcon(time)
         }
     }
 
@@ -113,7 +115,8 @@ fun ShapedLauncherIcon(
                 )
             }
         }
-        if (badge != null) {
+        val _badge = badge()
+        if (_badge != null) {
             Surface(
                 shadowElevation = 1.dp,
                 tonalElevation = 1.dp,
@@ -134,7 +137,7 @@ fun ShapedLauncherIcon(
                     contentAlignment = Alignment.Center
                 ) {
 
-                    badge.progress?.let {
+                    _badge.progress?.let {
                         val progress by animateFloatAsState(it)
                         CircularProgressIndicator(
                             modifier = Modifier.fillMaxSize(),
@@ -143,10 +146,10 @@ fun ShapedLauncherIcon(
                             color = MaterialTheme.colorScheme.secondaryContainer
                         )
                     }
-                    val badgeIconRes = badge.iconRes
-                    val badgeIcon = badge.icon
+                    val badgeIconRes = _badge.iconRes
+                    val badgeIcon = _badge.icon
 
-                    val number = badge.number
+                    val number = _badge.number
                     if (badgeIconRes != null) {
                         Image(
                             modifier = Modifier
@@ -186,6 +189,13 @@ fun ShapedLauncherIcon(
             }
         }
     }
+}
+
+@Composable
+private fun Badge(
+    badge: () -> Badge?
+) {
+
 }
 
 @Composable

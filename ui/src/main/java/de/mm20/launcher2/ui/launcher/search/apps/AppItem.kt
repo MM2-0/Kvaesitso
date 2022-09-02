@@ -169,8 +169,8 @@ fun AppItem(
                 size = 84.dp,
                 modifier = Modifier
                     .padding(16.dp),
-                badge = badge,
-                icon = icon,
+                badge = { badge },
+                icon = { icon },
             )
         }
 

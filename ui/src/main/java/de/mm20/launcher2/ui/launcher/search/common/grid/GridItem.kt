@@ -82,8 +82,8 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
                     bounds = it.boundsInWindow()
                 },
             size = LocalGridIconSize.current,
-            badge = badge,
-            icon = icon,
+            badge = { badge },
+            icon = { icon },
             onClick = {
                 if (!launchOnPress || !viewModel.launch(context, bounds)) {
                     showPopup = true

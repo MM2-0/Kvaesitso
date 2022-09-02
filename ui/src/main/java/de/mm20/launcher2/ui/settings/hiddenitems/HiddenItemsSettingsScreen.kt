@@ -186,7 +186,7 @@ fun HiddenItem(
     ) {
         ShapedLauncherIcon(
             size = 32.dp,
-            icon = icon,
+            icon = { icon },
             modifier = Modifier.padding(end = 16.dp)
         )
         Text(

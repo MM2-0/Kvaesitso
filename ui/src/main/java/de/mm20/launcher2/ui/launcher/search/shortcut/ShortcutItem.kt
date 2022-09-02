@@ -93,8 +93,8 @@ fun AppShortcutItem(
                 size = size,
                 modifier = Modifier
                     .padding(padding),
-                badge = badge,
-                icon = icon,
+                badge = { badge },
+                icon = { icon },
             )
         }
 

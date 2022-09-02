@@ -70,7 +70,7 @@ fun ContactItem(
                 size = 48.dp,
                 modifier = Modifier
                     .padding(start = padding, top = padding, bottom = padding),
-                icon = icon,
+                icon = { icon },
             )
             Column(
                 modifier = Modifier.padding(horizontal = 16.dp)
