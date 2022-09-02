@@ -87,7 +87,6 @@ dependencies {
     implementation(libs.materialcomponents.composethemeadapter)
     implementation(libs.materialcomponents.composethemeadapter3)
 
-    implementation(libs.viewpropertyobjectanimator)
     implementation(libs.draglinearlayout)
 
     implementation(libs.accompanist.insets)

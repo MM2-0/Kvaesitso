@@ -5,9 +5,24 @@ import de.mm20.launcher2.base.R
 val OpenSourceLicenses = arrayOf(
     OpenSourceLibrary(
         name = "Kotlin Standard Library",
+        description = " A modern programming language that makes developers happier.",
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
         url = "https://kotlinlang.org/"
+    ),
+    OpenSourceLibrary(
+        name = "KotlinX Coroutines",
+        description = "Library support for Kotlin coroutines",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/Kotlin/kotlinx.coroutines"
+    ),
+    OpenSourceLibrary(
+        name = "KotlinX Collections",
+        description = "Immutable collection interfaces and implementation prototypes for Kotlin.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/Kotlin/kotlinx.collections.immutable"
     ),
     OpenSourceLibrary(
         name = "Android Jetpack",
@@ -71,14 +86,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://jsoup.org/"
     ),
     OpenSourceLibrary(
-        name = "Glide Transformations",
-        description = "An Android transformation library providing a variety of image transformations for Glide",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright (C) 2020 Wasabeef",
-        url = "https://github.com/wasabeef/glide-transformations"
-    ),
-    OpenSourceLibrary(
         name = "Material Dialogs",
         description = "Easy to use material design dialogs",
         licenseName = R.string.apache_license_name,
@@ -93,14 +100,6 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         copyrightNote = "Copyright (c) 2014 Justas Medeisis",
         url = "https://github.com/justasm/DragLinearLayout"
-    ),
-    OpenSourceLibrary(
-        name = "ViewPropertyValueAnimator",
-        description = "Wrapper of the ObjectAnimator that can be used similarly to ViewPropertyAnimator.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright 2015 Bartosz Lipiński",
-        url = "https://github.com/blipinsk/ViewPropertyObjectAnimator"
     ),
     OpenSourceLibrary(
         name = "mXparser",
@@ -225,4 +224,19 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_mit,
         url = "https://airbnb.design/lottie/"
     ),
+    OpenSourceLibrary(
+        name = "Protobuf",
+        copyrightNote = "Copyright 2008 Google Inc.  All rights reserved.",
+        description = "Protocol buffers are a language-neutral, platform-neutral extensible mechanism for serializing structured data.",
+        licenseName = R.string.bsd_3clause_name,
+        licenseText = R.raw.license_bsd_3clause,
+        url = "https://developers.google.com/protocol-buffers"
+    ),
+    OpenSourceLibrary(
+        name = "AndroidSVG",
+        description = "AndroidSVG is a SVG parser and renderer for Android.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://bigbadaboom.github.io/androidsvg/"
+    )
 )

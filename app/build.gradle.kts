@@ -103,7 +103,6 @@ dependencies {
     implementation(libs.bundles.materialdialogs)
 
     implementation(libs.draglinearlayout)
-    implementation(libs.viewpropertyobjectanimator)
 
     implementation(libs.koin.android)
 

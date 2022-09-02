@@ -331,10 +331,6 @@ dependencyResolutionManagement {
                 .to("com.jmedeisis", "draglinearlayout")
                 .version("1.1.0")
 
-            alias("viewpropertyobjectanimator")
-                .to("com.bartoszlipinski", "viewpropertyobjectanimator")
-                .version("1.5.0")
-
             alias("mathparser")
                 .to("org.mariuszgromada.math", "MathParser.org-mXparser")
                 .version("4.4.2")
