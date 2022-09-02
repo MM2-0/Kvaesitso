@@ -13,7 +13,6 @@ class NotificationShadeController(
 ) {
     @SuppressLint("WrongConstant")
     fun expandNotifications() {
-        Log.e("MM20", "pull down")
         try {
             val statusBarService = context.getSystemService("statusbar")
             Class.forName("android.app.StatusBarManager")
