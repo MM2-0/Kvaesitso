@@ -9,6 +9,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -31,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
@@ -91,13 +93,12 @@ fun ShapedLauncherIcon(
                     clip = currentIcon?.backgroundLayer !is TransparentLayer
                     this.shape = shape
                 }
-                .combinedClickable(
-                    enabled = onClick != null || onLongClick != null,
-                    onClick = {
-                        onClick?.invoke()
-                    },
-                    onLongClick = onLongClick,
-                ),
+                .pointerInput(null) {
+                    detectTapGestures(
+                        onLongPress = { onLongClick?.invoke() },
+                        onTap = { onClick?.invoke() },
+                    )
+                },
             contentAlignment = Alignment.Center
         ) {
             currentIcon?.let {
@@ -123,13 +124,12 @@ fun ShapedLauncherIcon(
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd)
-                    .combinedClickable(
-                        enabled = onClick != null || onLongClick != null,
-                        onClick = {
-                            onClick?.invoke()
-                        },
-                        onLongClick = onLongClick,
-                    ),
+                    .pointerInput(null) {
+                        detectTapGestures(
+                            onLongPress = { onLongClick?.invoke() },
+                            onTap = { onClick?.invoke() },
+                        )
+                    },
                 color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {
