@@ -36,6 +36,7 @@ import com.android.launcher3.GestureNavContract
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.assistant.AssistantScaffold
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
@@ -127,36 +128,45 @@ abstract class SharedLauncherActivity(
                                 contentAlignment = Alignment.BottomCenter
                             ) {
                                 NavBarEffects(modifier = Modifier.fillMaxSize())
-                                when (layout) {
-                                    Settings.AppearanceSettings.Layout.PullDown -> {
-                                        PullDownScaffold(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .graphicsLayer {
-                                                    scaleX = 0.5f + enterTransition.value * 0.5f
-                                                    scaleY = 0.5f + enterTransition.value * 0.5f
-                                                    alpha = enterTransition.value
-                                                },
-                                            darkStatusBarIcons = lightStatus,
-                                            darkNavBarIcons = lightNav,
-                                        )
+                                if (mode == LauncherActivityMode.Assistant) {
+                                    AssistantScaffold(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        darkStatusBarIcons = lightStatus,
+                                        darkNavBarIcons = lightNav,
+                                    )
+                                } else {
+                                    when (layout) {
+                                        Settings.AppearanceSettings.Layout.PullDown -> {
+                                            PullDownScaffold(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .graphicsLayer {
+                                                        scaleX = 0.5f + enterTransition.value * 0.5f
+                                                        scaleY = 0.5f + enterTransition.value * 0.5f
+                                                        alpha = enterTransition.value
+                                                    },
+                                                darkStatusBarIcons = lightStatus,
+                                                darkNavBarIcons = lightNav,
+                                            )
+                                        }
+                                        Settings.AppearanceSettings.Layout.Pager,
+                                        Settings.AppearanceSettings.Layout.PagerReversed -> {
+                                            PagerScaffold(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .graphicsLayer {
+                                                        scaleX = enterTransition.value
+                                                        scaleY = enterTransition.value
+                                                        alpha = enterTransition.value
+                                                    },
+                                                darkStatusBarIcons = lightStatus,
+                                                darkNavBarIcons = lightNav,
+                                                reverse = layout == Settings.AppearanceSettings.Layout.PagerReversed
+                                            )
+                                        }
+                                        else -> {}
                                     }
-                                    Settings.AppearanceSettings.Layout.Pager,
-                                    Settings.AppearanceSettings.Layout.PagerReversed -> {
-                                        PagerScaffold(
-                                            modifier = Modifier
-                                                .fillMaxSize()
-                                                .graphicsLayer {
-                                                    scaleX = enterTransition.value
-                                                    scaleY = enterTransition.value
-                                                    alpha = enterTransition.value
-                                                },
-                                            darkStatusBarIcons = lightStatus,
-                                            darkNavBarIcons = lightNav,
-                                            reverse = layout == Settings.AppearanceSettings.Layout.PagerReversed
-                                        )
-                                    }
-                                    else -> {}
                                 }
                                 SnackbarHost(
                                     snackbarHostState,

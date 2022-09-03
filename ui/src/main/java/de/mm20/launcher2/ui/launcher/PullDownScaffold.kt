@@ -69,7 +69,7 @@ fun PullDownScaffold(
 
     val isSearchAtEnd by remember {
         derivedStateOf {
-            val lastItem = searchState.layoutInfo.visibleItemsInfo.last()
+            val lastItem = searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
             lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
         }
     }
