@@ -125,6 +125,15 @@ fun AppearanceSettingsScreen() {
                         viewModel.setIconSize(it)
                     }
                 )
+                val showLabels by viewModel.showLabels.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_grid_labels),
+                    summary = stringResource(R.string.preference_grid_labels_summary),
+                    value = showLabels == true,
+                    onValueChanged = {
+                        viewModel.setShowLabels(it)
+                    }
+                )
                 val columnCount by viewModel.columnCount.observeAsState(5)
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),

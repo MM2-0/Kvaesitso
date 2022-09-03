@@ -5,14 +5,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.Searchable
@@ -42,6 +39,8 @@ fun SearchColumn(
 
     val viewModel: SearchVM = viewModel()
 
+    val showLabels by viewModel.showLabels.observeAsState(true)
+
     val hideFavs by viewModel.hideFavorites.observeAsState(true)
     val favorites by viewModel.favorites.observeAsState(emptyList())
     val apps by viewModel.appResults.observeAsState(emptyList())
@@ -62,9 +61,19 @@ fun SearchColumn(
         reverseLayout = reverse,
     ) {
         if (!hideFavs) {
-            GridResults(favorites.toImmutableList(), columns, reverse)
+            GridResults(
+                items = favorites.toImmutableList(),
+                columns = columns,
+                showLabels = showLabels,
+                reverse = reverse,
+            )
         }
-        GridResults(apps.toImmutableList(), columns, reverse)
+        GridResults(
+            items = apps.toImmutableList(),
+            columns = columns,
+            showLabels = showLabels,
+            reverse = reverse,
+        )
         ListResults(appShortcuts.toImmutableList(), reverse)
         val uc = unitConverter
         if (uc != null) {
@@ -103,6 +112,7 @@ fun LazyListScope.GridResults(
     items: ImmutableList<Searchable>,
     columns: Int,
     reverse: Boolean,
+    showLabels: Boolean,
 ) {
     if (items.isEmpty()) return
     val rows = ceil(items.size / columns.toFloat()).toInt()
@@ -110,6 +120,7 @@ fun LazyListScope.GridResults(
         GridRow(
             items = items.subList(it * columns, (it * columns + columns).coerceAtMost(items.size)),
             columns = columns,
+            showLabels = showLabels,
             isFirst = if (reverse) it == rows - 1 else it == 0,
             isLast = if (reverse) it == 0 else it == rows - 1
         )
@@ -121,6 +132,7 @@ fun GridRow(
     modifier: Modifier = Modifier,
     items: ImmutableList<Searchable>,
     columns: Int,
+    showLabels: Boolean,
     isFirst: Boolean,
     isLast: Boolean,
 ) {
@@ -145,7 +157,7 @@ fun GridRow(
                             .weight(1f)
                             .padding(4.dp, 8.dp),
                         item = item,
-                        showLabels = true
+                        showLabels = showLabels
                     )
                 }
                 for (i in 0 until columns - items.size) {

@@ -78,6 +78,18 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+
+    val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
+    fun setShowLabels(showLabels: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setGrid(it.grid.toBuilder().setShowLabels(showLabels))
+                    .build()
+            }
+        }
+    }
+
     val dimWallpaper = dataStore.data.map { it.appearance.dimWallpaper }.asLiveData()
     fun setDimWallpaper(dimWallpaper: Boolean) {
         viewModelScope.launch {

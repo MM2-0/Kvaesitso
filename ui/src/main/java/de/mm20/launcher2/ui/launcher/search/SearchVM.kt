@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.search
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
@@ -46,6 +47,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val isSearching = MutableLiveData(false)
     val searchQuery = MutableLiveData("")
     val isSearchEmpty = MutableLiveData(true)
+
+    val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
 
     val favorites = MutableLiveData<List<Searchable>>(emptyList())
 
