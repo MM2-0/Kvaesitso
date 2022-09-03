@@ -517,8 +517,8 @@
     <string name="preference_screen_musicwidget">Music</string>
     <string name="preference_screen_clockwidget">Clock</string>
     <string name="preference_clockwidget_layout">Layout</string>
-    <string name="preference_clockwidget_layout_vertical">Vertical</string>
-    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clockwidget_layout_vertical">Default</string>
+    <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Select a clock</string>
     <string name="preference_clockwidget_date_part">Date</string>
