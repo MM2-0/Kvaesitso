@@ -120,6 +120,7 @@ message Settings {
     bool battery_part = 5;
     bool alarm_part = 6;
     bool favorites_part = 7;
+    bool fill_height = 8;
   }
   ClockWidgetSettings clock_widget = 7;
 
@@ -192,6 +193,7 @@ message Settings {
   message GridSettings {
     uint32 column_count = 1;
     uint32 icon_size = 2;
+    bool show_labels = 3;
   }
   GridSettings grid = 19;
 
