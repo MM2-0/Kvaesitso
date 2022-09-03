@@ -191,7 +191,8 @@ fun PagerScaffold(
         object : NestedScrollConnection {
             private var pullDownTotalY: Float? = 0f
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val diff = widgetsScrollState.value - available.y
+                if (!isWidgetsScrollZero) return Offset.Zero
+                val diff = -available.y
                 var totalY = pullDownTotalY ?: return available
                 if (diff >= 0) return super.onPreScroll(available, source)
 
