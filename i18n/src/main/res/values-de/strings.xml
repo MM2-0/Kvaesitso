@@ -296,8 +296,8 @@
     <string name="preference_screen_musicwidget">Musik</string>
     <string name="preference_screen_clockwidget">Uhr</string>
     <string name="preference_clockwidget_layout">Layout</string>
-    <string name="preference_clockwidget_layout_vertical">Vertikal</string>
-    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clockwidget_layout_vertical">Standard</string>
+    <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
     <string name="preference_clock_widget_style">Stil</string>
     <string name="preference_clock_widget_style_summary">Uhr auswählen</string>
     <string name="preference_crash_reporter">Crash-Reporter</string>
@@ -448,4 +448,8 @@
     <string name="icon_picker_search_icon">Symbol suchen</string>
     <string name="menu_customize">Anpassen</string>
     <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
+    <string name="preference_grid_labels">Beschriftungen anzeigen</string>
+    <string name="preference_grid_labels_summary">App-Namen unterhalb des App-Icons anzeigen</string>
+    <string name="preference_clock_widget_fill_height">Bildschirmhöhe ausfüllen</string>
+    <string name="preference_clock_widget_fill_height_summary">Zusätzlichen Freiraum über der Uhr einfügen um den ganzen Bildschirm zu füllen</string>
 </resources>
