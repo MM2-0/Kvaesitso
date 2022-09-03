@@ -93,7 +93,7 @@ fun ShapedLauncherIcon(
                     clip = currentIcon?.backgroundLayer !is TransparentLayer
                     this.shape = shape
                 }
-                .pointerInput(null) {
+                .pointerInput(onClick, onLongClick) {
                     detectTapGestures(
                         onLongPress = { onLongClick?.invoke() },
                         onTap = { onClick?.invoke() },
@@ -124,7 +124,7 @@ fun ShapedLauncherIcon(
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd)
-                    .pointerInput(null) {
+                    .pointerInput(onClick, onLongClick) {
                         detectTapGestures(
                             onLongPress = { onLongClick?.invoke() },
                             onTap = { onClick?.invoke() },
