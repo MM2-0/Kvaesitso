@@ -38,6 +38,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.ExternalWidget
 import kotlinx.coroutines.awaitCancellation
@@ -46,7 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun WidgetColumn(
     modifier: Modifier = Modifier,
-    clockHeight: () -> Dp = { 0.dp },
+    clockHeight: () -> Dp? = { null },
     clockBottomPadding: () -> Dp = { 0.dp },
     editMode: Boolean = false,
     onEditModeChange: (Boolean) -> Unit,
@@ -90,7 +91,7 @@ fun WidgetColumn(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(clockHeight())
+                    .then(clockHeight()?.let { Modifier.height(it) } ?: Modifier)
                     .padding(bottom = clockBottomPadding()),
                 contentAlignment = Alignment.BottomCenter
             ) {

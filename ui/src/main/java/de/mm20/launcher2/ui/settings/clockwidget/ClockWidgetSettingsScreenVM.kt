@@ -38,6 +38,19 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val fillHeight = dataStore.data.map { it.clockWidget.fillHeight }.asLiveData()
+    fun setFillHeight(fillHeight: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setFillHeight(fillHeight)
+                    ).build()
+            }
+        }
+    }
+
     val datePart = dataStore.data.map { it.clockWidget.datePart }.asLiveData()
     fun setDatePart(datePart: Boolean) {
         viewModelScope.launch {

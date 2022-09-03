@@ -50,4 +50,6 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     }
 
     val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
+
+    val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }.asLiveData()
 }

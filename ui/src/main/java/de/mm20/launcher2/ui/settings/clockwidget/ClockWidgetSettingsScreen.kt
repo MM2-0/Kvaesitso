@@ -52,6 +52,13 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setClockStyle(it)
                     }
                 )
+                val fillHeight by viewModel.fillHeight.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clock_widget_fill_height),
+                    summary = stringResource(R.string.preference_clock_widget_fill_height_summary),
+                    value = fillHeight == true,
+                    onValueChanged = { viewModel.setFillHeight(it) }
+                )
             }
         }
         item {

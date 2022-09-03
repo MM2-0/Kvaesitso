@@ -87,12 +87,15 @@ fun PagerScaffold(
             }
         }
     }
+
+    val fillClockHeight by viewModel.fillClockHeight.observeAsState(true)
+
     val showNavBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
                 !isSearchAtStart
             } else {
-                widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
+                (widgetsScrollState.value > 0 || !fillClockHeight) && widgetsScrollState.value < widgetsScrollState.maxValue
             }
         }
     }
@@ -274,12 +277,16 @@ fun PagerScaffold(
                         val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
 
                         val clockPadding by animateDpAsState(
-                            if (isWidgetsScrollZero) 64.dp + insets.calculateBottomPadding() else 0.dp
+                            if (isWidgetsScrollZero && fillClockHeight) 64.dp + insets.calculateBottomPadding() else 0.dp
                         )
 
                         val clockHeight by remember {
                             derivedStateOf {
-                                height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                                if (fillClockHeight){
+                                    height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                                } else {
+                                    null
+                                }
                             }
                         }
 
@@ -347,7 +354,7 @@ fun PagerScaffold(
             derivedStateOf {
                 when {
                     swipeableState.direction != 0f -> SearchBarLevel.Raised
-                    !isSearchOpen && isWidgetsScrollZero -> SearchBarLevel.Resting
+                    !isSearchOpen && isWidgetsScrollZero && fillClockHeight -> SearchBarLevel.Resting
                     isSearchOpen && isSearchAtStart -> SearchBarLevel.Active
                     else -> SearchBarLevel.Raised
                 }

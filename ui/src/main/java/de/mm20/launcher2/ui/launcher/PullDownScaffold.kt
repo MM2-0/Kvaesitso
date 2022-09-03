@@ -88,6 +88,8 @@ fun PullDownScaffold(
         }
     }
 
+    val fillClockHeight by viewModel.fillClockHeight.observeAsState(true)
+
     val showStatusBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
@@ -102,7 +104,7 @@ fun PullDownScaffold(
             if (isSearchOpen) {
                 !isSearchAtEnd
             } else {
-                widgetsScrollState.value > 0 && widgetsScrollState.value < widgetsScrollState.maxValue
+                (widgetsScrollState.value > 0 || !fillClockHeight) && widgetsScrollState.value < widgetsScrollState.maxValue
             }
         }
     }
@@ -295,11 +297,15 @@ fun PullDownScaffold(
                     )
                     val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
                     val clockPadding by animateDpAsState(
-                        if (isWidgetsAtStart) insets.calculateBottomPadding() else 0.dp
+                        if (isWidgetsAtStart && fillClockHeight) insets.calculateBottomPadding() else 0.dp
                     )
                     val clockHeight by remember {
                         derivedStateOf {
-                            height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                            if (fillClockHeight) {
+                                height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding + 56.dp)
+                            } else {
+                                null
+                            }
                         }
                     }
                     WidgetColumn(
@@ -316,6 +322,7 @@ fun PullDownScaffold(
                             .verticalScroll(widgetsScrollState)
                             .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
+                            .padding(top = 56.dp)
                             .padding(top = editModePadding),
                         clockHeight = { clockHeight },
                         clockBottomPadding = { clockPadding },
