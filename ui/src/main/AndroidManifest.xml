@@ -24,19 +24,29 @@
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-
-
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/debug_shortcuts" />
-
         </activity>
+
+        <activity
+            android:name=".assistant.AssistantActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/LauncherTheme"
+            android:stateNotNeeded="true"
+            android:resumeWhilePausing="true"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.ASSIST" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".settings.SettingsActivity"
             android:exported="true"
             android:label="@string/settings"
             android:launchMode="singleTask"
-            android:parentActivityName=".launcher.LauncherActivity"
+            android:parentActivityName=".launcher.SharedLauncherActivity"
             android:taskAffinity="de.mm20.launcher2.settings"
             android:theme="@style/SettingsTheme.NoActionBar">
             <intent-filter>
@@ -45,20 +55,20 @@
             </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.launcher.LauncherActivity" />
+                android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
         </activity>
 
         <activity
             android:name=".launcher.widgets.picker.PickAppWidgetActivity"
             android:exported="true"
             android:launchMode="singleTask"
-            android:parentActivityName=".launcher.LauncherActivity"
+            android:parentActivityName=".launcher.SharedLauncherActivity"
             android:screenOrientation="portrait"
             android:taskAffinity="de.mm20.launcher2.settings"
             android:theme="@style/SettingsTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.launcher.LauncherActivity" />
+                android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
         </activity>
     </application>
 
