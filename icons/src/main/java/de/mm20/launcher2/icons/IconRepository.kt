@@ -81,7 +81,7 @@ class IconRepository(
                 }
                 providers.add(GoogleClockIconProvider(context))
                 providers.add(CalendarIconProvider(context))
-                providers.add(SystemIconProvider(context))
+                providers.add(SystemIconProvider(context, settings.themedIcons))
                 providers.add(placeholderProvider)
                 cache.evictAll()
 
@@ -131,7 +131,7 @@ class IconRepository(
     private fun getProviders(customIcon: CustomIcon?): List<IconProvider> {
         if (customIcon is UnmodifiedSystemDefaultIcon) {
             return listOf(
-                SystemIconProvider(context)
+                SystemIconProvider(context, false)
             )
         }
         if (customIcon is CustomIconPackIcon) {

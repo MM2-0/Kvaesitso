@@ -15,6 +15,7 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -68,6 +69,7 @@ class AppShortcut(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
@@ -77,6 +79,15 @@ class AppShortcut(
             )
         } ?: return null
         if (icon is AdaptiveIconDrawable) {
+            if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
+                return StaticLauncherIcon(
+                    foregroundLayer = TintedIconLayer(
+                        scale = 1f,
+                        icon = icon.monochrome!!,
+                    ),
+                    backgroundLayer = ColorLayer()
+                )
+            }
             return StaticLauncherIcon(
                 foregroundLayer = icon.foreground?.let {
                     StaticIconLayer(

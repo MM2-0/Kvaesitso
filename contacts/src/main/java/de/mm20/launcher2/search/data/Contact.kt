@@ -51,6 +51,7 @@ class Contact(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? {
         val contentResolver = context.contentResolver
         val bmp = withContext(Dispatchers.IO) {

@@ -25,6 +25,7 @@ class Website(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? {
         if (favicon.isEmpty()) return null
         try {

@@ -42,6 +42,7 @@ open class LocalFile(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? {
         if (!JavaIOFile(path).exists()) return null
         when {

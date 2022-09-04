@@ -13,9 +13,9 @@ import android.os.UserHandle
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
 
 /**
  * An [Application] based on an [android.content.pm.LauncherActivityInfo]
@@ -29,7 +29,7 @@ class LauncherApp(
     activity = launcherActivityInfo.name,
     flags = launcherActivityInfo.applicationInfo.flags,
     version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
-), KoinComponent {
+) {
 
     internal val userSerialNumber: Long = launcherActivityInfo.user.getSerialNumber(context)
     val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
@@ -44,6 +44,7 @@ class LauncherApp(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? {
         try {
             val icon =
@@ -52,6 +53,15 @@ class LauncherApp(
 
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {
+                if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
+                    return StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            scale = 1f,
+                            icon = icon.monochrome!!,
+                        ),
+                        backgroundLayer = ColorLayer()
+                    )
+                }
                 return StaticLauncherIcon(
                     foregroundLayer = icon.foreground?.let {
                         StaticIconLayer(

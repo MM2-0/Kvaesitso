@@ -37,6 +37,7 @@ abstract class Searchable : Comparable<Searchable> {
     open suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon? = null
 
     abstract fun getPlaceholderIcon(context: Context): StaticLauncherIcon

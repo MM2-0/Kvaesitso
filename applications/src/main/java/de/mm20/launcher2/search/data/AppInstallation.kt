@@ -41,6 +41,7 @@ class AppInstallation(
     override suspend fun loadIcon(
         context: Context,
         size: Int,
+        themed: Boolean,
     ): LauncherIcon {
         val icon = session.appIcon ?: return getPlaceholderIcon(context)
         val foreground = BitmapDrawable(context.resources, icon)
