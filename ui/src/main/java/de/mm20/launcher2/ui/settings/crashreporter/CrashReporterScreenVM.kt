@@ -29,7 +29,7 @@ class CrashReporterScreenVM: ViewModel() {
         }
     }
 
-    val showExceptions = MutableLiveData(BuildConfig.DEBUG)
+    val showExceptions = MutableLiveData(false)
     val showCrashes = MutableLiveData(true)
 
     val reports = MutableLiveData<List<CrashReport>?>(null)
@@ -39,6 +39,7 @@ class CrashReporterScreenVM: ViewModel() {
         viewModelScope.launch {
             _reports = CrashReporter.getCrashReports()
             reports.value = _reports
+            setShowExceptions(BuildConfig.DEBUG)
         }
     }
 
