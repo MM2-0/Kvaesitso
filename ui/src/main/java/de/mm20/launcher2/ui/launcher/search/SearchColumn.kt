@@ -150,7 +150,12 @@ fun GridRow(
             isTop = isFirst,
             isBottom = isLast,
         ) {
-            Row {
+            Row(
+                modifier = Modifier.padding(
+                    top = if (isFirst) 4.dp else 0.dp,
+                    bottom = if (isLast) 2.dp else 0.dp,
+                )
+            ) {
                 for (item in items) {
                     GridItem(
                         modifier = Modifier
