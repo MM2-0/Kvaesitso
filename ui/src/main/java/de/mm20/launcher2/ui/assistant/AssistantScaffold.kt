@@ -8,8 +8,18 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
@@ -18,6 +28,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 @Composable
@@ -48,7 +59,8 @@ fun AssistantScaffold(
 
     val isSearchAtEnd by remember {
         derivedStateOf {
-            val lastItem = searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+            val lastItem =
+                searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
             lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
         }
     }
@@ -115,17 +127,37 @@ fun AssistantScaffold(
         }
     }
 
+    val density = LocalDensity.current
+    val maxSearchBarOffset = with(density) { 128.dp.toPx() }
+    var searchBarOffset by remember {
+        mutableStateOf(0f)
+    }
+
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val y = available.y * if (reverseResults == true) -1f else 1f
+                searchBarOffset = (searchBarOffset + y).coerceIn(-maxSearchBarOffset, 0f)
+                return super.onPreScroll(available, source)
+            }
+        }
+    }
+
     val searchVM: SearchVM = viewModel()
     val websearches by searchVM.websearchResults.observeAsState(emptyList())
     val webSearchPadding by animateDpAsState(
         if (websearches.isEmpty()) 0.dp else 48.dp
     )
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .nestedScroll(nestedScrollConnection)
+    ) {
         SearchColumn(
             modifier = Modifier.fillMaxSize(),
             paddingValues = PaddingValues(
-                top = (if (bottomSearchBar == true) 0.dp else 56.dp + webSearchPadding) + 4.dp  + windowInsets.calculateTopPadding(),
+                top = (if (bottomSearchBar == true) 0.dp else 56.dp + webSearchPadding) + 4.dp + windowInsets.calculateTopPadding(),
                 bottom = (if (bottomSearchBar == true) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding()
             ),
             reverse = reverseResults == true,
@@ -139,10 +171,16 @@ fun AssistantScaffold(
                 .wrapContentHeight()
                 .align(if (bottomSearchBar == true) Alignment.BottomCenter else Alignment.TopCenter)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(8.dp),
+                .padding(8.dp)
+                .offset {
+                    if (searchBarFocused) IntOffset.Zero
+                    else IntOffset(
+                        0,
+                        searchBarOffset.toInt() * if (bottomSearchBar == true) -1 else 1
+                    )
+                },
             focused = searchBarFocused,
             onFocusChange = {
-                if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
             },
             reverse = bottomSearchBar == true
