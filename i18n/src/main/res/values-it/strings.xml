@@ -42,9 +42,9 @@
     <string name="preference_clockwidget_music_part_summary">Mostra i controlli multimediali quando c\'è una riproduzione attiva</string>
     <string name="preference_search_files_summary">Cerca file locali e nel cloud</string>
     <string name="preference_search_unitconverter_summary">Utilizzo: 1.5 kg o 4 cm &gt;&gt; in</string>
-    <string name="edit_favorites_dialog_unpinned">Non appuntati - usati frequentemente</string>
+    <string name="edit_favorites_dialog_unpinned">Non bloccati: usati frequentemente</string>
     <string name="preference_search_websearch_summary">Mostra scorciatoie a diversi motori di ricerca</string>
-    <string name="edit_favorites_dialog_pinned_unsorted">Appuntati - ordinati automaticamente</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Bloccati: ordinati automaticamente</string>
     <string name="preference_search_wikipedia_pictures">Mostra immagini</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d evento in corso da giorni passati</item>
@@ -128,7 +128,7 @@
     <string name="websearch_dialog_url_description">\'${1}\' sarà sostituito dall\'effettivo termine di ricerca.</string>
     <string name="websearch_dialog_url_error">Il segnaposto \'${1}\' non è presente in questo URL</string>
     <string name="websearch_dialog_replace_icon">Sostituisci icona</string>
-    <string name="websearch_dialog_delete_icon">Rimuovi icona</string>
+    <string name="websearch_dialog_delete_icon">Elimina icona</string>
     <string name="websearch_dialog_custom_icon">Icona personalizzata</string>
     <string name="websearch_dialog_import_url">Importa da URL</string>
     <string name="websearch_dialog_import_error">L\'URL specificato non può essere importato automaticamente. Puoi provare un URL diverso o inserire manualmente i dati richiesti.</string>
@@ -140,7 +140,7 @@
     <string name="widget_add_external">Di più</string>
     <string name="shortcut_summary">Da %1$s</string>
     <string name="installation_in_progress">Installazione in corso... (%1$s)</string>
-    <string name="easter_egg_2">Per favore, smettila, stai perdendo tempo</string>
+    <string name="easter_egg_2">Per favore, smettila, stai perdendo il tuo tempo</string>
     <string name="easter_egg_3">Non lo ripeto più: non ci sono assolutamente Easter egg nascosti qui</string>
     <string name="easter_egg_text">Bene, mi hai trovato. Congratulazioni. Ne valeva la pena\?</string>
     <string name="close">Chiudi</string>
@@ -155,7 +155,7 @@
     <string name="owncloud_server_url">URL server Owncloud</string>
     <string name="owncloud_server_invalid_url">Questo URL non punta a un\'installazione Owncloud valida</string>
     <string name="owncloud_password">Password</string>
-    <string name="edit_favorites_dialog_pinned_sorted">Appuntati - ordinati manualmente</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Bloccati: ordinati manualmente</string>
     <string name="owncloud_login_failed">Accesso fallito: nome utente o password errati.</string>
     <string name="owncloud_username_empty">Il nome utente non deve essere vuoto</string>
     <string name="owncloud_password_empty">La password non deve essere vuota</string>
