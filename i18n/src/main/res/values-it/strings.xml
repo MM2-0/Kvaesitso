@@ -13,22 +13,22 @@
 \nUltimo aggiornamento: %1$s</string>
     <string name="weather_condition_sleet">Nevischio</string>
     <string name="file_meta_dimensions">Dimensioni: %1$s</string>
-    <string name="file_type_source_code">Codice sorgente</string>
+    <string name="file_type_source_code">File codice sorgente</string>
     <string name="weather_condition_sleetandthunder">Nevischio e tuono</string>
-    <string name="alert_delete_directory">La cartella %1$s e tutto il suo contenuto saranno eliminati definitivamente. Procedere\?</string>
+    <string name="alert_delete_directory">La cartella %1$s e tutto il suo contenuto saranno eliminati definitivamente. Procedo\?</string>
     <string name="weather_widget_hide_details">Nascondi dettagli</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="weather_widget_set_location">Imposta posizione</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="missing_permission_calendar_search_settings">Accesso al calendario necessario per cercare nel calendario</string>
-    <string name="missing_permission_file_search_settings_android10">Accesso tutti i file necessario per cercare file locali</string>
-    <string name="missing_permission_contact_search">Concedi l\'autorizzazione ai contatti per cercare all\'interno dei tuoi contatti.</string>
+    <string name="missing_permission_calendar_search_settings">È necessaria l\'autorizzazione Calendario per cercare nel calendario</string>
+    <string name="missing_permission_file_search_settings_android10">È necessaria l\'autorizzazione Gestisci tutti i file per cercare i file locali</string>
+    <string name="missing_permission_contact_search">Concedi l\'autorizzazione Contatti per cercare all\'interno dei tuoi contatti.</string>
     <string name="preference_calendar_hide_allday">Nascondi eventi di tutto il giorno</string>
     <string name="open_webpage">Apri sito web</string>
     <string name="preference_automatic_location_summary">Usa il GPS e i servizi di localizzazione per determinare automaticamente la tua posizione</string>
     <string name="preference_cards_stroke_width">Larghezza bordo</string>
-    <string name="preference_screen_buildinfo_summary">Maggiori informazioni su questa build di questa app</string>
-    <string name="preference_themed_icons_summary">Colora le icone con lo schema colore dell\'app</string>
+    <string name="preference_screen_buildinfo_summary">Maggiori informazioni sulla build di questa app</string>
+    <string name="preference_themed_icons_summary">Icone colorate con la combinazione di colori dell\'applicazione</string>
     <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura della ricerca</string>
     <string name="preference_light_nav_bar">Icone scure nella barra di navigazione</string>
     <string name="connect_account">Connetti account</string>
@@ -38,12 +38,12 @@
     <string name="preference_shortcut_badges_summary">Mostra un indicatore che indica a quale app appartiene una scorciatoia</string>
     <string name="preference_about_license">Questa app è software libero.</string>
     <string name="preference_clockwidget_layout">Disposizione</string>
-    <string name="preference_clockwidget_layout_horizontal">Orizzontale</string>
+    <string name="preference_clockwidget_layout_horizontal">Compatto</string>
     <string name="preference_clockwidget_music_part_summary">Mostra i controlli multimediali quando c\'è una riproduzione attiva</string>
     <string name="preference_search_files_summary">Cerca file locali e nel cloud</string>
     <string name="preference_search_unitconverter_summary">Utilizzo: 1.5 kg o 4 cm &gt;&gt; in</string>
     <string name="edit_favorites_dialog_unpinned">Non appuntati - usati frequentemente</string>
-    <string name="preference_search_websearch_summary">Mostra scorciatoie a motori di ricerca diversi</string>
+    <string name="preference_search_websearch_summary">Mostra scorciatoie a diversi motori di ricerca</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Appuntati - ordinati automaticamente</string>
     <string name="preference_search_wikipedia_pictures">Mostra immagini</string>
     <plurals name="calendar_widget_running_events">
@@ -58,7 +58,7 @@
     <string name="menu_favorites_pin">Aggiungi ai preferiti</string>
     <string name="menu_favorites_unpin">Rimuovi</string>
     <string name="menu_back">Indietro</string>
-    <string name="menu_app_info">Info applicazione</string>
+    <string name="menu_app_info">Info app</string>
     <string name="menu_launch">Avvia</string>
     <string name="menu_open_file">Apri</string>
     <string name="menu_hide">Nascondi</string>
@@ -100,8 +100,8 @@
     <string name="file_meta_owner">Proprietario: %1$s</string>
     <string name="file_meta_location">Posizione: %1$s</string>
     <string name="file_type_directory">Cartella</string>
-    <string name="file_type_archive">File d\'archivio</string>
-    <string name="file_type_android">Pacchetto android</string>
+    <string name="file_type_archive">File archivio</string>
+    <string name="file_type_android">File pacchetto Android</string>
     <string name="file_type_document">Documento</string>
     <string name="file_type_spreadsheet">Foglio di calcolo</string>
     <string name="file_type_music">File musicale</string>
@@ -113,20 +113,20 @@
     <string name="file_type_text">File di testo</string>
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Disegno</string>
-    <string name="file_type_form">Formulario</string>
+    <string name="file_type_form">Modulo</string>
     <string name="file_type_generic">File %1$s</string>
-    <string name="alert_delete_file">Il file %1$s sarà eliminato definitivamente. Procedere\?</string>
+    <string name="alert_delete_file">Il file %1$s sarà eliminato definitivamente. Procedo\?</string>
     <string name="error_activity_not_found">Errore nell\'apertura di %1$s</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_name">Google Play</string>
-    <string name="websearch_dialog_create_title">Aggiungi motore di ricerca</string>
-    <string name="websearch_dialog_edit_title">Modifica motore di ricerca</string>
+    <string name="websearch_dialog_create_title">Aggiungi ricerca web</string>
+    <string name="websearch_dialog_edit_title">Modifica ricerca web</string>
     <string name="websearch_dialog_name">Nome</string>
     <string name="websearch_dialog_url">URL</string>
     <string name="websearch_dialog_url_description">\'${1}\' sarà sostituito dall\'effettivo termine di ricerca.</string>
-    <string name="websearch_dialog_url_error">Segnaposto \'${1}\' mancante in questo URL</string>
+    <string name="websearch_dialog_url_error">Il segnaposto \'${1}\' non è presente in questo URL</string>
     <string name="websearch_dialog_replace_icon">Sostituisci icona</string>
     <string name="websearch_dialog_delete_icon">Rimuovi icona</string>
     <string name="websearch_dialog_custom_icon">Icona personalizzata</string>
@@ -141,7 +141,7 @@
     <string name="shortcut_summary">Da %1$s</string>
     <string name="installation_in_progress">Installazione in corso... (%1$s)</string>
     <string name="easter_egg_2">Per favore, smettila, stai perdendo tempo</string>
-    <string name="easter_egg_3">Non lo ripeto: non ci sono assolutamente easter egg nascosti qui</string>
+    <string name="easter_egg_3">Non lo ripeto più: non ci sono assolutamente Easter egg nascosti qui</string>
     <string name="easter_egg_text">Bene, mi hai trovato. Congratulazioni. Ne valeva la pena\?</string>
     <string name="close">Chiudi</string>
     <string name="turn_off">Disabilita</string>
@@ -149,7 +149,7 @@
     <string name="widget_action_remove">Rimuovi</string>
     <string name="widget_action_settings">Impostazioni</string>
     <string name="menu_item_edit_favs">Modifica preferiti</string>
-    <string name="easter_egg_1">Non ci sono easter egg qui, a meno che non te ne sia portato dietro tu qualcuno.</string>
+    <string name="easter_egg_1">Non ci sono Easter egg qui, a meno che non te ne sia portato dietro tu qualcuno.</string>
     <string name="nextcloud_server_url">URL server Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Questo URL non punta a un\'installazione Nextcloud valida</string>
     <string name="owncloud_server_url">URL server Owncloud</string>
@@ -169,7 +169,7 @@
     <string name="calendar_widget_open_app">Apri l\'app calendario</string>
     <string name="calendar_widget_new_event">Nuovo evento</string>
     <string name="calendar_event_allday">tutto il giorno</string>
-    <string name="music_widget_default_title">%1$s in riproduzione</string>
+    <string name="music_widget_default_title">%1$s sta riproducendo file multimediali</string>
     <string name="music_widget_no_data">Nessun file multimediale è stato ancora riprodotto</string>
     <string name="weather_condition_sleetshowers">Rovesci di nevischio</string>
     <string name="weather_condition_snow">Neve</string>
@@ -202,15 +202,15 @@
     <string name="weather_details_wind">Vento: %1$s</string>
     <string name="weather_details_precipitation">Precipitazioni: %1$s</string>
     <string name="weather_no_data">Nessun dato meteo disponibile.</string>
-    <string name="missing_permission_auto_location">Accesso alla posizione necessario per determinare la posizione automaticamente</string>
-    <string name="missing_permission_music_widget">Accesso alle notifiche necessario per controllare la riproduzione media</string>
-    <string name="missing_permission_contact_search_settings">Accesso ai contatti necessario per cercare i contatti</string>
-    <string name="missing_permission_calendar_widget_settings">Questo widget necessita di accesso al calendario</string>
-    <string name="missing_permission_file_search_settings">L\'accesso all\'archiviazione esterna è necessario per cercare i file locali</string>
-    <string name="missing_permission_notification_badges">L\'accesso alle notifiche è necessario per visualizzare gli indicatori di notifica</string>
-    <string name="missing_permission_calendar_widget">Concedi l\'autorizzazione al calendario per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
-    <string name="missing_permission_calendar_search">Concedi l\'autorizzazione al calendario per cercare all\'interno del tuo calendario.</string>
-    <string name="missing_permission_files_search">Concedi l\'autorizzazione all\'archiviazione per cercare foto, file multimediali e documenti su questo dispositivo.</string>
+    <string name="missing_permission_auto_location">È necessaria l\'autorizzazione Geolocalizzazione per determinare automaticamente la posizione</string>
+    <string name="missing_permission_music_widget">È necessario Accesso alle notifiche per controllare la riproduzione multimediale</string>
+    <string name="missing_permission_contact_search_settings">È necessaria l\'autorizzazione Contatti per cercare i contatti</string>
+    <string name="missing_permission_calendar_widget_settings">Questo widget richiede l\'autorizzazione Calendario</string>
+    <string name="missing_permission_file_search_settings">È necessaria l\'autorizzazione Archiviazione per cercare i file locali</string>
+    <string name="missing_permission_notification_badges">È necessario Accesso alle notifiche visualizzare gli indicatori di notifica</string>
+    <string name="missing_permission_calendar_widget">Concedi l\'autorizzazione Calendario per visualizzare gli appuntamenti e gli eventi imminenti qui.</string>
+    <string name="missing_permission_calendar_search">Concedi l\'autorizzazione Calendario per cercare all\'interno del tuo calendario.</string>
+    <string name="missing_permission_files_search">Concedi l\'autorizzazione Archiviazione per cercare foto, file multimediali e documenti su questo dispositivo.</string>
     <string name="weather_condition_fair">Soleggiato</string>
     <string name="weather_condition_heavyrainandthunder">Forti piogge e temporale</string>
     <string name="weather_condition_heavysleetandthunder">Forte nevischio e temporale</string>
@@ -256,7 +256,7 @@
     <string name="preference_category_searchbar">Barra di ricerca</string>
     <string name="preference_screen_services">Servizi</string>
     <string name="preference_theme_system">Segui sistema</string>
-    <string name="preference_themed_icons">Tema icone</string>
+    <string name="preference_themed_icons">Icone a tema</string>
     <string name="preference_icon_pack_summary_empty">Nessun pacchetto icone installato</string>
     <string name="preference_icon_pack">Pacchetto icone</string>
     <string name="preference_light_status_bar">Icone scure nella barra di stato</string>
@@ -271,8 +271,8 @@
     <string name="preference_category_wallpaper">Sfondo</string>
     <string name="preference_dim_wallpaper">Scurisci sfondo</string>
     <string name="preference_dim_wallpaper_summary">Nei temi scuri, scurisci lo sfondo</string>
-    <string name="preference_wallpaper_summary">Scegli lo sfondo</string>
-    <string name="preference_screen_badges_summary">Configura indicatori sulle icone</string>
+    <string name="preference_wallpaper_summary">Scegli uno sfondo</string>
+    <string name="preference_screen_badges_summary">Configura indicatori icona</string>
     <string name="preference_notification_badges">Indicatori di notifica</string>
     <string name="preference_screen_badges">Indicatori</string>
     <string name="preference_suspended_badges_summary">Mostra un indicatore per applicazioni sospese</string>
@@ -301,7 +301,7 @@
     <string name="preference_screen_weatherwidget">Meteo</string>
     <string name="preference_screen_musicwidget">Musica</string>
     <string name="preference_screen_clockwidget">Orologio</string>
-    <string name="preference_clockwidget_layout_vertical">Verticale</string>
+    <string name="preference_clockwidget_layout_vertical">Predefinito</string>
     <string name="preference_about_license_summary">Concesso in licenza sotto la GNU General Public License 3.0</string>
     <string name="preference_clock_widget_style">Stile</string>
     <string name="preference_clock_widget_style_summary">Seleziona orologio</string>
@@ -313,14 +313,14 @@
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra sveglie che suoneranno nei prossimi 15 minuti</string>
     <string name="preference_export_log">Esporta file di log</string>
-    <string name="preference_screen_search">Ricerca</string>
+    <string name="preference_screen_search">Cerca</string>
     <string name="preference_screen_search_summary">Configura la ricerca</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_files">File</string>
     <string name="preference_search_contacts">Contatti</string>
     <string name="preference_search_contacts_summary">Cerca contatti su questo dispositivo</string>
     <string name="preference_search_calendar">Calendario</string>
-    <string name="preference_search_calendar_summary">Cerca appuntamenti ed eventi in arrivo</string>
+    <string name="preference_search_calendar_summary">Cerca prossimi appuntamenti ed eventi</string>
     <string name="preference_search_calculator">Calcolatrice</string>
     <string name="preference_search_unitconverter">Convertitore di unità</string>
     <string name="preference_search_wikipedia">Wikipedia</string>
@@ -342,7 +342,7 @@
     <string name="preference_search_calculator_summary">Valuta termini matematici</string>
     <string name="preference_google_signin">Accedi a Google</string>
     <string name="preference_google_signin_summary">Accedi per cercare su Google Drive</string>
-    <string name="preference_crash_reporter_summary">Errori e rapporti di crash</string>
+    <string name="preference_crash_reporter_summary">Segnalazioni di errori e arresti anomali</string>
     <string name="preference_calendar_calendars">Calendari</string>
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendario selezionato</item>
@@ -424,7 +424,7 @@
     <string name="preference_font">Carattere</string>
     <string name="restore_complete">Il backup è stato ripristinato.</string>
     <string name="preference_clockwidget_favorites_part">Preferiti</string>
-    <string name="preference_clockwidget_favorites_part_summary">Mostra la prima riga di elementi aggiunti</string>
+    <string name="preference_clockwidget_favorites_part_summary">Mostra la prima riga di elementi appuntati</string>
     <string name="preference_backup_summary">Esporta preferenze e dati del launcher</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
     <string name="menu_customize">Personalizza</string>
@@ -448,4 +448,8 @@
     <string name="preference_colors_auto_generate">Genera dal colore primario</string>
     <string name="preference_enforce_icon_shape_summary">Applica la forma a tutte le icone comprese quelle che normalmente non la supporterebbero</string>
     <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedo\?</string>
+    <string name="preference_grid_labels">Mostra etichette</string>
+    <string name="preference_grid_labels_summary">Mostra il nome dell\'app sotto l\'icona</string>
+    <string name="preference_clock_widget_fill_height">Riempi altezza schermo</string>
+    <string name="preference_clock_widget_fill_height_summary">Inserisce spazio extra sopra l\'orologio per riempire l\'intera altezza dello schermo</string>
 </resources>
