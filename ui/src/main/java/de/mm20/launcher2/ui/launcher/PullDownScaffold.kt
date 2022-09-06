@@ -295,7 +295,6 @@ fun PullDownScaffold(
                         state = searchState,
 
                     )
-                    val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
                     val clockPadding by animateDpAsState(
                         if (isWidgetsAtStart && fillClockHeight) insets.calculateBottomPadding() else 0.dp
                     )
@@ -322,8 +321,7 @@ fun PullDownScaffold(
                             .verticalScroll(widgetsScrollState)
                             .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
-                            .padding(top = 56.dp)
-                            .padding(top = editModePadding),
+                            .padding(top = 56.dp),
                         clockHeight = { clockHeight },
                         clockBottomPadding = { clockPadding },
                         editMode = isWidgetEditMode,
