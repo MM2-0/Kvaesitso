@@ -306,8 +306,8 @@
     <string name="preference_screen_musicwidget">音乐</string>
     <string name="preference_screen_clockwidget">时钟</string>
     <string name="preference_clockwidget_layout">布局</string>
-    <string name="preference_clockwidget_layout_vertical">垂直</string>
-    <string name="preference_clockwidget_layout_horizontal">水平</string>
+    <string name="preference_clockwidget_layout_vertical">默认</string>
+    <string name="preference_clockwidget_layout_horizontal">简洁</string>
     <string name="preference_clock_widget_style">风格</string>
     <string name="preference_clockwidget_date_part">日期</string>
     <string name="preference_clockwidget_date_part_summary">显示当前日期</string>
@@ -445,4 +445,8 @@
     <string name="icon_picker_search_icon">搜索图标</string>
     <string name="preference_force_themed_icons">强制执行有主题的图标</string>
     <string name="menu_customize">自定义</string>
+    <string name="preference_grid_labels">显示应用名</string>
+    <string name="preference_grid_labels_summary">在图标底下显示应用名称</string>
+    <string name="preference_clock_widget_fill_height">全屏高度</string>
+    <string name="preference_clock_widget_fill_height_summary">在时钟上方插入额外的空间以填补整个屏幕的高度</string>
 </resources>
