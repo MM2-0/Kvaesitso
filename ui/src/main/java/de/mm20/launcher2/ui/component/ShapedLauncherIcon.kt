@@ -368,6 +368,7 @@ fun getShape(iconShape: IconShape): Shape {
         IconShape.Squircle -> SquircleShape
         IconShape.Hexagon -> HexagonShape
         IconShape.Pentagon -> PentagonShape
+        IconShape.Teardrop -> TeardropShape
         IconShape.EasterEgg -> EasterEggShape
         IconShape.UNRECOGNIZED -> CircleShape
     }
@@ -465,6 +466,36 @@ private val PentagonShape: Shape
         )
         close()
     }
+
+private val TeardropShape: Shape
+get() = GenericShape { size, _ ->
+    moveTo(0.5f * size.width, 0f)
+    cubicTo(
+        0.776f * size.width, 0f,
+        size.width, 0.224f * size.height,
+        size.width, 0.5f * size.height,
+    )
+    lineTo(
+        size.width, 0.88f * size.height,
+    )
+    cubicTo(
+        size.width, 0.946f * size.height,
+        0.946f * size.width, size.height,
+        0.88f * size.width, size.height,
+    )
+    lineTo(0.5f * size.width, size.height)
+    cubicTo(
+        0.224f * size.width, size.height,
+        0f, 0.776f * size.height,
+        0f, 0.5f * size.height,
+    )
+    cubicTo(
+        0f, 0.224f * size.height,
+        0.224f * size.width, 0f,
+        0.5f * size.width, 0f,
+    )
+    close()
+}
 
 private val EasterEggShape: Shape
     get() = GenericShape { size, _ ->

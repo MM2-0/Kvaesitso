@@ -219,6 +219,7 @@ message Settings {
       Hexagon = 6;
       Pentagon = 7;
       EasterEgg = 8;
+      Teardrop = 9;
     }
     IconShape shape = 1;
     bool themed_icons = 2;

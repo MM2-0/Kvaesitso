@@ -592,6 +592,7 @@ private fun getShapeName(shape: IconSettings.IconShape?): String? {
             IconSettings.IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
             IconSettings.IconShape.PlatformDefault -> R.string.preference_icon_shape_platform
             IconSettings.IconShape.Circle -> R.string.preference_icon_shape_circle
+            IconSettings.IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
             else -> return null
         }
     )
