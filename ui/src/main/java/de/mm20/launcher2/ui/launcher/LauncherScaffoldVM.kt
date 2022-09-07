@@ -19,7 +19,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val dataStore: LauncherDataStore by inject()
 
-    private val autoFocusSearch = dataStore.data.map { it.searchBar.autoFocus }
+    val autoFocusSearch = dataStore.data.map { it.searchBar.autoFocus }
 
     fun setSearchbarFocus(focused: Boolean) {
         if (searchBarFocused.value != focused) searchBarFocused.value = focused

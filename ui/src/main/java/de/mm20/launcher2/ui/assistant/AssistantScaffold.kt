@@ -8,14 +8,13 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.*
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -28,6 +27,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
@@ -39,6 +39,20 @@ fun AssistantScaffold(
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
 
+    var searchBarFocused by remember { mutableStateOf(false) }
+
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    LaunchedEffect(null) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            searchBarFocused = false
+            if (!viewModel.autoFocusSearch.first()) return@repeatOnLifecycle
+            delay(100)
+            searchBarFocused = true
+            keyboardController?.show()
+        }
+    }
+
     val bottomSearchBar by remember {
         viewModel.dataStore.data.map { it.appearance.layout != Settings.AppearanceSettings.Layout.PullDown }
     }.collectAsState(null)
@@ -47,7 +61,6 @@ fun AssistantScaffold(
         viewModel.dataStore.data.map { it.appearance.layout != Settings.AppearanceSettings.Layout.PullDown }
     }.collectAsState(null)
 
-    val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)
 
     val searchState = rememberLazyListState()
 
