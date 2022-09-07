@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.launcher.LauncherScaffoldVM
+import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchBar
 import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -124,6 +125,10 @@ fun AssistantScaffold(
                 darkIcons = darkStatusBarIcons
             )
         }
+    }
+
+    WallpaperBlur {
+        true
     }
 
     LaunchedEffect(darkNavBarIcons, showNavBarScrim) {
