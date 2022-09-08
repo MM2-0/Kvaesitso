@@ -261,7 +261,7 @@
     <string name="preference_icon_pack">Pacchetto icone</string>
     <string name="preference_light_status_bar">Icone scure nella barra di stato</string>
     <string name="preference_category_system_bars">Barre di sistema</string>
-    <string name="preference_icon_shape_triangle">Triangolo Reuleaux</string>
+    <string name="preference_icon_shape_triangle">Triangolo di Reuleaux</string>
     <string name="preference_hide_nav_bar">Nascondi barra di navigazione</string>
     <string name="preference_screen_services_summary">Gestisci account e servizi connessi</string>
     <string name="preference_category_services_google">Google</string>
@@ -452,4 +452,5 @@
     <string name="preference_grid_labels_summary">Mostra il nome dell\'app sotto l\'icona</string>
     <string name="preference_clock_widget_fill_height">Riempi altezza schermo</string>
     <string name="preference_clock_widget_fill_height_summary">Inserisce spazio extra sopra l\'orologio per riempire l\'intera altezza dello schermo</string>
+    <string name="preference_icon_shape_teardrop">Lacrima</string>
 </resources>
