@@ -72,7 +72,7 @@ fun SearchColumn(
             items = apps.toImmutableList(),
             columns = columns,
             showLabels = showLabels,
-            reverse = reverse,
+            reverse = reverse
         )
         ListResults(appShortcuts.toImmutableList(), reverse)
         val uc = unitConverter
@@ -113,17 +113,47 @@ fun LazyListScope.GridResults(
     columns: Int,
     reverse: Boolean,
     showLabels: Boolean,
+    before: (@Composable () -> Unit)? = null,
+    after: (@Composable () -> Unit)? = null,
 ) {
     if (items.isEmpty()) return
+
+    if (before != null) {
+        item(contentType = "ListItemsBefore") {
+            PartialCardRow(isFirst = true, isLast = false, reverse = reverse) {
+                before()
+            }
+        }
+    }
+
     val rows = ceil(items.size / columns.toFloat()).toInt()
     items(rows) {
-        GridRow(
-            items = items.subList(it * columns, (it * columns + columns).coerceAtMost(items.size)),
-            columns = columns,
-            showLabels = showLabels,
-            isFirst = if (reverse) it == rows - 1 else it == 0,
-            isLast = if (reverse) it == 0 else it == rows - 1
-        )
+        PartialCardRow(
+            isFirst = it == 0 && before == null,
+            isLast = it == rows - 1 && after == null,
+            reverse = reverse
+        ) {
+            GridRow(
+                modifier = Modifier.padding(
+                    top = if (if (reverse) it == rows - 1 else it == 0) 4.dp else 0.dp,
+                    bottom = if (if (reverse) it == 0 else it == rows - 1) 2.dp else 0.dp,
+                ),
+                items = items.subList(
+                    it * columns,
+                    (it * columns + columns).coerceAtMost(items.size)
+                ),
+                columns = columns,
+                showLabels = showLabels,
+            )
+        }
+    }
+
+    if (after != null) {
+        item(contentType = "ListItemsAfter") {
+            PartialCardRow(isFirst = false, isLast = true, reverse = reverse) {
+                after()
+            }
+        }
     }
 }
 
@@ -133,42 +163,22 @@ fun GridRow(
     items: ImmutableList<Searchable>,
     columns: Int,
     showLabels: Boolean,
-    isFirst: Boolean,
-    isLast: Boolean,
 ) {
-    Box(
+
+    Row(
         modifier = modifier
-            .clipToBounds()
     ) {
-        PartialLauncherCard(
-            modifier = Modifier.padding(
-                start = 8.dp,
-                end = 8.dp,
-                top = if (isFirst) 4.dp else 0.dp,
-                bottom = if (isLast) 4.dp else 0.dp,
-            ),
-            isTop = isFirst,
-            isBottom = isLast,
-        ) {
-            Row(
-                modifier = Modifier.padding(
-                    top = if (isFirst) 4.dp else 0.dp,
-                    bottom = if (isLast) 2.dp else 0.dp,
-                )
-            ) {
-                for (item in items) {
-                    GridItem(
-                        modifier = Modifier
-                            .weight(1f)
-                            .padding(4.dp, 8.dp),
-                        item = item,
-                        showLabels = showLabels
-                    )
-                }
-                for (i in 0 until columns - items.size) {
-                    Spacer(modifier = Modifier.weight(1f))
-                }
-            }
+        for (item in items) {
+            GridItem(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(4.dp, 8.dp),
+                item = item,
+                showLabels = showLabels
+            )
+        }
+        for (i in 0 until columns - items.size) {
+            Spacer(modifier = Modifier.weight(1f))
         }
     }
 }
@@ -176,14 +186,38 @@ fun GridRow(
 fun LazyListScope.ListResults(
     items: ImmutableList<Searchable>,
     reverse: Boolean,
+    before: (@Composable () -> Unit)? = null,
+    after: (@Composable () -> Unit)? = null,
 ) {
     if (items.isEmpty()) return
+    if (before != null) {
+        item(contentType = "ListItemsBefore") {
+            PartialCardRow(isFirst = true, isLast = false, reverse = reverse) {
+                before()
+            }
+        }
+    }
     items(items.size) {
-        ListRow(
-            item = items[it],
-            isFirst = if (reverse) it == items.size - 1 else it == 0,
-            isLast = if (reverse) it == 0 else it == items.size - 1
-        )
+        PartialCardRow(
+            isFirst = it == 0 && before == null,
+            isLast = it == items.lastIndex && after == null,
+            reverse = reverse
+        ) {
+            ListRow(
+                modifier = Modifier.padding(
+                    top = if (if (reverse) it == items.size - 1 else it == 0) 8.dp else 4.dp,
+                    bottom = if (if (reverse) it == 0 else it == items.size - 1) 8.dp else 4.dp,
+                ),
+                item = items[it],
+            )
+        }
+    }
+    if (after != null) {
+        item(contentType = "ListItemsAfter") {
+            PartialCardRow(isFirst = false, isLast = true, reverse = reverse) {
+                after()
+            }
+        }
     }
 }
 
@@ -191,38 +225,18 @@ fun LazyListScope.ListResults(
 fun ListRow(
     modifier: Modifier = Modifier,
     item: Searchable,
-    isFirst: Boolean,
-    isLast: Boolean,
 ) {
     Box(
-        modifier = modifier
-            .clipToBounds()
+        modifier = modifier.padding(
+            start = 8.dp,
+            end = 8.dp,
+        )
     ) {
-        PartialLauncherCard(
-            modifier = Modifier.padding(
-                start = 8.dp,
-                end = 8.dp,
-                top = if (isFirst) 4.dp else 0.dp,
-                bottom = if (isLast) 4.dp else 0.dp,
-            ),
-            isTop = isFirst,
-            isBottom = isLast,
-        ) {
-            Box(
-                modifier = Modifier.padding(
-                    start = 8.dp,
-                    end = 8.dp,
-                    top = if (isFirst) 8.dp else 4.dp,
-                    bottom = if (isLast) 8.dp else 4.dp,
-                )
-            ) {
-                ListItem(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    item = item
-                )
-            }
-        }
+        ListItem(
+            modifier = Modifier
+                .fillMaxWidth(),
+            item = item
+        )
     }
 }
 
@@ -234,6 +248,35 @@ fun LazyListScope.SingleResult(content: @Composable (() -> Unit)?) {
                 horizontal = 8.dp,
                 vertical = 4.dp,
             )
+        ) {
+            content()
+        }
+    }
+}
+
+@Composable
+fun PartialCardRow(
+    modifier: Modifier = Modifier,
+    isFirst: Boolean,
+    isLast: Boolean,
+    reverse: Boolean,
+    content: @Composable () -> Unit
+) {
+    val isTop = isFirst && !reverse || isLast && reverse
+    val isBottom = isLast && !reverse || isFirst && reverse
+    Box(
+        modifier = modifier
+            .clipToBounds()
+    ) {
+        PartialLauncherCard(
+            modifier = Modifier.padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = if (isTop) 4.dp else 0.dp,
+                bottom = if (isBottom) 4.dp else 0.dp,
+            ),
+            isTop = isTop,
+            isBottom = isBottom,
         ) {
             content()
         }
