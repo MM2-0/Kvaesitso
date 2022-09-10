@@ -31,7 +31,7 @@ val LightBlackAndWhiteColorScheme = lightColorScheme(
     onError = Color(0xFFFFFFFF),
     errorContainer = Color(0xFFFFDAD3),
     onErrorContainer = Color(0xFF410000),
-    outline = Color.White
+    outline = Color.Black
 )
 val DarkBlackAndWhiteColorScheme = darkColorScheme(
     primary = Color.White,
