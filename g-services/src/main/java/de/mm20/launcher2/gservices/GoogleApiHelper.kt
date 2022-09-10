@@ -20,6 +20,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.IOException
 
 class GoogleApiHelper private constructor(private val context: Context) {
@@ -100,25 +101,38 @@ class GoogleApiHelper private constructor(private val context: Context) {
     }
 
 
-    private fun getAuthFlow(): GoogleAuthorizationCodeFlow? {
+    private fun getAuthFlow(throwErrors: Boolean = false): GoogleAuthorizationCodeFlow? {
         val configResId = getConfigResId()
         if (configResId == 0) return null
         val jsonFactory = GsonFactory.getDefaultInstance()
-        return GoogleAuthorizationCodeFlow.Builder(
-            NetHttpTransport(),
-            jsonFactory,
-            GoogleClientSecrets.load(
+        try {
+            return GoogleAuthorizationCodeFlow.Builder(
+                NetHttpTransport(),
                 jsonFactory,
-                context.resources.openRawResource(configResId).reader()
-            ),
-            SCOPES
-        )
-            .setCredentialDataStore(
-                FileDataStoreFactory(context.filesDir).getDataStore(
-                    "google_signin"
-                )
+                GoogleClientSecrets.load(
+                    jsonFactory,
+                    context.resources.openRawResource(configResId).reader()
+                ),
+                SCOPES
             )
-            .build()
+                .setCredentialDataStore(
+                    FileDataStoreFactory(context.filesDir).getDataStore(
+                        "google_signin"
+                    )
+                )
+                .build()
+        } catch (e: IOException) {
+            if (throwErrors) throw e
+            else {
+                File(context.filesDir, "google_signin").delete()
+                context.getSharedPreferences(PREFS, Context.MODE_PRIVATE).edit {
+                    putString(PREF_ACCOUNT_NAME, null)
+                }
+                Log.e("MM20", "Google account has been reset because data store couldn't be readg")
+                CrashReporter.logException(e)
+                return getAuthFlow(true)
+            }
+        }
     }
 
     private var callback: (() -> Unit)? = null
