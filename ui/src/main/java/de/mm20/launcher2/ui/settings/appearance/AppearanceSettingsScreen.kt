@@ -409,12 +409,12 @@ fun IconShapePreference(
                         columns = GridCells.Adaptive(96.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 16.dp)
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
                     ) {
                         items(shapes) {
                             Column(
                                 modifier = Modifier
-                                    .padding(vertical = 16.dp),
+                                    .padding(8.dp),
                                 horizontalAlignment = Alignment.CenterHorizontally
                             ) {
                                 val context = LocalContext.current
@@ -441,6 +441,12 @@ fun IconShapePreference(
                                         showDialog = false
                                     },
                                     shape = getShape(it)
+                                )
+                                Text(
+                                    getShapeName(it) ?: "",
+                                    textAlign = TextAlign.Center,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    modifier = Modifier.padding(top = 4.dp)
                                 )
                             }
                         }
@@ -543,6 +549,15 @@ fun LayoutPreference(
                                     keyPath = arrayOf("ClockWidget", "**")
                                 )
                             )
+
+                            /*LaunchedEffect(null) {
+                                val drw = LottieDrawable()
+                                drw.composition = composition
+                                val list = drw.resolveKeyPath(KeyPath("**"))
+                                list.forEach {
+                                    Log.d("MM20", it.keysToString())
+                                }
+                            }*/
 
 
                             val progress by animateLottieCompositionAsState(
