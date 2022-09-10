@@ -102,7 +102,7 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/justasm/DragLinearLayout"
     ),
     OpenSourceLibrary(
-        name = "mXparser",
+        name = "mXparser (Version 4.4.2)",
         description = "A super easy, rich, fast and highly flexible math expression parser library",
         licenseName = R.string.bsd_2clause_name,
         licenseText = R.raw.license_bsd_2clause,

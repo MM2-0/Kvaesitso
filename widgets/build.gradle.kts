@@ -48,7 +48,6 @@ dependencies {
     implementation(project(":calendar"))
     implementation(project(":music"))
     implementation(project(":ktx"))
-    implementation(project(":transition"))
     implementation(project(":base"))
     implementation(project(":preferences"))
     implementation(project(":database"))

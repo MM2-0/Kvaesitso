@@ -83,10 +83,6 @@ dependencies {
     // Legacy dependencies
     implementation(libs.androidx.transition)
 
-    implementation(libs.materialcomponents.core)
-    implementation(libs.materialcomponents.composethemeadapter)
-    implementation(libs.materialcomponents.composethemeadapter3)
-
     implementation(libs.draglinearlayout)
 
     implementation(libs.accompanist.insets)
@@ -139,7 +135,6 @@ dependencies {
     implementation(project(":badges"))
     implementation(project(":crashreporter"))
     implementation(project(":notifications"))
-    implementation(project(":transition"))
     implementation(project(":contacts"))
     implementation(project(":permissions"))
     implementation(project(":websites"))
