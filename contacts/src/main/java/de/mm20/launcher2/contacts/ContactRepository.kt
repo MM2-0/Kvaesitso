@@ -65,7 +65,7 @@ internal class ContactRepositoryImpl(
             for ((id, rawIds) in contactMap) {
                 Contact.contactById(context, id, rawIds)?.let { results.add(it) }
             }
-            results.sortedBy { it }
+            results
         }
         return results
     }

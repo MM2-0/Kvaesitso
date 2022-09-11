@@ -16,4 +16,7 @@ interface CustomAttrsDao {
 
     @Insert
     fun setCustomAttribute(entity: CustomAttributeEntity)
+
+    @Query("SELECT * FROM CustomAttributes WHERE type = :type AND key IN (:keys)")
+    fun getCustomAttributes(keys: List<String>, type: String) : Flow<List<CustomAttributeEntity>>
 }

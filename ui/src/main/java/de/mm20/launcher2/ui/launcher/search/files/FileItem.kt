@@ -72,7 +72,7 @@ fun FileItem(
                     else MaterialTheme.typography.titleSmall
                 )
                 Text(
-                    text = file.label,
+                    text = file.labelOverride ?: file.label,
                     style = textStyle,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

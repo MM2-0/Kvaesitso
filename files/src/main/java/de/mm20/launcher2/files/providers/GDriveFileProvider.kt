@@ -25,7 +25,7 @@ internal class GDriveFileProvider(
                 viewUri = it.viewUri,
                 metaData = getMetadata(it.metadata)
             )
-        }.sorted()
+        }
     }
 
     private fun getMetadata(file: DriveFileMeta): List<Pair<Int, String>> {

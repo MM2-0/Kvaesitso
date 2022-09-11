@@ -130,7 +130,7 @@ internal class AppShortcutRepositoryImpl(
                                 it,
                                 label
                             )
-                        }.sorted()
+                        }
                     )
                 }
             }

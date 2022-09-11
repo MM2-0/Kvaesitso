@@ -80,7 +80,7 @@ fun ContactItem(
                     else MaterialTheme.typography.titleSmall
                 )
                 Text(
-                    text = contact.label,
+                    text = contact.labelOverride ?: contact.label,
                     style = textStyle,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis

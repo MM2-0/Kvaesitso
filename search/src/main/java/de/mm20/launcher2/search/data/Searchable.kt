@@ -16,6 +16,8 @@ abstract class Searchable : Comparable<Searchable> {
     abstract val key: String
     abstract val label: String
 
+    var labelOverride: String? = null
+
     open fun serialize(): String = ""
 
     open fun getLaunchIntent(context: Context): Intent? = null
@@ -43,8 +45,10 @@ abstract class Searchable : Comparable<Searchable> {
     abstract fun getPlaceholderIcon(context: Context): StaticLauncherIcon
 
     override fun compareTo(other: Searchable): Int {
+        val label1 = labelOverride ?: label
+        val label2 = other.labelOverride ?: other.label
         return Collator.getInstance().apply { strength = Collator.SECONDARY }
-            .compare(label.romanize(), other.label.romanize())
+            .compare(label1.romanize(), label2.romanize())
     }
 
     override fun equals(other: Any?): Boolean {

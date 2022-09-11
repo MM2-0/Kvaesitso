@@ -62,7 +62,7 @@ fun AppItem(
                     .weight(1f)
                     .padding(16.dp)
             ) {
-                Text(text = app.label, style = MaterialTheme.typography.titleMedium)
+                Text(text = app.labelOverride ?: app.label, style = MaterialTheme.typography.titleMedium)
                 app.version?.let {
                     Text(
                         text = stringResource(R.string.app_info_version, it),

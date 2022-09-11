@@ -27,7 +27,7 @@ internal class OneDriveFileProvider(
                 webUrl = driveItem.webUrl
             )
         }
-        return files.sorted()
+        return files
     }
 
     private fun getMetaData(driveItem: DriveItem): List<Pair<Int, String>> {

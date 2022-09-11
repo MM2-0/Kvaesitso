@@ -98,7 +98,7 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 8.dp),
-                text = item.label,
+                text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,

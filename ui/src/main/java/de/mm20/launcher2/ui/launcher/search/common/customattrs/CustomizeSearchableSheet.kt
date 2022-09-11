@@ -97,23 +97,29 @@ fun CustomizeSearchableSheet(
                         viewModel.openIconPicker()
                     }
                 )
+
+                var customLabelValue by remember {
+                    mutableStateOf(searchable.labelOverride ?: "")
+                }
                 OutlinedTextField(
                     modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(top = 24.dp)
-                        .clickable {
-                            Toast
-                                .makeText(context, "Soon™", Toast.LENGTH_SHORT)
-                                .show()
-                        },
-                    enabled = false,
-                    value = searchable.label,
-                    onValueChange = {},
+                        .padding(top = 24.dp),
+                    value = customLabelValue,
+                    onValueChange = {
+                        customLabelValue = it
+                    },
                     placeholder = {
                         Text(searchable.label)
                     },
                 )
+
+                DisposableEffect(searchable.key) {
+                    onDispose {
+                        viewModel.setCustomLabel(customLabelValue)
+                    }
+                }
             }
         } else {
             val iconSize = 48.dp

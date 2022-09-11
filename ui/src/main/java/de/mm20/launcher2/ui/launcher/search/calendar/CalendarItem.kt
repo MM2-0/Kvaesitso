@@ -80,7 +80,7 @@ fun CalendarItem(
                         if (showDetails) MaterialTheme.typography.titleMedium
                         else MaterialTheme.typography.titleSmall
                     )
-                    Text(text = calendar.label, style = textStyle)
+                    Text(text = calendar.labelOverride ?: calendar.label, style = textStyle)
                     AnimatedVisibility(!showDetails) {
                         Text(
                             modifier = Modifier.padding(top = 2.dp),

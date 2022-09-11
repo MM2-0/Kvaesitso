@@ -2,7 +2,9 @@ package de.mm20.launcher2.ui.launcher.search.common.customattrs
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.customattrs.CustomIcon
+import de.mm20.launcher2.customattrs.customAttrsModule
 import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
@@ -17,6 +19,7 @@ class CustomizeSearchableSheetVM(
     private val searchable: Searchable
 ) : KoinComponent {
     private val iconRepository: IconRepository by inject()
+    private val customAttributesRepository: CustomAttributesRepository by inject()
 
     val isIconPickerOpen = MutableLiveData(false)
 
@@ -63,6 +66,14 @@ class CustomizeSearchableSheetVM(
                 iconSearchResults.value = iconRepository.searchCustomIcons(query)
                 isSearchingIcons.value = false
             }
+        }
+    }
+
+    fun setCustomLabel(label: String) {
+        if (label.isBlank()) {
+            customAttributesRepository.clearCustomLabel(searchable)
+        } else {
+            customAttributesRepository.setCustomLabel(searchable, label)
         }
     }
 }

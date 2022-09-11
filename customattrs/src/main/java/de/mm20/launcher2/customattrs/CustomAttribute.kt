@@ -13,7 +13,8 @@ sealed interface CustomAttribute {
             if (entity == null) return null
             return when (entity.type) {
                 CustomAttributeType.Label.value -> CustomLabel(
-                    label = entity.value
+                    label = entity.value,
+                    key = entity.key
                 )
                 CustomAttributeType.Tag.value -> CustomTag(
                     tagName = entity.value
@@ -31,6 +32,7 @@ sealed interface CustomAttribute {
 
 
 class CustomLabel(
+    val key: String,
     val label: String,
 ) : CustomAttribute {
     override fun toDatabaseEntity(key: String): CustomAttributeEntity {

@@ -1,9 +1,9 @@
 package de.mm20.launcher2.customattrs
 
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
-import de.mm20.launcher2.database.entities.WebsearchEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
@@ -16,6 +16,10 @@ import java.io.File
 interface CustomAttributesRepository {
     fun getCustomIcon(searchable: Searchable): Flow<CustomIcon?>
     fun setCustomIcon(searchable: Searchable, icon: CustomIcon?)
+
+    fun getCustomLabels(items: List<Searchable>): Flow<List<CustomLabel>>
+    fun setCustomLabel(searchable: Searchable, label: String)
+    fun clearCustomLabel(searchable: Searchable)
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -41,6 +45,36 @@ internal class CustomAttributesRepositoryImpl(
             if (icon != null) {
                 dao.setCustomAttribute(icon.toDatabaseEntity(searchable.key))
             }
+        }
+    }
+
+    override fun getCustomLabels(items: List<Searchable>): Flow<List<CustomLabel>> {
+        val dao = appDatabase.customAttrsDao()
+        return dao.getCustomAttributes(items.map { it.key }, CustomAttributeType.Label.value)
+            .map { list ->
+                list.mapNotNull { CustomAttribute.fromDatabaseEntity(it) as? CustomLabel }
+            }
+    }
+
+    override fun setCustomLabel(searchable: Searchable, label: String) {
+        val dao = appDatabase.customAttrsDao()
+        scope.launch {
+            appDatabase.runInTransaction {
+                dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
+                dao.setCustomAttribute(
+                    CustomLabel(
+                        key = searchable.key,
+                        label = label,
+                    ).toDatabaseEntity(searchable.key)
+                )
+            }
+        }
+    }
+
+    override fun clearCustomLabel(searchable: Searchable) {
+        val dao = appDatabase.customAttrsDao()
+        scope.launch {
+            dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
         }
     }
 
@@ -72,7 +106,9 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.backupDao()
         dao.wipeCustomAttributes()
 
-        val files = fromDir.listFiles { _, name -> name.startsWith("customizations.") } ?: return@withContext
+        val files =
+            fromDir.listFiles { _, name -> name.startsWith("customizations.") }
+                ?: return@withContext
 
         for (file in files) {
             val customAttrs = mutableListOf<CustomAttributeEntity>()

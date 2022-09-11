@@ -10,6 +10,7 @@ import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.contacts.ContactRepository
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -31,6 +32,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val favoritesRepository: FavoritesRepository by inject()
     private val widgetRepository: WidgetRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val customAttributesRepository: CustomAttributesRepository by inject()
     private val dataStore: LauncherDataStore by inject()
 
     private val calendarRepository: CalendarRepository by inject()
@@ -81,12 +83,15 @@ class SearchVM : ViewModel(), KoinComponent {
                 }
                 widgetRepository.isCalendarWidgetEnabled().collectLatest { excludeCalendar ->
                     dataStore.data.map { it.grid.columnCount }.collectLatest { columns ->
-                        favoritesRepository.getFavorites(
-                            columns = columns,
-                            excludeCalendarEvents = excludeCalendar
-                        ).collectLatest {
-                            favorites.value = it
-                        }
+                        favoritesRepository
+                            .getFavorites(
+                                columns = columns,
+                                excludeCalendarEvents = excludeCalendar
+                            )
+                            .withCustomLabels()
+                            .collectLatest {
+                                favorites.value = it
+                            }
                     }
                 }
             }
@@ -103,44 +108,53 @@ class SearchVM : ViewModel(), KoinComponent {
 
         try {
             searchJob?.cancel()
-        } catch (e: CancellationException) {
+        } catch (_: CancellationException) {
         }
         hideFavorites.postValue(query.isNotEmpty())
         searchJob = viewModelScope.launch {
             isSearching.postValue(true)
             val jobs = mutableListOf<Deferred<Any>>()
             jobs += async(Dispatchers.Default) {
-                appRepository.search(query).collectLatest { apps ->
-                    hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val results = apps.partition { !hiddenKeys.contains(it.key) }
-                        appResults.postValue(results.first)
-                        hiddenItems.update {
-                            it.copy(apps = results.second)
+                appRepository
+                    .search(query)
+                    .withCustomLabels()
+                    .collectLatest { apps ->
+                        hiddenItemKeys.collectLatest { hiddenKeys ->
+                            val results = apps.partition { !hiddenKeys.contains(it.key) }
+                            appResults.postValue(results.first)
+                            hiddenItems.update {
+                                it.copy(apps = results.second)
+                            }
                         }
                     }
-                }
             }
             jobs += async(Dispatchers.Default) {
-                contactRepository.search(query).collectLatest { contacts ->
-                    hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val results = contacts.partition { !hiddenKeys.contains(it.key) }
-                        contactResults.postValue(results.first)
-                        hiddenItems.update {
-                            it.copy(contacts = results.second)
+                contactRepository
+                    .search(query)
+                    .withCustomLabels()
+                    .collectLatest { contacts ->
+                        hiddenItemKeys.collectLatest { hiddenKeys ->
+                            val results = contacts.partition { !hiddenKeys.contains(it.key) }
+                            contactResults.postValue(results.first)
+                            hiddenItems.update {
+                                it.copy(contacts = results.second)
+                            }
                         }
                     }
-                }
             }
             jobs += async(Dispatchers.Default) {
-                calendarRepository.search(query).collectLatest { events ->
-                    hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val results = events.partition { !hiddenKeys.contains(it.key) }
-                        calendarResults.postValue(results.first)
-                        hiddenItems.update {
-                            it.copy(calendarEvents = results.second)
+                calendarRepository
+                    .search(query)
+                    .withCustomLabels()
+                    .collectLatest { events ->
+                        hiddenItemKeys.collectLatest { hiddenKeys ->
+                            val results = events.partition { !hiddenKeys.contains(it.key) }
+                            calendarResults.postValue(results.first)
+                            hiddenItems.update {
+                                it.copy(calendarEvents = results.second)
+                            }
                         }
                     }
-                }
             }
             jobs += async(Dispatchers.Default) {
                 wikipediaRepository.search(query).collectLatest {
@@ -163,15 +177,18 @@ class SearchVM : ViewModel(), KoinComponent {
                 }
             }
             jobs += async(Dispatchers.Default) {
-                fileRepository.search(query).collectLatest { files ->
-                    hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val results = files.partition { !hiddenKeys.contains(it.key) }
-                        fileResults.postValue(results.first)
-                        hiddenItems.update {
-                            it.copy(files = results.second)
+                fileRepository
+                    .search(query)
+                    .withCustomLabels()
+                    .collectLatest { files ->
+                        hiddenItemKeys.collectLatest { hiddenKeys ->
+                            val results = files.partition { !hiddenKeys.contains(it.key) }
+                            fileResults.postValue(results.first)
+                            hiddenItems.update {
+                                it.copy(files = results.second)
+                            }
                         }
                     }
-                }
             }
             jobs += async(Dispatchers.Default) {
                 websearchRepository.search(query).collectLatest {
@@ -179,11 +196,14 @@ class SearchVM : ViewModel(), KoinComponent {
                 }
             }
             jobs += async(Dispatchers.Default) {
-                appShortcutRepository.search(query).collectLatest { shortcuts ->
-                    hiddenItemKeys.collectLatest { hidden ->
-                        appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
+                appShortcutRepository
+                    .search(query)
+                    .withCustomLabels()
+                    .collectLatest { shortcuts ->
+                        hiddenItemKeys.collectLatest { hidden ->
+                            appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
+                        }
                     }
-                }
             }
             launch(Dispatchers.Default) {
                 hiddenItems.collectLatest {
@@ -268,6 +288,22 @@ class SearchVM : ViewModel(), KoinComponent {
                 it.toBuilder()
                     .setAppShortcutSearch(it.appShortcutSearch.toBuilder().setEnabled(false))
                     .build()
+            }
+        }
+    }
+
+    /**
+     * Inject custom labels and sort by the actual label
+     */
+    private fun <T : Searchable> Flow<List<T>>.withCustomLabels(): Flow<List<T>> = channelFlow {
+        this@withCustomLabels.collectLatest { items ->
+            val labelsFlow = customAttributesRepository.getCustomLabels(items)
+            labelsFlow.collectLatest { labels ->
+                for (item in items) {
+                    val customLabel = labels.find { it.key == item.key }
+                    item.labelOverride = customLabel?.label
+                }
+                send(items.sorted())
             }
         }
     }

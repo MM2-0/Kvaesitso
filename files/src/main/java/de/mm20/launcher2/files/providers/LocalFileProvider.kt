@@ -61,6 +61,6 @@ internal class LocalFileProvider(
             results.add(file)
         }
         cursor.close()
-        return@withContext results.sortedBy { it }
+        return@withContext results
     }
 }

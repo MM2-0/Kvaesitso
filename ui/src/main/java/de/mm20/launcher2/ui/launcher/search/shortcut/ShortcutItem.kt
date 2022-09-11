@@ -65,7 +65,7 @@ fun AppShortcutItem(
             ) {
                 val titleStyle by animateTextStyleAsState(if (showDetails) MaterialTheme.typography.titleMedium else MaterialTheme.typography.titleSmall)
                 Text(
-                    text = shortcut.label,
+                    text = shortcut.labelOverride ?: shortcut.label,
                     style = titleStyle,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
