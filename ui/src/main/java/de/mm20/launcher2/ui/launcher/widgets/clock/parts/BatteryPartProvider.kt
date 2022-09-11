@@ -150,7 +150,7 @@ class BatteryPartProvider : PartProvider {
                 level = batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY),
                 charging = batteryManager.isCharging,
                 fullIn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                    batteryManager.computeChargeTimeRemaining().takeIf { it >= 0 }
+                    batteryManager.computeChargeTimeRemaining().takeIf { it > 0 }
                 } else null,
             )
         )
@@ -165,7 +165,7 @@ class BatteryPartProvider : PartProvider {
                             BatteryManager.BATTERY_STATUS_UNKNOWN
                         ) == BatteryManager.BATTERY_STATUS_CHARGING,
                         fullIn = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                            batteryManager.computeChargeTimeRemaining().takeIf { it >= 0 }
+                            batteryManager.computeChargeTimeRemaining().takeIf { it > 0 }
                         } else null,
                     )
                 )
