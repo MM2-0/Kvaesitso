@@ -118,6 +118,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 appRepository
                     .search(query)
                     .withCustomLabels()
+                    .sorted()
                     .collectLatest { apps ->
                         hiddenItemKeys.collectLatest { hiddenKeys ->
                             val results = apps.partition { !hiddenKeys.contains(it.key) }
@@ -132,6 +133,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 contactRepository
                     .search(query)
                     .withCustomLabels()
+                    .sorted()
                     .collectLatest { contacts ->
                         hiddenItemKeys.collectLatest { hiddenKeys ->
                             val results = contacts.partition { !hiddenKeys.contains(it.key) }
@@ -146,6 +148,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 calendarRepository
                     .search(query)
                     .withCustomLabels()
+                    .sorted()
                     .collectLatest { events ->
                         hiddenItemKeys.collectLatest { hiddenKeys ->
                             val results = events.partition { !hiddenKeys.contains(it.key) }
@@ -180,6 +183,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 fileRepository
                     .search(query)
                     .withCustomLabels()
+                    .sorted()
                     .collectLatest { files ->
                         hiddenItemKeys.collectLatest { hiddenKeys ->
                             val results = files.partition { !hiddenKeys.contains(it.key) }
@@ -199,6 +203,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 appShortcutRepository
                     .search(query)
                     .withCustomLabels()
+                    .sorted()
                     .collectLatest { shortcuts ->
                         hiddenItemKeys.collectLatest { hidden ->
                             appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
@@ -303,10 +308,12 @@ class SearchVM : ViewModel(), KoinComponent {
                     val customLabel = labels.find { it.key == item.key }
                     item.labelOverride = customLabel?.label
                 }
-                send(items.sorted())
+                send(items)
             }
         }
     }
+
+    private fun <T: Searchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
 
 }
 
