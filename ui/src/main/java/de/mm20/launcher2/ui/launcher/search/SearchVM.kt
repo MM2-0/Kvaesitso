@@ -55,6 +55,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val favorites = MutableLiveData<List<Searchable>>(emptyList())
 
     val appResults = MutableLiveData<List<Application>>(emptyList())
+    val workAppResults = MutableLiveData<List<Application>>(emptyList())
     val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())
     val fileResults = MutableLiveData<List<File>>(emptyList())
     val contactResults = MutableLiveData<List<Contact>>(emptyList())
@@ -133,7 +134,9 @@ class SearchVM : ViewModel(), KoinComponent {
                     .withCustomLabels()
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        appResults.postValue(results)
+                        val (work, personal) = results.partition { it is LauncherApp && !it.isMainProfile }
+                        appResults.postValue(personal)
+                        workAppResults.postValue(work)
                         hiddenItems.update {
                             it.copy(apps = hidden)
                         }

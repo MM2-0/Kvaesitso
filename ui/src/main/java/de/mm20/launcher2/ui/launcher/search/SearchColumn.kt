@@ -5,14 +5,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Work
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.PartialLauncherCard
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
@@ -41,9 +49,12 @@ fun SearchColumn(
 
     val showLabels by viewModel.showLabels.observeAsState(true)
 
+    var showWorkProfileApps by remember { mutableStateOf(false) }
+
     val hideFavs by viewModel.hideFavorites.observeAsState(true)
     val favorites by viewModel.favorites.observeAsState(emptyList())
     val apps by viewModel.appResults.observeAsState(emptyList())
+    val workApps by viewModel.workAppResults.observeAsState(emptyList())
     val appShortcuts by viewModel.appShortcutResults.observeAsState(emptyList())
     val contacts by viewModel.contactResults.observeAsState(emptyList())
     val files by viewModel.fileResults.observeAsState(emptyList())
@@ -69,10 +80,42 @@ fun SearchColumn(
             )
         }
         GridResults(
-            items = apps.toImmutableList(),
+            items = if (showWorkProfileApps && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
             columns = columns,
             showLabels = showLabels,
-            reverse = reverse
+            reverse = reverse,
+            before = if (workApps.isNotEmpty()) {
+                {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp)
+                            .padding(top = 8.dp, bottom = 4.dp),
+                    ) {
+                        FilterChip(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            selected = !showWorkProfileApps,
+                            onClick = { showWorkProfileApps = false },
+                            leadingIcon = {
+                                Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
+                            },
+                            label = {
+                                Text(stringResource(R.string.apps_profile_main), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            }
+                        )
+                        FilterChip(
+                            selected = showWorkProfileApps,
+                            onClick = { showWorkProfileApps = true },
+                            leadingIcon = {
+                                Icon(imageVector = Icons.Rounded.Work, contentDescription = null)
+                            },
+                            label = {
+                                Text(stringResource(R.string.apps_profile_work), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                            }
+                        )
+                    }
+                }
+            } else null
         )
         ListResults(appShortcuts.toImmutableList(), reverse)
         val uc = unitConverter

@@ -635,4 +635,7 @@
     <string name="icon_picker_default_icon">Default</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_search_icon">Search icon</string>
+
+    <string name="apps_profile_main">Personal</string>
+    <string name="apps_profile_work">Work</string>
 </resources>
