@@ -113,49 +113,55 @@ class SearchVM : ViewModel(), KoinComponent {
         hideFavorites.postValue(query.isNotEmpty())
         searchJob = viewModelScope.launch {
             isSearching.postValue(true)
+            val customAttrResults = customAttributesRepository.search(query)
+                .combine(dataStore.data) { items, settings ->
+                    items.filter {
+                        it is Application
+                                || it is Contact && settings.contactsSearch.enabled
+                                || it is CalendarEvent && settings.calendarSearch.enabled
+                                || it is AppShortcut && settings.appShortcutSearch.enabled
+                                || it is LocalFile && settings.fileSearch.localFiles
+                                || it is GDriveFile && settings.fileSearch.gdrive
+                                || it is OneDriveFile && settings.fileSearch.onedrive
+                    }
+                }
             val jobs = mutableListOf<Deferred<Any>>()
             jobs += async(Dispatchers.Default) {
                 appRepository
                     .search(query)
+                    .withCustomAttributeResults(customAttrResults)
                     .withCustomLabels()
                     .sorted()
-                    .collectLatest { apps ->
-                        hiddenItemKeys.collectLatest { hiddenKeys ->
-                            val results = apps.partition { !hiddenKeys.contains(it.key) }
-                            appResults.postValue(results.first)
-                            hiddenItems.update {
-                                it.copy(apps = results.second)
-                            }
+                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
+                        appResults.postValue(results)
+                        hiddenItems.update {
+                            it.copy(apps = hidden)
                         }
                     }
             }
             jobs += async(Dispatchers.Default) {
                 contactRepository
                     .search(query)
+                    .withCustomAttributeResults(customAttrResults)
                     .withCustomLabels()
                     .sorted()
-                    .collectLatest { contacts ->
-                        hiddenItemKeys.collectLatest { hiddenKeys ->
-                            val results = contacts.partition { !hiddenKeys.contains(it.key) }
-                            contactResults.postValue(results.first)
-                            hiddenItems.update {
-                                it.copy(contacts = results.second)
-                            }
+                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
+                        contactResults.postValue(results)
+                        hiddenItems.update {
+                            it.copy(contacts = hidden)
                         }
                     }
             }
             jobs += async(Dispatchers.Default) {
                 calendarRepository
                     .search(query)
+                    .withCustomAttributeResults(customAttrResults)
                     .withCustomLabels()
                     .sorted()
-                    .collectLatest { events ->
-                        hiddenItemKeys.collectLatest { hiddenKeys ->
-                            val results = events.partition { !hiddenKeys.contains(it.key) }
-                            calendarResults.postValue(results.first)
-                            hiddenItems.update {
-                                it.copy(calendarEvents = results.second)
-                            }
+                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
+                        calendarResults.postValue(results)
+                        hiddenItems.update {
+                            it.copy(calendarEvents = hidden)
                         }
                     }
             }
@@ -182,15 +188,13 @@ class SearchVM : ViewModel(), KoinComponent {
             jobs += async(Dispatchers.Default) {
                 fileRepository
                     .search(query)
+                    .withCustomAttributeResults(customAttrResults)
                     .withCustomLabels()
                     .sorted()
-                    .collectLatest { files ->
-                        hiddenItemKeys.collectLatest { hiddenKeys ->
-                            val results = files.partition { !hiddenKeys.contains(it.key) }
-                            fileResults.postValue(results.first)
-                            hiddenItems.update {
-                                it.copy(files = results.second)
-                            }
+                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
+                        fileResults.postValue(results)
+                        hiddenItems.update {
+                            it.copy(files = hidden)
                         }
                     }
             }
@@ -202,11 +206,13 @@ class SearchVM : ViewModel(), KoinComponent {
             jobs += async(Dispatchers.Default) {
                 appShortcutRepository
                     .search(query)
+                    .withCustomAttributeResults(customAttrResults)
                     .withCustomLabels()
                     .sorted()
-                    .collectLatest { shortcuts ->
-                        hiddenItemKeys.collectLatest { hidden ->
-                            appShortcutResults.postValue(shortcuts.filter { !hidden.contains(it.key) })
+                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
+                        appShortcutResults.postValue(results)
+                        hiddenItems.update {
+                            it.copy(appShortcuts = hidden)
                         }
                     }
             }
@@ -313,7 +319,27 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    private fun <T: Searchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
+    private inline fun <reified T : Searchable> Flow<List<T>>.withCustomAttributeResults(
+        customAttributeResults: Flow<List<Searchable>>
+    ): Flow<List<T>> {
+        return this.combine(customAttributeResults) { items, items2 ->
+            (items + items2.filterIsInstance<T>()).distinctBy { it.key }
+        }
+    }
+
+    private suspend fun <T : Searchable> Flow<List<T>>.collectWithHiddenItems(
+        hiddenItemKeys: Flow<List<String>>,
+        action: (items: List<T>, hidden: List<T>) -> Unit
+    ) {
+        return collectLatest { items ->
+            hiddenItemKeys.collectLatest { hiddenKeys ->
+                val (results, hidden) = items.partition { !hiddenKeys.contains(it.key) }
+                action(results, hidden)
+            }
+        }
+    }
+
+    private fun <T : Searchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
 
 }
 

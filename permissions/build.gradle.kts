@@ -43,7 +43,6 @@ dependencies {
 
     implementation(project(":ktx"))
     implementation(project(":base"))
-    implementation(project(":icons"))
     implementation(project(":search"))
     implementation(project(":crashreporter"))
 }

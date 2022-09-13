@@ -4,6 +4,7 @@ import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
@@ -21,12 +22,15 @@ interface CustomAttributesRepository {
     fun setCustomLabel(searchable: Searchable, label: String)
     fun clearCustomLabel(searchable: Searchable)
 
+    suspend fun search(query: String): Flow<List<Searchable>>
+
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
 }
 
 internal class CustomAttributesRepositoryImpl(
     private val appDatabase: AppDatabase,
+    private val favoritesRepository: FavoritesRepository
 ) : CustomAttributesRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
@@ -59,6 +63,7 @@ internal class CustomAttributesRepositoryImpl(
     override fun setCustomLabel(searchable: Searchable, label: String) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
+            favoritesRepository.save(searchable)
             appDatabase.runInTransaction {
                 dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
                 dao.setCustomAttribute(
@@ -75,6 +80,13 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
+        }
+    }
+
+    override suspend fun search(query: String): Flow<List<Searchable>> {
+        val dao = appDatabase.customAttrsDao()
+        return dao.search("%$query%").map {
+            favoritesRepository.getFromKeys(it)
         }
     }
 

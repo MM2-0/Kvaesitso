@@ -41,6 +41,18 @@ interface FavoritesRepository {
     fun getHiddenItemKeys(): Flow<List<String>>
     fun remove(searchable: Searchable)
 
+    /**
+     * Ensure that this searchable exists in the Favorites table.
+     * If it doesn't exist, insert it with 0 launch count, not pinned and not hidden
+     */
+    fun save(searchable: Searchable)
+
+    /**
+     * Get items with the given keys from the favorites database.
+     * Items that don't exist in the database will not be returned.
+     */
+    fun getFromKeys(keys: List<String>): List<Searchable>
+
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
 }
@@ -203,6 +215,21 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
+    override fun save(searchable: Searchable) {
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val entity = FavoritesItem(
+                    key = searchable.key,
+                    searchable = searchable,
+                    launchCount = 0,
+                    pinPosition = 0,
+                    hidden = false,
+                ).toDatabaseEntity() ?: return@withContext
+                database.searchDao().insertSkipExisting(entity)
+            }
+        }
+    }
+
 
     private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
         val deserializer: SearchableDeserializer =
@@ -214,6 +241,11 @@ internal class FavoritesRepositoryImpl(
             pinPosition = entity.pinPosition,
             hidden = entity.hidden
         )
+    }
+
+    override fun getFromKeys(keys: List<String>): List<Searchable> {
+        val dao = database.searchDao()
+        return dao.getFromKeys(keys).mapNotNull { fromDatabaseEntity(it).searchable }
     }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
@@ -246,7 +278,8 @@ internal class FavoritesRepositoryImpl(
         val dao = database.backupDao()
         dao.wipeFavorites()
 
-        val files = fromDir.listFiles { _, name -> name.startsWith("favorites.") } ?: return@withContext
+        val files =
+            fromDir.listFiles { _, name -> name.startsWith("favorites.") } ?: return@withContext
 
         for (file in files) {
             val favorites = mutableListOf<FavoritesItemEntity>()
