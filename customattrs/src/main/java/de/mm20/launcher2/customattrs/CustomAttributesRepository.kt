@@ -9,6 +9,7 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.json.JSONArray
 import org.json.JSONException
@@ -84,6 +85,11 @@ internal class CustomAttributesRepositoryImpl(
     }
 
     override suspend fun search(query: String): Flow<List<Searchable>> {
+        if (query.isBlank()) {
+            return flow {
+                emit(emptyList())
+            }
+        }
         val dao = appDatabase.customAttrsDao()
         return dao.search("%$query%").map {
             favoritesRepository.getFromKeys(it)
