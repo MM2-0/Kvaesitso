@@ -90,7 +90,7 @@ fun SearchColumn(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp)
-                            .padding(top = 8.dp, bottom = 4.dp),
+                            .padding(top = if (reverse) 4.dp else 8.dp, bottom = if (reverse) 8.dp else 4.dp),
                     ) {
                         FilterChip(
                             modifier = Modifier.padding(horizontal = 8.dp),
