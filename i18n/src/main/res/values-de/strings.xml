@@ -452,4 +452,7 @@
     <string name="preference_grid_labels_summary">App-Namen unterhalb des App-Icons anzeigen</string>
     <string name="preference_clock_widget_fill_height">Bildschirmhöhe ausfüllen</string>
     <string name="preference_clock_widget_fill_height_summary">Zusätzlichen Freiraum über der Uhr einfügen um den ganzen Bildschirm zu füllen</string>
+    <string name="apps_profile_main">Persönlich</string>
+    <string name="apps_profile_work">Geschäftlich</string>
+    <string name="preference_icon_shape_teardrop">Teardrop</string>
 </resources>
