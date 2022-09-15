@@ -10,10 +10,7 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.*
 import org.json.JSONArray
 import org.json.JSONException
 import org.koin.core.component.KoinComponent
@@ -35,7 +32,6 @@ interface FavoritesRepository {
     fun hideItem(searchable: Searchable)
     fun unhideItem(searchable: Searchable)
     fun incrementLaunchCounter(searchable: Searchable)
-    suspend fun getAllFavoriteItems(): List<FavoritesItem>
     fun saveFavorites(favorites: List<FavoritesItem>)
     fun getHiddenItems(): Flow<List<Searchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
@@ -73,7 +69,21 @@ internal class FavoritesRepositoryImpl(
             withContext(Dispatchers.IO) {
                 val dao = database.searchDao()
                 val pinnedFavorites =
-                    dao.getFavorites(excludeCalendarEvents, columns * (maxRows ?: 20)).map {
+                    if (excludeCalendarEvents) {
+                        dao.getFavoritesWithoutTypes(
+                            excludeTypes = listOf("calendar"),
+                            manuallySorted = true,
+                            automaticallySorted = true,
+                            frequentlyUsed =  false,
+                            limit = columns * (maxRows ?: 20)
+                        )
+                    } else {
+                        dao.getFavorites(
+                            manuallySorted = true,
+                            automaticallySorted = true,
+                            frequentlyUsed =  false,
+                            limit = columns * (maxRows ?: 20))
+                    }.map {
                         it.mapNotNull {
                             val item = fromDatabaseEntity(it).searchable
                             if (item == null) {
@@ -86,9 +96,12 @@ internal class FavoritesRepositoryImpl(
                 pinnedFavorites.collectLatest { pinned ->
                     var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
                     if (pinned.size < columns) favCount += columns
-                    val autoFavs = dao.getAutoFavorites(
-                        favCount.coerceAtMost((maxRows ?: 20) * columns) - pinned.size
-                    ).mapNotNull {
+                    val autoFavs = dao.getFavorites(
+                        manuallySorted = false,
+                        automaticallySorted = false,
+                        frequentlyUsed =  true,
+                        limit = favCount.coerceAtMost((maxRows ?: 20) * columns) - pinned.size
+                    ).first().mapNotNull {
                         val item = fromDatabaseEntity(it).searchable
                         if (item == null) {
                             dao.deleteByKey(it.key)
@@ -101,7 +114,12 @@ internal class FavoritesRepositoryImpl(
         }
 
     override fun getPinnedCalendarEvents(): Flow<List<CalendarEvent>> {
-        return database.searchDao().getPinnedCalendarEvents().map {
+        return database.searchDao().getFavoritesWithTypes(
+            includeTypes = listOf("calendar"),
+            automaticallySorted = true,
+            manuallySorted = true,
+            limit = 50
+        ).map {
             it.mapNotNull { fromDatabaseEntity(it).searchable as? CalendarEvent }
         }
     }
@@ -176,14 +194,6 @@ internal class FavoritesRepositoryImpl(
                     AppDatabase.getInstance(context).searchDao()
                         .incrementLaunchCount(it)
                 }
-            }
-        }
-    }
-
-    override suspend fun getAllFavoriteItems(): List<FavoritesItem> {
-        return withContext(Dispatchers.IO) {
-            AppDatabase.getInstance(context).searchDao().getAllFavoriteItems().mapNotNull {
-                fromDatabaseEntity(it).takeIf { it.searchable != null }
             }
         }
     }

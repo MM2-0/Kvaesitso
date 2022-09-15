@@ -1,6 +1,5 @@
 package de.mm20.launcher2.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
@@ -18,11 +17,46 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSkipExisting(items: FavoritesItemEntity)
 
-    @Query("SELECT * FROM Searchable WHERE pinned > 0 AND (NOT :excludeCalendarEvents OR NOT `key` LIKE 'calendar://%') ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
-    fun getFavorites(excludeCalendarEvents: Boolean = false, limit: Int): Flow<List<FavoritesItemEntity>>
 
-    @Query("SELECT * FROM Searchable WHERE pinned > 0 AND `key` LIKE 'calendar://%' ORDER BY pinned DESC, launchCount DESC")
-    fun getPinnedCalendarEvents(): Flow<List<FavoritesItemEntity>>
+    @Query("SELECT * FROM Searchable " +
+            "WHERE ((:manuallySorted AND pinned > 1) OR " +
+            "(:automaticallySorted AND pinned = 1) OR" +
+            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    fun getFavorites(
+        manuallySorted: Boolean = false,
+        automaticallySorted: Boolean = false,
+        frequentlyUsed: Boolean = false,
+        limit: Int,
+    ): Flow<List<FavoritesItemEntity>>
+
+    @Query("SELECT * FROM Searchable " +
+            "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) IN (:includeTypes) AND (" +
+            "(:manuallySorted AND pinned > 1) OR " +
+            "(:automaticallySorted AND pinned = 1) OR" +
+            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    fun getFavoritesWithTypes(
+        includeTypes: List<String>,
+        manuallySorted: Boolean = false,
+        automaticallySorted: Boolean = false,
+        frequentlyUsed: Boolean = false,
+        limit: Int,
+    ): Flow<List<FavoritesItemEntity>>
+
+    @Query("SELECT * FROM Searchable " +
+            "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) NOT IN (:excludeTypes) AND (" +
+            "(:manuallySorted AND pinned > 1) OR " +
+            "(:automaticallySorted AND pinned = 1) OR" +
+            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    fun getFavoritesWithoutTypes(
+        excludeTypes: List<String>,
+        manuallySorted: Boolean = false,
+        automaticallySorted: Boolean = false,
+        frequentlyUsed: Boolean = false,
+        limit: Int,
+    ): Flow<List<FavoritesItemEntity>>
 
     @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND `key` LIKE 'calendar://%'")
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
@@ -111,9 +145,6 @@ interface SearchDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertReplaceExisting(toDatabaseEntity: FavoritesItemEntity)
-
-    @Query("SELECT * FROM Searchable WHERE (pinned > 0 OR launchCount > 0) AND hidden = 0 ORDER BY pinned DESC, launchCount DESC")
-    fun getAllFavoriteItems(): List<FavoritesItemEntity>
 
     @Transaction
     fun saveFavorites(favorites: List<FavoritesItemEntity>) {
