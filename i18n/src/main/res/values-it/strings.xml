@@ -453,4 +453,6 @@
     <string name="preference_clock_widget_fill_height">Riempi altezza schermo</string>
     <string name="preference_clock_widget_fill_height_summary">Inserisce spazio extra sopra l\'orologio per riempire l\'intera altezza dello schermo</string>
     <string name="preference_icon_shape_teardrop">Lacrima</string>
+    <string name="apps_profile_main">Personale</string>
+    <string name="apps_profile_work">Lavoro</string>
 </resources>
