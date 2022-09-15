@@ -50,6 +50,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setDatePart(true)
                 .setMusicPart(true)
                 .setFavoritesPart(false)
+                .setFillHeight(true)
                 .build()
         )
         .setFavorites(
@@ -121,6 +122,7 @@ fun createFactorySettings(context: Context): Settings {
             Settings.GridSettings.newBuilder()
                 .setColumnCount(context.resources.getInteger(R.integer.config_columnCount))
                 .setIconSize(48)
+                .setShowLabels(true)
                 .build()
         )
         .setSearchBar(
