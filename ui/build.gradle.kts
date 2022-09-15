@@ -112,6 +112,7 @@ dependencies {
     implementation(libs.coil.compose)
 
     implementation(libs.lottie)
+    implementation(libs.composereorderable)
 
     implementation(project(":material-color-utilities"))
 

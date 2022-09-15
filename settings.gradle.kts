@@ -382,6 +382,10 @@ dependencyResolutionManagement {
             alias("lottie")
                 .to("com.airbnb.android", "lottie-compose")
                 .version("5.2.0")
+
+            alias("composereorderable")
+                .to("org.burnoutcrew.composereorderable", "reorderable")
+                .version("0.9.2")
         }
     }
 }
