@@ -49,6 +49,7 @@ import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.koin.android.ext.android.inject
+import java.net.URLDecoder
 
 class SettingsActivity : BaseActivity() {
 
@@ -161,6 +162,9 @@ class SettingsActivity : BaseActivity() {
                             })
                         ) {
                             val fileName = it.arguments?.getString("fileName")
+                                ?.let {
+                                    URLDecoder.decode(it, "utf8")
+                                }
                             CrashReportScreen(fileName!!)
                         }
                         composable(
