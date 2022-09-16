@@ -49,9 +49,10 @@ import kotlinx.coroutines.delay
 @Composable
 fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolean = true) {
     val viewModel = remember(item.key) { GridItemVM(item) }
+
     val context = LocalContext.current
 
-    var showPopup by remember { mutableStateOf(false) }
+    var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
