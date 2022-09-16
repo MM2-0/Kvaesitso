@@ -52,7 +52,7 @@ abstract class Searchable : Comparable<Searchable> {
     }
 
     override fun equals(other: Any?): Boolean {
-        return if (other is Searchable) key == other.key
+        return if (other is Searchable) key == other.key && label == other.label && labelOverride == other.labelOverride
         else super.equals(other)
     }
 
