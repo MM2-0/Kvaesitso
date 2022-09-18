@@ -60,13 +60,17 @@ fun EditFavoritesSheet(
 
     val iconSize = 48.dp.toPixels()
 
-    BottomSheetDialog(onDismissRequest = onDismiss, title = { /*TODO*/ }) {
+    BottomSheetDialog(onDismissRequest = onDismiss, title = {
+        Text(stringResource(id = R.string.menu_item_edit_favs))
+    }) {
         if (loading) {
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(48.dp).align(Alignment.Center)
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.Center)
                 )
             }
         } else {
