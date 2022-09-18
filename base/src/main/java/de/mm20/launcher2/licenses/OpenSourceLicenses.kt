@@ -94,14 +94,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/afollestad/material-dialogs"
     ),
     OpenSourceLibrary(
-        name = "DragLinearLayout",
-        description = "An Android LinearLayout that supports draggable and swappable child Views",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        copyrightNote = "Copyright (c) 2014 Justas Medeisis",
-        url = "https://github.com/justasm/DragLinearLayout"
-    ),
-    OpenSourceLibrary(
         name = "mXparser (Version 4.4.2)",
         description = "A super easy, rich, fast and highly flexible math expression parser library",
         licenseName = R.string.bsd_2clause_name,

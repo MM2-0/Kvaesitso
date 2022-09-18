@@ -322,10 +322,6 @@ dependencyResolutionManagement {
                 )
             )
 
-            alias("draglinearlayout")
-                .to("com.jmedeisis", "draglinearlayout")
-                .version("1.1.0")
-
             // 4.4.2 is the last GPL compatible version, don't update to 5.x
             alias("mathparser")
                 .to("org.mariuszgromada.math", "MathParser.org-mXparser")

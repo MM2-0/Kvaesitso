@@ -101,8 +101,6 @@ dependencies {
 
     implementation(libs.bundles.materialdialogs)
 
-    implementation(libs.draglinearlayout)
-
     implementation(libs.koin.android)
 
     implementation(project(":accounts"))
