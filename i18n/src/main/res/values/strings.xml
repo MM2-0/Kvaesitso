@@ -242,6 +242,7 @@
     <string name="edit_favorites_dialog_pinned_unsorted">Pinned – automatically sorted</string>
     <!-- Edit favorites, title for items that are pinned and have been sorted by the user -->
     <string name="edit_favorites_dialog_pinned_sorted">Pinned – manually sorted</string>
+    <string name="edit_favorites_dialog_empty_section">Drag items here</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->
@@ -645,4 +646,6 @@
 
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
+
+    <string name="favorites">Favorites</string>
 </resources>

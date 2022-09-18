@@ -25,6 +25,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -153,7 +154,7 @@ fun EditFavoritesSheet(
                                         horizontal = 16.dp,
                                         vertical = 24.dp,
                                     ),
-                                text = "Drag items here",
+                                text = stringResource(R.string.edit_favorites_dialog_empty_section),
                                 style = MaterialTheme.typography.labelSmall,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.outline

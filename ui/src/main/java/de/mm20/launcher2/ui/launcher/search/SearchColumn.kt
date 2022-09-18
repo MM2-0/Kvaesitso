@@ -106,7 +106,7 @@ fun SearchColumn(
                                         contentDescription = null
                                     )
                                 },
-                                label = { Text("Favorites") }
+                                label = { Text(stringResource(R.string.favorites)) }
                             )
                         }
                         SmallFloatingActionButton(
