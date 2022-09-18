@@ -1,18 +1,21 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Work
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.res.stringResource
@@ -23,6 +26,7 @@ import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.PartialLauncherCard
+import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
@@ -64,6 +68,8 @@ fun SearchColumn(
     val wikipedia by viewModel.wikipediaResult.observeAsState(null)
     val website by viewModel.websiteResult.observeAsState(null)
 
+    var showEditFavoritesDialog by remember { mutableStateOf(false) }
+
 
     LazyColumn(
         state = state,
@@ -77,6 +83,40 @@ fun SearchColumn(
                 columns = columns,
                 showLabels = showLabels,
                 reverse = reverse,
+                after = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 8.dp, end = 8.dp),
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .weight(1f)
+                                .horizontalScroll(rememberScrollState()),
+                        ) {
+                            FilterChip(
+                                modifier = Modifier.padding(start = 16.dp),
+                                selected = true,
+                                onClick = { /*TODO*/ },
+                                leadingIcon = {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Star,
+                                        contentDescription = null
+                                    )
+                                },
+                                label = { Text("Favorites") }
+                            )
+                        }
+                        SmallFloatingActionButton(
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                            onClick = { showEditFavoritesDialog = true }
+                        ) {
+                            Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                        }
+                    }
+                }
             )
         }
         GridResults(
@@ -90,7 +130,10 @@ fun SearchColumn(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp)
-                            .padding(top = if (reverse) 4.dp else 8.dp, bottom = if (reverse) 8.dp else 4.dp),
+                            .padding(
+                                top = if (reverse) 4.dp else 8.dp,
+                                bottom = if (reverse) 8.dp else 4.dp
+                            ),
                     ) {
                         FilterChip(
                             modifier = Modifier.padding(horizontal = 8.dp),
@@ -100,7 +143,11 @@ fun SearchColumn(
                                 Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
                             },
                             label = {
-                                Text(stringResource(R.string.apps_profile_main), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(
+                                    stringResource(R.string.apps_profile_main),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
                             }
                         )
                         FilterChip(
@@ -110,7 +157,11 @@ fun SearchColumn(
                                 Icon(imageVector = Icons.Rounded.Work, contentDescription = null)
                             },
                             label = {
-                                Text(stringResource(R.string.apps_profile_work), maxLines = 1, overflow = TextOverflow.Ellipsis)
+                                Text(
+                                    stringResource(R.string.apps_profile_work),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
                             }
                         )
                     }
@@ -148,6 +199,12 @@ fun SearchColumn(
         item {
             HiddenResults()
         }
+    }
+
+    if (showEditFavoritesDialog) {
+        EditFavoritesSheet(
+            onDismiss = { showEditFavoritesDialog = false }
+        )
     }
 }
 

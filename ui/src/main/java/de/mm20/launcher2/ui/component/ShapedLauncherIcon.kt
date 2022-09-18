@@ -8,7 +8,9 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -93,12 +95,16 @@ fun ShapedLauncherIcon(
                     clip = currentIcon?.backgroundLayer !is TransparentLayer
                     this.shape = shape
                 }
-                .pointerInput(onClick, onLongClick) {
-                    detectTapGestures(
-                        onLongPress = { onLongClick?.invoke() },
-                        onTap = { onClick?.invoke() },
-                    )
-                },
+                .then(
+                    if (onClick != null || onLongClick != null) {
+                        Modifier.pointerInput(onClick, onLongClick) {
+                            detectTapGestures(
+                                onLongPress = { onLongClick?.invoke() },
+                                onTap = { onClick?.invoke() },
+                            )
+                        }
+                    } else Modifier
+                ),
             contentAlignment = Alignment.Center
         ) {
             currentIcon?.let {
@@ -124,12 +130,16 @@ fun ShapedLauncherIcon(
                 modifier = Modifier
                     .size(size * 0.33f)
                     .align(Alignment.BottomEnd)
-                    .pointerInput(onClick, onLongClick) {
-                        detectTapGestures(
-                            onLongPress = { onLongClick?.invoke() },
-                            onTap = { onClick?.invoke() },
-                        )
-                    },
+                    .then(
+                        if (onClick != null || onLongClick != null) {
+                            Modifier.pointerInput(onClick, onLongClick) {
+                                detectTapGestures(
+                                    onLongPress = { onLongClick?.invoke() },
+                                    onTap = { onClick?.invoke() },
+                                )
+                            }
+                        } else Modifier
+                        ),
                 color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {
@@ -468,34 +478,34 @@ private val PentagonShape: Shape
     }
 
 private val TeardropShape: Shape
-get() = GenericShape { size, _ ->
-    moveTo(0.5f * size.width, 0f)
-    cubicTo(
-        0.776f * size.width, 0f,
-        size.width, 0.224f * size.height,
-        size.width, 0.5f * size.height,
-    )
-    lineTo(
-        size.width, 0.88f * size.height,
-    )
-    cubicTo(
-        size.width, 0.946f * size.height,
-        0.946f * size.width, size.height,
-        0.88f * size.width, size.height,
-    )
-    lineTo(0.5f * size.width, size.height)
-    cubicTo(
-        0.224f * size.width, size.height,
-        0f, 0.776f * size.height,
-        0f, 0.5f * size.height,
-    )
-    cubicTo(
-        0f, 0.224f * size.height,
-        0.224f * size.width, 0f,
-        0.5f * size.width, 0f,
-    )
-    close()
-}
+    get() = GenericShape { size, _ ->
+        moveTo(0.5f * size.width, 0f)
+        cubicTo(
+            0.776f * size.width, 0f,
+            size.width, 0.224f * size.height,
+            size.width, 0.5f * size.height,
+        )
+        lineTo(
+            size.width, 0.88f * size.height,
+        )
+        cubicTo(
+            size.width, 0.946f * size.height,
+            0.946f * size.width, size.height,
+            0.88f * size.width, size.height,
+        )
+        lineTo(0.5f * size.width, size.height)
+        cubicTo(
+            0.224f * size.width, size.height,
+            0f, 0.776f * size.height,
+            0f, 0.5f * size.height,
+        )
+        cubicTo(
+            0f, 0.224f * size.height,
+            0.224f * size.width, 0f,
+            0.5f * size.width, 0f,
+        )
+        close()
+    }
 
 private val EasterEggShape: Shape
     get() = GenericShape { size, _ ->

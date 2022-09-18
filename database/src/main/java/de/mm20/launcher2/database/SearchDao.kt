@@ -17,6 +17,9 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertSkipExisting(items: FavoritesItemEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAllReplaceExisting(items: List<FavoritesItemEntity>)
+
 
     @Query("SELECT * FROM Searchable " +
             "WHERE ((:manuallySorted AND pinned > 1) OR " +
@@ -155,4 +158,6 @@ interface SearchDao {
     @Query("DELETE FROM Searchable WHERE hidden = 0")
     fun deleteAllFavorites()
 
+    @Query("UPDATE Searchable SET `pinned` = 0")
+    fun unpinAll()
 }

@@ -97,15 +97,6 @@ fun SearchBar(
             DropdownMenu(expanded = show, onDismissRequest = onDismissRequest) {
                 DropdownMenuItem(
                     onClick = {
-                        activityViewModel.showEditFavorites()
-                        onDismissRequest()
-                    },
-                    text = {
-                        Text(stringResource(R.string.menu_item_edit_favs))
-                    }
-                )
-                DropdownMenuItem(
-                    onClick = {
                         context.startActivity(
                             Intent.createChooser(
                                 Intent(Intent.ACTION_SET_WALLPAPER),

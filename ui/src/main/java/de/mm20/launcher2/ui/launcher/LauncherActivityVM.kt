@@ -13,8 +13,6 @@ import org.koin.core.component.inject
 class LauncherActivityVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
-    val isEditFavoritesShown = MutableLiveData(false)
-
     private var isDarkInMode = MutableStateFlow(false)
 
     private val dimBackgroundState = combine(
@@ -44,14 +42,6 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
 
     fun setDarkMode(darkMode: Boolean) {
         isDarkInMode.value = darkMode
-    }
-
-    fun showEditFavorites() {
-        isEditFavoritesShown.value = true
-    }
-
-    fun hideEditFavorites() {
-        isEditFavoritesShown.value = false
     }
 
     val layout = dataStore.data.map { it.appearance.layout }.asLiveData()

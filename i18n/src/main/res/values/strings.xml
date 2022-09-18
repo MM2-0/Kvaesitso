@@ -434,6 +434,13 @@
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
     <string name="preference_category_debug">Debug</string>
+    <string name="preference_category_debug_tools">Tools</string>
+    <string name="preference_debug_cleanup_database">Clean up database</string>
+    <string name="preference_debug_cleanup_database_summary">Remove broken and unused entries from the launcher database</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d entry has been removed.</item>
+        <item quantity="other">%1$d entries have been removed.</item>
+    </plurals>
     <string name="preference_category_icons">Icons</string>
     <string name="preference_cards">Cards</string>
     <string name="preference_cards_summary">Customize card appearance</string>

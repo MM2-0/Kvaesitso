@@ -42,7 +42,6 @@ import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.launcher.modals.EditFavoritesView
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -178,29 +177,6 @@ abstract class SharedLauncherActivity(
                         }
                     }
                 }
-            }
-        }
-
-        var editFavoritesDialog: MaterialDialog? = null
-        viewModel.isEditFavoritesShown.observe(this) {
-            if (it) {
-                val view = EditFavoritesView(this@SharedLauncherActivity)
-                editFavoritesDialog =
-                    MaterialDialog(this, BottomSheet(LayoutMode.MATCH_PARENT)).show {
-                        customView(view = view)
-                        title(res = R.string.menu_item_edit_favs)
-                        positiveButton(res = R.string.close) {
-                            viewModel.hideEditFavorites()
-                            it.dismiss()
-                        }
-                        onDismiss {
-                            view.save()
-                            viewModel.hideEditFavorites()
-                        }
-                    }
-            } else {
-                editFavoritesDialog?.dismiss()
-                editFavoritesDialog = null
             }
         }
     }

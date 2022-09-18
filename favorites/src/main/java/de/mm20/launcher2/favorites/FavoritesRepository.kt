@@ -1,6 +1,7 @@
 package de.mm20.launcher2.favorites
 
 import android.content.Context
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
@@ -17,11 +18,31 @@ import org.koin.core.component.KoinComponent
 import java.io.File
 
 interface FavoritesRepository {
+    @Deprecated("Use getFavorites(java.util.List<java.lang.String>, java.util.List<java.lang.String>, boolean, boolean, boolean, java.lang.Integer) instead.")
     fun getFavorites(
         columns: Int,
         maxRows: Int? = null,
         excludeCalendarEvents: Boolean = false
     ): Flow<List<Searchable>>
+
+    /**
+     * Get favorites
+     * @param includeTypes Include only items of these types. Cannot be used together with excludeTypes.
+     * @param excludeTypes Exclude only items of these types. Cannot be used together with includeTypes.
+     * @param manuallySorted Include items that have been sorted manually
+     * @param automaticallySorted Include items that are pinned but not sorted
+     * @param frequentlyUsed Include items that are not pinned but most frequently used
+     * @param limit Maximum number of items returned.
+     */
+    fun getFavorites(
+        includeTypes: List<String>? = null,
+        excludeTypes: List<String>? = null,
+        manuallySorted: Boolean = false,
+        automaticallySorted: Boolean = false,
+        frequentlyUsed: Boolean = false,
+        limit: Int = 100
+    ): Flow<List<Searchable>>
+
 
     fun getPinnedCalendarEvents(): Flow<List<Searchable>>
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
@@ -32,7 +53,11 @@ interface FavoritesRepository {
     fun hideItem(searchable: Searchable)
     fun unhideItem(searchable: Searchable)
     fun incrementLaunchCounter(searchable: Searchable)
-    fun saveFavorites(favorites: List<FavoritesItem>)
+    fun updateFavorites(
+         manuallySorted: List<Searchable>,
+         automaticallySorted: List<Searchable>,
+    )
+
     fun getHiddenItems(): Flow<List<Searchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
     fun remove(searchable: Searchable)
@@ -51,6 +76,13 @@ interface FavoritesRepository {
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
+
+    /**
+     * Remove database entries that are invalid. This includes
+     * - entries that cannot be deserialized anymore
+     * - entries that are inconsistent (the key column is not equal to the key of the searchable)
+     */
+    suspend fun cleanupDatabase(): Int
 }
 
 internal class FavoritesRepositoryImpl(
@@ -74,21 +106,19 @@ internal class FavoritesRepositoryImpl(
                             excludeTypes = listOf("calendar"),
                             manuallySorted = true,
                             automaticallySorted = true,
-                            frequentlyUsed =  false,
+                            frequentlyUsed = false,
                             limit = columns * (maxRows ?: 20)
                         )
                     } else {
                         dao.getFavorites(
                             manuallySorted = true,
                             automaticallySorted = true,
-                            frequentlyUsed =  false,
-                            limit = columns * (maxRows ?: 20))
+                            frequentlyUsed = false,
+                            limit = columns * (maxRows ?: 20)
+                        )
                     }.map {
                         it.mapNotNull {
                             val item = fromDatabaseEntity(it).searchable
-                            if (item == null) {
-                                dao.deleteByKey(it.key)
-                            }
                             return@mapNotNull item
                         }
                     }
@@ -99,7 +129,7 @@ internal class FavoritesRepositoryImpl(
                     val autoFavs = dao.getFavorites(
                         manuallySorted = false,
                         automaticallySorted = false,
-                        frequentlyUsed =  true,
+                        frequentlyUsed = true,
                         limit = favCount.coerceAtMost((maxRows ?: 20) * columns) - pinned.size
                     ).first().mapNotNull {
                         val item = fromDatabaseEntity(it).searchable
@@ -112,6 +142,47 @@ internal class FavoritesRepositoryImpl(
                 }
             }
         }
+
+    override fun getFavorites(
+        includeTypes: List<String>?,
+        excludeTypes: List<String>?,
+        manuallySorted: Boolean,
+        automaticallySorted: Boolean,
+        frequentlyUsed: Boolean,
+        limit: Int
+    ): Flow<List<Searchable>> {
+        val dao = database.searchDao()
+        val entities = when {
+            includeTypes == null && excludeTypes == null -> dao.getFavorites(
+                manuallySorted = manuallySorted,
+                automaticallySorted = automaticallySorted,
+                frequentlyUsed = frequentlyUsed,
+                limit = limit
+            )
+            includeTypes != null && excludeTypes == null -> {
+                dao.getFavoritesWithTypes(
+                    includeTypes = includeTypes,
+                    manuallySorted = manuallySorted,
+                    automaticallySorted = automaticallySorted,
+                    frequentlyUsed = frequentlyUsed,
+                    limit = limit
+                )
+            }
+            excludeTypes != null && includeTypes == null -> {
+                dao.getFavoritesWithoutTypes(
+                    excludeTypes = excludeTypes,
+                    manuallySorted = manuallySorted,
+                    automaticallySorted = automaticallySorted,
+                    frequentlyUsed = frequentlyUsed,
+                    limit = limit
+                )
+            }
+            else -> throw IllegalArgumentException("You can either use includeTypes or excludeTypes, not both")
+        }
+        return entities.map {
+            it.mapNotNull { fromDatabaseEntity(it).searchable }
+        }
+    }
 
     override fun getPinnedCalendarEvents(): Flow<List<CalendarEvent>> {
         return database.searchDao().getFavoritesWithTypes(
@@ -198,15 +269,6 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun saveFavorites(favorites: List<FavoritesItem>) {
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).searchDao()
-                    .saveFavorites(favorites.mapNotNull { it.toDatabaseEntity() })
-            }
-        }
-    }
-
     override fun getHiddenItems(): Flow<List<Searchable>> {
         return database.searchDao().getHiddenItems().map {
             it.mapNotNull { fromDatabaseEntity(it).searchable }
@@ -240,22 +302,71 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
+    override fun updateFavorites(
+        manuallySorted: List<Searchable>,
+        automaticallySorted: List<Searchable>
+    ) {
+        val dao = database.searchDao()
+        scope.launch {
+            withContext(Dispatchers.IO) {
+                val keys = manuallySorted.map { it.key } + automaticallySorted.map { it.key }
+                val entities = dao.getFromKeys(keys)
+                val updatedManuallySorted = manuallySorted.mapIndexedNotNull { index, searchable ->
+                    val entity = entities.find { searchable.key == it.key } ?: FavoritesItem(
+                        key = searchable.key,
+                        searchable = searchable,
+                        launchCount = 0,
+                        pinPosition = 0,
+                        hidden = false,
+                    ).toDatabaseEntity() ?: return@mapIndexedNotNull null
+                    entity.pinPosition = manuallySorted.size - index + 1
+                    entity
+                }
+                val updatedAutomaticallySorted = automaticallySorted.mapIndexedNotNull { index, searchable ->
+                    val entity = entities.find { searchable.key == it.key } ?: FavoritesItem(
+                        key = searchable.key,
+                        searchable = searchable,
+                        launchCount = 0,
+                        pinPosition = 0,
+                        hidden = false,
+                    ).toDatabaseEntity() ?: return@mapIndexedNotNull null
+                    entity.pinPosition = 1
+                    entity
+                }
+                database.runInTransaction {
+                    dao.unpinAll()
+                    dao.insertAllReplaceExisting(updatedManuallySorted)
+                    dao.insertAllReplaceExisting(updatedAutomaticallySorted)
+                }
+            }
+        }
+    }
+
 
     private fun fromDatabaseEntity(entity: FavoritesItemEntity): FavoritesItem {
         val deserializer: SearchableDeserializer =
             getDeserializer(context, entity.serializedSearchable)
+        val searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#"))
+        if (searchable == null) removeInvalidItem(entity.key)
         return FavoritesItem(
             key = entity.key,
-            searchable = deserializer.deserialize(entity.serializedSearchable.substringAfter("#")),
+            searchable = searchable,
             launchCount = entity.launchCount,
             pinPosition = entity.pinPosition,
             hidden = entity.hidden
         )
     }
 
+    private fun removeInvalidItem(key: String) {
+        scope.launch {
+            database.searchDao().deleteByKey(key)
+        }
+    }
+
     override fun getFromKeys(keys: List<String>): List<Searchable> {
         val dao = database.searchDao()
-        return dao.getFromKeys(keys).mapNotNull { fromDatabaseEntity(it).searchable }
+        return dao.getFromKeys(keys)
+            .mapNotNull { fromDatabaseEntity(it).searchable }
     }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
@@ -314,5 +425,27 @@ internal class FavoritesRepositoryImpl(
                 CrashReporter.logException(e)
             }
         }
+    }
+
+    override suspend fun cleanupDatabase(): Int {
+        var removed = 0
+        val job = scope.launch {
+            val dao = database.backupDao()
+            var page = 0
+            do {
+                val favorites = dao.exportFavorites(limit = 100, offset = page * 100)
+                for (fav in favorites) {
+                    val item = fromDatabaseEntity(fav)
+                    if (item.searchable == null || item.searchable.key != item.key) {
+                        removeInvalidItem(item.key)
+                        removed++
+                        Log.i("MM20", "SearchableDatabase cleanup: removed invalid item ${item.key}")
+                    }
+                }
+                page++
+            } while (favorites.size == 100)
+        }
+        job.join()
+        return removed
     }
 }

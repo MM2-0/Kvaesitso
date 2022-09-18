@@ -239,11 +239,4 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://bigbadaboom.github.io/androidsvg/"
     ),
-    OpenSourceLibrary(
-        name = "Compose LazyList/Grid reorder",
-        description = "A Jetpack Compose (Android + Desktop) modifier enabling reordering by drag and drop in a LazyList and LazyGrid.",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        url = "https://github.com/aclassen/ComposeReorderable"
-    )
 )
