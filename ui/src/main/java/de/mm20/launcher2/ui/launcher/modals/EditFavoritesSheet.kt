@@ -1,13 +1,20 @@
 package de.mm20.launcher2.ui.launcher.modals
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
+import android.app.Activity
+import android.content.Context
+import android.content.pm.LauncherApps
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -16,6 +23,8 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -27,6 +36,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.DraggableItem
@@ -45,9 +55,61 @@ fun EditFavoritesSheet(
         viewModel.reload()
     }
 
-    val items by viewModel.gridItems.observeAsState(emptyList())
     val loading by viewModel.loading.observeAsState(true)
+    val createShortcutTarget by viewModel.createShortcutTarget.observeAsState(null)
 
+    BottomSheetDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(
+                if (createShortcutTarget == null) {
+                    stringResource(id = R.string.menu_item_edit_favs)
+                } else {
+                    stringResource(id = R.string.create_app_shortcut)
+                }
+            )
+        },
+        swipeToDismiss = {
+            createShortcutTarget == null
+        },
+        dismissOnBackPress = {
+            createShortcutTarget == null
+        },
+        confirmButton = {
+            if (createShortcutTarget != null) {
+                OutlinedButton(onClick = { viewModel.cancelPickShortcut() }) {
+                    Text(stringResource(id = android.R.string.cancel))
+                }
+            } else {
+                OutlinedButton(onClick = onDismiss) {
+                    Text(stringResource(id = R.string.close))
+                }
+            }
+        }
+    ) {
+        if (loading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f)
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .align(Alignment.Center)
+                )
+            }
+        } else if (createShortcutTarget != null) {
+            ShortcutPicker(viewModel)
+        } else {
+            ReorderFavoritesGrid(viewModel)
+        }
+    }
+}
+
+@Composable
+fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
+    val items by viewModel.gridItems.observeAsState(emptyList())
     val columns = LocalGridColumns.current
 
     val state = rememberLazyDragAndDropGridState(
@@ -60,124 +122,143 @@ fun EditFavoritesSheet(
 
     val iconSize = 48.dp.toPixels()
 
-    BottomSheetDialog(onDismissRequest = onDismiss, title = {
-        Text(stringResource(id = R.string.menu_item_edit_favs))
-    }) {
-        if (loading) {
-            Box(modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(48.dp)
-                        .align(Alignment.Center)
-                )
-            }
-        } else {
-        LazyVerticalDragAndDropGrid(
-            state = state,
-            columns = GridCells.Fixed(columns),
+    LazyVerticalDragAndDropGrid(
+        state = state,
+        columns = GridCells.Fixed(columns),
 
-            ) {
-            items(
-                items.size,
-                key = { i ->
-                    val it = items[i]
-                    if (it is FavoritesSheetGridItem.Favorite) it.item.key else i
-                },
-                span = { i ->
-                    val it = items[i]
-                    when (it) {
-                        is FavoritesSheetGridItem.Favorite -> GridItemSpan(1)
-                        is FavoritesSheetGridItem.Divider -> GridItemSpan(columns)
-                        is FavoritesSheetGridItem.EmptySection -> GridItemSpan(columns)
-                        is FavoritesSheetGridItem.Spacer -> GridItemSpan(it.span)
-                        is FavoritesSheetGridItem.Tags -> GridItemSpan(columns)
+        ) {
+        items(
+            items.size,
+            key = { i ->
+                val it = items[i]
+                if (it is FavoritesSheetGridItem.Favorite) it.item.key else i
+            },
+            span = { i ->
+                val it = items[i]
+                when (it) {
+                    is FavoritesSheetGridItem.Favorite -> GridItemSpan(1)
+                    is FavoritesSheetGridItem.Divider -> GridItemSpan(columns)
+                    is FavoritesSheetGridItem.EmptySection -> GridItemSpan(columns)
+                    is FavoritesSheetGridItem.Spacer -> GridItemSpan(it.span)
+                    is FavoritesSheetGridItem.Tags -> GridItemSpan(columns)
+                }
+            }
+        ) { i ->
+            when (val it = items[i]) {
+                is FavoritesSheetGridItem.Favorite -> {
+                    val icon by remember(it.item.key) {
+                        viewModel.getIcon(
+                            it.item,
+                            iconSize.roundToInt()
+                        )
+                    }.collectAsState(null)
+                    val badge by remember(it.item.key) {
+                        viewModel.getBadge(
+                            it.item,
+                        )
+                    }.collectAsState(null)
+                    DraggableItem(state = state, key = it.item.key) { dragged ->
+                        GridItem(
+                            label = it.item.labelOverride ?: it.item.label,
+                            icon = icon,
+                            badge = badge
+                        )
                     }
                 }
-            ) { i ->
-                when (val it = items[i]) {
-                    is FavoritesSheetGridItem.Favorite -> {
-                        val icon by remember(it.item.key) {
-                            viewModel.getIcon(
-                                it.item,
-                                iconSize.roundToInt()
-                            )
-                        }.collectAsState(null)
-                        val badge by remember(it.item.key) {
-                            viewModel.getBadge(
-                                it.item,
-                            )
-                        }.collectAsState(null)
-                        DraggableItem(state = state, key = it.item.key) { dragged ->
-                            GridItem(
-                                label = it.item.labelOverride ?: it.item.label,
-                                icon = icon,
-                                badge = badge
-                            )
-                        }
+                is FavoritesSheetGridItem.Divider -> {
+                    val title = when (it.section) {
+                        FavoritesSheetSection.ManuallySorted -> R.string.edit_favorites_dialog_pinned_sorted
+                        FavoritesSheetSection.AutomaticallySorted -> R.string.edit_favorites_dialog_pinned_unsorted
+                        FavoritesSheetSection.FrequentlyUsed -> R.string.edit_favorites_dialog_unpinned
                     }
-                    is FavoritesSheetGridItem.Divider -> {
+                    Row(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
-                            modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                            text = stringResource(id = it.titleRes),
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(end = 16.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                            text = stringResource(id = title),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.secondary
                         )
+                        if (it.section == FavoritesSheetSection.FrequentlyUsed) {
+                            /*FilledTonalIconToggleButton(
+                                modifier = Modifier.offset(x = 4.dp),
+                                checked = false,
+                                onCheckedChange = {}) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Settings,
+                                    contentDescription = null
+                                )
+                            }*/
+                        } else {
+                            FilledTonalIconButton(
+                                modifier = Modifier.offset(x = 4.dp),
+                                onClick = {
+                                    viewModel.pickShortcut(it.section)
+                                }) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Add,
+                                    contentDescription = null
+                                )
+                            }
+                        }
                     }
-                    is FavoritesSheetGridItem.EmptySection -> {
-                        val shape = MaterialTheme.shapes.medium
-                        val color = MaterialTheme.colorScheme.outline
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .drawBehind {
-                                    drawOutline(
-                                        outline = shape.createOutline(
-                                            size,
-                                            layoutDirection,
-                                            Density(density, fontScale)
-                                        ),
-                                        color = color,
-                                        style = Stroke(
-                                            2.dp.toPx(),
-                                            pathEffect = PathEffect.dashPathEffect(
-                                                intervals = floatArrayOf(
-                                                    4.dp.toPx(),
-                                                    4.dp.toPx(),
-                                                )
+                }
+                is FavoritesSheetGridItem.EmptySection -> {
+                    val shape = MaterialTheme.shapes.medium
+                    val color = MaterialTheme.colorScheme.outline
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 8.dp)
+                            .drawBehind {
+                                drawOutline(
+                                    outline = shape.createOutline(
+                                        size,
+                                        layoutDirection,
+                                        Density(density, fontScale)
+                                    ),
+                                    color = color,
+                                    style = Stroke(
+                                        2.dp.toPx(),
+                                        pathEffect = PathEffect.dashPathEffect(
+                                            intervals = floatArrayOf(
+                                                4.dp.toPx(),
+                                                4.dp.toPx(),
                                             )
                                         )
                                     )
-                                }
-                        ) {
-                            Text(
-                                modifier = Modifier
-                                    .align(Alignment.Center)
-                                    .padding(
-                                        horizontal = 16.dp,
-                                        vertical = 24.dp,
-                                    ),
-                                text = stringResource(R.string.edit_favorites_dialog_empty_section),
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.Center,
-                                color = MaterialTheme.colorScheme.outline
-                            )
-                        }
-                    }
-                    is FavoritesSheetGridItem.Spacer -> {
-                        Spacer(
+                                )
+                            }
+                    ) {
+                        Text(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .height(48.dp)
+                                .align(Alignment.Center)
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 24.dp,
+                                ),
+                            text = stringResource(R.string.edit_favorites_dialog_empty_section),
+                            style = MaterialTheme.typography.labelSmall,
+                            textAlign = TextAlign.Center,
+                            color = MaterialTheme.colorScheme.outline
                         )
                     }
-                    is FavoritesSheetGridItem.Tags -> {}
                 }
+                is FavoritesSheetGridItem.Spacer -> {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(48.dp)
+                    )
+                }
+                is FavoritesSheetGridItem.Tags -> {}
             }
-        }
-
         }
     }
 }
@@ -209,10 +290,81 @@ fun GridItem(
     }
 }
 
+@Composable
+fun ShortcutPicker(viewModel: EditFavoritesSheetVM) {
+
+    val hasShortcutPermission by remember { viewModel.hasShortcutPermission }.collectAsState(null)
+
+    val shortcutActivities by remember(hasShortcutPermission) { viewModel.getShortcutActivities() }.collectAsState(
+        emptyList()
+    )
+
+    val context = LocalContext.current
+    val activityLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartIntentSenderForResult()) {
+            if (it.resultCode != Activity.RESULT_OK) {
+                viewModel.cancelPickShortcut()
+            }
+            viewModel.createShortcut(context, it.data)
+
+        }
+
+    val iconSize = 48.dp.toPixels().roundToInt()
+    val activity = LocalLifecycleOwner.current as AppCompatActivity
+    LazyColumn {
+        if (hasShortcutPermission == false) {
+            item {
+                MissingPermissionBanner(
+                    modifier = Modifier.padding(bottom = 16.dp),
+                    text = stringResource(
+                        R.string.missing_permission_appshortcuts_create,
+                        stringResource(R.string.app_name)
+                    ),
+                    onClick = { viewModel.requestShortcutPermission(activity) })
+            }
+        }
+        items(shortcutActivities) {
+            val icon by remember(it.key) { viewModel.getIcon(it, iconSize) }.collectAsState(null)
+            val badge by remember(it.key) { viewModel.getBadge(it) }.collectAsState(null)
+            OutlinedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 4.dp),
+                onClick = {
+                    val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+                    val sender = launcherApps.getShortcutConfigActivityIntent(it.launcherActivityInfo) ?: return@OutlinedCard
+                    activityLauncher.launch(IntentSenderRequest.Builder(sender).build(), null)
+                }) {
+                Row(
+                    modifier = Modifier.padding(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    ShapedLauncherIcon(
+                        size = 48.dp,
+                        icon = { icon },
+                        badge = { badge },
+                    )
+                    Text(
+                        text = it.labelOverride ?: it.label,
+                        modifier = Modifier.padding(start = 16.dp),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
+        }
+    }
+}
+
 sealed interface FavoritesSheetGridItem {
     class Favorite(val item: Searchable) : FavoritesSheetGridItem
-    class Divider(val titleRes: Int) : FavoritesSheetGridItem
+    class Divider(val section: FavoritesSheetSection) : FavoritesSheetGridItem
     class Spacer(val span: Int = 1) : FavoritesSheetGridItem
-    class EmptySection() : FavoritesSheetGridItem
+    object EmptySection : FavoritesSheetGridItem
     class Tags() : FavoritesSheetGridItem
+}
+
+enum class FavoritesSheetSection {
+    ManuallySorted,
+    AutomaticallySorted,
+    FrequentlyUsed
 }

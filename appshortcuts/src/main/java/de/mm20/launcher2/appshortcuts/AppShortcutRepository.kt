@@ -16,6 +16,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,6 +31,8 @@ interface AppShortcutRepository {
         launcherActivityInfo: LauncherActivityInfo,
         count: Int = 5
     ): List<AppShortcut>
+
+    suspend fun getShortcutsConfigActivities(): List<LauncherApp>
 
     fun search(query: String): Flow<List<AppShortcut>>
 
@@ -202,6 +205,24 @@ internal class AppShortcutRepositoryImpl(
             allPinned.filter { it.id != shortcut.launcherShortcut.id }.map { it.id },
             userHandle
         )
+    }
+
+    override suspend fun getShortcutsConfigActivities(): List<LauncherApp> {
+        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        if (!launcherApps.hasShortcutHostPermission()) return emptyList()
+        val results = mutableListOf<LauncherApp>()
+        val profiles = launcherApps.profiles
+        for (profile in profiles) {
+            val activities = launcherApps.getShortcutConfigActivityList(null, profile)
+            results.addAll(
+                activities.map {
+                    LauncherApp(
+                        context, it
+                    )
+                }
+            )
+        }
+        return results.sorted()
     }
 
 

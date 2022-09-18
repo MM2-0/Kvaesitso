@@ -389,6 +389,8 @@
     <string name="missing_permission_contact_search">Grant contact permission to search your contact.</string>
     <!-- Missing permission app shortcuts permission, used in app shortcut search results. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
+    <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
+    <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
     <!-- Appearance preference title -->
@@ -648,4 +650,5 @@
     <string name="apps_profile_work">Work</string>
 
     <string name="favorites">Favorites</string>
+    <string name="create_app_shortcut">Create shortcut</string>
 </resources>

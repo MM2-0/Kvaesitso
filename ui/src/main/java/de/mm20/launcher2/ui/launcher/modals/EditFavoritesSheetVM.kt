@@ -1,18 +1,29 @@
 package de.mm20.launcher2.ui.launcher.modals
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.LauncherApps
+import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,12 +31,16 @@ import org.koin.core.component.inject
 class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     private val repository: FavoritesRepository by inject()
+    private val shortcutRepository: AppShortcutRepository by inject()
     private val iconRepository: IconRepository by inject()
     private val badgeRepository: BadgeRepository by inject()
+    private val permissionsManager: PermissionsManager by inject()
 
     val gridItems = MutableLiveData<List<FavoritesSheetGridItem>>(emptyList())
 
     val loading = MutableLiveData(false)
+
+    val createShortcutTarget = MutableLiveData<FavoritesSheetSection?>(null)
 
     private var manuallySorted: MutableList<Searchable> = mutableListOf()
     private var automaticallySorted: MutableList<Searchable> = mutableListOf()
@@ -52,25 +67,25 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
         items.add(FavoritesSheetGridItem.Tags())
 
-        items.add(FavoritesSheetGridItem.Divider(R.string.edit_favorites_dialog_pinned_sorted))
+        items.add(FavoritesSheetGridItem.Divider(FavoritesSheetSection.ManuallySorted))
         if (manuallySorted.isEmpty()) {
-            items.add(FavoritesSheetGridItem.EmptySection())
+            items.add(FavoritesSheetGridItem.EmptySection)
         } else {
             items.addAll(manuallySorted.map { FavoritesSheetGridItem.Favorite(it) })
             items.add(FavoritesSheetGridItem.Spacer())
         }
 
-        items.add(FavoritesSheetGridItem.Divider(R.string.edit_favorites_dialog_pinned_unsorted))
+        items.add(FavoritesSheetGridItem.Divider(FavoritesSheetSection.AutomaticallySorted))
         if (automaticallySorted.isEmpty()) {
-            items.add(FavoritesSheetGridItem.EmptySection())
+            items.add(FavoritesSheetGridItem.EmptySection)
         } else {
             items.addAll(automaticallySorted.map { FavoritesSheetGridItem.Favorite(it) })
             items.add(FavoritesSheetGridItem.Spacer())
         }
 
-        items.add(FavoritesSheetGridItem.Divider(R.string.edit_favorites_dialog_unpinned))
+        items.add(FavoritesSheetGridItem.Divider(FavoritesSheetSection.FrequentlyUsed))
         if (frequentlyUsed.isEmpty()) {
-            items.add(FavoritesSheetGridItem.EmptySection())
+            items.add(FavoritesSheetGridItem.EmptySection)
         } else {
             items.addAll(frequentlyUsed.map { FavoritesSheetGridItem.Favorite(it) })
             items.add(FavoritesSheetGridItem.Spacer())
@@ -123,6 +138,11 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
                 )
             }
         }
+        save()
+        buildItemList()
+    }
+
+    private fun save() {
         repository.updateFavorites(
             buildList {
                 addAll(manuallySorted)
@@ -131,7 +151,6 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
                 addAll(automaticallySorted)
             },
         )
-        buildItemList()
     }
 
     fun getIcon(searchable: Searchable, size: Int): Flow<LauncherIcon?> {
@@ -140,6 +159,45 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     fun getBadge(searchable: Searchable): Flow<Badge?> {
         return badgeRepository.getBadge(searchable)
+    }
+
+    fun pickShortcut(section: FavoritesSheetSection) {
+        createShortcutTarget.value = section
+    }
+    fun cancelPickShortcut() {
+        createShortcutTarget.value = null
+    }
+
+    fun getShortcutActivities() = flow {
+        emit(shortcutRepository.getShortcutsConfigActivities())
+    }
+
+    val hasShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts)
+
+    fun requestShortcutPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.AppShortcuts)
+    }
+
+    fun createShortcut(context: Context, data: Intent?) {
+        data ?: return cancelPickShortcut()
+        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        val pinRequest = launcherApps.getPinItemRequest(data) ?: return cancelPickShortcut()
+        val shortcutInfo = pinRequest.shortcutInfo ?: return cancelPickShortcut()
+        pinRequest.accept()
+        val shortcut = AppShortcut(
+            context,
+            shortcutInfo,
+            context.packageManager.getApplicationInfo(shortcutInfo.`package`, 0)
+                .loadLabel(context.packageManager).toString()
+        )
+        if (createShortcutTarget.value == FavoritesSheetSection.ManuallySorted) {
+            manuallySorted.add(shortcut)
+        } else {
+            automaticallySorted.add(shortcut)
+        }
+        save()
+        buildItemList()
+        createShortcutTarget.value = null
     }
 
 }
