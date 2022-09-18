@@ -32,6 +32,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.DraggableItem
 import de.mm20.launcher2.ui.launcher.helper.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlin.math.roundToInt
 
 @Composable
@@ -47,7 +48,7 @@ fun EditFavoritesSheet(
     val items by viewModel.gridItems.observeAsState(emptyList())
     val loading by viewModel.loading.observeAsState(true)
 
-    val columns = 5
+    val columns = LocalGridColumns.current
 
     val state = rememberLazyDragAndDropGridState(
         onDragStart = {
