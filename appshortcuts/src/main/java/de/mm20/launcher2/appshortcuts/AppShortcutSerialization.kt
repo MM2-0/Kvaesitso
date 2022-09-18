@@ -1,23 +1,27 @@
 package de.mm20.launcher2.appshortcuts
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.ShortcutIconResource
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Process
 import android.os.UserManager
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.search.data.Searchable
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 
 
-class AppShortcutSerializer : SearchableSerializer {
+class LauncherShortcutSerializer : SearchableSerializer {
     override fun serialize(searchable: Searchable): String {
-        searchable as AppShortcut
+        searchable as LauncherShortcut
         return jsonObjectOf(
             "packagename" to searchable.launcherShortcut.`package`,
             "id" to searchable.launcherShortcut.id,
@@ -30,7 +34,7 @@ class AppShortcutSerializer : SearchableSerializer {
 
 }
 
-class AppShortcutDeserializer(
+class LauncherShortcutDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
 
@@ -68,7 +72,7 @@ class AppShortcutDeserializer(
                 return null
             } else {
                 val activity = shortcuts[0].activity
-                return AppShortcut(
+                return LauncherShortcut(
                     context = context,
                     launcherShortcut = shortcuts[0],
                     appName = appName
@@ -76,4 +80,62 @@ class AppShortcutDeserializer(
             }
         }
     }
+}
+
+class LegacyShortcutSerializer: SearchableSerializer {
+    override fun serialize(searchable: Searchable): String? {
+        searchable as LegacyShortcut
+        return jsonObjectOf(
+            "label" to searchable.label,
+            "intent" to searchable.intent.toUri(0),
+            "iconResource" to searchable.iconResource?.let {
+                jsonObjectOf(
+                    "package" to it.packageName,
+                    "resource" to it.resourceName,
+                )
+            }
+        ).toString()
+    }
+
+    override val typePrefix: String
+        get() = "legacyshortcut"
+}
+
+class LegacyShortcutDeserializer(
+    val context: Context
+): SearchableDeserializer {
+    override fun deserialize(serialized: String): Searchable? {
+        val json = JSONObject(serialized)
+        val label = json.getString("label")
+        val intent = Intent.parseUri(json.getString("intent"), 0)
+        val iconResourceObj = json.optJSONObject("iconResource")
+        val iconResource = iconResourceObj?.let {
+            ShortcutIconResource().apply {
+                packageName = iconResourceObj.getString("package")
+                resourceName = iconResourceObj.getString("resource")
+            }
+        }
+
+        val packageName = intent.`package` ?: intent.component?.packageName
+
+        val appName = try {
+            packageName?.let {
+                context
+                    .packageManager
+                    .getApplicationInfo(it, 0)
+                    .loadLabel(context.packageManager)
+                    .toString()
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        }
+
+        return LegacyShortcut(
+            intent = intent,
+            label = label,
+            iconResource = iconResource,
+            appName = appName,
+        )
+    }
+
 }

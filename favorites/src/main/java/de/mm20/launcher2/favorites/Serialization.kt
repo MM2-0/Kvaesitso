@@ -1,8 +1,10 @@
 package de.mm20.launcher2.favorites
 
 import android.content.Context
-import de.mm20.launcher2.appshortcuts.AppShortcutDeserializer
-import de.mm20.launcher2.appshortcuts.AppShortcutSerializer
+import de.mm20.launcher2.appshortcuts.LauncherShortcutDeserializer
+import de.mm20.launcher2.appshortcuts.LauncherShortcutSerializer
+import de.mm20.launcher2.appshortcuts.LegacyShortcutDeserializer
+import de.mm20.launcher2.appshortcuts.LegacyShortcutSerializer
 import de.mm20.launcher2.calendar.CalendarEventDeserializer
 import de.mm20.launcher2.calendar.CalendarEventSerializer
 import de.mm20.launcher2.contacts.ContactDeserializer
@@ -23,8 +25,11 @@ internal fun getSerializer(searchable: Searchable?): SearchableSerializer {
     if (searchable is LauncherApp) {
         return LauncherAppSerializer()
     }
-    if (searchable is AppShortcut) {
-        return AppShortcutSerializer()
+    if (searchable is LauncherShortcut) {
+        return LauncherShortcutSerializer()
+    }
+    if (searchable is LegacyShortcut) {
+        return LegacyShortcutSerializer()
     }
     if (searchable is CalendarEvent) {
         return CalendarEventSerializer()
@@ -62,7 +67,10 @@ internal fun getDeserializer(context: Context, serialized: String): SearchableDe
         return LauncherAppDeserializer(context)
     }
     if (type == "shortcut") {
-        return AppShortcutDeserializer(context)
+        return LauncherShortcutDeserializer(context)
+    }
+    if (type == "legacyshortcut") {
+        return LegacyShortcutDeserializer(context)
     }
     if (type == "calendar") {
         return CalendarEventDeserializer(context)

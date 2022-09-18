@@ -6,6 +6,7 @@ import android.content.pm.LauncherApps
 import android.os.Bundle
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherShortcut
 import org.koin.android.ext.android.inject
 
 class AddItemActivity : Activity() {
@@ -14,15 +15,8 @@ class AddItemActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val launcherApps = getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        val pinRequest = launcherApps.getPinItemRequest(intent) ?: return run { finish() }
-        val shortcutInfo = pinRequest.shortcutInfo ?: return run { finish() }
-        val shortcut = AppShortcut(
-            this.applicationContext, shortcutInfo,
-            packageManager.getApplicationInfo(shortcutInfo.`package`, 0)
-                .loadLabel(packageManager).toString()
-        )
-        if (pinRequest.accept()) {
+        val shortcut = AppShortcut.fromPinRequestIntent(this, intent)
+        if (shortcut != null) {
             favoritesRepository.pinItem(shortcut)
         }
         finish()

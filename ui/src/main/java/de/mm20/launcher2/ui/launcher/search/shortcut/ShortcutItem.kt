@@ -4,7 +4,6 @@ package de.mm20.launcher2.ui.launcher.search.shortcut
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -73,13 +72,15 @@ fun AppShortcutItem(
                 val textSpace by transition.animateDp(label = "textSpace") {
                     if (it) 4.dp else 2.dp
                 }
-                Text(
-                    text = stringResource(R.string.shortcut_summary, shortcut.appName),
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = textSpace),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                shortcut.appName?.let {
+                    Text(
+                        text = stringResource(R.string.shortcut_summary, it),
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(top = textSpace),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
             val badge by viewModel.badge.collectAsState(null)
             val size by animateDpAsState(if (showDetails) 84.dp else 48.dp)
@@ -168,11 +169,14 @@ fun AppShortcutItem(
 
                         lifecycleOwner.lifecycleScope.launch {
                             val result = snackbarHostState.showSnackbar(
-                                message = context.getString(R.string.msg_item_hidden, shortcut.label),
+                                message = context.getString(
+                                    R.string.msg_item_hidden,
+                                    shortcut.label
+                                ),
                                 actionLabel = context.getString(R.string.action_undo),
                                 duration = SnackbarDuration.Short,
-                                )
-                            if(result == SnackbarResult.ActionPerformed) {
+                            )
+                            if (result == SnackbarResult.ActionPerformed) {
                                 viewModel.unhide()
                             }
                         }

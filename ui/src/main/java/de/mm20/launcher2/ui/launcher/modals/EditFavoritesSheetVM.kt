@@ -2,13 +2,12 @@ package de.mm20.launcher2.ui.launcher.modals
 
 import android.content.Context
 import android.content.Intent
+import android.content.Intent.ShortcutIconResource
 import android.content.pm.LauncherApps
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeRepository
@@ -18,13 +17,12 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.search.data.Searchable
-import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -164,6 +162,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     fun pickShortcut(section: FavoritesSheetSection) {
         createShortcutTarget.value = section
     }
+
     fun cancelPickShortcut() {
         createShortcutTarget.value = null
     }
@@ -180,24 +179,28 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     fun createShortcut(context: Context, data: Intent?) {
         data ?: return cancelPickShortcut()
-        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        val pinRequest = launcherApps.getPinItemRequest(data) ?: return cancelPickShortcut()
-        val shortcutInfo = pinRequest.shortcutInfo ?: return cancelPickShortcut()
-        pinRequest.accept()
-        val shortcut = AppShortcut(
-            context,
-            shortcutInfo,
-            context.packageManager.getApplicationInfo(shortcutInfo.`package`, 0)
-                .loadLabel(context.packageManager).toString()
-        )
-        if (createShortcutTarget.value == FavoritesSheetSection.ManuallySorted) {
-            manuallySorted.add(shortcut)
-        } else {
-            automaticallySorted.add(shortcut)
+
+        val shortcut = AppShortcut.fromPinRequestIntent(context, data)
+
+        if (shortcut == null) {
+            cancelPickShortcut()
+            return
+        }
+
+        if (!manuallySorted.any { it.key == shortcut.key }
+            && !automaticallySorted.any { it.key == shortcut.key }
+            && !frequentlyUsed.any { it.key == shortcut.key }
+        ) {
+            if (createShortcutTarget.value == FavoritesSheetSection.ManuallySorted) {
+                manuallySorted.add(shortcut)
+            } else {
+                automaticallySorted.add(shortcut)
+            }
         }
         save()
         buildItemList()
         createShortcutTarget.value = null
     }
+
 
 }

@@ -8,6 +8,8 @@ import android.util.Log
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -16,12 +18,17 @@ class ShortcutItemVM(private val shortcut: AppShortcut) : SearchableItemVM(short
 
     private val shortcutRepository: AppShortcutRepository by inject()
 
-    val canDelete = shortcut.launcherShortcut.isPinned
+    val canDelete = shortcut is LauncherShortcut && shortcut.launcherShortcut.isPinned
 
     fun openAppInfo(context: Context) {
+        val packageName = when(shortcut) {
+            is LegacyShortcut -> shortcut.intent.`package` ?: return
+            is LauncherShortcut -> shortcut.launcherShortcut.`package`
+            else -> return
+        }
         context.tryStartActivity(
             Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.parse("package:${shortcut.launcherShortcut.`package`}")
+                data = Uri.parse("package:$packageName")
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
         )
@@ -29,7 +36,7 @@ class ShortcutItemVM(private val shortcut: AppShortcut) : SearchableItemVM(short
 
     fun deleteShortcut() {
         if (!canDelete) return
-        shortcutRepository.removePinnedShortcut(shortcut)
+        if (shortcut is LauncherShortcut) shortcutRepository.removePinnedShortcut(shortcut)
         favoritesRepository.unpinItem(shortcut)
     }
 }

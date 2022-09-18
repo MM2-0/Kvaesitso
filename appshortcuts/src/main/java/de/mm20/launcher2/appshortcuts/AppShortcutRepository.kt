@@ -17,6 +17,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.LauncherShortcut
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -30,13 +31,13 @@ interface AppShortcutRepository {
     suspend fun getShortcutsForActivity(
         launcherActivityInfo: LauncherActivityInfo,
         count: Int = 5
-    ): List<AppShortcut>
+    ): List<LauncherShortcut>
 
     suspend fun getShortcutsConfigActivities(): List<LauncherApp>
 
     fun search(query: String): Flow<List<AppShortcut>>
 
-    fun removePinnedShortcut(shortcut: AppShortcut)
+    fun removePinnedShortcut(shortcut: LauncherShortcut)
 }
 
 internal class AppShortcutRepositoryImpl(
@@ -61,14 +62,14 @@ internal class AppShortcutRepositoryImpl(
         } catch (e: IllegalStateException) {
             emptyList()
         }
-        val appShortcuts = mutableListOf<AppShortcut>()
+        val appShortcuts = mutableListOf<LauncherShortcut>()
         appShortcuts.addAll(shortcuts
             ?.let {
                 if (it.size > count) it.subList(0, count)
                 else it
             }
             ?.map {
-                AppShortcut(
+                LauncherShortcut(
                     context,
                     it,
                     launcherActivityInfo.label.toString()
@@ -128,7 +129,7 @@ internal class AppShortcutRepositoryImpl(
                             } catch (e: PackageManager.NameNotFoundException) {
                                 ""
                             }
-                            AppShortcut(
+                            LauncherShortcut(
                                 context,
                                 it,
                                 label
@@ -186,7 +187,7 @@ internal class AppShortcutRepositoryImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(500), 1)
 
-    override fun removePinnedShortcut(shortcut: AppShortcut) {
+    override fun removePinnedShortcut(shortcut: LauncherShortcut) {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return
         val pinnedShortcutsQuery = LauncherApps.ShortcutQuery().apply {
