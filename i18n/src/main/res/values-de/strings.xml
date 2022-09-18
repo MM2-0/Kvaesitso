@@ -455,4 +455,15 @@
     <string name="apps_profile_main">Persönlich</string>
     <string name="apps_profile_work">Geschäftlich</string>
     <string name="preference_icon_shape_teardrop">Teardrop</string>
+    <string name="favorites">Favoriten</string>
+    <string name="missing_permission_appshortcuts_create">%1$s muss als Standard-Start-App gesetzt sein, um App-Shortcuts erstellen zu können.</string>
+    <string name="create_app_shortcut">Shortcut erstellen</string>
+    <string name="edit_favorites_dialog_empty_section">Elemente hierhin ziehen</string>
+    <string name="preference_category_debug_tools">Werkzeuge</string>
+    <string name="preference_debug_cleanup_database">Datenbank aufräumen</string>
+    <string name="preference_debug_cleanup_database_summary">Ungültige und nicht verwendete Einträge aus der Launcher-Datenbank entfernen</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d Eintrag wurde entfernt.</item>
+        <item quantity="other">%1$d Einträge wurden entfernt.</item>
+    </plurals>
 </resources>
