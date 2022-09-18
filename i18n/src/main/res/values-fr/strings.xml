@@ -6,7 +6,7 @@
     <!-- Shown in the app detail share menu if the application was installed from an app store -->
     <string name="menu_share_store_link">Lien %1$s</string>
     <!-- Share app menu when both, link and apk share are available-->
-    <string name="menu_share_apk_file">Fichier du programme</string>
+    <string name="menu_share_apk_file">Fichier APK</string>
     <!-- Uninstall an application -->
     <string name="menu_uninstall">Désinstaller</string>
     <!-- Share something -->
@@ -88,7 +88,7 @@
     <string name="preference_category_searchbar">Barre de recherche</string>
     <string name="file_type_directory">Dossier</string>
     <string name="file_type_archive">Fichier d\'archive</string>
-    <string name="file_type_android">Fichier paquet Android</string>
+    <string name="file_type_android">Fichier APK</string>
     <string name="file_type_source_code">Fichier de code source</string>
     <string name="file_type_document">Document</string>
     <string name="file_type_spreadsheet">Tableur</string>
@@ -152,7 +152,7 @@
     <string name="menu_favorites_pin">Ajouter aux favoris</string>
     <string name="menu_favorites_unpin">Retirer des favoris</string>
     <string name="menu_back">Retour</string>
-    <string name="menu_app_info">Informations sur l\'application</string>
+    <string name="menu_app_info">Infos sur l\'appli</string>
     <string name="preference_screen_services_summary">Gérer les comptes et les services</string>
     <string name="preference_category_services_google">Google</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
@@ -211,7 +211,7 @@
     <string name="preference_about_telegram">Groupe Telegram</string>
     <string name="preference_about_fdroid">Dépôt F-Droid</string>
     <string name="menu_item_edit_favs">Modifier les favoris</string>
-    <string name="edit_favorites_dialog_unpinned">Pas épinglé – utilisé fréquemment</string>
+    <string name="edit_favorites_dialog_unpinned">Pas épinglé – fréquemment utilisé</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Épinglé – trié automatiquement</string>
     <string name="edit_favorites_dialog_pinned_sorted">Épinglé – trié manuellement</string>
     <string name="login_flow_continue">Suivant</string>
@@ -325,8 +325,8 @@
     <string name="preference_screen_musicwidget">Musique</string>
     <string name="preference_screen_clockwidget">Horloge</string>
     <string name="preference_clockwidget_layout">Mise en page</string>
-    <string name="preference_clockwidget_layout_vertical">Vertical</string>
-    <string name="preference_clockwidget_layout_horizontal">Horizontal</string>
+    <string name="preference_clockwidget_layout_vertical">Défaut</string>
+    <string name="preference_clockwidget_layout_horizontal">Compacte</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Choisir un style d\'horloge</string>
     <string name="preference_crash_reporter">Signaler un plantage</string>
@@ -414,13 +414,13 @@
     <string name="preference_search_appshortcuts_summary">Rechercher les raccourcis d\'applications</string>
     <string name="preference_custom_colors_a3">Tertiaire</string>
     <string name="restore_different_minor_version">Cette sauvegarde a été créée depuis une version différente de %1$s. Certaines données pourraient ne pas être restaurées correctement.</string>
-    <string name="preference_clockwidget_favorites_part_summary">Afficher la première ligne des éléments épinglés</string>
+    <string name="preference_clockwidget_favorites_part_summary">Afficher la première rangée d\'éléments épinglés</string>
     <string name="restore_invalid_file">Le fichier sélectionné semble ne pas être un fichier de sauvegarde. Êtes-vous sûrs d\'avoir sélectionné le bon fichier \?</string>
     <string name="restore_incompatible_file">Cette sauvegarde a été créée avec une version différente de %1$s et ne peut donc pas être restaurée sur cette version.</string>
     <string name="restore_select_components">Sélectionnez ce que vous voulez restaurer. Les données existantes seront écrasées !</string>
     <string name="restore_complete">La sauvegarde a bien été restaurée.</string>
     <string name="preference_search_currencyconverter">Convertisseur de devise</string>
-    <string name="preference_category_custom_colors_light">Palette claire</string>
+    <string name="preference_category_custom_colors_light">Palette de couleurs claires</string>
     <string name="preference_cards_shape">Forme</string>
     <string name="preference_cards_shape_rounded">Arrondi</string>
     <string name="preference_cards_shape_cut">Couper</string>
@@ -434,14 +434,14 @@
     <string name="backup_component_widgets">Widgets intégrés</string>
     <string name="backup_complete">La sauvegarde a bien été réalisée.</string>
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
-    <string name="preference_category_custom_colors_dark">Palette sombre</string>
+    <string name="preference_category_custom_colors_dark">Palette de couleurs sombres</string>
     <string name="calendar_widget_next_events">Événement suivant</string>
     <string name="preference_layout">Disposition</string>
-    <string name="preference_layout_summary">Agencement de la barre de recherche, des widgets et des résultats de recherche</string>
-    <string name="preference_grid_icon_size">Taille des icônes</string>
+    <string name="preference_layout_summary">Organisation générale de la barre de recherche, des widgets et des résultats de recherches</string>
+    <string name="preference_grid_icon_size">Taille d\'icône</string>
     <string name="preference_clockwidget_favorites_part">Favoris</string>
     <string name="widget_name_favorites">Favoris</string>
-    <string name="msg_item_hidden">%1$s a bien été caché.</string>
+    <string name="msg_item_hidden">%1$s a été caché.</string>
     <string name="action_undo">Annuler</string>
     <string name="preference_custom_colors_a1">Primaire</string>
     <string name="preference_colors_custom">Personnalisé</string>
@@ -456,7 +456,7 @@
     <string name="preference_custom_colors_error">Erreur</string>
     <string name="preference_custom_colors_advanced_mode">Mode avancé</string>
     <string name="preference_custom_colors_simple_mode">Mode simplifié</string>
-    <string name="preference_colors_auto_generate">Générer depuis la couleur primaire</string>
+    <string name="preference_colors_auto_generate">Générer à partir de la couleur primaire</string>
     <string name="preference_custom_colors_n2">Variant neutre</string>
     <string name="preference_custom_colors_a2">Secondaire</string>
     <string name="save">Enregistrer</string>
@@ -478,4 +478,10 @@
     <string name="alert_delete_shortcut">Le raccourci %1$s va être supprimé. Continuer \?</string>
     <string name="menu_customize">Personnaliser</string>
     <string name="icon_picker_search_icon">Rechercher une icône</string>
+    <string name="apps_profile_main">Personnel</string>
+    <string name="apps_profile_work">Professionnel</string>
+    <string name="preference_grid_labels_summary">Afficher le nom de l\'application sous l\'icône</string>
+    <string name="preference_grid_labels">Afficher les noms</string>
+    <string name="preference_clock_widget_fill_height">Remplir la hauteur de l\'écran</string>
+    <string name="preference_clock_widget_fill_height_summary">Ajouter de l\'espace supplémentaire au-dessus de l\'horloge pour remplir toute la hauteur de l\'écran</string>
 </resources>
