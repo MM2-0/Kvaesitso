@@ -3,13 +3,13 @@ package de.mm20.launcher2.ui.component
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
@@ -109,6 +109,12 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             Text(
                                 action.label, modifier = Modifier.weight(1f),
                             )
+                        },
+                        leadingIcon = {
+                            Icon(action.icon, null)
+                        },
+                        trailingIcon = {
+                            Icon(Icons.Rounded.ChevronRight, null)
                         }
                     )
                 }
@@ -122,6 +128,9 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                             Text(
                                 action.label,
                             )
+                        },
+                        leadingIcon = {
+                            Icon(action.icon, null)
                         }
                     )
                 }
