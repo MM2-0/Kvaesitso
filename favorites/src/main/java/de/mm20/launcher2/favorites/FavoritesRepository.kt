@@ -54,13 +54,22 @@ interface FavoritesRepository {
     fun unhideItem(searchable: Searchable)
     fun incrementLaunchCounter(searchable: Searchable)
     fun updateFavorites(
-         manuallySorted: List<Searchable>,
-         automaticallySorted: List<Searchable>,
+        manuallySorted: List<Searchable>,
+        automaticallySorted: List<Searchable>,
     )
 
     fun getHiddenItems(): Flow<List<Searchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
+
+    /**
+     * Remove this item from the Searchable database
+     */
     fun remove(searchable: Searchable)
+
+    /**
+     * Remove this item from favorites and reset launch counter
+     */
+    fun removeFromFavorites(searchable: Searchable)
 
     /**
      * Ensure that this searchable exists in the Favorites table.
@@ -287,6 +296,12 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
+    override fun removeFromFavorites(searchable: Searchable) {
+        scope.launch {
+            database.searchDao().resetPinStatusAndLaunchCounter(searchable.key)
+        }
+    }
+
     override fun save(searchable: Searchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
@@ -322,17 +337,18 @@ internal class FavoritesRepositoryImpl(
                     entity.pinPosition = manuallySorted.size - index + 1
                     entity
                 }
-                val updatedAutomaticallySorted = automaticallySorted.mapIndexedNotNull { index, searchable ->
-                    val entity = entities.find { searchable.key == it.key } ?: FavoritesItem(
-                        key = searchable.key,
-                        searchable = searchable,
-                        launchCount = 0,
-                        pinPosition = 0,
-                        hidden = false,
-                    ).toDatabaseEntity() ?: return@mapIndexedNotNull null
-                    entity.pinPosition = 1
-                    entity
-                }
+                val updatedAutomaticallySorted =
+                    automaticallySorted.mapIndexedNotNull { index, searchable ->
+                        val entity = entities.find { searchable.key == it.key } ?: FavoritesItem(
+                            key = searchable.key,
+                            searchable = searchable,
+                            launchCount = 0,
+                            pinPosition = 0,
+                            hidden = false,
+                        ).toDatabaseEntity() ?: return@mapIndexedNotNull null
+                        entity.pinPosition = 1
+                        entity
+                    }
                 database.runInTransaction {
                     dao.unpinAll()
                     dao.insertAllReplaceExisting(updatedManuallySorted)
@@ -439,7 +455,10 @@ internal class FavoritesRepositoryImpl(
                     if (item.searchable == null || item.searchable.key != item.key) {
                         removeInvalidItem(item.key)
                         removed++
-                        Log.i("MM20", "SearchableDatabase cleanup: removed invalid item ${item.key}")
+                        Log.i(
+                            "MM20",
+                            "SearchableDatabase cleanup: removed invalid item ${item.key}"
+                        )
                     }
                 }
                 page++

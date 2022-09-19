@@ -202,5 +202,15 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         createShortcutTarget.value = null
     }
 
+    fun remove(key: String) {
+        val gridItems = gridItems.value?.toMutableList() ?: return
+        val item = gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
+        if (item != null) {
+            repository.removeFromFavorites(item.item)
+            gridItems.remove(item)
+            this.gridItems.value = gridItems
+        }
+    }
+
 
 }

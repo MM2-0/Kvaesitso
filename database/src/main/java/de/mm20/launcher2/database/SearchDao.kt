@@ -160,4 +160,7 @@ interface SearchDao {
 
     @Query("UPDATE Searchable SET `pinned` = 0")
     fun unpinAll()
+
+    @Query("UPDATE Searchable Set `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
+    suspend fun resetPinStatusAndLaunchCounter(key: String)
 }

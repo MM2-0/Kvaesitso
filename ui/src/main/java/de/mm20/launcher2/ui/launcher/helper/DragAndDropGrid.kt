@@ -31,6 +31,7 @@ import kotlin.coroutines.coroutineContext
 fun rememberLazyDragAndDropGridState(
     gridState: LazyGridState = rememberLazyGridState(),
     onDragStart: (item: LazyGridItemInfo) -> Boolean = { true },
+    onDrag: (item: LazyGridItemInfo, offset: Offset) -> Unit = {_, _ ->},
     onDragEnd: (item: LazyGridItemInfo) -> Unit = {},
     onDragCancel: (item: LazyGridItemInfo) -> Unit = {},
     onItemMove: (from: LazyGridItemInfo, to: LazyGridItemInfo) -> Unit
@@ -39,6 +40,7 @@ fun rememberLazyDragAndDropGridState(
         LazyDragAndDropGridState(
             gridState,
             onDragStart,
+            onDrag,
             onDragEnd,
             onDragCancel,
             onItemMove
@@ -49,6 +51,7 @@ fun rememberLazyDragAndDropGridState(
 data class LazyDragAndDropGridState(
     val gridState: LazyGridState,
     val onDragStart: (item: LazyGridItemInfo) -> Boolean = { true },
+    val onDrag: (item: LazyGridItemInfo, offset: Offset) -> Unit = {_, _ ->},
     val onDragEnd: (item: LazyGridItemInfo) -> Unit = {},
     val onDragCancel: (item: LazyGridItemInfo) -> Unit = {},
     val onItemMove: (from: LazyGridItemInfo, to: LazyGridItemInfo) -> Unit
@@ -259,7 +262,7 @@ fun Modifier.dragAndDrop(
                         ).contains(draggedCenter)
                     }
 
-                    if (dragOver != null && dragOver.key != state.draggedItem?.key) {
+                    if (dragOver != null && dragOver.key != draggedItem.key) {
                         scope.launch {
                             state.attemptMove(dragOver)
                         }
@@ -280,6 +283,8 @@ fun Modifier.dragAndDrop(
                     } else {
                         state.endScrolling()
                     }
+
+                    state.draggedItemOffset?.let { state.onDrag(draggedItem, it) }
                 }
             },
             onDragCancel = {

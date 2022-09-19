@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -112,9 +113,23 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
     val items by viewModel.gridItems.observeAsState(emptyList())
     val columns = LocalGridColumns.current
 
+    var contextMenuItemKey by remember { mutableStateOf<String?>(null) }
+
+    val contextMenuCloseDistance = 8.dp.toPixels()
+
     val state = rememberLazyDragAndDropGridState(
         onDragStart = {
-            items.getOrNull(it.index) is FavoritesSheetGridItem.Favorite
+            val item = items.getOrNull(it.index)
+
+            if (item !is FavoritesSheetGridItem.Favorite) return@rememberLazyDragAndDropGridState false
+
+            contextMenuItemKey = item.item.key
+            true
+        },
+        onDrag = { _, offset ->
+            if (offset.getDistanceSquared() > contextMenuCloseDistance) {
+                contextMenuItemKey = null
+            }
         }
     ) { from, to ->
         viewModel.moveItem(from, to)
@@ -163,6 +178,23 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                             icon = icon,
                             badge = badge
                         )
+                        if (contextMenuItemKey == it.item.key) {
+                            DropdownMenu(
+                                expanded = true,
+                                onDismissRequest = { contextMenuItemKey = null }) {
+                                DropdownMenuItem(
+                                    leadingIcon = {
+                                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
+                                    },
+                                    text = {
+                                        Text("Remove")
+                                    }, onClick = {
+                                        contextMenuItemKey?.let { viewModel.remove(it) }
+                                        contextMenuItemKey = null
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
                 is FavoritesSheetGridItem.Divider -> {
@@ -331,8 +363,11 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM) {
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
                 onClick = {
-                    val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-                    val sender = launcherApps.getShortcutConfigActivityIntent(it.launcherActivityInfo) ?: return@OutlinedCard
+                    val launcherApps =
+                        context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+                    val sender =
+                        launcherApps.getShortcutConfigActivityIntent(it.launcherActivityInfo)
+                            ?: return@OutlinedCard
                     activityLauncher.launch(IntentSenderRequest.Builder(sender).build(), null)
                 }) {
                 Row(
