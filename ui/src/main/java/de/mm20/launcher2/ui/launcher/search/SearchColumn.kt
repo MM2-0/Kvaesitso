@@ -87,7 +87,11 @@ fun SearchColumn(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(bottom = 8.dp, end = 8.dp),
+                            .padding(
+                                top = if (reverse) 8.dp else 4.dp,
+                                bottom = if (reverse) 4.dp else 8.dp,
+                                end = 8.dp
+                            ),
                         horizontalArrangement = Arrangement.End,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
