@@ -187,7 +187,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                         Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
                                     },
                                     text = {
-                                        Text("Remove")
+                                        Text(stringResource(R.string.menu_remove))
                                     }, onClick = {
                                         contextMenuItemKey?.let { viewModel.remove(it) }
                                         contextMenuItemKey = null

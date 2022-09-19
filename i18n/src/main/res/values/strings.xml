@@ -27,6 +27,7 @@
     <string name="action_undo">Undo</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
+    <string name="menu_remove">Remove</string>
     <!-- Open a contact in the contacts app -->
     <string name="menu_contacts_open_externally">Open in contacts app</string>
     <!-- Open an event in the calendar app -->
