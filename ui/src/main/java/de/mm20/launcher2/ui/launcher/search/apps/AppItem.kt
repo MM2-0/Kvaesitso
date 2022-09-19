@@ -238,14 +238,14 @@ fun AppItem(
                 children = listOf(
                     DefaultToolbarAction(
                         label = stringResource(R.string.menu_share_store_link, storeDetails.label),
-                        icon = Icons.Rounded.Share,
+                        icon = Icons.Rounded.Link,
                         action = {
                             viewModel.shareStoreLink(context, storeDetails.url)
                         }
                     ),
                     DefaultToolbarAction(
                         label = stringResource(R.string.menu_share_apk_file),
-                        icon = Icons.Rounded.Share
+                        icon = Icons.Rounded.Android
                     ) {
                         scope.launch {
                             viewModel.shareApkFile(context)
