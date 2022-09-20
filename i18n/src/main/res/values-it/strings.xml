@@ -455,4 +455,16 @@
     <string name="preference_icon_shape_teardrop">Lacrima</string>
     <string name="apps_profile_main">Personale</string>
     <string name="apps_profile_work">Lavoro</string>
+    <string name="menu_remove">Rimuovi</string>
+    <string name="missing_permission_appshortcuts_create">Imposta %1$s come app home predefinita per creare scorciatoie.</string>
+    <string name="preference_category_debug_tools">Strumenti</string>
+    <string name="preference_debug_cleanup_database">Pulisci database</string>
+    <string name="preference_debug_cleanup_database_summary">Rimuovi le voci interrotte e inutilizzate dal database del launcher</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d voce è stata rimossa.</item>
+        <item quantity="other">%1$d voci sono state rimosse.</item>
+    </plurals>
+    <string name="favorites">Preferiti</string>
+    <string name="create_app_shortcut">Crea scorciatoia</string>
+    <string name="edit_favorites_dialog_empty_section">Trascina gli elementi qui</string>
 </resources>
