@@ -18,6 +18,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.ui.utils.withCustomLabels
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -30,7 +31,6 @@ import org.koin.core.component.inject
 class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
-    private val widgetRepository: WidgetRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
     private val dataStore: LauncherDataStore by inject()
@@ -51,8 +51,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val isSearchEmpty = MutableLiveData(true)
 
     val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
-
-    val favorites = MutableLiveData<List<Searchable>>(emptyList())
 
     val appResults = MutableLiveData<List<Application>>(emptyList())
     val workAppResults = MutableLiveData<List<Application>>(emptyList())
@@ -76,27 +74,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     init {
         search("")
-        viewModelScope.launch {
-            dataStore.data.map { it.favorites.enabled }.collectLatest { enabled ->
-                if (!enabled) {
-                    favorites.value = emptyList()
-                    return@collectLatest
-                }
-                widgetRepository.isCalendarWidgetEnabled().collectLatest { excludeCalendar ->
-                    dataStore.data.map { it.grid.columnCount }.collectLatest { columns ->
-                        favoritesRepository
-                            .getFavorites(
-                                columns = columns,
-                                excludeCalendarEvents = excludeCalendar
-                            )
-                            .withCustomLabels()
-                            .collectLatest {
-                                favorites.value = it
-                            }
-                    }
-                }
-            }
-        }
     }
 
     var searchJob: Job? = null
@@ -131,7 +108,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 appRepository
                     .search(query)
                     .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels()
+                    .withCustomLabels(customAttributesRepository)
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
                         val (work, personal) = results.partition { it is LauncherApp && !it.isMainProfile }
@@ -146,7 +123,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 contactRepository
                     .search(query)
                     .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels()
+                    .withCustomLabels(customAttributesRepository)
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
                         contactResults.postValue(results)
@@ -159,7 +136,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 calendarRepository
                     .search(query)
                     .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels()
+                    .withCustomLabels(customAttributesRepository)
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
                         calendarResults.postValue(results)
@@ -192,7 +169,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 fileRepository
                     .search(query)
                     .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels()
+                    .withCustomLabels(customAttributesRepository)
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
                         fileResults.postValue(results)
@@ -210,7 +187,7 @@ class SearchVM : ViewModel(), KoinComponent {
                 appShortcutRepository
                     .search(query)
                     .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels()
+                    .withCustomLabels(customAttributesRepository)
                     .sorted()
                     .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
                         appShortcutResults.postValue(results)
@@ -306,21 +283,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    /**
-     * Inject custom labels and sort by the actual label
-     */
-    private fun <T : Searchable> Flow<List<T>>.withCustomLabels(): Flow<List<T>> = channelFlow {
-        this@withCustomLabels.collectLatest { items ->
-            val labelsFlow = customAttributesRepository.getCustomLabels(items)
-            labelsFlow.collectLatest { labels ->
-                for (item in items) {
-                    val customLabel = labels.find { it.key == item.key }
-                    item.labelOverride = customLabel?.label
-                }
-                send(items)
-            }
-        }
-    }
 
     private inline fun <reified T : Searchable> Flow<List<T>>.withCustomAttributeResults(
         customAttributeResults: Flow<List<Searchable>>

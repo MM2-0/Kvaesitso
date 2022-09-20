@@ -30,6 +30,7 @@ import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
+import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
 import de.mm20.launcher2.ui.launcher.search.hidden.HiddenResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
@@ -51,12 +52,14 @@ fun SearchColumn(
 
     val viewModel: SearchVM = viewModel()
 
+    val favoritesVM: SearchFavoritesVM = viewModel()
+    val favorites by remember { favoritesVM.favorites }.collectAsState(emptyList())
+
     val showLabels by viewModel.showLabels.observeAsState(true)
 
     var showWorkProfileApps by remember { mutableStateOf(false) }
 
     val hideFavs by viewModel.hideFavorites.observeAsState(true)
-    val favorites by viewModel.favorites.observeAsState(emptyList())
     val apps by viewModel.appResults.observeAsState(emptyList())
     val workApps by viewModel.workAppResults.observeAsState(emptyList())
     val appShortcuts by viewModel.appShortcutResults.observeAsState(emptyList())
