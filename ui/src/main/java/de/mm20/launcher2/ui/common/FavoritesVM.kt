@@ -24,13 +24,11 @@ open class FavoritesVM : ViewModel(), KoinComponent {
         if (tag == null) {
             val columns = dataStore.data.map { it.grid.columnCount }
             val excludeCalendar = widgetRepository.isCalendarWidgetEnabled()
-            val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
             val includeFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }
             val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }
 
             combine(
                 listOf(
-                    favoritesEnabled,
                     columns,
                     excludeCalendar,
                     includeFrequentlyUsed,
@@ -38,15 +36,10 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                 )
             ) { it }.transformLatest {
 
-                val favoritesEnabled = it[0] as Boolean
-                val columns = it[1] as Int
-                val excludeCalendar = it[2] as Boolean
-                val includeFrequentlyUsed = it[3] as Boolean
-                val frequentlyUsedRows = it[4] as Int
-
-                if (!favoritesEnabled) {
-                    return@transformLatest
-                }
+                val columns = it[0] as Int
+                val excludeCalendar = it[1] as Boolean
+                val includeFrequentlyUsed = it[2] as Boolean
+                val frequentlyUsedRows = it[3] as Int
 
                 val pinned = favoritesRepository.getFavorites(
                     excludeTypes = if (excludeCalendar) listOf("calendar") else null,
