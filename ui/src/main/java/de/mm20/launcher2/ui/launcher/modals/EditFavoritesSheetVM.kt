@@ -2,12 +2,12 @@ package de.mm20.launcher2.ui.launcher.modals
 
 import android.content.Context
 import android.content.Intent
-import android.content.Intent.ShortcutIconResource
-import android.content.pm.LauncherApps
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeRepository
@@ -16,13 +16,14 @@ import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.LauncherShortcut
-import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -33,6 +34,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private val iconRepository: IconRepository by inject()
     private val badgeRepository: BadgeRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val dataStore: LauncherDataStore by inject()
 
     val gridItems = MutableLiveData<List<FavoritesSheetGridItem>>(emptyList())
 
@@ -204,11 +206,42 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     fun remove(key: String) {
         val gridItems = gridItems.value?.toMutableList() ?: return
-        val item = gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
+        val item =
+            gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
         if (item != null) {
             repository.removeFromFavorites(item.item)
             gridItems.remove(item)
             this.gridItems.value = gridItems
+        }
+    }
+
+    val enableFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }.asLiveData()
+    fun setFrequentlyUsed(frequentlyUsed: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setFavorites(
+                        it.favorites
+                            .toBuilder()
+                            .setFrequentlyUsed(frequentlyUsed)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }.asLiveData()
+    fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setFavorites(
+                        it.favorites
+                            .toBuilder()
+                            .setFrequentlyUsedRows(frequentlyUsedRows)
+                    )
+                    .build()
+            }
         }
     }
 

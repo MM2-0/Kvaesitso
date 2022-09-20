@@ -7,6 +7,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -15,6 +16,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -184,7 +186,10 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                 onDismissRequest = { contextMenuItemKey = null }) {
                                 DropdownMenuItem(
                                     leadingIcon = {
-                                        Icon(imageVector = Icons.Rounded.Delete, contentDescription = null)
+                                        Icon(
+                                            imageVector = Icons.Rounded.Delete,
+                                            contentDescription = null
+                                        )
                                     },
                                     text = {
                                         Text(stringResource(R.string.menu_remove))
@@ -203,43 +208,122 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                         FavoritesSheetSection.AutomaticallySorted -> R.string.edit_favorites_dialog_pinned_unsorted
                         FavoritesSheetSection.FrequentlyUsed -> R.string.edit_favorites_dialog_unpinned
                     }
-                    Row(
-                        modifier = Modifier.padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(end = 16.dp),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            text = stringResource(id = title),
-                            style = MaterialTheme.typography.titleSmall,
-                            color = MaterialTheme.colorScheme.secondary
+                    var showSettings by remember { mutableStateOf(false) }
+                    Column(modifier = Modifier.fillMaxWidth()) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 16.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                text = stringResource(id = title),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                            if (it.section == FavoritesSheetSection.FrequentlyUsed) {
+                                FilledTonalIconToggleButton(
+                                    modifier = Modifier.offset(x = 4.dp),
+                                    checked = showSettings,
+                                    onCheckedChange = { showSettings = it }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Settings,
+                                        contentDescription = null
+                                    )
+                                }
+                            } else {
+                                FilledTonalIconButton(
+                                    modifier = Modifier.offset(x = 4.dp),
+                                    onClick = {
+                                        viewModel.pickShortcut(it.section)
+                                    }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Add,
+                                        contentDescription = null
+                                    )
+                                }
+                            }
+                        }
+                        val enableFrequentlyUsed by viewModel.enableFrequentlyUsed.observeAsState(
+                            null
                         )
-                        if (it.section == FavoritesSheetSection.FrequentlyUsed) {
-                            /*FilledTonalIconToggleButton(
-                                modifier = Modifier.offset(x = 4.dp),
-                                checked = false,
-                                onCheckedChange = {}) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Settings,
-                                    contentDescription = null
-                                )
-                            }*/
-                        } else {
-                            FilledTonalIconButton(
-                                modifier = Modifier.offset(x = 4.dp),
-                                onClick = {
-                                    viewModel.pickShortcut(it.section)
-                                }) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Add,
-                                    contentDescription = null
-                                )
+                        val frequentlyUsedRows by viewModel.frequentlyUsedRows.observeAsState(1)
+                        AnimatedVisibility(showSettings) {
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(bottom = 16.dp),
+                                color = MaterialTheme.colorScheme.surfaceVariant,
+                                shape = MaterialTheme.shapes.small
+                            ) {
+                                Column(
+                                    modifier = Modifier.fillMaxWidth()
+                                ) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 4.dp)
+                                            .padding(horizontal = 16.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        Text(
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .padding(end = 16.dp),
+                                            text = "Show in favorites",
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                        Switch(
+                                            checked = enableFrequentlyUsed == true,
+                                            onCheckedChange = {
+                                                viewModel.setFrequentlyUsed(it)
+                                            }
+                                        )
+                                    }
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp)
+                                            .padding(horizontal = 16.dp),
+                                        horizontalAlignment = Alignment.Start
+                                    ) {
+                                        Text(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            text = "Number of rows",
+                                            style = MaterialTheme.typography.labelMedium
+                                        )
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            Slider(
+                                                modifier = Modifier.weight(1f).padding(end = 16.dp),
+                                                value = frequentlyUsedRows.toFloat(),
+                                                colors = SliderDefaults.colors(
+                                                    inactiveTrackColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                                ),
+                                                onValueChange = {
+                                                    viewModel.setFrequentlyUsedRows(it.roundToInt())
+                                                },
+                                                steps = 2,
+                                                valueRange = 1f..4f
+                                            )
+                                            Text(
+                                                text = frequentlyUsedRows.toString(),
+                                                modifier = Modifier.width(52.dp).padding(4.dp),
+                                                style = MaterialTheme.typography.labelMedium,
+                                                textAlign = TextAlign.Center
+                                            )
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
+
                 }
                 is FavoritesSheetGridItem.EmptySection -> {
                     val shape = MaterialTheme.shapes.medium
