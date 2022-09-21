@@ -273,7 +273,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .padding(end = 16.dp),
-                                            text = "Show in favorites",
+                                            text = stringResource(R.string.frequently_used_show_in_favorites),
                                             style = MaterialTheme.typography.labelMedium
                                         )
                                         Switch(
@@ -293,7 +293,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                         ) {
                                             Text(
                                                 modifier = Modifier.fillMaxWidth(),
-                                                text = "Number of rows",
+                                                text = stringResource(R.string.frequently_used_rows),
                                                 style = MaterialTheme.typography.labelMedium
                                             )
                                             Row(
