@@ -466,4 +466,7 @@
         <item quantity="one">%1$d Eintrag wurde entfernt.</item>
         <item quantity="other">%1$d Einträge wurden entfernt.</item>
     </plurals>
+    <string name="frequently_used_rows">Anzahl Zeilen</string>
+    <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
+    <string name="menu_remove">Entfernen</string>
 </resources>
