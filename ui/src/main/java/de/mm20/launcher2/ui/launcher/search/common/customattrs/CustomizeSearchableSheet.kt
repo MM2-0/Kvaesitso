@@ -110,6 +110,7 @@ fun CustomizeSearchableSheet(
                     onValueChange = {
                         customLabelValue = it
                     },
+                    singleLine = true,
                     placeholder = {
                         Text(searchable.label)
                     },
