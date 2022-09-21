@@ -76,4 +76,12 @@ class CustomizeSearchableSheetVM(
             customAttributesRepository.setCustomLabel(searchable, label)
         }
     }
+
+    fun setTags(tags: List<String>) {
+        customAttributesRepository.setTags(searchable, tags)
+    }
+
+    fun getTags(): Flow<List<String>> {
+        return customAttributesRepository.getTags(searchable)
+    }
 }

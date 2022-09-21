@@ -1,6 +1,5 @@
 package de.mm20.launcher2.customattrs
 
-import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
@@ -11,6 +10,7 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
@@ -22,6 +22,9 @@ interface CustomAttributesRepository {
     fun getCustomLabels(items: List<Searchable>): Flow<List<CustomLabel>>
     fun setCustomLabel(searchable: Searchable, label: String)
     fun clearCustomLabel(searchable: Searchable)
+
+    fun setTags(searchable: Searchable, tags: List<String>)
+    fun getTags(searchable: Searchable): Flow<List<String>>
 
     suspend fun search(query: String): Flow<List<Searchable>>
 
@@ -81,6 +84,22 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
+        }
+    }
+
+    override fun setTags(searchable: Searchable, tags: List<String>) {
+        val dao = appDatabase.customAttrsDao()
+        scope.launch {
+            dao.setTags(searchable.key, tags.map {
+                CustomTag(it).toDatabaseEntity(searchable.key)
+            })
+        }
+    }
+
+    override fun getTags(searchable: Searchable): Flow<List<String>> {
+        val dao = appDatabase.customAttrsDao()
+        return dao.getCustomAttributes(listOf(searchable.key), CustomAttributeType.Tag.value).map {
+            it.map { it.value }
         }
     }
 

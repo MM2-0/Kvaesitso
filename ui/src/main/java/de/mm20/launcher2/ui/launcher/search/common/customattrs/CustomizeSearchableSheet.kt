@@ -1,10 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common.customattrs
 
 import android.graphics.drawable.InsetDrawable
-import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -19,7 +16,6 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -31,8 +27,10 @@ import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.OutlinedTagsInputField
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridColumns
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 @Composable
@@ -116,9 +114,27 @@ fun CustomizeSearchableSheet(
                     },
                 )
 
+                var tags by remember { mutableStateOf(emptyList<String>()) }
+
+                LaunchedEffect(searchable.key) {
+                    tags = viewModel.getTags().first()
+                }
+
+                OutlinedTagsInputField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 16.dp),
+                    tags = tags, onTagsChange = { tags = it },
+                    placeholder = {
+                        Text(stringResource(R.string.customize_tags_placeholder))
+                    },
+                    textStyle = MaterialTheme.typography.bodyMedium
+                )
+
                 DisposableEffect(searchable.key) {
                     onDispose {
                         viewModel.setCustomLabel(customLabelValue)
+                        viewModel.setTags(tags)
                     }
                 }
             }
