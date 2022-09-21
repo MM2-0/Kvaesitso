@@ -283,40 +283,46 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                             }
                                         )
                                     }
-                                    Column(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(top = 8.dp)
-                                            .padding(horizontal = 16.dp),
-                                        horizontalAlignment = Alignment.Start
-                                    ) {
-                                        Text(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            text = "Number of rows",
-                                            style = MaterialTheme.typography.labelMedium
-                                        )
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            verticalAlignment = Alignment.CenterVertically
+                                    AnimatedVisibility(enableFrequentlyUsed == true) {
+                                        Column(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(top = 8.dp)
+                                                .padding(horizontal = 16.dp),
+                                            horizontalAlignment = Alignment.Start
                                         ) {
-                                            Slider(
-                                                modifier = Modifier.weight(1f).padding(end = 16.dp),
-                                                value = frequentlyUsedRows.toFloat(),
-                                                colors = SliderDefaults.colors(
-                                                    inactiveTrackColor = MaterialTheme.colorScheme.onSurfaceVariant
-                                                ),
-                                                onValueChange = {
-                                                    viewModel.setFrequentlyUsedRows(it.roundToInt())
-                                                },
-                                                steps = 2,
-                                                valueRange = 1f..4f
-                                            )
                                             Text(
-                                                text = frequentlyUsedRows.toString(),
-                                                modifier = Modifier.width(52.dp).padding(4.dp),
-                                                style = MaterialTheme.typography.labelMedium,
-                                                textAlign = TextAlign.Center
+                                                modifier = Modifier.fillMaxWidth(),
+                                                text = "Number of rows",
+                                                style = MaterialTheme.typography.labelMedium
                                             )
+                                            Row(
+                                                modifier = Modifier.fillMaxWidth(),
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                Slider(
+                                                    modifier = Modifier
+                                                        .weight(1f)
+                                                        .padding(end = 16.dp),
+                                                    value = frequentlyUsedRows.toFloat(),
+                                                    colors = SliderDefaults.colors(
+                                                        inactiveTrackColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                                    ),
+                                                    onValueChange = {
+                                                        viewModel.setFrequentlyUsedRows(it.roundToInt())
+                                                    },
+                                                    steps = 2,
+                                                    valueRange = 1f..4f
+                                                )
+                                                Text(
+                                                    text = frequentlyUsedRows.toString(),
+                                                    modifier = Modifier
+                                                        .width(52.dp)
+                                                        .padding(4.dp),
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    textAlign = TextAlign.Center
+                                                )
+                                            }
                                         }
                                     }
                                 }
