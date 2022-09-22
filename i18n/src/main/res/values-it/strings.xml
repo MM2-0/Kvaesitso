@@ -115,7 +115,7 @@
     <string name="file_type_drawing">Disegno</string>
     <string name="file_type_form">Modulo</string>
     <string name="file_type_generic">File %1$s</string>
-    <string name="alert_delete_file">Il file %1$s sarà eliminato definitivamente. Procedo\?</string>
+    <string name="alert_delete_file">Il file %1$s sarà eliminato definitivamente. Procedere\?</string>
     <string name="error_activity_not_found">Errore nell\'apertura di %1$s</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_2_name">YouTube</string>
@@ -447,7 +447,7 @@
     <string name="preference_font_system">Predefinito del sistema</string>
     <string name="preference_colors_auto_generate">Genera dal colore primario</string>
     <string name="preference_enforce_icon_shape_summary">Applica la forma a tutte le icone comprese quelle che normalmente non la supporterebbero</string>
-    <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedo\?</string>
+    <string name="alert_delete_shortcut">La scorciatoia %1$s verrà rimossa in modo permanente. Procedere\?</string>
     <string name="preference_grid_labels">Mostra etichette</string>
     <string name="preference_grid_labels_summary">Mostra il nome dell\'app sotto l\'icona</string>
     <string name="preference_clock_widget_fill_height">Riempi altezza schermo</string>
@@ -467,4 +467,7 @@
     <string name="favorites">Preferiti</string>
     <string name="create_app_shortcut">Crea scorciatoia</string>
     <string name="edit_favorites_dialog_empty_section">Trascina gli elementi qui</string>
+    <string name="frequently_used_rows">Numero di righe</string>
+    <string name="frequently_used_show_in_favorites">Mostra nei preferiti</string>
+    <string name="customize_tags_placeholder">Tag…</string>
 </resources>
