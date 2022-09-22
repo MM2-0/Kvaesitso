@@ -641,15 +641,12 @@
     <string name="restore_meta">Created %1$s on %2$s with %3$s.</string>
     <string name="restore_select_components">Select what to restore. Existing data will be overwritten!</string>
     <string name="restore_complete">The backup has been restored.</string>
-
     <string name="icon_picker_title">Pick icon</string>
     <string name="icon_picker_default_icon">Default</string>
     <string name="icon_picker_suggestions">Suggestions</string>
     <string name="icon_picker_search_icon">Search icon</string>
-
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
-
     <string name="favorites">Favorites</string>
     <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
