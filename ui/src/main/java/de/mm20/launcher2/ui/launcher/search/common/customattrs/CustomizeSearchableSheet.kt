@@ -124,11 +124,14 @@ fun CustomizeSearchableSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp),
-                    tags = tags, onTagsChange = { tags = it },
+                    tags = tags, onTagsChange = { tags = it.distinct() },
                     placeholder = {
                         Text(stringResource(R.string.customize_tags_placeholder))
                     },
-                    textStyle = MaterialTheme.typography.bodyMedium
+                    textStyle = MaterialTheme.typography.bodyMedium,
+                    onAutocomplete = {
+                        viewModel.autocompleteTags(it).minus(tags.toSet())
+                    }
                 )
 
                 DisposableEffect(searchable.key) {

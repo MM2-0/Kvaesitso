@@ -23,6 +23,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.PopupProperties
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.launch
 
@@ -35,12 +36,15 @@ fun OutlinedTagsInputField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge,
     textColor: Color = LocalContentColor.current,
+    onAutocomplete: (suspend (query: String) -> List<String>)? = null
 ) {
     var value by remember { mutableStateOf("") }
     var lastTagFocused by remember { mutableStateOf(false) }
 
     val scrollState = rememberScrollState()
     val scope = rememberCoroutineScope()
+
+    var completions by remember(onAutocomplete) { mutableStateOf<List<String>>(emptyList()) }
 
     BasicTextField(
         modifier = modifier
@@ -73,6 +77,15 @@ fun OutlinedTagsInputField(
                 onTagsChange(tags + newTags.dropLast(1).filter { it.isNotBlank() })
             }
             value = newTags.last()
+            if (value.isNotBlank()) {
+                onAutocomplete?.let {
+                    scope.launch {
+                        completions = it(value)
+                    }
+                }
+            } else {
+                completions = emptyList()
+            }
             lastTagFocused = false
         },
         textStyle = textStyle.copy(
@@ -90,96 +103,81 @@ fun OutlinedTagsInputField(
             TextFieldDefaults.OutlinedTextFieldDecorationBox(
                 contentPadding = PaddingValues(0.dp),
                 value = value,
-                innerTextField = { Box {
-                    Row(
-                        modifier = Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        for ((i, tag) in tags.withIndex()) {
-                            InputChip(
-                                selected = i == tags.lastIndex && lastTagFocused,
-                                modifier = Modifier.padding(end = 12.dp),
-                                onClick = { },
-                                leadingIcon = {
-                                    Icon(imageVector = Icons.Rounded.Tag, contentDescription = null)
-                                },
-                                label = { Text(tag) },
-                                trailingIcon = {
-                                    Icon(
-                                        modifier = Modifier.clickable {
-                                            onTagsChange(tags.filter { it != tag })
-                                        }, imageVector = Icons.Rounded.Clear, contentDescription = null
-                                    )
-                                },
-                            )
-                        }
-                        Box(
+                innerTextField = {
+                    Box {
+                        Row(
                             modifier = Modifier
-                                .height(56.dp),
-                            contentAlignment = Alignment.CenterStart
+                                .horizontalScroll(rememberScrollState())
+                                .padding(horizontal = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-                            if (value.isEmpty()) {
-                                CompositionLocalProvider(
-                                    LocalTextStyle provides textStyle,
-                                    LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                            for ((i, tag) in tags.withIndex()) {
+                                InputChip(
+                                    selected = i == tags.lastIndex && lastTagFocused,
+                                    modifier = Modifier.padding(end = 12.dp),
+                                    onClick = { },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Tag,
+                                            contentDescription = null
+                                        )
+                                    },
+                                    label = { Text(tag) },
+                                    trailingIcon = {
+                                        Icon(
+                                            modifier = Modifier.clickable {
+                                                onTagsChange(tags.filterIndexed { index, _ -> index != i })
+                                            },
+                                            imageVector = Icons.Rounded.Clear,
+                                            contentDescription = null
+                                        )
+                                    },
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .height(56.dp),
+                                contentAlignment = Alignment.CenterStart
+                            ) {
+                                if (value.isEmpty()) {
+                                    CompositionLocalProvider(
+                                        LocalTextStyle provides textStyle,
+                                        LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
+                                    ) {
+                                        placeholder?.invoke()
+                                    }
+                                }
+                                innerTextField()
+
+                            }
+                        }
+                        if (completions.isNotEmpty()) {
+                            Box(modifier = Modifier.fillMaxWidth()) {
+                                DropdownMenu(
+                                    expanded = true,
+                                    onDismissRequest = { completions = emptyList() },
+                                    properties = PopupProperties(focusable = false)
                                 ) {
-                                    placeholder?.invoke()
+                                    for (completion in completions) {
+                                        DropdownMenuItem(
+                                            text = { Text(completion) },
+                                            onClick = {
+                                                onTagsChange(tags + completion)
+                                                value = ""
+                                                completions = emptyList()
+                                            },
+                                        )
+                                    }
                                 }
                             }
-                            innerTextField()
                         }
                     }
-
-                } },
+                },
                 enabled = true,
                 singleLine = true,
                 visualTransformation = VisualTransformation.None,
                 interactionSource = interactionSource,
             )
-            /*Box {
-                Row(
-                    modifier = Modifier.horizontalScroll(rememberScrollState()),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    for ((i, tag) in tags.withIndex()) {
-                        InputChip(
-                            selected = i == tags.lastIndex && lastTagFocused,
-                            modifier = Modifier.padding(end = 12.dp),
-                            onClick = { },
-                            leadingIcon = {
-                                Icon(imageVector = Icons.Rounded.Tag, contentDescription = null)
-                            },
-                            label = { Text(tag) },
-                            trailingIcon = {
-                                Icon(
-                                    modifier = Modifier.clickable {
-                                        onTagsChange(tags.filter { it != tag })
-                                    }, imageVector = Icons.Rounded.Clear, contentDescription = null
-                                )
-                            },
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .padding(vertical = 12.dp)
-                            .padding(
-                                start = if (tags.isEmpty()) 16.dp else 0.dp,
-                                end = 16.dp
-                            )
-                    ) {
-                        if (value.isEmpty()) {
-                            CompositionLocalProvider(
-                                LocalTextStyle provides textStyle,
-                                LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant,
-                            ) {
-                                placeholder?.invoke()
-                            }
-                        }
-                        innerTextField()
-                    }
-                }
-
-            }*/
         },
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
     )

@@ -32,4 +32,10 @@ interface CustomAttrsDao {
         clearCustomAttribute(key, "tag")
         insertCustomAttributes(tags)
     }
+
+    @Query("SELECT DISTINCT value FROM CustomAttributes WHERE type = 'tag' AND value LIKE :like ORDER BY value")
+    suspend fun getAllTagsLike(like: String): List<String>
+
+    @Query("SELECT DISTINCT value FROM CustomAttributes WHERE type = 'tag' ORDER BY value")
+    suspend fun getAllTags(): List<String>
 }

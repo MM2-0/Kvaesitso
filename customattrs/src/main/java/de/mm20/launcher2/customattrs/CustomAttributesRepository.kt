@@ -30,6 +30,8 @@ interface CustomAttributesRepository {
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
+
+    suspend fun getAllTags(startsWith: String? = null): List<String>
 }
 
 internal class CustomAttributesRepositoryImpl(
@@ -100,6 +102,15 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.customAttrsDao()
         return dao.getCustomAttributes(listOf(searchable.key), CustomAttributeType.Tag.value).map {
             it.map { it.value }
+        }
+    }
+
+    override suspend fun getAllTags(startsWith: String?): List<String> {
+        val dao = appDatabase.customAttrsDao()
+        return if (startsWith != null) {
+            dao.getAllTagsLike("$startsWith%")
+        } else {
+            dao.getAllTags()
         }
     }
 

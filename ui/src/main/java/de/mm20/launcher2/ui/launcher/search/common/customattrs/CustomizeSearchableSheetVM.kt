@@ -84,4 +84,8 @@ class CustomizeSearchableSheetVM(
     fun getTags(): Flow<List<String>> {
         return customAttributesRepository.getTags(searchable)
     }
+
+    suspend fun autocompleteTags(query: String): List<String> {
+        return customAttributesRepository.getAllTags(startsWith = query)
+    }
 }
