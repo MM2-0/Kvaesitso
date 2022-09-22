@@ -92,6 +92,7 @@ internal class CustomAttributesRepositoryImpl(
     override fun setTags(searchable: Searchable, tags: List<String>) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
+            favoritesRepository.save(searchable)
             dao.setTags(searchable.key, tags.map {
                 CustomTag(it).toDatabaseEntity(searchable.key)
             })
