@@ -119,7 +119,7 @@ fun SearchColumn(
                             )
                             for (tag in pinnedTags) {
                                 FilterChip(
-                                    modifier = Modifier.padding(start = 12.dp),
+                                    modifier = Modifier.padding(start = 8.dp),
                                     selected = selectedTag == tag.tag,
                                     onClick = { favoritesVM.selectTag(tag.tag) },
                                     leadingIcon = {

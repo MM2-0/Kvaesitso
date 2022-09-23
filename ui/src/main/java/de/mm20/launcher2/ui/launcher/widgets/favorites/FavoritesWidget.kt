@@ -58,7 +58,7 @@ fun FavoritesWidget() {
                 )
                 for (tag in pinnedTags) {
                     FilterChip(
-                        modifier = Modifier.padding(start = 12.dp),
+                        modifier = Modifier.padding(start = 8.dp),
                         selected = selectedTag == tag.tag,
                         onClick = { viewModel.selectTag(tag.tag) },
                         leadingIcon = {
