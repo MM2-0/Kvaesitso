@@ -85,6 +85,25 @@ fun SearchColumn(
                 showLabels = showLabels,
                 key = "favorites",
                 reverse = reverse,
+                before = if (favorites.isEmpty()) {
+                    {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    top = if (!reverse) 28.dp else 16.dp,
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = if (reverse) 28.dp else 16.dp,
+                                ),
+                            text = stringResource(
+                                if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                            ),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.outline
+                        )
+                    }
+                } else null,
                 after = {
                     Row(
                         modifier = Modifier

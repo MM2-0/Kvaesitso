@@ -27,7 +27,20 @@ fun FavoritesWidget() {
     var showEditFavoritesDialog by remember { mutableStateOf(false) }
 
     Column {
-        SearchResultGrid(favorites)
+        if (favorites.isNotEmpty()) {
+            SearchResultGrid(favorites)
+        } else {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 28.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                text = stringResource(
+                    if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                ),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()

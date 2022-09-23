@@ -650,6 +650,8 @@
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Work</string>
     <string name="favorites">Favorites</string>
+    <string name="favorites_empty">Pinned and frequently used items will appear here</string>
+    <string name="favorites_empty_tag">There are no items with this tag</string>
     <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
