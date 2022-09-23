@@ -66,6 +66,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val hiddenResults = MutableLiveData<List<Searchable>>(emptyList())
 
+    val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = MutableLiveData(false)
 
     private val hiddenItemKeys = favoritesRepository

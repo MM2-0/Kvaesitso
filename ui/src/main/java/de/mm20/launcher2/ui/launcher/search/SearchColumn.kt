@@ -57,6 +57,7 @@ fun SearchColumn(
     var showWorkProfileApps by remember { mutableStateOf(false) }
 
     val hideFavs by viewModel.hideFavorites.observeAsState(true)
+    val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
     val apps by viewModel.appResults.observeAsState(emptyList())
     val workApps by viewModel.workAppResults.observeAsState(emptyList())
     val appShortcuts by viewModel.appShortcutResults.observeAsState(emptyList())
@@ -80,7 +81,7 @@ fun SearchColumn(
         contentPadding = paddingValues,
         reverseLayout = reverse,
     ) {
-        if (!hideFavs) {
+        if (!hideFavs && favoritesEnabled) {
             GridResults(
                 items = favorites.toImmutableList(),
                 columns = columns,
@@ -101,7 +102,8 @@ fun SearchColumn(
                         Row(
                             modifier = Modifier
                                 .weight(1f)
-                                .horizontalScroll(tagsScrollState).padding(end = 12.dp),
+                                .horizontalScroll(tagsScrollState)
+                                .padding(end = 12.dp),
                         ) {
                             FilterChip(
                                 modifier = Modifier.padding(start = 16.dp),
