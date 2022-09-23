@@ -81,7 +81,7 @@ interface FavoritesRepository {
      * Get items with the given keys from the favorites database.
      * Items that don't exist in the database will not be returned.
      */
-    fun getFromKeys(keys: List<String>): List<Searchable>
+    suspend fun getFromKeys(keys: List<String>): List<Searchable>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -379,7 +379,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun getFromKeys(keys: List<String>): List<Searchable> {
+    override suspend fun getFromKeys(keys: List<String>): List<Searchable> {
         val dao = database.searchDao()
         return dao.getFromKeys(keys)
             .mapNotNull { fromDatabaseEntity(it).searchable }

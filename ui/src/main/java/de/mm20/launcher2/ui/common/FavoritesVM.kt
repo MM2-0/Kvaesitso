@@ -6,6 +6,7 @@ import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.utils.withCustomLabels
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.*
@@ -20,6 +21,14 @@ open class FavoritesVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
     val selectedTag = MutableStateFlow<String?>(null)
+
+    val pinnedTags = favoritesRepository.getFavorites(
+        includeTypes = listOf("tag"),
+        manuallySorted = true,
+        automaticallySorted = true,
+    ).map {
+        it.filterIsInstance<Tag>()
+    }
 
     val favorites: Flow<List<Searchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
@@ -43,7 +52,7 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                 val frequentlyUsedRows = it[3] as Int
 
                 val pinned = favoritesRepository.getFavorites(
-                    excludeTypes = if (excludeCalendar) listOf("calendar") else null,
+                    excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                     manuallySorted = true,
                     automaticallySorted = true,
                     limit = 10 * columns,
@@ -51,7 +60,7 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                 if (includeFrequentlyUsed) {
                     emitAll(pinned.flatMapLatest { pinned ->
                         favoritesRepository.getFavorites(
-                            excludeTypes = if (excludeCalendar) listOf("calendar") else null,
+                            excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                             frequentlyUsed = true,
                             limit = frequentlyUsedRows * columns - pinned.size % columns,
                         ).map {
@@ -66,7 +75,7 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                 }
             }
         } else {
-            emptyFlow<List<Searchable>>()
+            customAttributesRepository.getItemsForTag(tag)
         }
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 

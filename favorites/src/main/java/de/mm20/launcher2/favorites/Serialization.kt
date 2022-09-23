@@ -58,6 +58,9 @@ internal fun getSerializer(searchable: Searchable?): SearchableSerializer {
     if (searchable is Website) {
         return WebsiteSerializer()
     }
+    if (searchable is Tag) {
+        return TagSerializer()
+    }
     return NullSerializer()
 }
 
@@ -98,6 +101,9 @@ internal fun getDeserializer(context: Context, serialized: String): SearchableDe
     }
     if (type == "website") {
         return WebsiteDeserializer()
+    }
+    if (type == "tag") {
+        return TagDeserializer()
     }
     return NullDeserializer()
 }

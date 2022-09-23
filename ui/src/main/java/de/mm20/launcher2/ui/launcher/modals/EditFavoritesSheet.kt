@@ -8,15 +8,14 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -42,9 +41,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.helper.DraggableItem
-import de.mm20.launcher2.ui.launcher.helper.LazyVerticalDragAndDropGrid
-import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.launcher.helper.*
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlin.math.roundToInt
 
@@ -114,6 +111,9 @@ fun EditFavoritesSheet(
 fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
     val items by viewModel.gridItems.observeAsState(emptyList())
     val columns = LocalGridColumns.current
+
+    val availableTags by viewModel.availableTags.observeAsState(emptyList())
+    val pinnedTags by viewModel.pinnedTags.observeAsState(emptyList())
 
     var contextMenuItemKey by remember { mutableStateOf<String?>(null) }
 
@@ -379,7 +379,104 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                             .height(48.dp)
                     )
                 }
-                is FavoritesSheetGridItem.Tags -> {}
+                is FavoritesSheetGridItem.Tags -> {
+                    var showAddMenu by remember { mutableStateOf(false) }
+                    Column {
+                        if (availableTags.isNotEmpty() || pinnedTags.isNotEmpty()) {
+                            Row(
+                                modifier = Modifier.padding(vertical = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    modifier = Modifier
+                                        .weight(1f)
+                                        .padding(end = 16.dp),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    text = stringResource(R.string.edit_favorites_dialog_tags),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.secondary
+                                )
+                                Box() {
+                                    FilledTonalIconButton(
+                                        modifier = Modifier.offset(x = 4.dp),
+                                        enabled = availableTags.isNotEmpty(),
+                                        onClick = {
+                                            showAddMenu = true
+                                        }) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Add,
+                                            contentDescription = null
+                                        )
+                                    }
+                                    DropdownMenu(
+                                        expanded = showAddMenu,
+                                        onDismissRequest = { showAddMenu = false }) {
+                                        for (tag in availableTags) {
+                                            DropdownMenuItem(
+                                                leadingIcon = {
+                                                    Icon(Icons.Rounded.Tag, null)
+                                                },
+                                                text = { Text(tag.label) },
+                                                onClick = {
+                                                    viewModel.pinTag(tag)
+                                                    showAddMenu = false
+                                                })
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                        if (pinnedTags.isNotEmpty()) {
+                            val rowState = rememberLazyDragAndDropListState { from, to ->
+                                viewModel.moveTag(from, to)
+                            }
+                            LazyDragAndDropRow(state = rowState) {
+                                items(
+                                    pinnedTags,
+                                    key = { it.key }
+                                ) { tag ->
+                                    DraggableItem(state = rowState, key = tag.key) { dragged ->
+
+                                        FilterChip(
+                                            modifier = Modifier.padding(end = 12.dp),
+                                            selected = false,
+                                            onClick = {},
+                                            label = { Text(tag.label) },
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.Tag, null)
+                                            },
+                                            trailingIcon = {
+                                                Icon(
+                                                    modifier = Modifier.clickable {
+                                                        viewModel.unpinTag(tag)
+                                                    },
+                                                    imageVector = Icons.Rounded.Close,
+                                                    contentDescription = null
+                                                )
+                                            },
+                                            elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
+                                            colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
+                                            else FilterChipDefaults.filterChipColors(
+                                                containerColor = MaterialTheme.colorScheme.surface
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                        } else {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -485,7 +582,7 @@ sealed interface FavoritesSheetGridItem {
     class Divider(val section: FavoritesSheetSection) : FavoritesSheetGridItem
     class Spacer(val span: Int = 1) : FavoritesSheetGridItem
     object EmptySection : FavoritesSheetGridItem
-    class Tags() : FavoritesSheetGridItem
+    object Tags : FavoritesSheetGridItem
 }
 
 enum class FavoritesSheetSection {

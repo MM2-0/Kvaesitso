@@ -10,7 +10,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapNotNull
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
@@ -32,6 +31,7 @@ interface CustomAttributesRepository {
     suspend fun import(fromDir: File)
 
     suspend fun getAllTags(startsWith: String? = null): List<String>
+    fun getItemsForTag(tag: String): Flow<List<Searchable>>
 }
 
 internal class CustomAttributesRepositoryImpl(
@@ -112,6 +112,13 @@ internal class CustomAttributesRepositoryImpl(
             dao.getAllTagsLike("$startsWith%")
         } else {
             dao.getAllTags()
+        }
+    }
+
+    override fun getItemsForTag(tag: String): Flow<List<Searchable>> {
+        val dao = appDatabase.customAttrsDao()
+        return dao.getItemsWithTag(tag).map {
+            favoritesRepository.getFromKeys(it)
         }
     }
 

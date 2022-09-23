@@ -8,10 +8,7 @@ import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Work
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -53,7 +50,7 @@ fun SearchColumn(
     val viewModel: SearchVM = viewModel()
 
     val favoritesVM: SearchFavoritesVM = viewModel()
-    val favorites by remember { favoritesVM.favorites }.collectAsState(emptyList())
+    val favorites by favoritesVM.favorites.collectAsState(emptyList())
 
     val showLabels by viewModel.showLabels.observeAsState(true)
 
@@ -73,6 +70,9 @@ fun SearchColumn(
 
     var showEditFavoritesDialog by remember { mutableStateOf(false) }
 
+    val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
+    val selectedTag by favoritesVM.selectedTag.collectAsState(null)
+    val tagsScrollState = rememberScrollState()
 
     LazyColumn(
         state = state,
@@ -101,12 +101,12 @@ fun SearchColumn(
                         Row(
                             modifier = Modifier
                                 .weight(1f)
-                                .horizontalScroll(rememberScrollState()),
+                                .horizontalScroll(tagsScrollState).padding(end = 12.dp),
                         ) {
                             FilterChip(
                                 modifier = Modifier.padding(start = 16.dp),
-                                selected = true,
-                                onClick = { /*TODO*/ },
+                                selected = selectedTag == null,
+                                onClick = { favoritesVM.selectTag(null) },
                                 leadingIcon = {
                                     Icon(
                                         imageVector = Icons.Rounded.Star,
@@ -115,6 +115,20 @@ fun SearchColumn(
                                 },
                                 label = { Text(stringResource(R.string.favorites)) }
                             )
+                            for (tag in pinnedTags) {
+                                FilterChip(
+                                    modifier = Modifier.padding(start = 12.dp),
+                                    selected = selectedTag == tag.tag,
+                                    onClick = { favoritesVM.selectTag(tag.tag) },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Tag,
+                                            contentDescription = null
+                                        )
+                                    },
+                                    label = { Text(tag.label) }
+                                )
+                            }
                         }
                         SmallFloatingActionButton(
                             elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
@@ -223,11 +237,11 @@ fun LazyListScope.GridResults(
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
 ) {
-    if (items.isEmpty()) return
+    if (items.isEmpty() && before == null && after == null) return
 
     if (before != null) {
         item(contentType = "ListItemsBefore") {
-            PartialCardRow(isFirst = true, isLast = false, reverse = reverse) {
+            PartialCardRow(isFirst = true, isLast = items.isEmpty() && after == null, reverse = reverse) {
                 before()
             }
         }
@@ -257,7 +271,7 @@ fun LazyListScope.GridResults(
 
     if (after != null) {
         item(contentType = "ListItemsAfter") {
-            PartialCardRow(isFirst = false, isLast = true, reverse = reverse) {
+            PartialCardRow(isFirst = items.isEmpty() && before == null, isLast = true, reverse = reverse) {
                 after()
             }
         }

@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.modals
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,14 +12,18 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeRepository
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.normalize
+import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.data.Tag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -33,6 +38,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private val shortcutRepository: AppShortcutRepository by inject()
     private val iconRepository: IconRepository by inject()
     private val badgeRepository: BadgeRepository by inject()
+    private val customAttributesRepository: CustomAttributesRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -46,18 +52,37 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private var automaticallySorted: MutableList<Searchable> = mutableListOf()
     private var frequentlyUsed: MutableList<Searchable> = mutableListOf()
 
+    val pinnedTags = MutableLiveData<List<Tag>>(emptyList())
+    val availableTags = MutableLiveData<List<Tag>>(emptyList())
+
     suspend fun reload() {
         loading.value = true
         manuallySorted = mutableListOf()
         manuallySorted = repository.getFavorites(
-            manuallySorted = true
+            manuallySorted = true,
+            excludeTypes = listOf("tag"),
         ).first().toMutableList()
         automaticallySorted = repository.getFavorites(
-            automaticallySorted = true
+            automaticallySorted = true,
+            excludeTypes = listOf("tag"),
         ).first().toMutableList()
         frequentlyUsed = repository.getFavorites(
-            frequentlyUsed = true
+            frequentlyUsed = true,
+            excludeTypes = listOf("tag"),
         ).first().toMutableList()
+        val pinnedTags = repository.getFavorites(
+            includeTypes = listOf("tag"),
+            manuallySorted = true,
+            automaticallySorted = true,
+        ).first().filterIsInstance<Tag>().toMutableList()
+        availableTags.value =
+            customAttributesRepository
+                .getAllTags()
+                .filter {t -> pinnedTags.none { it.tag == t } }
+                .sortedBy { it.normalize() }
+                .map { Tag(it) }
+        this.pinnedTags.value = pinnedTags
+
         buildItemList()
         loading.value = false
     }
@@ -65,7 +90,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private fun buildItemList() {
         val items = mutableListOf<FavoritesSheetGridItem>()
 
-        items.add(FavoritesSheetGridItem.Tags())
+        items.add(FavoritesSheetGridItem.Tags)
 
         items.add(FavoritesSheetGridItem.Divider(FavoritesSheetSection.ManuallySorted))
         if (manuallySorted.isEmpty()) {
@@ -144,10 +169,11 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     private fun save() {
         repository.updateFavorites(
-            buildList {
+            manuallySorted = buildList {
+                pinnedTags.value?.let { addAll(it) }
                 addAll(manuallySorted)
             },
-            buildList {
+            automaticallySorted = buildList {
                 addAll(automaticallySorted)
             },
         )
@@ -245,5 +271,29 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         }
     }
 
+    fun pinTag(tag: Tag) {
+        val pinned = pinnedTags.value?.toMutableList() ?: mutableListOf()
+        pinned.add(tag)
+        val available = availableTags.value ?: emptyList()
+        availableTags.value = available.filter { it.tag != tag.tag }
+        pinnedTags.value = pinned.distinctBy { it.tag }
+        save()
+    }
+
+    fun unpinTag(tag: Tag) {
+        val pinned = pinnedTags.value?.toMutableList() ?: mutableListOf()
+        val available = availableTags.value ?: emptyList()
+        availableTags.value = (available + tag).sorted()
+        pinnedTags.value = pinned.filter { it.tag != tag.tag }
+        save()
+    }
+
+    fun moveTag(from: LazyListItemInfo, to: LazyListItemInfo) {
+        val pinned = pinnedTags.value?.toMutableList() ?: return
+        val tag = pinned.removeAt(from.index)
+        pinned.add(to.index, tag)
+        pinnedTags.value = pinned
+        save()
+    }
 
 }

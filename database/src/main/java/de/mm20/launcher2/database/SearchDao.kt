@@ -144,7 +144,7 @@ interface SearchDao {
     fun getFavorite(key: String): FavoritesItemEntity?
 
     @Query("SELECT * FROM Searchable WHERE `key` IN (:keys)")
-    fun getFromKeys(keys: List<String>): List<FavoritesItemEntity>
+    suspend fun getFromKeys(keys: List<String>): List<FavoritesItemEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertReplaceExisting(toDatabaseEntity: FavoritesItemEntity)

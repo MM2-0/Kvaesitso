@@ -6,6 +6,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +22,8 @@ import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 fun FavoritesWidget() {
     val viewModel: FavoritesWidgetVM = viewModel()
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
+    val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
+    val selectedTag by viewModel.selectedTag.collectAsState(null)
     var showEditFavoritesDialog by remember { mutableStateOf(false) }
 
     Column {
@@ -43,8 +46,8 @@ fun FavoritesWidget() {
             ) {
                 FilterChip(
                     modifier = Modifier.padding(start = 16.dp),
-                    selected = true,
-                    onClick = { /*TODO*/ },
+                    selected = selectedTag == null,
+                    onClick = { viewModel.selectTag(null) },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Rounded.Star,
@@ -53,6 +56,20 @@ fun FavoritesWidget() {
                     },
                     label = { Text(stringResource(R.string.favorites)) }
                 )
+                for (tag in pinnedTags) {
+                    FilterChip(
+                        modifier = Modifier.padding(start = 12.dp),
+                        selected = selectedTag == tag.tag,
+                        onClick = { viewModel.selectTag(tag.tag) },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Tag,
+                                contentDescription = null
+                            )
+                        },
+                        label = { Text(tag.label) }
+                    )
+                }
             }
             SmallFloatingActionButton(
                 elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
