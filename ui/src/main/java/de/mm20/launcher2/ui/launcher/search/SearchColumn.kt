@@ -2,10 +2,7 @@ package de.mm20.launcher2.ui.launcher.search
 
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -86,6 +83,7 @@ fun SearchColumn(
                 items = favorites.toImmutableList(),
                 columns = columns,
                 showLabels = showLabels,
+                key = "favorites",
                 reverse = reverse,
                 after = {
                     Row(
@@ -147,6 +145,7 @@ fun SearchColumn(
             columns = columns,
             showLabels = showLabels,
             reverse = reverse,
+            key = "apps",
             before = if (workApps.isNotEmpty()) {
                 {
                     Row(
@@ -191,7 +190,7 @@ fun SearchColumn(
                 }
             } else null
         )
-        ListResults(appShortcuts.toImmutableList(), reverse)
+        ListResults(appShortcuts.toImmutableList(), reverse, key = "shortcuts")
         val uc = unitConverter
         if (uc != null) {
             SingleResult {
@@ -204,8 +203,8 @@ fun SearchColumn(
                 CalculatorItem(calculator = calc)
             }
         }
-        ListResults(events.toImmutableList(), reverse)
-        ListResults(contacts.toImmutableList(), reverse)
+        ListResults(events.toImmutableList(), reverse, key = "events")
+        ListResults(contacts.toImmutableList(), reverse, key = "contacts")
         val wiki = wikipedia
         if (wiki != null) {
             SingleResult {
@@ -218,7 +217,7 @@ fun SearchColumn(
                 WebsiteItem(website = ws)
             }
         }
-        ListResults(files.toImmutableList(), reverse)
+        ListResults(files.toImmutableList(), reverse, key = "files")
         item {
             HiddenResults()
         }
@@ -236,21 +235,31 @@ fun LazyListScope.GridResults(
     columns: Int,
     reverse: Boolean,
     showLabels: Boolean,
+    key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
 ) {
     if (items.isEmpty() && before == null && after == null) return
 
     if (before != null) {
-        item(contentType = "ListItemsBefore") {
-            PartialCardRow(isFirst = true, isLast = items.isEmpty() && after == null, reverse = reverse) {
+        item(key = "$key-before") {
+            PartialCardRow(
+                isFirst = true,
+                isLast = items.isEmpty() && after == null,
+                reverse = reverse
+            ) {
                 before()
             }
         }
     }
 
     val rows = ceil(items.size / columns.toFloat()).toInt()
-    items(rows) {
+    items(
+        rows,
+        key = {
+            "$key-${items[it * columns].key}"
+        }
+    ) {
         PartialCardRow(
             isFirst = it == 0 && before == null,
             isLast = it == rows - 1 && after == null,
@@ -272,8 +281,12 @@ fun LazyListScope.GridResults(
     }
 
     if (after != null) {
-        item(contentType = "ListItemsAfter") {
-            PartialCardRow(isFirst = items.isEmpty() && before == null, isLast = true, reverse = reverse) {
+        item(key = "$key-after") {
+            PartialCardRow(
+                isFirst = items.isEmpty() && before == null,
+                isLast = true,
+                reverse = reverse
+            ) {
                 after()
             }
         }
@@ -309,18 +322,24 @@ fun GridRow(
 fun LazyListScope.ListResults(
     items: ImmutableList<Searchable>,
     reverse: Boolean,
+    key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
 ) {
     if (items.isEmpty()) return
     if (before != null) {
-        item(contentType = "ListItemsBefore") {
+        item(key = "$key-before") {
             PartialCardRow(isFirst = true, isLast = false, reverse = reverse) {
                 before()
             }
         }
     }
-    items(items.size) {
+    items(
+        items.size,
+        key = {
+            "$key-${items[it].key}"
+        }
+    ) {
         PartialCardRow(
             isFirst = it == 0 && before == null,
             isLast = it == items.lastIndex && after == null,
@@ -336,7 +355,7 @@ fun LazyListScope.ListResults(
         }
     }
     if (after != null) {
-        item(contentType = "ListItemsAfter") {
+        item(key = "$key-after") {
             PartialCardRow(isFirst = false, isLast = true, reverse = reverse) {
                 after()
             }
@@ -367,10 +386,12 @@ fun LazyListScope.SingleResult(content: @Composable (() -> Unit)?) {
     if (content == null) return
     item {
         LauncherCard(
-            modifier = Modifier.padding(
-                horizontal = 8.dp,
-                vertical = 4.dp,
-            )
+            modifier = Modifier
+                .padding(
+                    horizontal = 8.dp,
+                    vertical = 4.dp,
+                )
+                .animateItemPlacement()
         ) {
             content()
         }
@@ -378,7 +399,7 @@ fun LazyListScope.SingleResult(content: @Composable (() -> Unit)?) {
 }
 
 @Composable
-fun PartialCardRow(
+fun LazyItemScope.PartialCardRow(
     modifier: Modifier = Modifier,
     isFirst: Boolean,
     isLast: Boolean,
@@ -390,6 +411,7 @@ fun PartialCardRow(
     Box(
         modifier = modifier
             .clipToBounds()
+            .animateItemPlacement()
     ) {
         PartialLauncherCard(
             modifier = Modifier.padding(
