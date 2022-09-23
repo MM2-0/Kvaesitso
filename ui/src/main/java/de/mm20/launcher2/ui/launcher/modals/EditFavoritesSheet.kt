@@ -381,8 +381,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                 }
                 is FavoritesSheetGridItem.Tags -> {
                     var showAddMenu by remember { mutableStateOf(false) }
-                    Column {
-                        if (availableTags.isNotEmpty() || pinnedTags.isNotEmpty()) {
+                    if (availableTags.isNotEmpty() || pinnedTags.isNotEmpty()) {
+                        Column {
                             Row(
                                 modifier = Modifier.padding(vertical = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
@@ -427,53 +427,53 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                 }
 
                             }
-                        }
-                        if (pinnedTags.isNotEmpty()) {
-                            val rowState = rememberLazyDragAndDropListState { from, to ->
-                                viewModel.moveTag(from, to)
-                            }
-                            LazyDragAndDropRow(state = rowState) {
-                                items(
-                                    pinnedTags,
-                                    key = { it.key }
-                                ) { tag ->
-                                    DraggableItem(state = rowState, key = tag.key) { dragged ->
+                            if (pinnedTags.isNotEmpty()) {
+                                val rowState = rememberLazyDragAndDropListState { from, to ->
+                                    viewModel.moveTag(from, to)
+                                }
+                                LazyDragAndDropRow(state = rowState) {
+                                    items(
+                                        pinnedTags,
+                                        key = { it.key }
+                                    ) { tag ->
+                                        DraggableItem(state = rowState, key = tag.key) { dragged ->
 
-                                        FilterChip(
-                                            modifier = Modifier.padding(end = 12.dp),
-                                            selected = false,
-                                            onClick = {},
-                                            label = { Text(tag.label) },
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Tag, null)
-                                            },
-                                            trailingIcon = {
-                                                Icon(
-                                                    modifier = Modifier.clickable {
-                                                        viewModel.unpinTag(tag)
-                                                    },
-                                                    imageVector = Icons.Rounded.Close,
-                                                    contentDescription = null
+                                            FilterChip(
+                                                modifier = Modifier.padding(end = 12.dp),
+                                                selected = false,
+                                                onClick = {},
+                                                label = { Text(tag.label) },
+                                                leadingIcon = {
+                                                    Icon(Icons.Rounded.Tag, null)
+                                                },
+                                                trailingIcon = {
+                                                    Icon(
+                                                        modifier = Modifier.clickable {
+                                                            viewModel.unpinTag(tag)
+                                                        },
+                                                        imageVector = Icons.Rounded.Close,
+                                                        contentDescription = null
+                                                    )
+                                                },
+                                                elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
+                                                colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
+                                                else FilterChipDefaults.filterChipColors(
+                                                    containerColor = MaterialTheme.colorScheme.surface
                                                 )
-                                            },
-                                            elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
-                                            colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
-                                            else FilterChipDefaults.filterChipColors(
-                                                containerColor = MaterialTheme.colorScheme.surface
                                             )
-                                        )
+                                        }
                                     }
                                 }
+                            } else {
+                                Text(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 4.dp),
+                                    text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.outline
+                                )
                             }
-                        } else {
-                            Text(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 4.dp),
-                                text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.outline
-                            )
                         }
                     }
                 }
