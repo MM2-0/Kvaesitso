@@ -163,8 +163,8 @@ fun AppearanceSettingsScreen() {
                         viewModel.setDimWallpaper(it)
                     }
                 )
-                if (isAtLeastApiLevel(31)) {
-                    val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
+                val isBlurSupported = remember { viewModel.isBlurAvailable(context) }
+                if (isBlurSupported) {
                     val blurWallpaper by viewModel.blurWallpaper.observeAsState()
                     SwitchPreference(
                         title = stringResource(R.string.preference_blur_wallpaper),
