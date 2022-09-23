@@ -75,7 +75,10 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                 }
             }
         } else {
-            customAttributesRepository.getItemsForTag(tag)
+            customAttributesRepository
+                .getItemsForTag(tag)
+                .withCustomLabels(customAttributesRepository)
+                .map { it.sorted() }
         }
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
