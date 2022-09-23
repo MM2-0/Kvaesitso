@@ -6,6 +6,7 @@ import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.ui.utils.withCustomLabels
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
@@ -56,9 +57,12 @@ open class FavoritesVM : ViewModel(), KoinComponent {
                         ).map {
                             pinned + it
                         }
+                            .withCustomLabels(customAttributesRepository)
                     })
                 } else {
-                    emitAll(pinned)
+                    emitAll(
+                        pinned.withCustomLabels(customAttributesRepository)
+                    )
                 }
             }
         } else {
