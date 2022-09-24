@@ -9,11 +9,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.hoverable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
@@ -22,9 +28,11 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -32,6 +40,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toOffset
+import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
@@ -43,6 +53,8 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.*
 import de.mm20.launcher2.ui.locals.LocalGridColumns
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.isActive
 import kotlin.math.roundToInt
 
 @Composable
@@ -119,19 +131,55 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
 
     val contextMenuCloseDistance = 8.dp.toPixels()
 
+    var draggedItemKey by remember { mutableStateOf<String?>(null) }
+    var hoveredTag by remember { mutableStateOf<String?>(null) }
+
+    val gridState = rememberLazyGridState()
+    val tagsListState = rememberLazyListState()
+    val tagsTitleSize = 48.dp.toPixels()
     val state = rememberLazyDragAndDropGridState(
+        gridState = gridState,
         onDragStart = {
             val item = items.getOrNull(it.index)
 
             if (item !is FavoritesSheetGridItem.Favorite) return@rememberLazyDragAndDropGridState false
 
+            draggedItemKey = item.item.key
             contextMenuItemKey = item.item.key
             true
         },
-        onDrag = { _, offset ->
+        onDrag = { item, offset, position ->
             if (offset.getDistanceSquared() > contextMenuCloseDistance) {
                 contextMenuItemKey = null
             }
+            val draggedCenter = Rect(position, item.size.toSize()).center
+            val hoveredItem = gridState.layoutInfo.visibleItemsInfo.find {
+                Rect(
+                    it.offset.toOffset(),
+                    it.size.toSize()
+                ).contains(draggedCenter)
+            }
+            if (hoveredItem != null
+                && items[hoveredItem.index] is FavoritesSheetGridItem.Tags
+                && hoveredItem.offset.y + tagsTitleSize < position.y
+            ) {
+                val scroll = tagsListState.layoutInfo.viewportStartOffset
+                val tag = tagsListState.layoutInfo.visibleItemsInfo.find {
+                    position.x + scroll > it.offset && position.x + scroll < it.offset + it.size
+                }
+                hoveredTag = tag?.index?.let { pinnedTags[it].tag }
+            } else {
+                hoveredTag = null
+            }
+        },
+        onDragEnd = {
+            viewModel.addTag(draggedItemKey, hoveredTag)
+            draggedItemKey = null
+            hoveredTag = null
+        },
+        onDragCancel = {
+            draggedItemKey = null
+            hoveredTag = null
         }
     ) { from, to ->
         viewModel.moveItem(from, to)
@@ -428,10 +476,15 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
 
                             }
                             if (pinnedTags.isNotEmpty()) {
-                                val rowState = rememberLazyDragAndDropListState { from, to ->
+                                val rowState = rememberLazyDragAndDropListState(
+                                    listState = tagsListState,
+                                ) { from, to ->
                                     viewModel.moveTag(from, to)
                                 }
-                                LazyDragAndDropRow(state = rowState) {
+                                LazyDragAndDropRow(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    state = rowState
+                                ) {
                                     items(
                                         pinnedTags,
                                         key = { it.key }
@@ -439,8 +492,15 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                         DraggableItem(state = rowState, key = tag.key) { dragged ->
 
                                             FilterChip(
-                                                modifier = Modifier.padding(end = 12.dp),
-                                                selected = false,
+                                                modifier = Modifier
+                                                    .padding(end = 12.dp)
+                                                    .pointerInput(null) {
+                                                        val coroutineContext =
+                                                            currentCoroutineContext()
+
+                                                    }
+                                                ,
+                                                selected = tag.tag == hoveredTag,
                                                 onClick = {},
                                                 label = { Text(tag.label) },
                                                 leadingIcon = {

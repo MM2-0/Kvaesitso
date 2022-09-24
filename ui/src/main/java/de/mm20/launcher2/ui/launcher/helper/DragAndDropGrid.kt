@@ -31,7 +31,7 @@ import kotlin.coroutines.coroutineContext
 fun rememberLazyDragAndDropGridState(
     gridState: LazyGridState = rememberLazyGridState(),
     onDragStart: (item: LazyGridItemInfo) -> Boolean = { true },
-    onDrag: (item: LazyGridItemInfo, offset: Offset) -> Unit = {_, _ ->},
+    onDrag: (item: LazyGridItemInfo, offset: Offset, position: Offset) -> Unit = {_, _, _ ->},
     onDragEnd: (item: LazyGridItemInfo) -> Unit = {},
     onDragCancel: (item: LazyGridItemInfo) -> Unit = {},
     onItemMove: (from: LazyGridItemInfo, to: LazyGridItemInfo) -> Unit
@@ -51,7 +51,7 @@ fun rememberLazyDragAndDropGridState(
 data class LazyDragAndDropGridState(
     val gridState: LazyGridState,
     val onDragStart: (item: LazyGridItemInfo) -> Boolean = { true },
-    val onDrag: (item: LazyGridItemInfo, offset: Offset) -> Unit = {_, _ ->},
+    val onDrag: (item: LazyGridItemInfo, offset: Offset, position: Offset) -> Unit = {_, _, _ ->},
     val onDragEnd: (item: LazyGridItemInfo) -> Unit = {},
     val onDragCancel: (item: LazyGridItemInfo) -> Unit = {},
     val onItemMove: (from: LazyGridItemInfo, to: LazyGridItemInfo) -> Unit
@@ -284,7 +284,7 @@ fun Modifier.dragAndDrop(
                         state.endScrolling()
                     }
 
-                    state.draggedItemOffset?.let { state.onDrag(draggedItem, it) }
+                    state.draggedItemOffset?.let { state.onDrag(draggedItem, it, absPosition) }
                 }
             },
             onDragCancel = {

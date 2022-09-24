@@ -32,6 +32,7 @@ interface CustomAttributesRepository {
 
     suspend fun getAllTags(startsWith: String? = null): List<String>
     fun getItemsForTag(tag: String): Flow<List<Searchable>>
+    fun addTag(item: Searchable, tag: String)
 }
 
 internal class CustomAttributesRepositoryImpl(
@@ -119,6 +120,13 @@ internal class CustomAttributesRepositoryImpl(
         val dao = appDatabase.customAttrsDao()
         return dao.getItemsWithTag(tag).map {
             favoritesRepository.getFromKeys(it)
+        }
+    }
+
+    override fun addTag(item: Searchable, tag: String) {
+        val dao = appDatabase.customAttrsDao()
+        scope.launch {
+            dao.addTag(item.key, tag)
         }
     }
 

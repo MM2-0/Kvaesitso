@@ -41,4 +41,17 @@ interface CustomAttrsDao {
 
     @Query("SELECT key FROM CustomAttributes WHERE type = 'tag' AND value = :tag")
     fun getItemsWithTag(tag: String): Flow<List<String>>
+
+    @Transaction
+    suspend fun addTag(key: String, tag: String) {
+        removeTag(key, tag)
+        insertTag(key, tag)
+    }
+
+    @Query("DELETE FROM CustomAttributes WHERE type = 'tag' AND key = :key AND value = :tag")
+    suspend fun removeTag(key: String, tag: String)
+
+    @Query("INSERT INTO CustomAttributes (key, value, type) VALUES (:key, :tag, 'tag')")
+    suspend fun insertTag(key: String, tag: String)
+
 }

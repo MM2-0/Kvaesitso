@@ -296,4 +296,14 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         save()
     }
 
+    fun addTag(key: String?, tag: String?) {
+        val gridItems = gridItems.value?.toMutableList() ?: return
+        if (key == null || tag == null) return
+        val item =
+            gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
+        if (item != null) {
+            customAttributesRepository.addTag(item.item, tag)
+        }
+    }
+
 }
