@@ -18,13 +18,6 @@ import org.koin.core.component.KoinComponent
 import java.io.File
 
 interface FavoritesRepository {
-    @Deprecated("Use getFavorites(java.util.List<java.lang.String>, java.util.List<java.lang.String>, boolean, boolean, boolean, java.lang.Integer) instead.")
-    fun getFavorites(
-        columns: Int,
-        maxRows: Int? = null,
-        excludeCalendarEvents: Boolean = false
-    ): Flow<List<Searchable>>
-
     /**
      * Get favorites
      * @param includeTypes Include only items of these types. Cannot be used together with excludeTypes.
@@ -100,57 +93,6 @@ internal class FavoritesRepositoryImpl(
 ) : FavoritesRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
-    override fun getFavorites(
-        columns: Int,
-        maxRows: Int?,
-        excludeCalendarEvents: Boolean
-    ): Flow<List<Searchable>> =
-        channelFlow {
-            withContext(Dispatchers.IO) {
-                val dao = database.searchDao()
-                val pinnedFavorites =
-                    if (excludeCalendarEvents) {
-                        dao.getFavoritesWithoutTypes(
-                            excludeTypes = listOf("calendar"),
-                            manuallySorted = true,
-                            automaticallySorted = true,
-                            frequentlyUsed = false,
-                            limit = columns * (maxRows ?: 20)
-                        )
-                    } else {
-                        dao.getFavorites(
-                            manuallySorted = true,
-                            automaticallySorted = true,
-                            frequentlyUsed = false,
-                            limit = columns * (maxRows ?: 20)
-                        )
-                    }.map {
-                        it.mapNotNull {
-                            val item = fromDatabaseEntity(it).searchable
-                            return@mapNotNull item
-                        }
-                    }
-
-                pinnedFavorites.collectLatest { pinned ->
-                    var favCount = (pinned.size.toDouble() / columns).ceilToInt() * columns
-                    if (pinned.size < columns) favCount += columns
-                    val autoFavs = dao.getFavorites(
-                        manuallySorted = false,
-                        automaticallySorted = false,
-                        frequentlyUsed = true,
-                        limit = favCount.coerceAtMost((maxRows ?: 20) * columns) - pinned.size
-                    ).first().mapNotNull {
-                        val item = fromDatabaseEntity(it).searchable
-                        if (item == null) {
-                            dao.deleteByKey(it.key)
-                        }
-                        return@mapNotNull item
-                    }
-                    send(pinned + autoFavs)
-                }
-            }
-        }
 
     override fun getFavorites(
         includeTypes: List<String>?,

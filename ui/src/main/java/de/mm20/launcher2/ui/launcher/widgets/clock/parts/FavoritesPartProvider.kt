@@ -47,9 +47,11 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
 
         val favorites by remember(columns, excludeCalendar, layout) {
             favoritesRepository.getFavorites(
-                columns = columns,
-                maxRows = 1,
-                excludeCalendarEvents = excludeCalendar
+                excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
+                manuallySorted = true,
+                automaticallySorted = true,
+                frequentlyUsed = true,
+                limit = columns
             )
         }.collectAsState(emptyList())
 
