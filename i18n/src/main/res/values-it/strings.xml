@@ -470,4 +470,8 @@
     <string name="frequently_used_rows">Numero di righe</string>
     <string name="frequently_used_show_in_favorites">Mostra nei preferiti</string>
     <string name="customize_tags_placeholder">Tag…</string>
+    <string name="edit_favorites_dialog_tags">Tag</string>
+    <string name="edit_favorites_dialog_tag_section_empty">I tag aggiunti verranno visualizzati qui</string>
+    <string name="favorites_empty">Gli elementi appuntati e utilizzati di frequente appariranno qui</string>
+    <string name="favorites_empty_tag">Non ci sono elementi con questo tag</string>
 </resources>
