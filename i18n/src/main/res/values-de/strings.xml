@@ -469,4 +469,9 @@
     <string name="frequently_used_rows">Anzahl Zeilen</string>
     <string name="frequently_used_show_in_favorites">In Favoriten anzeigen</string>
     <string name="menu_remove">Entfernen</string>
+    <string name="customize_tags_placeholder">Tags…</string>
+    <string name="edit_favorites_dialog_tags">Tags</string>
+    <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
+    <string name="favorites_empty">Angeheftete und häufig genutzte Elemente werden hier angezeigt</string>
 </resources>
