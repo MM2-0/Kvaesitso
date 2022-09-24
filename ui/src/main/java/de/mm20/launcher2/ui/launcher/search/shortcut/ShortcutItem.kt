@@ -69,6 +69,18 @@ fun AppShortcutItem(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+
+                AnimatedVisibility(showDetails) {
+                    val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                    if (tags.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 1.dp, bottom = 2.dp),
+                            text = tags.joinToString(separator = " #", prefix = "#"),
+                            color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
                 val textSpace by transition.animateDp(label = "textSpace") {
                     if (it) 4.dp else 2.dp
                 }

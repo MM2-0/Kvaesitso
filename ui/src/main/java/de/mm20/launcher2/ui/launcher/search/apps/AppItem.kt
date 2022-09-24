@@ -4,7 +4,6 @@ import androidx.compose.animation.*
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
@@ -35,7 +34,6 @@ import de.mm20.launcher2.ui.locals.LocalGridIconSize
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
-import kotlin.math.min
 import kotlin.math.pow
 import kotlin.math.roundToInt
 
@@ -62,7 +60,22 @@ fun AppItem(
                     .weight(1f)
                     .padding(16.dp)
             ) {
-                Text(text = app.labelOverride ?: app.label, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = app.labelOverride ?: app.label,
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                if (tags.isNotEmpty()) {
+                    Text(
+                        modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
+                        text = tags.joinToString(separator = " #", prefix = "#"),
+                        color = MaterialTheme.colorScheme.secondary,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
+
+
                 app.version?.let {
                     Text(
                         text = stringResource(R.string.app_info_version, it),
@@ -75,16 +88,16 @@ fun AppItem(
                 Text(
                     text = app.`package`,
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 4.dp),
+                    modifier = Modifier.padding(top = 1.dp),
                     maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 FlowRow(
                     modifier = Modifier
-                        .padding(top = 16.dp)
+                        .padding(top = 12.dp)
                         .animateContentSize(),
-                    mainAxisSpacing = 16.dp,
+                    mainAxisSpacing = 12.dp,
                     crossAxisSpacing = 0.dp
                 ) {
                     val notifications by viewModel.notifications.collectAsState(initial = emptyList())
@@ -290,8 +303,8 @@ fun AppItem(
                             message = context.getString(R.string.msg_item_hidden, app.label),
                             actionLabel = context.getString(R.string.action_undo),
                             duration = SnackbarDuration.Short,
-                            )
-                        if(result == SnackbarResult.ActionPerformed) {
+                        )
+                        if (result == SnackbarResult.ActionPerformed) {
                             viewModel.unhide()
                         }
                     }

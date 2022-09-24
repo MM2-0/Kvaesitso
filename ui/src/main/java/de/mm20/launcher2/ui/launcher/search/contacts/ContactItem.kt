@@ -94,6 +94,17 @@ fun ContactItem(
                         overflow = TextOverflow.Ellipsis
                     )
                 }
+                AnimatedVisibility(showDetails) {
+                    val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                    if (tags.isNotEmpty()) {
+                        Text(
+                            modifier = Modifier.padding(top = 1.dp),
+                            text = tags.joinToString(separator = " #", prefix = "#"),
+                            color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
+                }
             }
         }
 

@@ -60,6 +60,15 @@ fun WebsiteItem(
                 text = website.label,
                 style = MaterialTheme.typography.titleLarge
             )
+            val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+            if (tags.isNotEmpty()) {
+                Text(
+                    modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
+                    text = tags.joinToString(separator = " #", prefix = "#"),
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
                 text = website.description,

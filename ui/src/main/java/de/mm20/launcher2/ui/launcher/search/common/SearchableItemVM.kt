@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.badges.BadgeRepository
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
@@ -22,6 +23,7 @@ abstract class SearchableItemVM(
     protected val favoritesRepository: FavoritesRepository by inject()
     protected val badgeRepository: BadgeRepository by inject()
     protected val iconRepository: IconRepository by inject()
+    protected val customAttributesRepository: CustomAttributesRepository by inject()
 
     val isPinned = favoritesRepository.isPinned(searchable)
     fun pin() {
@@ -45,6 +47,10 @@ abstract class SearchableItemVM(
 
     fun getIcon(size: Int): Flow<LauncherIcon> {
         return iconRepository.getIcon(searchable, size)
+    }
+
+    fun getTags(): Flow<List<String>> {
+        return customAttributesRepository.getTags(searchable)
     }
 
 

@@ -61,6 +61,15 @@ fun WikipediaItem(
                 text = wikipedia.label,
                 style = MaterialTheme.typography.titleLarge
             )
+            val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+            if (tags.isNotEmpty()) {
+                Text(
+                    modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
+                    text = tags.joinToString(separator = " #", prefix = "#"),
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
             Text(
                 modifier = Modifier.padding(top = 4.dp),
                 text = stringResource(id = R.string.wikipedia_source),
