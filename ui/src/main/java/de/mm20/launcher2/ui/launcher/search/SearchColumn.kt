@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
@@ -12,6 +13,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -19,6 +21,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.PartialLauncherCard
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
@@ -43,6 +46,7 @@ fun SearchColumn(
 ) {
 
     val columns = LocalGridColumns.current
+    val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
 
@@ -65,6 +69,11 @@ fun SearchColumn(
     val calculator by viewModel.calculatorResult.observeAsState(null)
     val wikipedia by viewModel.wikipediaResult.observeAsState(null)
     val website by viewModel.websiteResult.observeAsState(null)
+
+    val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
+    val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
+    val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
+    val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
 
     var showEditFavoritesDialog by remember { mutableStateOf(false) }
 
@@ -209,7 +218,27 @@ fun SearchColumn(
                 }
             } else null
         )
-        ListResults(appShortcuts.toImmutableList(), reverse, key = "shortcuts")
+        ListResults(
+            before = if (missingShortcutsPermission){{
+                MissingPermissionBanner(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(R.string.missing_permission_appshortcuts_search),
+                    onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
+                    secondaryAction = {
+                        OutlinedButton(onClick = {
+                            viewModel.disableAppShortcutSearch()
+                        }) {
+                            Text(
+                                stringResource(R.string.turn_off),
+                            )
+                        }
+                    }
+                )
+            }} else null,
+            items = appShortcuts.toImmutableList(),
+            reverse = reverse,
+            key = "shortcuts"
+        )
         val uc = unitConverter
         if (uc != null) {
             SingleResult {
@@ -222,8 +251,47 @@ fun SearchColumn(
                 CalculatorItem(calculator = calc)
             }
         }
-        ListResults(events.toImmutableList(), reverse, key = "events")
-        ListResults(contacts.toImmutableList(), reverse, key = "contacts")
+        ListResults(
+            before = if (missingCalendarPermission){{
+                MissingPermissionBanner(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(R.string.missing_permission_calendar_search),
+                    onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },secondaryAction = {
+                        OutlinedButton(onClick = {
+                            viewModel.disableCalendarSearch()
+                        }) {
+                            Text(
+                                stringResource(R.string.turn_off),
+                            )
+                        }
+                    }
+                )
+            }} else null,
+            items = events.toImmutableList(),
+            reverse = reverse,
+            key = "events"
+        )
+        ListResults(
+            before = if (missingContactsPermission){{
+                MissingPermissionBanner(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(R.string.missing_permission_contact_search),
+                    onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
+                    secondaryAction = {
+                        OutlinedButton(onClick = {
+                            viewModel.disableContactsSearch()
+                        }) {
+                            Text(
+                                stringResource(R.string.turn_off),
+                            )
+                        }
+                    }
+                )
+            }} else null,
+            items = contacts.toImmutableList(),
+            reverse = reverse,
+            key = "contacts"
+        )
         val wiki = wikipedia
         if (wiki != null) {
             SingleResult {
@@ -236,7 +304,27 @@ fun SearchColumn(
                 WebsiteItem(website = ws)
             }
         }
-        ListResults(files.toImmutableList(), reverse, key = "files")
+        ListResults(
+            before = if (missingFilesPermission){{
+                MissingPermissionBanner(
+                    modifier = Modifier.padding(8.dp),
+                    text = stringResource(R.string.missing_permission_files_search),
+                    onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
+                    secondaryAction = {
+                        OutlinedButton(onClick = {
+                            viewModel.disableFilesSearch()
+                        }) {
+                            Text(
+                                stringResource(R.string.turn_off),
+                            )
+                        }
+                    }
+                )
+            }} else null,
+            items = files.toImmutableList(),
+            reverse = reverse,
+            key = "files"
+        )
         item {
             HiddenResults()
         }
@@ -345,10 +433,13 @@ fun LazyListScope.ListResults(
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
 ) {
-    if (items.isEmpty()) return
     if (before != null) {
         item(key = "$key-before") {
-            PartialCardRow(isFirst = true, isLast = false, reverse = reverse) {
+            PartialCardRow(
+                isFirst = true,
+                isLast = items.isEmpty() && after == null,
+                reverse = reverse
+            ) {
                 before()
             }
         }
@@ -375,7 +466,11 @@ fun LazyListScope.ListResults(
     }
     if (after != null) {
         item(key = "$key-after") {
-            PartialCardRow(isFirst = false, isLast = true, reverse = reverse) {
+            PartialCardRow(
+                isFirst = items.isEmpty() && before == null,
+                isLast = true,
+                reverse = reverse
+            ) {
                 after()
             }
         }
