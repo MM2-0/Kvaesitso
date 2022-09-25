@@ -33,6 +33,7 @@ interface CustomAttributesRepository {
     suspend fun getAllTags(startsWith: String? = null): List<String>
     fun getItemsForTag(tag: String): Flow<List<Searchable>>
     fun addTag(item: Searchable, tag: String)
+    suspend fun cleanupDatabase(): Int
 }
 
 internal class CustomAttributesRepositoryImpl(
@@ -197,5 +198,15 @@ internal class CustomAttributesRepositoryImpl(
                 CrashReporter.logException(e)
             }
         }
+    }
+
+    override suspend fun cleanupDatabase(): Int {
+        val dao = appDatabase.backupDao()
+        var removed = 0
+        val job = scope.launch {
+            removed = dao.cleanUp()
+        }
+        job.join()
+        return removed
     }
 }
