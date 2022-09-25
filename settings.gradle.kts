@@ -106,7 +106,7 @@ dependencyResolutionManagement {
                 .version("1.3.0-beta03")
             alias("androidx.compose.material3")
                 .to("androidx.compose.material3", "material3")
-                .version("1.0.0-beta03")
+                .version("1.0.0-beta02")
 
             version("androidx.lifecycle", "2.6.0-alpha02")
             alias("androidx.lifecycle.viewmodel")
