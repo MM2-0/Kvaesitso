@@ -70,6 +70,8 @@ fun SearchColumn(
     val wikipedia by viewModel.wikipediaResult.observeAsState(null)
     val website by viewModel.websiteResult.observeAsState(null)
 
+    val isSearchEmpty by viewModel.isSearchEmpty.observeAsState(true)
+
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
@@ -219,7 +221,7 @@ fun SearchColumn(
             } else null
         )
         ListResults(
-            before = if (missingShortcutsPermission){{
+            before = if (missingShortcutsPermission && !isSearchEmpty){{
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(R.string.missing_permission_appshortcuts_search),
@@ -252,7 +254,7 @@ fun SearchColumn(
             }
         }
         ListResults(
-            before = if (missingCalendarPermission){{
+            before = if (missingCalendarPermission && !isSearchEmpty){{
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(R.string.missing_permission_calendar_search),
@@ -272,7 +274,7 @@ fun SearchColumn(
             key = "events"
         )
         ListResults(
-            before = if (missingContactsPermission){{
+            before = if (missingContactsPermission && !isSearchEmpty){{
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(R.string.missing_permission_contact_search),
@@ -305,7 +307,7 @@ fun SearchColumn(
             }
         }
         ListResults(
-            before = if (missingFilesPermission){{
+            before = if (missingFilesPermission && !isSearchEmpty){{
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
                     text = stringResource(R.string.missing_permission_files_search),
