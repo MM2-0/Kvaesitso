@@ -489,11 +489,11 @@ fun EditWebsearchDialog(
                 ) {
                     Divider()
                     ListPreference(
-                        title = stringResource(R.string.websearch_dialog_query_endcoding),
+                        title = stringResource(R.string.websearch_dialog_query_encoding),
                         items = listOf(
-                            stringResource(R.string.websearch_dialog_query_endcoding_url) to Websearch.QueryEncoding.UrlEncode,
-                            stringResource(R.string.websearch_dialog_query_endcoding_form) to Websearch.QueryEncoding.FormData,
-                            stringResource(R.string.websearch_dialog_query_endcoding_none) to Websearch.QueryEncoding.None,
+                            stringResource(R.string.websearch_dialog_query_encoding_url) to Websearch.QueryEncoding.UrlEncode,
+                            stringResource(R.string.websearch_dialog_query_encoding_form) to Websearch.QueryEncoding.FormData,
+                            stringResource(R.string.websearch_dialog_query_encoding_none) to Websearch.QueryEncoding.None,
                         ),
                         iconPadding = false,
                         value = encoding,
