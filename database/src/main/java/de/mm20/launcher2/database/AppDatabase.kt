@@ -18,7 +18,7 @@ import de.mm20.launcher2.database.entities.*
     IconEntity::class,
     IconPackEntity::class,
     WidgetEntity::class,
-    CustomAttributeEntity::class], version = 16, exportSchema = true)
+    CustomAttributeEntity::class], version = 17, exportSchema = true)
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -61,6 +61,7 @@ abstract class AppDatabase : RoomDatabase() {
                                     Migration_13_14(),
                                     Migration_14_15(),
                                     Migration_15_16(),
+                                    Migration_16_17(),
                             ).build()
             if (_instance == null) _instance = instance
             return instance
@@ -165,4 +166,11 @@ class Migration_15_16 : Migration(15, 16) {
             )
             """.trimIndent())
     }
+}
+
+class Migration_16_17 : Migration(16, 17) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Websearch ADD COLUMN encoding INTEGER")
+    }
+
 }

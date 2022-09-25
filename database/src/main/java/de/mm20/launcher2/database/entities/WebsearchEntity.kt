@@ -9,5 +9,6 @@ data class WebsearchEntity(
         var label: String,
         var color: Int,
         var icon: String?,
+        var encoding: Int?,
         @PrimaryKey(autoGenerate = true) val id: Long?
 )

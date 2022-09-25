@@ -208,6 +208,11 @@
     <string name="websearch_dialog_custom_icon">Custom icon</string>
     <string name="websearch_dialog_import_url">Import from URL</string>
     <string name="websearch_dialog_import_error">The given URL cannot be imported automatically. You can try a different URL or enter the required data manually.</string>
+    <string name="websearch_dialog_advanced">Advanced</string>
+    <string name="websearch_dialog_query_endcoding">Query encoding</string>
+    <string name="websearch_dialog_query_endcoding_url">Percent-encoding</string>
+    <string name="websearch_dialog_query_endcoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_query_endcoding_none">None</string>
     <string name="menu_edit_widgets">Edit widgets</string>
     <string name="widget_name_weather">Weather</string>
     <string name="widget_name_calendar">Calendar</string>

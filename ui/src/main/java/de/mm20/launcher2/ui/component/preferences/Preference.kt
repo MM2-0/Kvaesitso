@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 fun Preference(
     title: String,
     icon: @Composable (() -> Unit),
+    iconPadding: Boolean = true,
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
@@ -29,13 +30,17 @@ fun Preference(
             .padding(horizontal = 16.dp)
             .alpha(if (enabled) 1f else 0.38f),
     ) {
-        Box(
-            modifier = Modifier
-                .width(56.dp)
-                .padding(start = 4.dp),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            icon()
+        if (iconPadding) {
+            Box(
+                modifier = Modifier
+                    .width(56.dp)
+                    .padding(start = 4.dp),
+                contentAlignment = Alignment.CenterStart
+            ) {
+                icon()
+            }
+        } else {
+            Box(modifier = Modifier.size(0.dp))
         }
         Column(
             modifier = Modifier.weight(1f).padding(vertical = 16.dp)
@@ -63,13 +68,15 @@ fun Preference(
 fun Preference(
     title: String,
     icon: ImageVector? = null,
+    iconPadding: Boolean = true,
     summary: String? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true
 ) {
     Preference(
-        title, icon = {
+        title,
+        icon = {
             if (icon != null) {
                 Icon(
                     imageVector = icon,
@@ -77,6 +84,6 @@ fun Preference(
                     tint = MaterialTheme.colorScheme.primary,
                 )
             }
-        }, summary, onClick, controls, enabled
+        }, iconPadding, summary, onClick, controls, enabled
     )
 }

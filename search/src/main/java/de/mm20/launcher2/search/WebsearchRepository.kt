@@ -244,6 +244,7 @@ internal class WebsearchRepositoryImpl(
                         "label" to websearch.label,
                         "template" to websearch.urlTemplate,
                         "icon" to icon,
+                        "encoding" to websearch.encoding,
                     )
                 )
             }
@@ -289,6 +290,7 @@ internal class WebsearchRepositoryImpl(
                         color = json.optInt("color", 0),
                         label = json.getString("label"),
                         icon = iconFile?.absolutePath,
+                        encoding = json.optInt("encoding"),
                         id = null
                     )
                     websearches.add(entity)
