@@ -531,7 +531,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                         contentPadding = PaddingValues(
                                             start = MenuDefaults.DropdownMenuItemContentPadding.calculateStartPadding(LocalLayoutDirection.current),
                                             end = MenuDefaults.DropdownMenuItemContentPadding.calculateEndPadding(LocalLayoutDirection.current),
-                                            top = 8.dp,
+                                            top = if(availableTags.isNotEmpty()) 8.dp else 0.dp,
                                         ),
                                         text = {
                                             Box {
