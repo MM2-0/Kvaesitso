@@ -548,6 +548,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                                     singleLine = true,
                                                     keyboardActions = KeyboardActions(
                                                         onDone = {
+                                                            if (newTag.isBlank()) return@KeyboardActions
                                                             viewModel.createNewTag(newTag)
                                                             showAddMenu = false
                                                         }
@@ -558,6 +559,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                         trailingIcon = {
                                             Icon(
                                                 modifier = Modifier.clickable {
+                                                    if (newTag.isBlank()) return@clickable
                                                     viewModel.createNewTag(newTag)
                                                     showAddMenu = false
                                                 },
