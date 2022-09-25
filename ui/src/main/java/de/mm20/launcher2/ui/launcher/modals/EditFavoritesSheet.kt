@@ -71,7 +71,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
@@ -544,7 +546,10 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                                                 BasicTextField(
                                                     value = newTag,
                                                     onValueChange = { newTag = it.replace(",", "") },
-                                                    textStyle = LocalTextStyle.current,
+                                                    textStyle = LocalTextStyle.current.copy(
+                                                        color = LocalContentColor.current
+                                                    ),
+                                                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
                                                     singleLine = true,
                                                     keyboardActions = KeyboardActions(
                                                         onDone = {
