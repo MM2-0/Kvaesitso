@@ -474,4 +474,5 @@
     <string name="edit_favorites_dialog_tag_section_empty">I tag aggiunti verranno visualizzati qui</string>
     <string name="favorites_empty">Gli elementi appuntati e utilizzati di frequente appariranno qui</string>
     <string name="favorites_empty_tag">Non ci sono elementi con questo tag</string>
+    <string name="edit_favorites_dialog_new_tag">Crea tag…</string>
 </resources>

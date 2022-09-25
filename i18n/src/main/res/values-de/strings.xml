@@ -474,4 +474,5 @@
     <string name="favorites_empty_tag">Es gibt keine Elemente mit diesem Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
     <string name="favorites_empty">Angeheftete und häufig genutzte Elemente werden hier angezeigt</string>
+    <string name="edit_favorites_dialog_new_tag">Tag erstellen…</string>
 </resources>
