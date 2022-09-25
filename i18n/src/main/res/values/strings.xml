@@ -246,6 +246,7 @@
     <string name="edit_favorites_dialog_empty_section">Drag items here</string>
     <string name="edit_favorites_dialog_tags">Tags</string>
     <string name="edit_favorites_dialog_tag_section_empty">Pinned tags will appear here</string>
+    <string name="edit_favorites_dialog_new_tag">Create tag…</string>
     <!-- Nextcloud login flow, URL-->
     <string name="nextcloud_server_url">Nextcloud server URL</string>
     <!-- Nextcloud/Owncloud login flow, empty URL-->

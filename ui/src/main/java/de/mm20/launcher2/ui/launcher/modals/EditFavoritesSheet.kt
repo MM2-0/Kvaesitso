@@ -9,22 +9,64 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.hoverable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.Create
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.FilledTonalIconToggleButton
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -34,6 +76,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -51,10 +94,13 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.helper.*
+import de.mm20.launcher2.ui.launcher.helper.DraggableItem
+import de.mm20.launcher2.ui.launcher.helper.LazyDragAndDropRow
+import de.mm20.launcher2.ui.launcher.helper.LazyVerticalDragAndDropGrid
+import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlinx.coroutines.currentCoroutineContext
-import kotlinx.coroutines.isActive
 import kotlin.math.roundToInt
 
 @Composable
@@ -250,6 +296,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                         }
                     }
                 }
+
                 is FavoritesSheetGridItem.Divider -> {
                     val title = when (it.section) {
                         FavoritesSheetSection.ManuallySorted -> R.string.edit_favorites_dialog_pinned_sorted
@@ -379,6 +426,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                     }
 
                 }
+
                 is FavoritesSheetGridItem.EmptySection -> {
                     val shape = MaterialTheme.shapes.medium
                     val color = MaterialTheme.colorScheme.outline
@@ -420,6 +468,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                         )
                     }
                 }
+
                 is FavoritesSheetGridItem.Spacer -> {
                     Spacer(
                         modifier = Modifier
@@ -427,113 +476,157 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
                             .height(48.dp)
                     )
                 }
+
                 is FavoritesSheetGridItem.Tags -> {
                     var showAddMenu by remember { mutableStateOf(false) }
-                    if (availableTags.isNotEmpty() || pinnedTags.isNotEmpty()) {
-                        Column {
-                            Row(
-                                modifier = Modifier.padding(vertical = 8.dp),
-                                verticalAlignment = Alignment.CenterVertically
+                    Column {
+                        Row(
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .padding(end = 16.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                text = stringResource(R.string.edit_favorites_dialog_tags),
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                            Box() {
+                                FilledTonalIconButton(
+                                    modifier = Modifier.offset(x = 4.dp),
+                                    onClick = {
+                                        showAddMenu = true
+                                    }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Add,
+                                        contentDescription = null
+                                    )
+                                }
+                                DropdownMenu(
+                                    expanded = showAddMenu,
+                                    onDismissRequest = { showAddMenu = false }) {
+                                    for (tag in availableTags) {
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.Tag, null)
+                                            },
+                                            text = { Text(tag.label) },
+                                            onClick = {
+                                                viewModel.pinTag(tag)
+                                                showAddMenu = false
+                                            })
+                                    }
+                                    if (availableTags.isNotEmpty()) {
+                                        Divider()
+                                    }
+                                    var newTag by remember { mutableStateOf("") }
+                                    DropdownMenuItem(
+                                        leadingIcon = {
+                                            Icon(Icons.Rounded.Create, null)
+                                        },
+                                        contentPadding = PaddingValues(
+                                            start = MenuDefaults.DropdownMenuItemContentPadding.calculateStartPadding(LocalLayoutDirection.current),
+                                            end = MenuDefaults.DropdownMenuItemContentPadding.calculateEndPadding(LocalLayoutDirection.current),
+                                            top = 8.dp,
+                                        ),
+                                        text = {
+                                            Box {
+                                                if (newTag.isEmpty()) {
+                                                    Text(
+                                                        stringResource(R.string.edit_favorites_dialog_new_tag),
+                                                        color = LocalContentColor.current.copy(alpha = 0.5f)
+                                                    )
+                                                }
+                                                BasicTextField(
+                                                    value = newTag,
+                                                    onValueChange = { newTag = it.replace(",", "") },
+                                                    textStyle = LocalTextStyle.current,
+                                                    singleLine = true,
+                                                    keyboardActions = KeyboardActions(
+                                                        onDone = {
+                                                            viewModel.createNewTag(newTag)
+                                                            showAddMenu = false
+                                                        }
+                                                    )
+                                                )
+                                            }
+                                        },
+                                        trailingIcon = {
+                                            Icon(
+                                                modifier = Modifier.clickable {
+                                                    viewModel.createNewTag(newTag)
+                                                    showAddMenu = false
+                                                },
+                                                imageVector = Icons.Rounded.ArrowForward,
+                                                contentDescription = null
+                                            )
+                                        },
+                                        onClick = {  }
+                                    )
+                                }
+                            }
+
+                        }
+                        if (pinnedTags.isNotEmpty()) {
+                            val rowState = rememberLazyDragAndDropListState(
+                                listState = tagsListState,
+                            ) { from, to ->
+                                viewModel.moveTag(from, to)
+                            }
+                            LazyDragAndDropRow(
+                                modifier = Modifier.fillMaxWidth(),
+                                state = rowState
                             ) {
-                                Text(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .padding(end = 16.dp),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis,
-                                    text = stringResource(R.string.edit_favorites_dialog_tags),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    color = MaterialTheme.colorScheme.secondary
-                                )
-                                Box() {
-                                    FilledTonalIconButton(
-                                        modifier = Modifier.offset(x = 4.dp),
-                                        enabled = availableTags.isNotEmpty(),
-                                        onClick = {
-                                            showAddMenu = true
-                                        }) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Add,
-                                            contentDescription = null
+                                items(
+                                    pinnedTags,
+                                    key = { it.key }
+                                ) { tag ->
+                                    DraggableItem(state = rowState, key = tag.key) { dragged ->
+
+                                        FilterChip(
+                                            modifier = Modifier
+                                                .padding(end = 12.dp)
+                                                .pointerInput(null) {
+                                                    val coroutineContext =
+                                                        currentCoroutineContext()
+
+                                                },
+                                            selected = tag.tag == hoveredTag,
+                                            onClick = {},
+                                            label = { Text(tag.label) },
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.Tag, null)
+                                            },
+                                            trailingIcon = {
+                                                Icon(
+                                                    modifier = Modifier.clickable {
+                                                        viewModel.unpinTag(tag)
+                                                    },
+                                                    imageVector = Icons.Rounded.Close,
+                                                    contentDescription = null
+                                                )
+                                            },
+                                            elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
+                                            colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
+                                            else FilterChipDefaults.filterChipColors(
+                                                containerColor = MaterialTheme.colorScheme.surface
+                                            )
                                         )
                                     }
-                                    DropdownMenu(
-                                        expanded = showAddMenu,
-                                        onDismissRequest = { showAddMenu = false }) {
-                                        for (tag in availableTags) {
-                                            DropdownMenuItem(
-                                                leadingIcon = {
-                                                    Icon(Icons.Rounded.Tag, null)
-                                                },
-                                                text = { Text(tag.label) },
-                                                onClick = {
-                                                    viewModel.pinTag(tag)
-                                                    showAddMenu = false
-                                                })
-                                        }
-                                    }
                                 }
-
                             }
-                            if (pinnedTags.isNotEmpty()) {
-                                val rowState = rememberLazyDragAndDropListState(
-                                    listState = tagsListState,
-                                ) { from, to ->
-                                    viewModel.moveTag(from, to)
-                                }
-                                LazyDragAndDropRow(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    state = rowState
-                                ) {
-                                    items(
-                                        pinnedTags,
-                                        key = { it.key }
-                                    ) { tag ->
-                                        DraggableItem(state = rowState, key = tag.key) { dragged ->
-
-                                            FilterChip(
-                                                modifier = Modifier
-                                                    .padding(end = 12.dp)
-                                                    .pointerInput(null) {
-                                                        val coroutineContext =
-                                                            currentCoroutineContext()
-
-                                                    }
-                                                ,
-                                                selected = tag.tag == hoveredTag,
-                                                onClick = {},
-                                                label = { Text(tag.label) },
-                                                leadingIcon = {
-                                                    Icon(Icons.Rounded.Tag, null)
-                                                },
-                                                trailingIcon = {
-                                                    Icon(
-                                                        modifier = Modifier.clickable {
-                                                            viewModel.unpinTag(tag)
-                                                        },
-                                                        imageVector = Icons.Rounded.Close,
-                                                        contentDescription = null
-                                                    )
-                                                },
-                                                elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
-                                                colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
-                                                else FilterChipDefaults.filterChipColors(
-                                                    containerColor = MaterialTheme.colorScheme.surface
-                                                )
-                                            )
-                                        }
-                                    }
-                                }
-                            } else {
-                                Text(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(vertical = 4.dp),
-                                    text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = MaterialTheme.colorScheme.outline
-                                )
-                            }
+                        } else {
+                            Text(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                                text = stringResource(R.string.edit_favorites_dialog_tag_section_empty),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.outline
+                            )
                         }
                     }
                 }

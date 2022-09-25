@@ -306,4 +306,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         }
     }
 
+    fun createNewTag(newTag: String) {
+        pinTag(Tag(newTag))
+    }
+
 }
