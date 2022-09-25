@@ -183,6 +183,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
     val gridState = rememberLazyGridState()
     val tagsListState = rememberLazyListState()
     val tagsTitleSize = 48.dp.toPixels()
+    val tagsSpacing = 12.dp.toPixels()
     val state = rememberLazyDragAndDropGridState(
         gridState = gridState,
         onDragStart = {
@@ -211,7 +212,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
             ) {
                 val scroll = tagsListState.layoutInfo.viewportStartOffset
                 val tag = tagsListState.layoutInfo.visibleItemsInfo.find {
-                    position.x + scroll > it.offset && position.x + scroll < it.offset + it.size
+                    draggedCenter.x + scroll > it.offset && draggedCenter.x + scroll < it.offset + it.size - tagsSpacing
                 }
                 hoveredTag = tag?.index?.let { pinnedTags[it].tag }
             } else {

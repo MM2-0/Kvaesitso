@@ -55,8 +55,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     val pinnedTags = MutableLiveData<List<Tag>>(emptyList())
     val availableTags = MutableLiveData<List<Tag>>(emptyList())
 
-    suspend fun reload() {
-        loading.value = true
+    suspend fun reload(showLoadingIndicator: Boolean = true) {
+        loading.value = showLoadingIndicator
         manuallySorted = mutableListOf()
         manuallySorted = repository.getFavorites(
             manuallySorted = true,
@@ -236,8 +236,10 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
             gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
         if (item != null) {
             repository.removeFromFavorites(item.item)
-            gridItems.remove(item)
-            this.gridItems.value = gridItems
+            automaticallySorted.removeAll { it.key == item.item.key }
+                    || manuallySorted.removeAll { it.key == item.item.key }
+                    || frequentlyUsed.removeAll { it.key == item.item.key }
+            buildItemList()
         }
     }
 
@@ -302,7 +304,19 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         val item =
             gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
         if (item != null) {
+            automaticallySorted.removeAll { it.key == item.item.key }
+                    || manuallySorted.removeAll { it.key == item.item.key }
+                    || frequentlyUsed.removeAll { it.key == item.item.key }
+            buildItemList()
             customAttributesRepository.addTag(item.item, tag)
+            repository.unpinItem(item.item)
+            viewModelScope.launch {
+                frequentlyUsed = repository.getFavorites(
+                    frequentlyUsed = true,
+                    excludeTypes = listOf("tag"),
+                ).first().toMutableList()
+                buildItemList()
+            }
         }
     }
 
