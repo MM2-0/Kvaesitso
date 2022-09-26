@@ -31,13 +31,16 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 val favorites by viewModel.favorites.observeAsState()
-                SwitchPreference(
+                PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_favorites),
                     summary = stringResource(R.string.preference_search_favorites_summary),
                     icon = Icons.Rounded.Star,
-                    value = favorites == true,
-                    onValueChanged = {
+                    switchValue = favorites == true,
+                    onSwitchChanged = {
                         viewModel.setFavorites(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/favorites")
                     }
                 )
 

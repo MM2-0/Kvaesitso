@@ -35,6 +35,7 @@ import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
+import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
@@ -131,6 +132,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/widgets/clock") {
                             ClockWidgetSettingsScreen()
+                        }
+                        composable("settings/favorites") {
+                            FavoritesSettingsScreen()
                         }
                         composable("settings/badges") {
                             BadgeSettingsScreen()

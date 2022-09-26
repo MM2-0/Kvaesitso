@@ -13,4 +13,5 @@ class WidgetSettingsScreenVM: ViewModel(), KoinComponent {
     val calendarWidget = widgetRepository.isCalendarWidgetEnabled().asLiveData()
     val musicWidget = widgetRepository.isMusicWidgetEnabled().asLiveData()
     val weatherWidget = widgetRepository.isWeatherWidgetEnabled().asLiveData()
+    val favoritesWidget = widgetRepository.isFavoritesWidgetEnabled().asLiveData()
 }

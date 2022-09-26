@@ -4,6 +4,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Audiotrack
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -58,6 +59,17 @@ fun WidgetsSettingsScreen() {
                     icon = Icons.Rounded.Today,
                     onClick = {
                         navController?.navigate("settings/widgets/calendar")
+                    }
+                )
+            }
+
+            val favoritesWidget by viewModel.favoritesWidget.observeAsState()
+            if (favoritesWidget == true) {
+                Preference(
+                    title = stringResource(R.string.favorites),
+                    icon = Icons.Rounded.Star,
+                    onClick = {
+                        navController?.navigate("settings/favorites")
                     }
                 )
             }

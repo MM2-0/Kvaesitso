@@ -147,7 +147,20 @@ object FavoritesWidget : Widget() {
         )
     }
 
-    override val isConfigurable: Boolean = false
+    override val isConfigurable: Boolean = true
+
+    override fun configure(context: Activity, appWidgetHost: AppWidgetHost) {
+        val intent = Intent()
+        intent.component = ComponentName(
+            context.getPackageName(),
+            "de.mm20.launcher2.ui.settings.SettingsActivity"
+        )
+        intent.putExtra(
+            "de.mm20.launcher2.settings.ROUTE",
+            "settings/favorites"
+        )
+        context.tryStartActivity(intent)
+    }
 }
 
 
