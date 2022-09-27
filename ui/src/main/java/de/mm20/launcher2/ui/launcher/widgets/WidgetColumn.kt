@@ -7,20 +7,37 @@ import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.rememberDraggableState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExtendedFloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onPlaced
@@ -35,10 +52,9 @@ import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.ktx.conditional
+import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.ExternalWidget
 import kotlinx.coroutines.awaitCancellation
@@ -69,17 +85,18 @@ fun WidgetColumn(
         }
     }
 
-    val pickWidgetLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
-        val data = it.data ?: return@rememberLauncherForActivityResult
-        val widgetId = data.getIntExtra(
-            AppWidgetManager.EXTRA_APPWIDGET_ID,
-            AppWidgetManager.INVALID_APPWIDGET_ID
-        )
-        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return@rememberLauncherForActivityResult
-        if (it.resultCode == Activity.RESULT_OK) {
-            viewModel.addAppWidget(context, widgetId)
+    val pickWidgetLauncher =
+        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) {
+            val data = it.data ?: return@rememberLauncherForActivityResult
+            val widgetId = data.getIntExtra(
+                AppWidgetManager.EXTRA_APPWIDGET_ID,
+                AppWidgetManager.INVALID_APPWIDGET_ID
+            )
+            if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return@rememberLauncherForActivityResult
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.addAppWidget(context, widgetId)
+            }
         }
-    }
 
     Column(
         modifier = modifier
@@ -168,43 +185,47 @@ fun WidgetColumn(
             }
         }
 
-        val icon =
-            AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
-        ExtendedFloatingActionButton(
-            modifier = Modifier
-                .padding(16.dp)
-                .align(Alignment.CenterHorizontally),
-            icon = {
-                Icon(
-                    painter = rememberAnimatedVectorPainter(
-                        animatedImageVector = icon,
-                        atEnd = !editMode
-                    ), contentDescription = null
-                )
-            },
-            text = {
-                Text(
-                    stringResource(
-                        if (editMode) R.string.widget_add_widget
-                        else R.string.menu_edit_widgets
+        val editButton by viewModel.editButton.observeAsState()
+        if (editButton == true) {
+            val icon =
+                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
+            ExtendedFloatingActionButton(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.CenterHorizontally),
+                icon = {
+                    Icon(
+                        painter = rememberAnimatedVectorPainter(
+                            animatedImageVector = icon,
+                            atEnd = !editMode
+                        ), contentDescription = null
                     )
-                )
-            }, onClick = {
-                if (!editMode) {
-                    onEditModeChange(true)
-                } else {
-                    if (viewModel.getAvailableBuiltInWidgets().isEmpty()) {
-                        pickWidgetLauncher.launch(
-                            Intent(
-                                context,
-                                PickAppWidgetActivity::class.java
-                            )
+                },
+                text = {
+                    Text(
+                        stringResource(
+                            if (editMode) R.string.widget_add_widget
+                            else R.string.menu_edit_widgets
                         )
+                    )
+                }, onClick = {
+                    if (!editMode) {
+                        onEditModeChange(true)
                     } else {
-                        showAddDialog = true
+                        if (viewModel.getAvailableBuiltInWidgets().isEmpty()) {
+                            pickWidgetLauncher.launch(
+                                Intent(
+                                    context,
+                                    PickAppWidgetActivity::class.java
+                                )
+                            )
+                        } else {
+                            showAddDialog = true
+                        }
                     }
-                }
-            })
+                })
+
+        }
 
         if (showAddDialog) {
             val availableBuiltInWidgets =

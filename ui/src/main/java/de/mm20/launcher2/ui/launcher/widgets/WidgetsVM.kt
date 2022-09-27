@@ -6,17 +6,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.widgets.ExternalWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import de.mm20.launcher2.widgets.WidgetType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class WidgetsVM : ViewModel(), KoinComponent {
     private val widgetRepository: WidgetRepository by inject()
+
+    private val dataStore: LauncherDataStore by inject()
+
+    val editButton = dataStore.data.map { it.widgets.editButton }.asLiveData()
 
     val widgets = widgetRepository.getWidgets().asLiveData()
 

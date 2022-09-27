@@ -259,4 +259,9 @@ message Settings {
     bool enabled = 1;
   }
   AppShortcutSearchSettings app_shortcut_search = 25;
+
+  message WidgetSettings {
+    bool edit_button = 1;
+  }
+  WidgetSettings widgets = 26;
 }

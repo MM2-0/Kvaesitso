@@ -155,6 +155,10 @@ fun createFactorySettings(context: Context): Settings {
                 .setRadius(8)
                 .setOpacity(1f)
         )
+        .setWidgets(
+            Settings.WidgetSettings.newBuilder()
+                .setEditButton(true)
+        )
         .build()
 }
 
