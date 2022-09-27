@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -23,6 +24,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -55,7 +57,7 @@ abstract class SharedLauncherActivity(
 
     private val viewModel: LauncherActivityVM by viewModels()
 
-    private val homeTransitionManager = HomeTransitionManager()
+    internal val homeTransitionManager = HomeTransitionManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -186,16 +188,6 @@ abstract class SharedLauncherActivity(
         val windowController = WindowCompat.getInsetsController(window, window.decorView.rootView)
         windowController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        val navContract = intent?.let { GestureNavContract.fromIntent(it) }
-        if (navContract != null) {
-            homeTransitionManager.resolve(navContract)
-        } else {
-            onBackPressed()
-        }
     }
 
     enum class LauncherActivityMode {
