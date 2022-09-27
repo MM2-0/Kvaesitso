@@ -257,7 +257,7 @@ fun SearchColumn(
                 {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_appshortcuts_search),
+                        text = stringResource(R.string.missing_permission_appshortcuts_search, stringResource(R.string.app_name)),
                         onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
                         secondaryAction = {
                             OutlinedButton(onClick = {
