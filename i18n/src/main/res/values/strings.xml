@@ -667,6 +667,5 @@
     <string name="create_app_shortcut">Create shortcut</string>
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
-
     <string name="customize_tags_placeholder">Tags…</string>
 </resources>

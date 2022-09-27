@@ -475,4 +475,9 @@
     <string name="edit_favorites_dialog_tag_section_empty">Angeheftete Tags werden hier angezeigt</string>
     <string name="favorites_empty">Angeheftete und häufig genutzte Elemente werden hier angezeigt</string>
     <string name="edit_favorites_dialog_new_tag">Tag erstellen…</string>
+    <string name="websearch_dialog_query_encoding_url">URL-Encoding</string>
+    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_query_encoding_none">Keine</string>
+    <string name="websearch_dialog_query_encoding">Query-Kodierung</string>
+    <string name="websearch_dialog_advanced">Erweitert</string>
 </resources>
