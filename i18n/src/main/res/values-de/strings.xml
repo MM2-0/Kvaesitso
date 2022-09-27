@@ -480,4 +480,10 @@
     <string name="websearch_dialog_query_encoding_none">Keine</string>
     <string name="websearch_dialog_query_encoding">Query-Kodierung</string>
     <string name="websearch_dialog_advanced">Erweitert</string>
+    <string name="preference_edit_favorites_summary">Die Reihenfolge angehefteter Elemente ändern</string>
+    <string name="preference_category_favorites_frequently_used">Häufig verwendet</string>
+    <string name="preference_favorites_frequently_used_summary">Häufig verwendete Elemente in den Favoriten anzeigen</string>
+    <string name="preference_edit_button">Bearbeiten-Button</string>
+    <string name="preference_favorites_edit_button_summary">Eine Schaltfläche zum neu anordnen der Favoriten anzeigen</string>
+    <string name="preference_widgets_edit_button_summary">Eine Schaltfläche zum Hinzufügen, Entfernen und Anordnen von Widgets anzeigen</string>
 </resources>
