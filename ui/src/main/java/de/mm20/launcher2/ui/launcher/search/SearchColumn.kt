@@ -2,14 +2,39 @@ package de.mm20.launcher2.ui.launcher.search
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Person
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material.icons.rounded.Work
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
@@ -82,6 +107,7 @@ fun SearchColumn(
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
     val tagsScrollState = rememberScrollState()
+    val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
 
     LazyColumn(
         state = state,
@@ -115,56 +141,62 @@ fun SearchColumn(
                         )
                     }
                 } else null,
-                after = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                top = if (reverse) 8.dp else 4.dp,
-                                bottom = if (reverse) 4.dp else 8.dp,
-                                end = 8.dp
-                            ),
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
+                after = if (pinnedTags.isEmpty() && !favoritesEditButton) {
+                    null
+                } else {
+                    {
                         Row(
                             modifier = Modifier
-                                .weight(1f)
-                                .horizontalScroll(tagsScrollState)
-                                .padding(end = 12.dp),
+                                .fillMaxWidth()
+                                .padding(
+                                    top = if (reverse) 8.dp else 4.dp,
+                                    bottom = if (reverse) 4.dp else 8.dp,
+                                    end = if (favoritesEditButton) 8.dp else 0.dp
+                                ),
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            FilterChip(
-                                modifier = Modifier.padding(start = 16.dp),
-                                selected = selectedTag == null,
-                                onClick = { favoritesVM.selectTag(null) },
-                                leadingIcon = {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Star,
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(stringResource(R.string.favorites)) }
-                            )
-                            for (tag in pinnedTags) {
+                            Row(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .horizontalScroll(tagsScrollState)
+                                    .padding(end = 12.dp),
+                            ) {
                                 FilterChip(
-                                    modifier = Modifier.padding(start = 8.dp),
-                                    selected = selectedTag == tag.tag,
-                                    onClick = { favoritesVM.selectTag(tag.tag) },
+                                    modifier = Modifier.padding(start = 16.dp),
+                                    selected = selectedTag == null,
+                                    onClick = { favoritesVM.selectTag(null) },
                                     leadingIcon = {
                                         Icon(
-                                            imageVector = Icons.Rounded.Tag,
+                                            imageVector = Icons.Rounded.Star,
                                             contentDescription = null
                                         )
                                     },
-                                    label = { Text(tag.label) }
+                                    label = { Text(stringResource(R.string.favorites)) }
                                 )
+                                for (tag in pinnedTags) {
+                                    FilterChip(
+                                        modifier = Modifier.padding(start = 8.dp),
+                                        selected = selectedTag == tag.tag,
+                                        onClick = { favoritesVM.selectTag(tag.tag) },
+                                        leadingIcon = {
+                                            Icon(
+                                                imageVector = Icons.Rounded.Tag,
+                                                contentDescription = null
+                                            )
+                                        },
+                                        label = { Text(tag.label) }
+                                    )
+                                }
                             }
-                        }
-                        SmallFloatingActionButton(
-                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                            onClick = { showEditFavoritesDialog = true }
-                        ) {
-                            Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                            if (favoritesEditButton) {
+                                SmallFloatingActionButton(
+                                    elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                                    onClick = { showEditFavoritesDialog = true }
+                                ) {
+                                    Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                                }
+                            }
                         }
                     }
                 }
@@ -221,22 +253,24 @@ fun SearchColumn(
             } else null
         )
         ListResults(
-            before = if (missingShortcutsPermission && !isSearchEmpty){{
-                MissingPermissionBanner(
-                    modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_appshortcuts_search),
-                    onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
-                    secondaryAction = {
-                        OutlinedButton(onClick = {
-                            viewModel.disableAppShortcutSearch()
-                        }) {
-                            Text(
-                                stringResource(R.string.turn_off),
-                            )
+            before = if (missingShortcutsPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_appshortcuts_search),
+                        onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableAppShortcutSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
                         }
-                    }
-                )
-            }} else null,
+                    )
+                }
+            } else null,
             items = appShortcuts.toImmutableList(),
             reverse = reverse,
             key = "shortcuts"
@@ -254,42 +288,47 @@ fun SearchColumn(
             }
         }
         ListResults(
-            before = if (missingCalendarPermission && !isSearchEmpty){{
-                MissingPermissionBanner(
-                    modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_calendar_search),
-                    onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },secondaryAction = {
-                        OutlinedButton(onClick = {
-                            viewModel.disableCalendarSearch()
-                        }) {
-                            Text(
-                                stringResource(R.string.turn_off),
-                            )
+            before = if (missingCalendarPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_calendar_search),
+                        onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableCalendarSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
                         }
-                    }
-                )
-            }} else null,
+                    )
+                }
+            } else null,
             items = events.toImmutableList(),
             reverse = reverse,
             key = "events"
         )
         ListResults(
-            before = if (missingContactsPermission && !isSearchEmpty){{
-                MissingPermissionBanner(
-                    modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_contact_search),
-                    onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
-                    secondaryAction = {
-                        OutlinedButton(onClick = {
-                            viewModel.disableContactsSearch()
-                        }) {
-                            Text(
-                                stringResource(R.string.turn_off),
-                            )
+            before = if (missingContactsPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_contact_search),
+                        onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableContactsSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
                         }
-                    }
-                )
-            }} else null,
+                    )
+                }
+            } else null,
             items = contacts.toImmutableList(),
             reverse = reverse,
             key = "contacts"
@@ -307,22 +346,24 @@ fun SearchColumn(
             }
         }
         ListResults(
-            before = if (missingFilesPermission && !isSearchEmpty){{
-                MissingPermissionBanner(
-                    modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_files_search),
-                    onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
-                    secondaryAction = {
-                        OutlinedButton(onClick = {
-                            viewModel.disableFilesSearch()
-                        }) {
-                            Text(
-                                stringResource(R.string.turn_off),
-                            )
+            before = if (missingFilesPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_files_search),
+                        onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableFilesSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
                         }
-                    }
-                )
-            }} else null,
+                    )
+                }
+            } else null,
             items = files.toImmutableList(),
             reverse = reverse,
             key = "files"

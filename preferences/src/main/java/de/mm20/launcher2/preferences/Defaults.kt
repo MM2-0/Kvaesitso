@@ -59,6 +59,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setEnabled(true)
                 .setFrequentlyUsed(true)
                 .setFrequentlyUsedRows(1)
+                .setEditButton(true)
         )
         .setFileSearch(
             Settings.FilesSearchSettings

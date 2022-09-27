@@ -39,4 +39,18 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
             }
         }
     }
+
+    val editButton = dataStore.data.map { it.favorites.editButton }.asLiveData()
+    fun setEditButton(editButton: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setFavorites(
+                        it.favorites.toBuilder()
+                            .setEditButton(editButton)
+                    )
+                    .build()
+            }
+        }
+    }
 }

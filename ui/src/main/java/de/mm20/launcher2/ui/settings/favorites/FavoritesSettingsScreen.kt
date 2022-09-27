@@ -58,6 +58,19 @@ fun FavoritesSettingsScreen() {
                 )
             }
         }
+        item {
+            val editButton by viewModel.editButton.observeAsState()
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_edit_button),
+                    summary = stringResource(R.string.preference_favorites_edit_button_summary),
+                    value = editButton == true,
+                    onValueChanged = {
+                        viewModel.setEditButton(it)
+                    }
+                )
+            }
+        }
     }
 
     if (showEditSheet) {

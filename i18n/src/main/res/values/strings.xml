@@ -620,6 +620,8 @@
     <string name="preference_edit_favorites_summary">Change the order of pinned items</string>
     <string name="preference_category_favorites_frequently_used">Frequently used</string>
     <string name="preference_favorites_frequently_used_summary">Show frequently used items in favorites</string>
+    <string name="preference_edit_button">Edit button</string>
+    <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->

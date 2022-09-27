@@ -8,6 +8,7 @@ class Migration_9_10: VersionedMigration(9, 10) {
             builder.favorites.toBuilder()
                 .setFrequentlyUsed(true)
                 .setFrequentlyUsedRows(1)
+                .setEditButton(true)
         )
     }
 }

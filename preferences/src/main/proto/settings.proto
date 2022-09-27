@@ -128,6 +128,7 @@ message Settings {
     bool enabled = 1;
     bool frequently_used = 2;
     int32 frequently_used_rows = 3;
+    bool edit_button = 4;
   }
   FavoritesSettings favorites = 8;
 

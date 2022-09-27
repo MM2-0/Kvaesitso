@@ -22,6 +22,8 @@ open class FavoritesVM : ViewModel(), KoinComponent {
 
     val selectedTag = MutableStateFlow<String?>(null)
 
+    val showEditButton = dataStore.data.map { it.favorites.editButton }
+
     val pinnedTags = favoritesRepository.getFavorites(
         includeTypes = listOf("tag"),
         manuallySorted = true,

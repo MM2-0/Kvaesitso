@@ -1,14 +1,28 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,6 +39,7 @@ fun FavoritesWidget() {
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
     var showEditFavoritesDialog by remember { mutableStateOf(false) }
+    val favoritesEditButton by viewModel.showEditButton.collectAsState(false)
 
     Column {
         if (favorites.isNotEmpty()) {
@@ -41,54 +56,59 @@ fun FavoritesWidget() {
                 color = MaterialTheme.colorScheme.outline
             )
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    top = 4.dp,
-                    bottom = 8.dp,
-                    end = 8.dp
-                ),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
+        if (pinnedTags.isNotEmpty() || favoritesEditButton) {
             Row(
                 modifier = Modifier
-                    .weight(1f)
-                    .horizontalScroll(rememberScrollState()),
+                    .fillMaxWidth()
+                    .padding(
+                        top = 4.dp,
+                        bottom = 8.dp,
+                        end = if (favoritesEditButton) 8.dp else 0.dp
+                    ),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                FilterChip(
-                    modifier = Modifier.padding(start = 16.dp),
-                    selected = selectedTag == null,
-                    onClick = { viewModel.selectTag(null) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Rounded.Star,
-                            contentDescription = null
-                        )
-                    },
-                    label = { Text(stringResource(R.string.favorites)) }
-                )
-                for (tag in pinnedTags) {
+                Row(
+                    modifier = Modifier
+                        .weight(1f)
+                        .horizontalScroll(rememberScrollState())
+                        .padding(end = 12.dp),
+                ) {
                     FilterChip(
-                        modifier = Modifier.padding(start = 8.dp),
-                        selected = selectedTag == tag.tag,
-                        onClick = { viewModel.selectTag(tag.tag) },
+                        modifier = Modifier.padding(start = 16.dp),
+                        selected = selectedTag == null,
+                        onClick = { viewModel.selectTag(null) },
                         leadingIcon = {
                             Icon(
-                                imageVector = Icons.Rounded.Tag,
+                                imageVector = Icons.Rounded.Star,
                                 contentDescription = null
                             )
                         },
-                        label = { Text(tag.label) }
+                        label = { Text(stringResource(R.string.favorites)) }
                     )
+                    for (tag in pinnedTags) {
+                        FilterChip(
+                            modifier = Modifier.padding(start = 8.dp),
+                            selected = selectedTag == tag.tag,
+                            onClick = { viewModel.selectTag(tag.tag) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Tag,
+                                    contentDescription = null
+                                )
+                            },
+                            label = { Text(tag.label) }
+                        )
+                    }
                 }
-            }
-            SmallFloatingActionButton(
-                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                onClick = { showEditFavoritesDialog = true }
-            ) {
-                Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                if (favoritesEditButton) {
+                    SmallFloatingActionButton(
+                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                        onClick = { showEditFavoritesDialog = true }
+                    ) {
+                        Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                    }
+                }
             }
         }
     }
