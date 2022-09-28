@@ -47,9 +47,6 @@ dependencies {
     implementation(libs.google.drive)
     implementation(libs.google.oauth2)
 
-
-    implementation(libs.bundles.materialdialogs)
-
     implementation(project(":i18n"))
     implementation(project(":crashreporter"))
 }

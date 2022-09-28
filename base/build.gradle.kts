@@ -43,8 +43,6 @@ dependencies {
 
     implementation(libs.androidx.palette)
 
-    implementation(libs.bundles.materialdialogs)
-
     implementation(project(":ktx"))
     implementation(project(":i18n"))
 

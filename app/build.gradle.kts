@@ -99,7 +99,6 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.svg)
 
-    implementation(libs.bundles.materialdialogs)
 
     implementation(libs.koin.android)
 

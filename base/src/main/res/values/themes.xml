@@ -17,10 +17,6 @@
         <item name="textAppearanceLabelMedium">@style/Typography.Label.Medium</item>
         <item name="textAppearanceLabelSmall">@style/Typography.Label.Small</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
-        <item name="md_background_color">?colorSurface</item>
-        <item name="md_button_casing">literal</item>
-        <item name="md_font_title">@font/poppins500</item>
-        <item name="md_font_button">@font/poppins600</item>
     </style>
 
 

@@ -300,28 +300,6 @@ dependencyResolutionManagement {
                 .to("org.apache.commons", "commons-text")
                 .version("1.9")
 
-            version("materialdialogs", "3.3.0")
-            alias("materialdialogs.core")
-                .to("com.afollestad.material-dialogs", "core")
-                .versionRef("materialdialogs")
-            alias("materialdialogs.input")
-                .to("com.afollestad.material-dialogs", "input")
-                .versionRef("materialdialogs")
-            alias("materialdialogs.color")
-                .to("com.afollestad.material-dialogs", "color")
-                .versionRef("materialdialogs")
-            alias("materialdialogs.bottomsheets")
-                .to("com.afollestad.material-dialogs", "bottomsheets")
-                .versionRef("materialdialogs")
-            bundle(
-                "materialdialogs", listOf(
-                    "materialdialogs.core",
-                    "materialdialogs.input",
-                    "materialdialogs.color",
-                    "materialdialogs.bottomsheets"
-                )
-            )
-
             // 4.4.2 is the last GPL compatible version, don't update to 5.x
             alias("mathparser")
                 .to("org.mariuszgromada.math", "MathParser.org-mXparser")

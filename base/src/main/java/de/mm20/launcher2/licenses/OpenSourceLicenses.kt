@@ -86,14 +86,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://jsoup.org/"
     ),
     OpenSourceLibrary(
-        name = "Material Dialogs",
-        description = "Easy to use material design dialogs",
-        licenseName = R.string.apache_license_name,
-        licenseText = R.raw.license_apache_2,
-        copyrightNote = "Copyright (C) 2020 Wasabeef",
-        url = "https://github.com/afollestad/material-dialogs"
-    ),
-    OpenSourceLibrary(
         name = "mXparser (Version 4.4.2)",
         description = "A super easy, rich, fast and highly flexible math expression parser library",
         licenseName = R.string.bsd_2clause_name,

@@ -99,8 +99,6 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodelcompose)
 
-    implementation(libs.bundles.materialdialogs)
-
     implementation(libs.jsoup)
 
     implementation(libs.koin.android)
