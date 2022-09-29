@@ -484,4 +484,36 @@
     <string name="preference_grid_labels">Afficher les noms</string>
     <string name="preference_clock_widget_fill_height">Remplir la hauteur de l\'écran</string>
     <string name="preference_clock_widget_fill_height_summary">Ajouter de l\'espace supplémentaire au-dessus de l\'horloge pour remplir toute la hauteur de l\'écran</string>
+    <string name="frequently_used_show_in_favorites">Afficher dans les favoris</string>
+    <string name="websearch_dialog_query_encoding">Encodage de la requête</string>
+    <string name="websearch_dialog_query_encoding_url">Encodage-pourcent</string>
+    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_query_encoding_none">Aucun</string>
+    <string name="preference_category_favorites_frequently_used">Fréquemment utilisés</string>
+    <string name="preference_edit_favorites_summary">Changer l\'ordre des éléments épinglés</string>
+    <string name="preference_favorites_frequently_used_summary">Afficher les éléments fréquemment utilisés dans les favoris</string>
+    <string name="preference_edit_button">Bouton d\'édition</string>
+    <string name="preference_favorites_edit_button_summary">Afficher un bouton pour réordonner les favoris</string>
+    <string name="favorites_empty_tag">Il n\'y a pas d\'élément avec cette étiquette</string>
+    <string name="create_app_shortcut">Créer un raccourci</string>
+    <string name="frequently_used_rows">Nombre de colonnes</string>
+    <string name="customize_tags_placeholder">Étiquettes…</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="one">%1$d entrée a été supprimée.</item>
+        <item quantity="other">%1$d entrées ont été supprimées.</item>
+    </plurals>
+    <string name="preference_widgets_edit_button_summary">Afficher un bouton pour ajouter, supprimer et réordonner les widgets</string>
+    <string name="menu_remove">Supprimer</string>
+    <string name="missing_permission_appshortcuts_create">Mettre %1$s comme application par défaut pour créer des raccourcis.</string>
+    <string name="preference_debug_cleanup_database_summary">Supprimer les entrées cassées et inutilisées de la base de données du lanceur</string>
+    <string name="preference_debug_cleanup_database">Nettoyer la base de données</string>
+    <string name="edit_favorites_dialog_tag_section_empty">Les étiquettes épinglées apparaîtront ici</string>
+    <string name="edit_favorites_dialog_tags">Étiquettes</string>
+    <string name="edit_favorites_dialog_empty_section">Faites glisser les éléments ici</string>
+    <string name="preference_icon_shape_teardrop">Goutte d\'eau</string>
+    <string name="edit_favorites_dialog_new_tag">Créer une étiquette…</string>
+    <string name="websearch_dialog_advanced">Avancé</string>
+    <string name="preference_category_debug_tools">Outils</string>
+    <string name="favorites">Favoris</string>
+    <string name="favorites_empty">Les éléments épinglés et fréquemment utilisés apparaîtront ici</string>
 </resources>
