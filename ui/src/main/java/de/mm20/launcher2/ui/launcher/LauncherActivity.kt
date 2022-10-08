@@ -9,8 +9,9 @@ class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
         super.onNewIntent(intent)
         val navContract = intent?.let { GestureNavContract.fromIntent(it) }
         if (navContract != null) {
-            homeTransitionManager.resolve(navContract)
+            homeTransitionManager.resolve(navContract, window)
         } else {
+            homeTransitionManager.clear()
             onBackPressed()
         }
     }

@@ -73,7 +73,11 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
                     bounds.right > 0f && bounds.left < windowSize.width &&
                     bounds.bottom > 0f && bounds.top < windowSize.height
                 ) {
-                    return@HandleHomeTransition HomeTransitionParams(bounds)
+                    return@HandleHomeTransition HomeTransitionParams(
+                        bounds
+                    ) { _, _ ->
+                        ShapedLauncherIcon(size = LocalGridIconSize.current, icon = { icon })
+                    }
                 }
                 return@HandleHomeTransition null
             }

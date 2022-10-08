@@ -1,11 +1,9 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.WallpaperManager
-import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -16,34 +14,40 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
-import com.android.launcher3.GestureNavContract
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import kotlin.math.pow
 
 
 abstract class SharedLauncherActivity(
@@ -86,15 +90,22 @@ abstract class SharedLauncherActivity(
 
                             val systemUiController = rememberSystemUiController()
 
-                            val enterTransition = remember { mutableStateOf(1f) }
+                            val enterTransitionProgress = remember { mutableStateOf(1f) }
+                            var enterTransition by remember {
+                                mutableStateOf<HomeTransition?>(
+                                    null
+                                )
+                            }
 
                             LaunchedEffect(null) {
                                 homeTransitionManager
                                     .currentTransition
                                     .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                                     .collect {
-                                        enterTransition.value = 0f
-                                        enterTransition.animateTo(1f)
+                                        enterTransitionProgress.value = 0f
+                                        enterTransition = it
+                                        enterTransitionProgress.animateTo(1f)
+                                        enterTransition = null
                                     }
                             }
 
@@ -138,29 +149,33 @@ abstract class SharedLauncherActivity(
                                                 modifier = Modifier
                                                     .fillMaxSize()
                                                     .graphicsLayer {
-                                                        scaleX = 0.5f + enterTransition.value * 0.5f
-                                                        scaleY = 0.5f + enterTransition.value * 0.5f
-                                                        alpha = enterTransition.value
+                                                        scaleX =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        scaleY =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        alpha = enterTransitionProgress.value
                                                     },
                                                 darkStatusBarIcons = lightStatus,
                                                 darkNavBarIcons = lightNav,
                                             )
                                         }
+
                                         Settings.AppearanceSettings.Layout.Pager,
                                         Settings.AppearanceSettings.Layout.PagerReversed -> {
                                             PagerScaffold(
                                                 modifier = Modifier
                                                     .fillMaxSize()
                                                     .graphicsLayer {
-                                                        scaleX = enterTransition.value
-                                                        scaleY = enterTransition.value
-                                                        alpha = enterTransition.value
+                                                        scaleX = enterTransitionProgress.value
+                                                        scaleY = enterTransitionProgress.value
+                                                        alpha = enterTransitionProgress.value
                                                     },
                                                 darkStatusBarIcons = lightStatus,
                                                 darkNavBarIcons = lightNav,
                                                 reverse = layout == Settings.AppearanceSettings.Layout.PagerReversed
                                             )
                                         }
+
                                         else -> {}
                                     }
                                 }
@@ -170,6 +185,25 @@ abstract class SharedLauncherActivity(
                                         .navigationBarsPadding()
                                         .imePadding()
                                 )
+                                enterTransition?.let {
+                                    val dX = it.startBounds.center.x - it.targetBounds.center.x
+                                    val dY = it.startBounds.center.y - it.targetBounds.center.y
+                                    val s = (it.startBounds.minDimension / it.targetBounds.minDimension - 1f) * 0.5f
+                                    Box(
+                                        modifier = Modifier
+                                            .align(Alignment.TopStart)
+                                            .graphicsLayer {
+                                                val p = (enterTransitionProgress.value).pow(2f)
+                                                transformOrigin = TransformOrigin.Center
+                                                translationX = it.targetBounds.left + dX * (1 - p)
+                                                translationY = it.targetBounds.top + dY * (1 - p)
+                                                alpha = enterTransitionProgress.value
+                                                scaleX = 1f + s * (1 - p)
+                                                scaleY = 1f + s * (1 - p)
+                                            }) {
+                                        it.icon?.invoke(Offset(dX, dY)) { enterTransitionProgress.value }
+                                    }
+                                }
                             }
                         }
                     }
