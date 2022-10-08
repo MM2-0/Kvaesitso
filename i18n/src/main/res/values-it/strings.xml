@@ -155,7 +155,7 @@
     <string name="owncloud_server_url">URL server Owncloud</string>
     <string name="owncloud_server_invalid_url">Questo URL non punta a un\'installazione Owncloud valida</string>
     <string name="owncloud_password">Password</string>
-    <string name="edit_favorites_dialog_pinned_sorted">Appuntato: ordinati manualmente</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Appuntati: ordinati manualmente</string>
     <string name="owncloud_login_failed">Accesso fallito: nome utente o password errati.</string>
     <string name="owncloud_username_empty">Il nome utente non deve essere vuoto</string>
     <string name="owncloud_password_empty">La password non deve essere vuota</string>
@@ -480,4 +480,10 @@
     <string name="websearch_dialog_query_encoding">Codifica ricerche</string>
     <string name="websearch_dialog_query_encoding_url">Percentuale codifica</string>
     <string name="websearch_dialog_advanced">Avanzate</string>
+    <string name="preference_edit_favorites_summary">Modifica l\'ordine degli elementi appuntati</string>
+    <string name="preference_category_favorites_frequently_used">Usato frequentemente</string>
+    <string name="preference_favorites_frequently_used_summary">Mostra gli elementi usati di frequente nei preferiti</string>
+    <string name="preference_edit_button">Pulsante modifica</string>
+    <string name="preference_favorites_edit_button_summary">Mostra un pulsante per riordinare i preferiti</string>
+    <string name="preference_widgets_edit_button_summary">Mostra un pulsante per aggiungere, rimuovere e riorganizzare i widget</string>
 </resources>

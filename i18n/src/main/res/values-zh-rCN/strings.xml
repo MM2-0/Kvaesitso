@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="preference_light_nav_bar">暗色的导航条图标</string>
-    <string name="preference_dim_wallpaper_summary">在暗色主题中，使壁纸变暗</string>
+    <string name="preference_light_nav_bar">深色的导航条图标</string>
+    <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
     <string name="preference_screen_badges_summary">配置图标角标</string>
     <string name="preference_ms_signin_summary">登陆以查找OneDrive</string>
     <string name="preference_category_services_nextcloud">Nextcloud</string>
@@ -223,8 +223,8 @@
     <string name="grant_permission">授予</string>
     <string name="preference_screen_appearance">外观</string>
     <string name="preference_theme">主题</string>
-    <string name="preference_theme_light">亮色</string>
-    <string name="preference_theme_dark">暗色</string>
+    <string name="preference_theme_light">浅色</string>
+    <string name="preference_theme_dark">深色</string>
     <string name="preference_screen_colors">配色方案</string>
     <string name="preference_colors_default">默认</string>
     <string name="preference_colors_bw">黑白</string>
@@ -252,7 +252,7 @@
     <string name="preference_icon_pack">图标包</string>
     <string name="preference_icon_pack_summary_empty">没有已安装的图标包</string>
     <string name="preference_category_system_bars">系统栏</string>
-    <string name="preference_light_status_bar">暗色的状态栏图标</string>
+    <string name="preference_light_status_bar">深色的状态栏图标</string>
     <string name="preference_hide_status_bar">隐藏状态栏</string>
     <string name="preference_hide_nav_bar">隐藏导航条</string>
     <string name="preference_screen_services_summary">管理已连接的账户和服务</string>
@@ -393,8 +393,8 @@
     <string name="preference_custom_colors_n2">中性变体色</string>
     <string name="preference_colors_auto_generate">从主色中生成色彩方案</string>
     <string name="preference_custom_colors_error">错误色</string>
-    <string name="preference_category_custom_colors_light">亮色方案</string>
-    <string name="preference_category_custom_colors_dark">暗色方案</string>
+    <string name="preference_category_custom_colors_light">浅色方案</string>
+    <string name="preference_category_custom_colors_dark">深色方案</string>
     <string name="preference_search_currencyconverter">货币转换器</string>
     <string name="preference_search_currencyconverter_summary">定期下载汇率来转换货币</string>
     <string name="preference_layout">布局</string>
@@ -449,4 +449,37 @@
     <string name="preference_grid_labels_summary">在图标底下显示应用名称</string>
     <string name="preference_clock_widget_fill_height">全屏高度</string>
     <string name="preference_clock_widget_fill_height_summary">在时钟上方插入额外的空间以填补整个屏幕的高度</string>
+    <string name="websearch_dialog_query_encoding">查询的编码方式</string>
+    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="websearch_dialog_query_encoding_none">无</string>
+    <string name="customize_tags_placeholder">标签…</string>
+    <string name="websearch_dialog_query_encoding_url">百分比编码</string>
+    <string name="apps_profile_main">个人</string>
+    <string name="preference_edit_favorites_summary">改变固定项目的顺序</string>
+    <string name="preference_category_favorites_frequently_used">常用的</string>
+    <string name="preference_favorites_frequently_used_summary">在收藏夹显示常用的项目</string>
+    <string name="preference_edit_button">编辑按钮</string>
+    <string name="preference_favorites_edit_button_summary">显示一个按钮以重新排列收藏夹</string>
+    <string name="preference_widgets_edit_button_summary">显示一个按钮以添加、移除和重新排列组件</string>
+    <string name="frequently_used_show_in_favorites">显示在收藏夹</string>
+    <string name="edit_favorites_dialog_tags">标签</string>
+    <string name="edit_favorites_dialog_tag_section_empty">被固定的标签将出现在这里</string>
+    <string name="missing_permission_appshortcuts_create">设置%1$s为默认桌面应用以创建快捷方式.</string>
+    <string name="preference_debug_cleanup_database">清理数据库</string>
+    <string name="preference_debug_cleanup_database_summary">从启动器数据库中删除损坏和未使用的条目</string>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="other">%1$d条目已经被移除.</item>
+    </plurals>
+    <string name="favorites_empty">被固定的和常用的项目会出现在这里</string>
+    <string name="favorites_empty_tag">此标签里没有项目</string>
+    <string name="frequently_used_rows">行数</string>
+    <string name="edit_favorites_dialog_new_tag">创建标签…</string>
+    <string name="preference_category_debug_tools">工具</string>
+    <string name="apps_profile_work">工作</string>
+    <string name="preference_icon_shape_teardrop">泪滴形</string>
+    <string name="edit_favorites_dialog_empty_section">拖动项目到此</string>
+    <string name="websearch_dialog_advanced">高级</string>
+    <string name="menu_remove">移除</string>
+    <string name="favorites">收藏夹</string>
+    <string name="create_app_shortcut">创建快捷方式</string>
 </resources>
