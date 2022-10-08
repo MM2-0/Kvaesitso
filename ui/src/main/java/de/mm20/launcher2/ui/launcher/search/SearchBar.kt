@@ -20,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.Wallpaper
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -107,6 +109,9 @@ fun SearchBar(
                     },
                     text = {
                         Text(stringResource(R.string.wallpaper))
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Rounded.Wallpaper, contentDescription = null)
                     }
                 )
                 DropdownMenuItem(
@@ -116,6 +121,9 @@ fun SearchBar(
                     },
                     text = {
                         Text(stringResource(R.string.settings))
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
                     }
                 )
             }
