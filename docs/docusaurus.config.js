@@ -35,7 +35,7 @@ const config = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/MM2-0/Kvaesitso/tree/main/docs/docs/',
+            'https://github.com/MM2-0/Kvaesitso/tree/main/docs/',
         },
         blog: false,
         theme: {

@@ -12,7 +12,7 @@ There are two ways of creating a websearch shortcut:
 
 Some websearches can be imported automatically (if they support the [OpenSearch description format](https://developer.mozilla.org/en-US/docs/Web/OpenSearch)
 
-- In the create websearch dialog, click the download icon in the top left-corner
+- In the create websearch dialog, click the download icon in the top right corner
 - Enter the base URL of the website you are trying to import (for example: `github.com`)
 - Click the arrow next to the text field
 - If the website is supported, all the required fields will be filled automatically.
