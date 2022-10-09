@@ -1,22 +1,12 @@
-# :ms-services
+# Microsoft Graph Services
 
-⚠️ Depends on non-free external services.
+Microsoft Graph Services are used for OneDrive search. To enable OneDrive integration in your builds, follow these steps:
 
-This module manages API calls to Microsoft APIs and connected Microsoft accounts.
-
-## Configuration
-
-This module requires additional configuration in order to work properly. You can skip this step but
-then Microsoft API related features (e.g. OneDrive search) won't be available.
-
-In order to use Microsoft Graph APIs, you need to setup a new project in the Microsoft Azure Portal first.
-
-1. Open the [Microsoft Azure Portal](https://portal.azure.com)
+1. Go to the [Microsoft Azure Portal](https://portal.azure.com)
 1. Create a new project.
-   1. Search for Azure Active Directory
-   1. On the left side, select App registrations
+   1. Search for App Registrations
    1. Add a new registration
-      1. Supported account types: Personal Microsoft Accounts only
+      1. Supported account types: Accounts in any organizational directory and personal Microsoft accounts
 1. Add an authentication platform
    1. Go to Authentication
    1. Add a platform > Android
@@ -28,7 +18,7 @@ In order to use Microsoft Graph APIs, you need to setup a new project in the Mic
    1. Add package name (de.mm20.launcher2.release) and signature hash of your release key
 1. Download the client details
    1. In the debug client row, click on View
-   1. Copy the JSON below MSAL Configuration to ./src/debug/res/raw/msal_auth_config.json
+   1. Copy the JSON below MSAL Configuration to `ms-services/src/debug/res/raw/msal_auth_config.json` (you'll need to create this file first)
 1. Repeat the previous step for the release config
 1. Add the required scopes
    1. Go to API permissions
@@ -38,4 +28,3 @@ In order to use Microsoft Graph APIs, you need to setup a new project in the Mic
       - Files.Read.All
       - User.Read
    1. Click Add permissions
-

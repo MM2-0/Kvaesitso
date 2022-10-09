@@ -2,18 +2,9 @@
 
 <img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/assets/icons/ic_launcher.png" width="128">
 
-Kvæsitso is a launcher application for Android which replaces the device's default home screen. It
-has been built from scratch, meaning it is not based on the AOSP launcher (like many other third
-party launchers) nor does it try to recreate this launcher. Instead, Kvæsitso follows its own
-concepts.
+Kvæsitso is a search focused, free and open source launcher for Android.
 
-The main feature is a global search which does not only let you search on device for apps, contacts,
-and calendar events, but also on web services like Wikipedia or your Nextcloud Instance.
-Additionally it includes some useful tools, for example a calculator and a unit converter. You are
-looking for a document or an information? Just search for it and Kvæsitso shows you the fastest way
-to it.
-
-[Screenshots](https://github.com/MM2-0/Kvaesitso/wiki/Screenshots)
+[Website and documentation](https://kvaesitso.mm20.de)
 
 ## Installation
 
@@ -48,24 +39,6 @@ If you have an idea for a new feature, just create a new issue. However, there i
 they will be implemented. If it's important for you, consider implementing it yourself,
 see [contribute](#contribute).
 
-## Build
-
-Just open up the project in the latest stable version of Android Studio and run it. Before you do,
-follow the steps below:
-
-### Additional configuration
-
-Some modules require additional configuration in order to work properly (for example some modules
-require API keys which are not included in this repository). While you can still build this app
-successfully even if you skip these steps, some features might be disabled in the resulting app if
-you do so. Please refer to the instructions in the respective modules to learn how to set them up
-properly.
-
-Modules that require additional configuration:
-
-- `:g-services`
-- `:ms-services`
-- `:weather`
 
 ## Contribute
 
@@ -81,6 +54,7 @@ If you want to help translating, see [how to translate the project.](./i18n/read
 
 ## Links
 
+- User guide: https://kvaesitso.mm20.de/docs/user-guide
 - Telegram group: https://t.me/Kvaesitso
 - F-Droid-Repository: https://raw.githubusercontent.com/MM2-0/fdroid/master/fdroid/repo
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
