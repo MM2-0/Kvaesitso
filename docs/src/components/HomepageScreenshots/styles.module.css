@@ -1,0 +1,8 @@
+.screenshot {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+.screenshot > img {
+  max-width: 350px;
+}
