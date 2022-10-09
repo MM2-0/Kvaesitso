@@ -1,2 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="unit_meter">
+        <item quantity="other">メートル</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">km</string>
+    <plurals name="unit_kilometer">
+        <item quantity="other">キロメートル</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_centimeter">
+        <item quantity="other">センチメートル</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <plurals name="unit_millimeter">
+        <item quantity="other">ミリメートル</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">インチ</item>
+    </plurals>
+    <string name="unit_foot_symbol">ft</string>
+    <plurals name="unit_foot">
+        <item quantity="other">フィート</item>
+    </plurals>
+    <string name="unit_yard_symbol">yd</string>
+    <plurals name="unit_yard">
+        <item quantity="other">ヤード</item>
+    </plurals>
+    <string name="unit_mile_symbol">mi</string>
+    <plurals name="unit_mile">
+        <item quantity="other">マイル</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">浬</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="other">平方メートル</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">平方キロメートル</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">平方センチメートル</item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">平方ミリメートル</item>
+    </plurals>
+    <string name="unit_hectare_symbol">ha</string>
+    <plurals name="unit_hectare">
+        <item quantity="other">ヘクター</item>
+    </plurals>
+    <string name="unit_acre_symbol">ac</string>
+    <plurals name="unit_acre">
+        <item quantity="other">エーカー</item>
+    </plurals>
+    <plurals name="unit_second">
+        <item quantity="other">秒</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">ms</string>
+    <plurals name="unit_millisecond">
+        <item quantity="other">ミリ秒</item>
+    </plurals>
+    <string name="unit_minute_symbol">分</string>
+    <plurals name="unit_minute">
+        <item quantity="other">分</item>
+    </plurals>
+    <string name="unit_hour_symbol">時</string>
+    <plurals name="unit_hour">
+        <item quantity="other">時</item>
+    </plurals>
+    <string name="unit_day_symbol">日</string>
+    <plurals name="unit_day">
+        <item quantity="other">日</item>
+    </plurals>
+    <string name="unit_year_symbol">年</string>
+    <plurals name="unit_year">
+        <item quantity="other">年</item>
+    </plurals>
+    <string name="unit_ounce_symbol">oz.</string>
+    <plurals name="unit_pound">
+        <item quantity="other">ポンド</item>
+    </plurals>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_meter_symbol">m</string>
+    <string name="unit_inch_symbol">in</string>
+    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_ounce">
+        <item quantity="other">オンス</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="other">米トン</item>
+    </plurals>
+</resources>
