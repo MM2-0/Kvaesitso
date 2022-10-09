@@ -1,2 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_share">共有</string>
+    <string name="menu_uninstall">アンインストール</string>
+    <string name="wind_north">北</string>
+    <string name="wind_east">東</string>
+    <string name="wind_north_north_east">北々東</string>
+    <string name="wind_north_east">北東</string>
+    <string name="wallpaper">壁紙</string>
+    <string name="wind_east_north_east">東北東</string>
+    <string name="wind_east_south_east">東南東</string>
+    <string name="wind_south_south_east">南南東</string>
+    <string name="wind_south">南</string>
+    <string name="wind_south_south_west">南南西</string>
+    <string name="wind_south_west">南西</string>
+    <string name="wind_west_south_west">西南西</string>
+    <string name="wind_west">西</string>
+    <string name="wind_west_north_west">西北西</string>
+    <string name="wind_north_west">北西</string>
+    <string name="app_name">Kvæsitso</string>
+    <string name="menu_delete">削除</string>
+    <string name="settings">設定</string>
+    <string name="wind_south_east">南東</string>
+    <string name="wind_north_north_west">北北西</string>
+    <string name="wikipedia_url">https://ja.wikipedia.org</string>
+</resources>
