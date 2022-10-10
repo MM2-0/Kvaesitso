@@ -1,8 +1,10 @@
 package de.mm20.launcher2.ui.component
 
-import android.graphics.*
 import android.graphics.Matrix
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -23,17 +25,30 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.toRect
-import androidx.compose.ui.graphics.*
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.asComposePath
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toAndroidRect
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
@@ -41,7 +56,19 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.icons.ClockLayer
+import de.mm20.launcher2.icons.ClockSublayer
+import de.mm20.launcher2.icons.ClockSublayerRole
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.DynamicLauncherIcon
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.LauncherIconLayer
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TextLayer
+import de.mm20.launcher2.icons.TintedClockLayer
+import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
@@ -139,7 +166,7 @@ fun ShapedLauncherIcon(
                                 )
                             }
                         } else Modifier
-                        ),
+                    ),
                 color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {
@@ -219,6 +246,7 @@ private fun IconLayer(
         is ClockLayer -> {
             ClockLayer(layer.sublayers, scale = layer.scale, tintColor = null)
         }
+
         is TintedClockLayer -> {
             ClockLayer(
                 layer.sublayers,
@@ -228,6 +256,7 @@ private fun IconLayer(
             )
 
         }
+
         is ColorLayer -> {
             Box(
                 modifier = Modifier
@@ -241,6 +270,7 @@ private fun IconLayer(
                     )
             )
         }
+
         is StaticIconLayer -> {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 withTransform({
@@ -253,6 +283,7 @@ private fun IconLayer(
                 }
             }
         }
+
         is TextLayer -> {
             Text(
                 text = layer.text,
@@ -266,6 +297,7 @@ private fun IconLayer(
                 },
             )
         }
+
         is TintedIconLayer -> {
             val color =
                 if (layer.color == 0) defaultTintColor.toArgb()
@@ -284,6 +316,7 @@ private fun IconLayer(
                 }
             }
         }
+
         is TransparentLayer -> {}
     }
 }
@@ -347,12 +380,15 @@ private fun ClockLayer(
                         ClockSublayerRole.Hour -> {
                             rotate(hour.value / 12f * 360f)
                         }
+
                         ClockSublayerRole.Minute -> {
                             rotate(minute.value / 60f * 360f)
                         }
+
                         ClockSublayerRole.Second -> {
                             rotate(second.value / 60f * 360f)
                         }
+
                         ClockSublayerRole.Static -> {}
                     }
                 }) {
@@ -379,6 +415,7 @@ fun getShape(iconShape: IconShape): Shape {
         IconShape.Hexagon -> HexagonShape
         IconShape.Pentagon -> PentagonShape
         IconShape.Teardrop -> TeardropShape
+        IconShape.Pebble -> PebbleShape
         IconShape.EasterEgg -> EasterEggShape
         IconShape.UNRECOGNIZED -> CircleShape
     }
@@ -503,6 +540,44 @@ private val TeardropShape: Shape
             0f, 0.224f * size.height,
             0.224f * size.width, 0f,
             0.5f * size.width, 0f,
+        )
+        close()
+    }
+
+private val PebbleShape: Shape
+    get() = GenericShape { size, _ ->
+        moveTo(0.55f * size.width, 0f * size.height)
+        cubicTo(
+            0.25f * size.width,
+            0f * size.height,
+            0f * size.width,
+            0.25f * size.height,
+            0f * size.width,
+            0.5f * size.height
+        )
+        cubicTo(
+            0f * size.width,
+            0.78f * size.height,
+            0.28f * size.width,
+            1f * size.height,
+            0.55f * size.width,
+            1f * size.height
+        )
+        cubicTo(
+            0.85f * size.width,
+            1f * size.height,
+            1f * size.width,
+            0.85f * size.height,
+            1f * size.width,
+            0.58f * size.height
+        )
+        cubicTo(
+            1f * size.width,
+            0.3f * size.height,
+            0.86f * size.width,
+            0f * size.height,
+            0.55f * size.width,
+            0f * size.height
         )
         close()
     }
