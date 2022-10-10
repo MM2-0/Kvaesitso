@@ -46,7 +46,7 @@ Contributions are always welcome. If you want to fix any existing issues or impl
 features just create a new pull request. If you plan to implement any (bigger) new features, please
 create an issue first so we can discuss if and how this feature should be implemented.
 
-If you want to help translating, see [how to translate the project.](./i18n/readme.md)
+If you want to help translating, see [how to translate the project.](https://kvaesitso.mm20.de/docs/contributor-guide/i18n)
 
 <a href="https://i18n.mm20.de/engage/kvaesitso/">
 <img src="https://i18n.mm20.de/widgets/kvaesitso/-/287x66-grey.png" alt ="Translation Status">

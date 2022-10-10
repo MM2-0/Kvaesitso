@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Kvæsitso',
-  tagline: 'A search focused, free and open source launcher for Android',
+  tagline: 'A search-focused, free and open source launcher for Android',
   url: 'https://kvaesitso.mm20.de',
   baseUrl: '/',
   onBrokenLinks: 'throw',
