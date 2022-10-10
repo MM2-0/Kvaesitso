@@ -146,6 +146,8 @@ class IconPackManager(
             pm.getResourcesForApplication(pack)
         } catch (e: Resources.NotFoundException) {
             return null
+        } catch (e: PackageManager.NameNotFoundException) {
+            return null
         }
 
         if (mask != null) {
