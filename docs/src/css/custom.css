@@ -33,6 +33,12 @@
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
 }
 
+.MuiSvgIcon-root {
+  vertical-align: top;
+  display: inline-block;
+  padding: 2px;
+}
+
 /* poppins-regular - latin */
 @font-face {
   font-family: 'Poppins';

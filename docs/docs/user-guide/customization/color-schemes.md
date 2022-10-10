@@ -22,7 +22,7 @@ Since Kvæsitso uses Material Design 3, all colors are based on the [Material 3 
 
 In simple mode, you specify six base colors from which a light and a dark color scheme will be generated.
 
-:::info
+:::tip
 You can also specify only one color, the primary color, and generate the rest using the “Generate from primary color” option in the overflow menu. This will generate a whole palette from one color, using the same method that wallpaper-based color schemes use to generate the entire color scheme from only one base color.
 :::
 
@@ -41,8 +41,8 @@ Several color tones (brightness levels) are generated from each color. These ton
 
 In advanced mode, you have full control over every color that might or might not be used anywhere in the launcher UI. In this mode, you can customize light and dark mode color scheme seperately. Colors are used as is, without any further processing.
 
-:::info
-Since there are quite a lot of different colors and color shades, it can be tedious to customize every single color. The recommended approach is to set the base colors in simple mode and then switch to advanced mode to tweak only individual colors.
+:::tip
+Since there are quite a lot of different colors and color shades, it can be tedious to customize every single color. A good approach is to set the base colors in simple mode and then switch to advanced mode to tweak only individual colors.
 :::
 
 :::caution

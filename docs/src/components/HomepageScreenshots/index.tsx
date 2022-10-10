@@ -4,8 +4,8 @@ import ThemedImage from '@theme/ThemedImage'
 
 export default function HomepageScreenshots(): JSX.Element {
   return (
-    <section>
-      <div className="container padding-vert--xl">
+    <section className="padding-vert--xl">
+      <div className="container">
         <div className="row">
           <div className="col col--4">
             <div className={styles.screenshot}>
@@ -40,6 +40,12 @@ export default function HomepageScreenshots(): JSX.Element {
             </div>
           </div>
         </div>
+      </div>
+      <div className={styles.wallpaperLink}>
+        Wallpaper: Johannes Plenio on{' '}
+        <a target="_blank" href="https://unsplash.com/photos/ztiulja606U">
+          Unsplash.com
+        </a>
       </div>
     </section>
   )

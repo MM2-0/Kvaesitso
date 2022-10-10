@@ -6,3 +6,8 @@
 .screenshot > img {
   max-width: 350px;
 }
+
+.wallpaperLink {
+  text-align: center;
+  font-size: 0.8rem;
+}
