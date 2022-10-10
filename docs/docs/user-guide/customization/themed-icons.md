@@ -21,4 +21,4 @@ In Android 13, a [new API](https://developer.android.com/develop/ui/views/launch
 
 ## Auto generated themed icons
 
-There is also an option to force themed icons to all icons (Settings > Appearance > Force themed icons). This scales the foreground layer of an icon down, adds a monochrome color filter and replaces the background with a solid color. Using this option is generally not recommended because icons may become illegible, but it might work well in combination with certain monochrome icon packs. You can also apply auto generated themed icons on a per-app basis by using the [customize menu](per-app-customization).
+There is also an option to force themed icons to all icons (Settings > Appearance > Force themed icons). This scales the foreground layer of an icon down, adds a monochrome color filter and replaces the background with a solid color. Using this option is generally not recommended because icons may become illegible, but it might work well in combination with certain monochrome icon packs. You can also apply auto generated themed icons on a per-app basis by using the [customize menu](per-item-customization).
