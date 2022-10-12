@@ -18,14 +18,6 @@ allprojects {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://jitpack.io")
-        maven(url = "https://oss.sonatype.org/content/repositories/snapshots")
-        maven(url = "https://androidx.dev/snapshots/builds/7559387/artifacts/repository/")
-        maven(url = "https://dl.bintray.com/amulyakhare/maven") {
-            content {
-                includeGroup("com.amulyakhare")
-            }
-        }
         maven(url = "https://pkgs.dev.azure.com/MicrosoftDeviceSDK/DuoSDK-Public/_packaging/Duo-SDK-Feed/maven/v1")
         jcenter() // For tinypinyin
     }
