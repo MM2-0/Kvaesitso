@@ -43,7 +43,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -381,7 +382,7 @@ fun SearchColumn(
 }
 
 fun LazyListScope.GridResults(
-    items: ImmutableList<Searchable>,
+    items: ImmutableList<PinnableSearchable>,
     columns: Int,
     reverse: Boolean,
     showLabels: Boolean,
@@ -446,7 +447,7 @@ fun LazyListScope.GridResults(
 @Composable
 fun GridRow(
     modifier: Modifier = Modifier,
-    items: ImmutableList<Searchable>,
+    items: ImmutableList<PinnableSearchable>,
     columns: Int,
     showLabels: Boolean,
 ) {
@@ -470,7 +471,7 @@ fun GridRow(
 }
 
 fun LazyListScope.ListResults(
-    items: ImmutableList<Searchable>,
+    items: ImmutableList<PinnableSearchable>,
     reverse: Boolean,
     key: String,
     before: (@Composable () -> Unit)? = null,
@@ -523,7 +524,7 @@ fun LazyListScope.ListResults(
 @Composable
 fun ListRow(
     modifier: Modifier = Modifier,
-    item: Searchable,
+    item: PinnableSearchable,
 ) {
     Box(
         modifier = modifier.padding(

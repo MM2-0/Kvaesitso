@@ -17,12 +17,12 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.ktx.romanize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -48,9 +48,9 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
     val createShortcutTarget = MutableLiveData<FavoritesSheetSection?>(null)
 
-    private var manuallySorted: MutableList<Searchable> = mutableListOf()
-    private var automaticallySorted: MutableList<Searchable> = mutableListOf()
-    private var frequentlyUsed: MutableList<Searchable> = mutableListOf()
+    private var manuallySorted: MutableList<PinnableSearchable> = mutableListOf()
+    private var automaticallySorted: MutableList<PinnableSearchable> = mutableListOf()
+    private var frequentlyUsed: MutableList<PinnableSearchable> = mutableListOf()
 
     val pinnedTags = MutableLiveData<List<Tag>>(emptyList())
     val availableTags = MutableLiveData<List<Tag>>(emptyList())
@@ -179,7 +179,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         )
     }
 
-    fun getIcon(searchable: Searchable, size: Int): Flow<LauncherIcon?> {
+    fun getIcon(searchable: PinnableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconRepository.getIcon(searchable, size)
     }
 

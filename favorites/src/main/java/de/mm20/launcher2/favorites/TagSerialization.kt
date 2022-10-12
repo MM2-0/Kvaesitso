@@ -1,14 +1,14 @@
 package de.mm20.launcher2.favorites
 
-import android.content.Context
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
 import org.json.JSONObject
 
 class TagSerializer: SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as Tag
         val json = JSONObject()
         json.put("tag", searchable.tag)
@@ -20,7 +20,7 @@ class TagSerializer: SearchableSerializer {
 }
 
 class TagDeserializer: SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
 
         return Tag(json.getString("tag"))

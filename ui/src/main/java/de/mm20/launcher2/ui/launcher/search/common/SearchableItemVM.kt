@@ -10,15 +10,15 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.Application
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class SearchableItemVM(
-    private val searchable: Searchable
+    private val searchable: PinnableSearchable
 ) : KoinComponent {
     protected val favoritesRepository: FavoritesRepository by inject()
     protected val badgeRepository: BadgeRepository by inject()
@@ -74,7 +74,7 @@ abstract class SearchableItemVM(
         if (searchable.launch(context, bundle)) {
             favoritesRepository.incrementLaunchCounter(searchable)
             return true
-        } else if (searchable is Application || searchable is AppShortcut) {
+        } else if (searchable is LauncherApp || searchable is AppShortcut) {
             favoritesRepository.remove(searchable)
         }
         return false

@@ -2,13 +2,14 @@ package de.mm20.launcher2.ui.launcher.search.common.list
 
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
@@ -17,7 +18,7 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 
 @Composable
-fun ListItem(modifier: Modifier = Modifier, item: Searchable) {
+fun ListItem(modifier: Modifier = Modifier, item: PinnableSearchable) {
     var showDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
 

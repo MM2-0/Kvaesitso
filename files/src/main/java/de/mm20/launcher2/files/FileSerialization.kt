@@ -1,12 +1,13 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.*
@@ -15,7 +16,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class LocalFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as LocalFile
         return jsonObjectOf(
             "id" to searchable.id
@@ -29,7 +30,7 @@ class LocalFileSerializer : SearchableSerializer {
 class LocalFileDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable? {
         val permissionsManager: PermissionsManager = get()
         if (!permissionsManager.checkPermissionOnce(
                 PermissionGroup.ExternalStorage
@@ -74,7 +75,7 @@ class LocalFileDeserializer(
 }
 
 class GDriveFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as GDriveFile
         return jsonObjectOf(
             "id" to searchable.fileId,
@@ -103,7 +104,7 @@ class GDriveFileSerializer : SearchableSerializer {
 }
 
 class GDriveFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
         val id = json.getString("id")
         val label = json.getString("label")
@@ -134,7 +135,7 @@ class GDriveFileDeserializer : SearchableDeserializer {
 }
 
 class OneDriveFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as OneDriveFile
         return jsonObjectOf(
             "id" to searchable.fileId,
@@ -161,7 +162,7 @@ class OneDriveFileSerializer : SearchableSerializer {
 }
 
 class OneDriveFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
         val fileId = json.getString("id")
         val label = json.getString("label")
@@ -189,10 +190,10 @@ class OneDriveFileDeserializer : SearchableDeserializer {
 }
 
 class NextcloudFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as NextcloudFile
         return jsonObjectOf(
-            "id" to searchable.id,
+            "id" to searchable.fileId,
             "label" to searchable.label,
             "path" to searchable.path,
             "mimeType" to searchable.mimeType,
@@ -216,7 +217,7 @@ class NextcloudFileSerializer : SearchableSerializer {
 }
 
 class NextcloudFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
         val id = json.getLong("id")
         val label = json.getString("label")
@@ -242,10 +243,10 @@ class NextcloudFileDeserializer : SearchableDeserializer {
 }
 
 class OwncloudFileSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as OwncloudFile
         return jsonObjectOf(
-            "id" to searchable.id,
+            "id" to searchable.fileId,
             "label" to searchable.label,
             "path" to searchable.path,
             "mimeType" to searchable.mimeType,
@@ -269,7 +270,7 @@ class OwncloudFileSerializer : SearchableSerializer {
 }
 
 class OwncloudFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
         val id = json.getLong("id")
         val label = json.getString("label")

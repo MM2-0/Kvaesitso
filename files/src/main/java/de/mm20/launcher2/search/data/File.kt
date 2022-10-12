@@ -1,25 +1,29 @@
 package de.mm20.launcher2.search.data
 
 import android.content.Context
-import android.graphics.Color
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import java.util.*
 
-abstract class File(
-    val id: Long,
-    val path: String,
-    val mimeType: String,
-    val size: Long,
-    val isDirectory: Boolean,
+interface File : PinnableSearchable {
+    val path: String
+    val mimeType: String
+    val size: Long
+    val isDirectory: Boolean
     val metaData: List<Pair<Int, String>>
-) : Searchable() {
-    abstract val isStoredInCloud: Boolean
 
-    open val providerIconRes: Int? = null
+    val isStoredInCloud: Boolean
+
+    override val preferDetailsOverLaunch: Boolean
+        get() = false
+
+    open val providerIconRes: Int?
+        get() = null
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when {
@@ -124,7 +128,8 @@ abstract class File(
         return context.getString(resource)
     }
 
-    open val isDeletable: Boolean = false
-    open suspend fun delete(context: Context) {}
+    val isDeletable: Boolean
+        get() = false
+    suspend fun delete(context: Context) {}
 
 }

@@ -8,16 +8,13 @@ import android.content.pm.*
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Process
-import android.provider.Settings
 import android.service.notification.StatusBarNotification
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.Application
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import kotlinx.coroutines.Dispatchers
@@ -28,7 +25,7 @@ import kotlinx.coroutines.withContext
 import org.koin.core.component.inject
 
 class AppItemVM(
-    private val app: Application
+    private val app: LauncherApp
 ) : SearchableItemVM(app) {
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
@@ -44,21 +41,12 @@ class AppItemVM(
     fun openAppInfo(context: Context) {
         val launcherApps = context.getSystemService<LauncherApps>()!!
 
-        if (app is LauncherApp) {
-            launcherApps.startAppDetailsActivity(
-                ComponentName(app.`package`, app.activity),
-                app.getUser(),
-                null,
-                null
-            )
-        } else {
-            context.tryStartActivity(
-                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                    data = Uri.parse("package:${app.`package`}")
-                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-            )
-        }
+        launcherApps.startAppDetailsActivity(
+            ComponentName(app.`package`, app.activity),
+            app.getUser(),
+            null,
+            null
+        )
     }
 
     suspend fun shareApkFile(context: Context) {
@@ -128,9 +116,7 @@ class AppItemVM(
     }
 
     val shortcuts = flow {
-        if (app is LauncherApp) {
-            emit(appShortcutRepository.getShortcutsForActivity(app.launcherActivityInfo, 5))
-        }
+        emit(appShortcutRepository.getShortcutsForActivity(app.launcherActivityInfo, 5))
     }
 
     fun isShortcutPinned(shortcut: AppShortcut): Flow<Boolean> {

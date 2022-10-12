@@ -23,7 +23,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.CustomIconWithPreview
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -35,7 +36,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CustomizeSearchableSheet(
-    searchable: Searchable,
+    searchable: PinnableSearchable,
     onDismiss: () -> Unit,
 ) {
     val viewModel: CustomizeSearchableSheetVM =

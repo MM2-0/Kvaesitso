@@ -12,17 +12,18 @@ import android.os.Process
 import android.os.UserHandle
 import android.util.Log
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.search.data.Application
+import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.LauncherApp
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.*
 
-interface AppRepository {
-    fun search(query: String): Flow<List<Application>>
-    fun getAllInstalledApps(): Flow<List<Application>>
+interface AppRepository: SearchableRepository<LauncherApp> {
+    fun getAllInstalledApps(): Flow<List<LauncherApp>>
     fun getSuspendedPackages(): Flow<List<String>>
 }
 
@@ -140,11 +141,11 @@ internal class AppRepositoryImpl(
         return LauncherApp(context, launcherActivityInfo)
     }
 
-    override fun search(query: String): Flow<List<Application>> = channelFlow {
+    override fun search(query: String): Flow<ImmutableList<LauncherApp>> = channelFlow {
 
         installedApps.collectLatest { apps ->
             withContext(Dispatchers.Default) {
-                val appResults = mutableListOf<Application>()
+                val appResults = mutableListOf<LauncherApp>()
                 if (query.isEmpty()) {
                     appResults.addAll(apps)
                 } else {
@@ -158,12 +159,12 @@ internal class AppRepositoryImpl(
 
                 appResults.sort()
 
-                send(appResults)
+                send(appResults.toImmutableList())
             }
         }
     }
 
-    override fun getAllInstalledApps(): Flow<List<Application>> {
+    override fun getAllInstalledApps(): Flow<List<LauncherApp>> {
         return installedApps
     }
 
@@ -174,7 +175,7 @@ internal class AppRepositoryImpl(
                 fuzzyScore.fuzzyScore(normalizedLabel, query.normalize()) >= query.length * 1.5
     }
 
-    private fun getActivityByComponentName(componentName: ComponentName?): Application? {
+    private fun getActivityByComponentName(componentName: ComponentName?): LauncherApp? {
         componentName ?: return null
         val intent = Intent().setComponent(componentName)
         val lai = launcherApps.resolveActivity(intent, Process.myUserHandle())

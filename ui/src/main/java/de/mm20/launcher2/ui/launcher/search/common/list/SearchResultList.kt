@@ -8,12 +8,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.ui.layout.BottomReversed
 
 @Composable
 fun SearchResultList(
-    items: List<Searchable>,
+    items: List<PinnableSearchable>,
     modifier: Modifier = Modifier,
     reverse: Boolean = false
 ) {

@@ -5,16 +5,18 @@ import android.provider.ContactsContract
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.Contact
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface ContactRepository {
-    fun search(query: String): Flow<List<Contact>>
-}
+interface ContactRepository: SearchableRepository<Contact>
 
 internal class ContactRepositoryImpl(
     private val context: Context,
@@ -23,13 +25,13 @@ internal class ContactRepositoryImpl(
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    override fun search(query: String): Flow<List<Contact>> {
+    override fun search(query: String): Flow<ImmutableList<Contact>> {
         val searchContacts = dataStore.data.map { it.contactsSearch.enabled }
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
         if (query.length < 3) {
             return flow {
-                emit(emptyList())
+                emit(persistentListOf())
             }
         }
 
@@ -39,12 +41,12 @@ internal class ContactRepositoryImpl(
             if (it) {
                 queryContacts(query)
             } else {
-                emptyList()
+                persistentListOf()
             }
         }
     }
 
-    private suspend fun queryContacts(query: String): List<Contact> {
+    private suspend fun queryContacts(query: String): ImmutableList<Contact> {
         val results = withContext(Dispatchers.IO) {
             val proj = arrayOf(
                 ContactsContract.RawContacts.CONTACT_ID,
@@ -67,6 +69,6 @@ internal class ContactRepositoryImpl(
             }
             results
         }
-        return results
+        return results.toImmutableList()
     }
 }

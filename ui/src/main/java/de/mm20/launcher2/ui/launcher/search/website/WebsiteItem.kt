@@ -57,7 +57,7 @@ fun WebsiteItem(
             modifier = Modifier.padding(16.dp),
         ) {
             Text(
-                text = website.label,
+                text = website.labelOverride ?: website.label,
                 style = MaterialTheme.typography.titleLarge
             )
             val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())

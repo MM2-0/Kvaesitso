@@ -5,11 +5,10 @@ import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.FavoritesItemEntity
-import de.mm20.launcher2.ktx.ceilToInt
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.json.JSONArray
@@ -34,47 +33,47 @@ interface FavoritesRepository {
         automaticallySorted: Boolean = false,
         frequentlyUsed: Boolean = false,
         limit: Int = 100
-    ): Flow<List<Searchable>>
+    ): Flow<List<PinnableSearchable>>
 
 
-    fun getPinnedCalendarEvents(): Flow<List<Searchable>>
+    fun getPinnedCalendarEvents(): Flow<List<PinnableSearchable>>
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
-    fun isPinned(searchable: Searchable): Flow<Boolean>
-    fun pinItem(searchable: Searchable)
-    fun unpinItem(searchable: Searchable)
-    fun isHidden(searchable: Searchable): Flow<Boolean>
-    fun hideItem(searchable: Searchable)
-    fun unhideItem(searchable: Searchable)
-    fun incrementLaunchCounter(searchable: Searchable)
+    fun isPinned(searchable: PinnableSearchable): Flow<Boolean>
+    fun pinItem(searchable: PinnableSearchable)
+    fun unpinItem(searchable: PinnableSearchable)
+    fun isHidden(searchable: PinnableSearchable): Flow<Boolean>
+    fun hideItem(searchable: PinnableSearchable)
+    fun unhideItem(searchable: PinnableSearchable)
+    fun incrementLaunchCounter(searchable: PinnableSearchable)
     fun updateFavorites(
-        manuallySorted: List<Searchable>,
-        automaticallySorted: List<Searchable>,
+        manuallySorted: List<PinnableSearchable>,
+        automaticallySorted: List<PinnableSearchable>,
     )
 
-    fun getHiddenItems(): Flow<List<Searchable>>
+    fun getHiddenItems(): Flow<List<PinnableSearchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
 
     /**
      * Remove this item from the Searchable database
      */
-    fun remove(searchable: Searchable)
+    fun remove(searchable: PinnableSearchable)
 
     /**
      * Remove this item from favorites and reset launch counter
      */
-    fun removeFromFavorites(searchable: Searchable)
+    fun removeFromFavorites(searchable: PinnableSearchable)
 
     /**
      * Ensure that this searchable exists in the Favorites table.
      * If it doesn't exist, insert it with 0 launch count, not pinned and not hidden
      */
-    fun save(searchable: Searchable)
+    fun save(searchable: PinnableSearchable)
 
     /**
      * Get items with the given keys from the favorites database.
      * Items that don't exist in the database will not be returned.
      */
-    suspend fun getFromKeys(keys: List<String>): List<Searchable>
+    suspend fun getFromKeys(keys: List<String>): List<PinnableSearchable>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -101,7 +100,7 @@ internal class FavoritesRepositoryImpl(
         automaticallySorted: Boolean,
         frequentlyUsed: Boolean,
         limit: Int
-    ): Flow<List<Searchable>> {
+    ): Flow<List<PinnableSearchable>> {
         val dao = database.searchDao()
         val entities = when {
             includeTypes == null && excludeTypes == null -> dao.getFavorites(
@@ -150,11 +149,11 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().getHiddenCalendarEventKeys()
     }
 
-    override fun isPinned(searchable: Searchable): Flow<Boolean> {
+    override fun isPinned(searchable: PinnableSearchable): Flow<Boolean> {
         return AppDatabase.getInstance(context).searchDao().isPinned(searchable.key)
     }
 
-    override fun pinItem(searchable: Searchable) {
+    override fun pinItem(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 val dao = AppDatabase.getInstance(context).searchDao()
@@ -171,7 +170,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun unpinItem(searchable: Searchable) {
+    override fun unpinItem(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context).searchDao().unpinFavorite(searchable.key)
@@ -179,11 +178,11 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun isHidden(searchable: Searchable): Flow<Boolean> {
+    override fun isHidden(searchable: PinnableSearchable): Flow<Boolean> {
         return AppDatabase.getInstance(context).searchDao().isHidden(searchable.key)
     }
 
-    override fun hideItem(searchable: Searchable) {
+    override fun hideItem(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 val dao = AppDatabase.getInstance(context).searchDao()
@@ -200,7 +199,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun unhideItem(searchable: Searchable) {
+    override fun unhideItem(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 AppDatabase.getInstance(context).searchDao().unhideItem(searchable.key)
@@ -208,7 +207,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun incrementLaunchCounter(searchable: Searchable) {
+    override fun incrementLaunchCounter(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 val item = FavoritesItem(searchable.key, searchable, 0, 0, false)
@@ -220,7 +219,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun getHiddenItems(): Flow<List<Searchable>> {
+    override fun getHiddenItems(): Flow<List<PinnableSearchable>> {
         return database.searchDao().getHiddenItems().map {
             it.mapNotNull { fromDatabaseEntity(it).searchable }
         }
@@ -230,7 +229,7 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().getHiddenItemKeys()
     }
 
-    override fun remove(searchable: Searchable) {
+    override fun remove(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 database.searchDao().deleteByKey(searchable.key)
@@ -238,13 +237,13 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun removeFromFavorites(searchable: Searchable) {
+    override fun removeFromFavorites(searchable: PinnableSearchable) {
         scope.launch {
             database.searchDao().resetPinStatusAndLaunchCounter(searchable.key)
         }
     }
 
-    override fun save(searchable: Searchable) {
+    override fun save(searchable: PinnableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
                 val entity = FavoritesItem(
@@ -260,8 +259,8 @@ internal class FavoritesRepositoryImpl(
     }
 
     override fun updateFavorites(
-        manuallySorted: List<Searchable>,
-        automaticallySorted: List<Searchable>
+        manuallySorted: List<PinnableSearchable>,
+        automaticallySorted: List<PinnableSearchable>
     ) {
         val dao = database.searchDao()
         scope.launch {
@@ -321,7 +320,7 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override suspend fun getFromKeys(keys: List<String>): List<Searchable> {
+    override suspend fun getFromKeys(keys: List<String>): List<PinnableSearchable> {
         val dao = database.searchDao()
         return dao.getFromKeys(keys)
             .mapNotNull { fromDatabaseEntity(it).searchable }

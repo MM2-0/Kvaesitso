@@ -1,14 +1,21 @@
 package de.mm20.launcher2.search.data
 
+import de.mm20.launcher2.search.Searchable
 import java.text.DecimalFormat
 import java.util.*
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
-class Calculator(
+data class Calculator(
     val term: String,
     val solution: Double
-) {
+): Searchable {
+
+    override val domain: String
+        get() = "calculator"
+
+    override val key: String
+        get() = "calculator://$term"
 
     val formattedString: String
     val formattedBinaryString: String

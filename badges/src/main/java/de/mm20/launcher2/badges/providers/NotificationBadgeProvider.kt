@@ -3,9 +3,8 @@ package de.mm20.launcher2.badges.providers
 import android.app.Notification
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.notifications.NotificationRepository
-import de.mm20.launcher2.search.data.Application
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -17,7 +16,7 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
 
     override fun getBadge(searchable: Searchable): Flow<Badge?> = channelFlow {
-        if (searchable is Application) {
+        if (searchable is LauncherApp) {
             val packageName = searchable.`package`
             notificationRepository.notifications.map {
                 it.filter { it.packageName == packageName }

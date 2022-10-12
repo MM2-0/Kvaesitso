@@ -4,11 +4,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.customattrs.CustomIcon
-import de.mm20.launcher2.customattrs.customAttrsModule
 import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -16,7 +16,7 @@ import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
 
 class CustomizeSearchableSheetVM(
-    private val searchable: Searchable
+    private val searchable: PinnableSearchable
 ) : KoinComponent {
     private val iconRepository: IconRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()

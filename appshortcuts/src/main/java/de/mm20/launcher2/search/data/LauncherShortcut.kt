@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
@@ -14,35 +15,54 @@ import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.PinnableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
  * Represents a modern (Android O+) launcher shortcut
  */
-class LauncherShortcut(
-    context: Context,
+data class LauncherShortcut(
     val launcherShortcut: ShortcutInfo,
-    appName: String
-) : AppShortcut(appName) {
+    override val appName: String?,
+    internal val userSerialNumber: Long,
+    override val labelOverride: String? = null,
+) : AppShortcut {
+
+    override val domain: String = Domain
+
+    constructor(
+        context: Context,
+        launcherShortcut: ShortcutInfo,
+    ): this(
+        launcherShortcut = launcherShortcut,
+        appName = try {
+            context.packageManager.getApplicationInfo(launcherShortcut.`package`, 0)
+                .loadLabel(context.packageManager).toString()
+        } catch (e: PackageManager.NameNotFoundException) {
+            null
+        },
+        userSerialNumber = launcherShortcut.userHandle.getSerialNumber(context)
+    )
 
     override val label: String
         get() = launcherShortcut.shortLabel?.toString() ?: ""
 
+    override fun overrideLabel(label: String): LauncherShortcut {
+        return this.copy(labelOverride = label)
+    }
 
-    internal val userSerialNumber: Long = launcherShortcut.userHandle.getSerialNumber(context)
+    override val preferDetailsOverLaunch: Boolean = false
+
+
     val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
 
     override val key: String
         get() = if (isMainProfile) {
-            "shortcut://${launcherShortcut.`package`}/${launcherShortcut.id}"
+            "$domain://${launcherShortcut.`package`}/${launcherShortcut.id}"
         } else {
-            "shortcut://${launcherShortcut.`package`}/${launcherShortcut.id}:${userSerialNumber}"
+            "$domain://${launcherShortcut.`package`}/${launcherShortcut.id}:${userSerialNumber}"
         }
-
-    override fun getLaunchIntent(context: Context): Intent? {
-        return launcherShortcut.intent
-    }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         val launcherApps = context.getSystemService<LauncherApps>()!!
@@ -123,10 +143,10 @@ class LauncherShortcut(
             return LauncherShortcut(
                 context,
                 shortcutInfo,
-                context.packageManager.getApplicationInfo(shortcutInfo.`package`, 0)
-                    .loadLabel(context.packageManager).toString()
             )
         }
+
+        const val Domain = "shortcut"
     }
 
 }

@@ -6,14 +6,15 @@ import android.content.pm.PackageManager
 import android.provider.ContactsContract
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.Contact
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import org.json.JSONObject
 
 class ContactSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as Contact
         return jsonObjectOf(
             "id" to searchable.id
@@ -25,7 +26,7 @@ class ContactSerializer : SearchableSerializer {
 }
 
 class ContactDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable? {
         if (ContextCompat.checkSelfPermission(
                 context,
                 Manifest.permission.READ_CONTACTS

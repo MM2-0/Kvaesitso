@@ -46,6 +46,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":preferences"))
-    implementation(project(":search"))
+    implementation(project(":base"))
 
 }

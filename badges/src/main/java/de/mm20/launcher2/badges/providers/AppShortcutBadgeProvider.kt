@@ -6,7 +6,7 @@ import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow

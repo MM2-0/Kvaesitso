@@ -4,21 +4,35 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.wikipedia.R
 
-class Wikipedia(
+data class Wikipedia(
     override val label: String,
     val id: Long,
     val text: String,
     val image: String?,
     val wikipediaUrl: String,
-) : Searchable() {
-    override val key = "wikipedia://$wikipediaUrl:$id"
+    override val labelOverride: String? = null,
+) : PinnableSearchable {
+
+    override val domain: String = Domain
+
+    override val preferDetailsOverLaunch: Boolean = false
+
+    override fun overrideLabel(label: String): Wikipedia {
+        return this.copy(labelOverride = label)
+    }
+
+    override val key = "$domain://$wikipediaUrl:$id"
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
@@ -31,7 +45,7 @@ class Wikipedia(
         )
     }
 
-    override fun getLaunchIntent(context: Context): Intent? {
+    private fun getLaunchIntent(): Intent {
         val intent = CustomTabsIntent
             .Builder()
             .setToolbarColor(Color.BLACK)
@@ -41,5 +55,13 @@ class Wikipedia(
         val uri = "${wikipediaUrl.padEnd(1, '/')}wiki?curid=$id"
         intent.intent.data = Uri.parse(uri)
         return intent.intent
+    }
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return context.tryStartActivity(getLaunchIntent(), options)
+    }
+
+    companion object {
+        const val Domain = "wikipedia"
     }
 }

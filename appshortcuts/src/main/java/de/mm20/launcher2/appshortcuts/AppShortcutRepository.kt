@@ -15,9 +15,13 @@ import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.LauncherShortcut
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,15 +31,13 @@ import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.*
 
-interface AppShortcutRepository {
+interface AppShortcutRepository: SearchableRepository<AppShortcut> {
     suspend fun getShortcutsForActivity(
         launcherActivityInfo: LauncherActivityInfo,
         count: Int = 5
     ): List<LauncherShortcut>
 
     suspend fun getShortcutsConfigActivities(): List<LauncherApp>
-
-    fun search(query: String): Flow<List<AppShortcut>>
 
     fun removePinnedShortcut(shortcut: LauncherShortcut)
 }
@@ -72,32 +74,31 @@ internal class AppShortcutRepositoryImpl(
                 LauncherShortcut(
                     context,
                     it,
-                    launcherActivityInfo.label.toString()
                 )
             } ?: emptyList())
         appShortcuts
     }
 
-    override fun search(query: String) = channelFlow<List<AppShortcut>> {
+    override fun search(query: String) = channelFlow<ImmutableList<AppShortcut>> {
         if (query.length < 3) {
-            send(emptyList())
+            send(persistentListOf())
             return@channelFlow
         }
         withContext(Dispatchers.IO) {
             if (!permissionsManager.checkPermissionOnce(PermissionGroup.AppShortcuts)) {
-                send(emptyList())
+                send(persistentListOf())
                 return@withContext
             }
             dataStore.data.map { it.appShortcutSearch.enabled }.collectLatest { enabled ->
                 if (!enabled) {
-                    send(emptyList())
+                    send(persistentListOf())
                     return@collectLatest
                 }
 
                 shortcutChangeEmitter.collectLatest {
                     val launcherApps =
                         context.getSystemService<LauncherApps>() ?: return@collectLatest send(
-                            emptyList()
+                            persistentListOf()
                         )
 
                     val shortcutQuery = LauncherApps.ShortcutQuery()
@@ -124,17 +125,11 @@ internal class AppShortcutRepositoryImpl(
 
                     send(
                         shortcuts.mapNotNull {
-                            val label = try {
-                                pm.getApplicationInfo(it.`package`, 0).loadLabel(pm).toString()
-                            } catch (e: PackageManager.NameNotFoundException) {
-                                ""
-                            }
                             LauncherShortcut(
                                 context,
-                                it,
-                                label
+                                it
                             )
-                        }
+                        }.toImmutableList()
                     )
                 }
             }

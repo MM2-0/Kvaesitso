@@ -51,7 +51,6 @@ dependencies {
     implementation(libs.coil.core)
 
     implementation(project(":preferences"))
-    implementation(project(":search"))
     implementation(project(":base"))
     implementation(project(":ktx"))
 

@@ -6,15 +6,18 @@ import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.File
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-interface FileRepository {
-    fun search(query: String): Flow<List<File>>
+interface FileRepository: SearchableRepository<File> {
     fun deleteFile(file: File)
 }
 
@@ -60,21 +63,21 @@ internal class FileRepositoryImpl(
         }
     }
 
-    override fun search(query: String): Flow<List<File>> = channelFlow {
+    override fun search(query: String): Flow<ImmutableList<File>> = channelFlow {
         if (query.isBlank()) {
-            send(emptyList())
+            send(persistentListOf())
             return@channelFlow
         }
 
         providers.collectLatest { providers ->
             if (providers.isEmpty()) {
-                send(emptyList())
+                send(persistentListOf())
                 return@collectLatest
             }
             val results = mutableListOf<File>()
             for (provider in providers) {
                 results.addAll(provider.search(query))
-                send(results.toList())
+                send(results.toImmutableList())
             }
         }
     }

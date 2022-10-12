@@ -4,20 +4,17 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
-import android.content.pm.PackageManager
-import android.os.Build
 import android.os.Process
 import android.os.UserManager
-import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import org.json.JSONObject
-import org.koin.core.component.KoinComponent
 
 class LauncherAppSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as LauncherApp
         val json = JSONObject()
         json.put("package", searchable.`package`)
@@ -31,7 +28,7 @@ class LauncherAppSerializer : SearchableSerializer {
 }
 
 class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable? {
         val json = JSONObject(serialized)
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val userManager = context.getSystemService<UserManager>()!!

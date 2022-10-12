@@ -7,8 +7,12 @@ import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.UserCalendar
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
@@ -16,9 +20,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.util.*
 
-interface CalendarRepository {
-    fun search(query: String): Flow<List<CalendarEvent>>
-
+interface CalendarRepository: SearchableRepository<CalendarEvent> {
     fun getUpcomingEvents(): Flow<List<CalendarEvent>>
 
     suspend fun getCalendars(): List<UserCalendar>
@@ -31,10 +33,10 @@ internal class CalendarRepositoryImpl(
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    override fun search(query: String): Flow<List<CalendarEvent>> {
+    override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
         if (query.isBlank() || query.length < 3) {
             return flow {
-                emit(emptyList())
+                emit(persistentListOf())
             }
         }
 
@@ -49,9 +51,9 @@ internal class CalendarRepositoryImpl(
                     query,
                     intervalStart = now,
                     intervalEnd = now + 14 * 24 * 60 * 60 * 1000L,
-                )
+                ).toImmutableList()
             } else {
-                emptyList()
+                persistentListOf()
             }
         }
 

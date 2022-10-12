@@ -5,22 +5,22 @@ import android.content.Intent
 import android.content.Intent.ShortcutIconResource
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Process
 import android.os.UserManager
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 
 
 class LauncherShortcutSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as LauncherShortcut
         return jsonObjectOf(
             "packagename" to searchable.launcherShortcut.`package`,
@@ -38,7 +38,7 @@ class LauncherShortcutDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
 
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return null
         else {
@@ -75,7 +75,6 @@ class LauncherShortcutDeserializer(
                 return LauncherShortcut(
                     context = context,
                     launcherShortcut = shortcuts[0],
-                    appName = appName
                 )
             }
         }
@@ -83,7 +82,7 @@ class LauncherShortcutDeserializer(
 }
 
 class LegacyShortcutSerializer: SearchableSerializer {
-    override fun serialize(searchable: Searchable): String? {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as LegacyShortcut
         return jsonObjectOf(
             "label" to searchable.label,
@@ -104,7 +103,7 @@ class LegacyShortcutSerializer: SearchableSerializer {
 class LegacyShortcutDeserializer(
     val context: Context
 ): SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable {
         val json = JSONObject(serialized)
         val label = json.getString("label")
         val intent = Intent.parseUri(json.getString("intent"), 0)

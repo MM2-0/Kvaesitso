@@ -13,8 +13,9 @@ import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -98,7 +99,7 @@ class IconRepository(
     }
 
 
-    fun getIcon(searchable: Searchable, size: Int): Flow<LauncherIcon> = channelFlow {
+    fun getIcon(searchable: PinnableSearchable, size: Int): Flow<LauncherIcon> = channelFlow {
         iconProviders.collectLatest { providers ->
             transformations.collectLatest { transformations ->
                 customAttributesRepository.getCustomIcon(searchable).collectLatest { customIcon ->
@@ -189,7 +190,7 @@ class IconRepository(
     }
 
     suspend fun getCustomIconSuggestions(
-        searchable: Searchable,
+        searchable: PinnableSearchable,
         size: Int
     ): List<CustomIconWithPreview> {
         val suggestions = mutableListOf<CustomIconWithPreview>()
@@ -301,7 +302,7 @@ class IconRepository(
 
     }
 
-    suspend fun getUncustomizedDefaultIcon(searchable: Searchable, size: Int): CustomIconWithPreview? {
+    suspend fun getUncustomizedDefaultIcon(searchable: PinnableSearchable, size: Int): CustomIconWithPreview? {
         val icon = iconProviders.first().getFirstIcon(searchable, size)
             ?.transform(transformations.first()) ?: return null
         return CustomIconWithPreview(
@@ -338,7 +339,7 @@ class IconRepository(
         return iconPackIcons + themedIcons
     }
 
-    fun setCustomIcon(searchable: Searchable, icon: CustomIcon?) {
+    fun setCustomIcon(searchable: PinnableSearchable, icon: CustomIcon?) {
         customAttributesRepository.setCustomIcon(searchable, icon)
     }
 

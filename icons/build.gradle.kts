@@ -50,7 +50,6 @@ dependencies {
     implementation(project(":preferences"))
     implementation(project(":ktx"))
     implementation(project(":base"))
-    implementation(project(":search"))
     implementation(project(":applications"))
     implementation(project(":crashreporter"))
     api(project(":customattrs"))

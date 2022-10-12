@@ -1,14 +1,15 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
+import de.mm20.launcher2.search.PinnableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Wikipedia
 import org.json.JSONObject
 
 class WikipediaSerializer : SearchableSerializer {
-    override fun serialize(searchable: Searchable): String {
+    override fun serialize(searchable: PinnableSearchable): String {
         searchable as Wikipedia
         val json = JSONObject()
         json.put("label", searchable.label)
@@ -24,7 +25,7 @@ class WikipediaSerializer : SearchableSerializer {
 }
 
 class WikipediaDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): Searchable? {
+    override fun deserialize(serialized: String): PinnableSearchable? {
         val json = JSONObject(serialized)
         return Wikipedia(
             label = json.getString("label"),

@@ -12,6 +12,7 @@ import de.mm20.launcher2.contacts.ContactSerializer
 import de.mm20.launcher2.files.*
 import de.mm20.launcher2.search.NullDeserializer
 import de.mm20.launcher2.search.NullSerializer
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.*

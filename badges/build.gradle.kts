@@ -49,6 +49,5 @@ dependencies {
     implementation(project(":notifications"))
     implementation(project(":preferences"))
     implementation(project(":base"))
-    implementation(project(":search"))
     implementation(project(":files"))
 }

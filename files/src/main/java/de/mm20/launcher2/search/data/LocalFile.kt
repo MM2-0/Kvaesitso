@@ -9,6 +9,7 @@ import android.location.Geocoder
 import android.media.MediaMetadataRetriever
 import android.media.ThumbnailUtils
 import android.net.Uri
+import android.os.Bundle
 import android.provider.MediaStore
 import android.text.format.DateUtils
 import android.util.Size
@@ -17,25 +18,34 @@ import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.formatToString
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
+import de.mm20.launcher2.search.PinnableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import java.io.IOException
 import java.io.File as JavaIOFile
 
-open class LocalFile(
-    id: Long,
-    path: String,
-    mimeType: String,
-    size: Long,
-    isDirectory: Boolean,
-    metaData: List<Pair<Int, String>>
-) : File(id, path, mimeType, size, isDirectory, metaData) {
+data class LocalFile(
+    val id: Long,
+    override val path: String,
+    override val mimeType: String,
+    override val size: Long,
+    override val isDirectory: Boolean,
+    override val metaData: List<Pair<Int, String>>,
+    override val labelOverride: String? = null
+) : File {
 
     override val label = path.substringAfterLast('/')
 
-    override val key = "file://$path"
+    override fun overrideLabel(label: String): LocalFile {
+        return this.copy(labelOverride = label)
+    }
+
+    override val domain: String = Domain
+
+    override val key = "$domain://$path"
 
     override val isStoredInCloud = false
 
@@ -148,7 +158,7 @@ open class LocalFile(
     }
 
 
-    override fun getLaunchIntent(context: Context): Intent? {
+    private fun getLaunchIntent(context: Context): Intent {
         val uri = if (isDirectory) {
             Uri.parse(path)
         } else {
@@ -160,6 +170,10 @@ open class LocalFile(
         return Intent(Intent.ACTION_VIEW)
             .setDataAndType(uri, mimeType)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return context.tryStartActivity(getLaunchIntent(context), options)
     }
 
     override val isDeletable: Boolean
@@ -186,6 +200,9 @@ open class LocalFile(
 
 
     companion object {
+
+        const val Domain = "file"
+
         internal fun getMimetypeByFileExtension(extension: String): String {
             return when (extension) {
                 "apk" -> "application/vnd.android.package-archive"

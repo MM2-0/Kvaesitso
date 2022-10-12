@@ -3,20 +3,21 @@ package de.mm20.launcher2.search.data
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.provider.ContactsContract
-import androidx.core.content.ContextCompat
 import androidx.core.database.getStringOrNull
 import androidx.core.graphics.drawable.toDrawable
-import de.mm20.launcher2.contacts.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.asBitmap
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.URLEncoder
 
-class Contact(
+data class Contact(
     val id: Long,
     val firstName: String,
     val lastName: String,
@@ -27,11 +28,20 @@ class Contact(
     val telegram: Set<ContactInfo>,
     val whatsapp: Set<ContactInfo>,
     val postals: Set<ContactInfo>,
-) : Searchable() {
+    override val labelOverride: String? = null
+) : Searchable, PinnableSearchable {
+
+    override val domain: String = Domain
     override val key: String
-        get() = "contact://$id"
+        get() = "${Domain}://$id"
     override val label: String
         get() = "$firstName $lastName"
+
+    override fun overrideLabel(label: String): Contact {
+        return this.copy(labelOverride = label)
+    }
+
+    override val preferDetailsOverLaunch: Boolean = true
 
     val summary: String
         get() {
@@ -69,7 +79,12 @@ class Contact(
         )
     }
 
-    override fun getLaunchIntent(context: Context): Intent {
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        val intent = getLaunchIntent()
+        return context.tryStartActivity(intent, options)
+    }
+
+    private fun getLaunchIntent(): Intent {
         val uri =
             ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, id)
         return Intent(Intent.ACTION_VIEW).setData(uri).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -202,7 +217,10 @@ class Contact(
             )
         }
 
+        const val Domain = "contact"
+
     }
+
 }
 
 data class ContactInfo(

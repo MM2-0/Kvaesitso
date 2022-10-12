@@ -3,7 +3,7 @@ package de.mm20.launcher2.badges
 import android.content.Context
 import de.mm20.launcher2.badges.providers.*
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent

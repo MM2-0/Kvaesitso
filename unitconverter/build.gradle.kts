@@ -45,7 +45,7 @@ dependencies {
 
     implementation(project(":preferences"))
     implementation(project(":currencies"))
-    implementation(project(":search"))
+    implementation(project(":base"))
     implementation(project(":i18n"))
 
 }

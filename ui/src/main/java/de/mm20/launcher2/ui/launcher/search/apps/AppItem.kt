@@ -23,7 +23,7 @@ import androidx.core.app.NotificationCompat
 import androidx.lifecycle.lifecycleScope
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
-import de.mm20.launcher2.search.data.Application
+import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.*
 import de.mm20.launcher2.ui.ktx.toDp
@@ -40,7 +40,7 @@ import kotlin.math.roundToInt
 @Composable
 fun AppItem(
     modifier: Modifier = Modifier,
-    app: Application,
+    app: LauncherApp,
     onBack: () -> Unit
 ) {
     val viewModel = remember { AppItemVM(app) }
@@ -336,7 +336,7 @@ fun AppItem(
 
 @Composable
 fun AppItemGridPopup(
-    app: Application,
+    app: LauncherApp,
     show: Boolean,
     animationProgress: Float,
     origin: Rect,

@@ -4,22 +4,32 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ShortcutIconResource
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.os.Bundle
 import android.util.Log
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.PinnableSearchable
 
-class LegacyShortcut(
+data class LegacyShortcut(
     val intent: Intent,
     override val label: String,
-    appName: String?,
+    override val appName: String?,
     val iconResource: ShortcutIconResource?,
-) : AppShortcut(appName) {
-    override val key: String
-        get() = "legacyshortcut://${intent.toUri(0)}"
+    override val labelOverride: String? = null,
+) : AppShortcut {
 
-    override fun getLaunchIntent(context: Context): Intent {
-        return intent
+    override val domain = Domain
+    override val key: String = "$domain://${intent.toUri(0)}"
+
+    override fun overrideLabel(label: String): LegacyShortcut {
+        return this.copy(labelOverride = label)
+    }
+
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return context.tryStartActivity(intent, options)
     }
 
     val packageName: String?
@@ -67,6 +77,9 @@ class LegacyShortcut(
     }
 
     companion object {
+
+        const val Domain = "legacyshortcut"
+
         fun fromPinRequestIntent(context: Context, data: Intent): LegacyShortcut? {
             val intent: Intent? = data.extras?.getParcelable(Intent.EXTRA_SHORTCUT_INTENT)
             val name: String? = data.extras?.getString(Intent.EXTRA_SHORTCUT_NAME)

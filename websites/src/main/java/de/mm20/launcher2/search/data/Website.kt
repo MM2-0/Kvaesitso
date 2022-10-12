@@ -2,26 +2,38 @@ package de.mm20.launcher2.search.data
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import coil.imageLoader
 import coil.request.ImageRequest
 import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.websites.R
 import java.util.concurrent.ExecutionException
 
-class Website(
+data class Website(
     override val label: String,
     val url: String,
     val description: String,
     val image: String,
     val favicon: String,
-    val color: Int
-) : Searchable() {
+    val color: Int,
+    override val labelOverride: String? = null,
+) : PinnableSearchable {
 
-    override val key = "web://$url"
+    override val domain: String = Domain
+
+    override val key = "$domain://$url"
+
+    override val preferDetailsOverLaunch: Boolean = false
+
+    override fun overrideLabel(label: String): Website {
+        return this.copy(labelOverride = label)
+    }
+
     override suspend fun loadIcon(
         context: Context,
         size: Int,
@@ -68,10 +80,18 @@ class Website(
         )
     }
 
-    override fun getLaunchIntent(context: Context): Intent? {
+    private fun getLaunchIntent(): Intent {
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(url)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         return intent
+    }
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return context.tryStartActivity(getLaunchIntent(), options)
+    }
+
+    companion object {
+        const val Domain = "web"
     }
 }

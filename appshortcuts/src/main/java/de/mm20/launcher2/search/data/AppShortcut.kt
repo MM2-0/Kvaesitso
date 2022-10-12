@@ -7,10 +7,15 @@ import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 
-abstract class AppShortcut(
+interface AppShortcut: PinnableSearchable {
+
     val appName: String?
-) : Searchable() {
+
+    override val preferDetailsOverLaunch: Boolean
+        get() = false
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(

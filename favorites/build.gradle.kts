@@ -43,7 +43,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":base"))
-    implementation(project(":search"))
     implementation(project(":calendar"))
     implementation(project(":database"))
     implementation(project(":preferences"))

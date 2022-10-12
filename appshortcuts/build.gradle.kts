@@ -44,7 +44,6 @@ dependencies {
     implementation(libs.commons.text)
 
     implementation(project(":applications"))
-    implementation(project(":search"))
     implementation(project(":permissions"))
     implementation(project(":base"))
     implementation(project(":preferences"))

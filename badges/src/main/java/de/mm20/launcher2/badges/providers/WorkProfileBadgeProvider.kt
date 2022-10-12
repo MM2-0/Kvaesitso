@@ -2,10 +2,9 @@ package de.mm20.launcher2.badges.providers
 
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.R
-import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.LauncherShortcut
-import de.mm20.launcher2.search.data.Searchable
+import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

@@ -16,12 +16,13 @@ import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.utils.withCustomLabels
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
-import de.mm20.launcher2.widgets.WidgetRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -52,8 +53,8 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
 
-    val appResults = MutableLiveData<List<Application>>(emptyList())
-    val workAppResults = MutableLiveData<List<Application>>(emptyList())
+    val appResults = MutableLiveData<List<LauncherApp>>(emptyList())
+    val workAppResults = MutableLiveData<List<LauncherApp>>(emptyList())
     val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())
     val fileResults = MutableLiveData<List<File>>(emptyList())
     val contactResults = MutableLiveData<List<Contact>>(emptyList())
@@ -64,7 +65,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResult = MutableLiveData<UnitConverter?>(null)
     val websearchResults = MutableLiveData<List<Websearch>>(emptyList())
 
-    val hiddenResults = MutableLiveData<List<Searchable>>(emptyList())
+    val hiddenResults = MutableLiveData<List<PinnableSearchable>>(emptyList())
 
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = MutableLiveData(false)
@@ -95,7 +96,7 @@ class SearchVM : ViewModel(), KoinComponent {
             val customAttrResults = customAttributesRepository.search(query)
                 .combine(dataStore.data) { items, settings ->
                     items.filter {
-                        it is Application
+                        it is LauncherApp
                                 || it is Contact && settings.contactsSearch.enabled
                                 || it is CalendarEvent && settings.calendarSearch.enabled
                                 || it is AppShortcut && settings.appShortcutSearch.enabled
@@ -285,15 +286,15 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
 
-    private inline fun <reified T : Searchable> Flow<List<T>>.withCustomAttributeResults(
-        customAttributeResults: Flow<List<Searchable>>
+    private inline fun <reified T : PinnableSearchable> Flow<List<T>>.withCustomAttributeResults(
+        customAttributeResults: Flow<List<PinnableSearchable>>
     ): Flow<List<T>> {
         return this.combine(customAttributeResults) { items, items2 ->
             (items + items2.filterIsInstance<T>()).distinctBy { it.key }
         }
     }
 
-    private suspend fun <T : Searchable> Flow<List<T>>.collectWithHiddenItems(
+    private suspend fun <T : PinnableSearchable> Flow<List<T>>.collectWithHiddenItems(
         hiddenItemKeys: Flow<List<String>>,
         action: (items: List<T>, hidden: List<T>) -> Unit
     ) {
@@ -305,18 +306,18 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    private fun <T : Searchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
+    private fun <T : PinnableSearchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
 
 }
 
 private data class HiddenItemResults(
-    val apps: List<Application> = emptyList(),
+    val apps: List<LauncherApp> = emptyList(),
     val contacts: List<Contact> = emptyList(),
     val calendarEvents: List<CalendarEvent> = emptyList(),
     val files: List<File> = emptyList(),
     val appShortcuts: List<AppShortcut> = emptyList(),
 ) {
-    fun joinToList(): List<Searchable> {
+    fun joinToList(): List<PinnableSearchable> {
         return apps + contacts + calendarEvents + files + appShortcuts
     }
 }

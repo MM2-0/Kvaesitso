@@ -2,19 +2,15 @@ package de.mm20.launcher2.ui.launcher.search.common.grid
 
 import android.content.ComponentName
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -26,6 +22,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -47,7 +45,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolean = true) {
+fun GridItem(modifier: Modifier = Modifier, item: PinnableSearchable, showLabels: Boolean = true) {
     val viewModel = remember(item.key) { GridItemVM(item) }
 
     val context = LocalContext.current
@@ -59,13 +57,11 @@ fun GridItem(modifier: Modifier = Modifier, item: Searchable, showLabels: Boolea
         val iconSize = LocalGridIconSize.current.toPixels()
         val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
 
-        // If item is one of these types, try to launch them on click; show details otherwise
-        val launchOnPress =
-            item is File || item is Application || item is AppShortcut || item is Website || item is Wikipedia
+        val launchOnPress = !item.preferDetailsOverLaunch
 
         val windowSize = LocalWindowSize.current
 
-        if (item is Application) {
+        if (item is LauncherApp) {
             HandleHomeTransition {
                 val cn = ComponentName(item.`package`, item.activity)
                 if (
@@ -164,7 +160,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                         .wrapContentSize()
                 ) {
                     when (searchable) {
-                        is Application -> {
+                        is LauncherApp -> {
                             AppItemGridPopup(
                                 app = searchable,
                                 show = show,
