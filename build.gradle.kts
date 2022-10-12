@@ -34,3 +34,5 @@ allprojects {
 tasks.create<Delete>("clean") {
     delete(rootProject.buildDir)
 }
+
+apply(from = "docs/deps-graph.gradle")

@@ -1,0 +1,289 @@
+digraph {
+  graph [label="MM20Launcher2\n ",labelloc=t,fontsize=30,ranksep=1.4];
+  node [style=filled, fillcolor="#bbbbbb"];
+  rankdir=TB;
+
+  # Projects
+
+  ":accounts" [fillcolor="#baffc9"];
+  ":app" [fillcolor="#baffc9"];
+  ":applications" [fillcolor="#baffc9"];
+  ":appshortcuts" [fillcolor="#baffc9"];
+  ":backup" [fillcolor="#baffc9"];
+  ":badges" [fillcolor="#baffc9"];
+  ":base" [fillcolor="#baffc9"];
+  ":calculator" [fillcolor="#baffc9"];
+  ":calendar" [fillcolor="#baffc9"];
+  ":compat" [fillcolor="#baffc9"];
+  ":contacts" [fillcolor="#baffc9"];
+  ":crashreporter" [fillcolor="#baffc9"];
+  ":currencies" [fillcolor="#baffc9"];
+  ":customattrs" [fillcolor="#baffc9"];
+  ":database" [fillcolor="#baffc9"];
+  ":favorites" [fillcolor="#baffc9"];
+  ":files" [fillcolor="#baffc9"];
+  ":g-services" [fillcolor="#baffc9"];
+  ":i18n" [fillcolor="#baffc9"];
+  ":icons" [fillcolor="#baffc9"];
+  ":ktx" [fillcolor="#baffc9"];
+  ":material-color-utilities" [fillcolor="#baffc9"];
+  ":ms-services" [fillcolor="#baffc9"];
+  ":music" [fillcolor="#baffc9"];
+  ":nextcloud" [fillcolor="#baffc9"];
+  ":notifications" [fillcolor="#baffc9"];
+  ":owncloud" [fillcolor="#baffc9"];
+  ":permissions" [fillcolor="#baffc9"];
+  ":preferences" [fillcolor="#baffc9"];
+  ":search" [fillcolor="#baffc9"];
+  ":ui" [fillcolor="#baffc9"];
+  ":unitconverter" [fillcolor="#baffc9"];
+  ":weather" [fillcolor="#baffc9"];
+  ":webdav" [fillcolor="#baffc9"];
+  ":websites" [fillcolor="#baffc9"];
+  ":widgets" [fillcolor="#baffc9"];
+  ":wikipedia" [fillcolor="#baffc9"];
+
+  {rank = same;}
+
+  # Dependencies
+
+  ":accounts" -> ":accounts"
+  ":accounts" -> ":g-services" [style=dotted]
+  ":accounts" -> ":ms-services" [style=dotted]
+  ":accounts" -> ":owncloud" [style=dotted]
+  ":accounts" -> ":nextcloud" [style=dotted]
+  ":app" -> ":app"
+  ":app" -> ":accounts" [style=dotted]
+  ":app" -> ":applications" [style=dotted]
+  ":app" -> ":appshortcuts" [style=dotted]
+  ":app" -> ":backup" [style=dotted]
+  ":app" -> ":badges" [style=dotted]
+  ":app" -> ":base" [style=dotted]
+  ":app" -> ":calculator" [style=dotted]
+  ":app" -> ":calendar" [style=dotted]
+  ":app" -> ":contacts" [style=dotted]
+  ":app" -> ":crashreporter" [style=dotted]
+  ":app" -> ":currencies" [style=dotted]
+  ":app" -> ":customattrs" [style=dotted]
+  ":app" -> ":favorites" [style=dotted]
+  ":app" -> ":files" [style=dotted]
+  ":app" -> ":g-services" [style=dotted]
+  ":app" -> ":i18n" [style=dotted]
+  ":app" -> ":icons" [style=dotted]
+  ":app" -> ":ktx" [style=dotted]
+  ":app" -> ":ms-services" [style=dotted]
+  ":app" -> ":music" [style=dotted]
+  ":app" -> ":nextcloud" [style=dotted]
+  ":app" -> ":notifications" [style=dotted]
+  ":app" -> ":owncloud" [style=dotted]
+  ":app" -> ":permissions" [style=dotted]
+  ":app" -> ":preferences" [style=dotted]
+  ":app" -> ":search" [style=dotted]
+  ":app" -> ":unitconverter" [style=dotted]
+  ":app" -> ":ui" [style=dotted]
+  ":app" -> ":weather" [style=dotted]
+  ":app" -> ":websites" [style=dotted]
+  ":app" -> ":widgets" [style=dotted]
+  ":app" -> ":wikipedia" [style=dotted]
+  ":app" -> ":database" [style=dotted]
+  ":applications" -> ":applications"
+  ":applications" -> ":base" [style=dotted]
+  ":applications" -> ":preferences" [style=dotted]
+  ":applications" -> ":ktx" [style=dotted]
+  ":applications" -> ":compat" [style=dotted]
+  ":appshortcuts" -> ":appshortcuts"
+  ":appshortcuts" -> ":applications" [style=dotted]
+  ":appshortcuts" -> ":permissions" [style=dotted]
+  ":appshortcuts" -> ":base" [style=dotted]
+  ":appshortcuts" -> ":preferences" [style=dotted]
+  ":appshortcuts" -> ":ktx" [style=dotted]
+  ":backup" -> ":backup"
+  ":backup" -> ":favorites" [style=dotted]
+  ":backup" -> ":widgets" [style=dotted]
+  ":backup" -> ":search" [style=dotted]
+  ":backup" -> ":preferences" [style=dotted]
+  ":backup" -> ":ktx" [style=dotted]
+  ":backup" -> ":customattrs" [style=dotted]
+  ":badges" -> ":badges"
+  ":badges" -> ":ktx" [style=dotted]
+  ":badges" -> ":applications" [style=dotted]
+  ":badges" -> ":appshortcuts" [style=dotted]
+  ":badges" -> ":notifications" [style=dotted]
+  ":badges" -> ":preferences" [style=dotted]
+  ":badges" -> ":base" [style=dotted]
+  ":badges" -> ":files" [style=dotted]
+  ":base" -> ":base"
+  ":base" -> ":ktx" [style=dotted]
+  ":base" -> ":i18n" [style=dotted]
+  ":calculator" -> ":calculator"
+  ":calculator" -> ":preferences" [style=dotted]
+  ":calculator" -> ":base" [style=dotted]
+  ":calendar" -> ":calendar"
+  ":calendar" -> ":preferences" [style=dotted]
+  ":calendar" -> ":ktx" [style=dotted]
+  ":calendar" -> ":base" [style=dotted]
+  ":calendar" -> ":permissions" [style=dotted]
+  ":calendar" -> ":material-color-utilities" [style=dotted]
+  ":compat" -> ":compat"
+  ":contacts" -> ":contacts"
+  ":contacts" -> ":preferences" [style=dotted]
+  ":contacts" -> ":ktx" [style=dotted]
+  ":contacts" -> ":base" [style=dotted]
+  ":contacts" -> ":permissions" [style=dotted]
+  ":crashreporter" -> ":crashreporter"
+  ":crashreporter" -> ":base" [style=dotted]
+  ":currencies" -> ":currencies"
+  ":currencies" -> ":ktx" [style=dotted]
+  ":currencies" -> ":i18n" [style=dotted]
+  ":currencies" -> ":database" [style=dotted]
+  ":currencies" -> ":crashreporter" [style=dotted]
+  ":customattrs" -> ":customattrs"
+  ":customattrs" -> ":database" [style=dotted]
+  ":customattrs" -> ":base" [style=dotted]
+  ":customattrs" -> ":ktx" [style=dotted]
+  ":customattrs" -> ":crashreporter" [style=dotted]
+  ":customattrs" -> ":favorites" [style=dotted]
+  ":database" -> ":database"
+  ":database" -> ":i18n" [style=dotted]
+  ":database" -> ":ktx" [style=dotted]
+  ":favorites" -> ":favorites"
+  ":favorites" -> ":base" [style=dotted]
+  ":favorites" -> ":calendar" [style=dotted]
+  ":favorites" -> ":database" [style=dotted]
+  ":favorites" -> ":preferences" [style=dotted]
+  ":favorites" -> ":applications" [style=dotted]
+  ":favorites" -> ":appshortcuts" [style=dotted]
+  ":favorites" -> ":contacts" [style=dotted]
+  ":favorites" -> ":ktx" [style=dotted]
+  ":favorites" -> ":files" [style=dotted]
+  ":favorites" -> ":websites" [style=dotted]
+  ":favorites" -> ":wikipedia" [style=dotted]
+  ":favorites" -> ":badges" [style=dotted]
+  ":favorites" -> ":crashreporter" [style=dotted]
+  ":files" -> ":files"
+  ":files" -> ":preferences" [style=dotted]
+  ":files" -> ":base" [style=dotted]
+  ":files" -> ":ktx" [style=dotted]
+  ":files" -> ":ms-services" [style=dotted]
+  ":files" -> ":g-services" [style=dotted]
+  ":files" -> ":nextcloud" [style=dotted]
+  ":files" -> ":owncloud" [style=dotted]
+  ":files" -> ":i18n" [style=dotted]
+  ":files" -> ":permissions" [style=dotted]
+  ":g-services" -> ":g-services"
+  ":g-services" -> ":i18n" [style=dotted]
+  ":g-services" -> ":crashreporter" [style=dotted]
+  ":i18n" -> ":i18n"
+  ":icons" -> ":customattrs"
+  ":icons" -> ":icons"
+  ":icons" -> ":database" [style=dotted]
+  ":icons" -> ":preferences" [style=dotted]
+  ":icons" -> ":ktx" [style=dotted]
+  ":icons" -> ":base" [style=dotted]
+  ":icons" -> ":applications" [style=dotted]
+  ":icons" -> ":crashreporter" [style=dotted]
+  ":ktx" -> ":ktx"
+  ":material-color-utilities" -> ":material-color-utilities"
+  ":ms-services" -> ":ms-services"
+  ":ms-services" -> ":crashreporter" [style=dotted]
+  ":ms-services" -> ":preferences" [style=dotted]
+  ":music" -> ":music"
+  ":music" -> ":ktx" [style=dotted]
+  ":music" -> ":preferences" [style=dotted]
+  ":music" -> ":notifications" [style=dotted]
+  ":music" -> ":crashreporter" [style=dotted]
+  ":nextcloud" -> ":webdav"
+  ":nextcloud" -> ":nextcloud"
+  ":nextcloud" -> ":base" [style=dotted]
+  ":nextcloud" -> ":i18n" [style=dotted]
+  ":notifications" -> ":notifications"
+  ":notifications" -> ":preferences" [style=dotted]
+  ":notifications" -> ":permissions" [style=dotted]
+  ":owncloud" -> ":webdav"
+  ":owncloud" -> ":owncloud"
+  ":owncloud" -> ":base" [style=dotted]
+  ":owncloud" -> ":crashreporter" [style=dotted]
+  ":owncloud" -> ":ktx" [style=dotted]
+  ":owncloud" -> ":i18n" [style=dotted]
+  ":permissions" -> ":permissions"
+  ":permissions" -> ":ktx" [style=dotted]
+  ":permissions" -> ":base" [style=dotted]
+  ":permissions" -> ":crashreporter" [style=dotted]
+  ":preferences" -> ":preferences"
+  ":preferences" -> ":ktx" [style=dotted]
+  ":preferences" -> ":i18n" [style=dotted]
+  ":preferences" -> ":base" [style=dotted]
+  ":preferences" -> ":crashreporter" [style=dotted]
+  ":preferences" -> ":material-color-utilities" [style=dotted]
+  ":search" -> ":search"
+  ":search" -> ":base" [style=dotted]
+  ":search" -> ":database" [style=dotted]
+  ":search" -> ":preferences" [style=dotted]
+  ":search" -> ":crashreporter" [style=dotted]
+  ":search" -> ":ktx" [style=dotted]
+  ":ui" -> ":ui"
+  ":ui" -> ":material-color-utilities" [style=dotted]
+  ":ui" -> ":base" [style=dotted]
+  ":ui" -> ":i18n" [style=dotted]
+  ":ui" -> ":compat" [style=dotted]
+  ":ui" -> ":ktx" [style=dotted]
+  ":ui" -> ":icons" [style=dotted]
+  ":ui" -> ":music" [style=dotted]
+  ":ui" -> ":weather" [style=dotted]
+  ":ui" -> ":calendar" [style=dotted]
+  ":ui" -> ":search" [style=dotted]
+  ":ui" -> ":preferences" [style=dotted]
+  ":ui" -> ":applications" [style=dotted]
+  ":ui" -> ":appshortcuts" [style=dotted]
+  ":ui" -> ":calculator" [style=dotted]
+  ":ui" -> ":files" [style=dotted]
+  ":ui" -> ":widgets" [style=dotted]
+  ":ui" -> ":favorites" [style=dotted]
+  ":ui" -> ":wikipedia" [style=dotted]
+  ":ui" -> ":badges" [style=dotted]
+  ":ui" -> ":crashreporter" [style=dotted]
+  ":ui" -> ":notifications" [style=dotted]
+  ":ui" -> ":contacts" [style=dotted]
+  ":ui" -> ":permissions" [style=dotted]
+  ":ui" -> ":websites" [style=dotted]
+  ":ui" -> ":unitconverter" [style=dotted]
+  ":ui" -> ":nextcloud" [style=dotted]
+  ":ui" -> ":g-services" [style=dotted]
+  ":ui" -> ":ms-services" [style=dotted]
+  ":ui" -> ":owncloud" [style=dotted]
+  ":ui" -> ":accounts" [style=dotted]
+  ":ui" -> ":backup" [style=dotted]
+  ":unitconverter" -> ":unitconverter"
+  ":unitconverter" -> ":preferences" [style=dotted]
+  ":unitconverter" -> ":currencies" [style=dotted]
+  ":unitconverter" -> ":base" [style=dotted]
+  ":unitconverter" -> ":i18n" [style=dotted]
+  ":weather" -> ":weather"
+  ":weather" -> ":database" [style=dotted]
+  ":weather" -> ":ktx" [style=dotted]
+  ":weather" -> ":crashreporter" [style=dotted]
+  ":weather" -> ":preferences" [style=dotted]
+  ":weather" -> ":permissions" [style=dotted]
+  ":weather" -> ":i18n" [style=dotted]
+  ":webdav" -> ":webdav"
+  ":webdav" -> ":crashreporter" [style=dotted]
+  ":webdav" -> ":ktx" [style=dotted]
+  ":websites" -> ":websites"
+  ":websites" -> ":preferences" [style=dotted]
+  ":websites" -> ":base" [style=dotted]
+  ":websites" -> ":ktx" [style=dotted]
+  ":widgets" -> ":widgets"
+  ":widgets" -> ":weather" [style=dotted]
+  ":widgets" -> ":calendar" [style=dotted]
+  ":widgets" -> ":music" [style=dotted]
+  ":widgets" -> ":ktx" [style=dotted]
+  ":widgets" -> ":base" [style=dotted]
+  ":widgets" -> ":preferences" [style=dotted]
+  ":widgets" -> ":database" [style=dotted]
+  ":widgets" -> ":crashreporter" [style=dotted]
+  ":wikipedia" -> ":wikipedia"
+  ":wikipedia" -> ":preferences" [style=dotted]
+  ":wikipedia" -> ":base" [style=dotted]
+  ":wikipedia" -> ":ktx" [style=dotted]
+  ":wikipedia" -> ":crashreporter" [style=dotted]
+}

@@ -45,3 +45,5 @@ The source code consists of a number of Gradle submodules which all depend on ea
 - `:wikipedia`: APIs to search Wikipedia
 
 Most of the modules have a `Module.kt` file in their root which contains Koin definitions to make the APIs accessable for other modules.
+
+[![](/img/dependency-graph.dot.png)](/img/dependency-graph.dot.png))
