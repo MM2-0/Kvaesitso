@@ -482,4 +482,5 @@
     <string name="menu_remove">移除</string>
     <string name="favorites">收藏夹</string>
     <string name="create_app_shortcut">创建快捷方式</string>
+    <string name="preference_icon_shape_pebble">鹅卵形</string>
 </resources>

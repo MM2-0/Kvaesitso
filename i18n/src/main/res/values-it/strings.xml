@@ -486,4 +486,5 @@
     <string name="preference_edit_button">Pulsante modifica</string>
     <string name="preference_favorites_edit_button_summary">Mostra un pulsante per riordinare i preferiti</string>
     <string name="preference_widgets_edit_button_summary">Mostra un pulsante per aggiungere, rimuovere e riorganizzare i widget</string>
+    <string name="preference_icon_shape_pebble">Ciottolo</string>
 </resources>
