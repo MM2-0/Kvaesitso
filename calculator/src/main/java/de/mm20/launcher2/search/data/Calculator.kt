@@ -11,12 +11,6 @@ data class Calculator(
     val solution: Double
 ): Searchable {
 
-    override val domain: String
-        get() = "calculator"
-
-    override val key: String
-        get() = "calculator://$term"
-
     val formattedString: String
     val formattedBinaryString: String
     val formattedHexString: String

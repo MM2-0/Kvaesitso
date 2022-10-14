@@ -47,6 +47,17 @@ dependencies {
     implementation(libs.okhttp)
     implementation(libs.coil.core)
 
+    implementation(project(":applications"))
+    implementation(project(":appshortcuts"))
+    implementation(project(":calculator"))
+    implementation(project(":calendar"))
+    implementation(project(":contacts"))
+    implementation(project(":files"))
+    implementation(project(":unitconverter"))
+    implementation(project(":websites"))
+    implementation(project(":wikipedia"))
+    implementation(project(":customattrs"))
+
     implementation(project(":base"))
     implementation(project(":database"))
     implementation(project(":preferences"))

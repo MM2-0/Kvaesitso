@@ -3,13 +3,10 @@ package de.mm20.launcher2.websites
 import android.content.Context
 import android.webkit.URLUtil
 import androidx.core.graphics.toColorInt
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Website
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -17,7 +14,6 @@ import okhttp3.Request
 import org.jsoup.Jsoup
 import org.jsoup.UncheckedIOException
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URISyntaxException
@@ -29,8 +25,6 @@ interface WebsiteRepository {
 }
 
 internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, KoinComponent {
-
-    private val dataStore: LauncherDataStore by inject()
 
     private val httpClient = OkHttpClient
         .Builder()
@@ -46,14 +40,8 @@ internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, 
         }
         if (query.isBlank()) return@channelFlow
 
-        dataStore.data.map { it.websiteSearch.enabled }.collectLatest {
-            if(it) {
-                val website = queryWebsite(query)
-                send(website)
-            } else {
-                send(null)
-            }
-        }
+        val website = queryWebsite(query)
+        send(website)
 
     }
 

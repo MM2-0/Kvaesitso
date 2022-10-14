@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val calendarModule = module {
-    single<CalendarRepository> { CalendarRepositoryImpl(androidContext()) }
+    single<CalendarRepository> { CalendarRepositoryImpl(androidContext(), get()) }
 }

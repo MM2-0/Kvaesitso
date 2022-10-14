@@ -16,13 +16,13 @@ The source code consists of a number of Gradle submodules which all depend on ea
 - `:calculator`: Implements the calculator
 - `:calendar`: query calendar events for the calendar widget and calendar search
 - `:compat`: Compatibility helpers for old Android versions
-- `:contacts`: Contact search
+- `:contacts`: Query contacts on the device
 - `:crashreporter`: Crash reporter; based on https://github.com/MindorksOpenSource/CrashReporter
 - `:currencies`: APIs to fetch currency conversion rates, used by `:unitconverter`
 - `:customattrs`: common (low-level) APIs to store per-app customizations (custom labels, custom icons, tags)
 - `:database`: the launcher database, uses AndroidX Room
 - `:favorites`: Handles pinned, frequently used and hidden items and serialization / deserialization of items. Depends on most of the search modules (`:apps`, `:calendar`, `:contacts`, etc.)
-- `:files`: File search (local and cloud)
+- `:files`: Manage and find files (local and cloud)
 - `:g-services`: Google APIs and Google sign-in; used by `:accounts` and `:files`
 - `:i18n`: All resources that require localization. Mainly strings but can also be used for icon resources if they need localization.
 - `:icons`: Used to retrieve icons for items. Handles icon packs, themed icons and also custom icons (on a higher level)
@@ -35,7 +35,7 @@ The source code consists of a number of Gradle submodules which all depend on ea
 - `:owncloud`: Owncloud APIs and Owncloud sign-in; used by `:accounts` and `:files`
 - `:permissions`: Request and observe permission status for this app
 - `:preferences`: Store user preferences; uses AndroidX Datastore
-- `:search`: Base classes for search items and search item serialization. Also websearches. Does not contain the actual search which is split across several modules (`:applications`, `:calendar`, `:contacts`, `:files` and so on)
+- `:search`: The search. Also websearches.
 - `:ui`: Contains almost the entire user interface (except for account sign-in UIs). Uses Jetpack Compose.
 - `:unitconverter`: Unit and currency converter
 - `:weather`: APIs to fetch weather data

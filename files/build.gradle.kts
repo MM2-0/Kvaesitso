@@ -44,7 +44,6 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(project(":preferences"))
     implementation(project(":base"))
     implementation(project(":ktx"))
     implementation(project(":ms-services"))

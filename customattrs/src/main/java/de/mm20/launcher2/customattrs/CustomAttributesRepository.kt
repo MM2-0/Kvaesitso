@@ -6,6 +6,9 @@ import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.PinnableSearchable
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -15,6 +18,9 @@ import org.json.JSONException
 import java.io.File
 
 interface CustomAttributesRepository {
+
+    fun search(query: String): Flow<ImmutableList<PinnableSearchable>>
+
     fun getCustomIcon(searchable: PinnableSearchable): Flow<CustomIcon?>
     fun setCustomIcon(searchable: PinnableSearchable, icon: CustomIcon?)
 
@@ -24,8 +30,6 @@ interface CustomAttributesRepository {
 
     fun setTags(searchable: PinnableSearchable, tags: List<String>)
     fun getTags(searchable: PinnableSearchable): Flow<List<String>>
-
-    suspend fun search(query: String): Flow<List<PinnableSearchable>>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -131,15 +135,15 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override suspend fun search(query: String): Flow<List<PinnableSearchable>> {
+    override fun search(query: String): Flow<ImmutableList<PinnableSearchable>> {
         if (query.isBlank()) {
             return flow {
-                emit(emptyList())
+                emit(persistentListOf())
             }
         }
         val dao = appDatabase.customAttrsDao()
         return dao.search("%$query%").map {
-            favoritesRepository.getFromKeys(it)
+            favoritesRepository.getFromKeys(it).toImmutableList()
         }
     }
 

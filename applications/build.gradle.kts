@@ -46,7 +46,6 @@ dependencies {
     implementation(libs.commons.text)
 
     implementation(project(":base"))
-    implementation(project(":preferences"))
     implementation(project(":ktx"))
     implementation(project(":compat"))
 

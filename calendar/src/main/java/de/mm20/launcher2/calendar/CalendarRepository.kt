@@ -6,32 +6,36 @@ import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.search.data.UserCalendar
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
-import java.util.*
+import java.util.Calendar
 
-interface CalendarRepository: SearchableRepository<CalendarEvent> {
-    fun getUpcomingEvents(): Flow<List<CalendarEvent>>
+interface CalendarRepository {
+
+    fun search(query: String): Flow<ImmutableList<CalendarEvent>>
+    fun getUpcomingEvents(
+        excludeCalendars: List<Long>,
+        excludeAllDayEvents: Boolean
+    ): Flow<List<CalendarEvent>>
 
     suspend fun getCalendars(): List<UserCalendar>
 }
 
 internal class CalendarRepositoryImpl(
     private val context: Context,
-) : CalendarRepository, KoinComponent {
-
-    private val dataStore: LauncherDataStore by inject()
-    private val permissionsManager: PermissionsManager by inject()
+    private val permissionsManager: PermissionsManager,
+) : CalendarRepository {
 
     override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
         if (query.isBlank() || query.length < 3) {
@@ -41,10 +45,7 @@ internal class CalendarRepositoryImpl(
         }
 
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        val searchCalendar = dataStore.data.map { it.calendarSearch.enabled }
-        return combine(hasPermission, searchCalendar) { permission, search ->
-            permission && search
-        }.map {
+        return hasPermission.map {
             if (it) {
                 val now = System.currentTimeMillis()
                 queryCalendarEvents(
@@ -149,25 +150,26 @@ internal class CalendarRepositoryImpl(
         return results
     }
 
-    override fun getUpcomingEvents(): Flow<List<CalendarEvent>> = channelFlow {
+    override fun getUpcomingEvents(
+        excludeCalendars: List<Long>,
+        excludeAllDayEvents: Boolean,
+    ): Flow<List<CalendarEvent>> = channelFlow {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
         hasPermission.collectLatest {
             if (it) {
-                dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
-                    val now = System.currentTimeMillis()
-                    val end = now + 14 * 24 * 60 * 60 * 1000L
-                    val events = withContext(Dispatchers.IO) {
-                        queryCalendarEvents(
-                            query = "",
-                            intervalStart = now,
-                            intervalEnd = end,
-                            limit = 700,
-                            excludeAllDayEvents = settings.hideAlldayEvents,
-                            excludeCalendars = settings.excludeCalendarsList
-                        )
-                    }
-                    send(events)
+                val now = System.currentTimeMillis()
+                val end = now + 14 * 24 * 60 * 60 * 1000L
+                val events = withContext(Dispatchers.IO) {
+                    queryCalendarEvents(
+                        query = "",
+                        intervalStart = now,
+                        intervalEnd = end,
+                        limit = 700,
+                        excludeAllDayEvents = excludeAllDayEvents,
+                        excludeCalendars = excludeCalendars
+                    )
                 }
+                send(events)
             } else {
                 send(emptyList())
             }

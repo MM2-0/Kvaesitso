@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val wikipediaModule = module {
-    single<WikipediaRepository> { WikipediaRepositoryImpl(androidContext()) }
+    single<WikipediaRepository> { WikipediaRepositoryImpl(androidContext(), get()) }
 }

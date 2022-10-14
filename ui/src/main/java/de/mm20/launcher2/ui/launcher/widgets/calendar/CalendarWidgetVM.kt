@@ -14,17 +14,22 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.CalendarEvent
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.lang.Integer.min
-import java.time.*
-import java.util.*
+import java.time.Instant
+import java.time.LocalDate
+import java.time.OffsetDateTime
+import java.time.ZoneId
 import kotlin.math.max
 
 class CalendarWidgetVM : ViewModel(), KoinComponent {
 
+    private val dataStore: LauncherDataStore by inject()
     private val calendarRepository: CalendarRepository by inject()
     private val favoritesRepository: FavoritesRepository by inject()
 
@@ -144,10 +149,16 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     suspend fun onActive() {
         selectDate(LocalDate.now())
-        calendarRepository.getUpcomingEvents().collectLatest { events ->
-            favoritesRepository.getHiddenCalendarEventKeys().collectLatest { hidden ->
-                upcomingEvents = events.filter { !hidden.contains(it.key) }
+        dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
+            calendarRepository.getUpcomingEvents(
+                excludeAllDayEvents = settings.hideAlldayEvents,
+                excludeCalendars = settings.excludeCalendarsList
+            ).collectLatest { events ->
+                favoritesRepository.getHiddenCalendarEventKeys().collectLatest { hidden ->
+                    upcomingEvents = events.filter { !hidden.contains(it.key) }
+                }
             }
+
         }
     }
 

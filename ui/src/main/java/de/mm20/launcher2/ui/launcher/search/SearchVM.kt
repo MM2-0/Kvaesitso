@@ -1,29 +1,19 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.applications.AppRepository
-import de.mm20.launcher2.appshortcuts.AppShortcutRepository
-import de.mm20.launcher2.calculator.CalculatorRepository
-import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.contacts.ContactRepository
 import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
-import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.WebsearchRepository
+import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.data.*
-import de.mm20.launcher2.ui.utils.withCustomLabels
-import de.mm20.launcher2.unitconverter.UnitConverterRepository
-import de.mm20.launcher2.websites.WebsiteRepository
-import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
@@ -33,19 +23,9 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val customAttributesRepository: CustomAttributesRepository by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    private val calendarRepository: CalendarRepository by inject()
-    private val contactRepository: ContactRepository by inject()
-    private val appRepository: AppRepository by inject()
-    private val appShortcutRepository: AppShortcutRepository by inject()
-    private val wikipediaRepository: WikipediaRepository by inject()
-    private val unitConverterRepository: UnitConverterRepository by inject()
-    private val calculatorRepository: CalculatorRepository by inject()
-    private val websiteRepository: WebsiteRepository by inject()
-    private val fileRepository: FileRepository by inject()
-    private val websearchRepository: WebsearchRepository by inject()
+    private val searchService: SearchService by inject()
 
     val isSearching = MutableLiveData(false)
     val searchQuery = MutableLiveData("")
@@ -59,10 +39,10 @@ class SearchVM : ViewModel(), KoinComponent {
     val fileResults = MutableLiveData<List<File>>(emptyList())
     val contactResults = MutableLiveData<List<Contact>>(emptyList())
     val calendarResults = MutableLiveData<List<CalendarEvent>>(emptyList())
-    val wikipediaResult = MutableLiveData<Wikipedia?>(null)
-    val websiteResult = MutableLiveData<Website?>(null)
-    val calculatorResult = MutableLiveData<Calculator?>(null)
-    val unitConverterResult = MutableLiveData<UnitConverter?>(null)
+    val wikipediaResults = MutableLiveData<List<Wikipedia>>(emptyList())
+    val websiteResults = MutableLiveData<List<Website>>(emptyList())
+    val calculatorResults = MutableLiveData<List<Calculator>>(emptyList())
+    val unitConverterResults = MutableLiveData<List<UnitConverter>>(emptyList())
     val websearchResults = MutableLiveData<List<Websearch>>(emptyList())
 
     val hiddenResults = MutableLiveData<List<PinnableSearchable>>(emptyList())
@@ -84,8 +64,6 @@ class SearchVM : ViewModel(), KoinComponent {
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
 
-        val hiddenItems = MutableStateFlow(HiddenItemResults())
-
         try {
             searchJob?.cancel()
         } catch (_: CancellationException) {
@@ -93,117 +71,64 @@ class SearchVM : ViewModel(), KoinComponent {
         hideFavorites.postValue(query.isNotEmpty())
         searchJob = viewModelScope.launch {
             isSearching.postValue(true)
-            val customAttrResults = customAttributesRepository.search(query)
-                .combine(dataStore.data) { items, settings ->
-                    items.filter {
-                        it is LauncherApp
-                                || it is Contact && settings.contactsSearch.enabled
-                                || it is CalendarEvent && settings.calendarSearch.enabled
-                                || it is AppShortcut && settings.appShortcutSearch.enabled
-                                || it is LocalFile && settings.fileSearch.localFiles
-                                || it is GDriveFile && settings.fileSearch.gdrive
-                                || it is OneDriveFile && settings.fileSearch.onedrive
-                    }
-                }
-            val jobs = mutableListOf<Deferred<Any>>()
-            jobs += async(Dispatchers.Default) {
-                appRepository
-                    .search(query)
-                    .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels(customAttributesRepository)
-                    .sorted()
-                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        val (work, personal) = results.partition { it is LauncherApp && !it.isMainProfile }
-                        appResults.postValue(personal)
-                        workAppResults.postValue(work)
-                        hiddenItems.update {
-                            it.copy(apps = hidden)
+
+            dataStore.data.collectLatest {
+                searchService.search(
+                    query,
+                    calculator = it.calculatorSearch,
+                    unitConverter = it.unitConverterSearch,
+                    calendars = it.calendarSearch,
+                    contacts = it.contactsSearch,
+                    files = it.fileSearch,
+                    shortcuts = it.appShortcutSearch,
+                    websites = it.websiteSearch,
+                    wikipedia = it.wikipediaSearch,
+                ).collectLatest { results ->
+                    hiddenItemKeys.collectLatest { hiddenKeys ->
+                        val hidden = mutableListOf<PinnableSearchable>()
+                        val apps = mutableListOf<LauncherApp>()
+                        val workApps = mutableListOf<LauncherApp>()
+                        val shortcuts = mutableListOf<AppShortcut>()
+                        val files = mutableListOf<File>()
+                        val contacts = mutableListOf<Contact>()
+                        val events = mutableListOf<CalendarEvent>()
+                        val unitConv = mutableListOf<UnitConverter>()
+                        val calc = mutableListOf<Calculator>()
+                        val wikipedia = mutableListOf<Wikipedia>()
+                        val website = mutableListOf<Website>()
+                        for (r in results) {
+                            when {
+                                r is PinnableSearchable && hiddenKeys.contains(r.key) -> {
+                                    hidden.add(r)
+                                }
+                                r is LauncherApp && !r.isMainProfile -> workApps.add(r)
+                                r is LauncherApp -> apps.add(r)
+                                r is AppShortcut -> shortcuts.add(r)
+                                r is File -> files.add(r)
+                                r is Contact -> contacts.add(r)
+                                r is CalendarEvent -> events.add(r)
+                                r is UnitConverter -> unitConv.add(r)
+                                r is Calculator -> calc.add(r)
+                                r is Website -> website.add(r)
+                                r is Wikipedia -> wikipedia.add(r)
+                            }
                         }
+                        appResults.value = apps
+                        workAppResults.value = workApps
+                        appShortcutResults.value = shortcuts
+                        fileResults.value = files
+                        contactResults.value = contacts
+                        calendarResults.value = events
+                        wikipediaResults.value = wikipedia
+                        websiteResults.value = website
+                        calculatorResults.value = calc
+                        unitConverterResults.value = unitConv
+                        hiddenResults.value = hidden
                     }
-            }
-            jobs += async(Dispatchers.Default) {
-                contactRepository
-                    .search(query)
-                    .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels(customAttributesRepository)
-                    .sorted()
-                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        contactResults.postValue(results)
-                        hiddenItems.update {
-                            it.copy(contacts = hidden)
-                        }
-                    }
-            }
-            jobs += async(Dispatchers.Default) {
-                calendarRepository
-                    .search(query)
-                    .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels(customAttributesRepository)
-                    .sorted()
-                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        calendarResults.postValue(results)
-                        hiddenItems.update {
-                            it.copy(calendarEvents = hidden)
-                        }
-                    }
-            }
-            jobs += async(Dispatchers.Default) {
-                wikipediaRepository.search(query).collectLatest {
-                    wikipediaResult.postValue(it)
                 }
             }
-            jobs += async(Dispatchers.Default) {
-                unitConverterRepository.search(query).collectLatest {
-                    unitConverterResult.postValue(it)
-                }
-            }
-            jobs += async(Dispatchers.Default) {
-                calculatorRepository.search(query).collectLatest {
-                    calculatorResult.postValue(it)
-                }
-            }
-            jobs += async(Dispatchers.Default) {
-                websiteRepository.search(query).collectLatest {
-                    websiteResult.postValue(it)
-                }
-            }
-            jobs += async(Dispatchers.Default) {
-                fileRepository
-                    .search(query)
-                    .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels(customAttributesRepository)
-                    .sorted()
-                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        fileResults.postValue(results)
-                        hiddenItems.update {
-                            it.copy(files = hidden)
-                        }
-                    }
-            }
-            jobs += async(Dispatchers.Default) {
-                websearchRepository.search(query).collectLatest {
-                    websearchResults.postValue(it)
-                }
-            }
-            jobs += async(Dispatchers.Default) {
-                appShortcutRepository
-                    .search(query)
-                    .withCustomAttributeResults(customAttrResults)
-                    .withCustomLabels(customAttributesRepository)
-                    .sorted()
-                    .collectWithHiddenItems(hiddenItemKeys) { results, hidden ->
-                        appShortcutResults.postValue(results)
-                        hiddenItems.update {
-                            it.copy(appShortcuts = hidden)
-                        }
-                    }
-            }
-            launch(Dispatchers.Default) {
-                hiddenItems.collectLatest {
-                    hiddenResults.postValue(it.joinToList())
-                }
-            }
-            jobs.map { it.await() }
+
+
             isSearching.postValue(false)
         }
     }

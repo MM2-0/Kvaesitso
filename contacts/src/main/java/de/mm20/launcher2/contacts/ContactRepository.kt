@@ -4,8 +4,6 @@ import android.content.Context
 import android.provider.ContactsContract
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.Contact
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -13,20 +11,17 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-interface ContactRepository: SearchableRepository<Contact>
+interface ContactRepository {
+    fun search(query: String): Flow<ImmutableList<Contact>>
+}
 
 internal class ContactRepositoryImpl(
     private val context: Context,
-) : ContactRepository, KoinComponent {
-
-    private val permissionsManager: PermissionsManager by inject()
-    private val dataStore: LauncherDataStore by inject()
+    private val permissionsManager: PermissionsManager
+) : ContactRepository {
 
     override fun search(query: String): Flow<ImmutableList<Contact>> {
-        val searchContacts = dataStore.data.map { it.contactsSearch.enabled }
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
         if (query.length < 3) {
@@ -35,9 +30,7 @@ internal class ContactRepositoryImpl(
             }
         }
 
-        return combine(searchContacts, hasPermission) { search, permission ->
-            search && permission
-        }.map {
+        return hasPermission.map {
             if (it) {
                 queryContacts(query)
             } else {

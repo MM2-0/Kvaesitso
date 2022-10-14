@@ -46,7 +46,6 @@ dependencies {
     implementation(project(":applications"))
     implementation(project(":permissions"))
     implementation(project(":base"))
-    implementation(project(":preferences"))
     implementation(project(":ktx"))
 
 }

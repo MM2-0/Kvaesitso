@@ -15,16 +15,15 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 interface WikipediaRepository {
-    fun search(query: String): Flow<Wikipedia?>
+    fun search(query: String,  loadImages: Boolean = false): Flow<Wikipedia?>
 }
 
 internal class WikipediaRepositoryImpl(
-    private val context: Context
+    private val context: Context,
+    private val dataStore: LauncherDataStore
 ) : WikipediaRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
-    private val dataStore: LauncherDataStore by inject()
 
     private val httpClient = OkHttpClient
         .Builder()
@@ -58,7 +57,7 @@ internal class WikipediaRepositoryImpl(
     private lateinit var wikipediaService: WikipediaApi
 
 
-    override fun search(query: String): Flow<Wikipedia?> = channelFlow {
+    override fun search(query: String, loadImages: Boolean): Flow<Wikipedia?> = channelFlow {
         send(null)
         withContext(Dispatchers.IO) {
             httpClient.dispatcher.cancelAll()
@@ -67,13 +66,7 @@ internal class WikipediaRepositoryImpl(
         if (!::wikipediaService.isInitialized) return@channelFlow
         if (query.isBlank()) return@channelFlow
 
-        dataStore.data.map { it.wikipediaSearch }.collectLatest {
-            if (it.enabled) {
-                send(queryWikipedia(query, it.images))
-            } else {
-                send(null)
-            }
-        }
+        send(queryWikipedia(query, loadImages))
     }
 
     private suspend fun queryWikipedia(query: String, loadImages: Boolean): Wikipedia? {

@@ -9,6 +9,9 @@ import java.text.Collator
 
 interface PinnableSearchable : Searchable, Comparable<PinnableSearchable>  {
 
+    val domain: String
+    val key: String
+
     val label: String
     val labelOverride: String?
         get() = null

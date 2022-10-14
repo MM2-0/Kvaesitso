@@ -91,10 +91,10 @@ fun SearchColumn(
     val contacts by viewModel.contactResults.observeAsState(emptyList())
     val files by viewModel.fileResults.observeAsState(emptyList())
     val events by viewModel.calendarResults.observeAsState(emptyList())
-    val unitConverter by viewModel.unitConverterResult.observeAsState(null)
-    val calculator by viewModel.calculatorResult.observeAsState(null)
-    val wikipedia by viewModel.wikipediaResult.observeAsState(null)
-    val website by viewModel.websiteResult.observeAsState(null)
+    val unitConverter by viewModel.unitConverterResults.observeAsState(emptyList())
+    val calculator by viewModel.calculatorResults.observeAsState(emptyList())
+    val wikipedia by viewModel.wikipediaResults.observeAsState(emptyList())
+    val website by viewModel.websiteResults.observeAsState(emptyList())
 
     val isSearchEmpty by viewModel.isSearchEmpty.observeAsState(true)
 
@@ -276,14 +276,12 @@ fun SearchColumn(
             reverse = reverse,
             key = "shortcuts"
         )
-        val uc = unitConverter
-        if (uc != null) {
+        for (conv in unitConverter) {
             SingleResult {
-                UnitConverterItem(unitConverter = uc)
+                UnitConverterItem(unitConverter = conv)
             }
         }
-        val calc = calculator
-        if (calc != null) {
+        for (calc in calculator) {
             SingleResult {
                 CalculatorItem(calculator = calc)
             }
@@ -334,14 +332,12 @@ fun SearchColumn(
             reverse = reverse,
             key = "contacts"
         )
-        val wiki = wikipedia
-        if (wiki != null) {
+        for (wiki in wikipedia) {
             SingleResult {
                 WikipediaItem(wikipedia = wiki)
             }
         }
-        val ws = website
-        if (ws != null) {
+        for (ws in website) {
             SingleResult {
                 WebsiteItem(website = ws)
             }

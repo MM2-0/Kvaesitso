@@ -12,7 +12,6 @@ import android.os.Process
 import android.os.UserHandle
 import android.util.Log
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -22,9 +21,10 @@ import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.*
 
-interface AppRepository: SearchableRepository<LauncherApp> {
+interface AppRepository {
     fun getAllInstalledApps(): Flow<List<LauncherApp>>
     fun getSuspendedPackages(): Flow<List<String>>
+    fun search(query: String): Flow<ImmutableList<LauncherApp>>
 }
 
 internal class AppRepositoryImpl(

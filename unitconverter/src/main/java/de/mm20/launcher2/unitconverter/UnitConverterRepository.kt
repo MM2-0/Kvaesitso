@@ -1,7 +1,6 @@
 package de.mm20.launcher2.unitconverter
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.currencies.CurrencyRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.UnitConverter
@@ -15,7 +14,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface UnitConverterRepository {
-    fun search(query: String): Flow<UnitConverter?>
+    fun search(query: String, includeCurrencies: Boolean): Flow<UnitConverter?>
 }
 
 internal class UnitConverterRepositoryImpl(
@@ -26,8 +25,6 @@ internal class UnitConverterRepositoryImpl(
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    val unitConverter = MutableLiveData<UnitConverter?>()
-
     init {
         scope.launch {
             dataStore.data.map { it.unitConverterSearch }.distinctUntilChanged().collectLatest {
@@ -37,18 +34,12 @@ internal class UnitConverterRepositoryImpl(
         }
     }
 
-    override fun search(query: String): Flow<UnitConverter?> = channelFlow {
+    override fun search(query: String, includeCurrencies: Boolean): Flow<UnitConverter?> = channelFlow {
         if (query.isBlank()) {
             send(null)
             return@channelFlow
         }
-        dataStore.data.map { it.unitConverterSearch }.collectLatest {
-            if (it.enabled) {
-                send(queryUnitConverter(query, it.currencies))
-            } else {
-                send(null)
-            }
-        }
+        send(queryUnitConverter(query, includeCurrencies))
     }
 
     private suspend fun queryUnitConverter(

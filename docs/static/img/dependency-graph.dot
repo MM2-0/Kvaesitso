@@ -88,14 +88,12 @@ digraph {
   ":app" -> ":database" [style=dotted]
   ":applications" -> ":applications"
   ":applications" -> ":base" [style=dotted]
-  ":applications" -> ":preferences" [style=dotted]
   ":applications" -> ":ktx" [style=dotted]
   ":applications" -> ":compat" [style=dotted]
   ":appshortcuts" -> ":appshortcuts"
   ":appshortcuts" -> ":applications" [style=dotted]
   ":appshortcuts" -> ":permissions" [style=dotted]
   ":appshortcuts" -> ":base" [style=dotted]
-  ":appshortcuts" -> ":preferences" [style=dotted]
   ":appshortcuts" -> ":ktx" [style=dotted]
   ":backup" -> ":backup"
   ":backup" -> ":favorites" [style=dotted]
@@ -116,17 +114,14 @@ digraph {
   ":base" -> ":ktx" [style=dotted]
   ":base" -> ":i18n" [style=dotted]
   ":calculator" -> ":calculator"
-  ":calculator" -> ":preferences" [style=dotted]
   ":calculator" -> ":base" [style=dotted]
   ":calendar" -> ":calendar"
-  ":calendar" -> ":preferences" [style=dotted]
   ":calendar" -> ":ktx" [style=dotted]
   ":calendar" -> ":base" [style=dotted]
   ":calendar" -> ":permissions" [style=dotted]
   ":calendar" -> ":material-color-utilities" [style=dotted]
   ":compat" -> ":compat"
   ":contacts" -> ":contacts"
-  ":contacts" -> ":preferences" [style=dotted]
   ":contacts" -> ":ktx" [style=dotted]
   ":contacts" -> ":base" [style=dotted]
   ":contacts" -> ":permissions" [style=dotted]
@@ -161,7 +156,6 @@ digraph {
   ":favorites" -> ":badges" [style=dotted]
   ":favorites" -> ":crashreporter" [style=dotted]
   ":files" -> ":files"
-  ":files" -> ":preferences" [style=dotted]
   ":files" -> ":base" [style=dotted]
   ":files" -> ":ktx" [style=dotted]
   ":files" -> ":ms-services" [style=dotted]
@@ -216,6 +210,16 @@ digraph {
   ":preferences" -> ":crashreporter" [style=dotted]
   ":preferences" -> ":material-color-utilities" [style=dotted]
   ":search" -> ":search"
+  ":search" -> ":applications" [style=dotted]
+  ":search" -> ":appshortcuts" [style=dotted]
+  ":search" -> ":calculator" [style=dotted]
+  ":search" -> ":calendar" [style=dotted]
+  ":search" -> ":contacts" [style=dotted]
+  ":search" -> ":files" [style=dotted]
+  ":search" -> ":unitconverter" [style=dotted]
+  ":search" -> ":websites" [style=dotted]
+  ":search" -> ":wikipedia" [style=dotted]
+  ":search" -> ":customattrs" [style=dotted]
   ":search" -> ":base" [style=dotted]
   ":search" -> ":database" [style=dotted]
   ":search" -> ":preferences" [style=dotted]
@@ -269,7 +273,6 @@ digraph {
   ":webdav" -> ":crashreporter" [style=dotted]
   ":webdav" -> ":ktx" [style=dotted]
   ":websites" -> ":websites"
-  ":websites" -> ":preferences" [style=dotted]
   ":websites" -> ":base" [style=dotted]
   ":websites" -> ":ktx" [style=dotted]
   ":widgets" -> ":widgets"
