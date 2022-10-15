@@ -10,16 +10,22 @@ fun String.decodeUrl(charset: String): String? {
 }
 
 /**
- * Normalize a string to lowercase ASCII
- * TODO: Only supports Chinese/Pinyin at the moment
+ * Normalize a string to lowercase string
+ * This is used for substring matching.
+ * Characters must be normalized independently so that
+ * A.contains(B) -> A.normalize().contains(B.normalize()) is true.
  */
 fun String.normalize(): String {
     return StringUtils.stripAccents(this.romanize().lowercase(Locale.getDefault()))
+        .replace("æ", "ae")
+        .replace("œ", "oe")
+        .replace("ß", "ss")
 }
 
 /**
  * Romanize a string, transliterate non-latin characters into latin
- * TODO: Only supports Chinese/Pinyin at the moment
+ * This is used for sorting. The resulting string represents the position where the original
+ * string should be sorted in the latin alphabet.
  */
 fun String.romanize(): String {
     return Pinyin.toPinyin(this, "")
