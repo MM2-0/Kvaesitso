@@ -36,7 +36,6 @@ interface FavoritesRepository {
     ): Flow<List<PinnableSearchable>>
 
 
-    fun getPinnedCalendarEvents(): Flow<List<PinnableSearchable>>
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
     fun isPinned(searchable: PinnableSearchable): Flow<Boolean>
     fun pinItem(searchable: PinnableSearchable)
@@ -131,17 +130,6 @@ internal class FavoritesRepositoryImpl(
         }
         return entities.map {
             it.mapNotNull { fromDatabaseEntity(it).searchable }
-        }
-    }
-
-    override fun getPinnedCalendarEvents(): Flow<List<CalendarEvent>> {
-        return database.searchDao().getFavoritesWithTypes(
-            includeTypes = listOf("calendar"),
-            automaticallySorted = true,
-            manuallySorted = true,
-            limit = 50
-        ).map {
-            it.mapNotNull { fromDatabaseEntity(it).searchable as? CalendarEvent }
         }
     }
 

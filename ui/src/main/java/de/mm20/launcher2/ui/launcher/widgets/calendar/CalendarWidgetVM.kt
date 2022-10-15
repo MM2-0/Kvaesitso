@@ -35,7 +35,11 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     val calendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
-        favoritesRepository.getPinnedCalendarEvents().asLiveData(viewModelScope.coroutineContext)
+        favoritesRepository.getFavorites(
+            includeTypes = listOf(CalendarEvent.Domain),
+            automaticallySorted = true,
+            manuallySorted = true,
+        ).asLiveData(viewModelScope.coroutineContext)
     val nextEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     var availableDates = listOf(LocalDate.now())
 
