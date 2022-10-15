@@ -10,7 +10,7 @@ There are two ways of creating a websearch shortcut:
 
 ### Automatically
 
-Some websearches can be imported automatically (if they support the [OpenSearch description format](https://developer.mozilla.org/en-US/docs/Web/OpenSearch)
+Some websearches can be imported automatically (if they support the [OpenSearch description format](https://developer.mozilla.org/en-US/docs/Web/OpenSearch))
 
 - In the create websearch dialog, click the download icon in the top right corner
 - Enter the base URL of the website you are trying to import (for example: `github.com`)
@@ -30,7 +30,7 @@ Some websearches can be imported automatically (if they support the [OpenSearch 
     :::info
     Spaces and special characters might be encoded. Don't worry about it, the launcher will handle the encoding for you.
 
-    If you can't the search term anywhere, try to disable Javascript and try again. If that still doesn't work, then that website cannot be used.
+    If you can't find the search term anywhere, try to disable Javascript and try again. If that still doesn't work, then that website cannot be used.
     :::
 
   - Replace the search term in the URL with `${1}`. Copy the URL and paste it into the URL field.
