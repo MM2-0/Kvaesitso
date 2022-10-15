@@ -11,9 +11,13 @@ class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
         if (navContract != null) {
             homeTransitionManager.resolve(navContract, window)
         } else {
-            homeTransitionManager.clear()
             onBackPressed()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        homeTransitionManager.clear()
     }
 
     override fun onBackPressed() {
