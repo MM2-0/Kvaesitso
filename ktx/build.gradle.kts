@@ -43,4 +43,6 @@ dependencies {
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.commons.text)
 
+    testImplementation(libs.bundles.tests)
+
 }

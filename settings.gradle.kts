@@ -280,6 +280,10 @@ dependencyResolutionManagement {
 
             library("lottie", "com.airbnb.android", "lottie-compose")
                 .version("5.2.0")
+
+            version("junit", "4.13")
+            library("junit", "junit", "junit").versionRef("junit")
+            bundle("tests", listOf("junit"))
         }
     }
 }
