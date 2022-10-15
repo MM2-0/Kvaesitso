@@ -43,8 +43,7 @@ fun MaterialYouCompatScheme(wallpaperColors: WallpaperColors, darkTheme: Boolean
         onError = Color(scheme.onError),
         errorContainer = Color(scheme.errorContainer),
         onErrorContainer = Color(scheme.onErrorContainer),
-        //TODO: handle outline variant and scrim properly
-        scrim = Color.Black,
-        outlineVariant = Color(scheme.surfaceVariant),
+        scrim = Color(scheme.scrim),
+        outlineVariant = Color(scheme.outlineVariant),
     )
 }

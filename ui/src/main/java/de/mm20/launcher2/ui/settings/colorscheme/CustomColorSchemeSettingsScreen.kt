@@ -363,6 +363,20 @@ fun CustomColorSchemeSettingsScreen() {
                     )
 
                     ColorPreference(
+                        title = "Surface Tint",
+                        value = lightScheme?.let { Color(it.surfaceTint) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceTint(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
+                    ColorPreference(
                         title = "Surface Variant",
                         value = lightScheme?.let { Color(it.surfaceVariant) },
                         onValueChanged = {
@@ -707,6 +721,19 @@ fun CustomColorSchemeSettingsScreen() {
                             viewModel.setDarkScheme(
                                 colors.toBuilder()
                                     .setOnSurface(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Tint",
+                        value = darkScheme?.let { Color(it.surfaceTint) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceTint(it.toArgb())
                                     .build()
                             )
                         }

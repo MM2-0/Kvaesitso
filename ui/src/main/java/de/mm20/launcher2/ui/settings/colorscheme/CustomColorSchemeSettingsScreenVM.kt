@@ -126,6 +126,7 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
 
         return CustomColors.Scheme.newBuilder()
             .setPrimary(a1.tone(80))
+            .setSurfaceTint(a1.tone(80))
             .setOnPrimary(a1.tone(20))
             .setPrimaryContainer(a1.tone(30))
             .setOnPrimaryContainer(a1.tone(90))
@@ -148,9 +149,11 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
             .setSurfaceVariant(n2.tone(30))
             .setOnSurfaceVariant(n2.tone(80))
             .setOutline(n2.tone(60))
+            .setOutlineVariant(n2.tone(30))
             .setInverseSurface(n1.tone(90))
             .setInverseOnSurface(n1.tone(20))
             .setInversePrimary(a1.tone(40))
+            .setScrim(n1.tone(0))
             .build()
     }
 
@@ -164,6 +167,7 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
 
         return CustomColors.Scheme.newBuilder()
             .setPrimary(a1.tone(40))
+            .setSurfaceTint(a1.tone(40))
             .setOnPrimary(a1.tone(100))
             .setPrimaryContainer(a1.tone(90))
             .setOnPrimaryContainer(a1.tone(10))
@@ -186,9 +190,11 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
             .setSurfaceVariant(n2.tone(90))
             .setOnSurfaceVariant(n2.tone(30))
             .setOutline(n2.tone(50))
+            .setOutlineVariant(n2.tone(80))
             .setInverseSurface(n1.tone(20))
             .setInverseOnSurface(n1.tone(95))
             .setInversePrimary(a1.tone(80))
+            .setScrim(n1.tone(0))
             .build()
     }
 }

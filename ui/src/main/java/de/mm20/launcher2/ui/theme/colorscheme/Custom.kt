@@ -28,7 +28,7 @@ fun CustomColorScheme(colors: Settings.AppearanceSettings.CustomColors.Scheme) :
         inverseSurface = Color(colors.inverseSurface),
         inverseOnSurface = Color(colors.inverseOnSurface),
         inversePrimary = Color(colors.inversePrimary),
-        surfaceTint = Color(colors.primary),
+        surfaceTint = Color(colors.surfaceTint),
         error = Color(colors.error),
         onError = Color(colors.onError),
         errorContainer = Color(colors.errorContainer),

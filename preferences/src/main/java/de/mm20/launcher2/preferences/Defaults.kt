@@ -205,9 +205,9 @@ internal val DefaultLightCustomColorScheme: Settings.AppearanceSettings.CustomCo
             .setInverseOnSurface(scheme.inverseOnSurface)
             .setInversePrimary(scheme.inversePrimary)
             .setOutline(scheme.outline)
-            //TODO: handle outline variant and scrim properly
-            .setScrim(Color.BLACK)
-            .setOutlineVariant(scheme.surfaceVariant)
+            .setScrim(scheme.scrim)
+            .setOutlineVariant(scheme.outlineVariant)
+            .setSurfaceTint(scheme.primary)
             .build()
     }
 
@@ -241,8 +241,8 @@ internal val DefaultDarkCustomColorScheme: Settings.AppearanceSettings.CustomCol
             .setInverseOnSurface(scheme.inverseOnSurface)
             .setInversePrimary(scheme.inversePrimary)
             .setOutline(scheme.outline)
-            //TODO: handle outline variant and scrim properly
-            .setScrim(Color.BLACK)
-            .setOutlineVariant(scheme.surfaceVariant)
+            .setScrim(scheme.scrim)
+            .setOutlineVariant(scheme.outlineVariant)
+            .setSurfaceTint(scheme.primary)
             .build()
     }
