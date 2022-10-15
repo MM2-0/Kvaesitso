@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ktx
 
 import com.github.promeg.pinyinhelper.Pinyin
+import org.apache.commons.lang3.StringUtils
 import java.net.URLDecoder
 import java.util.*
 
@@ -13,7 +14,7 @@ fun String.decodeUrl(charset: String): String? {
  * TODO: Only supports Chinese/Pinyin at the moment
  */
 fun String.normalize(): String {
-    return this.romanize().lowercase(Locale.getDefault())
+    return StringUtils.stripAccents(this.romanize().lowercase(Locale.getDefault()))
 }
 
 /**

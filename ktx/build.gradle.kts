@@ -41,5 +41,6 @@ dependencies {
     implementation(libs.tinypinyin)
     implementation(libs.androidx.appcompat)
     implementation(libs.bundles.androidx.lifecycle)
+    implementation(libs.commons.text)
 
 }
