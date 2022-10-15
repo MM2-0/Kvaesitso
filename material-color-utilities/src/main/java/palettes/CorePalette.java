@@ -17,6 +17,7 @@
 package palettes;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 import hct.Hct;
 
@@ -38,17 +39,35 @@ public final class CorePalette {
    * @param argb ARGB representation of a color
    */
   public static CorePalette of(int argb) {
-    return new CorePalette(argb);
+    return new CorePalette(argb, false);
   }
 
-  private CorePalette(int argb) {
+  /**
+   * Create content key tones from a color.
+   *
+   * @param argb ARGB representation of a color
+   */
+  public static CorePalette contentOf(int argb) {
+    return new CorePalette(argb, true);
+  }
+
+  private CorePalette(int argb, boolean isContent) {
     Hct hct = Hct.fromInt(argb);
-    float hue = hct.getHue();
-    this.a1 = TonalPalette.fromHueAndChroma(hue, max(48f, hct.getChroma()));
-    this.a2 = TonalPalette.fromHueAndChroma(hue, 16f);
-    this.a3 = TonalPalette.fromHueAndChroma(hue + 60f, 24f);
-    this.n1 = TonalPalette.fromHueAndChroma(hue, 4f);
-    this.n2 = TonalPalette.fromHueAndChroma(hue, 8f);
-    this.error = TonalPalette.fromHueAndChroma(25, 84f);
+    double hue = hct.getHue();
+    double chroma = hct.getChroma();
+    if (isContent) {
+      this.a1 = TonalPalette.fromHueAndChroma(hue, chroma);
+      this.a2 = TonalPalette.fromHueAndChroma(hue, chroma / 3.);
+      this.a3 = TonalPalette.fromHueAndChroma(hue + 60., chroma / 2.);
+      this.n1 = TonalPalette.fromHueAndChroma(hue, min(chroma / 12., 4.));
+      this.n2 = TonalPalette.fromHueAndChroma(hue, min(chroma / 6., 8.));
+    } else {
+      this.a1 = TonalPalette.fromHueAndChroma(hue, max(48., chroma));
+      this.a2 = TonalPalette.fromHueAndChroma(hue, 16.);
+      this.a3 = TonalPalette.fromHueAndChroma(hue + 60., 24.);
+      this.n1 = TonalPalette.fromHueAndChroma(hue, 4.);
+      this.n2 = TonalPalette.fromHueAndChroma(hue, 8.);
+    }
+    this.error = TonalPalette.fromHueAndChroma(25, 84.);
   }
 }

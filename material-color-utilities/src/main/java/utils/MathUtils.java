@@ -102,6 +102,22 @@ public class MathUtils {
     return degrees;
   }
 
+  /**
+   * Sign of direction change needed to travel from one angle to another.
+   *
+   * <p>For angles that are 180 degrees apart from each other, both directions have the same travel
+   * distance, so either direction is shortest. The value 1.0 is returned in this case.
+   *
+   * @param from The angle travel starts from, in degrees.
+   * @param to The angle travel ends at, in degrees.
+   * @return -1 if decreasing from leads to the shortest travel distance, 1 if increasing from leads
+   *     to the shortest travel distance.
+   */
+  public static double rotationDirection(double from, double to) {
+    double increasingDifference = sanitizeDegreesDouble(to - from);
+    return increasingDifference <= 180.0 ? 1.0 : -1.0;
+  }
+
   /** Distance of two points on a circle, represented using degrees. */
   public static double differenceDegrees(double a, double b) {
     return 180.0 - Math.abs(Math.abs(a - b) - 180.0);
@@ -114,6 +130,5 @@ public class MathUtils {
     double c = row[0] * matrix[2][0] + row[1] * matrix[2][1] + row[2] * matrix[2][2];
     return new double[] {a, b, c};
   }
-
 }
 

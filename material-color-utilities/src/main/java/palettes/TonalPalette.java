@@ -25,8 +25,8 @@ import java.util.Map;
  */
 public final class TonalPalette {
   Map<Integer, Integer> cache;
-  float hue;
-  float chroma;
+  double hue;
+  double chroma;
 
   /**
    * Create tones using the HCT hue and chroma from a color.
@@ -46,11 +46,11 @@ public final class TonalPalette {
    * @param chroma HCT chroma
    * @return Tones matching hue and chroma.
    */
-  public static final TonalPalette fromHueAndChroma(float hue, float chroma) {
+  public static final TonalPalette fromHueAndChroma(double hue, double chroma) {
     return new TonalPalette(hue, chroma);
   }
 
-  private TonalPalette(float hue, float chroma) {
+  private TonalPalette(double hue, double chroma) {
     cache = new HashMap<>();
     this.hue = hue;
     this.chroma = chroma;

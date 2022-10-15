@@ -54,6 +54,14 @@ public class ColorUtils {
     return (255 << 24) | ((red & 255) << 16) | ((green & 255) << 8) | (blue & 255);
   }
 
+  /** Converts a color from linear RGB components to ARGB format. */
+  public static int argbFromLinrgb(double[] linrgb) {
+    int r = delinearized(linrgb[0]);
+    int g = delinearized(linrgb[1]);
+    int b = delinearized(linrgb[2]);
+    return argbFromRgb(r, g, b);
+  }
+
   /** Returns the alpha component of a color in ARGB format. */
   public static int alphaFromArgb(int argb) {
     return (argb >> 24) & 255;
@@ -148,18 +156,9 @@ public class ColorUtils {
    * @return ARGB representation of grayscale color with lightness matching L*
    */
   public static int argbFromLstar(double lstar) {
-    double fy = (lstar + 16.0) / 116.0;
-    double fz = fy;
-    double fx = fy;
-    double kappa = 24389.0 / 27.0;
-    double epsilon = 216.0 / 24389.0;
-    boolean lExceedsEpsilonKappa = lstar > 8.0;
-    double y = lExceedsEpsilonKappa ? fy * fy * fy : lstar / kappa;
-    boolean cubeExceedEpsilon = fy * fy * fy > epsilon;
-    double x = cubeExceedEpsilon ? fx * fx * fx : lstar / kappa;
-    double z = cubeExceedEpsilon ? fz * fz * fz : lstar / kappa;
-    double[] whitePoint = WHITE_POINT_D65;
-    return argbFromXyz(x * whitePoint[0], y * whitePoint[1], z * whitePoint[2]);
+    double y = yFromLstar(lstar);
+    int component = delinearized(y);
+    return argbFromRgb(component, component, component);
   }
 
   /**
@@ -169,14 +168,8 @@ public class ColorUtils {
    * @return L*, from L*a*b*, coordinate of the color
    */
   public static double lstarFromArgb(int argb) {
-    double y = xyzFromArgb(argb)[1] / 100.0;
-    double e = 216.0 / 24389.0;
-    if (y <= e) {
-      return 24389.0 / 27.0 * y;
-    } else {
-      double yIntermediate = Math.pow(y, 1.0 / 3.0);
-      return 116.0 * yIntermediate - 16.0;
-    }
+    double y = xyzFromArgb(argb)[1];
+    return 116.0 * labF(y / 100.0) - 16.0;
   }
 
   /**
@@ -191,12 +184,7 @@ public class ColorUtils {
    * @return Y in XYZ
    */
   public static double yFromLstar(double lstar) {
-    double ke = 8.0;
-    if (lstar > ke) {
-      return Math.pow((lstar + 16.0) / 116.0, 3.0) * 100.0;
-    } else {
-      return lstar / 24389.0 / 27.0 * 100.0;
-    }
+    return 100.0 * labInvf((lstar + 16.0) / 116.0);
   }
 
   /**
@@ -260,6 +248,5 @@ public class ColorUtils {
       return (116 * ft - 16) / kappa;
     }
   }
-
 }
 
