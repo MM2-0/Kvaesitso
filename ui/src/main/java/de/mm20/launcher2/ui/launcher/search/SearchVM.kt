@@ -214,40 +214,4 @@ class SearchVM : ViewModel(), KoinComponent {
             }
         }
     }
-
-
-    private inline fun <reified T : PinnableSearchable> Flow<List<T>>.withCustomAttributeResults(
-        customAttributeResults: Flow<List<PinnableSearchable>>
-    ): Flow<List<T>> {
-        return this.combine(customAttributeResults) { items, items2 ->
-            (items + items2.filterIsInstance<T>()).distinctBy { it.key }
-        }
-    }
-
-    private suspend fun <T : PinnableSearchable> Flow<List<T>>.collectWithHiddenItems(
-        hiddenItemKeys: Flow<List<String>>,
-        action: (items: List<T>, hidden: List<T>) -> Unit
-    ) {
-        return collectLatest { items ->
-            hiddenItemKeys.collectLatest { hiddenKeys ->
-                val (results, hidden) = items.partition { !hiddenKeys.contains(it.key) }
-                action(results, hidden)
-            }
-        }
-    }
-
-    private fun <T : PinnableSearchable> Flow<List<T>>.sorted(): Flow<List<T>> = this.map { it.sorted() }
-
-}
-
-private data class HiddenItemResults(
-    val apps: List<LauncherApp> = emptyList(),
-    val contacts: List<Contact> = emptyList(),
-    val calendarEvents: List<CalendarEvent> = emptyList(),
-    val files: List<File> = emptyList(),
-    val appShortcuts: List<AppShortcut> = emptyList(),
-) {
-    fun joinToList(): List<PinnableSearchable> {
-        return apps + contacts + calendarEvents + files + appShortcuts
-    }
 }
