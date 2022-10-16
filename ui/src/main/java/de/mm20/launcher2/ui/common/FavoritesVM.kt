@@ -6,7 +6,7 @@ import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.customattrs.utils.withCustomLabels
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.*
@@ -32,7 +32,7 @@ open class FavoritesVM : ViewModel(), KoinComponent {
         it.filterIsInstance<Tag>()
     }
 
-    val favorites: Flow<List<PinnableSearchable>> = selectedTag.flatMapLatest { tag ->
+    val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
             val columns = dataStore.data.map { it.grid.columnCount }
             val excludeCalendar = widgetRepository.isCalendarWidgetEnabled()

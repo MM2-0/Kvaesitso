@@ -3,9 +3,8 @@ package de.mm20.launcher2.icons.providers
 import android.content.ComponentName
 import android.content.Context
 import de.mm20.launcher2.icons.*
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -14,7 +13,7 @@ class IconPackIconProvider(
     private val iconPack: String,
     private val iconPackManager: IconPackManager,
 ): IconProvider {
-    override suspend fun getIcon(searchable: PinnableSearchable, size: Int): LauncherIcon? {
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
 
         val component = ComponentName(searchable.`package`, searchable.activity)

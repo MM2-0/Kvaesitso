@@ -5,15 +5,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalGridColumns
 import kotlin.math.ceil
 
 @Composable
 fun SearchResultGrid(
-    items: List<PinnableSearchable>,
+    items: List<SavableSearchable>,
     modifier: Modifier = Modifier,
     showLabels: Boolean = true,
     columns: Int = LocalGridColumns.current,

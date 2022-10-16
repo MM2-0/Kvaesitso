@@ -10,7 +10,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class SearchableItemVM(
-    private val searchable: PinnableSearchable
+    private val searchable: SavableSearchable
 ) : KoinComponent {
     protected val favoritesRepository: FavoritesRepository by inject()
     protected val badgeRepository: BadgeRepository by inject()

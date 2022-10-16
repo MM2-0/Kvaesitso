@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.LauncherCard
@@ -45,7 +45,7 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun GridItem(modifier: Modifier = Modifier, item: PinnableSearchable, showLabels: Boolean = true) {
+fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels: Boolean = true) {
     val viewModel = remember(item.key) { GridItemVM(item) }
 
     val context = LocalContext.current

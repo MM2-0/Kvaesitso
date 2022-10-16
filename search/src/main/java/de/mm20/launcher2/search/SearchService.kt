@@ -36,7 +36,6 @@ import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
@@ -216,7 +215,7 @@ internal class SearchServiceImpl(
             }
             launch {
                 results
-                    .map { it.toList().sortedBy { it as? PinnableSearchable }.toImmutableList() }
+                    .map { it.toList().sortedBy { it as? SavableSearchable }.toImmutableList() }
                     .collectLatest {
                         send(it)
                     }
@@ -235,7 +234,7 @@ internal data class SearchResults(
     val unitConverters: List<UnitConverter> = emptyList(),
     val websites: List<Website> = emptyList(),
     val wikipedia: List<Wikipedia> = emptyList(),
-    val other: List<PinnableSearchable> = emptyList(),
+    val other: List<SavableSearchable> = emptyList(),
 ) {
     fun toList(): List<Searchable> {
         return (apps + shortcuts + contacts + calendars  + websites + wikipedia + other).distinctBy { it.key } + calculators+ unitConverters

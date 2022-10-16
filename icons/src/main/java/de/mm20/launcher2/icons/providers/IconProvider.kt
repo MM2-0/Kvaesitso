@@ -1,15 +1,14 @@
 package de.mm20.launcher2.icons.providers
 
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 
 interface IconProvider {
-    suspend fun getIcon(searchable: PinnableSearchable, size: Int): LauncherIcon?
+    suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon?
 }
 
 internal suspend fun Iterable<IconProvider>.getFirstIcon(
-    searchable: PinnableSearchable,
+    searchable: SavableSearchable,
     size: Int
 ): LauncherIcon? {
     for (provider in this) {

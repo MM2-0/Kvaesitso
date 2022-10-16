@@ -11,7 +11,7 @@ import androidx.core.graphics.drawable.toDrawable
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.asBitmap
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -29,7 +29,7 @@ data class Contact(
     val whatsapp: Set<ContactInfo>,
     val postals: Set<ContactInfo>,
     override val labelOverride: String? = null
-) : Searchable, PinnableSearchable {
+) : Searchable, SavableSearchable {
 
     override val domain: String = Domain
     override val key: String

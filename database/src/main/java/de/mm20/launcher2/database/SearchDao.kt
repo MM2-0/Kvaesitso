@@ -1,7 +1,7 @@
 package de.mm20.launcher2.database
 
 import androidx.room.*
-import de.mm20.launcher2.database.entities.FavoritesItemEntity
+import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -9,16 +9,16 @@ import kotlinx.coroutines.flow.Flow
 interface SearchDao {
 
     @Insert()
-    fun insertAll(items: List<FavoritesItemEntity>)
+    fun insertAll(items: List<SavedSearchableEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllSkipExisting(items: List<FavoritesItemEntity>)
+    fun insertAllSkipExisting(items: List<SavedSearchableEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertSkipExisting(items: FavoritesItemEntity)
+    fun insertSkipExisting(items: SavedSearchableEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllReplaceExisting(items: List<FavoritesItemEntity>)
+    fun insertAllReplaceExisting(items: List<SavedSearchableEntity>)
 
 
     @Query("SELECT * FROM Searchable " +
@@ -31,7 +31,7 @@ interface SearchDao {
         automaticallySorted: Boolean = false,
         frequentlyUsed: Boolean = false,
         limit: Int,
-    ): Flow<List<FavoritesItemEntity>>
+    ): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT * FROM Searchable " +
             "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) IN (:includeTypes) AND (" +
@@ -45,10 +45,10 @@ interface SearchDao {
         automaticallySorted: Boolean = false,
         frequentlyUsed: Boolean = false,
         limit: Int,
-    ): Flow<List<FavoritesItemEntity>>
+    ): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT * FROM Searchable " +
-            "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) NOT IN (:excludeTypes) AND (" +
+            "WHERE `type` NOT IN (:excludeTypes) AND (" +
             "(:manuallySorted AND pinned > 1) OR " +
             "(:automaticallySorted AND pinned = 1) OR" +
             "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
@@ -59,7 +59,7 @@ interface SearchDao {
         automaticallySorted: Boolean = false,
         frequentlyUsed: Boolean = false,
         limit: Int,
-    ): Flow<List<FavoritesItemEntity>>
+    ): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND `key` LIKE 'calendar://%'")
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
@@ -69,7 +69,7 @@ interface SearchDao {
     fun getPinCount(): Int
 
     @Query("SELECT * FROM Searchable WHERE pinned = 0 AND launchCount > 0 AND hidden = 0 AND NOT `key` LIKE 'calendar://%' ORDER BY launchCount DESC LIMIT :count")
-    fun getAutoFavorites(count: Int): List<FavoritesItemEntity>
+    fun getAutoFavorites(count: Int): List<SavedSearchableEntity>
 
     @Query("DELETE FROM Searchable WHERE `key` IN (:keys)")
     fun deleteAll(keys: List<String>)
@@ -79,7 +79,7 @@ interface SearchDao {
     fun pinExistingItem(key: String)
 
     @Transaction
-    fun pinToFavorites(item: FavoritesItemEntity) {
+    fun pinToFavorites(item: SavedSearchableEntity) {
         pinExistingItem(item.key)
         insertSkipExisting(item)
     }
@@ -102,7 +102,7 @@ interface SearchDao {
     fun hideExistingItem(key: String)
 
     @Transaction
-    fun hideItem(item: FavoritesItemEntity) {
+    fun hideItem(item: SavedSearchableEntity) {
         hideExistingItem(item.key)
         insertSkipExisting(item)
     }
@@ -117,7 +117,7 @@ interface SearchDao {
     fun getHiddenItemKeys(): Flow<List<String>>
 
     @Query("SELECT * FROM SEARCHABLE WHERE hidden = 1")
-    fun getHiddenItems(): Flow<List<FavoritesItemEntity>>
+    fun getHiddenItems(): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT * FROM Websearch ORDER BY label ASC")
     fun getWebSearches(): Flow<List<WebsearchEntity>>
@@ -135,22 +135,22 @@ interface SearchDao {
     fun incrementExistingLaunchCount(key: String)
 
     @Transaction
-    fun incrementLaunchCount(item: FavoritesItemEntity) {
+    fun incrementLaunchCount(item: SavedSearchableEntity) {
         incrementExistingLaunchCount(item.key)
         insertSkipExisting(item)
     }
 
     @Query("SELECT * FROM Searchable WHERE `key` = :key")
-    fun getFavorite(key: String): FavoritesItemEntity?
+    fun getFavorite(key: String): SavedSearchableEntity?
 
     @Query("SELECT * FROM Searchable WHERE `key` IN (:keys)")
-    suspend fun getFromKeys(keys: List<String>): List<FavoritesItemEntity>
+    suspend fun getFromKeys(keys: List<String>): List<SavedSearchableEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertReplaceExisting(toDatabaseEntity: FavoritesItemEntity)
+    fun insertReplaceExisting(toDatabaseEntity: SavedSearchableEntity)
 
     @Transaction
-    fun saveFavorites(favorites: List<FavoritesItemEntity>) {
+    fun saveFavorites(favorites: List<SavedSearchableEntity>) {
         deleteAllFavorites()
         insertAll(favorites)
     }

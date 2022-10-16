@@ -7,10 +7,9 @@ import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 
-interface AppShortcut: PinnableSearchable {
+interface AppShortcut: SavableSearchable {
 
     val appName: String?
 

@@ -1,30 +1,28 @@
 package de.mm20.launcher2.favorites
 
-import de.mm20.launcher2.database.entities.FavoritesItemEntity
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.Searchable
 
-data class FavoritesItem(
+data class SavedSearchable(
     val key: String,
     /**
      * null if searchable could not be deserialized (i.e. the app has been uninstalled)
      */
-    val searchable: PinnableSearchable?,
+    val searchable: SavableSearchable?,
     var launchCount: Int,
     var pinPosition: Int,
     var hidden: Boolean
 ) {
-    private val serializer: SearchableSerializer = getSerializer(searchable)
-
-    fun toDatabaseEntity(): FavoritesItemEntity? {
-        val serializer = serializer
+    fun toDatabaseEntity(): SavedSearchableEntity? {
+        val serializer = getSerializer(searchable)
 
         val data = searchable?.let { serializer.serialize(it) } ?: return null
 
-        return FavoritesItemEntity(
+        return SavedSearchableEntity(
             key = key,
-            serializedSearchable = "${serializer.typePrefix}#${data}",
+            type = searchable.domain,
+            serializedSearchable = data,
             hidden = hidden,
             pinPosition = pinPosition,
             launchCount = launchCount

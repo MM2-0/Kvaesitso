@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
-import de.mm20.launcher2.database.entities.FavoritesItemEntity
+import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
 import de.mm20.launcher2.database.entities.WidgetEntity
 
@@ -16,10 +16,10 @@ interface BackupRestoreDao {
     suspend fun wipeFavorites()
 
     @Query("SELECT * FROM Searchable LIMIT :limit OFFSET :offset")
-    suspend fun exportFavorites(limit: Int, offset: Int): List<FavoritesItemEntity>
+    suspend fun exportFavorites(limit: Int, offset: Int): List<SavedSearchableEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun importFavorites(items: List<FavoritesItemEntity>)
+    suspend fun importFavorites(items: List<SavedSearchableEntity>)
 
     @Query("DELETE FROM Widget")
     suspend fun wipeWidgets()

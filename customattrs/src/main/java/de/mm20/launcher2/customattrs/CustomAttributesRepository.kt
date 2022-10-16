@@ -5,7 +5,7 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -19,24 +19,24 @@ import java.io.File
 
 interface CustomAttributesRepository {
 
-    fun search(query: String): Flow<ImmutableList<PinnableSearchable>>
+    fun search(query: String): Flow<ImmutableList<SavableSearchable>>
 
-    fun getCustomIcon(searchable: PinnableSearchable): Flow<CustomIcon?>
-    fun setCustomIcon(searchable: PinnableSearchable, icon: CustomIcon?)
+    fun getCustomIcon(searchable: SavableSearchable): Flow<CustomIcon?>
+    fun setCustomIcon(searchable: SavableSearchable, icon: CustomIcon?)
 
-    fun getCustomLabels(items: List<PinnableSearchable>): Flow<List<CustomLabel>>
-    fun setCustomLabel(searchable: PinnableSearchable, label: String)
-    fun clearCustomLabel(searchable: PinnableSearchable)
+    fun getCustomLabels(items: List<SavableSearchable>): Flow<List<CustomLabel>>
+    fun setCustomLabel(searchable: SavableSearchable, label: String)
+    fun clearCustomLabel(searchable: SavableSearchable)
 
-    fun setTags(searchable: PinnableSearchable, tags: List<String>)
-    fun getTags(searchable: PinnableSearchable): Flow<List<String>>
+    fun setTags(searchable: SavableSearchable, tags: List<String>)
+    fun getTags(searchable: SavableSearchable): Flow<List<String>>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
 
     suspend fun getAllTags(startsWith: String? = null): List<String>
-    fun getItemsForTag(tag: String): Flow<List<PinnableSearchable>>
-    fun addTag(item: PinnableSearchable, tag: String)
+    fun getItemsForTag(tag: String): Flow<List<SavableSearchable>>
+    fun addTag(item: SavableSearchable, tag: String)
     suspend fun cleanupDatabase(): Int
 }
 
@@ -46,7 +46,7 @@ internal class CustomAttributesRepositoryImpl(
 ) : CustomAttributesRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    override fun getCustomIcon(searchable: PinnableSearchable): Flow<CustomIcon?> {
+    override fun getCustomIcon(searchable: SavableSearchable): Flow<CustomIcon?> {
         val dao = appDatabase.customAttrsDao()
         return dao.getCustomAttribute(searchable.key, CustomAttributeType.Icon.value)
             .map {
@@ -54,7 +54,7 @@ internal class CustomAttributesRepositoryImpl(
             }
     }
 
-    override fun setCustomIcon(searchable: PinnableSearchable, icon: CustomIcon?) {
+    override fun setCustomIcon(searchable: SavableSearchable, icon: CustomIcon?) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             dao.clearCustomAttribute(searchable.key, CustomAttributeType.Icon.value)
@@ -64,7 +64,7 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override fun getCustomLabels(items: List<PinnableSearchable>): Flow<List<CustomLabel>> {
+    override fun getCustomLabels(items: List<SavableSearchable>): Flow<List<CustomLabel>> {
         val dao = appDatabase.customAttrsDao()
         return dao.getCustomAttributes(items.map { it.key }, CustomAttributeType.Label.value)
             .map { list ->
@@ -72,7 +72,7 @@ internal class CustomAttributesRepositoryImpl(
             }
     }
 
-    override fun setCustomLabel(searchable: PinnableSearchable, label: String) {
+    override fun setCustomLabel(searchable: SavableSearchable, label: String) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             favoritesRepository.save(searchable)
@@ -88,14 +88,14 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override fun clearCustomLabel(searchable: PinnableSearchable) {
+    override fun clearCustomLabel(searchable: SavableSearchable) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
         }
     }
 
-    override fun setTags(searchable: PinnableSearchable, tags: List<String>) {
+    override fun setTags(searchable: SavableSearchable, tags: List<String>) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             favoritesRepository.save(searchable)
@@ -105,7 +105,7 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override fun getTags(searchable: PinnableSearchable): Flow<List<String>> {
+    override fun getTags(searchable: SavableSearchable): Flow<List<String>> {
         val dao = appDatabase.customAttrsDao()
         return dao.getCustomAttributes(listOf(searchable.key), CustomAttributeType.Tag.value).map {
             it.map { it.value }
@@ -121,21 +121,21 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override fun getItemsForTag(tag: String): Flow<List<PinnableSearchable>> {
+    override fun getItemsForTag(tag: String): Flow<List<SavableSearchable>> {
         val dao = appDatabase.customAttrsDao()
         return dao.getItemsWithTag(tag).map {
             favoritesRepository.getFromKeys(it)
         }
     }
 
-    override fun addTag(item: PinnableSearchable, tag: String) {
+    override fun addTag(item: SavableSearchable, tag: String) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
             dao.addTag(item.key, tag)
         }
     }
 
-    override fun search(query: String): Flow<ImmutableList<PinnableSearchable>> {
+    override fun search(query: String): Flow<ImmutableList<SavableSearchable>> {
         if (query.isBlank()) {
             return flow {
                 emit(persistentListOf())

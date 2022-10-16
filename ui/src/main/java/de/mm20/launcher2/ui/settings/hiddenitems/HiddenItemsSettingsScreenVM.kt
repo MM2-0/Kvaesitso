@@ -14,9 +14,8 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -33,18 +32,18 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     val allApps = appRepository.getAllInstalledApps().map {
         withContext(Dispatchers.Default) { it.sorted() }
     }.asLiveData()
-    val hiddenItems: LiveData<List<PinnableSearchable>> = liveData {
+    val hiddenItems: LiveData<List<SavableSearchable>> = liveData {
         val hidden = withContext(Dispatchers.Default) {
             favoritesRepository.getHiddenItems().first().filter { it !is LauncherApp }.sorted()
         }
         emit(hidden)
     }
 
-    fun isHidden(searchable: PinnableSearchable): Flow<Boolean> {
+    fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
         return favoritesRepository.isHidden(searchable)
     }
 
-    fun setHidden(searchable: PinnableSearchable, hidden: Boolean) {
+    fun setHidden(searchable: SavableSearchable, hidden: Boolean) {
         if(hidden) {
             favoritesRepository.hideItem(searchable)
         } else {
@@ -52,11 +51,11 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun getIcon(searchable: PinnableSearchable, size: Int): Flow<LauncherIcon> {
+    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
         return iconRepository.getIcon(searchable, size)
     }
 
-    fun launch(context: Context, searchable: PinnableSearchable) {
+    fun launch(context: Context, searchable: SavableSearchable) {
         val bundle = Bundle()
         if (isAtLeastApiLevel(31)) {
             bundle.putInt("android.activity.splashScreenStyle", 1)

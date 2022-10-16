@@ -13,9 +13,8 @@ import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -99,7 +98,7 @@ class IconRepository(
     }
 
 
-    fun getIcon(searchable: PinnableSearchable, size: Int): Flow<LauncherIcon> = channelFlow {
+    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> = channelFlow {
         iconProviders.collectLatest { providers ->
             transformations.collectLatest { transformations ->
                 customAttributesRepository.getCustomIcon(searchable).collectLatest { customIcon ->
@@ -190,7 +189,7 @@ class IconRepository(
     }
 
     suspend fun getCustomIconSuggestions(
-        searchable: PinnableSearchable,
+        searchable: SavableSearchable,
         size: Int
     ): List<CustomIconWithPreview> {
         val suggestions = mutableListOf<CustomIconWithPreview>()
@@ -302,7 +301,7 @@ class IconRepository(
 
     }
 
-    suspend fun getUncustomizedDefaultIcon(searchable: PinnableSearchable, size: Int): CustomIconWithPreview? {
+    suspend fun getUncustomizedDefaultIcon(searchable: SavableSearchable, size: Int): CustomIconWithPreview? {
         val icon = iconProviders.first().getFirstIcon(searchable, size)
             ?.transform(transformations.first()) ?: return null
         return CustomIconWithPreview(
@@ -339,7 +338,7 @@ class IconRepository(
         return iconPackIcons + themedIcons
     }
 
-    fun setCustomIcon(searchable: PinnableSearchable, icon: CustomIcon?) {
+    fun setCustomIcon(searchable: SavableSearchable, icon: CustomIcon?) {
         customAttributesRepository.setCustomIcon(searchable, icon)
     }
 

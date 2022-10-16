@@ -65,45 +65,44 @@ internal fun getSerializer(searchable: Searchable?): SearchableSerializer {
     return NullSerializer()
 }
 
-internal fun getDeserializer(context: Context, serialized: String): SearchableDeserializer {
-    val type = serialized.substringBefore("#")
-    if (type == "app") {
+internal fun getDeserializer(context: Context, type: String): SearchableDeserializer {
+    if (type == LauncherApp.Domain) {
         return LauncherAppDeserializer(context)
     }
-    if (type == "shortcut") {
+    if (type == LauncherShortcut.Domain) {
         return LauncherShortcutDeserializer(context)
     }
-    if (type == "legacyshortcut") {
+    if (type == LegacyShortcut.Domain) {
         return LegacyShortcutDeserializer(context)
     }
-    if (type == "calendar") {
+    if (type == CalendarEvent.Domain) {
         return CalendarEventDeserializer(context)
     }
-    if (type == "contact") {
+    if (type == Contact.Domain) {
         return ContactDeserializer(context)
     }
-    if (type == "wikipedia") {
+    if (type == Wikipedia.Domain) {
         return WikipediaDeserializer(context)
     }
-    if (type == "gdrive") {
+    if (type == GDriveFile.Domain) {
         return GDriveFileDeserializer()
     }
-    if (type == "onedrive") {
+    if (type == OneDriveFile.Domain) {
         return OneDriveFileDeserializer()
     }
-    if (type == "nextcloud") {
+    if (type == NextcloudFile.Domain) {
         return NextcloudFileDeserializer()
     }
-    if (type == "owncloud") {
+    if (type == OwncloudFile.Domain) {
         return OwncloudFileDeserializer()
     }
-    if (type == "file") {
+    if (type == LocalFile.Domain) {
         return LocalFileDeserializer(context)
     }
-    if (type == "website") {
+    if (type == Website.Domain) {
         return WebsiteDeserializer()
     }
-    if (type == "tag") {
+    if (type == Tag.Domain) {
         return TagDeserializer()
     }
     return NullDeserializer()

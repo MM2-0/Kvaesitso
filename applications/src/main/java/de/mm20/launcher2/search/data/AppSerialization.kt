@@ -7,14 +7,13 @@ import android.content.pm.LauncherApps
 import android.os.Process
 import android.os.UserManager
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import org.json.JSONObject
 
 class LauncherAppSerializer : SearchableSerializer {
-    override fun serialize(searchable: PinnableSearchable): String {
+    override fun serialize(searchable: SavableSearchable): String {
         searchable as LauncherApp
         val json = JSONObject()
         json.put("package", searchable.`package`)
@@ -28,7 +27,7 @@ class LauncherAppSerializer : SearchableSerializer {
 }
 
 class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): PinnableSearchable? {
+    override fun deserialize(serialized: String): SavableSearchable? {
         val json = JSONObject(serialized)
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val userManager = context.getSystemService<UserManager>()!!

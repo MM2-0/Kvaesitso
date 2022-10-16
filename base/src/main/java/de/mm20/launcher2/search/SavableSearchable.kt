@@ -7,7 +7,7 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.ktx.romanize
 import java.text.Collator
 
-interface PinnableSearchable : Searchable, Comparable<PinnableSearchable>  {
+interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
 
     val domain: String
     val key: String
@@ -16,7 +16,7 @@ interface PinnableSearchable : Searchable, Comparable<PinnableSearchable>  {
     val labelOverride: String?
         get() = null
 
-    fun overrideLabel(label: String): PinnableSearchable
+    fun overrideLabel(label: String): SavableSearchable
 
     fun launch(context: Context, options: Bundle?): Boolean
 
@@ -34,7 +34,7 @@ interface PinnableSearchable : Searchable, Comparable<PinnableSearchable>  {
     ): LauncherIcon? = null
 
 
-    override fun compareTo(other: PinnableSearchable): Int {
+    override fun compareTo(other: SavableSearchable): Int {
         val label1 = labelOverride ?: label
         val label2 = other.labelOverride ?: other.label
         return Collator.getInstance().apply { strength = Collator.SECONDARY }

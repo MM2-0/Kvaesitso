@@ -17,7 +17,7 @@ import de.mm20.launcher2.compat.PackageManagerCompat
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -30,7 +30,7 @@ data class LauncherApp(
     val version: String?,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
-) : PinnableSearchable {
+) : SavableSearchable {
 
     constructor(context: Context, launcherActivityInfo: LauncherActivityInfo): this(
         launcherActivityInfo,

@@ -16,15 +16,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
 @Composable
 fun HiddenItemsSheet(
-    items: List<PinnableSearchable>,
+    items: List<SavableSearchable>,
     onDismiss: () -> Unit
 ) {
     val viewModel: HiddenItemsSheetVM = viewModel()

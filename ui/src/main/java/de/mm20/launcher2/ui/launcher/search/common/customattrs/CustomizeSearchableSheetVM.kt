@@ -7,8 +7,7 @@ import de.mm20.launcher2.customattrs.CustomIcon
 import de.mm20.launcher2.icons.CustomIconWithPreview
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
@@ -16,7 +15,7 @@ import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
 
 class CustomizeSearchableSheetVM(
-    private val searchable: PinnableSearchable
+    private val searchable: SavableSearchable
 ) : KoinComponent {
     private val iconRepository: IconRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()

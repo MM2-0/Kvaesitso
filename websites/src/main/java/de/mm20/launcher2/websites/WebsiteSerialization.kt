@@ -1,15 +1,14 @@
 package de.mm20.launcher2.websites
 
 import de.mm20.launcher2.ktx.jsonObjectOf
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Website
 import org.json.JSONObject
 
 class WebsiteSerializer : SearchableSerializer {
-    override fun serialize(searchable: PinnableSearchable): String {
+    override fun serialize(searchable: SavableSearchable): String {
         searchable as Website
         return jsonObjectOf(
             "label" to searchable.label,
@@ -26,7 +25,7 @@ class WebsiteSerializer : SearchableSerializer {
 }
 
 class WebsiteDeserializer: SearchableDeserializer {
-    override fun deserialize(serialized: String): PinnableSearchable? {
+    override fun deserialize(serialized: String): SavableSearchable? {
         val json = JSONObject(serialized)
         return Website(
             label = json.getString("label"),

@@ -89,8 +89,7 @@ import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -739,7 +738,7 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM) {
 }
 
 sealed interface FavoritesSheetGridItem {
-    class Favorite(val item: PinnableSearchable) : FavoritesSheetGridItem
+    class Favorite(val item: SavableSearchable) : FavoritesSheetGridItem
     class Divider(val section: FavoritesSheetSection) : FavoritesSheetGridItem
     class Spacer(val span: Int = 1) : FavoritesSheetGridItem
     object EmptySection : FavoritesSheetGridItem

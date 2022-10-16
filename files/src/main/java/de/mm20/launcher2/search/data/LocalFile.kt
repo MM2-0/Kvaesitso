@@ -20,10 +20,8 @@ import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
-import de.mm20.launcher2.search.PinnableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
 import java.io.IOException
 import java.io.File as JavaIOFile
 

@@ -15,7 +15,6 @@ import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.PinnableSearchable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

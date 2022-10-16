@@ -183,7 +183,7 @@ class BackupManager(
 
     companion object {
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 2
+        private const val BackupFormatMinor = 3
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }

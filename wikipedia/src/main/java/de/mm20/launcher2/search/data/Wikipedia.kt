@@ -11,8 +11,7 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.wikipedia.R
 
 data class Wikipedia(
@@ -22,7 +21,7 @@ data class Wikipedia(
     val image: String?,
     val wikipediaUrl: String,
     override val labelOverride: String? = null,
-) : PinnableSearchable {
+) : SavableSearchable {
 
     override val domain: String = Domain
 

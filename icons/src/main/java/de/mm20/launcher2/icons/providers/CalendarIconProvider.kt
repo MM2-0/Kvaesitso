@@ -6,12 +6,11 @@ import android.content.pm.PackageManager
 import de.mm20.launcher2.icons.DynamicCalendarIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
 
 class CalendarIconProvider(val context: Context): IconProvider {
-    override suspend fun getIcon(searchable: PinnableSearchable, size: Int): LauncherIcon? {
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if(searchable !is LauncherApp) return null
         val component = ComponentName(searchable.`package`, searchable.activity)
         val pm = context.packageManager

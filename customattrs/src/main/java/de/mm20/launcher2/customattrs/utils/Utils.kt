@@ -1,12 +1,12 @@
 package de.mm20.launcher2.customattrs.utils
 
 import de.mm20.launcher2.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 
-fun <T: PinnableSearchable>Flow<List<T>>.withCustomLabels(
+fun <T: SavableSearchable>Flow<List<T>>.withCustomLabels(
     customAttributesRepository: CustomAttributesRepository,
 ): Flow<List<T>> = channelFlow {
     this@withCustomLabels.collectLatest { items ->

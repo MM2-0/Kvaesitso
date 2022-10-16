@@ -5,8 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "Searchable")
-data class FavoritesItemEntity(
+data class SavedSearchableEntity(
         @PrimaryKey val key: String,
+        val type: String,
         @ColumnInfo(name = "searchable") val serializedSearchable: String,
         var launchCount: Int,
         @ColumnInfo(name = "pinned") var pinPosition: Int,

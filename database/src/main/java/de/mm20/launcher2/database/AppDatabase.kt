@@ -12,13 +12,13 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import de.mm20.launcher2.database.entities.*
 
 @Database(entities = [ForecastEntity::class,
-    FavoritesItemEntity::class,
+    SavedSearchableEntity::class,
     WebsearchEntity::class,
     CurrencyEntity::class,
     IconEntity::class,
     IconPackEntity::class,
     WidgetEntity::class,
-    CustomAttributeEntity::class], version = 17, exportSchema = true)
+    CustomAttributeEntity::class], version = 18, exportSchema = true)
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
@@ -62,6 +62,7 @@ abstract class AppDatabase : RoomDatabase() {
                                     Migration_14_15(),
                                     Migration_15_16(),
                                     Migration_16_17(),
+                                    Migration_17_18(),
                             ).build()
             if (_instance == null) _instance = instance
             return instance
@@ -172,5 +173,15 @@ class Migration_16_17 : Migration(16, 17) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("ALTER TABLE Websearch ADD COLUMN encoding INTEGER")
     }
+}
 
+class Migration_17_18: Migration(17, 18) {
+    override fun migrate(database: SupportSQLiteDatabase) {
+        database.execSQL("ALTER TABLE Searchable ADD COLUMN type TEXT NOT NULL DEFAULT ''")
+        database.execSQL("""
+            UPDATE Searchable
+            SET type = SUBSTR(`key`, 0, INSTR(`key`, '://')),
+            searchable = SUBSTR(`searchable`, INSTR(`searchable`, '#') + 1)
+            """.trimIndent())
+    }
 }

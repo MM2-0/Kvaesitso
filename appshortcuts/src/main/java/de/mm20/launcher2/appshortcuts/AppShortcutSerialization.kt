@@ -9,18 +9,17 @@ import android.os.Process
 import android.os.UserManager
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.jsonObjectOf
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
-import de.mm20.launcher2.search.Searchable
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 
 
 class LauncherShortcutSerializer : SearchableSerializer {
-    override fun serialize(searchable: PinnableSearchable): String {
+    override fun serialize(searchable: SavableSearchable): String {
         searchable as LauncherShortcut
         return jsonObjectOf(
             "packagename" to searchable.launcherShortcut.`package`,
@@ -38,7 +37,7 @@ class LauncherShortcutDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
 
-    override fun deserialize(serialized: String): PinnableSearchable? {
+    override fun deserialize(serialized: String): SavableSearchable? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return null
         else {
@@ -82,7 +81,7 @@ class LauncherShortcutDeserializer(
 }
 
 class LegacyShortcutSerializer: SearchableSerializer {
-    override fun serialize(searchable: PinnableSearchable): String {
+    override fun serialize(searchable: SavableSearchable): String {
         searchable as LegacyShortcut
         return jsonObjectOf(
             "label" to searchable.label,
@@ -103,7 +102,7 @@ class LegacyShortcutSerializer: SearchableSerializer {
 class LegacyShortcutDeserializer(
     val context: Context
 ): SearchableDeserializer {
-    override fun deserialize(serialized: String): PinnableSearchable {
+    override fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val label = json.getString("label")
         val intent = Intent.parseUri(json.getString("intent"), 0)

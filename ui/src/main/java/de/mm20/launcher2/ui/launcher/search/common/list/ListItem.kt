@@ -8,8 +8,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
@@ -18,7 +17,7 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 
 @Composable
-fun ListItem(modifier: Modifier = Modifier, item: PinnableSearchable) {
+fun ListItem(modifier: Modifier = Modifier, item: SavableSearchable) {
     var showDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
 

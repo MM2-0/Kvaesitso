@@ -5,12 +5,10 @@ import android.content.Intent
 import android.content.Intent.ShortcutIconResource
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
-import android.util.Log
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.PinnableSearchable
 
 data class LegacyShortcut(
     val intent: Intent,

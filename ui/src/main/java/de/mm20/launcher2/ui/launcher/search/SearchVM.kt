@@ -1,17 +1,15 @@
 package de.mm20.launcher2.ui.launcher.search
 
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.PinnableSearchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.*
@@ -47,7 +45,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResults = MutableLiveData<List<UnitConverter>>(emptyList())
     val websearchResults = MutableLiveData<List<Websearch>>(emptyList())
 
-    val hiddenResults = MutableLiveData<List<PinnableSearchable>>(emptyList())
+    val hiddenResults = MutableLiveData<List<SavableSearchable>>(emptyList())
 
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = MutableLiveData(false)
@@ -90,7 +88,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     wikipedia = it.wikipediaSearch,
                 ).collectLatest { results ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
-                        val hidden = mutableListOf<PinnableSearchable>()
+                        val hidden = mutableListOf<SavableSearchable>()
                         val apps = mutableListOf<LauncherApp>()
                         val workApps = mutableListOf<LauncherApp>()
                         val shortcuts = mutableListOf<AppShortcut>()
@@ -103,7 +101,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         val website = mutableListOf<Website>()
                         for (r in results) {
                             when {
-                                r is PinnableSearchable && hiddenKeys.contains(r.key) -> {
+                                r is SavableSearchable && hiddenKeys.contains(r.key) -> {
                                     hidden.add(r)
                                 }
                                 r is LauncherApp && !r.isMainProfile -> workApps.add(r)

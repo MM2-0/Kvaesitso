@@ -8,12 +8,11 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RotateDrawable
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.icons.*
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
 
 class GoogleClockIconProvider(val context: Context) : IconProvider {
-    override suspend fun getIcon(searchable: PinnableSearchable, size: Int): LauncherIcon? {
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
         if (searchable.`package` != "com.google.android.deskclock") return null
         val pm = context.packageManager

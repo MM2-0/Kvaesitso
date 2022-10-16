@@ -6,11 +6,10 @@ import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import java.util.*
 
-interface File : PinnableSearchable {
+interface File : SavableSearchable {
     val path: String
     val mimeType: String
     val size: Long

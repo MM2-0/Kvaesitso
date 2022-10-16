@@ -9,8 +9,7 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.PinnableSearchable
-import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SavableSearchable
 import java.text.SimpleDateFormat
 
 data class CalendarEvent(
@@ -25,7 +24,7 @@ data class CalendarEvent(
     val description: String,
     val calendar: Long,
     override val labelOverride: String? = null,
-) : PinnableSearchable {
+) : SavableSearchable {
 
     override val domain: String = Domain
 
