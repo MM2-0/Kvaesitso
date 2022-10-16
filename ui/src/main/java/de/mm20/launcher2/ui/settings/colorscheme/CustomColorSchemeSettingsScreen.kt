@@ -22,6 +22,7 @@ fun CustomColorSchemeSettingsScreen() {
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_colors),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/customization/color-schemes",
         topBarActions = {
             var showOverflowMenu by remember { mutableStateOf(false) }
             IconButton(onClick = { showOverflowMenu = true }) {

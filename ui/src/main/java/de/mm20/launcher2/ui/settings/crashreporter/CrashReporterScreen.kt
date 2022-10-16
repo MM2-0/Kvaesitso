@@ -35,7 +35,10 @@ fun CrashReporterScreen() {
     val reports by viewModel.reports.observeAsState()
     val showExceptions by viewModel.showExceptions.observeAsState(true)
     val showCrashes by viewModel.showCrashes.observeAsState(true)
-    PreferenceScreen(title = stringResource(R.string.preference_crash_reporter)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_crash_reporter),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/troubleshooting/crashreporter"
+    ) {
         reports?.let {
             item {
                 Row(

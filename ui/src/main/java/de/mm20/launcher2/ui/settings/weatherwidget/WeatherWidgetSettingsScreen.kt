@@ -23,7 +23,10 @@ fun WeatherWidgetSettingsScreen() {
     val viewModel: WeatherWidgetSettingsScreenVM = viewModel()
     val context = LocalContext.current
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_weatherwidget)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_screen_weatherwidget),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/widgets/weather-widget"
+    ) {
         item {
             PreferenceCategory {
                 val weatherProvider by viewModel.weatherProvider.observeAsState()

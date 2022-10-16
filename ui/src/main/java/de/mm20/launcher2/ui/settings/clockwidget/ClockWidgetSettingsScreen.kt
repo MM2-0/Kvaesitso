@@ -28,7 +28,8 @@ import de.mm20.launcher2.ui.component.preferences.*
 fun ClockWidgetSettingsScreen() {
     val viewModel: ClockWidgetSettingsScreenVM = viewModel()
     PreferenceScreen(
-        title = stringResource(R.string.preference_screen_clockwidget)
+        title = stringResource(R.string.preference_screen_clockwidget),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/widgets/clock"
     ) {
         item {
             PreferenceCategory {

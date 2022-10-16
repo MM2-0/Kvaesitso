@@ -25,7 +25,8 @@ fun MusicWidgetSettingsScreen() {
     val viewModel: MusicWidgetSettingsScreenVM = viewModel()
     val hasPermission by viewModel.hasPermission.observeAsState()
     PreferenceScreen(
-        stringResource(R.string.preference_screen_musicwidget)
+        stringResource(R.string.preference_screen_musicwidget),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/widgets/clock"
     ) {
         item {
             PreferenceCategory {

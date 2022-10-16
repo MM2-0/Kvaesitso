@@ -32,7 +32,10 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 fun CalendarWidgetSettingsScreen() {
     val viewModel: CalendarWidgetSettingsScreenVM = viewModel()
     val context = LocalContext.current
-    PreferenceScreen(title = stringResource(R.string.preference_screen_calendarwidget)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_screen_calendarwidget),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/widgets/calendar-widget"
+    ) {
         item {
             val excludeAllDayEvents by viewModel.excludeAllDayEvents.observeAsState()
             PreferenceCategory {

@@ -91,7 +91,8 @@ fun WebSearchSettingsScreen() {
             FloatingActionButton(onClick = { showNewDialog = true }) {
                 Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
             }
-        }
+        },
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/search/websearches"
     ) {
         item {
             PreferenceCategory {
