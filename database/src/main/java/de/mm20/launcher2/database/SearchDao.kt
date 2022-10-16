@@ -61,15 +61,10 @@ interface SearchDao {
         limit: Int,
     ): Flow<List<SavedSearchableEntity>>
 
-    @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND `key` LIKE 'calendar://%'")
+    @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND type = 'calendar'")
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
 
 
-    @Query("SELECT COUNT(key) as count FROM Searchable WHERE pinned = 1;")
-    fun getPinCount(): Int
-
-    @Query("SELECT * FROM Searchable WHERE pinned = 0 AND launchCount > 0 AND hidden = 0 AND NOT `key` LIKE 'calendar://%' ORDER BY launchCount DESC LIMIT :count")
-    fun getAutoFavorites(count: Int): List<SavedSearchableEntity>
 
     @Query("DELETE FROM Searchable WHERE `key` IN (:keys)")
     fun deleteAll(keys: List<String>)
