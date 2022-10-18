@@ -28,7 +28,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val websearchRepository: WebsearchRepository by inject()
 
     val isSearching = MutableLiveData(false)
-    val searchQuery = MutableLiveData("")
+    val searchQuery = MutableLiveData<String>("")
     val isSearchEmpty = MutableLiveData(true)
 
     val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
@@ -55,11 +55,12 @@ class SearchVM : ViewModel(), KoinComponent {
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
     init {
-        search("")
+        search("", true)
     }
 
     var searchJob: Job? = null
-    fun search(query: String) {
+    fun search(query: String, forceRestart: Boolean = false) {
+        if (searchQuery.value == query && !forceRestart) return
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
