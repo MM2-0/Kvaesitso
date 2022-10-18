@@ -41,6 +41,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -307,9 +308,9 @@ fun PullDownScaffold(
                             }
                         }
                     }
-                    WidgetColumn(
-                        modifier =
-                        Modifier
+
+                    Column(
+                        modifier = Modifier
                             .graphicsLayer {
                                 transformOrigin = TransformOrigin.Center
                                 scaleX = 1 - offset
@@ -321,14 +322,28 @@ fun PullDownScaffold(
                             .verticalScroll(widgetsScrollState)
                             .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
-                            .padding(top = 56.dp),
-                        clockHeight = { clockHeight },
-                        clockBottomPadding = { clockPadding },
-                        editMode = isWidgetEditMode,
-                        onEditModeChange = {
-                            viewModel.setWidgetEditMode(it)
+                            .padding(top = 56.dp)
+                    ) {
+                        AnimatedVisibility(!isWidgetEditMode) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
+                                    .padding(bottom = clockPadding),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                ClockWidget(
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                            }
                         }
-                    )
+                        WidgetColumn(
+                            editMode = isWidgetEditMode,
+                            onEditModeChange = {
+                                viewModel.setWidgetEditMode(it)
+                            }
+                        )
+                    }
                 }
 
             }

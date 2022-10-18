@@ -44,6 +44,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
+import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
@@ -290,7 +291,7 @@ fun PagerScaffold(
                             }
                         }
 
-                        WidgetColumn(
+                        Column(
                             modifier = Modifier
                                 .requiredWidth(width)
                                 .fillMaxHeight()
@@ -299,14 +300,30 @@ fun PagerScaffold(
                                 .windowInsetsPadding(WindowInsets.safeDrawing)
                                 .padding(horizontal = 8.dp)
                                 .padding(top = 8.dp, bottom = 64.dp)
-                                .padding(top = editModePadding),
-                            clockHeight = { clockHeight },
-                            clockBottomPadding = { clockPadding },
-                            editMode = isWidgetEditMode,
-                            onEditModeChange = {
-                                viewModel.setWidgetEditMode(it)
+                                .padding(top = editModePadding)
+                        ) {
+
+                            AnimatedVisibility(!isWidgetEditMode) {
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
+                                        .padding(bottom = clockPadding),
+                                    contentAlignment = Alignment.BottomCenter
+                                ) {
+                                    ClockWidget(
+                                        modifier = Modifier.fillMaxWidth()
+                                    )
+                                }
                             }
-                        )
+
+                            WidgetColumn(
+                                editMode = isWidgetEditMode,
+                                onEditModeChange = {
+                                    viewModel.setWidgetEditMode(it)
+                                }
+                            )
+                        }
 
 
                         val websearches by searchVM.websearchResults.observeAsState(emptyList())

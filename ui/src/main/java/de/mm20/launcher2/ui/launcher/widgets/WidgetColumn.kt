@@ -63,8 +63,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun WidgetColumn(
     modifier: Modifier = Modifier,
-    clockHeight: () -> Dp? = { null },
-    clockBottomPadding: () -> Dp = { 0.dp },
     editMode: Boolean = false,
     onEditModeChange: (Boolean) -> Unit,
 ) {
@@ -103,20 +101,6 @@ fun WidgetColumn(
     ) {
         val scope = rememberCoroutineScope()
         var showAddDialog by remember { mutableStateOf(false) }
-
-        AnimatedVisibility(!editMode) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .then(clockHeight()?.let { Modifier.height(it) } ?: Modifier)
-                    .padding(bottom = clockBottomPadding()),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                ClockWidget(
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
         Column {
             val widgets by viewModel.widgets.observeAsState(emptyList())
             val swapThresholds = remember(widgets) {
