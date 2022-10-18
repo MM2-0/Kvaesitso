@@ -39,7 +39,7 @@ fun CustomizeSearchableSheet(
     onDismiss: () -> Unit,
 ) {
     val viewModel: CustomizeSearchableSheetVM =
-        remember(searchable) { CustomizeSearchableSheetVM(searchable) }
+        remember(searchable.key) { CustomizeSearchableSheetVM(searchable) }
     val context = LocalContext.current
 
     val pickIcon by viewModel.isIconPickerOpen.observeAsState(false)
