@@ -486,4 +486,5 @@
     <string name="favorites_empty_tag">Er zijn geen items met dit label</string>
     <string name="create_app_shortcut">Snelkoppeling maken</string>
     <string name="preference_search_appshortcuts_summary">Applicatiesnelkoppelingen doorzoeken</string>
+    <string name="preference_icon_shape_pebble">Kiezelsteen</string>
 </resources>
