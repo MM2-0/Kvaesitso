@@ -237,6 +237,6 @@ internal data class SearchResults(
     val other: List<SavableSearchable> = emptyList(),
 ) {
     fun toList(): List<Searchable> {
-        return (apps + shortcuts + contacts + calendars  + websites + wikipedia + other).distinctBy { it.key } + calculators+ unitConverters
+        return (apps + shortcuts + contacts + calendars  + files + websites + wikipedia + other).distinctBy { it.key } + calculators + unitConverters
     }
 }
