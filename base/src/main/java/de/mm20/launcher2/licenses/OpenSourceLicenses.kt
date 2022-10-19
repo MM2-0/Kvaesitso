@@ -147,12 +147,12 @@ val OpenSourceLicenses = arrayOf(
         url = "https://insert-koin.io/"
     ),
     OpenSourceLibrary(
-        name = "Poppins",
+        name = "Outfit",
         description = "A geometric sans serif typeface",
-        copyrightNote = "Copyright 2020 The Poppins Project Authors",
+        copyrightNote = "Copyright 2021 The Outfit Project Authors",
         licenseName = R.string.open_font_license_name,
         licenseText = R.raw.license_ofl,
-        url = "https://github.com/itfoundry/poppins"
+        url = "https://github.com/Outfitio/Outfit-Fonts"
     ),
     OpenSourceLibrary(
         name = "Coil",

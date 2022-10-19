@@ -76,7 +76,7 @@ message Settings {
     Layout layout = 9;
 
     enum Font {
-      Poppins = 0;
+      Outfit = 0;
       SystemDefault = 1;
     }
     Font font = 10;

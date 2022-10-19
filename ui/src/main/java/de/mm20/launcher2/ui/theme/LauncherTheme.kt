@@ -62,7 +62,7 @@ fun LauncherTheme(
     val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
 
     val font by remember { dataStore.data.map { it.appearance.font } }.collectAsState(
-        AppearanceSettings.Font.Poppins
+        AppearanceSettings.Font.Outfit
     )
 
     val typography = remember(font) {

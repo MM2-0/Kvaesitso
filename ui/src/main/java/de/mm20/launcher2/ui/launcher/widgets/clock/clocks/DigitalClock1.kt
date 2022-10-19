@@ -38,7 +38,6 @@ fun DigitalClock1(
             fontWeight = FontWeight.Black,
             textAlign = TextAlign.Center,
             lineHeight = 0.8.em,
-            letterSpacing = -0.1.em,
         )
     )
 }

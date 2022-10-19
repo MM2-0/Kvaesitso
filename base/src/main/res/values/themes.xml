@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="BaseTheme" parent="Theme.Material3.DayNight">
-        <item name="textAppearanceDisplayLarge">@style/Typography.Display.Large</item>
-        <item name="textAppearanceDisplayMedium">@style/Typography.Display.Medium</item>
-        <item name="textAppearanceDisplaySmall">@style/Typography.Display.Small</item>
-        <item name="textAppearanceHeadlineLarge">@style/Typography.Headline.Large</item>
-        <item name="textAppearanceHeadlineMedium">@style/Typography.Headline.Medium</item>
-        <item name="textAppearanceHeadlineSmall">@style/Typography.Headline.Small</item>
-        <item name="textAppearanceTitleLarge">@style/Typography.Title.Large</item>
-        <item name="textAppearanceTitleMedium">@style/Typography.Title.Medium</item>
-        <item name="textAppearanceTitleSmall">@style/Typography.Title.Small</item>
-        <item name="textAppearanceBodyLarge">@style/Typography.Body.Large</item>
-        <item name="textAppearanceBodyMedium">@style/Typography.Body.Medium</item>
-        <item name="textAppearanceBodySmall">@style/Typography.Body.Small</item>
-        <item name="textAppearanceLabelLarge">@style/Typography.Label.Large</item>
-        <item name="textAppearanceLabelMedium">@style/Typography.Label.Medium</item>
-        <item name="textAppearanceLabelSmall">@style/Typography.Label.Small</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
     </style>
 

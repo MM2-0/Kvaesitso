@@ -90,7 +90,7 @@ fun AppearanceSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.preference_font),
                     items = listOf(
-                        "Poppins" to AppearanceSettings.Font.Poppins,
+                        "Outfit" to AppearanceSettings.Font.Outfit,
                         stringResource(R.string.preference_font_system) to AppearanceSettings.Font.SystemDefault,
                     ),
                     value = font,
