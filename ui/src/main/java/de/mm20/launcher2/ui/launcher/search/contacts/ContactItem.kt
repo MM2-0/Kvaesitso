@@ -33,7 +33,7 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
-import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
@@ -349,7 +349,7 @@ fun ContactItemGridPopup(
                 modifier = Modifier
                     .fillMaxWidth()
                     .scale(
-                        1 - (1 - LocalGridIconSize.current / 48.dp) * (1 - animationProgress),
+                        1 - (1 - LocalGridSettings.current.iconSize / 48f) * (1 - animationProgress),
                         transformOrigin = TransformOrigin(0f, 0f)
                     )
                     .offset(

@@ -29,7 +29,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.OutlinedTagsInputField
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.locals.LocalGridColumns
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
@@ -158,7 +158,7 @@ fun CustomizeSearchableSheet(
             val isSearching by viewModel.isSearchingIcons.observeAsState(initial = false)
             val iconResults by viewModel.iconSearchResults.observeAsState(emptyList())
 
-            val columns = LocalGridColumns.current
+            val columns = LocalGridSettings.current.columnCount
 
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),

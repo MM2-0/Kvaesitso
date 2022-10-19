@@ -57,7 +57,7 @@ import de.mm20.launcher2.ui.launcher.search.hidden.HiddenResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItem
-import de.mm20.launcher2.ui.locals.LocalGridColumns
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.ceil
@@ -70,15 +70,13 @@ fun SearchColumn(
     reverse: Boolean = false,
 ) {
 
-    val columns = LocalGridColumns.current
+    val columns = LocalGridSettings.current.columnCount
     val context = LocalContext.current
 
     val viewModel: SearchVM = viewModel()
 
     val favoritesVM: SearchFavoritesVM = viewModel()
     val favorites by favoritesVM.favorites.collectAsState(emptyList())
-
-    val showLabels by viewModel.showLabels.observeAsState(true)
 
     var showWorkProfileApps by remember { mutableStateOf(false) }
 
@@ -119,7 +117,6 @@ fun SearchColumn(
             GridResults(
                 items = favorites.toImmutableList(),
                 columns = columns,
-                showLabels = showLabels,
                 key = "favorites",
                 reverse = reverse,
                 before = if (favorites.isEmpty()) {
@@ -205,7 +202,6 @@ fun SearchColumn(
         GridResults(
             items = if (showWorkProfileApps && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
             columns = columns,
-            showLabels = showLabels,
             reverse = reverse,
             key = "apps",
             before = if (workApps.isNotEmpty()) {
@@ -380,7 +376,6 @@ fun LazyListScope.GridResults(
     items: ImmutableList<SavableSearchable>,
     columns: Int,
     reverse: Boolean,
-    showLabels: Boolean,
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
@@ -421,7 +416,6 @@ fun LazyListScope.GridResults(
                     (it * columns + columns).coerceAtMost(items.size)
                 ),
                 columns = columns,
-                showLabels = showLabels,
             )
         }
     }
@@ -444,7 +438,7 @@ fun GridRow(
     modifier: Modifier = Modifier,
     items: ImmutableList<SavableSearchable>,
     columns: Int,
-    showLabels: Boolean,
+    showLabels: Boolean = LocalGridSettings.current.showLabels,
 ) {
 
     Row(

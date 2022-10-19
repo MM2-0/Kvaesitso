@@ -31,8 +31,6 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = MutableLiveData<String>("")
     val isSearchEmpty = MutableLiveData(true)
 
-    val showLabels = dataStore.data.map { it.grid.showLabels }.asLiveData()
-
     val appResults = MutableLiveData<List<LauncherApp>>(emptyList())
     val workAppResults = MutableLiveData<List<LauncherApp>>(emptyList())
     val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())

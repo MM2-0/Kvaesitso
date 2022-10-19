@@ -7,8 +7,7 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
-import de.mm20.launcher2.ui.locals.LocalGridColumns
-import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -42,19 +41,14 @@ fun ProvideSettings(
         ) { a, b, c -> a || b || c }.distinctUntilChanged()
     }.collectAsState(true)
 
-    val gridColumns by remember {
-        dataStore.data.map { it.grid.columnCount }.distinctUntilChanged()
-    }.collectAsState(5)
-
-    val gridIconSize by remember {
-        dataStore.data.map { it.grid.iconSize.dp }.distinctUntilChanged()
-    }.collectAsState(48.dp)
+    val gridSettings by remember {
+        dataStore.data.map { it.grid }.distinctUntilChanged()
+    }.collectAsState(Settings.GridSettings.newBuilder().setColumnCount(5).setShowLabels(true).setIconSize(48).build())
 
     CompositionLocalProvider(
         LocalCardStyle provides cardStyle,
         LocalFavoritesEnabled provides favoritesEnabled,
-        LocalGridColumns provides gridColumns,
-        LocalGridIconSize provides gridIconSize,
+        LocalGridSettings provides gridSettings,
     ) {
         ProvideIconShape(iconShape) {
             content()

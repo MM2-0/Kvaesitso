@@ -100,7 +100,7 @@ import de.mm20.launcher2.ui.launcher.helper.LazyDragAndDropRow
 import de.mm20.launcher2.ui.launcher.helper.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropListState
-import de.mm20.launcher2.ui.locals.LocalGridColumns
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.currentCoroutineContext
 import kotlin.math.roundToInt
 
@@ -169,7 +169,7 @@ fun EditFavoritesSheet(
 @Composable
 fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
     val items by viewModel.gridItems.observeAsState(emptyList())
-    val columns = LocalGridColumns.current
+    val columns = LocalGridSettings.current.columnCount
 
     val availableTags by viewModel.availableTags.observeAsState(emptyList())
     val pinnedTags by viewModel.pinnedTags.observeAsState(emptyList())

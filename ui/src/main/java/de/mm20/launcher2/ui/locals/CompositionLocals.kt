@@ -7,6 +7,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.GridSettings
 
 val LocalWindowSize = compositionLocalOf { Size(0f, 0f) }
 
@@ -18,9 +19,7 @@ val LocalCardStyle = compositionLocalOf<Settings.CardSettings> { Settings.CardSe
 
 val LocalFavoritesEnabled = compositionLocalOf { true }
 
-val LocalGridColumns = compositionLocalOf { 5 }
-
-val LocalGridIconSize = compositionLocalOf { 48.dp }
+val LocalGridSettings = compositionLocalOf { GridSettings.newBuilder().setColumnCount(5).setShowLabels(true).setIconSize(48).build() }
 
 val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
 

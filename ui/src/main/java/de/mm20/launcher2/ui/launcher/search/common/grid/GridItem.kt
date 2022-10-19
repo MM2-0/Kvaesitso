@@ -38,7 +38,7 @@ import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
 import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
-import de.mm20.launcher2.ui.locals.LocalGridIconSize
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import kotlinx.coroutines.delay
@@ -54,7 +54,7 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
-        val iconSize = LocalGridIconSize.current.toPixels()
+        val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
         val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
 
         val launchOnPress = !item.preferDetailsOverLaunch
@@ -72,7 +72,7 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                     return@HandleHomeTransition HomeTransitionParams(
                         bounds
                     ) { _, _ ->
-                        ShapedLauncherIcon(size = LocalGridIconSize.current, icon = { icon })
+                        ShapedLauncherIcon(size = LocalGridSettings.current.iconSize.dp, icon = { icon })
                     }
                 }
                 return@HandleHomeTransition null
@@ -85,7 +85,7 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                 .onGloballyPositioned {
                     bounds = it.boundsInWindow()
                 },
-            size = LocalGridIconSize.current,
+            size = LocalGridSettings.current.iconSize.dp,
             badge = { badge },
             icon = { icon },
             onClick = {
