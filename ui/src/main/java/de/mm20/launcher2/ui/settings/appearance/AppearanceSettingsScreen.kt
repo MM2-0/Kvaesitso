@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.appearance
 
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -33,6 +34,8 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -250,6 +253,21 @@ fun AppearanceSettingsScreen() {
                         viewModel.setSearchBarStyle(it)
                     }
                 )
+                AnimatedVisibility(searchBarStyle == SearchBarStyle.Transparent) {
+                    val searchBarColor by viewModel.searchBarColor.observeAsState()
+                    ListPreference(
+                        title = stringResource(R.string.preference_search_bar_color),
+                        value = searchBarColor,
+                        items = listOf(
+                            stringResource(R.string.preference_system_bar_icons_auto) to SearchBarColors.Auto,
+                            stringResource(R.string.preference_system_bar_icons_light) to SearchBarColors.Light,
+                            stringResource(R.string.preference_system_bar_icons_dark) to SearchBarColors.Dark,
+                        ),
+                        onValueChanged = {
+                            if (it != null) viewModel.setSearchBarColor(it)
+                        }
+                    )
+                }
             }
             PreferenceCategory(stringResource(R.string.preference_category_system_bars)) {
                 val lightStatusBar by viewModel.statusBarIcons.observeAsState()

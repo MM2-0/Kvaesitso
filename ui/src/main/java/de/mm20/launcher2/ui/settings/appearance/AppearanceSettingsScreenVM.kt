@@ -13,6 +13,7 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.*
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -212,6 +213,20 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
                     .setIcons(
                         it.icons.toBuilder()
                             .setIconPack(iconPack)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val searchBarColor = dataStore.data.map { it.searchBar.color }.asLiveData()
+    fun setSearchBarColor(color: SearchBarColors) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setColor(color)
                     )
                     .build()
             }

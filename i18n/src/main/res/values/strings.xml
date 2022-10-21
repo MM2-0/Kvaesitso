@@ -617,6 +617,7 @@
     <string name="preference_music_filter_sources_summary">Ignore media sessions of apps that are not music apps</string>
     <string name="preference_search_bar_style">Style</string>
     <string name="preference_search_bar_style_summary">Customize search bar appearance</string>
+    <string name="preference_search_bar_color">Color</string>
     <string name="preference_search_bar_auto_focus">Open keyboard</string>
     <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the search</string>
     <string name="preference_hidden_items">Hidden search results</string>

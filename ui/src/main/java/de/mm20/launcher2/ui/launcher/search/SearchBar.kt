@@ -44,12 +44,14 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.search.data.Websearch
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.LauncherActivityVM
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.map
@@ -71,6 +73,9 @@ fun SearchBar(
 
     val style by remember { dataStore.data.map { it.searchBar.searchBarStyle } }
         .collectAsState(SearchBarSettings.SearchBarStyle.Hidden)
+
+    val color by remember { dataStore.data.map { it.searchBar.color } }
+        .collectAsState(SearchBarSettings.SearchBarColors.Auto)
 
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
@@ -135,7 +140,8 @@ fun SearchBar(
         onUnfocus = {
             onFocusChange(false)
         },
-        reverse = reverse
+        reverse = reverse,
+        darkColors = color == SearchBarColors.Dark || color == SearchBarColors.Auto && LocalPreferDarkContentOverWallpaper.current
     )
 }
 
@@ -152,6 +158,7 @@ fun SearchBar(
     onUnfocus: () -> Unit = {},
     focusRequester: FocusRequester = remember { FocusRequester() },
     reverse: Boolean = false,
+    darkColors: Boolean = false,
 ) {
     val context = LocalContext.current
 
@@ -212,7 +219,7 @@ fun SearchBar(
         }) {
         when {
             style != SearchBarSettings.SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
-            it == SearchBarLevel.Resting -> Color.White
+            it == SearchBarLevel.Resting -> if (darkColors) Color(0,0,0, 180) else Color.White
             else -> MaterialTheme.colorScheme.onSurface
         }
     }

@@ -216,6 +216,12 @@ message Settings {
     }
     SearchBarStyle search_bar_style = 1;
     bool auto_focus = 2;
+    enum SearchBarColors {
+      Auto = 0;
+      Light = 1;
+      Dark = 2;
+    }
+    SearchBarColors color = 3;
   }
   SearchBarSettings search_bar = 20;
 

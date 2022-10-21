@@ -2,6 +2,7 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import android.graphics.Color
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import scheme.Scheme
 
 fun createFactorySettings(context: Context): Settings {
@@ -133,6 +134,7 @@ fun createFactorySettings(context: Context): Settings {
             Settings.SearchBarSettings.newBuilder()
                 .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
                 .setAutoFocus(false)
+                .setColor(SearchBarColors.Auto)
                 .build()
         )
         .setIcons(
