@@ -230,8 +230,6 @@
     <string name="preference_icon_pack">Ikonpaket</string>
     <string name="preference_icon_pack_summary_empty">Inga ikonpaket installerade</string>
     <string name="preference_category_system_bars">Systemfält</string>
-    <string name="preference_light_status_bar">Mörka statusfältikoner</string>
-    <string name="preference_light_nav_bar">Mörka navigationsfältikoner</string>
     <string name="preference_hide_status_bar">Göm statusfält</string>
     <string name="preference_hide_nav_bar">Göm navigationsfält</string>
     <string name="preference_screen_services_summary">Hantera anslutna konton och tjänster</string>

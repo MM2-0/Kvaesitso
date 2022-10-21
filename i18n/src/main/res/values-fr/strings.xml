@@ -145,8 +145,6 @@
     <string name="widget_add_widget">Ajouter un widget</string>
     <string name="widget_add_external">Plus</string>
     <string name="preference_category_system_bars">Barres du système</string>
-    <string name="preference_light_status_bar">Icônes de la barre d\'état sombres</string>
-    <string name="preference_light_nav_bar">Icônes de la barre de navigation sombres</string>
     <string name="widget_name_music">Musique</string>
     <string name="menu_contacts_open_externally">Ouvrir dans l\'application de contacts</string>
     <string name="menu_favorites_pin">Ajouter aux favoris</string>

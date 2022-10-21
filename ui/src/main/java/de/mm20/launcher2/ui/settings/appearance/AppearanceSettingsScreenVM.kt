@@ -13,6 +13,7 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.*
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
+import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -217,28 +218,28 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val lightStatusBar = dataStore.data.map { it.systemBars.lightStatusBar }.asLiveData()
-    fun setLightStatusBar(lightStatusBar: Boolean) {
+    val statusBarIcons = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
+    fun setLightStatusBar(statusBarColor: SystemBarsSettings.SystemBarColors) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
                     .setSystemBars(
                         it.systemBars.toBuilder()
-                            .setLightStatusBar(lightStatusBar)
+                            .setStatusBarColor(statusBarColor)
                     )
                     .build()
             }
         }
     }
 
-    val lightNavBar = dataStore.data.map { it.systemBars.lightNavBar }.asLiveData()
-    fun setLightNavBar(lightNavBar: Boolean) {
+    val navBarIcons = dataStore.data.map { it.systemBars.navBarColor }.asLiveData()
+    fun setLightNavBar(navBarColors: SystemBarsSettings.SystemBarColors) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
                     .setSystemBars(
                         it.systemBars.toBuilder()
-                            .setLightNavBar(lightNavBar)
+                            .setNavBarColor(navBarColors)
                     )
                     .build()
             }

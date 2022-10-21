@@ -35,6 +35,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
@@ -44,9 +45,12 @@ import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
+import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
+import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlin.math.pow
 
 
@@ -73,19 +77,26 @@ abstract class SharedLauncherActivity(
 
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
+            val wallpaperColors by wallpaperColorsAsState()
+            val dimBackground by viewModel.dimBackground.observeAsState(false)
             CompositionLocalProvider(
                 LocalHomeTransitionManager provides homeTransitionManager,
                 LocalWindowSize provides windowSize,
-                LocalSnackbarHostState provides snackbarHostState
+                LocalSnackbarHostState provides snackbarHostState,
+                LocalWallpaperColors provides wallpaperColors,
+                LocalPreferDarkContentOverWallpaper provides (!dimBackground && wallpaperColors.supportsDarkText),
             ) {
                 LauncherTheme {
                     ProvideCurrentTime {
                         ProvideSettings {
-                            val lightStatus by viewModel.lightStatusBar.observeAsState(false)
-                            val lightNav by viewModel.lightNavBar.observeAsState(false)
+                            val statusBarColor by viewModel.statusBarColor.observeAsState(SystemBarColors.Auto)
+                            val navBarColor by viewModel.navBarColor.observeAsState(SystemBarColors.Auto)
+
+                            val lightStatus = !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+                            val lightNav = !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+
                             val hideStatus by viewModel.hideStatusBar.observeAsState(false)
                             val hideNav by viewModel.hideNavBar.observeAsState(false)
-                            val dimBackground by viewModel.dimBackground.observeAsState(false)
                             val layout by viewModel.layout.observeAsState(null)
 
                             val systemUiController = rememberSystemUiController()

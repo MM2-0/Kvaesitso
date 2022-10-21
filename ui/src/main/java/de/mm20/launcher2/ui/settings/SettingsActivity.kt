@@ -20,6 +20,7 @@ import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalNavController
+import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
 import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
@@ -47,6 +48,7 @@ import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
+import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.koin.android.ext.android.inject
@@ -72,9 +74,11 @@ class SettingsActivity : BaseActivity() {
             }.collectAsState(
                 Settings.CardSettings.getDefaultInstance()
             )
+            val wallpaperColors by wallpaperColorsAsState()
             CompositionLocalProvider(
                 LocalNavController provides navController,
-                LocalCardStyle provides cardStyle
+                LocalCardStyle provides cardStyle,
+                LocalWallpaperColors provides wallpaperColors,
             ) {
                 LauncherTheme {
                     AnimatedNavHost(

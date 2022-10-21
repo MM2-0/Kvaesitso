@@ -276,8 +276,6 @@
     <string name="preference_icon_pack">Pacote de ícones</string>
     <string name="preference_icon_pack_summary_empty">Não há pacotes de ícones instalados</string>
     <string name="preference_category_system_bars">Barras do sistema</string>
-    <string name="preference_light_status_bar">Ícones da barra de status escuro</string>
-    <string name="preference_light_nav_bar">Ícones da barra de navegação escuro</string>
     <string name="preference_hide_status_bar">Ocultar a barra de status</string>
     <string name="preference_hide_nav_bar">Ocultar a barra de navegação</string>
     <string name="preference_screen_services_summary">Gerenciar as contas e serviços conectados</string>

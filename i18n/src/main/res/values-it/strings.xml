@@ -30,7 +30,6 @@
     <string name="preference_screen_buildinfo_summary">Maggiori informazioni sulla build di questa app</string>
     <string name="preference_themed_icons_summary">Icone colorate con la combinazione di colori dell\'applicazione</string>
     <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura della ricerca</string>
-    <string name="preference_light_nav_bar">Icone scure nella barra di navigazione</string>
     <string name="connect_account">Connetti account</string>
     <string name="preference_hide_status_bar">Nascondi barra di stato</string>
     <string name="preference_summary_not_logged_in">Non hai eseguito l\'accesso</string>
@@ -259,7 +258,6 @@
     <string name="preference_themed_icons">Icone a tema</string>
     <string name="preference_icon_pack_summary_empty">Nessun pacchetto icone installato</string>
     <string name="preference_icon_pack">Pacchetto icone</string>
-    <string name="preference_light_status_bar">Icone scure nella barra di stato</string>
     <string name="preference_category_system_bars">Barre di sistema</string>
     <string name="preference_icon_shape_triangle">Triangolo di Reuleaux</string>
     <string name="preference_hide_nav_bar">Nascondi barra di navigazione</string>

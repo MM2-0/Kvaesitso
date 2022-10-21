@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -23,19 +24,8 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
     }
     val dimBackground = dimBackgroundState.asLiveData()
 
-    val lightStatusBar = combine(
-        dimBackgroundState,
-        dataStore.data.map { it.systemBars.lightStatusBar }
-    ) { dim, light ->
-        !dim && light
-    }.asLiveData()
-
-    val lightNavBar = combine(
-        dimBackgroundState,
-        dataStore.data.map { it.systemBars.lightNavBar }
-    ) { dim, light ->
-        !dim && light
-    }.asLiveData()
+    val statusBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
+    val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
 
     val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }.asLiveData()
     val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }.asLiveData()

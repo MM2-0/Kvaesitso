@@ -33,6 +33,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.*
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
@@ -251,20 +252,30 @@ fun AppearanceSettingsScreen() {
                 )
             }
             PreferenceCategory(stringResource(R.string.preference_category_system_bars)) {
-                val lightStatusBar by viewModel.lightStatusBar.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_light_status_bar),
-                    value = lightStatusBar == true,
+                val lightStatusBar by viewModel.statusBarIcons.observeAsState()
+                ListPreference(
+                    title = stringResource(R.string.preference_status_bar_icons),
+                    value = lightStatusBar,
+                    items = listOf(
+                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
+                    ),
                     onValueChanged = {
-                        viewModel.setLightStatusBar(it)
+                        if (it != null) viewModel.setLightStatusBar(it)
                     }
                 )
-                val lightNavBar by viewModel.lightNavBar.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_light_nav_bar),
-                    value = lightNavBar == true,
+                val lightNavBar by viewModel.navBarIcons.observeAsState()
+                ListPreference(
+                    title = stringResource(R.string.preference_nav_bar_icons),
+                    value = lightNavBar,
+                    items = listOf(
+                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
+                    ),
                     onValueChanged = {
-                        viewModel.setLightNavBar(it)
+                        if (it != null) viewModel.setLightNavBar(it)
                     }
                 )
                 val hideStatusBar by viewModel.hideStatusBar.observeAsState()

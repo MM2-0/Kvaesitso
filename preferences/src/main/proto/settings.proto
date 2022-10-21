@@ -238,8 +238,16 @@ message Settings {
   bool easter_egg = 22;
 
   message SystemBarsSettings {
-    bool lightStatusBar = 1;
-    bool lightNavBar = 2;
+    enum SystemBarColors {
+      // Light icons
+      Auto = 0;
+      // Dark icons
+      Dark = 1;
+      // Wallpaper based
+      Light = 2;
+    }
+    SystemBarColors statusBarColor = 1;
+    SystemBarColors navBarColor = 2;
     bool hideStatusBar = 3;
     bool hideNavBar = 4;
   }

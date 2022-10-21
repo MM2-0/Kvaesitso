@@ -37,7 +37,6 @@
     <string name="weather_details_humidity">Vlhkost: %1$s</string>
     <string name="preference_icon_pack_summary_empty">Nejsou nainstalovány žádné balíčky ikon</string>
     <string name="weather_widget_set_location">Nastavit polohu</string>
-    <string name="preference_light_status_bar">Tmavé ikony na stavové liště</string>
     <string name="missing_permission_calendar_widget_settings">Tento widget vyžaduje přístup ke kalendáři</string>
     <string name="preference_summary_not_logged_in">Momentálně nejste přihlášeni</string>
     <string name="preference_blur_wallpaper_unsupported">Není podporováno na tomto zařízení</string>
@@ -310,7 +309,6 @@
     <string name="preference_themed_icons_summary">Barevné ikony s barevným schématem aplikace</string>
     <string name="preference_icon_pack">Balíček ikon</string>
     <string name="preference_category_system_bars">Systémové lišty</string>
-    <string name="preference_light_nav_bar">Tmavé ikony na navigační liště</string>
     <string name="preference_hide_status_bar">Skrýt stavovou lištu</string>
     <string name="preference_hide_nav_bar">Skrýt navigační lištu</string>
     <string name="preference_screen_services_summary">Spravovat připojené účty a služby</string>

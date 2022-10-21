@@ -297,8 +297,6 @@
     <string name="preference_force_themed_icons">Forceer iconen met een thema</string>
     <string name="preference_icon_pack">Pictogrammenpakket</string>
     <string name="preference_category_system_bars">Systeembalken</string>
-    <string name="preference_light_status_bar">Donkere statusbalkpictogrammen</string>
-    <string name="preference_light_nav_bar">Donkere navigatiebalkpictogrammen</string>
     <string name="preference_hide_status_bar">Statusbalk verbergen</string>
     <string name="preference_summary_not_logged_in">Je bent niet ingelogd</string>
     <string name="preference_icon_shape_pentagon">Vijfhoek</string>

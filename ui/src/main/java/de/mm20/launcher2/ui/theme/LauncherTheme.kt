@@ -16,6 +16,7 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
@@ -124,11 +125,10 @@ fun colorSchemeAsState(
         }
         else -> {
             if (Build.VERSION.SDK_INT >= 27 && (Build.VERSION.SDK_INT < 31 || colorScheme == AppearanceSettings.ColorScheme.DebugMaterialYouCompat)) {
-                val wallpaperColors by wallpaperColorsAsState()
+                val wallpaperColors = LocalWallpaperColors.current
                 val state = remember(wallpaperColors, darkTheme) {
                     mutableStateOf(
-                        wallpaperColors?.let { MaterialYouCompatScheme(it, darkTheme) }
-                            ?: if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
+                        MaterialYouCompatScheme(wallpaperColors, darkTheme)
                     )
                 }
                 return state

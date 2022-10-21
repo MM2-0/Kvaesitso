@@ -284,8 +284,6 @@
     <string name="preference_search_files_summary">Поиск локальных файлов и облачных файлов</string>
     <string name="preference_search_websearch_summary">Показать ярлыки различных поисковых систем</string>
     <string name="preference_category_services_google">Google</string>
-    <string name="preference_light_status_bar">Темные значки в строке состояния</string>
-    <string name="preference_light_nav_bar">Темные значки в панели навигации</string>
     <string name="preference_hide_status_bar">Скрыть строку состояния</string>
     <string name="preference_hide_nav_bar">Скрыть панель навигации</string>
     <string name="preference_category_wallpaper">Обои</string>

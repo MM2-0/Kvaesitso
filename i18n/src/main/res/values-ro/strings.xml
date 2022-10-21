@@ -247,8 +247,6 @@
     <string name="preference_icon_pack">Pachet de pictograme</string>
     <string name="preference_icon_pack_summary_empty">Nu sunt instalate pachete de pictograme</string>
     <string name="preference_category_system_bars">Bare de sistem</string>
-    <string name="preference_light_status_bar">Pictogramele barei de stare întunecate</string>
-    <string name="preference_light_nav_bar">Pictograme întunecate ale barei de navigare</string>
     <string name="preference_hide_status_bar">Ascunde bara de stare</string>
     <string name="preference_hide_nav_bar">Ascunde bara de navigare</string>
     <string name="preference_category_services_google">Google</string>

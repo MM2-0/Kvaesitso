@@ -144,8 +144,8 @@ fun createFactorySettings(context: Context): Settings {
         .setEasterEgg(false)
         .setSystemBars(
             Settings.SystemBarsSettings.newBuilder()
-                .setLightNavBar(false)
-                .setLightStatusBar(false)
+                .setNavBarColor(Settings.SystemBarsSettings.SystemBarColors.Light)
+                .setStatusBarColor(Settings.SystemBarsSettings.SystemBarColors.Light)
                 .setHideStatusBar(false)
                 .setHideNavBar(false)
         )

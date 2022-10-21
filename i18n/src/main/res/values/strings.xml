@@ -482,8 +482,11 @@
     <string name="preference_icon_pack">Icon pack</string>
     <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
     <string name="preference_category_system_bars">System bars</string>
-    <string name="preference_light_status_bar">Dark status bar icons</string>
-    <string name="preference_light_nav_bar">Dark navigation bar icons</string>
+    <string name="preference_status_bar_icons">Status bar icons</string>
+    <string name="preference_nav_bar_icons">Navigation bar icons</string>
+    <string name="preference_system_bar_icons_auto">Auto</string>
+    <string name="preference_system_bar_icons_light">Light</string>
+    <string name="preference_system_bar_icons_dark">Dark</string>
     <string name="preference_hide_status_bar">Hide status bar</string>
     <string name="preference_hide_nav_bar">Hide navigation bar</string>
     <string name="preference_screen_services_summary">Manage connected accounts and services</string>

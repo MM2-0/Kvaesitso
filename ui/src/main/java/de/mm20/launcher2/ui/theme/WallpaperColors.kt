@@ -5,21 +5,35 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.RequiresApi
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-data class WallpaperColors(val primary: Color, val secondary: Color?, val tertiary: Color?) {
+data class WallpaperColors(
+    val primary: Color = Color(0xFF3C6089),
+    val secondary: Color? = null,
+    val tertiary: Color? = null,
+    private val hints: Int = 0,
+) {
+    val supportsDarkText: Boolean
+        get() = hints and android.app.WallpaperColors.HINT_SUPPORTS_DARK_TEXT != 0
+
     companion object {
         @RequiresApi(Build.VERSION_CODES.O_MR1)
         fun fromPlatformType(colors: android.app.WallpaperColors): WallpaperColors {
             return WallpaperColors(
                 Color(colors.primaryColor.toArgb()),
                 colors.secondaryColor?.toArgb()?.let { Color(it) },
-                colors.tertiaryColor?.toArgb()?.let { Color(it) }
+                colors.tertiaryColor?.toArgb()?.let { Color(it) },
+                colors.colorHints
             )
         }
     }
@@ -27,18 +41,18 @@ data class WallpaperColors(val primary: Color, val secondary: Color?, val tertia
 
 @RequiresApi(Build.VERSION_CODES.O_MR1)
 @Composable
-fun wallpaperColorsAsState(): State<WallpaperColors?> {
+fun wallpaperColorsAsState(): State<WallpaperColors> {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    val state = remember { mutableStateOf<WallpaperColors?>(null) }
+    val state = remember { mutableStateOf(WallpaperColors()) }
     DisposableEffect(null) {
         val wallpaperManager = WallpaperManager.getInstance(context)
         val callback = callback@{ colors: android.app.WallpaperColors?, which: Int ->
-            if (which or WallpaperManager.FLAG_SYSTEM == 0) return@callback
+            if (which and WallpaperManager.FLAG_SYSTEM == 0) return@callback
             if (colors != null) {
                 state.value = WallpaperColors.fromPlatformType(colors)
             } else {
-                state.value = null
+                state.value = WallpaperColors()
             }
         }
         wallpaperManager.addOnColorsChangedListener(
@@ -58,5 +72,3 @@ fun wallpaperColorsAsState(): State<WallpaperColors?> {
     }
     return state
 }
-
-internal val DefaultWallpaperColors = WallpaperColors(Color.White, null, null)

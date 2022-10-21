@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="preference_light_nav_bar">深色的导航条图标</string>
     <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
     <string name="preference_screen_badges_summary">配置图标角标</string>
     <string name="preference_ms_signin_summary">登陆以查找OneDrive</string>
@@ -252,7 +251,6 @@
     <string name="preference_icon_pack">图标包</string>
     <string name="preference_icon_pack_summary_empty">没有已安装的图标包</string>
     <string name="preference_category_system_bars">系统栏</string>
-    <string name="preference_light_status_bar">深色的状态栏图标</string>
     <string name="preference_hide_status_bar">隐藏状态栏</string>
     <string name="preference_hide_nav_bar">隐藏导航条</string>
     <string name="preference_screen_services_summary">管理已连接的账户和服务</string>
