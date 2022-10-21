@@ -545,6 +545,7 @@
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_fill_height_summary">Insert extra space above the clock to fill the entire screen height</string>
+    <string name="preference_clock_widget_color">Color</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Select a clock</string>
     <string name="preference_clockwidget_date_part">Date</string>

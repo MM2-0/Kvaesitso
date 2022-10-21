@@ -18,7 +18,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.launcher.widgets.clock.Clock
 import de.mm20.launcher2.ui.R
@@ -51,6 +53,19 @@ fun ClockWidgetSettingsScreen() {
                     value = clockStyle,
                     onValueChanged = {
                         viewModel.setClockStyle(it)
+                    }
+                )
+                val color by viewModel.color.observeAsState()
+                ListPreference(
+                    title = stringResource(R.string.preference_clock_widget_color),
+                    value = color,
+                    items = listOf(
+                        stringResource(R.string.preference_system_bar_icons_auto) to ClockWidgetColors.Auto,
+                        stringResource(R.string.preference_system_bar_icons_light) to ClockWidgetColors.Light,
+                        stringResource(R.string.preference_system_bar_icons_dark) to ClockWidgetColors.Dark,
+                    ),
+                    onValueChanged = {
+                        if (it != null) viewModel.setColor(it)
                     }
                 )
                 val fillHeight by viewModel.fillHeight.observeAsState()

@@ -16,11 +16,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 
 @Composable
 fun ClockWidget(
@@ -30,6 +33,7 @@ fun ClockWidget(
     val context = LocalContext.current
     val layout by viewModel.layout.observeAsState()
     val clockStyle by viewModel.clockStyle.observeAsState()
+    val color by viewModel.color.observeAsState()
     val time = LocalTime.current
 
     LaunchedEffect(time) {
@@ -44,8 +48,14 @@ fun ClockWidget(
         contentAlignment = Alignment.BottomCenter
     ) {
 
+        val contentColor = if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
+            Color(0,0,0, 180)
+        } else {
+            Color.White
+        }
+
         CompositionLocalProvider(
-            LocalContentColor provides Color.White
+            LocalContentColor provides contentColor
         ) {
             if (layout == ClockWidgetLayout.Vertical) {
                 Column(

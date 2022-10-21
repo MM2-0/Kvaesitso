@@ -45,6 +45,7 @@ fun createFactorySettings(context: Context): Settings {
                 .newBuilder()
                 .setLayout(Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical)
                 .setClockStyle(Settings.ClockWidgetSettings.ClockStyle.DigitalClock1)
+                .setColor(Settings.ClockWidgetSettings.ClockWidgetColors.Auto)
                 .setAlarmPart(true)
                 .setBatteryPart(true)
                 .setDatePart(true)

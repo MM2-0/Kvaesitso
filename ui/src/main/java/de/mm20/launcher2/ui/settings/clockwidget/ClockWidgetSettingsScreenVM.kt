@@ -5,6 +5,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -33,6 +34,19 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
                     .setClockWidget(
                         it.clockWidget.toBuilder()
                             .setClockStyle(clockStyle)
+                    ).build()
+            }
+        }
+    }
+
+    val color = dataStore.data.map { it.clockWidget.color }.asLiveData()
+    fun setColor(color: ClockWidgetColors) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setColor(color)
                     ).build()
             }
         }

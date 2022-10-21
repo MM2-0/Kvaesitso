@@ -67,6 +67,8 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     val layout = dataStore.data.map { it.clockWidget.layout }.asLiveData()
     val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }.asLiveData()
 
+    val color = dataStore.data.map { it.clockWidget.color }.asLiveData()
+
     fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }
     }

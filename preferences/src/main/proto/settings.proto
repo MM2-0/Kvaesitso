@@ -122,6 +122,13 @@ message Settings {
     bool alarm_part = 6;
     bool favorites_part = 7;
     bool fill_height = 8;
+
+    enum ClockWidgetColors {
+      Auto = 0;
+      Light = 1;
+      Dark = 2;
+    }
+    ClockWidgetColors color = 9;
   }
   ClockWidgetSettings clock_widget = 7;
 
