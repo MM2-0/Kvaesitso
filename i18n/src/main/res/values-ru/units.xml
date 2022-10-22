@@ -1,2 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="unit_centimeter">
+        <item quantity="one">сантиметр</item>
+        <item quantity="few">сантиметров</item>
+        <item quantity="many">сантиметра</item>
+        <item quantity="other">сантиметра</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">мм</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">миллиметр</item>
+        <item quantity="few">миллиметров</item>
+        <item quantity="many">миллиметра</item>
+        <item quantity="other">миллиметра</item>
+    </plurals>
+    <string name="unit_inch_symbol">дюйм</string>
+    <plurals name="unit_inch">
+        <item quantity="one">дюйм</item>
+        <item quantity="few">дюймов</item>
+        <item quantity="many">дюйма</item>
+        <item quantity="other">дюйма</item>
+    </plurals>
+    <string name="unit_foot_symbol">фут</string>
+    <plurals name="unit_foot">
+        <item quantity="one">фут</item>
+        <item quantity="few">футов</item>
+        <item quantity="many">фута</item>
+        <item quantity="other">фута</item>
+    </plurals>
+    <string name="unit_yard_symbol">ярд</string>
+    <plurals name="unit_yard">
+        <item quantity="one">ярд</item>
+        <item quantity="few">ярдов</item>
+        <item quantity="many">ярда</item>
+        <item quantity="other">ярда</item>
+    </plurals>
+    <string name="unit_mile_symbol">миль</string>
+    <string name="unit_meter_symbol">м</string>
+    <plurals name="unit_meter">
+        <item quantity="one">метр</item>
+        <item quantity="few">метров</item>
+        <item quantity="many">метра</item>
+        <item quantity="other">метра</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">км</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">километр</item>
+        <item quantity="few">километров</item>
+        <item quantity="many">километра</item>
+        <item quantity="other">километра</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">см</string>
+</resources>
