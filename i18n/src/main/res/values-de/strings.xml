@@ -484,4 +484,12 @@
     <string name="preference_edit_button">Bearbeiten-Button</string>
     <string name="preference_favorites_edit_button_summary">Eine Schaltfläche zum neu anordnen der Favoriten anzeigen</string>
     <string name="preference_widgets_edit_button_summary">Eine Schaltfläche zum Hinzufügen, Entfernen und Anordnen von Widgets anzeigen</string>
+    <string name="preference_status_bar_icons">Statusleistensymbole</string>
+    <string name="preference_nav_bar_icons">Navigationsleistensymbole</string>
+    <string name="preference_system_bar_icons_auto">Automatisch</string>
+    <string name="preference_system_bar_icons_light">Hell</string>
+    <string name="preference_system_bar_icons_dark">Dunkel</string>
+    <string name="preference_icon_shape_pebble">Pebble</string>
+    <string name="preference_clock_widget_color">Farbe</string>
+    <string name="preference_search_bar_color">Farbe</string>
 </resources>
