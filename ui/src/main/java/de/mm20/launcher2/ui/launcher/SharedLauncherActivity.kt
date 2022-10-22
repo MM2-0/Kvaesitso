@@ -73,7 +73,7 @@ abstract class SharedLauncherActivity(
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        viewModel.setDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
+        viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
