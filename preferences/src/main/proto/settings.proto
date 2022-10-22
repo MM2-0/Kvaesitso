@@ -111,6 +111,7 @@ message Settings {
     enum ClockStyle {
       DigitalClock1 = 0;
       DigitalClock2 = 1;
+      OrbitClock = 5;
       BinaryClock = 2;
       AnalogClock = 3;
       EmptyClock = 4;

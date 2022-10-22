@@ -135,10 +135,11 @@ fun Clock(
 ) {
     val time = LocalTime.current
     when (style) {
-        ClockStyle.DigitalClock1 -> DigitalClock1(time, layout)
+        ClockStyle.DigitalClock1 -> DigitalClock1(time = time, layout = layout)
         ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)
         ClockStyle.BinaryClock -> BinaryClock(time, layout)
         ClockStyle.AnalogClock -> AnalogClock(time, layout)
+        ClockStyle.OrbitClock -> OrbitClock(time, layout)
         ClockStyle.EmptyClock -> EmptyClock(time, layout)
         else -> {}
     }
