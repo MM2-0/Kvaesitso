@@ -29,6 +29,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
@@ -47,6 +48,7 @@ import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 @Composable
@@ -191,6 +193,8 @@ fun PagerScaffold(
     val notificationDragThreshold = with(LocalDensity.current) { 200.dp.toPx() }
     val notificationShadeController = rememberNotificationShadeController()
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             private var pullDownTotalY: Float? = 0f
@@ -221,6 +225,15 @@ fun PagerScaffold(
             }
         }
     }
+
+    val searchNestedScrollConnection = remember { object: NestedScrollConnection {
+        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+            if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                keyboardController?.hide()
+            }
+            return super.onPreScroll(available, source)
+        }
+    }}
 
     val insets = WindowInsets.safeDrawing.asPaddingValues()
 
@@ -335,6 +348,7 @@ fun PagerScaffold(
                             modifier = Modifier
                                 .requiredWidth(width)
                                 .fillMaxHeight()
+                                .nestedScroll(searchNestedScrollConnection)
                                 .padding(
                                     start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
                                     end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),

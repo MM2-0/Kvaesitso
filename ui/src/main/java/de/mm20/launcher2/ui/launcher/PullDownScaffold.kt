@@ -27,6 +27,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
@@ -43,6 +44,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import kotlinx.coroutines.launch
+import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 @Composable
@@ -193,10 +195,15 @@ fun PullDownScaffold(
         }
     }
 
+    val keyboardController = LocalSoftwareKeyboardController.current
+
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (isWidgetEditMode) return Offset.Zero
+                if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                    keyboardController?.hide()
+                }
                 val canPullDown = if (isSearchOpen) {
                     isSearchAtStart
                 } else {
