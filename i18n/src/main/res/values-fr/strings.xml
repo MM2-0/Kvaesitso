@@ -514,4 +514,10 @@
     <string name="preference_category_debug_tools">Outils</string>
     <string name="favorites">Favoris</string>
     <string name="favorites_empty">Les éléments épinglés et fréquemment utilisés apparaîtront ici</string>
+    <string name="preference_status_bar_icons">Icônes de la barre d\'état</string>
+    <string name="preference_nav_bar_icons">Icônes de la barre de navigation</string>
+    <string name="preference_system_bar_icons_auto">Automatique</string>
+    <string name="preference_system_bar_icons_light">Clair</string>
+    <string name="preference_system_bar_icons_dark">Sombre</string>
+    <string name="preference_icon_shape_pebble">Pebble</string>
 </resources>
