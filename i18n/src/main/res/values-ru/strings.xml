@@ -331,4 +331,9 @@
     <string name="preference_icon_pack_summary_empty">Наборы иконок не установлены</string>
     <string name="file_type_launcherbackup">Резервная копия %1$s</string>
     <string name="preference_category_system_bars">Системные панели</string>
+    <string name="websearch_dialog_query_encoding">Кодировка запроса</string>
+    <string name="alert_delete_shortcut">Ярлык %1$s будет удален навсегда. Продолжить\?</string>
+    <string name="menu_customize">Настроить</string>
+    <string name="menu_remove">Удалить</string>
+    <string name="websearch_dialog_advanced">Расширенный</string>
 </resources>
