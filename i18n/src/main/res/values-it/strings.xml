@@ -485,4 +485,11 @@
     <string name="preference_favorites_edit_button_summary">Mostra un pulsante per riordinare i preferiti</string>
     <string name="preference_widgets_edit_button_summary">Mostra un pulsante per aggiungere, rimuovere e riorganizzare i widget</string>
     <string name="preference_icon_shape_pebble">Ciottolo</string>
+    <string name="preference_status_bar_icons">Icone barra di stato</string>
+    <string name="preference_nav_bar_icons">Icone barra di navigazione</string>
+    <string name="preference_system_bar_icons_auto">Auto</string>
+    <string name="preference_system_bar_icons_light">Chiaro</string>
+    <string name="preference_system_bar_icons_dark">Scuro</string>
+    <string name="preference_clock_widget_color">Colore</string>
+    <string name="preference_search_bar_color">Colore</string>
 </resources>
