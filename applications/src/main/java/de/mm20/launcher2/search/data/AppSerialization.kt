@@ -32,7 +32,7 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val userManager = context.getSystemService<UserManager>()!!
         val userSerial = json.optLong("user")
-        val user = userManager.getUserForSerialNumber(userSerial) ?: Process.myUserHandle()
+        val user = userManager.getUserForSerialNumber(userSerial) ?: return null
         val pkg = json.getString("package")
         val intent = Intent().also {
             it.component = ComponentName(pkg, json.getString("activity"))

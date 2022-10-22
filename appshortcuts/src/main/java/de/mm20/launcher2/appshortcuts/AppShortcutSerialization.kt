@@ -55,7 +55,7 @@ class LauncherShortcutDeserializer(
             )
             query.setShortcutIds(mutableListOf(id))
             val userManager = context.getSystemService<UserManager>()!!
-            val user = userManager.getUserForSerialNumber(userSerial) ?: Process.myUserHandle()
+            val user = userManager.getUserForSerialNumber(userSerial) ?: return null
             val shortcuts = try {
                 launcherApps.getShortcuts(query, user)
             } catch (e: IllegalStateException) {
