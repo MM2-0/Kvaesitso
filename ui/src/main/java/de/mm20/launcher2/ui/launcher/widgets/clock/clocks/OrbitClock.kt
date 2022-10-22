@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
+import android.text.format.DateFormat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -36,7 +38,7 @@ fun OrbitClock(
     val date = Calendar.getInstance()
     date.timeInMillis = time
     val minute = date[Calendar.MINUTE]
-    val hour = date[Calendar.HOUR_OF_DAY]
+    val hour = if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
 
     val mu by animateFloatAsState(minute / 60f * 2f * PI.toFloat())
     val heta by animateFloatAsState((hour % 12) / 12f * 2f * PI.toFloat() + (minute / 60f) * 1f / 6f * PI.toFloat())
