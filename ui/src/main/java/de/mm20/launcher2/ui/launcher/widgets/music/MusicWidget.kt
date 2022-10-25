@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Audiotrack
 import androidx.compose.material.icons.rounded.MusicNote
@@ -23,10 +24,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -36,6 +44,9 @@ import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
+import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
+import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
+import de.mm20.launcher2.ui.locals.LocalWindowSize
 
 @Composable
 fun MusicWidget() {
@@ -155,14 +166,48 @@ fun MusicWidget() {
                     contentAlignment = Alignment.Center
                 ) {
                     if (albumArt != null) {
-                        albumArt?.let {
+                        albumArt?.let { art ->
+                            val windowSize = LocalWindowSize.current
+                            var bounds by remember { mutableStateOf(Rect.Zero) }
                             Image(
-                                bitmap = it.asImageBitmap(),
+                                bitmap = art.asImageBitmap(),
                                 modifier = Modifier
-                                    .fillMaxSize(),
+                                    .fillMaxSize()
+                                    .onGloballyPositioned {
+                                        bounds = it.boundsInWindow()
+                                    },
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
+                            HandleHomeTransition {
+                                if (
+                                    it.componentName.packageName == viewModel.currentPlayerPackage &&
+                                    bounds.right > 0f && bounds.left < windowSize.width &&
+                                        bounds.bottom > 0f && bounds.top < windowSize.height
+                                ) {
+                                    return@HandleHomeTransition HomeTransitionParams(
+                                        bounds
+                                    ) { _, _ ->
+                                        val shape = MaterialTheme.shapes.medium
+                                        Image(
+                                            bitmap = art.asImageBitmap(),
+                                            modifier = Modifier
+                                                .size(144.dp)
+                                                .graphicsLayer {
+                                                   this.clip = true
+                                                   this.shape = shape.copy(
+                                                       topStart = CornerSize(0f),
+                                                       bottomStart = CornerSize(0f),
+                                                   )
+                                                }
+                                            ,
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Crop
+                                        )
+                                    }
+                                }
+                                return@HandleHomeTransition null
+                            }
                         }
                     } else {
                         Icon(

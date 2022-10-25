@@ -38,6 +38,8 @@ interface MusicRepository {
     val album: Flow<String?>
     val albumArt: Flow<Bitmap?>
 
+    val lastPlayerPackage: String?
+
     fun next()
     fun previous()
     fun pause()
@@ -62,7 +64,7 @@ internal class MusicRepositoryImpl(
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
     }
 
-    private var lastPlayerPackage: String? = null
+    override var lastPlayerPackage: String? = null
         get() {
             if (field == null) {
                 field = preferences.getString(PREFS_KEY_LAST_PLAYER, null)

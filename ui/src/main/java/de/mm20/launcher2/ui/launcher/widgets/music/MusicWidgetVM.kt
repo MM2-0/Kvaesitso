@@ -27,6 +27,9 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Notifications).asLiveData()
 
+    val currentPlayerPackage
+        get() = musicRepository.lastPlayerPackage
+
     fun skipPrevious() {
         musicRepository.previous()
     }
@@ -41,8 +44,7 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
 
     fun openPlayer() {
         try {
-            musicRepository.
-            openPlayer()?.send()
+            musicRepository.openPlayer()?.send()
         } catch (e: PendingIntent.CanceledException) {
             CrashReporter.logException(e)
         }
