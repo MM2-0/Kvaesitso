@@ -93,7 +93,7 @@ dependencyResolutionManagement {
                 .version("1.1.0-alpha01")
 
             version("androidx.lifecycle", "2.6.0-alpha02")
-            library("androidx.lifecycle.viewmodel", "androidx.^lifecycle", "lifecycle-viewmodel-ktx")
+            library("androidx.lifecycle.viewmodel", "androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.livedata", "androidx.lifecycle", "lifecycle-livedata-ktx")
                 .versionRef("androidx.lifecycle")
