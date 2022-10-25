@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,35 +40,36 @@ data class WallpaperColors(
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O_MR1)
 @Composable
 fun wallpaperColorsAsState(): State<WallpaperColors> {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val state = remember { mutableStateOf(WallpaperColors()) }
-    DisposableEffect(null) {
-        val wallpaperManager = WallpaperManager.getInstance(context)
-        val callback = callback@{ colors: android.app.WallpaperColors?, which: Int ->
-            if (which and WallpaperManager.FLAG_SYSTEM == 0) return@callback
-            if (colors != null) {
-                state.value = WallpaperColors.fromPlatformType(colors)
-            } else {
-                state.value = WallpaperColors()
+    if (isAtLeastApiLevel(27)) {
+        DisposableEffect(null) {
+            val wallpaperManager = WallpaperManager.getInstance(context)
+            val callback = callback@{ colors: android.app.WallpaperColors?, which: Int ->
+                if (which and WallpaperManager.FLAG_SYSTEM == 0) return@callback
+                if (colors != null) {
+                    state.value = WallpaperColors.fromPlatformType(colors)
+                } else {
+                    state.value = WallpaperColors()
+                }
             }
-        }
-        wallpaperManager.addOnColorsChangedListener(
-            callback,
-            Handler(Looper.getMainLooper())
-        )
+            wallpaperManager.addOnColorsChangedListener(
+                callback,
+                Handler(Looper.getMainLooper())
+            )
 
-        scope.launch {
-            val colors = withContext(Dispatchers.IO) {
-                wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
-            } ?: return@launch
-            state.value = WallpaperColors.fromPlatformType(colors)
-        }
-        onDispose {
-            wallpaperManager.removeOnColorsChangedListener(callback)
+            scope.launch {
+                val colors = withContext(Dispatchers.IO) {
+                    wallpaperManager.getWallpaperColors(WallpaperManager.FLAG_SYSTEM)
+                } ?: return@launch
+                state.value = WallpaperColors.fromPlatformType(colors)
+            }
+            onDispose {
+                wallpaperManager.removeOnColorsChangedListener(callback)
+            }
         }
     }
     return state
