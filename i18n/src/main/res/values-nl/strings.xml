@@ -485,4 +485,11 @@
     <string name="create_app_shortcut">Snelkoppeling maken</string>
     <string name="preference_search_appshortcuts_summary">Applicatiesnelkoppelingen doorzoeken</string>
     <string name="preference_icon_shape_pebble">Kiezelsteen</string>
+    <string name="preference_status_bar_icons">Statusbalkpictogrammen</string>
+    <string name="preference_nav_bar_icons">Navigatiebalkpictogrammen</string>
+    <string name="preference_system_bar_icons_auto">Automatisch</string>
+    <string name="preference_system_bar_icons_light">Licht</string>
+    <string name="preference_system_bar_icons_dark">Donker</string>
+    <string name="preference_clock_widget_color">Kleur</string>
+    <string name="preference_search_bar_color">Kleur</string>
 </resources>
