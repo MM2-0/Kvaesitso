@@ -7,24 +7,43 @@ import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Wallpaper
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ElevatedAssistChip
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -34,11 +53,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -53,7 +69,6 @@ import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
-import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
 import java.io.File
@@ -175,6 +190,7 @@ fun SearchBar(
                     durationMillis = 200,
                     delayMillis = 200
                 )
+
                 targetState == SearchBarLevel.Resting -> tween(durationMillis = 200)
                 else -> tween(durationMillis = 500)
             }
@@ -195,6 +211,7 @@ fun SearchBar(
                     durationMillis = 200,
                     delayMillis = 200
                 )
+
                 else -> tween(durationMillis = 200)
             }
         }) {
@@ -214,12 +231,13 @@ fun SearchBar(
                     durationMillis = 200,
                     delayMillis = 200
                 )
+
                 else -> tween(durationMillis = 500)
             }
         }) {
         when {
             style != SearchBarSettings.SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
-            it == SearchBarLevel.Resting -> if (darkColors) Color(0,0,0, 180) else Color.White
+            it == SearchBarLevel.Resting -> if (darkColors) Color(0, 0, 0, 180) else Color.White
             else -> MaterialTheme.colorScheme.onSurface
         }
     }
@@ -298,27 +316,23 @@ fun SearchBar(
             AnimatedVisibility(websearches.isNotEmpty()) {
                 LazyRow(
                     modifier = Modifier
-                        .height(48.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .height(48.dp)
+                        .padding(bottom = 12.dp, top = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    contentPadding = PaddingValues(horizontal = 8.dp)
                 ) {
                     items(websearches) {
-                        Surface(
-                            shape = MaterialTheme.shapes.extraSmall,
-                            modifier = Modifier.padding(horizontal = 8.dp)
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .height(32.dp)
-                                    .clickable {
-                                        it
-                                            .getLaunchIntent()
-                                            ?.let {
-                                                context.tryStartActivity(it)
-                                            }
+                        AssistChip(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            onClick = {
+                                it
+                                    .getLaunchIntent()
+                                    ?.let {
+                                        context.tryStartActivity(it)
                                     }
-                                    .padding(horizontal = 4.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
+                            },
+                            label = { Text(it.label) },
+                            leadingIcon = {
                                 val icon = it.icon
                                 if (icon == null) {
                                     Icon(
@@ -335,13 +349,8 @@ fun SearchBar(
                                         contentDescription = null
                                     )
                                 }
-                                Text(
-                                    it.label,
-                                    modifier = Modifier.padding(start = 4.dp),
-                                    style = MaterialTheme.typography.labelMedium
-                                )
                             }
-                        }
+                        )
                     }
                 }
             }
