@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Intent
+import android.net.Uri
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateDp
@@ -24,6 +27,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Wallpaper
@@ -51,6 +55,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -144,6 +149,26 @@ fun SearchBar(
                     },
                     leadingIcon = {
                         Icon(imageVector = Icons.Rounded.Settings, contentDescription = null)
+                    }
+                )
+                val colorScheme = MaterialTheme.colorScheme
+                DropdownMenuItem(
+                    onClick = {
+                        CustomTabsIntent.Builder()
+                            .setDefaultColorSchemeParams(
+                                CustomTabColorSchemeParams.Builder()
+                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                .build()
+                            )
+                            .build().launchUrl(context, Uri.parse("https://kvaesitso.mm20.de/docs/user-guide"))
+                        onDismissRequest()
+                    },
+                    text = {
+                        Text(stringResource(R.string.help))
+                    },
+                    leadingIcon = {
+                        Icon(imageVector = Icons.Rounded.HelpOutline, contentDescription = null)
                     }
                 )
             }

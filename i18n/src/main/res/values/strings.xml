@@ -38,6 +38,8 @@
     <string name="app_info_version">Version %1$s</string>
     <!-- Menu entry for launcher settings -->
     <string name="settings">Settings</string>
+    <!-- Menu entry for launcher help -->
+    <string name="help">Help</string>
     <!-- Set the device's wallpaper -->
     <string name="wallpaper">Wallpaper</string>
     <!-- Wind direction, used in weather widget -->
