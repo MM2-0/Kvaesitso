@@ -520,4 +520,6 @@
     <string name="preference_system_bar_icons_light">Clair</string>
     <string name="preference_system_bar_icons_dark">Sombre</string>
     <string name="preference_icon_shape_pebble">Pebble</string>
+    <string name="preference_clock_widget_color">Couleur</string>
+    <string name="preference_search_bar_color">Couleur</string>
 </resources>

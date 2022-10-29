@@ -50,4 +50,122 @@
         <item quantity="other">километра</item>
     </plurals>
     <string name="unit_centimeter_symbol">см</string>
+    <plurals name="unit_mile">
+        <item quantity="one">миль</item>
+        <item quantity="few">миля</item>
+        <item quantity="many">милей</item>
+        <item quantity="other">милей</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">мор. м.</string>
+    <string name="unit_sqmillimeter_symbol">мм²</string>
+    <string name="unit_sqinch_symbol">кв. дюйм</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">квадратный дюйм</item>
+        <item quantity="few">квадратных дюйма</item>
+        <item quantity="many">квадратных дюймов</item>
+        <item quantity="other">квадратных дюймов</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">кв. фут.</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">квадратный фут</item>
+        <item quantity="few">квадратных фута</item>
+        <item quantity="many">квадратных футов</item>
+        <item quantity="other">квадратных футов</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">см²</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">квадратный километр</item>
+        <item quantity="few">квадратных километра</item>
+        <item quantity="many">квадратных километров</item>
+        <item quantity="other">квадратных километров</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">км²</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">морская миля</item>
+        <item quantity="few">морских миля</item>
+        <item quantity="many">морских миль</item>
+        <item quantity="other">морских миль</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">м²</string>
+    <string name="unit_sqyard_symbol">кв. ярд</string>
+    <plurals name="unit_sqyard">
+        <item quantity="one">квадратный ярд</item>
+        <item quantity="few">квадратных ярда</item>
+        <item quantity="many">квадратных ярдов</item>
+        <item quantity="other">квадратных ярдов</item>
+    </plurals>
+    <string name="unit_hectare_symbol">га</string>
+    <plurals name="unit_hectare">
+        <item quantity="one">гектар</item>
+        <item quantity="few">гектара</item>
+        <item quantity="many">гектаров</item>
+        <item quantity="other">гектаров</item>
+    </plurals>
+    <string name="unit_acre_symbol">акр</string>
+    <string name="unit_second_symbol">с</string>
+    <plurals name="unit_second">
+        <item quantity="one">секунда</item>
+        <item quantity="few">секунды</item>
+        <item quantity="many">секунд</item>
+        <item quantity="other">секунд</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">мс</string>
+    <string name="unit_minute_symbol">мин</string>
+    <plurals name="unit_minute">
+        <item quantity="one">минута</item>
+        <item quantity="few">минуты</item>
+        <item quantity="many">минут</item>
+        <item quantity="other">минут</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">час</item>
+        <item quantity="few">часа</item>
+        <item quantity="many">часов</item>
+        <item quantity="other">часов</item>
+    </plurals>
+    <string name="unit_day_symbol">д</string>
+    <plurals name="unit_day">
+        <item quantity="one">день</item>
+        <item quantity="few">дня</item>
+        <item quantity="many">дней</item>
+        <item quantity="other">дней</item>
+    </plurals>
+    <string name="unit_year_symbol">г</string>
+    <plurals name="unit_year">
+        <item quantity="one">год</item>
+        <item quantity="few">года</item>
+        <item quantity="many">лет</item>
+        <item quantity="other">лет</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">квадратный миллиметр</item>
+        <item quantity="few">квадратных миллиметра</item>
+        <item quantity="many">квадратных миллиметров</item>
+        <item quantity="other">квадратных миллиметров</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">квадратный сантиметр</item>
+        <item quantity="few">квадратных сантиметра</item>
+        <item quantity="many">квадратных сантиметров</item>
+        <item quantity="other">квадратных сантиметров</item>
+    </plurals>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">квадратный метр</item>
+        <item quantity="few">квадратных метра</item>
+        <item quantity="many">квадратных метров</item>
+        <item quantity="other">квадратных метров</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">акр</item>
+        <item quantity="few">акра</item>
+        <item quantity="many">акров</item>
+        <item quantity="other">акров</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">миллисекунда</item>
+        <item quantity="few">миллисекунды</item>
+        <item quantity="many">миллисекунд</item>
+        <item quantity="other">миллисекунд</item>
+    </plurals>
+    <string name="unit_hour_symbol">ч</string>
 </resources>
