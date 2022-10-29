@@ -106,7 +106,7 @@ class AppItemVM(
 
     fun openNotification(notification: StatusBarNotification) {
         try {
-            notification.notification.contentIntent.send()
+            notification.notification.contentIntent?.send()
         } catch (e: PendingIntent.CanceledException) {}
     }
 
