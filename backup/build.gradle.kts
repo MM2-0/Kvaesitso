@@ -42,7 +42,7 @@ dependencies {
 
     implementation(project(":favorites"))
     implementation(project(":widgets"))
-    implementation(project(":search"))
+    implementation(project(":search-actions"))
     implementation(project(":preferences"))
     implementation(project(":ktx"))
     implementation(project(":customattrs"))

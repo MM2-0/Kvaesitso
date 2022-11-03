@@ -10,16 +10,16 @@ interface SearchAction : Searchable {
     fun start(context: Context)
 }
 
-enum class SearchActionIcon {
-    Search,
-    Website,
-    Alarm,
-    Timer,
-    Contact,
-    Phone,
-    Email,
-    Message,
-    Calendar,
-    Translate,
-    Custom,
+enum class SearchActionIcon(value: Int) {
+    Search(0),
+    Custom(1),
+    Website(2),
+    Alarm(3),
+    Timer(4),
+    Contact(5),
+    Phone(6),
+    Email(7),
+    Message(8),
+    Calendar(9),
+    Translate(10),
 }

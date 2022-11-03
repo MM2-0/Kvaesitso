@@ -2,7 +2,6 @@ package de.mm20.launcher2.database
 
 import androidx.room.*
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
-import de.mm20.launcher2.database.entities.WebsearchEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -113,18 +112,6 @@ interface SearchDao {
 
     @Query("SELECT * FROM SEARCHABLE WHERE hidden = 1")
     fun getHiddenItems(): Flow<List<SavedSearchableEntity>>
-
-    @Query("SELECT * FROM Websearch ORDER BY label ASC")
-    fun getWebSearches(): Flow<List<WebsearchEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertWebsearch(websearch: WebsearchEntity)
-
-    @Delete
-    fun deleteWebsearch(websearch: WebsearchEntity)
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllWebsearches(websearches: List<WebsearchEntity>)
 
     @Query("UPDATE Searchable SET launchCount = launchCount + 1 WHERE `key` = :key")
     fun incrementExistingLaunchCount(key: String)

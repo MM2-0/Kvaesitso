@@ -39,10 +39,14 @@ dependencies {
     implementation(libs.androidx.core)
 
     implementation(libs.koin.android)
+    implementation(libs.jsoup)
+    implementation(libs.okhttp)
+    implementation(libs.coil.core)
 
     implementation(project(":base"))
     implementation(project(":database"))
     implementation(project(":ktx"))
     implementation(project(":preferences"))
+    implementation(project(":crashreporter"))
 
 }

@@ -10,7 +10,6 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
-import de.mm20.launcher2.search.WebsearchRepository
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.CalendarEvent
@@ -40,7 +39,6 @@ class SearchVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
     private val searchService: SearchService by inject()
-    private val websearchRepository: WebsearchRepository by inject()
 
     val isSearching = MutableLiveData(false)
     val searchQuery = MutableLiveData<String>("")

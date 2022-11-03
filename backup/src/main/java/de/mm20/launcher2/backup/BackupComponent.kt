@@ -5,7 +5,7 @@ enum class BackupComponent(val value: String) {
     Favorites("favorites"),
     Widgets("widgets"),
     Customizations("customizations"),
-    Websearches("websearches");
+    SearchActions("searchactions");
 
     companion object {
         fun fromValue(value: String): BackupComponent? {

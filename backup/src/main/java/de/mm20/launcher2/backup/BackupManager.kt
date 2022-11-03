@@ -8,7 +8,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.export
 import de.mm20.launcher2.preferences.import
-import de.mm20.launcher2.search.WebsearchRepository
+import de.mm20.launcher2.searchactions.SearchActionRepository
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.*
 import java.io.File
@@ -23,7 +23,7 @@ class BackupManager(
     private val dataStore: LauncherDataStore,
     private val favoritesRepository: FavoritesRepository,
     private val widgetRepository: WidgetRepository,
-    private val websearchRepository: WebsearchRepository,
+    private val searchActionRepository: SearchActionRepository,
     private val customAttrsRepository: CustomAttributesRepository,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
@@ -70,8 +70,8 @@ class BackupManager(
                 widgetRepository.export(backupDir)
             }
 
-            if (include.contains(BackupComponent.Websearches)) {
-                websearchRepository.export(backupDir)
+            if (include.contains(BackupComponent.SearchActions)) {
+                searchActionRepository.export(backupDir)
             }
 
             if (include.contains(BackupComponent.Customizations)) {
@@ -111,8 +111,8 @@ class BackupManager(
                     widgetRepository.import(restoreDir)
                 }
 
-                if (include.contains(BackupComponent.Websearches)) {
-                    websearchRepository.import(restoreDir)
+                if (include.contains(BackupComponent.SearchActions)) {
+                    searchActionRepository.import(restoreDir)
                 }
 
                 if (include.contains(BackupComponent.Customizations)) {
@@ -183,7 +183,7 @@ class BackupManager(
 
     companion object {
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 3
+        private const val BackupFormatMinor = 4
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }

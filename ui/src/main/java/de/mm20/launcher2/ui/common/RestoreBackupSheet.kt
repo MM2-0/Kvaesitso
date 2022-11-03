@@ -170,7 +170,7 @@ fun RestoreBackupSheet(
                                             imageVector = when (component) {
                                                 BackupComponent.Favorites -> Icons.Rounded.Star
                                                 BackupComponent.Settings -> Icons.Rounded.Settings
-                                                BackupComponent.Websearches -> Icons.Rounded.TravelExplore
+                                                BackupComponent.SearchActions -> Icons.Rounded.ArrowOutward
                                                 BackupComponent.Widgets -> Icons.Rounded.Widgets
                                                 BackupComponent.Customizations -> Icons.Rounded.Edit
                                             },
@@ -181,7 +181,7 @@ fun RestoreBackupSheet(
                                                 when (component) {
                                                     BackupComponent.Favorites -> R.string.backup_component_favorites
                                                     BackupComponent.Settings -> R.string.backup_component_settings
-                                                    BackupComponent.Websearches -> R.string.backup_component_websearches
+                                                    BackupComponent.SearchActions -> R.string.backup_component_searchactions
                                                     BackupComponent.Widgets -> R.string.backup_component_widgets
                                                     BackupComponent.Customizations -> R.string.backup_component_customizations
                                                 }

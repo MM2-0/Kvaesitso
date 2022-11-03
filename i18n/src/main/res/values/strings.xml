@@ -651,6 +651,7 @@
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>
+    <string name="backup_component_searchactions">Web &amp; app search shortcuts</string>
     <string name="backup_component_widgets">Built-in widgets</string>
     <string name="backup_component_customizations">Customizations</string>
     <string name="backup_complete">The backup has been completed.</string>

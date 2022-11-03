@@ -135,11 +135,11 @@ fun CreateBackupSheet(
                             }
                         )
                         BackupableComponent(
-                            title = stringResource(R.string.backup_component_websearches),
+                            title = stringResource(R.string.backup_component_searchactions),
                             icon = Icons.Rounded.TravelExplore,
-                            checked = components.contains(BackupComponent.Websearches),
+                            checked = components.contains(BackupComponent.SearchActions),
                             onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Websearches)
+                                viewModel.toggleComponent(BackupComponent.SearchActions)
                             }
                         )
                         SmallMessage(

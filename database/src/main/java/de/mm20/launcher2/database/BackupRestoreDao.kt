@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.database.entities.WebsearchEntity
 import de.mm20.launcher2.database.entities.WidgetEntity
 
@@ -30,14 +31,14 @@ interface BackupRestoreDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun importWidgets(items: List<WidgetEntity>)
 
-    @Query("DELETE FROM Websearch")
-    suspend fun wipeWebsearches()
+    @Query("DELETE FROM SearchAction")
+    suspend fun wipeSearchActions()
 
-    @Query("SELECT * FROM Websearch LIMIT :limit OFFSET :offset")
-    suspend fun exportWebsearches(limit: Int, offset: Int): List<WebsearchEntity>
+    @Query("SELECT * FROM SearchAction LIMIT :limit OFFSET :offset")
+    suspend fun exportSearchActions(limit: Int, offset: Int): List<SearchActionEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun importWebsearches(items: List<WebsearchEntity>)
+    suspend fun importSearchActions(items: List<SearchActionEntity>)
 
     @Query("DELETE FROM CustomAttributes")
     suspend fun wipeCustomAttributes()
