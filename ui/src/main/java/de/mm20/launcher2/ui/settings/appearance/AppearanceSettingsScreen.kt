@@ -38,11 +38,11 @@ import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchBar
+import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
 import de.mm20.launcher2.ui.component.preferences.*
-import de.mm20.launcher2.ui.launcher.search.SearchBar
-import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.getTypography
 import kotlinx.coroutines.delay
@@ -389,7 +389,6 @@ fun SearchBarStylePreference(
                             modifier = Modifier.padding(8.dp),
                             level = level,
                             style = styles[it],
-                            websearches = emptyList(),
                             value = previewSearchValue,
                             onValueChange = {})
                     }

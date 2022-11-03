@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -8,7 +7,24 @@ import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -17,9 +33,19 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.rememberSwipeableState
 import androidx.compose.material.swipeable
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -37,15 +63,18 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
-import de.mm20.launcher2.ui.launcher.search.SearchBar
-import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -64,6 +93,8 @@ fun PagerScaffold(
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
 
+    val actions by searchVM.searchActionResults.observeAsState(emptyList())
+
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
     val swipeableState = rememberSwipeableState(if (isSearchOpen) Page.Search else Page.Widgets)
@@ -76,7 +107,8 @@ fun PagerScaffold(
 
     val isSearchAtEnd by remember {
         derivedStateOf {
-            val lastItem = searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+            val lastItem =
+                searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
             lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
         }
     }
@@ -179,9 +211,11 @@ fun PagerScaffold(
                 viewModel.closeSearch()
                 searchVM.search("")
             }
+
             isWidgetEditMode -> {
                 viewModel.setWidgetEditMode(false)
             }
+
             widgetsScrollState.value != 0 -> {
                 scope.launch {
                     widgetsScrollState.animateScrollTo(0)
@@ -226,14 +260,16 @@ fun PagerScaffold(
         }
     }
 
-    val searchNestedScrollConnection = remember { object: NestedScrollConnection {
-        override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-            if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
-                keyboardController?.hide()
+    val searchNestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                    keyboardController?.hide()
+                }
+                return super.onPreScroll(available, source)
             }
-            return super.onPreScroll(available, source)
         }
-    }}
+    }
 
     val insets = WindowInsets.safeDrawing.asPaddingValues()
 
@@ -296,7 +332,7 @@ fun PagerScaffold(
 
                         val clockHeight by remember {
                             derivedStateOf {
-                                if (fillClockHeight){
+                                if (fillClockHeight) {
                                     height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
                                 } else {
                                     null
@@ -338,10 +374,8 @@ fun PagerScaffold(
                             )
                         }
 
-
-                        val websearches by searchVM.websearchResults.observeAsState(emptyList())
                         val webSearchPadding by animateDpAsState(
-                            if (websearches.isEmpty()) 0.dp else 48.dp
+                            if (actions.isEmpty()) 0.dp else 48.dp
                         )
                         val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                         SearchColumn(
@@ -398,17 +432,29 @@ fun PagerScaffold(
             if (isWidgetEditMode) 128.dp else 0.dp
         )
 
-        SearchBar(
+        val value by searchVM.searchQuery.observeAsState("")
+
+        val searchBarColor by viewModel.searchBarColor.observeAsState(SearchBarColors.Auto)
+        val searchBarStyle by viewModel.searchBarStyle.observeAsState(SearchBarStyle.Transparent)
+
+        LauncherSearchBar(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .imePadding()
                 .offset(y = widgetEditModeOffset),
-            level = { searchBarLevel }, focused = focusSearchBar, onFocusChange = {
+            level = { searchBarLevel },
+            focused = focusSearchBar,
+            onFocusChange = {
                 if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
             },
+            actions = actions,
+            value = { value },
+            onValueChange = { searchVM.search(it) },
+            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
+            style = searchBarStyle,
             reverse = true
         )
     }

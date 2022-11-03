@@ -16,6 +16,7 @@ val searchModule = module {
             get(),
             get(),
             get(),
+            get(),
         )
     }
     single<WebsearchRepository> { WebsearchRepositoryImpl(androidContext(), get()) }

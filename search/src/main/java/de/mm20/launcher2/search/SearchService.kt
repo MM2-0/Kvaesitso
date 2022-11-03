@@ -13,6 +13,7 @@ import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
 import de.mm20.launcher2.preferences.Settings.ContactsSearchSettings
 import de.mm20.launcher2.preferences.Settings.FilesSearchSettings
+import de.mm20.launcher2.preferences.Settings.SearchActionSettings
 import de.mm20.launcher2.preferences.Settings.UnitConverterSearchSettings
 import de.mm20.launcher2.preferences.Settings.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.Settings.WikipediaSearchSettings
@@ -30,6 +31,8 @@ import de.mm20.launcher2.search.data.OwncloudFile
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.search.data.Wikipedia
+import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
@@ -56,6 +59,7 @@ interface SearchService {
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
+        searchActions: SearchActionSettings,
     ): Flow<ImmutableList<Searchable>>
 }
 
@@ -69,6 +73,7 @@ internal class SearchServiceImpl(
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
     private val websiteRepository: WebsiteRepository,
+    private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
 ) : SearchService {
 
@@ -82,6 +87,7 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
+        searchActions: SearchActionSettings,
     ): Flow<ImmutableList<Searchable>> = channelFlow {
         supervisorScope {
             val results = MutableStateFlow(SearchResults())
@@ -214,6 +220,14 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
+                searchActionService.search(searchActions, query)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(searchActions = r)
+                        }
+                    }
+            }
+            launch {
                 results
                     .map { it.toList().sortedBy { it as? SavableSearchable }.toImmutableList() }
                     .collectLatest {
@@ -234,9 +248,10 @@ internal data class SearchResults(
     val unitConverters: List<UnitConverter> = emptyList(),
     val websites: List<Website> = emptyList(),
     val wikipedia: List<Wikipedia> = emptyList(),
+    val searchActions: List<SearchAction> = emptyList(),
     val other: List<SavableSearchable> = emptyList(),
 ) {
     fun toList(): List<Searchable> {
-        return (apps + shortcuts + contacts + calendars  + files + websites + wikipedia + other).distinctBy { it.key } + calculators + unitConverters
+        return searchActions + (apps + shortcuts + contacts + calendars  + files + websites + wikipedia + other).distinctBy { it.key } + calculators + unitConverters
     }
 }

@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.launcher.search
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -12,9 +11,25 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.WebsearchRepository
-import de.mm20.launcher2.search.data.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.Calculator
+import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.Contact
+import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.UnitConverter
+import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.search.data.Wikipedia
+import de.mm20.launcher2.searchactions.actions.SearchAction
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -41,7 +56,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val websiteResults = MutableLiveData<List<Website>>(emptyList())
     val calculatorResults = MutableLiveData<List<Calculator>>(emptyList())
     val unitConverterResults = MutableLiveData<List<UnitConverter>>(emptyList())
-    val websearchResults = MutableLiveData<List<Websearch>>(emptyList())
+    val searchActionResults = MutableLiveData<List<SearchAction>>(emptyList())
 
     val hiddenResults = MutableLiveData<List<SavableSearchable>>(emptyList())
 
@@ -71,9 +86,6 @@ class SearchVM : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             isSearching.postValue(true)
 
-            websearchResults.value = websearchRepository.search(query).first()
-
-
             dataStore.data.collectLatest {
                 searchService.search(
                     query,
@@ -85,6 +97,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     shortcuts = it.appShortcutSearch,
                     websites = it.websiteSearch,
                     wikipedia = it.wikipediaSearch,
+                    searchActions = it.searchActions,
                 ).collectLatest { results ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
@@ -98,11 +111,13 @@ class SearchVM : ViewModel(), KoinComponent {
                         val calc = mutableListOf<Calculator>()
                         val wikipedia = mutableListOf<Wikipedia>()
                         val website = mutableListOf<Website>()
+                        val actions = mutableListOf<SearchAction>()
                         for (r in results) {
                             when {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) -> {
                                     hidden.add(r)
                                 }
+
                                 r is LauncherApp && !r.isMainProfile -> workApps.add(r)
                                 r is LauncherApp -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
@@ -113,8 +128,10 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is Calculator -> calc.add(r)
                                 r is Website -> website.add(r)
                                 r is Wikipedia -> wikipedia.add(r)
+                                r is SearchAction -> actions.add(r)
                             }
                         }
+                        searchActionResults.value = actions
                         appResults.value = apps
                         workAppResults.value = workApps
                         appShortcutResults.value = shortcuts

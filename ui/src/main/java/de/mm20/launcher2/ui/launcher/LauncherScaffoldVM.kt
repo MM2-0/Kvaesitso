@@ -52,4 +52,6 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
 
     val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }.asLiveData()
+    val searchBarColor = dataStore.data.map { it.searchBar.color }.asLiveData()
+    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
 }

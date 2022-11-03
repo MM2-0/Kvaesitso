@@ -57,6 +57,7 @@ dependencies {
     implementation(project(":websites"))
     implementation(project(":wikipedia"))
     implementation(project(":customattrs"))
+    implementation(project(":search-actions"))
 
     implementation(project(":base"))
     implementation(project(":database"))

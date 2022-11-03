@@ -141,4 +141,5 @@ dependencies {
     implementation(project(":owncloud"))
     implementation(project(":accounts"))
     implementation(project(":backup"))
+    implementation(project(":search-actions"))
 }

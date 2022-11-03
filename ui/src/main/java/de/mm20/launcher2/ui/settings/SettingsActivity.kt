@@ -1,13 +1,15 @@
 package de.mm20.launcher2.ui.settings
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.runtime.*
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
@@ -16,7 +18,6 @@ import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -43,11 +44,13 @@ import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
+import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.websearch.WebSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
+import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
@@ -119,6 +122,9 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/search/websearch") {
                             WebSearchSettingsScreen()
                         }
+                        composable("settings/search/searchactions") {
+                            SearchActionsSettingsScreen()
+                        }
                         composable("settings/search/hiddenitems") {
                             HiddenItemsSettingsScreen()
                         }
@@ -164,7 +170,8 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/debug/crashreporter") {
                             CrashReporterScreen()
                         }
-                        composable("settings/debug/crashreporter/report?fileName={fileName}",
+                        composable(
+                            "settings/debug/crashreporter/report?fileName={fileName}",
                             arguments = listOf(navArgument("fileName") {
                                 nullable = false
                             })

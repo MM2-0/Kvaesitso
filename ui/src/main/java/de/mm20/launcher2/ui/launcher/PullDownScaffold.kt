@@ -34,15 +34,17 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
-import de.mm20.launcher2.ui.launcher.search.SearchBar
-import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
@@ -57,6 +59,8 @@ fun PullDownScaffold(
     val searchVM: SearchVM = viewModel()
 
     val density = LocalDensity.current
+
+    val actions by searchVM.searchActionResults.observeAsState(emptyList())
 
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
@@ -277,9 +281,8 @@ fun PullDownScaffold(
                             )
                         }
                 ) {
-                    val websearches by searchVM.websearchResults.observeAsState(emptyList())
                     val webSearchPadding by animateDpAsState(
-                        if (websearches.isEmpty()) 0.dp else 48.dp
+                        if (actions.isEmpty()) 0.dp else 48.dp
                     )
                     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                     SearchColumn(
@@ -392,8 +395,12 @@ fun PullDownScaffold(
             if (isWidgetEditMode) -128.dp else 0.dp
         )
 
-        SearchBar(
-            level = { searchBarLevel },
+        val value by searchVM.searchQuery.observeAsState("")
+
+        val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
+        val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
+
+        LauncherSearchBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -410,11 +417,17 @@ fun PullDownScaffold(
                                 .roundToInt()
                         })
                 },
+            level = { searchBarLevel },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
-            }
+            },
+            actions = actions,
+            value = { value },
+            onValueChange = { searchVM.search(it) },
+            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
+            style = searchBarStyle,
         )
 
     }

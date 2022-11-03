@@ -287,3 +287,4 @@ dependencyResolutionManagement {
         }
     }
 }
+include(":search-actions")

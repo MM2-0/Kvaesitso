@@ -135,6 +135,7 @@ dependencies {
     implementation(project(":widgets"))
     implementation(project(":wikipedia"))
     implementation(project(":database"))
+    implementation(project(":search-actions"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)

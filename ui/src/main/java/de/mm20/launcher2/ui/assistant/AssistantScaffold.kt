@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
@@ -22,12 +21,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.LauncherScaffoldVM
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
-import de.mm20.launcher2.ui.launcher.search.SearchBar
-import de.mm20.launcher2.ui.launcher.search.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -162,9 +162,9 @@ fun AssistantScaffold(
     }
 
     val searchVM: SearchVM = viewModel()
-    val websearches by searchVM.websearchResults.observeAsState(emptyList())
+    val actions by searchVM.searchActionResults.observeAsState(emptyList())
     val webSearchPadding by animateDpAsState(
-        if (websearches.isEmpty()) 0.dp else 48.dp
+        if (actions.isEmpty()) 0.dp else 48.dp
     )
     val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
     Box(
@@ -182,8 +182,12 @@ fun AssistantScaffold(
             state = searchState
         )
 
-        SearchBar(
-            level = { searchBarLevel },
+        val value by searchVM.searchQuery.observeAsState("")
+
+        val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
+        val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
+
+        LauncherSearchBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
@@ -197,10 +201,17 @@ fun AssistantScaffold(
                         searchBarOffset.toInt() * if (bottomSearchBar == true) -1 else 1
                     )
                 },
+            level = { searchBarLevel },
             focused = searchBarFocused,
             onFocusChange = {
+                if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
             },
+            actions = actions,
+            value = { value },
+            onValueChange = { searchVM.search(it) },
+            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
+            style = searchBarStyle,
             reverse = bottomSearchBar == true
         )
     }

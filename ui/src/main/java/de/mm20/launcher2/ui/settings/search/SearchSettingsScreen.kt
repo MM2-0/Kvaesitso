@@ -169,17 +169,12 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val webSearch by viewModel.webSearch.observeAsState()
-                PreferenceWithSwitch(
-                    title = stringResource(R.string.preference_search_websearch),
-                    summary = stringResource(R.string.preference_search_websearch_summary),
-                    icon = Icons.Rounded.TravelExplore,
-                    switchValue = webSearch == true,
-                    onSwitchChanged = {
-                        viewModel.setWebSearch(it)
-                    },
+                Preference(
+                    title = stringResource(R.string.preference_screen_search_actions),
+                    summary = stringResource(R.string.preference_search_search_actions_summary),
+                    icon = Icons.Rounded.ArrowOutward,
                     onClick = {
-                        navController?.navigate("settings/search/websearch")
+                        navController?.navigate("settings/search/searchactions")
                     }
                 )
             }

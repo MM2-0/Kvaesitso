@@ -676,4 +676,15 @@
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
     <string name="customize_tags_placeholder">Tags…</string>
+
+    <string name="preference_screen_search_actions">Quick actions</string>
+    <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
+    <string name="search_action_call">Call</string>
+    <string name="search_action_message">Message</string>
+    <string name="search_action_email">Email</string>
+    <string name="search_action_alarm">Set alarm</string>
+    <string name="search_action_timer">Start timer</string>
+    <string name="search_action_contact">Add to contacts</string>
+    <string name="search_action_open_url">View website</string>
+    <string name="search_action_event">Schedule event</string>
 </resources>
