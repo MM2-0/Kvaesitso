@@ -46,6 +46,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun backupDao(): BackupRestoreDao
     abstract fun customAttrsDao(): CustomAttrsDao
 
+    abstract fun searchActionDao(): SearchActionDao
+
     companion object {
         private var _instance: AppDatabase? = null
         fun getInstance(context: Context): AppDatabase {

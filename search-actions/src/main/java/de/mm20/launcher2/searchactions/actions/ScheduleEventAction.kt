@@ -16,7 +16,7 @@ data class ScheduleEventAction(
 ) : SearchAction {
     override val icon: SearchActionIcon = SearchActionIcon.Calendar
     override val iconColor: Int = 0
-
+    override val customIcon: String? = null
     override fun start(context: Context) {
 
         val startTime = date.let {

@@ -13,7 +13,7 @@ data class TimerAction(
 
     override val icon: SearchActionIcon = SearchActionIcon.Timer
     override val iconColor: Int = 0
-
+    override val customIcon: String? = null
     override fun start(context: Context) {
         val intent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
             putExtra(AlarmClock.EXTRA_LENGTH, length.seconds.toInt())

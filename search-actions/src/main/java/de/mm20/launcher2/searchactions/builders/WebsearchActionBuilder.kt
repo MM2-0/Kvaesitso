@@ -12,6 +12,7 @@ class WebsearchActionBuilder(
     val label: String,
     val urlTemplate: String,
     val icon: SearchActionIcon = SearchActionIcon.Search,
+    val color: Int = 0,
     val customIcon: String? = null,
     val encoding: QueryEncoding = QueryEncoding.UrlEncode,
 ) : SearchActionBuilder {
@@ -21,6 +22,9 @@ class WebsearchActionBuilder(
         return OpenUrlAction(
             label = label,
             url = url,
+            icon = icon,
+            customIcon = customIcon,
+            iconColor = color,
         )
     }
 

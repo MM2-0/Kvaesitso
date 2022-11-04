@@ -8,6 +8,7 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
@@ -15,7 +16,7 @@ import java.io.File
 import java.util.UUID
 
 interface SearchActionRepository {
-    fun getSearchActionBuilders(filter: TextType?): Flow<List<SearchActionBuilder>>
+    fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -25,8 +26,9 @@ internal class SearchActionRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase
 ): SearchActionRepository {
-    override fun getSearchActionBuilders(filter: TextType?): Flow<List<SearchActionBuilder>> {
-        TODO("Not yet implemented")
+    override fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>> {
+        val dao = database.searchActionDao()
+        return dao.getSearchActions().map { it.mapNotNull { SearchActionBuilder.from(it) } }
     }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {

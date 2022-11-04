@@ -11,7 +11,7 @@ data class EmailAction(
 ) : SearchAction {
     override val icon: SearchActionIcon = SearchActionIcon.Email
     override val iconColor: Int = 0
-
+    override val customIcon: String? = null
     override fun start(context: Context) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             type = "*/*"

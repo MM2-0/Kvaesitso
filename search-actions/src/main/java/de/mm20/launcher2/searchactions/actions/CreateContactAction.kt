@@ -13,6 +13,7 @@ class CreateContactAction(
 ) : SearchAction {
     override val icon: SearchActionIcon = SearchActionIcon.Contact
     override val iconColor: Int = 0
+    override val customIcon: String? = null
 
     override fun start(context: Context) {
         val intent = Intent(Intent.ACTION_INSERT).apply {

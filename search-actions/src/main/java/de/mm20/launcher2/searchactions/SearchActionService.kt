@@ -1,8 +1,14 @@
 package de.mm20.launcher2.searchactions
 
 import android.content.Context
+import android.content.Intent
+import android.content.pm.LauncherActivityInfo
+import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.UserHandle
 import android.util.Log
 import android.util.Xml
 import androidx.core.graphics.drawable.toBitmap
@@ -30,7 +36,9 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -51,6 +59,7 @@ interface SearchActionService {
     suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder?
     suspend fun createIcon(uri: Uri, size: Int): String?
 
+    suspend fun getSearchActivities(): List<ResolveInfo>
 }
 
 internal class SearchActionServiceImpl(
@@ -80,8 +89,13 @@ internal class SearchActionServiceImpl(
 
         val classificationResult = textClassifier.classify(context, query)
 
+        val other = repository.getSearchActionBuilders()
 
-        emit(builders.mapNotNull { it.build(context, classificationResult) }.toImmutableList())
+        emitAll(
+            other.map {
+                (builders + it).mapNotNull { it.build(context, classificationResult) }.toImmutableList()
+            }
+        )
     }
 
     override suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder? =
@@ -204,5 +218,11 @@ internal class SearchActionServiceImpl(
         scaledIcon.compress(Bitmap.CompressFormat.PNG, 100, out)
         out.close()
         return@withContext file.absolutePath
+    }
+
+    override suspend fun getSearchActivities(): List<ResolveInfo> {
+        val packageManager = context.packageManager
+        val intent = Intent(Intent.ACTION_SEARCH)
+        return packageManager.queryIntentActivities(intent, 0)
     }
 }

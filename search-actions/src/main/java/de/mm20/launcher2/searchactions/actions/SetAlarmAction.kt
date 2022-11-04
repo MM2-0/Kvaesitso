@@ -12,7 +12,7 @@ data class SetAlarmAction(
 ) : SearchAction {
     override val icon: SearchActionIcon = SearchActionIcon.Alarm
     override val iconColor: Int = 0
-
+    override val customIcon: String? = null
     override fun start(context: Context) {
         val intent = Intent(AlarmClock.ACTION_SET_ALARM).apply {
             putExtra(AlarmClock.EXTRA_HOUR, time.hour)
