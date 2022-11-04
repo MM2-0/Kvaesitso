@@ -451,6 +451,7 @@ fun PagerScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,

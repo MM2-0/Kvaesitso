@@ -360,9 +360,6 @@ fun SearchColumn(
             reverse = reverse,
             key = "files"
         )
-        item {
-            HiddenResults()
-        }
     }
 
     if (showEditFavoritesDialog) {

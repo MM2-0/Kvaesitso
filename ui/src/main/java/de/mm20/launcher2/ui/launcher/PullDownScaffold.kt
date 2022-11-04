@@ -424,6 +424,7 @@ fun PullDownScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
