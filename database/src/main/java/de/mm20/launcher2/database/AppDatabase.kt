@@ -57,13 +57,23 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            db.execSQL("INSERT INTO `SearchAction` (`position`, `type`) VALUES" +
+                                    "(0, 'call')," +
+                                    "(1, 'message')," +
+                                    "(2, 'email')," +
+                                    "(3, 'contact')," +
+                                    "(4, 'alarm')," +
+                                    "(5, 'timer')," +
+                                    "(6, 'calendar')," +
+                                    "(7, 'website')"
+                            )
 
                             db.execSQL("INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
                                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
                                 arrayOf(
-                                    0, "url", context.getString(R.string.default_websearch_1_url), context.getString(R.string.default_websearch_1_name), 0, 0, null, null,
-                                    0, "url", context.getString(R.string.default_websearch_2_url), context.getString(R.string.default_websearch_2_name), 0, 0, null, null,
-                                    0, "url", context.getString(R.string.default_websearch_3_url), context.getString(R.string.default_websearch_3_name), 0, 0, null, null,
+                                    8, "url", context.getString(R.string.default_websearch_1_url), context.getString(R.string.default_websearch_1_name), 0, 0, null, null,
+                                    9, "url", context.getString(R.string.default_websearch_2_url), context.getString(R.string.default_websearch_2_name), 0, 0, null, null,
+                                    10, "url", context.getString(R.string.default_websearch_3_url), context.getString(R.string.default_websearch_3_name), 0, 0, null, null,
                                 )
                             )
 

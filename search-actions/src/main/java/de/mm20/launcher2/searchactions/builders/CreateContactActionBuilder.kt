@@ -5,8 +5,18 @@ import de.mm20.launcher2.searchactions.R
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.CreateContactAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 
-object CreateContactActionBuilder : SearchActionBuilder {
+class CreateContactActionBuilder(
+    override val label: String
+) : SearchActionBuilder {
+
+    constructor(context: Context) : this(context.getString(R.string.search_action_contact))
+
+    override val key: String
+        get() = "contact"
+
+    override val icon: SearchActionIcon = SearchActionIcon.Contact
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (classifiedQuery.phoneNumber != null || classifiedQuery.email != null) {

@@ -1,21 +1,27 @@
 package de.mm20.launcher2.searchactions.builders
 
+import android.content.ComponentName
 import android.content.Context
-import android.content.pm.LauncherActivityInfo
 import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.TextType
 import de.mm20.launcher2.searchactions.actions.AppSearchAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 
 class AppSearchActionBuilder(
-    val label: String,
-    val activity: LauncherActivityInfo,
-    val filter: TextType? = null,
-) : SearchActionBuilder {
+    override val label: String,
+    val componentName: ComponentName,
+    override val icon: SearchActionIcon = SearchActionIcon.Search,
+    override val iconColor: Int = 0,
+    override val customIcon: String? = null,
+) : CustomizableSearchActionBuilder {
+
+    override val key: String
+        get() = "app://${componentName.flattenToShortString()}"
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         return AppSearchAction(
             label = label,
-            componentName = activity.componentName,
+            componentName = componentName,
             query = classifiedQuery.text,
         )
     }

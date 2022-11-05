@@ -1,115 +1,166 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Alarm
-import androidx.compose.material.icons.rounded.CalendarToday
-import androidx.compose.material.icons.rounded.Call
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.Event
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Sms
-import androidx.compose.material.icons.rounded.Timer
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
-import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.SearchActionIcon
+import de.mm20.launcher2.ui.component.getSearchActionIconVector
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.launcher.helper.DraggableItem
+import de.mm20.launcher2.ui.launcher.helper.LazyDragAndDropColumn
+import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropListState
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
 fun SearchActionsSettingsScreen() {
     val viewModel: SearchActionsSettingsScreenVM = viewModel()
-    val settings by viewModel.searchActionSettings.observeAsState(
-        Settings.SearchActionSettings.getDefaultInstance()
+    val navController = LocalNavController.current
+    val systemUiController = rememberSystemUiController()
+    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
+    systemUiController.setNavigationBarColor(Color.Black)
+
+    val context = LocalContext.current
+
+    val colorScheme = MaterialTheme.colorScheme
+
+    val activity = LocalContext.current as? AppCompatActivity
+
+    val listState = rememberLazyDragAndDropListState(
+        onDragStart = {
+            it.key != "divider" && !(it.key as String).startsWith("disabled-")
+        },
+        onItemMove = { from, to -> viewModel.moveItem(from.index, to.index) }
     )
 
-    PreferenceScreen(stringResource(id = R.string.preference_screen_search_actions)) {
-        item {
-            PreferenceCategory {
-                SwitchPreference(
-                    icon = Icons.Rounded.Call,
-                    title = stringResource(R.string.search_action_call),
-                    value = settings.call,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setCall(it)
+    val searchActions by viewModel.searchActions.observeAsState(emptyList())
+    val disabledActions by viewModel.disabledActions.observeAsState(emptyList())
+
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(onClick = { /*TODO*/ }) {
+                Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+            }
+        },
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    Text(
+                        stringResource(id = R.string.preference_screen_search_actions),
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        maxLines = 1
+                    )
+                },
+                navigationIcon = {
+                    IconButton(onClick = {
+                        if (navController?.navigateUp() != true) {
+                            activity?.onBackPressed()
                         }
-                    },
+                    }) {
+                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                    }
+                },
+            )
+        }) {
+
+        LazyDragAndDropColumn(
+            state = listState,
+            bidirectionalDrag = false,
+            contentPadding = it,
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(
+                items = searchActions,
+                key = { it.key }
+            ) { item ->
+                DraggableItem(
+                    state = listState,
+                    key = item.key
+                ) {
+                    val elevation by animateDpAsState(if (it) 4.dp else 0.dp)
+                    Surface(
+                        shadowElevation = elevation,
+                        tonalElevation = elevation,
+                        modifier = Modifier.zIndex(if (it) 1f else 0f)
+                    ) {
+                        if (item is CustomizableSearchActionBuilder) {
+                            Preference(
+                                icon = {
+                                    SearchActionIcon(
+                                        icon = item.icon,
+                                        color = item.iconColor,
+                                        customIcon = item.customIcon
+                                    )
+                                },
+                                title = item.label
+                            )
+                        } else {
+                            SwitchPreference(
+                                icon = getSearchActionIconVector(item.icon),
+                                title = item.label,
+                                value = true,
+                                onValueChanged = {
+                                    viewModel.removeAction(item)
+                                }
+                            )
+                        }
+                    }
+                }
+            }
+            item(key = "divider") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(0.5.dp)
+                        .background(
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+                        )
                 )
+            }
+            items(
+                items = disabledActions,
+                key = { "disabled-${it.key}" }
+            ) { item ->
                 SwitchPreference(
-                    icon = Icons.Rounded.Sms,
-                    title = stringResource(R.string.search_action_message),
-                    value = settings.message,
+                    icon = getSearchActionIconVector(item.icon),
+                    title = item.label,
+                    value = false,
                     onValueChanged = {
-                        viewModel.updateSettings {
-                            setMessage(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Email,
-                    title = stringResource(R.string.search_action_email),
-                    value = settings.email,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setEmail(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Person,
-                    title = stringResource(R.string.search_action_contact),
-                    value = settings.contact,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setContact(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Alarm,
-                    title = stringResource(R.string.search_action_alarm),
-                    value = settings.setAlarm,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setSetAlarm(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Timer,
-                    title = stringResource(R.string.search_action_timer),
-                    value = settings.startTimer,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setStartTimer(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Event,
-                    title = stringResource(R.string.search_action_event),
-                    value = settings.scheduleEvent,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setScheduleEvent(it)
-                        }
-                    },
-                )
-                SwitchPreference(
-                    icon = Icons.Rounded.Language,
-                    title = stringResource(R.string.search_action_open_url),
-                    value = settings.openUrl,
-                    onValueChanged = {
-                        viewModel.updateSettings {
-                            setOpenUrl(it)
-                        }
-                    },
+                        viewModel.addAction(item)
+                    }
                 )
             }
         }

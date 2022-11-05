@@ -6,9 +6,19 @@ import de.mm20.launcher2.searchactions.TextClassificationResult
 import de.mm20.launcher2.searchactions.actions.MessageAction
 import de.mm20.launcher2.searchactions.actions.ScheduleEventAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import java.time.LocalDateTime
 
-object ScheduleEventActionBuilder : SearchActionBuilder {
+class ScheduleEventActionBuilder(
+    override val label: String
+) : SearchActionBuilder {
+
+    constructor(context: Context) : this(context.getString(R.string.search_action_event))
+
+    override val key: String
+        get() = "calendar"
+
+    override val icon: SearchActionIcon = SearchActionIcon.Calendar
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
         if (classifiedQuery.date != null) {

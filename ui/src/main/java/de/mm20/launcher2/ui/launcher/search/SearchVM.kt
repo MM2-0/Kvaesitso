@@ -95,7 +95,6 @@ class SearchVM : ViewModel(), KoinComponent {
                     shortcuts = it.appShortcutSearch,
                     websites = it.websiteSearch,
                     wikipedia = it.wikipediaSearch,
-                    searchActions = it.searchActions,
                 ).collectLatest { results ->
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()

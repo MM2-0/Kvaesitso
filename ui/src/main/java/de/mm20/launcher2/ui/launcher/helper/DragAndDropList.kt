@@ -88,7 +88,7 @@ data class LazyDragAndDropListState(
     fun startDrag(offset: Offset): Boolean {
         val draggedItem = listState.layoutInfo.visibleItemsInfo.find {
             Rect(
-                it.offset.toOffset(),
+                (it.offset + listState.layoutInfo.beforeContentPadding).toOffset(),
                 it.size.toSize()
             ).contains(offset)
         } ?: return false
@@ -240,13 +240,16 @@ fun LazyDragAndDropRow(
     verticalAlignment: Alignment.Vertical = Alignment.Top,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
     userScrollEnabled: Boolean = true,
+    bidirectionalDrag: Boolean = true,
     content: LazyListScope.() -> Unit
 ) {
     LazyRow(
         modifier = modifier.dragAndDrop(
             state,
-            LocalLayoutDirection.current == LayoutDirection.Rtl,
-            LocalHapticFeedback.current
+            isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl,
+            hapticFeedback = LocalHapticFeedback.current,
+            dragVertical = bidirectionalDrag,
+            dragHorizontal = true,
         ),
         state = state.listState,
         contentPadding = contentPadding,
@@ -269,13 +272,16 @@ fun LazyDragAndDropColumn(
     horizontalAlignment: Alignment.Horizontal = Alignment.Start,
     flingBehavior: FlingBehavior = ScrollableDefaults.flingBehavior(),
     userScrollEnabled: Boolean = true,
+    bidirectionalDrag: Boolean = true,
     content: LazyListScope.() -> Unit
 ) {
     LazyColumn(
         modifier = modifier.dragAndDrop(
             state,
-            LocalLayoutDirection.current == LayoutDirection.Rtl,
-            LocalHapticFeedback.current
+            isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl,
+            hapticFeedback = LocalHapticFeedback.current,
+            dragVertical = true,
+            dragHorizontal = bidirectionalDrag,
         ),
         state = state.listState,
         contentPadding = contentPadding,
@@ -291,6 +297,8 @@ fun LazyDragAndDropColumn(
 fun Modifier.dragAndDrop(
     state: LazyDragAndDropListState,
     isRtl: Boolean,
+    dragVertical: Boolean = true,
+    dragHorizontal: Boolean = true,
     hapticFeedback: HapticFeedback
 ) =
     this then pointerInput(null) {
@@ -302,9 +310,18 @@ fun Modifier.dragAndDrop(
                 }
             },
             onDrag = { _, dragAmount ->
-                scope.launch { state.drag(dragAmount.let {
-                    if (isRtl) it.copy(x = -it.x) else it
-                }) }
+                scope.launch {
+                    state.drag(
+                        when {
+                            !dragVertical && !dragHorizontal -> Offset.Zero
+                            dragVertical && !dragHorizontal -> Offset(0f, dragAmount.y)
+                            !dragVertical && dragHorizontal && isRtl -> Offset(-dragAmount.x, 0f)
+                            !dragVertical && dragHorizontal && !isRtl -> Offset(dragAmount.x, 0f)
+                            dragVertical && dragHorizontal && isRtl -> Offset(-dragAmount.x, dragAmount.y)
+                            else -> dragAmount
+                        }
+                    )
+                }
             },
             onDragCancel = {
                 scope.launch { state.cancelDrag() }

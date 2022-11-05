@@ -7,10 +7,10 @@ import androidx.room.PrimaryKey
 data class SearchActionEntity(
     @PrimaryKey val position: Int,
     val type: String,
-    val data: String,
-    val label: String?,
-    val icon: Int,
-    val color: Int = 0,
+    val data: String? = null,
+    val label: String? = null,
+    val icon: Int? = null,
+    val color: Int? = null,
     val customIcon: String? = null,
     val options: String? = null,
 )

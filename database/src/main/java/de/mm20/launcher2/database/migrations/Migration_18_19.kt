@@ -9,9 +9,19 @@ class Migration_18_19 : Migration(18, 19) {
     override fun migrate(database: SupportSQLiteDatabase) {
         val websearches =
             database.query("SELECT label, urlTemplate, color, icon, encoding FROM `Websearch` ORDER BY label ASC")
-        database.execSQL("CREATE TABLE IF NOT EXISTS `SearchAction` (`position` INTEGER NOT NULL, `type` TEXT NOT NULL, `data` TEXT NOT NULL, `label` TEXT, `icon` INTEGER NOT NULL, `color` INTEGER NOT NULL, `customIcon` TEXT, `options` TEXT, PRIMARY KEY(`position`))"
+        database.execSQL("CREATE TABLE IF NOT EXISTS `SearchAction` (`position` INTEGER NOT NULL, `type` TEXT NOT NULL, `data` TEXT, `label` TEXT, `icon` INTEGER, `color` INTEGER, `customIcon` TEXT, `options` TEXT, PRIMARY KEY(`position`))"
         )
-        var position = 0
+        database.execSQL("INSERT INTO `SearchAction` (`position`, `type`) VALUES" +
+                "(0, 'call')," +
+                "(1, 'message')," +
+                "(2, 'email')," +
+                "(3, 'contact')," +
+                "(4, 'alarm')," +
+                "(5, 'timer')," +
+                "(6, 'calendar')," +
+                "(7, 'website')"
+        )
+        var position = 8
         while (websearches.moveToNext()) {
             val label = websearches.getString(0)
             val data = websearches.getString(1)

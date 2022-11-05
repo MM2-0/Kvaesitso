@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 19,
-    "identityHash": "c6adf1dca8ade5117d4e8952a67786fa",
+    "identityHash": "968a73b13f39e00505a4adf1bda01394",
     "entities": [
       {
         "tableName": "forecasts",
@@ -398,7 +398,7 @@
       },
       {
         "tableName": "SearchAction",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`position` INTEGER NOT NULL, `type` TEXT NOT NULL, `data` TEXT NOT NULL, `label` TEXT, `icon` INTEGER NOT NULL, `color` INTEGER NOT NULL, `customIcon` TEXT, `options` TEXT, PRIMARY KEY(`position`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`position` INTEGER NOT NULL, `type` TEXT NOT NULL, `data` TEXT, `label` TEXT, `icon` INTEGER, `color` INTEGER, `customIcon` TEXT, `options` TEXT, PRIMARY KEY(`position`))",
         "fields": [
           {
             "fieldPath": "position",
@@ -416,7 +416,7 @@
             "fieldPath": "data",
             "columnName": "data",
             "affinity": "TEXT",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "label",
@@ -428,13 +428,13 @@
             "fieldPath": "icon",
             "columnName": "icon",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "color",
             "columnName": "color",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "customIcon",
@@ -462,7 +462,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c6adf1dca8ade5117d4e8952a67786fa')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '968a73b13f39e00505a4adf1bda01394')"
     ]
   }
 }

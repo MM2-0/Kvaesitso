@@ -13,7 +13,6 @@ import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
 import de.mm20.launcher2.preferences.Settings.ContactsSearchSettings
 import de.mm20.launcher2.preferences.Settings.FilesSearchSettings
-import de.mm20.launcher2.preferences.Settings.SearchActionSettings
 import de.mm20.launcher2.preferences.Settings.UnitConverterSearchSettings
 import de.mm20.launcher2.preferences.Settings.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.Settings.WikipediaSearchSettings
@@ -59,7 +58,6 @@ interface SearchService {
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-        searchActions: SearchActionSettings,
     ): Flow<ImmutableList<Searchable>>
 }
 
@@ -87,7 +85,6 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-        searchActions: SearchActionSettings,
     ): Flow<ImmutableList<Searchable>> = channelFlow {
         supervisorScope {
             val results = MutableStateFlow(SearchResults())
@@ -220,7 +217,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                searchActionService.search(searchActions, query)
+                searchActionService.search(query)
                     .collectLatest { r ->
                         results.update {
                             it.copy(searchActions = r)

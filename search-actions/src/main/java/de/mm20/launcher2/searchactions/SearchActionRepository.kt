@@ -5,10 +5,21 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.searchactions.builders.CallActionBuilder
+import de.mm20.launcher2.searchactions.builders.CreateContactActionBuilder
+import de.mm20.launcher2.searchactions.builders.EmailActionBuilder
+import de.mm20.launcher2.searchactions.builders.MessageActionBuilder
+import de.mm20.launcher2.searchactions.builders.OpenUrlActionBuilder
+import de.mm20.launcher2.searchactions.builders.ScheduleEventActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.SetAlarmActionBuilder
+import de.mm20.launcher2.searchactions.builders.TimerActionBuilder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
@@ -17,6 +28,9 @@ import java.util.UUID
 
 interface SearchActionRepository {
     fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>>
+    fun getBuiltinSearchActionBuilders(): List<SearchActionBuilder>
+
+    fun saveSearchActionBuilders(builders: List<SearchActionBuilder>)
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -26,9 +40,35 @@ internal class SearchActionRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase
 ): SearchActionRepository {
+
+    private val scope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     override fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>> {
         val dao = database.searchActionDao()
-        return dao.getSearchActions().map { it.mapNotNull { SearchActionBuilder.from(it) } }
+        return dao.getSearchActions().map { it.mapNotNull { SearchActionBuilder.from(context, it) } }
+    }
+
+    override fun getBuiltinSearchActionBuilders(): List<SearchActionBuilder> {
+        val allActions = listOf(
+            CallActionBuilder(context),
+            MessageActionBuilder(context),
+            CreateContactActionBuilder(context),
+            EmailActionBuilder(context),
+            ScheduleEventActionBuilder(context),
+            SetAlarmActionBuilder(context),
+            TimerActionBuilder(context),
+            OpenUrlActionBuilder(context),
+        )
+
+        return allActions
+    }
+
+    override fun saveSearchActionBuilders(builders: List<SearchActionBuilder>) {
+        scope.launch {
+            val dao = database.searchActionDao()
+            dao.replaceAll(
+                builders.mapIndexed { i, it -> SearchActionBuilder.toDatabaseEntity(it, i) }
+            )
+        }
     }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {

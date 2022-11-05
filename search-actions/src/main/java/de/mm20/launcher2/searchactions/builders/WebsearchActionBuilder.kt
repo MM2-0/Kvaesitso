@@ -9,13 +9,16 @@ import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import java.net.URLEncoder
 
 class WebsearchActionBuilder(
-    val label: String,
+    override val label: String,
     val urlTemplate: String,
-    val icon: SearchActionIcon = SearchActionIcon.Search,
-    val color: Int = 0,
-    val customIcon: String? = null,
+    override val icon: SearchActionIcon = SearchActionIcon.Search,
+    override val iconColor: Int = 0,
+    override val customIcon: String? = null,
     val encoding: QueryEncoding = QueryEncoding.UrlEncode,
-) : SearchActionBuilder {
+) : CustomizableSearchActionBuilder {
+
+    override val key: String
+        get() = "web://$urlTemplate"
 
     override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction {
         val url = urlTemplate.replace("\${1}", encodeQuery(classifiedQuery.text, encoding))
@@ -24,7 +27,7 @@ class WebsearchActionBuilder(
             url = url,
             icon = icon,
             customIcon = customIcon,
-            iconColor = color,
+            iconColor = iconColor,
         )
     }
 

@@ -162,17 +162,6 @@ fun createFactorySettings(context: Context): Settings {
             Settings.WidgetSettings.newBuilder()
                 .setEditButton(true)
         )
-        .setSearchActions(
-            Settings.SearchActionSettings.newBuilder()
-                .setCall(true)
-                .setContact(true)
-                .setEmail(true)
-                .setMessage(true)
-                .setOpenUrl(true)
-                .setScheduleEvent(true)
-                .setSetAlarm(true)
-                .setStartTimer(true)
-        )
         .build()
 }
 

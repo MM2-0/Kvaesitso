@@ -288,16 +288,4 @@ message Settings {
     bool edit_button = 1;
   }
   WidgetSettings widgets = 26;
-
-  message SearchActionSettings {
-    bool call = 1;
-    bool message = 2;
-    bool email = 3;
-    bool contact = 4;
-    bool open_url = 5;
-    bool schedule_event = 6;
-    bool set_alarm = 7;
-    bool start_timer = 8;
-  }
-  SearchActionSettings search_actions = 27;
 }

@@ -2,13 +2,9 @@ package de.mm20.launcher2.searchactions
 
 import android.content.Context
 import android.content.Intent
-import android.content.pm.LauncherActivityInfo
-import android.content.pm.LauncherApps
-import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.Bitmap
 import android.net.Uri
-import android.os.UserHandle
 import android.util.Log
 import android.util.Xml
 import androidx.core.graphics.drawable.toBitmap
@@ -16,20 +12,10 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.database.entities.WebsearchEntity
-import de.mm20.launcher2.ktx.jsonObjectOf
-import de.mm20.launcher2.preferences.Settings.SearchActionSettings
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.CallActionBuilder
-import de.mm20.launcher2.searchactions.builders.CreateContactActionBuilder
-import de.mm20.launcher2.searchactions.builders.EmailActionBuilder
-import de.mm20.launcher2.searchactions.builders.MessageActionBuilder
-import de.mm20.launcher2.searchactions.builders.OpenUrlActionBuilder
-import de.mm20.launcher2.searchactions.builders.ScheduleEventActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
-import de.mm20.launcher2.searchactions.builders.SetAlarmActionBuilder
-import de.mm20.launcher2.searchactions.builders.TimerActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -42,8 +28,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.json.JSONArray
-import org.json.JSONException
 import org.jsoup.Jsoup
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
@@ -54,12 +38,18 @@ import java.net.URL
 import java.util.UUID
 
 interface SearchActionService {
-    fun search(settings: SearchActionSettings, query: String): Flow<ImmutableList<SearchAction>>
+    fun search(query: String): Flow<ImmutableList<SearchAction>>
+
+    fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>>
+    fun getDisabledActionBuilders(): Flow<List<SearchActionBuilder>>
+
+    fun saveSearchActionBuilders(builders: List<SearchActionBuilder>)
 
     suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder?
-    suspend fun createIcon(uri: Uri, size: Int): String?
 
     suspend fun getSearchActivities(): List<ResolveInfo>
+
+    suspend fun createIcon(uri: Uri, size: Int): String?
 }
 
 internal class SearchActionServiceImpl(
@@ -68,7 +58,6 @@ internal class SearchActionServiceImpl(
     private val textClassifier: TextClassifier,
 ) : SearchActionService {
     override fun search(
-        settings: SearchActionSettings,
         query: String
     ): Flow<ImmutableList<SearchAction>> = flow {
         if (query.isBlank()) {
@@ -76,26 +65,31 @@ internal class SearchActionServiceImpl(
             return@flow
         }
 
-        val builders = mutableListOf<SearchActionBuilder>()
-
-        if (settings.call) builders.add(CallActionBuilder)
-        if (settings.message) builders.add(MessageActionBuilder)
-        if (settings.contact) builders.add(CreateContactActionBuilder)
-        if (settings.email) builders.add(EmailActionBuilder)
-        if (settings.openUrl) builders.add(OpenUrlActionBuilder)
-        if (settings.scheduleEvent) builders.add(ScheduleEventActionBuilder)
-        if (settings.setAlarm) builders.add(SetAlarmActionBuilder)
-        if (settings.startTimer) builders.add(TimerActionBuilder)
-
         val classificationResult = textClassifier.classify(context, query)
 
-        val other = repository.getSearchActionBuilders()
+        val builders = repository.getSearchActionBuilders()
 
         emitAll(
-            other.map {
-                (builders + it).mapNotNull { it.build(context, classificationResult) }.toImmutableList()
+            builders.map {
+                it.mapNotNull { it.build(context, classificationResult) }.toImmutableList()
             }
         )
+    }
+
+    override fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>> {
+        return repository.getSearchActionBuilders()
+    }
+
+    override fun getDisabledActionBuilders(): Flow<List<SearchActionBuilder>> {
+        val allActions = repository.getBuiltinSearchActionBuilders()
+
+        return getSearchActionBuilders().map { enabled ->
+            allActions.filter { action -> !enabled.any { it.key == action.key } }
+        }
+    }
+
+    override fun saveSearchActionBuilders(builders: List<SearchActionBuilder>) {
+        repository.saveSearchActionBuilders(builders)
     }
 
     override suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder? =
