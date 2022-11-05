@@ -1,2 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Kvæsitso</string>
+    <string name="menu_open_file">aperti</string>
+    <string name="settings">agordoj</string>
+    <string name="menu_share">kvoto</string>
+    <string name="menu_uninstall">malinstali</string>
+    <string name="menu_hide">kaŝi</string>
+    <string name="search_bar_placeholder">serĉi</string>
+    <string name="wind_north">nordo</string>
+</resources>
