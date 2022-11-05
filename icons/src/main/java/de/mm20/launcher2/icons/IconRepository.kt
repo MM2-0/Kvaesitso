@@ -6,8 +6,25 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
 import android.util.LruCache
-import de.mm20.launcher2.customattrs.*
-import de.mm20.launcher2.icons.providers.*
+import de.mm20.launcher2.customattrs.AdaptifiedLegacyIcon
+import de.mm20.launcher2.customattrs.CustomAttributesRepository
+import de.mm20.launcher2.customattrs.CustomIcon
+import de.mm20.launcher2.customattrs.CustomIconPackIcon
+import de.mm20.launcher2.customattrs.CustomThemedIcon
+import de.mm20.launcher2.customattrs.DefaultPlaceholderIcon
+import de.mm20.launcher2.customattrs.ForceThemedIcon
+import de.mm20.launcher2.customattrs.UnmodifiedSystemDefaultIcon
+import de.mm20.launcher2.icons.providers.CalendarIconProvider
+import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
+import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
+import de.mm20.launcher2.icons.providers.GoogleClockIconProvider
+import de.mm20.launcher2.icons.providers.IconPackIconProvider
+import de.mm20.launcher2.icons.providers.IconProvider
+import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
+import de.mm20.launcher2.icons.providers.SystemIconProvider
+import de.mm20.launcher2.icons.providers.ThemedIconProvider
+import de.mm20.launcher2.icons.providers.ThemedPlaceholderIconProvider
+import de.mm20.launcher2.icons.providers.getFirstIcon
 import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
@@ -18,7 +35,13 @@ import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class IconRepository(
@@ -88,7 +111,9 @@ class IconRepository(
                 val transformations = mutableListOf<LauncherIconTransformation>()
 
                 if (settings.adaptify) transformations.add(LegacyToAdaptiveTransformation())
-                if (settings.themedIcons && settings.forceThemed) transformations.add(ForceThemedIconTransformation())
+                if (settings.themedIcons && settings.forceThemed) transformations.add(
+                    ForceThemedIconTransformation()
+                )
 
                 this@IconRepository.placeholderProvider = placeholderProvider
                 iconProviders.value = providers
@@ -217,6 +242,14 @@ class IconRepository(
                     bgColor = 1
                 )
             )
+
+            // Android 7.1 round icons (48x48 circle with 1px padding)
+            transformationOptions.add(
+                AdaptifiedLegacyIcon(
+                    fgScale = 48f / 44f,
+                    bgColor = 1
+                )
+            )
             transformationOptions.add(
                 AdaptifiedLegacyIcon(
                     fgScale = 0.7f,
@@ -301,7 +334,10 @@ class IconRepository(
 
     }
 
-    suspend fun getUncustomizedDefaultIcon(searchable: SavableSearchable, size: Int): CustomIconWithPreview? {
+    suspend fun getUncustomizedDefaultIcon(
+        searchable: SavableSearchable,
+        size: Int
+    ): CustomIconWithPreview? {
         val icon = iconProviders.first().getFirstIcon(searchable, size)
             ?.transform(transformations.first()) ?: return null
         return CustomIconWithPreview(
@@ -312,7 +348,7 @@ class IconRepository(
 
     suspend fun searchCustomIcons(query: String): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
-        val iconPackIcons =  iconPackManager.searchIconPackIcon(query).mapNotNull {
+        val iconPackIcons = iconPackManager.searchIconPackIcon(query).mapNotNull {
             val componentName = it.componentName ?: return@mapNotNull null
 
             CustomIconWithPreview(
@@ -320,7 +356,8 @@ class IconRepository(
                     iconPackPackage = it.iconPack,
                     iconComponentName = componentName.flattenToString(),
                 ),
-                preview = iconPackManager.getIcon(it.iconPack, componentName)?.transform(transformations) ?: return@mapNotNull null
+                preview = iconPackManager.getIcon(it.iconPack, componentName)
+                    ?.transform(transformations) ?: return@mapNotNull null
             )
         }
 
@@ -331,7 +368,8 @@ class IconRepository(
                 customIcon = CustomThemedIcon(
                     iconPackageName = componentName.packageName,
                 ),
-                preview = iconPackManager.getThemedIcon(componentName.packageName)?.transform(transformations) ?: return@mapNotNull null
+                preview = iconPackManager.getThemedIcon(componentName.packageName)
+                    ?.transform(transformations) ?: return@mapNotNull null
             )
         }
 
