@@ -25,7 +25,7 @@ class Migration_18_19 : Migration(18, 19) {
         while (websearches.moveToNext()) {
             val label = websearches.getString(0)
             val data = websearches.getString(1)
-            val color = websearches.getInt(2)
+            val color = 0
             val icon = websearches.getStringOrNull(3)
             val encoding = websearches.getStringOrNull(4)
 

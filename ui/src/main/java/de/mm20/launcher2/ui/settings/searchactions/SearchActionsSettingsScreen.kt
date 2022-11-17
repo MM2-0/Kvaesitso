@@ -69,7 +69,7 @@ fun SearchActionsSettingsScreen() {
 
     Scaffold(
         floatingActionButton = {
-            FloatingActionButton(onClick = { /*TODO*/ }) {
+            FloatingActionButton(onClick = { viewModel.createAction() }) {
                 Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
             }
         },
@@ -119,13 +119,12 @@ fun SearchActionsSettingsScreen() {
                         if (item is CustomizableSearchActionBuilder) {
                             Preference(
                                 icon = {
-                                    SearchActionIcon(
-                                        icon = item.icon,
-                                        color = item.iconColor,
-                                        customIcon = item.customIcon
-                                    )
+                                    SearchActionIcon(item)
                                 },
-                                title = item.label
+                                title = item.label,
+                                onClick = {
+                                    viewModel.editAction(item)
+                                }
                             )
                         } else {
                             SwitchPreference(
@@ -164,5 +163,34 @@ fun SearchActionsSettingsScreen() {
                 )
             }
         }
+    }
+
+    val editAction by viewModel.showEditDialogFor.observeAsState(null)
+    val createAction by viewModel.showCreateDialog.observeAsState(false)
+
+    if (createAction) {
+        EditSearchActionSheet(
+            initialSearchAction = null,
+            onSave = {
+                viewModel.addAction(it)
+            },
+            onDismiss = {
+                viewModel.dismissDialogs()
+            }
+        )
+    }
+    if (editAction != null) {
+        EditSearchActionSheet(
+            initialSearchAction = editAction,
+            onSave = {
+                viewModel.updateAction(editAction!!, it)
+            },
+            onDismiss = {
+                viewModel.dismissDialogs()
+            },
+            onDelete = {
+                viewModel.removeAction(editAction!!)
+            }
+        )
     }
 }

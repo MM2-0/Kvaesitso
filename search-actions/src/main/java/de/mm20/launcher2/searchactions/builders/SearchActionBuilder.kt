@@ -1,6 +1,8 @@
 package de.mm20.launcher2.searchactions.builders
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.media.metrics.Event
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
@@ -42,7 +44,23 @@ interface SearchActionBuilder {
                     )
                 }
                 "app" -> {
-                    return null
+                    return AppSearchActionBuilder(
+                        label = entity.label ?: "",
+                        componentName = ComponentName.unflattenFromString(entity.data ?: return null) ?: return null,
+                        iconColor = entity.color ?: 0,
+                        icon = SearchActionIcon.fromInt(entity.icon),
+                        customIcon = entity.customIcon,
+                    )
+                }
+                "intent" -> {
+                    return CustomIntentActionBuilder(
+                        entity.label ?: "",
+                        baseIntent = Intent.parseUri(entity.data, 0),
+                        iconColor = entity.color ?: 0,
+                        icon = SearchActionIcon.fromInt(entity.icon),
+                        customIcon = entity.customIcon,
+                        queryKey = options?.getString("extra")?.takeIf { it.isNotEmpty() } ?: return null
+                    )
                 }
                 "call" -> return CallActionBuilder(context)
                 "message" -> return MessageActionBuilder(context)
@@ -70,7 +88,28 @@ interface SearchActionBuilder {
                         "encoding" to builder.encoding.toInt()
                     ).toString()
                 )
-                //is AppSearchActionBuilder -> null
+                is AppSearchActionBuilder -> SearchActionEntity(
+                    position = position,
+                    type = "app",
+                    label = builder.label,
+                    data = builder.componentName.flattenToShortString(),
+                    color = builder.iconColor,
+                    icon = builder.icon.toInt(),
+                    customIcon = builder.customIcon,
+                    options = null
+                )
+                is CustomIntentActionBuilder -> SearchActionEntity(
+                    position = position,
+                    type = "intent",
+                    label = builder.label,
+                    data = builder.baseIntent.toUri(0),
+                    color = builder.iconColor,
+                    icon = builder.icon.toInt(),
+                    customIcon = builder.customIcon,
+                    options = jsonObjectOf(
+                        "extra" to builder.queryKey
+                    ).toString()
+                )
                 else -> SearchActionEntity(
                     position = position,
                     type = builder.key,

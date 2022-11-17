@@ -8,10 +8,10 @@ import de.mm20.launcher2.searchactions.actions.AppSearchAction
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 
-class AppSearchActionBuilder(
+data class AppSearchActionBuilder(
     override val label: String,
     val componentName: ComponentName,
-    override val icon: SearchActionIcon = SearchActionIcon.Search,
+    override val icon: SearchActionIcon = SearchActionIcon.Custom,
     override val iconColor: Int = 0,
     override val customIcon: String? = null,
 ) : CustomizableSearchActionBuilder {
@@ -23,6 +23,9 @@ class AppSearchActionBuilder(
             label = label,
             componentName = componentName,
             query = classifiedQuery.text,
+            icon = icon,
+            iconColor = iconColor,
+            customIcon = customIcon,
         )
     }
 }

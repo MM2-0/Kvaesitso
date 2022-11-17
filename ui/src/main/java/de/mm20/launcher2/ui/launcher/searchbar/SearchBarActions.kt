@@ -47,9 +47,7 @@ fun SearchBarActions(
                     label = { Text(it.label) },
                     leadingIcon = {
                         SearchActionIcon(
-                            icon = it.icon,
-                            color = it.iconColor,
-                            customIcon = it.customIcon
+                            action = it
                         )
                     }
                     /*leadingIcon = {

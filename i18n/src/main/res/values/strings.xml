@@ -238,6 +238,8 @@
     <!-- Close a dialog -->
     <string name="close">Close</string>
     <string name="save">Save</string>
+    <string name="skip">Skip</string>
+    <string name="action_continue">Continue</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
     <string name="widget_action_adjust_height">Adjust height</string>
@@ -651,7 +653,7 @@
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>
-    <string name="backup_component_searchactions">Web &amp; app search shortcuts</string>
+    <string name="backup_component_searchactions">Quick actions</string>
     <string name="backup_component_widgets">Built-in widgets</string>
     <string name="backup_component_customizations">Customizations</string>
     <string name="backup_complete">The backup has been completed.</string>
@@ -688,4 +690,19 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
+
+    <string name="create_search_action_type">What kind of action do you want to create?</string>
+    <string name="create_search_action_type_web">Search on a website</string>
+    <string name="create_search_action_type_app">Search in an app</string>
+    <string name="create_search_action_type_intent">Custom intent</string>
+    <string name="create_search_action_title">New quick action</string>
+    <string name="edit_search_action_title">Edit quick action</string>
+    <string name="create_search_action_pick_app">Pick an app to search:</string>
+    <string name="create_search_action_website_url">Enter the address of the website:</string>
+    <string name="create_search_action_website_invalid_url">The given website cannot automatically be imported as a web search. You can try a different website or enter the required data manually in the next step.</string>
+    <string name="search_action_label">Name</string>
+    <string name="search_action_app">App</string>
+    <string name="search_action_websearch_url">URL template</string>
+    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com?q=${1}.</string>
+    <string name="more_information">More information</string>
 </resources>

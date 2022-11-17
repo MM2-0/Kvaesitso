@@ -1,8 +1,11 @@
 package de.mm20.launcher2.searchactions
 
+import android.app.SearchManager
+import android.app.SearchableInfo
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ResolveInfo
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
@@ -14,7 +17,6 @@ import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
-import de.mm20.launcher2.searchactions.builders.CallActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import kotlinx.collections.immutable.ImmutableList
@@ -47,7 +49,7 @@ interface SearchActionService {
 
     suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder?
 
-    suspend fun getSearchActivities(): List<ResolveInfo>
+    suspend fun getSearchActivities(): List<ComponentName>
 
     suspend fun createIcon(uri: Uri, size: Int): String?
 }
@@ -100,6 +102,16 @@ internal class SearchActionServiceImpl(
                 } else {
                     "https://$url"
                 }
+
+                if (u.contains("${1}")) {
+                    return@withContext WebsearchActionBuilder(
+                        urlTemplate = u,
+                        label = "",
+                        iconColor = 0,
+                        icon = SearchActionIcon.Search,
+                    )
+                }
+
                 val document = Jsoup.parse(URL(u), 5000)
                 val metaElements =
                     document.select("link[rel=\"search\"][href][type=\"application/opensearchdescription+xml\"]")
@@ -185,6 +197,7 @@ internal class SearchActionServiceImpl(
                         label = label ?: "",
                         icon = if (localIconUrl == null) SearchActionIcon.Search else SearchActionIcon.Custom,
                         customIcon = localIconUrl,
+                        iconColor = if (localIconUrl == null) 0 else 1,
                         urlTemplate = urlTemplate ?: ""
                     )
                 }
@@ -214,9 +227,19 @@ internal class SearchActionServiceImpl(
         return@withContext file.absolutePath
     }
 
-    override suspend fun getSearchActivities(): List<ResolveInfo> {
-        val packageManager = context.packageManager
-        val intent = Intent(Intent.ACTION_SEARCH)
-        return packageManager.queryIntentActivities(intent, 0)
+    override suspend fun getSearchActivities(): List<ComponentName> {
+        return withContext(Dispatchers.Default) {
+            val resolveInfos = context.packageManager.queryIntentActivities(
+                Intent(Intent.ACTION_SEARCH).addCategory(Intent.CATEGORY_DEFAULT), PackageManager.GET_META_DATA,
+            )
+            resolveInfos.mapNotNull {
+                if (!it.activityInfo.exported || !it.activityInfo.enabled) return@mapNotNull null
+                if (it.activityInfo.permission != null && context.checkSelfPermission(it.activityInfo.permission) != PackageManager.PERMISSION_GRANTED) {
+                    return@mapNotNull null
+                }
+                val componentName = ComponentName(it.activityInfo.packageName, it.activityInfo.name)
+                componentName
+            }
+        }
     }
 }

@@ -8,7 +8,7 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import java.net.URLEncoder
 
-class WebsearchActionBuilder(
+data class WebsearchActionBuilder(
     override val label: String,
     val urlTemplate: String,
     override val icon: SearchActionIcon = SearchActionIcon.Search,
