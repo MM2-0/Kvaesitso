@@ -441,7 +441,7 @@
     <string name="icon_picker_default_icon">默认</string>
     <string name="icon_picker_suggestions">建议</string>
     <string name="icon_picker_search_icon">搜索图标</string>
-    <string name="preference_force_themed_icons">强制执行有主题的图标</string>
+    <string name="preference_force_themed_icons">强制应用有主题的图标</string>
     <string name="menu_customize">自定义</string>
     <string name="preference_grid_labels">显示应用名</string>
     <string name="preference_grid_labels_summary">在图标底下显示应用名称</string>
@@ -481,4 +481,11 @@
     <string name="favorites">收藏夹</string>
     <string name="create_app_shortcut">创建快捷方式</string>
     <string name="preference_icon_shape_pebble">鹅卵形</string>
+    <string name="preference_status_bar_icons">状态栏图标</string>
+    <string name="preference_nav_bar_icons">导航栏图标</string>
+    <string name="preference_system_bar_icons_auto">自动</string>
+    <string name="preference_system_bar_icons_light">浅色</string>
+    <string name="preference_system_bar_icons_dark">深色</string>
+    <string name="preference_search_bar_color">颜色</string>
+    <string name="preference_clock_widget_color">颜色</string>
 </resources>

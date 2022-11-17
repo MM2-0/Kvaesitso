@@ -29,6 +29,7 @@ private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
     "app.lawnchair.lawnicons", // Lawnicons
     "app.lawnchair", // Lawnchair
     "de.mm20.launcher2.themedicons",
+    "de.kvaesitso.icons",
 )
 
 
