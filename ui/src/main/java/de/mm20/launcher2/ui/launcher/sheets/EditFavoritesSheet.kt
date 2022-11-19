@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.modals
+package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
 import android.content.Context

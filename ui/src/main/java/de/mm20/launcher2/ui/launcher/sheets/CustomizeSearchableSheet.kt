@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.search.common.customattrs
+package de.mm20.launcher2.ui.launcher.sheets
 
 import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.content.res.AppCompatResources

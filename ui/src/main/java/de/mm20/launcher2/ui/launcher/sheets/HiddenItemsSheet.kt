@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.modals
+package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState

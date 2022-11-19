@@ -29,7 +29,7 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -48,8 +48,6 @@ fun CalendarItem(
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
-
-    var edit by remember { mutableStateOf(false) }
 
     val darkMode = LocalDarkTheme.current
 
@@ -237,10 +235,11 @@ fun CalendarItem(
                         )
                     )
 
+                    val sheetManager = LocalBottomSheetManager.current
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_customize),
                         icon = Icons.Rounded.Edit,
-                        action = { edit = true }
+                        action = { sheetManager.showCustomizeSearchableModal(calendar) }
                     ))
 
                     toolbarActions.add(hideAction)
@@ -259,13 +258,6 @@ fun CalendarItem(
                 }
             }
         }
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = calendar,
-            onDismiss = { edit = false }
-        )
     }
 }
 

@@ -14,7 +14,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
+import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
 
 @Composable
 fun FavoritesSettingsScreen() {

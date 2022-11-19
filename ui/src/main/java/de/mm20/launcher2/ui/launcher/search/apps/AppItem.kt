@@ -28,7 +28,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.*
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -47,8 +47,6 @@ fun AppItem(
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
-
-    var edit by remember { mutableStateOf(false) }
 
     val scope = rememberCoroutineScope()
     Column(
@@ -228,10 +226,11 @@ fun AppItem(
             )
         )
 
+        val sheetManager = LocalBottomSheetManager.current
         toolbarActions.add(DefaultToolbarAction(
             label = stringResource(R.string.menu_customize),
             icon = Icons.Rounded.Edit,
-            action = { edit = true }
+            action = { sheetManager.showCustomizeSearchableModal(app) }
         ))
 
         val storeDetails = remember(app) { app.getStoreDetails(context) }
@@ -323,13 +322,6 @@ fun AppItem(
                 }
             ),
             rightActions = toolbarActions
-        )
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = app,
-            onDismiss = { edit = false }
         )
     }
 }

@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.search.common.customattrs
+package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData

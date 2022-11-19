@@ -48,7 +48,6 @@ import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.PartialLauncherCard
-import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
@@ -56,6 +55,8 @@ import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItem
+import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -91,6 +92,7 @@ fun SearchColumn(
     val calculator by viewModel.calculatorResults.observeAsState(emptyList())
     val wikipedia by viewModel.wikipediaResults.observeAsState(emptyList())
     val website by viewModel.websiteResults.observeAsState(emptyList())
+    val hiddenResults by viewModel.hiddenResults.observeAsState(emptyList())
 
     val isSearchEmpty by viewModel.isSearchEmpty.observeAsState(true)
 
@@ -98,8 +100,6 @@ fun SearchColumn(
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
-
-    var showEditFavoritesDialog by remember { mutableStateOf(false) }
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
@@ -178,9 +178,10 @@ fun SearchColumn(
                                 }
                             }
                             if (favoritesEditButton) {
+                                val sheetManager = LocalBottomSheetManager.current
                                 SmallFloatingActionButton(
                                     elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                                    onClick = { showEditFavoritesDialog = true }
+                                    onClick = { sheetManager.showEditFavoritesSheet() }
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.Edit,
@@ -359,10 +360,9 @@ fun SearchColumn(
         )
     }
 
-    if (showEditFavoritesDialog) {
-        EditFavoritesSheet(
-            onDismiss = { showEditFavoritesDialog = false }
-        )
+    val sheetManager = LocalBottomSheetManager.current
+    if (sheetManager.hiddenItemsSheetShown.value) {
+        HiddenItemsSheet(items = hiddenResults, onDismiss = { sheetManager.dismissHiddenItemsSheet() })
     }
 }
 

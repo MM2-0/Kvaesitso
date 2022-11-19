@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.search.website
 
 import androidx.compose.animation.*
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -24,7 +23,7 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 
 @Composable
@@ -35,8 +34,6 @@ fun WebsiteItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(website) { WebsiteItemVM(website) }
-
-    var edit by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.clickable {
@@ -110,10 +107,11 @@ fun WebsiteItem(
             )
         )
 
+        val sheetManager = LocalBottomSheetManager.current
         toolbarActions.add(DefaultToolbarAction(
             label = stringResource(R.string.menu_customize),
             icon = Icons.Rounded.Edit,
-            action = { edit = true }
+            action = { sheetManager.showCustomizeSearchableModal(website) }
         ))
 
         Toolbar(
@@ -125,13 +123,6 @@ fun WebsiteItem(
                 )
             ) else emptyList(),
             rightActions = toolbarActions
-        )
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = website,
-            onDismiss = { edit = false }
         )
     }
 }

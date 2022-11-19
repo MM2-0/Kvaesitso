@@ -24,8 +24,9 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
-import de.mm20.launcher2.ui.launcher.modals.HiddenItemsSheet
+import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
 fun LauncherSearchBar(
@@ -44,9 +45,9 @@ fun LauncherSearchBar(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    val searchVM: SearchVM = viewModel()
+    val sheetManager = LocalBottomSheetManager.current
 
-    var showHiddenItemsSheet by remember { mutableStateOf(false) }
+    val searchVM: SearchVM = viewModel()
 
     val hiddenItems by searchVM.hiddenResults.observeAsState(emptyList())
 
@@ -70,8 +71,8 @@ fun LauncherSearchBar(
                 exit = scaleOut(tween(100))
             ) {
                 FilledIconButton(
-                    onClick = { showHiddenItemsSheet = !showHiddenItemsSheet },
-                    colors = if (showHiddenItemsSheet) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.iconButtonColors()
+                    onClick = { sheetManager.showHiddenItemsSheet() },
+                    colors = if (sheetManager.hiddenItemsSheetShown.value) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.iconButtonColors()
                 ) {
                     Icon(imageVector = Icons.Rounded.VisibilityOff, contentDescription = null)
                 }
@@ -85,8 +86,4 @@ fun LauncherSearchBar(
         onFocus = { onFocusChange(true) },
         onUnfocus = { onFocusChange(false) },
     )
-
-    if (showHiddenItemsSheet) {
-        HiddenItemsSheet(hiddenItems, onDismiss = { showHiddenItemsSheet = false })
-    }
 }

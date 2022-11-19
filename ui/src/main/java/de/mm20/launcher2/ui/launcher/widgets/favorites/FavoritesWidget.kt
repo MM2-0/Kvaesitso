@@ -14,7 +14,6 @@ import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,8 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
-import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
 fun FavoritesWidget() {
@@ -39,7 +38,6 @@ fun FavoritesWidget() {
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)
-    var showEditFavoritesDialog by remember { mutableStateOf(false) }
     val favoritesEditButton by viewModel.showEditButton.collectAsState(false)
 
     Column {
@@ -100,20 +98,15 @@ fun FavoritesWidget() {
                     }
                 }
                 if (favoritesEditButton) {
+                    val bottomSheetManager = LocalBottomSheetManager.current
                     SmallFloatingActionButton(
                         elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                        onClick = { showEditFavoritesDialog = true }
+                        onClick = { bottomSheetManager.showEditFavoritesSheet() }
                     ) {
                         Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
                     }
                 }
             }
         }
-    }
-
-    if (showEditFavoritesDialog) {
-        EditFavoritesSheet(
-            onDismiss = { showEditFavoritesDialog = false }
-        )
     }
 }

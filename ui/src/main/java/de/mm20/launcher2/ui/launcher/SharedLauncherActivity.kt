@@ -42,6 +42,11 @@ import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.sheets.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
+import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
+import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
 import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
@@ -75,6 +80,8 @@ abstract class SharedLauncherActivity(
 
         viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
+        val bottomSheetManager = LauncherBottomSheetManager()
+
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
@@ -85,6 +92,7 @@ abstract class SharedLauncherActivity(
                 LocalSnackbarHostState provides snackbarHostState,
                 LocalWallpaperColors provides wallpaperColors,
                 LocalPreferDarkContentOverWallpaper provides (!dimBackground && wallpaperColors.supportsDarkText),
+                LocalBottomSheetManager provides bottomSheetManager,
             ) {
                 LauncherTheme {
                     ProvideCurrentTime {
@@ -214,6 +222,13 @@ abstract class SharedLauncherActivity(
                                             }) {
                                         it.icon?.invoke(Offset(dX, dY)) { enterTransitionProgress.value }
                                     }
+                                }
+
+                                bottomSheetManager.customizeSearchableSheetShown.value?.let {
+                                    CustomizeSearchableSheet(searchable = it, onDismiss = { bottomSheetManager.dismissCustomizeSearchableModal() })
+                                }
+                                if (bottomSheetManager.editFavoritesSheetShown.value) {
+                                    EditFavoritesSheet(onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })
                                 }
                             }
                         }

@@ -23,7 +23,7 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.utils.htmlToAnnotatedString
 
@@ -35,8 +35,6 @@ fun WikipediaItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(wikipedia) { WikipediaItemVM(wikipedia) }
-
-    var edit by remember { mutableStateOf(false) }
 
     Column(
         modifier = modifier.clickable {
@@ -117,10 +115,11 @@ fun WikipediaItem(
             )
         )
 
+        val sheetManager = LocalBottomSheetManager.current
         toolbarActions.add(DefaultToolbarAction(
             label = stringResource(R.string.menu_customize),
             icon = Icons.Rounded.Edit,
-            action = { edit = true }
+            action = { sheetManager.showCustomizeSearchableModal(wikipedia) }
         ))
 
         Toolbar(
@@ -132,13 +131,6 @@ fun WikipediaItem(
                 )
             ) else emptyList(),
             rightActions = toolbarActions
-        )
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = wikipedia,
-            onDismiss = { edit = false }
         )
     }
 }

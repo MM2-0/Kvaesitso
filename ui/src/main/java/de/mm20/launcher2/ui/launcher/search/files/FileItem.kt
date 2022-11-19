@@ -18,7 +18,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.data.File
@@ -30,7 +29,7 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -48,8 +47,6 @@ fun FileItem(
 ) {
     val context = LocalContext.current
     val viewModel = remember(file.key) { FileItemVM(file) }
-
-    var edit by remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -233,10 +230,11 @@ fun FileItem(
                     }
                 }
 
+                val sheetManager = LocalBottomSheetManager.current
                 toolbarActions.add(DefaultToolbarAction(
                     label = stringResource(R.string.menu_customize),
                     icon = Icons.Rounded.Edit,
-                    action = { edit = true }
+                    action = { sheetManager.showCustomizeSearchableModal(file) }
                 ))
 
                 val isHidden by viewModel.isHidden.collectAsState(false)
@@ -284,13 +282,6 @@ fun FileItem(
                 )
             }
         }
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = file,
-            onDismiss = { edit = false }
-        )
     }
 }
 

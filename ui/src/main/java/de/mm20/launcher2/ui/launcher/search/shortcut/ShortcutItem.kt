@@ -26,7 +26,7 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.search.common.customattrs.CustomizeSearchableSheet
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
@@ -49,7 +49,6 @@ fun AppShortcutItem(
     val snackbarHostState = LocalSnackbarHostState.current
 
     var requestDelete by remember { mutableStateOf(false) }
-    var edit by remember { mutableStateOf(false) }
 
     val transition = updateTransition(showDetails, label = "AppShortcutItem")
 
@@ -146,11 +145,11 @@ fun AppShortcutItem(
                 })
 
 
-
+            val sheetManager = LocalBottomSheetManager.current
             toolbarActions.add(DefaultToolbarAction(
                 label = stringResource(R.string.menu_customize),
                 icon = Icons.Rounded.Edit,
-                action = { edit = true }
+                action = { sheetManager.showCustomizeSearchableModal(shortcut) }
             ))
 
             if (viewModel.canDelete) {
@@ -229,13 +228,6 @@ fun AppShortcutItem(
                     Text(stringResource(android.R.string.cancel))
                 }
             }
-        )
-    }
-
-    if (edit) {
-        CustomizeSearchableSheet(
-            searchable = shortcut,
-            onDismiss = { edit = false }
         )
     }
 }
