@@ -82,6 +82,7 @@ import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.ExperimentalBadge
 import de.mm20.launcher2.ui.component.SearchActionIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 
@@ -256,9 +257,10 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 )
                 Text(
                     text = stringResource(R.string.create_search_action_type_app),
-                    modifier = Modifier.padding(start = 16.dp),
+                    modifier = Modifier.weight(1f).padding(start = 16.dp),
                     style = MaterialTheme.typography.labelLarge,
                 )
+                ExperimentalBadge(modifier = Modifier.padding(start = 16.dp))
             }
         }
         OutlinedCard(
