@@ -521,4 +521,6 @@
     <string name="search_action_websearch_url">URL-Vorlage</string>
     <string name="more_information">Mehr Informationen</string>
     <string name="experimental_feature">Experimentell</string>
+    <string name="preference_logs">Logs</string>
+    <string name="preference_logs_summary">Anwendungslogs ansehen und exportieren</string>
 </resources>
