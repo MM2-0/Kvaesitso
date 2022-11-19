@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -12,6 +15,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -25,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -92,6 +97,23 @@ fun SearchActionsSettingsScreen() {
                         Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
+                actions = {
+                    IconButton(onClick = {
+                        CustomTabsIntent.Builder()
+                            .setDefaultColorSchemeParams(
+                                CustomTabColorSchemeParams.Builder()
+                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                .build()
+                            )
+                            .build().launchUrl(context, Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions"))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Rounded.HelpOutline,
+                            contentDescription = "Help"
+                        )
+                    }
+                }
             )
         }) {
 

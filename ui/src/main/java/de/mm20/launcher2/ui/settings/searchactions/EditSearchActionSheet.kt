@@ -1,7 +1,10 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,6 +46,7 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
@@ -62,6 +66,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -73,6 +78,7 @@ import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
@@ -257,7 +263,9 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
                 )
                 Text(
                     text = stringResource(R.string.create_search_action_type_app),
-                    modifier = Modifier.weight(1f).padding(start = 16.dp),
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(start = 16.dp),
                     style = MaterialTheme.typography.labelLarge,
                 )
                 ExperimentalBadge(modifier = Modifier.padding(start = 16.dp))
@@ -413,6 +421,8 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
 
             val placeholderBackground = MaterialTheme.colorScheme.tertiary
             val placeholderColor = MaterialTheme.colorScheme.onTertiary
+            val colorScheme = MaterialTheme.colorScheme
+            val context = LocalContext.current
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -426,16 +436,24 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                     } else {
                         Column {
                             Text(stringResource(R.string.search_action_websearch_url_hint))
-                            /** TODO: Write user guide for this and link it here
                             Text(
-                            stringResource(R.string.more_information),
-                            modifier = Modifier
-                            .padding(vertical = 4.dp)
-                            .clickable { },
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = LocalTextStyle.current.copy(textDecoration = TextDecoration.Underline)
+                                stringResource(R.string.more_information),
+                                modifier = Modifier
+                                    .padding(vertical = 4.dp)
+                                    .clickable {
+
+                                        CustomTabsIntent.Builder()
+                                            .setDefaultColorSchemeParams(
+                                                CustomTabColorSchemeParams.Builder()
+                                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                                .build()
+                                            )
+                                            .build().launchUrl(context, Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions#web-search"))
+                                    },
+                                color = MaterialTheme.colorScheme.secondary,
+                                style = LocalTextStyle.current.copy(textDecoration = TextDecoration.Underline)
                             )
-                             */
                         }
                     }
                 },
@@ -586,7 +604,9 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
 
     if (action is CustomIntentActionBuilder) {
         Column(
-            modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
         ) {
             Row(
                 verticalAlignment = Alignment.Bottom
