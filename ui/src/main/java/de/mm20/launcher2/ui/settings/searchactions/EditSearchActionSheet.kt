@@ -122,7 +122,7 @@ fun EditSearchActionSheet(
                             viewModel.onSave()
                             searchAction?.let { onSave(it) }
                         }
-                    }) {
+                    }, enabled = !searchAction?.label.isNullOrBlank()) {
                         Text(stringResource(R.string.save))
                     }
                 }
