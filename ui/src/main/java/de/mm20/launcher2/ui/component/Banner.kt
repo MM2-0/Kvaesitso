@@ -18,8 +18,8 @@ fun Banner(
     modifier: Modifier = Modifier,
     text: String,
     icon: ImageVector,
-    primaryAction: @Composable () -> Unit,
-    secondaryAction: @Composable () -> Unit = {}
+    primaryAction: (@Composable () -> Unit)? = null,
+    secondaryAction: (@Composable () -> Unit)? = null,
 ) {
     Card(
         modifier = modifier,
@@ -44,21 +44,23 @@ fun Banner(
                     style = MaterialTheme.typography.labelMedium
                 )
             }
-            FlowRow(
-                Modifier
-                    .align(Alignment.End)
-                    .padding(8.dp),
-                crossAxisSpacing = 8.dp,
-                crossAxisAlignment = FlowCrossAxisAlignment.End,
-                mainAxisAlignment = MainAxisAlignment.End
-            ) {
-                Box {
-                    secondaryAction()
-                }
-                Box(modifier = Modifier.padding(start = 8.dp)) {
-                    primaryAction()
-                }
+            if (secondaryAction != null || primaryAction != null) {
+                FlowRow(
+                    Modifier
+                        .align(Alignment.End)
+                        .padding(8.dp),
+                    crossAxisSpacing = 8.dp,
+                    crossAxisAlignment = FlowCrossAxisAlignment.End,
+                    mainAxisAlignment = MainAxisAlignment.End
+                ) {
+                    Box {
+                        secondaryAction?.invoke()
+                    }
+                    Box(modifier = Modifier.padding(start = 8.dp)) {
+                        primaryAction?.invoke()
+                    }
 
+                }
             }
 
         }

@@ -24,7 +24,6 @@ import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
@@ -45,6 +44,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.PartialLauncherCard
@@ -53,7 +53,6 @@ import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
-import de.mm20.launcher2.ui.launcher.search.hidden.HiddenResults
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItem
@@ -121,20 +120,12 @@ fun SearchColumn(
                 reverse = reverse,
                 before = if (favorites.isEmpty()) {
                     {
-                        Text(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    top = if (!reverse) 28.dp else 16.dp,
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = if (reverse) 28.dp else 16.dp,
-                                ),
+                        Banner(
+                            modifier = Modifier.padding(16.dp),
                             text = stringResource(
                                 if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
                             ),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.outline
+                            icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
                         )
                     }
                 } else null,
@@ -191,7 +182,10 @@ fun SearchColumn(
                                     elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
                                     onClick = { showEditFavoritesDialog = true }
                                 ) {
-                                    Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                                    Icon(
+                                        imageVector = Icons.Rounded.Edit,
+                                        contentDescription = null
+                                    )
                                 }
                             }
                         }
@@ -253,7 +247,10 @@ fun SearchColumn(
                 {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_appshortcuts_search, stringResource(R.string.app_name)),
+                        text = stringResource(
+                            R.string.missing_permission_appshortcuts_search,
+                            stringResource(R.string.app_name)
+                        ),
                         onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
                         secondaryAction = {
                             OutlinedButton(onClick = {

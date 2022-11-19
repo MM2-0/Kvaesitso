@@ -29,6 +29,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.launcher.modals.EditFavoritesSheet
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 
@@ -45,15 +46,12 @@ fun FavoritesWidget() {
         if (favorites.isNotEmpty()) {
             SearchResultGrid(favorites)
         } else {
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 28.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+            Banner(
+                modifier = Modifier.padding(16.dp),
                 text = stringResource(
                     if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
                 ),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.outline
+                icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
             )
         }
         if (pinnedTags.isNotEmpty() || favoritesEditButton) {
