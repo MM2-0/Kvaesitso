@@ -90,6 +90,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ExperimentalBadge
 import de.mm20.launcher2.ui.component.SearchActionIcon
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.ktx.toPixels
 
 @Composable
@@ -442,14 +443,20 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                                     .padding(vertical = 4.dp)
                                     .clickable {
 
-                                        CustomTabsIntent.Builder()
+                                        CustomTabsIntent
+                                            .Builder()
                                             .setDefaultColorSchemeParams(
-                                                CustomTabColorSchemeParams.Builder()
-                                                .setToolbarColor(colorScheme.primaryContainer.toArgb())
-                                                .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
-                                                .build()
+                                                CustomTabColorSchemeParams
+                                                    .Builder()
+                                                    .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                                    .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                                    .build()
                                             )
-                                            .build().launchUrl(context, Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions#web-search"))
+                                            .build()
+                                            .launchUrl(
+                                                context,
+                                                Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/search/quickactions#web-search")
+                                            )
                                     },
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = LocalTextStyle.current.copy(textDecoration = TextDecoration.Underline)
@@ -475,6 +482,34 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
                     }, OffsetMapping.Identity)
                 }
             )
+
+            var showAdvanced by remember {
+                mutableStateOf(false)
+            }
+
+            AnimatedVisibility(!showAdvanced) {
+                TextButton(
+                    modifier = Modifier.padding(top = 16.dp),
+                    onClick = { showAdvanced = true }) {
+                    Text(stringResource(id = R.string.websearch_dialog_advanced))
+                }
+            }
+
+            AnimatedVisibility(showAdvanced) {
+                ListPreference(
+                    title = stringResource(R.string.websearch_dialog_query_encoding),
+                    items = listOf(
+                        stringResource(id = R.string.websearch_dialog_query_encoding_url) to WebsearchActionBuilder.QueryEncoding.UrlEncode,
+                        stringResource(id = R.string.websearch_dialog_query_encoding_form) to WebsearchActionBuilder.QueryEncoding.FormData,
+                        stringResource(id = R.string.websearch_dialog_query_encoding_none) to WebsearchActionBuilder.QueryEncoding.None,
+                    ),
+                    value = (searchAction as WebsearchActionBuilder).encoding,
+                    onValueChanged = {
+                        viewModel.setQueryEncoding(it)
+                    },
+                    iconPadding = false
+                )
+            }
         }
     }
 }

@@ -457,6 +457,16 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             else -> action
         }
     }
+
+    fun setQueryEncoding(encoding: WebsearchActionBuilder.QueryEncoding) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is WebsearchActionBuilder -> action.copy(
+                encoding = encoding
+            )
+            else -> action
+        }
+    }
 }
 
 enum class EditSearchActionPage {
