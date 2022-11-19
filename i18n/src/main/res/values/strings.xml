@@ -703,7 +703,7 @@
     <string name="search_action_label">Name</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url">URL template</string>
-    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
 </resources>
