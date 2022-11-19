@@ -56,7 +56,7 @@ class DatePartProvider : PartProvider {
             } else {
                 val line1Format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "EEEE")
                 val line2Format =
-                    DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMMM dd yyyy")
+                    DateFormat.getBestDateTimePattern(Locale.getDefault(), "MMMM dd")
                 val format = SimpleDateFormat("$line1Format\n$line2Format")
                 Text(
                     text = format.format(time),
