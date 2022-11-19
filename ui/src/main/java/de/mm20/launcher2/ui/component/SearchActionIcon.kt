@@ -7,14 +7,29 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Event
+import androidx.compose.material.icons.rounded.FindInPage
+import androidx.compose.material.icons.rounded.Games
+import androidx.compose.material.icons.rounded.ImageSearch
 import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material.icons.rounded.ManageSearch
+import androidx.compose.material.icons.rounded.Movie
+import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.PersonAdd
+import androidx.compose.material.icons.rounded.PersonSearch
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Sms
+import androidx.compose.material.icons.rounded.SportsEsports
+import androidx.compose.material.icons.rounded.StickyNote2
 import androidx.compose.material.icons.rounded.Timer
 import androidx.compose.material.icons.rounded.Translate
+import androidx.compose.material.icons.rounded.TravelExplore
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -119,6 +134,18 @@ fun getSearchActionIconVector(icon: SearchActionIcon): ImageVector {
         SearchActionIcon.Message -> Icons.Rounded.Sms
         SearchActionIcon.Calendar -> Icons.Rounded.Event
         SearchActionIcon.Translate -> Icons.Rounded.Translate
-        else -> Icons.Rounded.Search
+        SearchActionIcon.Search -> Icons.Rounded.Search
+        SearchActionIcon.Custom -> Icons.Rounded.Warning
+        SearchActionIcon.WebSearch -> Icons.Rounded.TravelExplore
+        SearchActionIcon.PersonSearch -> Icons.Rounded.PersonSearch
+        SearchActionIcon.StatsSearch -> Icons.Rounded.QueryStats
+        SearchActionIcon.SearchPage -> Icons.Rounded.FindInPage
+        SearchActionIcon.SearchList -> Icons.Rounded.ManageSearch
+        SearchActionIcon.ImageSearch -> Icons.Rounded.ImageSearch
+        SearchActionIcon.Location -> Icons.Rounded.Place
+        SearchActionIcon.Movie -> Icons.Rounded.Movie
+        SearchActionIcon.Music -> Icons.Rounded.MusicNote
+        SearchActionIcon.Game -> Icons.Rounded.SportsEsports
+        SearchActionIcon.Note -> Icons.Rounded.StickyNote2
     }
 }

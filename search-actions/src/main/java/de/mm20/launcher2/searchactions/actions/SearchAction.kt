@@ -12,48 +12,35 @@ interface SearchAction : Searchable {
     fun start(context: Context)
 }
 
-enum class SearchActionIcon {
-    Search,
-    Custom,
-    Website,
-    Alarm,
-    Timer,
-    Contact,
-    Phone,
-    Email,
-    Message,
-    Calendar,
-    Translate;
+enum class SearchActionIcon(private val value: Int) {
+    Search(0),
+    Custom(1),
+    Website(2),
+    Alarm(3),
+    Timer(4),
+    Contact(5),
+    Phone(6),
+    Email(7),
+    Message(8),
+    Calendar(9),
+    Translate(10),
+    WebSearch(11),
+    PersonSearch(12),
+    StatsSearch(13),
+    SearchPage(14),
+    SearchList(15),
+    ImageSearch(16),
+    Location(17),
+    Movie(18),
+    Music(19),
+    Game(20),
+    Note(21);
     fun toInt(): Int {
-        return when (this) {
-            Search -> 0
-            Custom -> 1
-            Website -> 2
-            Alarm -> 3
-            Timer -> 4
-            Contact -> 5
-            Phone -> 6
-            Email -> 7
-            Message -> 8
-            Calendar -> 9
-            Translate -> 10
-        }
+        return value
     }
     companion object {
         fun fromInt(value: Int?): SearchActionIcon {
-            return when (value) {
-                1 -> Custom
-                2 -> Website
-                3 -> Alarm
-                4 -> Timer
-                5 -> Contact
-                6 -> Phone
-                7 -> Email
-                8 -> Message
-                9 -> Calendar
-                10 -> Translate
-                else -> Search
-            }
+            return values().firstOrNull { it.value == value } ?: Search
         }
     }
 }
