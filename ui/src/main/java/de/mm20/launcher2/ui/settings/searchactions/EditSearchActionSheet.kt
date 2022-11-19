@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.searchactions
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -21,18 +22,25 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Android
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.ManageSearch
 import androidx.compose.material.icons.rounded.MoreVert
+import androidx.compose.material.icons.rounded.RemoveCircleOutline
+import androidx.compose.material.icons.rounded.ToggleOn
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FilledIconButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -60,6 +68,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
@@ -68,6 +77,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import de.mm20.launcher2.ui.R
@@ -373,7 +383,9 @@ private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM) {
 fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
-    Column {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
 
         if (searchAction != null && searchAction is WebsearchActionBuilder) {
             Row(
@@ -456,11 +468,16 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
         initial = emptyList()
     )
     val selectedApp =
-        remember(availableSearchApps, (searchAction as? AppSearchActionBuilder)?.componentName) {
-            availableSearchApps.find { it.componentName == (searchAction as? AppSearchActionBuilder)?.componentName }
+        remember(
+            availableSearchApps,
+            (searchAction as? AppSearchActionBuilder)?.baseIntent?.component
+        ) {
+            availableSearchApps.find { it.componentName == (searchAction as? AppSearchActionBuilder)?.baseIntent?.component }
         }
 
-    Column {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
 
         if (searchAction != null) {
 
@@ -538,6 +555,23 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
                     }
                 }
             }
+
+            var showAdvanced by remember {
+                mutableStateOf(false)
+            }
+
+            AnimatedVisibility(!showAdvanced) {
+                TextButton(
+                    modifier = Modifier.padding(top = 16.dp),
+                    onClick = { showAdvanced = true }) {
+                    Text(stringResource(id = R.string.websearch_dialog_advanced))
+                }
+            }
+
+            AnimatedVisibility(showAdvanced) {
+                IntentExtrasEditor(viewModel)
+            }
+
         }
     }
 }
@@ -547,7 +581,9 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
     if (searchAction != null) {
-        Column {
+        Column(
+            modifier = Modifier.verticalScroll(rememberScrollState())
+        ) {
             Row(
                 verticalAlignment = Alignment.Bottom
             ) {
@@ -602,7 +638,7 @@ fun PickIcon(viewModel: EditSearchActionSheetVM) {
                             }) {
                                 SearchActionIcon(
                                     icon = SearchActionIcon.Custom,
-                                    componentName = (action as AppSearchActionBuilder).componentName,
+                                    componentName = (action as AppSearchActionBuilder).baseIntent.component,
                                     size = 24.dp,
                                     color = 1,
                                 )
@@ -701,6 +737,299 @@ private fun SearchActionIconTile(
     ) {
         Box(modifier = Modifier.padding(16.dp)) {
             icon()
+        }
+    }
+}
+
+@Composable
+private fun IntentExtrasEditor(viewModel: EditSearchActionSheetVM) {
+
+    val action = viewModel.searchAction.value
+    val extras = remember(action?.key) {
+        when (action) {
+            is CustomIntentActionBuilder -> action.baseIntent.extras
+            is AppSearchActionBuilder -> action.baseIntent.extras
+            else -> null
+        }
+
+    }
+
+    val keys = remember(extras) { extras?.keySet()?.sorted() ?: emptyList() }
+
+    Column(
+        modifier = Modifier.padding(top = 24.dp)
+    ) {
+        Text("Extras", style = MaterialTheme.typography.titleSmall)
+        for (key in keys) {
+            Row(
+                modifier = Modifier.padding(top = 12.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                val value = extras?.get(key)
+                when (value) {
+                    is String -> {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(bottom = 8.dp),
+                            value = value,
+                            onValueChange = { viewModel.putStringExtra(key, it) },
+                            label = { Text(key) },
+                            leadingIcon = {
+                                Text("ABC", style = MaterialTheme.typography.labelSmall)
+                            },
+                            singleLine = true,
+                        )
+                    }
+
+                    is Long -> {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(bottom = 8.dp),
+                            value = value.toString(),
+                            onValueChange = {
+                                viewModel.putLongExtra(
+                                    key,
+                                    it.replace(Regex("[^0-9]"), "").toLongOrNull() ?: 0
+                                )
+                            },
+                            label = { Text(key) },
+                            leadingIcon = {
+                                Text("1234", style = MaterialTheme.typography.labelSmall)
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                        )
+                    }
+
+                    is Int -> {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(bottom = 8.dp),
+                            value = value.toString(),
+                            onValueChange = {
+                                viewModel.putIntExtra(
+                                    key,
+                                    it.replace(Regex("[^0-9]"), "").toIntOrNull() ?: 0
+                                )
+                            },
+                            label = { Text(key) },
+                            leadingIcon = {
+                                Text("123", style = MaterialTheme.typography.labelSmall)
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                        )
+                    }
+
+                    is Double -> {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(bottom = 8.dp),
+                            value = value.toString(),
+                            onValueChange = {
+                                viewModel.putDoubleExtra(
+                                    key,
+                                    it.replace(Regex("[^0-9.]"), "").toDoubleOrNull() ?: 0.0
+                                )
+                            },
+                            label = { Text(key) },
+                            leadingIcon = {
+                                Text("1.00", style = MaterialTheme.typography.labelSmall)
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                        )
+                    }
+
+                    is Float -> {
+                        OutlinedTextField(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(bottom = 8.dp),
+                            value = value.toString(),
+                            onValueChange = {
+                                viewModel.putFloatExtra(
+                                    key,
+                                    it.replace(Regex("[^0-9.]"), "").toFloatOrNull() ?: 0f
+                                )
+                            },
+                            label = { Text(key) },
+                            leadingIcon = {
+                                Text("1.0", style = MaterialTheme.typography.labelSmall)
+                            },
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                            singleLine = true,
+                        )
+                    }
+
+                    is Boolean -> {
+                        Switch(
+                            checked = value,
+                            onCheckedChange = { viewModel.putBooleanExtra(key, it) })
+                        Text(
+                            text = key,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 8.dp),
+                            style = MaterialTheme.typography.labelSmall,
+                        )
+                    }
+                }
+                IconButton(
+                    onClick = { viewModel.removeExtra(key) },
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Icon(imageVector = Icons.Rounded.RemoveCircleOutline, contentDescription = null)
+                }
+            }
+        }
+
+
+        OutlinedCard(
+            modifier = Modifier
+                .padding(top = 16.dp)
+                .fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium,
+        ) {
+
+            var newKey by remember { mutableStateOf("") }
+            var newType by remember { mutableStateOf("string") }
+            var showTypeDropdown by remember { mutableStateOf(false) }
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
+            ) {
+                FilledTonalIconButton(
+                    modifier = Modifier.padding(end = 8.dp),
+                    onClick = { showTypeDropdown = !showTypeDropdown }
+                ) {
+                    when (newType) {
+                        "bool" -> {
+                            Icon(Icons.Rounded.ToggleOn, contentDescription = null)
+                        }
+
+                        "string" -> {
+                            Text("ABC", style = MaterialTheme.typography.labelSmall)
+                        }
+
+                        "int" -> {
+                            Text("123", style = MaterialTheme.typography.labelSmall)
+                        }
+
+                        "long" -> {
+                            Text("1234", style = MaterialTheme.typography.labelSmall)
+                        }
+
+                        "float" -> {
+                            Text("1.0", style = MaterialTheme.typography.labelSmall)
+                        }
+
+                        "double" -> {
+                            Text("1.00", style = MaterialTheme.typography.labelSmall)
+                        }
+                    }
+                    DropdownMenu(
+                        expanded = showTypeDropdown,
+                        onDismissRequest = { showTypeDropdown = false }) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Text(
+                                    "ABC",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
+                            text = { Text("String") },
+                            onClick = {
+                                newType = "string"
+                                showTypeDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Text(
+                                    "123",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
+                            text = { Text("Integer") },
+                            onClick = {
+                                newType = "int"
+                                showTypeDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Text(
+                                    "1234",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
+                            text = { Text("Long") },
+                            onClick = {
+                                newType = "long"
+                                showTypeDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Text(
+                                    "1.0",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
+                            text = { Text("Float") },
+                            onClick = {
+                                newType = "float"
+                                showTypeDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Text(
+                                    "1.00",
+                                    style = MaterialTheme.typography.labelSmall
+                                )
+                            },
+                            text = { Text("Double") },
+                            onClick = {
+                                newType = "double"
+                                showTypeDropdown = false
+                            })
+                        DropdownMenuItem(
+                            leadingIcon = { Icon(Icons.Rounded.ToggleOn, null) },
+                            text = { Text("Boolean") },
+                            onClick = {
+                                newType = "bool"
+                                showTypeDropdown = false
+                            })
+                    }
+                }
+                OutlinedTextField(
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(bottom = 8.dp),
+                    label = { Text("Key") },
+                    value = newKey,
+                    onValueChange = { newKey = it },
+                )
+                FilledIconButton(
+                    modifier = Modifier.padding(start = 8.dp),
+                    onClick = {
+                        when (newType) {
+                            "string" -> viewModel.putStringExtra(newKey)
+                            "int" -> viewModel.putIntExtra(newKey)
+                            "bool" -> viewModel.putBooleanExtra(newKey)
+                            "long" -> viewModel.putLongExtra(newKey)
+                            "double" -> viewModel.putDoubleExtra(newKey)
+                            "float" -> viewModel.putFloatExtra(newKey)
+                        }
+                        newKey = ""
+                    },
+                    enabled = newKey.isNotBlank()
+                ) {
+                    Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
+                }
+            }
         }
     }
 }

@@ -7,8 +7,8 @@ import de.mm20.launcher2.ktx.tryStartActivity
 class CustomIntentAction(
     override val label: String,
     val query: String,
-    val queryKey: String,
-    val baseIntent: Intent,
+    private val queryKey: String,
+    private val baseIntent: Intent,
     override val icon: SearchActionIcon = SearchActionIcon.Custom,
     override val iconColor: Int = 1,
     override val customIcon: String? = null,

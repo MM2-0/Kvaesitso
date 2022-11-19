@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.unit.Density
@@ -73,7 +74,9 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     fun selectSearchableApp(app: SearchableApp) {
         searchAction.value = AppSearchActionBuilder(
             label = app.label,
-            componentName = app.componentName,
+            baseIntent = Intent().apply {
+                setComponent(app.componentName)
+            },
             icon = SearchActionIcon.Custom,
             customIcon = null,
             iconColor = 1,
@@ -116,7 +119,9 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                 )
             )
 
-            is AppSearchActionBuilder -> action.copy(componentName = componentName)
+            is AppSearchActionBuilder -> action.also {
+                it.baseIntent.setComponent(componentName)
+            }
             is WebsearchActionBuilder -> action
         }
 
@@ -257,6 +262,153 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             val path = searchActionService.createIcon(uri, size)
             setCustomIcon(path)
+        }
+    }
+
+    fun removeExtra(key: String) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.remove(key)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.remove(key)
+                    it.replaceExtras(extras)
+                }
+            )
+            else -> action
+        }
+    }
+
+    fun putStringExtra(key: String, value: String = "") {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putString(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putString(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun putIntExtra(key: String, value: Int = 0) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putInt(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putInt(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun putLongExtra(key: String, value: Long = 0L) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putLong(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putLong(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun putFloatExtra(key: String, value: Float = 0f) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putFloat(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putFloat(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun putDoubleExtra(key: String, value: Double = 0.0) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putDouble(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putDouble(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun putBooleanExtra(key: String, value: Boolean = false) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putBoolean(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            is AppSearchActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    extras.putBoolean(key, value)
+                    it.replaceExtras(extras)
+                },
+            )
+            else -> action
         }
     }
 }

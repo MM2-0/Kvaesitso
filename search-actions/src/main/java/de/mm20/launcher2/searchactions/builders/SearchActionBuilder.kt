@@ -46,7 +46,7 @@ interface SearchActionBuilder {
                 "app" -> {
                     return AppSearchActionBuilder(
                         label = entity.label ?: "",
-                        componentName = ComponentName.unflattenFromString(entity.data ?: return null) ?: return null,
+                        baseIntent = Intent.parseUri(entity.data, 0),
                         iconColor = entity.color ?: 0,
                         icon = SearchActionIcon.fromInt(entity.icon),
                         customIcon = entity.customIcon,
@@ -92,7 +92,7 @@ interface SearchActionBuilder {
                     position = position,
                     type = "app",
                     label = builder.label,
-                    data = builder.componentName.flattenToShortString(),
+                    data = builder.baseIntent.toUri(0),
                     color = builder.iconColor,
                     icon = builder.icon.toInt(),
                     customIcon = builder.customIcon,

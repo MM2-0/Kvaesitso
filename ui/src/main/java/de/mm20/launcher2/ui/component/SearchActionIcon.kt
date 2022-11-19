@@ -92,7 +92,7 @@ fun SearchActionIcon(action: SearchAction, size: Dp = 20.dp) {
         icon = action.icon,
         color = action.iconColor,
         customIcon = action.customIcon,
-        componentName = (action as? AppSearchAction)?.componentName,
+        componentName = (action as? AppSearchAction)?.baseIntent?.component,
         size = size,
     )
 }
@@ -103,7 +103,7 @@ fun SearchActionIcon(builder: CustomizableSearchActionBuilder, size: Dp = 20.dp)
        icon = builder.icon,
        color = builder.iconColor,
        customIcon = builder.customIcon,
-       componentName = (builder as? AppSearchActionBuilder)?.componentName,
+       componentName = (builder as? AppSearchActionBuilder)?.baseIntent?.component,
        size = size,
    )
 }
