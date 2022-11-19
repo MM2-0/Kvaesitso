@@ -679,7 +679,6 @@
     <string name="frequently_used_show_in_favorites">Show in favorites</string>
     <string name="frequently_used_rows">Number of rows</string>
     <string name="customize_tags_placeholder">Tags…</string>
-
     <string name="preference_screen_search_actions">Quick actions</string>
     <string name="preference_search_search_actions_summary">Configure quick actions and search shortcuts</string>
     <string name="search_action_call">Call</string>
@@ -690,7 +689,6 @@
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>
-
     <string name="create_search_action_type">What kind of action do you want to create?</string>
     <string name="create_search_action_type_web">Search on a website</string>
     <string name="create_search_action_type_app">Search in an app</string>
