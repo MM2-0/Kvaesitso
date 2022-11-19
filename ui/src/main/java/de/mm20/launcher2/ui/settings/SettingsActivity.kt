@@ -41,6 +41,7 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
+import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
@@ -165,6 +166,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/debug/crashreporter") {
                             CrashReporterScreen()
+                        }
+                        composable("settings/debug/logs") {
+                            LogScreen()
                         }
                         composable(
                             "settings/debug/crashreporter/report?fileName={fileName}",

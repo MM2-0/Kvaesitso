@@ -570,6 +570,8 @@
     <string name="preference_restore_summary">Import a previously created backup</string>
     <string name="preference_crash_reporter">Crash reporter</string>
     <string name="preference_crash_reporter_summary">Error and crash reports</string>
+    <string name="preference_logs">Logs</string>
+    <string name="preference_logs_summary">View and export application logs</string>
     <string name="preference_export_log">Export log file</string>
     <string name="preference_screen_search">Search</string>
     <string name="preference_screen_search_summary">Configure the search</string>

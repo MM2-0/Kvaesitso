@@ -37,25 +37,10 @@ fun DebugSettingsScreen() {
                     })
 
                 Preference(
-                    title = stringResource(R.string.preference_export_log),
+                    title = stringResource(R.string.preference_logs),
+                    summary = stringResource(R.string.preference_logs_summary),
                     onClick = {
-                        scope.launch {
-                            val path = DebugInformationDumper().dump(context)
-                            context.tryStartActivity(
-                                Intent.createChooser(
-                                    Intent(Intent.ACTION_SEND).apply {
-                                        type = "text/plain"
-                                        putExtra(
-                                            Intent.EXTRA_STREAM, FileProvider.getUriForFile(
-                                                context,
-                                                context.applicationContext.packageName + ".fileprovider",
-                                                File(path)
-                                            )
-                                        )
-                                    }, null
-                                )
-                            )
-                        }
+                        navController?.navigate("settings/debug/logs")
                     })
             }
             PreferenceCategory(stringResource(R.string.preference_category_debug_tools)) {
