@@ -86,6 +86,7 @@ internal class SearchServiceImpl(
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
     ): Flow<ImmutableList<Searchable>> = channelFlow {
+        var searchActionsReady = false
         supervisorScope {
             val results = MutableStateFlow(SearchResults())
             launch {
@@ -220,6 +221,7 @@ internal class SearchServiceImpl(
                 searchActionService.search(query)
                     .collectLatest { r ->
                         results.update {
+                            searchActionsReady = true
                             it.copy(searchActions = r)
                         }
                     }
@@ -228,7 +230,7 @@ internal class SearchServiceImpl(
                 results
                     .map { it.toList().sortedBy { it as? SavableSearchable }.toImmutableList() }
                     .collectLatest {
-                        send(it)
+                        if (searchActionsReady) send(it)
                     }
             }
         }

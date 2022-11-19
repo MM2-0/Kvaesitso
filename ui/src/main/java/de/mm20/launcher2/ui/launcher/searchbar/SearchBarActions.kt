@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.searchbar
 
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,7 @@ import de.mm20.launcher2.ui.component.SearchActionIcon
 import de.mm20.launcher2.ui.settings.SettingsActivity
 
 @Composable
-fun SearchBarActions(
+fun ColumnScope.SearchBarActions(
     modifier: Modifier = Modifier,
     actions: List<SearchAction>,
     reverse: Boolean = false,

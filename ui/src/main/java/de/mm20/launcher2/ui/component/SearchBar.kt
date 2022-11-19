@@ -8,6 +8,7 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,7 +53,7 @@ fun SearchBar(
     reverse: Boolean = false,
     darkColors: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
-    actions: @Composable () -> Unit = {},
+    actions: @Composable ColumnScope.() -> Unit = {},
 ) {
 
     val transition = updateTransition(level, label = "Searchbar")
@@ -179,7 +180,7 @@ fun SearchBar(
                         menu()
                     }
                 }
-                actions()
+                this.actions()
             }
         }
     }
