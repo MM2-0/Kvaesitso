@@ -23,4 +23,69 @@
     <string name="wind_south_east">南東</string>
     <string name="wind_north_north_west">北北西</string>
     <string name="wikipedia_url">https://ja.wikipedia.org</string>
+    <string name="menu_favorites_pin">ピン留め</string>
+    <string name="menu_share_apk_file">APKファイル</string>
+    <string name="menu_share_store_link">%1$sリンク</string>
+    <string name="menu_hide">非表示</string>
+    <string name="menu_customize">編集</string>
+    <string name="menu_launch">開く</string>
+    <string name="menu_open_file">開く</string>
+    <string name="menu_app_info">アプリ情報</string>
+    <string name="menu_back">戻る</string>
+    <string name="menu_favorites_unpin">解除</string>
+    <string name="menu_unhide">表示</string>
+    <string name="action_undo">元に戻す</string>
+    <string name="menu_contacts_open_externally">連絡先アプリで開く</string>
+    <string name="menu_calendar_open_externally">カレンダーアプリで開く</string>
+    <string name="menu_remove">取り外す</string>
+    <string name="msg_item_hidden">%1$sが非表示された。</string>
+    <string name="app_info_version">バージョン%1$s</string>
+    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
+    <string name="default_websearch_1_name">Google</string>
+    <string name="default_websearch_2_name">YouTube</string>
+    <string name="disclaimer">免責</string>
+    <string name="date_today">今日</string>
+    <string name="login_flow_login">ログイン</string>
+    <string name="date_tomorrow">明日</string>
+    <string name="preference_screen_appearance">外観</string>
+    <string name="preference_custom_colors_error">エラー</string>
+    <string name="preference_colors_bw">黒白</string>
+    <string name="preference_font_system">システム</string>
+    <string name="preference_font">文字フォント</string>
+    <string name="preference_category_links">リング</string>
+    <string name="provider_here">HERE</string>
+    <string name="preference_category_icons">アイコン</string>
+    <string name="preference_cards_shape">形</string>
+    <string name="preference_icon_shape_teardrop">ティアドロップ</string>
+    <string name="preference_icon_shape_triangle">ルーローの三角形</string>
+    <string name="preference_grid_labels">ラベルの表示</string>
+    <string name="preference_grid_icon_size">サイズ</string>
+    <string name="battery_part_charging">充電中</string>
+    <string name="customize_tags_placeholder">タグ</string>
+    <string name="search_action_email">メール</string>
+    <string name="search_bar_placeholder">検索</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
+    <string name="default_websearch_3_name">Playストア</string>
+    <string name="owncloud_password_empty">パスワードは空白にしてはいけない</string>
+    <string name="login_flow_continue">次</string>
+    <string name="disclaimer_currency_converter">為替レートは、欧州中央銀行が1日1回発表するものです。すべての情報は、いかなる種類の保証もなく「現状のまま」提供されます。これらの情報については、いかなる責任も負いません。
+\n
+\n最終更新：%1$s</string>
+    <string name="preference_icon_shape">形</string>
+    <string name="preference_icon_shape_squircle">スクワークル</string>
+    <string name="preference_category_wallpaper">壁紙</string>
+    <string name="preference_icon_shape_pentagon">五角</string>
+    <string name="preference_backup">バック・アップ</string>
+    <string name="preference_clock_widget_color">色</string>
+    <string name="preference_clockwidget_battery_part">電池</string>
+    <string name="help">ヘルプ</string>
+    <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
+    <string name="websearch_dialog_url_description">「${1}」は実際の検索キーワードに置き換えられる。</string>
+    <string name="widget_name_calendar">カレンダー</string>
+    <string name="widget_name_weather">天気</string>
+    <string name="installation_in_progress">インストール中...%1$s</string>
+    <string name="preference_icon_shape_platform">システム</string>
+    <string name="preference_icon_shape_rounded_square">角丸</string>
+    <string name="preference_icon_shape_square">スクエア</string>
+    <string name="preference_clockwidget_alarm_part">アラーム</string>
 </resources>
