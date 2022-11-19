@@ -119,88 +119,18 @@ internal class SearchActionServiceImpl(
                     .getOrNull(0)
                     ?.absUrl("href")
                     ?.takeIf { it.isNotEmpty() }
-                    ?: return@withContext run {
-                        Log.d("MM20", "Specified URL does not implement the OpenSearch protocol")
-                        null
-                    }
 
-                val httpClient = OkHttpClient()
-                val request = Request.Builder()
-                    .url(openSearchHref)
-                    .build()
-                val response = httpClient.newCall(request).execute()
-                val inputStream = response.body?.byteStream() ?: return@withContext null
-
-                var label: String? = null
-                var urlTemplate: String? = null
-                var icon: String? = null
-                var iconSize: Int = 0
-                var iconUrl: String? = null
-
-                inputStream.use {
-                    val parser = Xml.newPullParser()
-                    parser.setInput(inputStream.reader())
-                    while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                        if (parser.eventType == XmlPullParser.START_TAG) {
-                            when (parser.name) {
-                                "ShortName" -> {
-                                    parser.next()
-                                    if (parser.eventType == XmlPullParser.TEXT) {
-                                        label = parser.text
-                                    }
-                                }
-
-                                "LongName" -> {
-                                    parser.next()
-                                    if (parser.eventType == XmlPullParser.TEXT) {
-                                        if (label != null) label = parser.text
-                                    }
-                                }
-
-                                "Image" -> {
-                                    val size =
-                                        parser.getAttributeValue(null, "width")?.toIntOrNull() ?: 0
-                                    if (size > iconSize || iconUrl == null) {
-                                        parser.next()
-                                        if (parser.eventType == XmlPullParser.TEXT) {
-                                            iconUrl = parser.text
-                                            iconSize = size
-                                        }
-                                    }
-                                }
-
-                                "Url" -> {
-                                    if (parser.getAttributeValue(null, "type") == "text/html") {
-                                        val rel = parser.getAttributeValue(null, "rel")
-                                        if (rel == null || rel == "results") {
-                                            val template =
-                                                parser.getAttributeValue(null, "template")
-                                                    ?.takeIf { it.isNotEmpty() } ?: continue
-                                            urlTemplate = template
-                                                .replace("{searchTerms}", "\${1}")
-                                                .replace("{startPage?}", "1")
-                                        }
-                                    }
-                                }
-
-                                else -> continue
-                            }
-                        }
-                    }
-
-                    val localIconUrl = iconUrl?.let {
-                        val uri = Uri.parse(it)
-                        createIcon(uri, iconSize)
-                    }
-
-                    return@withContext WebsearchActionBuilder(
-                        label = label ?: "",
-                        icon = if (localIconUrl == null) SearchActionIcon.Search else SearchActionIcon.Custom,
-                        customIcon = localIconUrl,
-                        iconColor = if (localIconUrl == null) 0 else 1,
-                        urlTemplate = urlTemplate ?: ""
-                    )
+                var action = openSearchHref?.let {
+                    importOpenSearch(it)
                 }
+
+                if (action != null) {
+                    return@withContext action
+                }
+
+                val host = URL(u).host ?: return@withContext null
+                return@withContext knownWebsearchByHostname(host)
+
             } catch (e: IOException) {
                 CrashReporter.logException(e)
             } catch (e: XmlPullParserException) {
@@ -208,6 +138,91 @@ internal class SearchActionServiceImpl(
             }
             return@withContext null
         }
+
+    private suspend fun importOpenSearch(openSearchHref: String): WebsearchActionBuilder? {
+        try {
+            val httpClient = OkHttpClient()
+            val request = Request.Builder()
+                .url(openSearchHref)
+                .build()
+            val response = httpClient.newCall(request).execute()
+            val inputStream = response.body?.byteStream() ?: return null
+
+            var label: String? = null
+            var urlTemplate: String? = null
+            var icon: String? = null
+            var iconSize: Int = 0
+            var iconUrl: String? = null
+
+            inputStream.use {
+                val parser = Xml.newPullParser()
+                parser.setInput(inputStream.reader())
+                while (parser.next() != XmlPullParser.END_DOCUMENT) {
+                    if (parser.eventType == XmlPullParser.START_TAG) {
+                        when (parser.name) {
+                            "ShortName" -> {
+                                parser.next()
+                                if (parser.eventType == XmlPullParser.TEXT) {
+                                    label = parser.text
+                                }
+                            }
+
+                            "LongName" -> {
+                                parser.next()
+                                if (parser.eventType == XmlPullParser.TEXT) {
+                                    if (label != null) label = parser.text
+                                }
+                            }
+
+                            "Image" -> {
+                                val size =
+                                    parser.getAttributeValue(null, "width")?.toIntOrNull() ?: 0
+                                if (size > iconSize || iconUrl == null) {
+                                    parser.next()
+                                    if (parser.eventType == XmlPullParser.TEXT) {
+                                        iconUrl = parser.text
+                                        iconSize = size
+                                    }
+                                }
+                            }
+
+                            "Url" -> {
+                                if (parser.getAttributeValue(null, "type") == "text/html") {
+                                    val rel = parser.getAttributeValue(null, "rel")
+                                    if (rel == null || rel == "results") {
+                                        val template =
+                                            parser.getAttributeValue(null, "template")
+                                                ?.takeIf { it.isNotEmpty() } ?: continue
+                                        urlTemplate = template
+                                            .replace("{searchTerms}", "\${1}")
+                                            .replace("{startPage?}", "1")
+                                    }
+                                }
+                            }
+
+                            else -> continue
+                        }
+                    }
+                }
+
+                val localIconUrl = iconUrl?.let {
+                    val uri = Uri.parse(it)
+                    createIcon(uri, iconSize)
+                }
+
+                return WebsearchActionBuilder(
+                    label = label ?: "",
+                    icon = if (localIconUrl == null) SearchActionIcon.Search else SearchActionIcon.Custom,
+                    customIcon = localIconUrl,
+                    iconColor = if (localIconUrl == null) 0 else 1,
+                    urlTemplate = urlTemplate ?: ""
+                )
+            }
+        } catch (e: IOException) {
+
+        } catch (e: XmlPullParserException) {}
+        return null
+    }
 
     override suspend fun createIcon(uri: Uri, size: Int): String? = withContext(
         Dispatchers.IO
