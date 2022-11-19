@@ -492,4 +492,33 @@
     <string name="preference_icon_shape_pebble">Pebble</string>
     <string name="preference_clock_widget_color">Farbe</string>
     <string name="preference_search_bar_color">Farbe</string>
+    <string name="search_action_event">Termin planen</string>
+    <string name="create_search_action_type_intent">Benutzerdefinierter Intent</string>
+    <string name="create_search_action_website_invalid_url">Die angegebene Webseite kann nicht automatisch als Websuche importiert werden. Sie können es mit einer anderen Webseite versuchen oder die benötigten Daten im nächsten Schritt manuell eingeben.</string>
+    <string name="search_action_websearch_url_hint">Die URL-Vorlage, die verwendet wird um die Websuch-URL zusammenzusetzen. Verwenden Sie „${1}“ als Platzhalter für den eigentlichen Suchbegriff, z.B. https://google.com/search\?q=${1}.</string>
+    <string name="help">Hilfe</string>
+    <string name="backup_component_searchactions">Schnellaktionen</string>
+    <string name="skip">Überspringen</string>
+    <string name="action_continue">Fortsetzen</string>
+    <string name="preference_screen_search_actions">Schnellaktionen</string>
+    <string name="preference_search_search_actions_summary">Schnellaktionen und Such-Shortcuts bearbeiten</string>
+    <string name="search_action_call">Anrufen</string>
+    <string name="search_action_message">Nachricht</string>
+    <string name="search_action_email">E-Mail</string>
+    <string name="search_action_alarm">Wecker stellen</string>
+    <string name="search_action_timer">Timer starten</string>
+    <string name="search_action_contact">Neuer Kontakt</string>
+    <string name="search_action_open_url">Website öffnen</string>
+    <string name="create_search_action_type">Welche Art von Aktion möchten Sie erstellen\?</string>
+    <string name="create_search_action_type_web">Auf einer Webseite suchen</string>
+    <string name="create_search_action_type_app">In einer App suchen</string>
+    <string name="create_search_action_title">Neue Schnellaktion</string>
+    <string name="edit_search_action_title">Schnellaktion bearbeiten</string>
+    <string name="create_search_action_pick_app">App zum Durchsuchen auswählen:</string>
+    <string name="create_search_action_website_url">Adresse der Webseite eingeben:</string>
+    <string name="search_action_label">Name</string>
+    <string name="search_action_app">App</string>
+    <string name="search_action_websearch_url">URL-Vorlage</string>
+    <string name="more_information">Mehr Informationen</string>
+    <string name="experimental_feature">Experimentell</string>
 </resources>
