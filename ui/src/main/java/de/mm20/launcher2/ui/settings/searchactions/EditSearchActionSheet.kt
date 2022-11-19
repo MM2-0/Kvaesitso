@@ -582,9 +582,11 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
 fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
     val searchAction by viewModel.searchAction
 
-    if (searchAction != null) {
+    val action = searchAction
+
+    if (action is CustomIntentActionBuilder) {
         Column(
-            modifier = Modifier.verticalScroll(rememberScrollState())
+            modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth()
         ) {
             Row(
                 verticalAlignment = Alignment.Bottom
@@ -600,10 +602,58 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
                     modifier = Modifier
                         .weight(1f)
                         .padding(start = 16.dp),
-                    value = searchAction!!.label,
+                    value = action.label,
                     onValueChange = { viewModel.setLabel(it) },
                     label = { Text(stringResource(R.string.search_action_label)) },
                 )
+            }
+
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                value = action.baseIntent.action ?: "",
+                onValueChange = { viewModel.setIntentAction(it) },
+                label = { Text("Action") },
+            )
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = action.baseIntent.categories?.firstOrNull() ?: "",
+                onValueChange = { viewModel.setIntentCategory(it) },
+                label = { Text("Category") },
+            )
+
+            OutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
+                value = action.queryKey,
+                onValueChange = { viewModel.setIntentQueryExtra(it) },
+                label = { Text("Extra key") },
+                supportingText = {
+                    Text("The key of the string extra that the search term is passed as.")
+                },
+                isError = viewModel.customIntentKeyError.value
+            )
+
+            var showAdvanced by remember {
+                mutableStateOf(false)
+            }
+
+            AnimatedVisibility(!showAdvanced) {
+                TextButton(
+                    modifier = Modifier.padding(top = 16.dp),
+                    onClick = { showAdvanced = true }) {
+                    Text(stringResource(id = R.string.websearch_dialog_advanced))
+                }
+            }
+
+            AnimatedVisibility(showAdvanced) {
+                IntentExtrasEditor(viewModel)
             }
         }
     }

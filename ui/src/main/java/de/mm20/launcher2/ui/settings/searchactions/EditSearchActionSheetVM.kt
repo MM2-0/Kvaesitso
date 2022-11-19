@@ -18,7 +18,6 @@ import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -44,6 +43,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         currentPage.value = when (searchAction) {
             is AppSearchActionBuilder -> EditSearchActionPage.CustomizeAppSearch
             is WebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
+            is CustomIntentActionBuilder -> EditSearchActionPage.CustomizeCustomIntent
             else -> EditSearchActionPage.SelectType
         }
         createNew.value = searchAction == null
@@ -181,12 +181,18 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     private val invalidWebsearchUrl = mutableStateOf<String?>(null)
     val websearchInvalidUrlError = derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? WebsearchActionBuilder)?.urlTemplate }
+    val customIntentKeyError = mutableStateOf(false)
     fun validate() : Boolean {
         val action = searchAction.value ?: return false
 
         if (action is WebsearchActionBuilder) {
             val valid = action.urlTemplate.contains("\${1}")
             invalidWebsearchUrl.value = if(valid) null else action.urlTemplate
+            return valid
+        }
+        if (action is CustomIntentActionBuilder) {
+            val valid = action.queryKey.isNotBlank()
+            customIntentKeyError.value = !valid
             return valid
         }
         return true
@@ -407,6 +413,46 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     extras.putBoolean(key, value)
                     it.replaceExtras(extras)
                 },
+            )
+            else -> action
+        }
+    }
+
+    fun setIntentAction(action: String) {
+        val searchAction = searchAction.value ?: return
+        this.searchAction.value = when(searchAction) {
+            is CustomIntentActionBuilder -> searchAction.copy(
+                baseIntent = searchAction.baseIntent.cloneFilter().also {
+                    val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    it.action = action
+                },
+            )
+            else -> searchAction
+        }
+    }
+
+    fun setIntentCategory(category: String) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                baseIntent = action.baseIntent.cloneFilter().also {
+                    val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
+                    it.replaceExtras(extras)
+                    val oldCategory = it.categories?.firstOrNull()
+                    if (oldCategory != null) it.removeCategory(oldCategory)
+                    if (category.isNotBlank()) it.addCategory(category)
+                },
+            )
+            else -> action
+        }
+    }
+
+    fun setIntentQueryExtra(key: String) {
+        val action = searchAction.value ?: return
+        searchAction.value = when(action) {
+            is CustomIntentActionBuilder -> action.copy(
+                queryKey = key,
             )
             else -> action
         }
