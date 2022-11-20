@@ -488,4 +488,35 @@
     <string name="preference_system_bar_icons_dark">深色</string>
     <string name="preference_search_bar_color">颜色</string>
     <string name="preference_clock_widget_color">颜色</string>
+    <string name="preference_screen_search_actions">快捷操作</string>
+    <string name="preference_search_search_actions_summary">配置快捷操作和搜索栏快捷方式</string>
+    <string name="search_action_call">拨号</string>
+    <string name="search_action_message">信息</string>
+    <string name="search_action_email">电子邮件</string>
+    <string name="search_action_alarm">设置闹钟</string>
+    <string name="search_action_timer">启动定时器</string>
+    <string name="search_action_contact">新建联系人</string>
+    <string name="action_continue">继续</string>
+    <string name="preference_logs">日志</string>
+    <string name="preference_logs_summary">查看和导出应用日志</string>
+    <string name="backup_component_searchactions">快捷操作</string>
+    <string name="search_action_open_url">浏览网站</string>
+    <string name="help">帮助</string>
+    <string name="search_action_event">日程事件</string>
+    <string name="skip">跳过</string>
+    <string name="search_action_label">名称</string>
+    <string name="search_action_app">应用程序</string>
+    <string name="search_action_websearch_url">URL模板</string>
+    <string name="search_action_websearch_url_hint">URL模板用于构建搜索引擎的URL.使用‘${1}’作为实际搜索字词的占位符，例如 https://google.com/search\?q=${1}</string>
+    <string name="more_information">更多信息</string>
+    <string name="experimental_feature">实验性的</string>
+    <string name="create_search_action_type">你想创建哪种操作\?</string>
+    <string name="create_search_action_type_web">在网站上搜索</string>
+    <string name="create_search_action_type_app">在应用程序中搜索</string>
+    <string name="create_search_action_type_intent">Custom intent</string>
+    <string name="create_search_action_title">新建快捷操作</string>
+    <string name="edit_search_action_title">编辑快捷操作</string>
+    <string name="create_search_action_pick_app">固定一个应用程序到搜索栏:</string>
+    <string name="create_search_action_website_url">输入网站地址:</string>
+    <string name="create_search_action_website_invalid_url">给定的网站不能自动导入成搜索引擎. 你可以尝试其它不同的网站或者在下一步手动输入必填的数据.</string>
 </resources>
