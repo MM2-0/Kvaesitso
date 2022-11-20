@@ -492,4 +492,35 @@
     <string name="preference_system_bar_icons_dark">Donker</string>
     <string name="preference_clock_widget_color">Kleur</string>
     <string name="preference_search_bar_color">Kleur</string>
+    <string name="preference_logs">Logberichten</string>
+    <string name="preference_logs_summary">Applicatielogs bekijken en exporteren</string>
+    <string name="backup_component_searchactions">Snelle acties</string>
+    <string name="preference_screen_search_actions">Snelle acties</string>
+    <string name="preference_search_search_actions_summary">Snelle acties en zoeksnelkoppelingen configureren</string>
+    <string name="search_action_call">Oproep</string>
+    <string name="search_action_message">Bericht</string>
+    <string name="search_action_email">E-mail</string>
+    <string name="search_action_alarm">Alarm instellen</string>
+    <string name="search_action_timer">Timer starten</string>
+    <string name="search_action_contact">Contact maken</string>
+    <string name="search_action_open_url">Website bekijken</string>
+    <string name="search_action_event">Event plannen</string>
+    <string name="create_search_action_type">Welke actie wil je maken\?</string>
+    <string name="create_search_action_type_web">Zoeken op website</string>
+    <string name="create_search_action_type_app">Zoeken in applicatie</string>
+    <string name="create_search_action_type_intent">Aangepaste indent</string>
+    <string name="create_search_action_title">Nieuwe snelle actie</string>
+    <string name="edit_search_action_title">Snelle actie bewerken</string>
+    <string name="create_search_action_pick_app">Kies een zoekapplicatie:</string>
+    <string name="create_search_action_website_url">Adres van de website:</string>
+    <string name="create_search_action_website_invalid_url">De website kan niet automatisch geïmporteerd worden als een webzoekmachine. Probeer een andere website of geef de gegevens handmatig in in de volgende stap.</string>
+    <string name="search_action_label">Naam</string>
+    <string name="search_action_app">Applicatie</string>
+    <string name="search_action_websearch_url">URL-sjabloon</string>
+    <string name="search_action_websearch_url_hint">Het URL-sjabloon dat gebruikt wordt om de zoek-URL te maken. Gebruik ‘${1}’ op de plaats waar de echte zoekterm moet komen, bv. https://google.com/search\?q=${1}.</string>
+    <string name="more_information">Meer informatie</string>
+    <string name="experimental_feature">Experimenteel</string>
+    <string name="help">Hulp</string>
+    <string name="skip">Overslaan</string>
+    <string name="action_continue">Doorgaan</string>
 </resources>
