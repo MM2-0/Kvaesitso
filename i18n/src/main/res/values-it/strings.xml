@@ -47,6 +47,7 @@
     <string name="preference_search_wikipedia_pictures">Mostra immagini</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d evento in corso da giorni passati</item>
+        <item quantity="many">+%1$d eventi in corso da giorni passati</item>
         <item quantity="other">+%1$d eventi in corso da giorni passati</item>
     </plurals>
     <string name="preference_search_wikipedia_pictures_summary">Aumenta significativamente il consumo dei dati</string>
@@ -344,6 +345,7 @@
     <string name="preference_calendar_calendars">Calendari</string>
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendario selezionato</item>
+        <item quantity="many">%1$d calendari selezionati</item>
         <item quantity="other">%1$d calendari selezionati</item>
     </plurals>
     <string name="preference_screen_buildinfo">Informazioni build</string>
@@ -356,6 +358,7 @@
     <string name="battery_part_charging">In carica</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Carico in %1$s minuto</item>
+        <item quantity="many">Carico in %1$s minuti</item>
         <item quantity="other">Carico in %1$s minuti</item>
     </plurals>
     <string name="no_account_nextcloud">Non hai ancora collegato un account Nextcloud</string>
@@ -460,6 +463,7 @@
     <string name="preference_debug_cleanup_database_summary">Rimuovi le voci interrotte e inutilizzate dal database del launcher</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d voce è stata rimossa.</item>
+        <item quantity="many">%1$d voci sono state rimosse.</item>
         <item quantity="other">%1$d voci sono state rimosse.</item>
     </plurals>
     <string name="favorites">Preferiti</string>
@@ -492,4 +496,35 @@
     <string name="preference_system_bar_icons_dark">Scuro</string>
     <string name="preference_clock_widget_color">Colore</string>
     <string name="preference_search_bar_color">Colore</string>
+    <string name="preference_logs">Log</string>
+    <string name="preference_logs_summary">Visualizza ed esporta i log dell\'applicazione</string>
+    <string name="backup_component_searchactions">Azioni rapide</string>
+    <string name="preference_screen_search_actions">Azioni rapide</string>
+    <string name="preference_search_search_actions_summary">Configura azioni rapide e scorciatoie di ricerca</string>
+    <string name="search_action_call">Chiamata</string>
+    <string name="search_action_message">Messaggio</string>
+    <string name="search_action_email">E-mail</string>
+    <string name="search_action_alarm">Imposta sveglia</string>
+    <string name="search_action_timer">Avvia timer</string>
+    <string name="search_action_contact">Crea contatto</string>
+    <string name="search_action_open_url">Visualizza sito web</string>
+    <string name="search_action_event">Pianifica evento</string>
+    <string name="create_search_action_type">Che tipo di azione vuoi creare\?</string>
+    <string name="create_search_action_type_web">Cerca su un sito web</string>
+    <string name="create_search_action_type_app">Cerca in un\'app</string>
+    <string name="create_search_action_type_intent">Intent personalizzato</string>
+    <string name="create_search_action_title">Nuova azione rapida</string>
+    <string name="edit_search_action_title">Modifica azione rapida</string>
+    <string name="create_search_action_pick_app">Scegli un\'app per la ricerca:</string>
+    <string name="create_search_action_website_url">Inserisci l\'indirizzo del sito web:</string>
+    <string name="create_search_action_website_invalid_url">Il sito web specificato non può essere importato automaticamente come ricerca web. Puoi provare un altro sito web o inserire manualmente i dati richiesti nel passaggio successivo.</string>
+    <string name="search_action_label">Nome</string>
+    <string name="search_action_app">App</string>
+    <string name="search_action_websearch_url">Modello dell\'URL</string>
+    <string name="search_action_websearch_url_hint">Il modello di URL utilizzato per creare l\'URL della ricerca web. Utilizza \'${1}\' come segnaposto per il termine di ricerca effettivo, ad es. https://google.com/search\?q=${1}.</string>
+    <string name="more_information">Maggiori informazioni</string>
+    <string name="experimental_feature">Sperimentale</string>
+    <string name="help">Aiuto</string>
+    <string name="skip">Salta</string>
+    <string name="action_continue">Continua</string>
 </resources>
