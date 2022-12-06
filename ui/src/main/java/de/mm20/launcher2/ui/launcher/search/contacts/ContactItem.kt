@@ -284,7 +284,7 @@ fun ContactItem(
 
                 toolbarActions.add(
                     DefaultToolbarAction(
-                        label = stringResource(R.string.menu_calendar_open_externally),
+                        label = stringResource(R.string.menu_contacts_open_externally),
                         icon = Icons.Rounded.OpenInNew,
                         action = {
                             viewModel.launch(context)
