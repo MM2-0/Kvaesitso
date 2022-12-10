@@ -1,14 +1,11 @@
 package de.mm20.launcher2.searchactions
 
-import android.app.SearchManager
-import android.app.SearchableInfo
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
-import android.util.Log
 import android.util.Xml
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
@@ -120,8 +117,8 @@ internal class SearchActionServiceImpl(
                     ?.absUrl("href")
                     ?.takeIf { it.isNotEmpty() }
 
-                var action = openSearchHref?.let {
-                    importOpenSearch(it)
+                val action = openSearchHref?.let {
+                    importOpenSearch(it, iconSize)
                 }
 
                 if (action != null) {
@@ -139,7 +136,7 @@ internal class SearchActionServiceImpl(
             return@withContext null
         }
 
-    private suspend fun importOpenSearch(openSearchHref: String): WebsearchActionBuilder? {
+    private suspend fun importOpenSearch(openSearchHref: String, iconSize: Int): WebsearchActionBuilder? {
         try {
             val httpClient = OkHttpClient()
             val request = Request.Builder()
@@ -151,8 +148,8 @@ internal class SearchActionServiceImpl(
             var label: String? = null
             var urlTemplate: String? = null
             var icon: String? = null
-            var iconSize: Int = 0
-            var iconUrl: String? = null
+            var largestIconSize: Int = 0
+            var largestIcon: String? = null
 
             inputStream.use {
                 val parser = Xml.newPullParser()
@@ -175,13 +172,13 @@ internal class SearchActionServiceImpl(
                             }
 
                             "Image" -> {
-                                val size =
+                                val width =
                                     parser.getAttributeValue(null, "width")?.toIntOrNull() ?: 0
-                                if (size > iconSize || iconUrl == null) {
+                                if (width > largestIconSize || largestIcon == null) {
                                     parser.next()
                                     if (parser.eventType == XmlPullParser.TEXT) {
-                                        iconUrl = parser.text
-                                        iconSize = size
+                                        largestIcon = parser.text
+                                        largestIconSize = width
                                     }
                                 }
                             }
@@ -205,7 +202,7 @@ internal class SearchActionServiceImpl(
                     }
                 }
 
-                val localIconUrl = iconUrl?.let {
+                val localIconUrl = largestIcon?.let {
                     val uri = Uri.parse(it)
                     createIcon(uri, iconSize)
                 }
