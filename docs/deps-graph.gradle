@@ -86,16 +86,16 @@ task projectDependencyGraph {
         traits.add('shape=box')
       }
 
-      if (multiplatformProjects.contains(project)) {
-        traits.add('fillcolor="#ffd2b3"')
-      } else if (jsProjects.contains(project)) {
-        traits.add('fillcolor="#ffffba"')
-      } else if (androidProjects.contains(project)) {
+      if (project.getPath().startsWith(":core")) {
+        traits.add('fillcolor="#94c1ff"')
+      } else if (project.getPath().startsWith(":app")) {
         traits.add('fillcolor="#baffc9"')
-      } else if (javaProjects.contains(project)) {
-        traits.add('fillcolor="#ffb3ba"')
-      } else {
-        traits.add('fillcolor="#eeeeee"')
+      } else if (project.getPath().startsWith(":data")) {
+        traits.add('fillcolor="#fff694"')
+      } else if (project.getPath().startsWith(":services")) {
+        traits.add('fillcolor="#ff9498"')
+      } else if (project.getPath().startsWith(":libs")) {
+        traits.add('fillcolor="#ad94ff"')
       }
 
       dot << "  \"${project.path}\" [${traits.join(", ")}];\n"
