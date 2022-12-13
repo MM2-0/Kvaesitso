@@ -523,4 +523,6 @@
     <string name="experimental_feature">Experimentell</string>
     <string name="preference_logs">Logs</string>
     <string name="preference_logs_summary">Anwendungslogs ansehen und exportieren</string>
+    <string name="preference_screen_tags">Tags</string>
+    <string name="preference_screen_tags_summary">Tags und getaggte Elemente verwalten</string>
 </resources>
