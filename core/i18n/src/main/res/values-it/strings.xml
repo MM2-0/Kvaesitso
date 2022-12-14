@@ -527,4 +527,6 @@
     <string name="help">Aiuto</string>
     <string name="skip">Salta</string>
     <string name="action_continue">Continua</string>
+    <string name="preference_screen_tags">Tag</string>
+    <string name="preference_screen_tags_summary">Gestisci i tag e gli elementi con tag</string>
 </resources>
