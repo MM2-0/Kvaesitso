@@ -293,7 +293,7 @@
     <string name="preference_screen_services">Diensten</string>
     <string name="edit_favorites_dialog_empty_section">Sleep items naar hier</string>
     <string name="preference_themed_icons">Iconen met thema</string>
-    <string name="preference_themed_icons_summary">Pas de kleur van iconen aan aan het kleurenschema</string>
+    <string name="preference_themed_icons_summary">Kleur pictogrammen met het kleurenschema van de toepassing</string>
     <string name="preference_force_themed_icons">Forceer iconen met een thema</string>
     <string name="preference_icon_pack">Pictogrammenpakket</string>
     <string name="preference_category_system_bars">Systeembalken</string>
@@ -513,7 +513,7 @@
     <string name="edit_search_action_title">Snelle actie bewerken</string>
     <string name="create_search_action_pick_app">Kies een zoekapplicatie:</string>
     <string name="create_search_action_website_url">Adres van de website:</string>
-    <string name="create_search_action_website_invalid_url">De website kan niet automatisch geïmporteerd worden als een webzoekmachine. Probeer een andere website of geef de gegevens handmatig in in de volgende stap.</string>
+    <string name="create_search_action_website_invalid_url">De opgegeven website kan niet automatisch worden geïmporteerd als een websearch. U kunt een andere website proberen of de vereiste gegevens handmatig invoeren in de volgende stap.</string>
     <string name="search_action_label">Naam</string>
     <string name="search_action_app">Applicatie</string>
     <string name="search_action_websearch_url">URL-sjabloon</string>
@@ -523,4 +523,6 @@
     <string name="help">Hulp</string>
     <string name="skip">Overslaan</string>
     <string name="action_continue">Doorgaan</string>
+    <string name="preference_screen_tags">Tags</string>
+    <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
 </resources>
