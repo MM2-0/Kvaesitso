@@ -153,7 +153,7 @@ fun EditSearchActionSheet(
                                 if (viewModel.skipWebsearchImport.value) {
                                     R.string.skip
                                 } else {
-                                    R.string.action_continue
+                                    R.string.action_next
                                 }
                             )
                         )

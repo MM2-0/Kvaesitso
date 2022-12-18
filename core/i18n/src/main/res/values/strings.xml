@@ -238,8 +238,10 @@
     <!-- Close a dialog -->
     <string name="close">Close</string>
     <string name="save">Save</string>
+    <string name="duplicate">Duplicate</string>
     <string name="skip">Skip</string>
     <string name="action_continue">Continue</string>
+    <string name="action_next">Next</string>
     <!-- Turn something off / disable a functionality of the launcher -->
     <string name="turn_off">Turn off</string>
     <string name="widget_action_adjust_height">Adjust height</string>
