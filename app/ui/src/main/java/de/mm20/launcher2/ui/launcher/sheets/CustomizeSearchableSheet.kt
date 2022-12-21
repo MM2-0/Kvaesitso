@@ -66,7 +66,8 @@ fun CustomizeSearchableSheet(
         if (!pickIcon) {
             Column(
                 modifier = Modifier
-                    .padding(top = 8.dp),
+                    .padding(top = 8.dp)
+                    .padding(it),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
 
@@ -162,7 +163,8 @@ fun CustomizeSearchableSheet(
 
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),
-                columns = GridCells.Fixed(columns)
+                columns = GridCells.Fixed(columns),
+                contentPadding = it,
             ) {
 
                 item(span = { GridItemSpan(columns) }) {

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
@@ -58,7 +59,7 @@ fun BottomSheetDialog(
     dismissButton: @Composable (() -> Unit)? = null,
     swipeToDismiss: () -> Boolean = { true },
     dismissOnBackPress: () -> Boolean = { true },
-    content: @Composable () -> Unit,
+    content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val swipeState = remember {
         SwipeableState(
@@ -200,12 +201,11 @@ fun BottomSheetDialog(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .wrapContentHeight()
-                                .padding(horizontal = 24.dp, vertical = 8.dp),
+                                .wrapContentHeight(),
                             propagateMinConstraints = true,
                             contentAlignment = Alignment.Center
                         ) {
-                            content()
+                            content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
                         }
 
                     }

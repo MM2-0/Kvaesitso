@@ -80,6 +80,7 @@ fun RestoreBackupSheet(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .verticalScroll(rememberScrollState())
+                .padding(it)
         ) {
             when (state) {
                 RestoreBackupState.Parsing -> {

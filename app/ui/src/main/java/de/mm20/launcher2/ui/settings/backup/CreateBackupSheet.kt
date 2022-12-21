@@ -93,6 +93,7 @@ fun CreateBackupSheet(
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .verticalScroll(rememberScrollState())
+                .padding(it)
         ) {
             when (state) {
                 CreateBackupState.Ready -> {
@@ -143,7 +144,9 @@ fun CreateBackupSheet(
                             }
                         )
                         SmallMessage(
-                            modifier = Modifier.padding(top = 8.dp),
+                            modifier = Modifier
+                                .padding(top = 8.dp)
+                                .fillMaxWidth(),
                             icon = Icons.Rounded.Warning,
                             text = stringResource(R.string.backup_not_included)
                         )

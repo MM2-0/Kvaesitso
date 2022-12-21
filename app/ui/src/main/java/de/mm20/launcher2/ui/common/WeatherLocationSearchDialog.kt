@@ -51,7 +51,7 @@ fun WeatherLocationSearchDialog(
     ) {
         var query by remember { mutableStateOf("") }
         Column(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth().padding(it)
         ) {
             Row(
                 Modifier.padding(bottom = 16.dp)

@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -102,16 +103,19 @@ fun EditTagSheet(
         }
     ) {
         when (viewModel.page) {
-            EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel)
-            EditTagSheetPage.PickItems -> PickItems(viewModel)
-            EditTagSheetPage.CustomizeTag -> CustomizeTag(viewModel)
+            EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)
+            EditTagSheetPage.PickItems -> PickItems(viewModel, it)
+            EditTagSheetPage.CustomizeTag -> CustomizeTag(viewModel, it)
         }
     }
 }
 
 @Composable
-fun CreateNewTagPage(viewModel: EditTagSheetVM) {
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+fun CreateNewTagPage(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .padding(paddingValues)
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
@@ -130,8 +134,8 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM) {
 }
 
 @Composable
-fun PickItems(viewModel: EditTagSheetVM) {
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
+    LazyColumn(modifier = Modifier.fillMaxWidth(), contentPadding = paddingValues) {
         item {
             Text(stringResource(id = R.string.tag_select_items),
                 style = MaterialTheme.typography.labelMedium,
@@ -209,9 +213,13 @@ fun ListItem(
 
 
 @Composable
-fun CustomizeTag(viewModel: EditTagSheetVM) {
+fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val iconSize = 32.dp.toPixels()
-    Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+    Column(modifier = Modifier
+        .verticalScroll(rememberScrollState())
+        .fillMaxWidth()
+        .padding(paddingValues)
+    ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,

@@ -56,6 +56,7 @@ fun HiddenItemsSheet(
             items,
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
+                .padding(it)
         )
     }
 }

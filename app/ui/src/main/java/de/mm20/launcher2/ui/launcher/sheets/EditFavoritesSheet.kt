@@ -151,6 +151,7 @@ fun EditFavoritesSheet(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
+                    .padding(it)
             ) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -159,15 +160,15 @@ fun EditFavoritesSheet(
                 )
             }
         } else if (createShortcutTarget != null) {
-            ShortcutPicker(viewModel)
+            ShortcutPicker(viewModel, it)
         } else {
-            ReorderFavoritesGrid(viewModel)
+            ReorderFavoritesGrid(viewModel, it)
         }
     }
 }
 
 @Composable
-fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
+fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues) {
     val items by viewModel.gridItems.observeAsState(emptyList())
     val columns = LocalGridSettings.current.columnCount
 
@@ -238,6 +239,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM) {
     LazyVerticalDragAndDropGrid(
         state = state,
         columns = GridCells.Fixed(columns),
+        contentPadding = paddingValues,
 
         ) {
         items(
@@ -670,7 +672,7 @@ fun GridItem(
 }
 
 @Composable
-fun ShortcutPicker(viewModel: EditFavoritesSheetVM) {
+fun ShortcutPicker(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues) {
 
     val hasShortcutPermission by remember { viewModel.hasShortcutPermission }.collectAsState(null)
 
@@ -690,7 +692,9 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM) {
 
     val iconSize = 48.dp.toPixels().roundToInt()
     val activity = LocalLifecycleOwner.current as AppCompatActivity
-    LazyColumn {
+    LazyColumn(
+        contentPadding = paddingValues
+    ) {
         if (hasShortcutPermission == false) {
             item {
                 MissingPermissionBanner(

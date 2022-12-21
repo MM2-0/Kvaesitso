@@ -205,20 +205,25 @@ fun EditSearchActionSheet(
             )
         }) {
         when (page) {
-            EditSearchActionPage.SelectType -> SelectTypePage(viewModel)
-            EditSearchActionPage.InitWebSearch -> InitWebSearchPage(viewModel)
-            EditSearchActionPage.InitAppSearch -> InitAppSearchPage(viewModel)
-            EditSearchActionPage.CustomizeWebSearch -> CustomizeWebSearch(viewModel)
-            EditSearchActionPage.CustomizeCustomIntent -> CustomizeCustomIntent(viewModel)
-            EditSearchActionPage.CustomizeAppSearch -> CustomizeAppSearch(viewModel)
-            EditSearchActionPage.PickIcon -> PickIcon(viewModel)
+            EditSearchActionPage.SelectType -> SelectTypePage(viewModel, it)
+            EditSearchActionPage.InitWebSearch -> InitWebSearchPage(viewModel, it)
+            EditSearchActionPage.InitAppSearch -> InitAppSearchPage(viewModel, it)
+            EditSearchActionPage.CustomizeWebSearch -> CustomizeWebSearch(viewModel, it)
+            EditSearchActionPage.CustomizeCustomIntent -> CustomizeCustomIntent(viewModel, it)
+            EditSearchActionPage.CustomizeAppSearch -> CustomizeAppSearch(viewModel, it)
+            EditSearchActionPage.PickIcon -> PickIcon(viewModel, it)
         }
     }
 }
 
 @Composable
-private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
-    Column {
+private fun SelectTypePage(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(paddingValues)
+    ) {
         Text(
             text = stringResource(R.string.create_search_action_type),
             style = MaterialTheme.typography.labelMedium,
@@ -299,13 +304,13 @@ private fun SelectTypePage(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-private fun InitAppSearchPage(viewModel: EditSearchActionSheetVM) {
+private fun InitAppSearchPage(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     val context = LocalContext.current
     val searchableApps by remember { viewModel.getSearchableApps(context) }.collectAsState(null)
 
     if (searchableApps != null) {
         LazyColumn(
-            contentPadding = PaddingValues(bottom = 16.dp)
+            contentPadding = paddingValues
         ) {
             item {
                 Text(
@@ -344,12 +349,15 @@ private fun InitAppSearchPage(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM) {
+private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     var url by viewModel.initWebsearchUrl
     val importError by viewModel.websearchImportError
     val loading by viewModel.loadingWebsearch
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())
+            .padding(paddingValues)
     ) {
         Text(
             text = stringResource(R.string.create_search_action_website_url),
@@ -391,11 +399,14 @@ private fun InitWebSearchPage(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
+fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     val searchAction by viewModel.searchAction
 
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .padding(paddingValues)
     ) {
 
         if (searchAction != null && searchAction is WebsearchActionBuilder) {
@@ -515,7 +526,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
+fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     val searchAction by viewModel.searchAction
     val context = LocalContext.current
 
@@ -531,7 +542,10 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
         }
 
     Column(
-        modifier = Modifier.verticalScroll(rememberScrollState())
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .padding(paddingValues)
     ) {
 
         if (searchAction != null) {
@@ -632,7 +646,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
+fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     val searchAction by viewModel.searchAction
 
     val action = searchAction
@@ -642,6 +656,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxWidth()
+                .padding(paddingValues)
         ) {
             Row(
                 verticalAlignment = Alignment.Bottom
@@ -715,7 +730,7 @@ fun CustomizeCustomIntent(viewModel: EditSearchActionSheetVM) {
 }
 
 @Composable
-fun PickIcon(viewModel: EditSearchActionSheetVM) {
+fun PickIcon(viewModel: EditSearchActionSheetVM, paddingValues: PaddingValues) {
     val action by viewModel.searchAction
 
     val iconSizePx = 20.dp.toPixels()
@@ -730,7 +745,9 @@ fun PickIcon(viewModel: EditSearchActionSheetVM) {
         val availableIcons =
             remember { SearchActionIcon.values().filter { it != SearchActionIcon.Custom } }
 
-        Column {
+        Column(
+            modifier = Modifier.padding(paddingValues)
+        ) {
             LazyVerticalGrid(columns = GridCells.Adaptive(64.dp)) {
                 if (action is AppSearchActionBuilder) {
                     item {
@@ -779,7 +796,8 @@ fun PickIcon(viewModel: EditSearchActionSheetVM) {
         }
     } else {
         Column(
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(paddingValues)
         ) {
             SearchActionIconTile {
                 SearchActionIcon(builder = action!!, size = 24.dp)
