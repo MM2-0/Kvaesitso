@@ -525,4 +525,18 @@
     <string name="preference_logs_summary">Anwendungslogs ansehen und exportieren</string>
     <string name="preference_screen_tags">Tags</string>
     <string name="preference_screen_tags_summary">Tags und getaggte Elemente verwalten</string>
+    <string name="duplicate">Duplizieren</string>
+    <string name="action_next">Weiter</string>
+    <string name="create_tag_title">Neuer Tag</string>
+    <string name="edit_tag_title">Tag bearbeiten</string>
+    <string name="tag_exists_error">Ein Tag mit diesem Namen existiert bereits.</string>
+    <string name="tag_exists_message">Ein Tag mit diesem Namen existiert bereits. Wenn Sie fortfahren, werden die beiden Tags zusammengeführt.</string>
+    <string name="tag_no_items_message">Diesem Tag sind keine Elemente zugeordnet. Wenn Sie fortfahren, wird der Tag gelöscht.</string>
+    <string name="tag_empty_message">Tag-Name darf nicht leer sein.</string>
+    <string name="tag_select_items">Elemente auswählen:</string>
+    <string name="tag_name">Tag-Name</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d Element ausgewählt</item>
+        <item quantity="other">%1$d Elemente ausgewählt</item>
+    </plurals>
 </resources>
