@@ -221,9 +221,10 @@ internal class AppShortcutRepositoryImpl(
 
 
     private fun matches(label: String, query: String): Boolean {
-        val labelLatin = label.normalize()
+        val normalizedLabel = label.normalize()
+        val normalizedQuery = query.normalize()
+        if (normalizedLabel.contains(normalizedQuery)) return true
         val fuzzyScore = FuzzyScore(Locale.getDefault())
-        return fuzzyScore.fuzzyScore(label, query) >= query.length * 1.5 ||
-                fuzzyScore.fuzzyScore(labelLatin, query.normalize()) >= query.length * 1.5
+        return fuzzyScore.fuzzyScore(normalizedLabel, normalizedQuery) >= query.length * 1.5
     }
 }

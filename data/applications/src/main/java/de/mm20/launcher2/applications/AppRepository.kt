@@ -170,9 +170,10 @@ internal class AppRepositoryImpl(
 
     private fun matches(label: String, query: String): Boolean {
         val normalizedLabel = label.normalize()
+        val normalizedQuery = query.normalize()
+        if (normalizedLabel.contains(normalizedQuery)) return true
         val fuzzyScore = FuzzyScore(Locale.getDefault())
-        return fuzzyScore.fuzzyScore(label, query) >= query.length * 1.5 ||
-                fuzzyScore.fuzzyScore(normalizedLabel, query.normalize()) >= query.length * 1.5
+        return fuzzyScore.fuzzyScore(normalizedLabel, normalizedQuery) >= query.length * 1.5
     }
 
     private fun getActivityByComponentName(componentName: ComponentName?): LauncherApp? {
