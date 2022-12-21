@@ -63,6 +63,8 @@ internal class WikipediaRepositoryImpl(
             httpClient.dispatcher.cancelAll()
         }
 
+        if (query.length < 4) return@channelFlow
+
         if (!::wikipediaService.isInitialized) return@channelFlow
         if (query.isBlank()) return@channelFlow
 

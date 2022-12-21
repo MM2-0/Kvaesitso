@@ -19,6 +19,7 @@ internal class LocalFileProvider(
         if (!permissionsManager.checkPermissionOnce(PermissionGroup.ExternalStorage)) {
             return@withContext emptyList()
         }
+        if (query.length < 2 || query.isBlank()) return@withContext emptyList()
         val results = mutableListOf<LocalFile>()
         val uri = MediaStore.Files.getContentUri("external").buildUpon()
             .appendQueryParameter("limit", "10").build()
@@ -29,9 +30,8 @@ internal class LocalFileProvider(
             MediaStore.Files.FileColumns.DATA,
             MediaStore.Files.FileColumns.MIME_TYPE
         )
-        val selection =
-            if (query.length > 3) "${MediaStore.Files.FileColumns.TITLE} LIKE ?" else "${MediaStore.Files.FileColumns.TITLE} = ?"
-        val selArgs = if (query.length > 3) arrayOf("%$query%") else arrayOf(query)
+        val selection = "${MediaStore.Files.FileColumns.TITLE} LIKE ?"
+        val selArgs = if (query.length > 3) arrayOf("%$query%") else arrayOf("$query%")
         val sort = "${MediaStore.Files.FileColumns.DISPLAY_NAME} COLLATE NOCASE ASC"
 
 

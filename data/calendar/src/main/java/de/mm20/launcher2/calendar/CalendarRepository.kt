@@ -38,7 +38,7 @@ internal class CalendarRepositoryImpl(
 ) : CalendarRepository {
 
     override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
-        if (query.isBlank() || query.length < 3) {
+        if (query.isBlank() || query.length < 2) {
             return flow {
                 emit(persistentListOf())
             }

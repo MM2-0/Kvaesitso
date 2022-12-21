@@ -24,7 +24,7 @@ internal class ContactRepositoryImpl(
     override fun search(query: String): Flow<ImmutableList<Contact>> {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
-        if (query.length < 3) {
+        if (query.length < 2) {
             return flow {
                 emit(persistentListOf())
             }
@@ -59,6 +59,7 @@ internal class ContactRepositoryImpl(
             val results = mutableListOf<Contact>()
             for ((id, rawIds) in contactMap) {
                 Contact.contactById(context, id, rawIds)?.let { results.add(it) }
+                if (results.size > 15) break
             }
             results
         }
