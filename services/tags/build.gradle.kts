@@ -47,5 +47,7 @@ dependencies {
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))
     implementation(project(":core:crashreporter"))
+    implementation(project(":data:customattrs"))
+    implementation(project(":data:favorites"))
 
 }

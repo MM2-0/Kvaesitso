@@ -10,6 +10,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
@@ -85,6 +86,6 @@ class CustomizeSearchableSheetVM(
     }
 
     suspend fun autocompleteTags(query: String): List<String> {
-        return customAttributesRepository.getAllTags(startsWith = query)
+        return customAttributesRepository.getAllTags(startsWith = query).first()
     }
 }

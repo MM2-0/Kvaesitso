@@ -78,6 +78,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         availableTags.value =
             customAttributesRepository
                 .getAllTags()
+                .first()
                 .filter {t -> pinnedTags.none { it.tag == t } }
                 .sortedBy { it.normalize() }
                 .map { Tag(it) }

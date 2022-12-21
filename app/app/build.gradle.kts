@@ -128,6 +128,7 @@ dependencies {
     implementation(project(":core:permissions"))
     implementation(project(":core:preferences"))
     implementation(project(":services:search"))
+    implementation(project(":services:tags"))
     implementation(project(":data:unitconverter"))
     implementation(project(":app:ui"))
     implementation(project(":data:weather"))

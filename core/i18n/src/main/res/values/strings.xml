@@ -710,4 +710,16 @@
     <string name="search_action_websearch_url_hint">The URL template that is used to construct the web search URL. Use ‘${1}’ as a placeholder for the actual search term, e.g. https://google.com/search?q=${1}.</string>
     <string name="more_information">More information</string>
     <string name="experimental_feature">Experimental</string>
+    <string name="create_tag_title">New tag</string>
+    <string name="edit_tag_title">Edit tag</string>
+    <string name="tag_exists_error">A tag with this name already exists.</string>
+    <string name="tag_exists_message">A tag with this name already exists. If you continue, the two tags will be merged.</string>
+    <string name="tag_no_items_message">No items are assigned to this tag. If you continue, the tag will be deleted.</string>
+    <string name="tag_empty_message">Tag name must not be blank.</string>
+    <string name="tag_select_items">Select items:</string>
+    <string name="tag_name">Tag name</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d item selected</item>
+        <item quantity="other">%1$d items selected</item>
+    </plurals>
 </resources>

@@ -34,11 +34,13 @@ interface CustomAttributesRepository {
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
 
-    suspend fun getAllTags(startsWith: String? = null): List<String>
+    fun getAllTags(startsWith: String? = null): Flow<List<String>>
     fun getItemsForTag(tag: String): Flow<List<SavableSearchable>>
+    fun setItemsForTag(tag: String, items: List<SavableSearchable>): Job
     fun addTag(item: SavableSearchable, tag: String)
 
-    fun renameTag(oldName: String, newName: String)
+    fun renameTag(oldName: String, newName: String): Job
+    fun deleteTag(tag: String): Job
     suspend fun cleanupDatabase(): Int
 }
 
@@ -114,7 +116,7 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override suspend fun getAllTags(startsWith: String?): List<String> {
+    override fun getAllTags(startsWith: String?): Flow<List<String>> {
         val dao = appDatabase.customAttrsDao()
         return if (startsWith != null) {
             dao.getAllTagsLike("$startsWith%")
@@ -130,6 +132,17 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
+    override fun setItemsForTag(tag: String, items: List<SavableSearchable>): Job {
+        val dao = appDatabase.customAttrsDao()
+        return scope.launch {
+            dao.setItemsWithTag(tag, items.map { it.key })
+            for (item in items) {
+                favoritesRepository.save(item)
+            }
+        }
+    }
+
+
     override fun addTag(item: SavableSearchable, tag: String) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
@@ -137,10 +150,17 @@ internal class CustomAttributesRepositoryImpl(
         }
     }
 
-    override fun renameTag(oldName: String, newName: String) {
+    override fun renameTag(oldName: String, newName: String): Job {
         val dao = appDatabase.customAttrsDao()
-        scope.launch {
+        return scope.launch {
             dao.renameTag(oldName, newName)
+        }
+    }
+
+    override fun deleteTag(tag: String): Job {
+        val dao = appDatabase.customAttrsDao()
+        return scope.launch {
+            dao.deleteTag(tag)
         }
     }
 

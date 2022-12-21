@@ -28,6 +28,7 @@ import de.mm20.launcher2.notifications.notificationsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.searchactions.searchActionsModule
+import de.mm20.launcher2.services.tags.servicesTagsModule
 import de.mm20.launcher2.weather.weatherModule
 import kotlinx.coroutines.*
 import org.koin.android.ext.koin.androidContext
@@ -74,7 +75,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     weatherModule,
                     websitesModule,
                     widgetsModule,
-                    wikipediaModule
+                    wikipediaModule,
+                    servicesTagsModule,
                 )
             )
         }
