@@ -88,4 +88,5 @@
     <string name="preference_icon_shape_rounded_square">角丸</string>
     <string name="preference_icon_shape_square">スクエア</string>
     <string name="preference_clockwidget_alarm_part">アラーム</string>
+    <string name="wikipedia_source">ウィキペディアから</string>
 </resources>
