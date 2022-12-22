@@ -38,7 +38,8 @@ fun TagsSettingsScreen() {
             FloatingActionButton(onClick = { viewModel.createTag.value = true }) {
                 Icon(Icons.Rounded.Add, null)
             }
-        }
+        },
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/tags"
     ) {
         item {
             PreferenceCategory {
