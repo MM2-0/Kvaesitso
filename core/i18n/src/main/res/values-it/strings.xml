@@ -429,7 +429,7 @@
     <string name="preference_backup_summary">Esporta preferenze e dati del launcher</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
     <string name="menu_customize">Personalizza</string>
-    <string name="calendar_widget_next_events">Prossimo evento</string>
+    <string name="calendar_widget_next_events">Evento successivo</string>
     <string name="weather_condition_heavysleetshowersandthunder">Rovesci di nevischio e tuoni</string>
     <string name="weather_condition_heavysnowshowersandthunder">Forti rovesci di neve e tuoni</string>
     <string name="weather_condition_snowshowersandthunder">Rovesci di neve e tuoni</string>
@@ -529,4 +529,19 @@
     <string name="action_continue">Continua</string>
     <string name="preference_screen_tags">Tag</string>
     <string name="preference_screen_tags_summary">Gestisci i tag e gli elementi con tag</string>
+    <string name="tag_exists_message">Esiste già un tag con questo nome. Se continui, i due tag verranno uniti.</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d elemento selezionato</item>
+        <item quantity="many">%1$d elementi selezionati</item>
+        <item quantity="other">%1$d elementi selezionati</item>
+    </plurals>
+    <string name="duplicate">Duplica</string>
+    <string name="action_next">Successivo</string>
+    <string name="create_tag_title">Nuovo tag</string>
+    <string name="edit_tag_title">Modifica tag</string>
+    <string name="tag_exists_error">Esiste già un tag con questo nome.</string>
+    <string name="tag_no_items_message">Nessun elemento è assegnato a questo tag. Se continui, il tag verrà eliminato.</string>
+    <string name="tag_empty_message">Il nome del tag non deve essere vuoto.</string>
+    <string name="tag_select_items">Seleziona elementi:</string>
+    <string name="tag_name">Nome tag</string>
 </resources>
