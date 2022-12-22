@@ -19,11 +19,15 @@ class CalendarIconProvider(val context: Context): IconProvider {
         } catch (e: PackageManager.NameNotFoundException) {
             return null
         }
-        val resources = pm.getResourcesForActivity(component)
         var arrayId = ai.metaData?.getInt("com.teslacoilsw.launcher.calendarIconArray") ?: 0
         if (arrayId == 0) arrayId = ai.metaData?.getInt("com.google.android.calendar.dynamic_icons")
             ?: return null
         if (arrayId == 0) return null
+        val resources = try {
+            pm.getResourcesForActivity(component)
+        } catch (e: PackageManager.NameNotFoundException) {
+            return null
+        }
         val typedArray = resources.obtainTypedArrayOrNull(arrayId) ?: return null
         if (typedArray.length() != 31) {
             typedArray.recycle()
