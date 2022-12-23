@@ -1,0 +1,32 @@
+import MoreVertRoundedIcon from '@mui/icons-material/MoreVertRounded'
+
+# Notification Access on Android 13+
+
+Starting with Android 13, notification access is restricted for sideloaded apps. If you sideloaded
+the APK, you might need to perform some extra steps to enable notification access (which is required for the music widget and for notification badges):
+
+1. Try to grant the notification access permission as you would normally do. If you sideloaded the APK, all the controls are disabled:
+
+<img src="/img/notification-access-1.png" width="300"/>
+
+2. Tap on the disabled toggle “Allow notification access”. This dialog will show up:
+
+<img src="/img/notification-access-2.png" width="300"/>
+
+3. Tap “OK” to close the dialog.
+
+4. Tap on the app icon. It leads to the app info screen.
+
+<img src="/img/notification-access-3.png" width="300"/>
+
+5. Tap on the 3-dot-menu (<MoreVertRoundedIcon/>) in the top-right corner.
+
+:::info
+This menu only shows up if you have tried to enable a restricted setting before. **Step 2 is crucial for this to work.**
+:::
+
+6. Tap on “Allow restricted settings”
+
+<img src="/img/notification-access-4.png" width="300"/>
+
+7. Go back to the previous screen. The controls are no longer disabled, and you can allow notification access.
