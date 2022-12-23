@@ -312,7 +312,7 @@
     <string name="preference_clockwidget_alarm_part">Sveglie</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nei prossimi 15 minuti</string>
     <string name="preference_export_log">Esporta file di log</string>
-    <string name="preference_screen_search">Cerca</string>
+    <string name="preference_screen_search">Ricerca</string>
     <string name="preference_screen_search_summary">Configura la ricerca</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_files">File</string>
