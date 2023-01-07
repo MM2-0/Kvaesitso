@@ -527,7 +527,7 @@
     <string name="preference_clock_widget_color">Couleur</string>
     <string name="preference_search_bar_color">Couleur</string>
     <string name="skip">Passer</string>
-    <string name="preference_logs">journaux</string>
+    <string name="preference_logs">Journaux</string>
     <string name="preference_logs_summary">Afficher et exporter les journaux de l\'application</string>
     <string name="help">Aide</string>
     <string name="action_continue">Continuer</string>
