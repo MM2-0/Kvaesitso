@@ -525,4 +525,18 @@
     <string name="action_continue">Doorgaan</string>
     <string name="preference_screen_tags">Tags</string>
     <string name="preference_screen_tags_summary">Beheer tags en getagde items</string>
+    <string name="create_tag_title">Nieuwe tag</string>
+    <string name="edit_tag_title">Tag bewerken</string>
+    <string name="tag_exists_error">Er bestaat al een tag met deze naam.</string>
+    <string name="tag_exists_message">Er bestaat al een tag met deze naam. Als je doorgaat worden de twee tags samengevoegd.</string>
+    <string name="tag_no_items_message">Deze tag bevat geen items. Als je doorgaat wordt de tag verwijderd.</string>
+    <string name="tag_empty_message">Tagnaam kan niet leeg zijn.</string>
+    <string name="tag_select_items">Kies items:</string>
+    <string name="tag_name">Tagnaam</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d item geselecteerd</item>
+        <item quantity="other">%1$d</item>
+    </plurals>
+    <string name="duplicate">Dupliceren</string>
+    <string name="action_next">Volgende</string>
 </resources>

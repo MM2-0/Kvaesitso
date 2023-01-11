@@ -247,6 +247,7 @@
     <string name="calendar_widget_new_event">Nouvel évènement</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d évènement a eu lieu ces derniers jours</item>
+        <item quantity="many">+%1$d évènements ont eu lieu ces derniers jours</item>
         <item quantity="other">+%1$d évènements ont eu lieu ces derniers jours</item>
     </plurals>
     <!-- Weather widget -->
@@ -364,6 +365,7 @@
     <string name="preference_calendar_hide_allday">Cacher les évènements qui durent toute la journée</string>
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendrier sélectionné</item>
+        <item quantity="many">%1$d calendriers sélectionnés</item>
         <item quantity="other">%1$d calendriers sélectionnés</item>
     </plurals>
     <string name="preference_screen_buildinfo">Informations sur la version</string>
@@ -394,6 +396,7 @@
     <string name="websearch_dialog_import_url">Importer depuis une URL</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Pleine dans %1$s minute</item>
+        <item quantity="many">Pleine dans %1$s minutes</item>
         <item quantity="other">Pleine dans %1$s minutes</item>
     </plurals>
     <string name="preference_clockwidget_date_part">Date</string>
@@ -442,7 +445,7 @@
     <string name="msg_item_hidden">%1$s a été caché.</string>
     <string name="action_undo">Annuler</string>
     <string name="preference_custom_colors_a1">Primaire</string>
-    <string name="preference_colors_custom">Personnalisé</string>
+    <string name="preference_colors_custom">Personnalisée</string>
     <string name="preference_restore_summary">Importer une ancienne sauvegarde</string>
     <string name="preference_backup">Sauvegarder</string>
     <string name="preference_screen_backup">Sauvegarde et restauration</string>
@@ -453,7 +456,7 @@
     <string name="preference_custom_colors_n1">Neutre</string>
     <string name="preference_custom_colors_error">Erreur</string>
     <string name="preference_custom_colors_advanced_mode">Mode avancé</string>
-    <string name="preference_custom_colors_simple_mode">Mode simplifié</string>
+    <string name="preference_custom_colors_simple_mode">Mode simple</string>
     <string name="preference_colors_auto_generate">Générer à partir de la couleur primaire</string>
     <string name="preference_custom_colors_n2">Variant neutre</string>
     <string name="preference_custom_colors_a2">Secondaire</string>
@@ -498,6 +501,7 @@
     <string name="customize_tags_placeholder">Étiquettes…</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entrée a été supprimée.</item>
+        <item quantity="many">%1$d entrées ont été supprimées.</item>
         <item quantity="other">%1$d entrées ont été supprimées.</item>
     </plurals>
     <string name="preference_widgets_edit_button_summary">Afficher un bouton pour ajouter, supprimer et réordonner les widgets</string>
@@ -523,8 +527,51 @@
     <string name="preference_clock_widget_color">Couleur</string>
     <string name="preference_search_bar_color">Couleur</string>
     <string name="skip">Passer</string>
-    <string name="preference_logs">journaux</string>
+    <string name="preference_logs">Journaux</string>
     <string name="preference_logs_summary">Afficher et exporter les journaux de l\'application</string>
     <string name="help">Aide</string>
     <string name="action_continue">Continuer</string>
+    <string name="preference_screen_search_actions">Actions rapides</string>
+    <string name="search_action_message">Message</string>
+    <string name="search_action_email">Mail</string>
+    <string name="search_action_event">Planifier un évènement</string>
+    <string name="create_search_action_type">Quel type d\'action voulez-vous créer \?</string>
+    <string name="search_action_app">Application</string>
+    <string name="search_action_label">Nom</string>
+    <string name="duplicate">Dupliquer</string>
+    <string name="action_next">Suivant</string>
+    <string name="backup_component_searchactions">Actions rapides</string>
+    <string name="create_search_action_title">Nouvelle action rapide</string>
+    <string name="preference_screen_tags">Étiquettes</string>
+    <string name="preference_screen_tags_summary">Gérer les étiquettes et les éléments étiquetés</string>
+    <string name="tag_exists_message">Une étiquette avec ce nom existe déjà. Si vous continuez, les deux étiquettes seront fusionnées.</string>
+    <string name="search_action_websearch_url_hint">Le modèle d\'URL est utilisé pour construire une URL de recherche. Utilisez ‘${1}’ comme remplacement pour la recherche entrée, par exemple https://google.com/search\?q=${1}.</string>
+    <string name="search_action_open_url">Voir le site</string>
+    <string name="create_search_action_website_url">Entrez l\'adresse du site :</string>
+    <string name="more_information">Plus d\'informations</string>
+    <string name="experimental_feature">Expérimental</string>
+    <string name="create_search_action_pick_app">Choisir une application pour rechercher :</string>
+    <string name="create_search_action_website_invalid_url">Ce site ne peut pas être importé automatiquement comme moteur de recherche. Vous pouvez essayer un autre site ou entrer directement les données nécessaires dans la prochaine étape.</string>
+    <string name="search_action_alarm">Créer une alarme</string>
+    <string name="search_action_timer">Démarrer un minuteur</string>
+    <string name="search_action_contact">Ajouter aux contacts</string>
+    <string name="create_search_action_type_web">Rechercher sur le site</string>
+    <string name="create_search_action_type_app">Rechercher dans une application</string>
+    <string name="create_search_action_type_intent">Intent personnalisé</string>
+    <string name="search_action_websearch_url">Modèle d\'URL</string>
+    <string name="create_tag_title">Nouvelle étiquette</string>
+    <string name="edit_tag_title">Éditer l\'étiquette</string>
+    <string name="tag_exists_error">Une étiquette avec ce nom existe déjà.</string>
+    <string name="edit_search_action_title">Éditer l\'action rapide</string>
+    <string name="tag_no_items_message">Aucuns éléments ne sont assignés à cette étiquette. Si vous continuez, l\'étiquette sera supprimée.</string>
+    <string name="tag_empty_message">Le nom de l\'étiquette ne peut pas être vide.</string>
+    <string name="tag_select_items">Éléments sélectionnés :</string>
+    <string name="tag_name">Nom de l\'étiquette</string>
+    <plurals name="tag_selected_items">
+        <item quantity="one">%1$d élément sélectionné</item>
+        <item quantity="many">%1$d éléments sélectionnés</item>
+        <item quantity="other">%1$d éléments sélectionnés</item>
+    </plurals>
+    <string name="preference_search_search_actions_summary">Configurer les actions rapides et les raccourcis de recherche</string>
+    <string name="search_action_call">Appeler</string>
 </resources>
