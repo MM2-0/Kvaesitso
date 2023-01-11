@@ -31,7 +31,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("androidx.compose.compiler", "1.4.0-alpha03")
+            version("androidx.compose.compiler", "1.4.0-alpha02")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
                 .version("1.4.0-alpha03")
             library("androidx.compose.livedata", "androidx.compose.runtime", "runtime-livedata")
