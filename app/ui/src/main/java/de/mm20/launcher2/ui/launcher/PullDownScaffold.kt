@@ -7,15 +7,41 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -54,6 +80,7 @@ fun PullDownScaffold(
     modifier: Modifier = Modifier,
     darkStatusBarIcons: Boolean = false,
     darkNavBarIcons: Boolean = false,
+    bottomSearchBar: Boolean = true,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -76,7 +103,8 @@ fun PullDownScaffold(
 
     val isSearchAtEnd by remember {
         derivedStateOf {
-            val lastItem = searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+            val lastItem =
+                searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
             lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
         }
     }
@@ -188,9 +216,11 @@ fun PullDownScaffold(
                 viewModel.closeSearch()
                 searchVM.search("")
             }
+
             isWidgetEditMode -> {
                 viewModel.setWidgetEditMode(false)
             }
+
             widgetsScrollState.value != 0 -> {
                 scope.launch {
                     widgetsScrollState.animateScrollTo(0)
@@ -221,11 +251,13 @@ fun PullDownScaffold(
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(-maxOffset, 0f)
                         consumed
                     }
+
                     canPullDown && available.y > 0 || offsetY.value > 0 -> {
                         val consumed = available.y
                         offsetY.value = (offsetY.value + (consumed * 0.5f)).coerceIn(0f, maxOffset)
                         consumed
                     }
+
                     else -> 0f
                 }
 
@@ -300,14 +332,17 @@ fun PullDownScaffold(
                                 end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
                             ),
                         paddingValues = PaddingValues(
-                            top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding(),
-                            bottom = 4.dp + windowInsets.calculateBottomPadding()
+                            top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 60.dp + webSearchPadding else 4.dp,
+                            bottom = windowInsets.calculateBottomPadding() + if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
                         ),
                         state = searchState,
 
-                    )
+                        )
                     val clockPadding by animateDpAsState(
-                        if (isWidgetsAtStart && fillClockHeight) insets.calculateBottomPadding() else 0.dp
+                        if (isWidgetsAtStart && fillClockHeight)
+                            insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
+                        else 0.dp
+
                     )
                     val clockHeight by remember {
                         derivedStateOf {
@@ -332,7 +367,10 @@ fun PullDownScaffold(
                             .verticalScroll(widgetsScrollState)
                             .windowInsetsPadding(WindowInsets.safeDrawing)
                             .padding(8.dp)
-                            .padding(top = 56.dp)
+                            .padding(
+                                top = if (bottomSearchBar) 0.dp else 56.dp,
+                                bottom = if (bottomSearchBar) 56.dp else 0.dp,
+                            )
                     ) {
                         AnimatedVisibility(!isWidgetEditMode) {
                             Box(
@@ -392,7 +430,7 @@ fun PullDownScaffold(
         }
         val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)
         val editModeSearchBarOffset by animateDpAsState(
-            if (isWidgetEditMode) -128.dp else 0.dp
+            (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
         )
 
         val value by searchVM.searchQuery.observeAsState("")
@@ -402,12 +440,17 @@ fun PullDownScaffold(
 
         LauncherSearchBar(
             modifier = Modifier
+                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
                 .fillMaxWidth()
                 .wrapContentHeight()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
-                .offset { IntOffset(0,
-                    if (searchBarFocused) 0 else searchBarOffset.value.toInt()) }
+                .offset {
+                    IntOffset(
+                        0,
+                        if (searchBarFocused) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) -1 else 1)
+                    )
+                }
                 .offset {
                     IntOffset(
                         0,
@@ -429,6 +472,7 @@ fun PullDownScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
+            reverse = bottomSearchBar,
         )
 
     }
