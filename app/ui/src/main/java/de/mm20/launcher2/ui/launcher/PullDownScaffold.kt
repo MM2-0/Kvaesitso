@@ -96,7 +96,7 @@ fun PullDownScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
 
-    val isSearchAtStart by remember {
+    val isSearchAtTop by remember {
         derivedStateOf {
             if (reverseSearchResults) {
                 val lastItem =
@@ -108,7 +108,7 @@ fun PullDownScaffold(
         }
     }
 
-    val isSearchAtEnd by remember {
+    val isSearchAtBottom by remember {
         derivedStateOf {
             if (reverseSearchResults) {
                 searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
@@ -139,7 +139,7 @@ fun PullDownScaffold(
     val showStatusBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                !isSearchAtStart
+                !isSearchAtTop
             } else {
                 widgetsScrollState.value > 0
             }
@@ -148,7 +148,7 @@ fun PullDownScaffold(
     val showNavBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                !isSearchAtEnd
+                !isSearchAtBottom
             } else {
                 (widgetsScrollState.value > 0 || !fillClockHeight) && widgetsScrollState.value < widgetsScrollState.maxValue
             }
@@ -250,11 +250,11 @@ fun PullDownScaffold(
                     keyboardController?.hide()
                 }
                 val canPullDown = if (isSearchOpen) {
-                    isSearchAtStart
+                    isSearchAtTop
                 } else {
                     isWidgetsAtStart
                 }
-                val canPullUp = isSearchOpen && isSearchAtEnd
+                val canPullUp = isSearchOpen && isSearchAtBottom
 
                 val consumed = when {
                     canPullUp && available.y < 0 || offsetY.value < 0 -> {
@@ -434,10 +434,10 @@ fun PullDownScaffold(
             derivedStateOf {
                 when {
                     offsetY.value != 0f -> SearchBarLevel.Raised
-                    isSearchOpen && isSearchAtStart -> SearchBarLevel.Active
-                    isSearchOpen && !isSearchAtStart -> SearchBarLevel.Raised
-                    !isWidgetsAtStart -> SearchBarLevel.Raised
-                    else -> SearchBarLevel.Resting
+                    !isSearchOpen && isWidgetsAtStart && fillClockHeight -> SearchBarLevel.Resting
+                    isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
+                    isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
+                    else -> SearchBarLevel.Raised
                 }
             }
         }
