@@ -86,6 +86,8 @@ fun PagerScaffold(
     darkStatusBarIcons: Boolean = false,
     darkNavBarIcons: Boolean = false,
     reverse: Boolean = false,
+    bottomSearchBar: Boolean = true,
+    reverseSearchResults: Boolean = true,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -99,24 +101,37 @@ fun PagerScaffold(
     val searchState = rememberLazyListState()
     val swipeableState = rememberSwipeableState(if (isSearchOpen) Page.Search else Page.Widgets)
 
-    val isSearchAtStart by remember {
+    val isSearchAtBottom by remember {
         derivedStateOf {
-            searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            if (reverseSearchResults) {
+                searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            } else {
+                val lastItem =
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+            }
         }
     }
 
-    val isSearchAtEnd by remember {
-        derivedStateOf {
-            val lastItem =
-                searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
-            lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+    val isSearchAtTop by remember {
+        if (reverseSearchResults) {
+            derivedStateOf {
+                val lastItem =
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull()
+                        ?: return@derivedStateOf true
+                lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+            }
+        } else {
+            derivedStateOf {
+                searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            }
         }
     }
 
     val showStatusBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                !isSearchAtEnd
+                !isSearchAtTop
             } else {
                 widgetsScrollState.value > 0
             }
@@ -128,7 +143,7 @@ fun PagerScaffold(
     val showNavBarScrim by remember {
         derivedStateOf {
             if (isSearchOpen) {
-                !isSearchAtStart
+                !isSearchAtBottom
             } else {
                 (widgetsScrollState.value > 0 || !fillClockHeight) && widgetsScrollState.value < widgetsScrollState.maxValue
             }
@@ -324,10 +339,12 @@ fun PagerScaffold(
                     ) {
 
 
-                        val editModePadding by animateDpAsState(if (isWidgetEditMode) 56.dp else 0.dp)
+                        val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
 
                         val clockPadding by animateDpAsState(
-                            if (isWidgetsScrollZero && fillClockHeight) 64.dp + insets.calculateBottomPadding() else 0.dp
+                            if (isWidgetsScrollZero && fillClockHeight)
+                                insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
+                            else 0.dp
                         )
 
                         val clockHeight by remember {
@@ -347,8 +364,11 @@ fun PagerScaffold(
                                 .nestedScroll(nestedScrollConnection)
                                 .verticalScroll(widgetsScrollState)
                                 .windowInsetsPadding(WindowInsets.safeDrawing)
-                                .padding(horizontal = 8.dp)
-                                .padding(top = 8.dp, bottom = 64.dp)
+                                .padding(8.dp)
+                                .padding(
+                                    top = if (bottomSearchBar) 0.dp else 56.dp,
+                                    bottom = if (bottomSearchBar) 56.dp else 0.dp,
+                                )
                                 .padding(top = editModePadding)
                         ) {
 
@@ -378,6 +398,17 @@ fun PagerScaffold(
                             if (actions.isEmpty()) 0.dp else 48.dp
                         )
                         val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+                        val paddingValues = if (bottomSearchBar) {
+                            PaddingValues(
+                                top = 4.dp + windowInsets.calculateTopPadding(),
+                                bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
+                            )
+                        } else {
+                            PaddingValues(
+                                bottom = 4.dp + windowInsets.calculateBottomPadding(),
+                                top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
+                            )
+                        }
                         SearchColumn(
                             modifier = Modifier
                                 .requiredWidth(width)
@@ -387,12 +418,9 @@ fun PagerScaffold(
                                     start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
                                     end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
                                 ),
-                            reverse = true,
+                            reverse = reverseSearchResults,
                             state = searchState,
-                            paddingValues = PaddingValues(
-                                top = 4.dp + windowInsets.calculateTopPadding(),
-                                bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
-                            )
+                            paddingValues = paddingValues,
                         )
                     }
                 }
@@ -420,7 +448,8 @@ fun PagerScaffold(
                 when {
                     swipeableState.direction != 0f -> SearchBarLevel.Raised
                     !isSearchOpen && isWidgetsScrollZero && fillClockHeight -> SearchBarLevel.Resting
-                    isSearchOpen && isSearchAtStart -> SearchBarLevel.Active
+                    isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
+                    isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
                     else -> SearchBarLevel.Raised
                 }
             }
@@ -429,7 +458,7 @@ fun PagerScaffold(
         val focusSearchBar by viewModel.searchBarFocused.observeAsState(false)
 
         val widgetEditModeOffset by animateDpAsState(
-            if (isWidgetEditMode) 128.dp else 0.dp
+            (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
         )
 
         val value by searchVM.searchQuery.observeAsState("")
@@ -439,8 +468,8 @@ fun PagerScaffold(
 
         LauncherSearchBar(
             modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
+                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
+                .padding(8.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .imePadding()
                 .offset(y = widgetEditModeOffset),
