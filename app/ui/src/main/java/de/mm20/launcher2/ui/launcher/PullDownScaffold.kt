@@ -80,7 +80,8 @@ fun PullDownScaffold(
     modifier: Modifier = Modifier,
     darkStatusBarIcons: Boolean = false,
     darkNavBarIcons: Boolean = false,
-    bottomSearchBar: Boolean = true,
+    bottomSearchBar: Boolean = false,
+    reverseSearchResults: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -97,15 +98,25 @@ fun PullDownScaffold(
 
     val isSearchAtStart by remember {
         derivedStateOf {
-            searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            if (reverseSearchResults) {
+                val lastItem =
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+            } else {
+                searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            }
         }
     }
 
     val isSearchAtEnd by remember {
         derivedStateOf {
-            val lastItem =
-                searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
-            lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+            if (reverseSearchResults) {
+                searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
+            } else {
+                val lastItem =
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
+            }
         }
     }
 
@@ -261,8 +272,10 @@ fun PullDownScaffold(
                     else -> 0f
                 }
 
+                val deltaSearchBarOffset = (available.y - consumed) * if (reverseSearchResults && isSearchOpen) -1f else 1f
+
                 searchBarOffset.value =
-                    (searchBarOffset.value + (available.y - consumed)).coerceIn(
+                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(
                         -maxSearchBarOffset,
                         0f
                     )
@@ -336,7 +349,7 @@ fun PullDownScaffold(
                             bottom = windowInsets.calculateBottomPadding() + if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
                         ),
                         state = searchState,
-
+                        reverse = reverseSearchResults,
                         )
                     val clockPadding by animateDpAsState(
                         if (isWidgetsAtStart && fillClockHeight)
