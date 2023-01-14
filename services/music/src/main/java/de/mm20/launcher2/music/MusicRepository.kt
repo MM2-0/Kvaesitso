@@ -14,7 +14,6 @@ import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
@@ -25,8 +24,22 @@ import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
@@ -447,7 +460,10 @@ internal class MusicRepositoryImpl(
     }
 
     private fun getMusicApps(): Set<String> {
-        val apps = mutableSetOf<String>()
+        val apps = mutableSetOf<String>(
+            "com.aspiro.tidal", // Tidal
+            "com.bandcamp.android", // Bandcamp
+        )
         var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
         apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
             .map { it.activityInfo.packageName })
