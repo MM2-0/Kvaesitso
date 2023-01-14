@@ -195,11 +195,11 @@ fun SearchColumn(
             )
         }
         GridResults(
-            items = if (showWorkProfileApps && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
+            items = if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
             columns = columns,
             reverse = reverse,
             key = "apps",
-            before = if (workApps.isNotEmpty()) {
+            before = if (workApps.isNotEmpty() && apps.isNotEmpty()) {
                 {
                     Row(
                         modifier = Modifier
