@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -7,6 +8,7 @@ import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -16,6 +18,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
@@ -26,6 +29,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.FractionalThreshold
@@ -44,15 +49,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -67,6 +77,8 @@ import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
+import de.mm20.launcher2.ui.gestures.LocalGestureManager
+import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -99,7 +111,8 @@ fun PagerScaffold(
 
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
-    val swipeableState = rememberSwipeableState(if (isSearchOpen) Page.Search else Page.Widgets)
+
+    val pagerState = rememberPagerState()
 
     val isSearchAtBottom by remember {
         derivedStateOf {
@@ -107,7 +120,8 @@ fun PagerScaffold(
                 searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
             } else {
                 val lastItem =
-                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull()
+                        ?: return@derivedStateOf true
                 lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
             }
         }
@@ -194,10 +208,7 @@ fun PagerScaffold(
 
     val blurWallpaper by remember {
         derivedStateOf {
-            blurEnabled && (
-                    isSearchOpen || swipeableState.progress.to == Page.Widgets && swipeableState.progress.fraction <= 0.5f ||
-                            swipeableState.progress.to == Page.Search && swipeableState.progress.fraction > 0.5f ||
-                            !isWidgetsScrollZero)
+            blurEnabled && (isSearchOpen || !isWidgetsScrollZero)
         }
     }
 
@@ -205,16 +216,16 @@ fun PagerScaffold(
         blurWallpaper
     }
 
-    val currentPage = swipeableState.currentValue
+    val currentPage = pagerState.currentPage
     LaunchedEffect(currentPage) {
-        if (currentPage == Page.Search) viewModel.openSearch()
+        if (currentPage == 1) viewModel.openSearch()
         else viewModel.closeSearch()
     }
 
     LaunchedEffect(isSearchOpen) {
-        if (isSearchOpen) swipeableState.animateTo(Page.Search)
+        if (isSearchOpen) pagerState.animateScrollToPage(1)
         else {
-            swipeableState.animateTo(Page.Widgets)
+            pagerState.animateScrollToPage(0)
             searchVM.search("")
         }
     }
@@ -239,40 +250,36 @@ fun PagerScaffold(
         }
     }
 
-    val notificationDragThreshold = with(LocalDensity.current) { 200.dp.toPx() }
-    val notificationShadeController = rememberNotificationShadeController()
-
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    val gestureManager = LocalGestureManager.current
+
+    val searchBarOffset = remember { mutableStateOf(0f) }
+    val density = LocalDensity.current
+    val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
-            private var pullDownTotalY: Float? = 0f
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (!isWidgetsScrollZero) return Offset.Zero
-                val diff = -available.y
-                var totalY = pullDownTotalY ?: return available
-                if (diff >= 0) return super.onPreScroll(available, source)
-
-                totalY += diff
-
-                if (totalY < -notificationDragThreshold) {
-                    notificationShadeController.expandNotifications()
-                    pullDownTotalY = null
-                    return available
-                }
-                pullDownTotalY = totalY
-
-                return super.onPreScroll(available, source)
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                if (source == NestedScrollSource.Drag) gestureManager.reportDrag(available)
+                val deltaSearchBarOffset = consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
+                searchBarOffset.value = (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                return super.onPostScroll(consumed, available, source)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                if (pullDownTotalY == null) {
-                    pullDownTotalY = 0f
-                    return available
-                }
+                gestureManager.reportDragEnd()
                 return super.onPreFling(available)
             }
         }
+    }
+
+    LaunchedEffect(pagerState.currentPage) {
+        searchBarOffset.animateTo(0f)
     }
 
     val searchNestedScrollConnection = remember {
@@ -290,6 +297,7 @@ fun PagerScaffold(
 
     Box(
         modifier = modifier
+            .nestedScroll(nestedScrollConnection)
     ) {
 
         BoxWithConstraints(
@@ -302,126 +310,126 @@ fun PagerScaffold(
                 derivedStateOf { maxWidth }
             }
 
-
-            val widthPx = width.toPixels()
-
-            val originalLayoutDirection = LocalLayoutDirection.current
-
             CompositionLocalProvider(
                 LocalOverscrollConfiguration provides null,
-                LocalLayoutDirection provides if (reverse) LayoutDirection.Rtl else LayoutDirection.Ltr
             ) {
 
-                Row(
-                    modifier = Modifier
-                        .requiredWidth(width * 2)
-                        .fillMaxHeight()
-                        .swipeable(
-                            swipeableState,
-                            orientation = Orientation.Horizontal,
-                            anchors = mapOf(
-                                -widthPx / 2f to Page.Search,
-                                widthPx / 2f to Page.Widgets,
-                            ),
-                            thresholds = { _, _ ->
-                                FractionalThreshold(0.5f)
-                            },
-                            enabled = !isWidgetEditMode,
-                            reverseDirection = reverse,
-                        )
-                        .offset {
-                            IntOffset(swipeableState.offset.value.roundToInt(), 0)
-                        },
+                HorizontalPager(
+                    modifier = Modifier.fillMaxSize(),
+                    pageCount = 2,
+                    beyondBoundsPageCount = 1,
+                    reverseLayout = reverse,
+                    state = pagerState,
+                    userScrollEnabled = !isWidgetEditMode,
                 ) {
+                    val pagerProgress = pagerState.currentPage + pagerState.currentPageOffsetFraction
+                    when(it) {
+                        0 -> {
+                            val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
 
-                    CompositionLocalProvider(
-                        LocalLayoutDirection provides originalLayoutDirection
-                    ) {
+                            val clockPadding by animateDpAsState(
+                                if (isWidgetsScrollZero && fillClockHeight)
+                                    insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
+                                else 0.dp
+                            )
 
-
-                        val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
-
-                        val clockPadding by animateDpAsState(
-                            if (isWidgetsScrollZero && fillClockHeight)
-                                insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
-                            else 0.dp
-                        )
-
-                        val clockHeight by remember {
-                            derivedStateOf {
-                                if (fillClockHeight) {
-                                    height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
-                                } else {
-                                    null
+                            val clockHeight by remember {
+                                derivedStateOf {
+                                    if (fillClockHeight) {
+                                        height - (64.dp + insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding)
+                                    } else {
+                                        null
+                                    }
                                 }
                             }
-                        }
 
-                        Column(
-                            modifier = Modifier
-                                .requiredWidth(width)
-                                .fillMaxHeight()
-                                .nestedScroll(nestedScrollConnection)
-                                .verticalScroll(widgetsScrollState)
-                                .windowInsetsPadding(WindowInsets.safeDrawing)
-                                .padding(8.dp)
-                                .padding(
-                                    top = if (bottomSearchBar) 0.dp else 56.dp,
-                                    bottom = if (bottomSearchBar) 56.dp else 0.dp,
-                                )
-                                .padding(top = editModePadding)
-                        ) {
-
-                            AnimatedVisibility(!isWidgetEditMode) {
-                                Box(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
-                                        .padding(bottom = clockPadding),
-                                    contentAlignment = Alignment.BottomCenter
-                                ) {
-                                    ClockWidget(
-                                        modifier = Modifier.fillMaxWidth()
+                            Column(
+                                modifier = Modifier
+                                    .requiredWidth(width)
+                                    .fillMaxHeight()
+                                    .pointerInput(Unit) {
+                                        detectTapGestures(
+                                            onDoubleTap = {
+                                                gestureManager.reportDoubleTap(it)
+                                            },
+                                            onLongPress = {
+                                                gestureManager.reportLongPress(it)
+                                            }
+                                        )
+                                    }
+                                    .verticalScroll(widgetsScrollState)
+                                    .windowInsetsPadding(WindowInsets.safeDrawing)
+                                    .graphicsLayer {
+                                        alpha = 1f - pagerProgress
+                                    }
+                                    .padding(8.dp)
+                                    .padding(
+                                        top = if (bottomSearchBar) 0.dp else 56.dp,
+                                        bottom = if (bottomSearchBar) 56.dp else 0.dp,
                                     )
+                                    .padding(top = editModePadding)
+                            ) {
+
+                                AnimatedVisibility(!isWidgetEditMode) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .then(clockHeight?.let { Modifier.height(it) }
+                                                ?: Modifier)
+                                            .padding(bottom = clockPadding),
+                                        contentAlignment = Alignment.BottomCenter
+                                    ) {
+                                        ClockWidget(
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
                                 }
+
+                                WidgetColumn(
+                                    editMode = isWidgetEditMode,
+                                    onEditModeChange = {
+                                        viewModel.setWidgetEditMode(it)
+                                    }
+                                )
                             }
-
-                            WidgetColumn(
-                                editMode = isWidgetEditMode,
-                                onEditModeChange = {
-                                    viewModel.setWidgetEditMode(it)
-                                }
+                        }
+                        1 -> {
+                            val webSearchPadding by animateDpAsState(
+                                if (actions.isEmpty()) 0.dp else 48.dp
+                            )
+                            val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+                            val paddingValues = if (bottomSearchBar) {
+                                PaddingValues(
+                                    top = 4.dp + windowInsets.calculateTopPadding(),
+                                    bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
+                                )
+                            } else {
+                                PaddingValues(
+                                    bottom = 4.dp + windowInsets.calculateBottomPadding(),
+                                    top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
+                                )
+                            }
+                            SearchColumn(
+                                modifier = Modifier
+                                    .requiredWidth(width)
+                                    .fillMaxHeight()
+                                    .graphicsLayer {
+                                        alpha = pagerProgress
+                                    }
+                                    .nestedScroll(searchNestedScrollConnection)
+                                    .padding(
+                                        start = windowInsets.calculateStartPadding(
+                                            LocalLayoutDirection.current
+                                        ),
+                                        end = windowInsets.calculateStartPadding(
+                                            LocalLayoutDirection.current
+                                        ),
+                                    ),
+                                reverse = reverseSearchResults,
+                                state = searchState,
+                                paddingValues = paddingValues,
                             )
                         }
-
-                        val webSearchPadding by animateDpAsState(
-                            if (actions.isEmpty()) 0.dp else 48.dp
-                        )
-                        val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
-                        val paddingValues = if (bottomSearchBar) {
-                            PaddingValues(
-                                top = 4.dp + windowInsets.calculateTopPadding(),
-                                bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
-                            )
-                        } else {
-                            PaddingValues(
-                                bottom = 4.dp + windowInsets.calculateBottomPadding(),
-                                top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
-                            )
-                        }
-                        SearchColumn(
-                            modifier = Modifier
-                                .requiredWidth(width)
-                                .fillMaxHeight()
-                                .nestedScroll(searchNestedScrollConnection)
-                                .padding(
-                                    start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
-                                    end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
-                                ),
-                            reverse = reverseSearchResults,
-                            state = searchState,
-                            paddingValues = paddingValues,
-                        )
                     }
                 }
             }
@@ -445,8 +453,9 @@ fun PagerScaffold(
 
         val searchBarLevel by remember {
             derivedStateOf {
+                Log.d("MM20", pagerState.currentPageOffsetFraction.toString())
                 when {
-                    swipeableState.direction != 0f -> SearchBarLevel.Raised
+                    pagerState.currentPageOffsetFraction != 0f -> SearchBarLevel.Raised
                     !isSearchOpen && isWidgetsScrollZero && fillClockHeight -> SearchBarLevel.Resting
                     isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
                     isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
@@ -472,6 +481,7 @@ fun PagerScaffold(
                 .padding(8.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .imePadding()
+                .offset { IntOffset(0, if (focusSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) }
                 .offset(y = widgetEditModeOffset),
             level = { searchBarLevel },
             focused = focusSearchBar,
