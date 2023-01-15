@@ -94,12 +94,12 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
+import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.helper.DraggableItem
-import de.mm20.launcher2.ui.launcher.helper.LazyDragAndDropRow
-import de.mm20.launcher2.ui.launcher.helper.LazyVerticalDragAndDropGrid
-import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropGridState
-import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.currentCoroutineContext
 import kotlin.math.roundToInt

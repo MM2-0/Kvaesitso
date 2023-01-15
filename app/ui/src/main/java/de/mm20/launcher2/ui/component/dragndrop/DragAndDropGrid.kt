@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.helper
+package de.mm20.launcher2.ui.component.dragndrop
 
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.foundation.gestures.*

@@ -40,12 +40,12 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchActionIcon
+import de.mm20.launcher2.ui.component.dragndrop.DraggableItem
+import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropColumn
+import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.component.getSearchActionIconVector
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.launcher.helper.DraggableItem
-import de.mm20.launcher2.ui.launcher.helper.LazyDragAndDropColumn
-import de.mm20.launcher2.ui.launcher.helper.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
