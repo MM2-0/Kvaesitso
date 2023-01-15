@@ -463,6 +463,7 @@ internal class MusicRepositoryImpl(
         val apps = mutableSetOf<String>(
             "com.aspiro.tidal", // Tidal
             "com.bandcamp.android", // Bandcamp
+            "com.qobuz.music", // Qobuz
         )
         var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
         apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
