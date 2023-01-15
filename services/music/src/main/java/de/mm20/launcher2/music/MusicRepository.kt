@@ -460,10 +460,12 @@ internal class MusicRepositoryImpl(
     }
 
     private fun getMusicApps(): Set<String> {
-        val apps = mutableSetOf<String>(
+        // List of known music apps that don't have the correct intent filter
+        val apps = mutableSetOf(
             "com.aspiro.tidal", // Tidal
             "com.bandcamp.android", // Bandcamp
             "com.qobuz.music", // Qobuz
+            "tv.plex.labs.plexamp", // Plexamp
         )
         var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
         apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
