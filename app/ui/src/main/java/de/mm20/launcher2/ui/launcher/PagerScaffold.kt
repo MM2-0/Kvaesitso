@@ -7,13 +7,11 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.calculateStartPadding
@@ -33,11 +31,8 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.rememberSwipeableState
-import androidx.compose.material.swipeable
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,10 +47,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -68,7 +61,6 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -77,9 +69,8 @@ import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
-import de.mm20.launcher2.ui.gestures.LocalGestureManager
+import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -87,10 +78,8 @@ import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
-import de.mm20.launcher2.ui.utils.rememberNotificationShadeController
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
-import kotlin.math.roundToInt
 
 @Composable
 fun PagerScaffold(
@@ -252,7 +241,7 @@ fun PagerScaffold(
 
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val gestureManager = LocalGestureManager.current
+    val gestureManager = LocalGestureDetector.current
 
     val searchBarOffset = remember { mutableStateOf(0f) }
     val density = LocalDensity.current
@@ -265,14 +254,14 @@ fun PagerScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag) gestureManager.reportDrag(available)
+                if (source == NestedScrollSource.Drag) gestureManager.dispatchDrag(available)
                 val deltaSearchBarOffset = consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
                 searchBarOffset.value = (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
                 return super.onPostScroll(consumed, available, source)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                gestureManager.reportDragEnd()
+                gestureManager.dispatchDragEnd()
                 return super.onPreFling(available)
             }
         }
@@ -350,10 +339,10 @@ fun PagerScaffold(
                                     .pointerInput(Unit) {
                                         detectTapGestures(
                                             onDoubleTap = {
-                                                gestureManager.reportDoubleTap(it)
+                                                gestureManager.dispatchDoubleTap(it)
                                             },
                                             onLongPress = {
-                                                gestureManager.reportLongPress(it)
+                                                gestureManager.dispatchLongPress(it)
                                             }
                                         )
                                     }
@@ -453,7 +442,6 @@ fun PagerScaffold(
 
         val searchBarLevel by remember {
             derivedStateOf {
-                Log.d("MM20", pagerState.currentPageOffsetFraction.toString())
                 when {
                     pagerState.currentPageOffsetFraction != 0f -> SearchBarLevel.Raised
                     !isSearchOpen && isWidgetsScrollZero && fillClockHeight -> SearchBarLevel.Resting

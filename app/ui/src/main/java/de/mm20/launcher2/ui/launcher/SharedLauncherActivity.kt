@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
@@ -41,10 +43,13 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
+import de.mm20.launcher2.ui.gestures.GestureDetector
+import de.mm20.launcher2.ui.gestures.GestureHandler
+import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.sheets.CustomizeSearchableSheet
 import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
-import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
@@ -56,6 +61,7 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
+import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
@@ -81,6 +87,7 @@ abstract class SharedLauncherActivity(
         viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         val bottomSheetManager = LauncherBottomSheetManager()
+        val gestureDetector = GestureDetector()
 
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
@@ -93,15 +100,20 @@ abstract class SharedLauncherActivity(
                 LocalWallpaperColors provides wallpaperColors,
                 LocalPreferDarkContentOverWallpaper provides (!dimBackground && wallpaperColors.supportsDarkText),
                 LocalBottomSheetManager provides bottomSheetManager,
+                LocalGestureDetector provides gestureDetector,
             ) {
                 LauncherTheme {
                     ProvideCurrentTime {
                         ProvideSettings {
-                            val statusBarColor by viewModel.statusBarColor.observeAsState(SystemBarColors.Auto)
+                            val statusBarColor by viewModel.statusBarColor.observeAsState(
+                                SystemBarColors.Auto
+                            )
                             val navBarColor by viewModel.navBarColor.observeAsState(SystemBarColors.Auto)
 
-                            val lightStatus = !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
-                            val lightNav = !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+                            val lightStatus =
+                                !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+                            val lightNav =
+                                !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
 
                             val hideStatus by viewModel.hideStatusBar.observeAsState(false)
                             val hideNav by viewModel.hideNavBar.observeAsState(false)
@@ -207,7 +219,8 @@ abstract class SharedLauncherActivity(
                                 enterTransition?.let {
                                     val dX = it.startBounds.center.x - it.targetBounds.center.x
                                     val dY = it.startBounds.center.y - it.targetBounds.center.y
-                                    val s = (it.startBounds.minDimension / it.targetBounds.minDimension - 1f) * 0.5f
+                                    val s =
+                                        (it.startBounds.minDimension / it.targetBounds.minDimension - 1f) * 0.5f
                                     Box(
                                         modifier = Modifier
                                             .align(Alignment.TopStart)
@@ -220,17 +233,60 @@ abstract class SharedLauncherActivity(
                                                 scaleX = 1f + s * (1 - p)
                                                 scaleY = 1f + s * (1 - p)
                                             }) {
-                                        it.icon?.invoke(Offset(dX, dY)) { enterTransitionProgress.value }
+                                        it.icon?.invoke(
+                                            Offset(
+                                                dX,
+                                                dY
+                                            )
+                                        ) { enterTransitionProgress.value }
                                     }
                                 }
 
                                 bottomSheetManager.customizeSearchableSheetShown.value?.let {
-                                    CustomizeSearchableSheet(searchable = it, onDismiss = { bottomSheetManager.dismissCustomizeSearchableModal() })
+                                    CustomizeSearchableSheet(
+                                        searchable = it,
+                                        onDismiss = { bottomSheetManager.dismissCustomizeSearchableModal() })
                                 }
                                 if (bottomSheetManager.editFavoritesSheetShown.value) {
                                     EditFavoritesSheet(onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })
                                 }
                             }
+
+                            val swipeThreshold = 150.dp.toPixels()
+                            GestureHandler(
+                                detector = gestureDetector,
+                                onDoubleTap = {
+                                    Log.d("MM20", "Double tap")
+                                },
+                                onLongPress = {
+                                    Log.d("MM20", "Long press")
+                                },
+                                onDrag = {
+                                    return@GestureHandler when {
+                                        it.x > swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
+                                            Log.d("MM20", "Swipe right")
+                                            true
+                                        }
+
+                                        it.x < -swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
+                                            Log.d("MM20", "Swipe left")
+                                            true
+                                        }
+
+                                        it.y > swipeThreshold && it.y.absoluteValue > it.x.absoluteValue * 2f -> {
+                                            Log.d("MM20", "Swipe down")
+                                            true
+                                        }
+
+                                        it.y < -swipeThreshold && it.y.absoluteValue > it.x.absoluteValue * 2f -> {
+                                            Log.d("MM20", "Swipe up")
+                                            true
+                                        }
+
+                                        else -> false
+                                    }
+                                }
+                            )
                         }
                     }
                 }

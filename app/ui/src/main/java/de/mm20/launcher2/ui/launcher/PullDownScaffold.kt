@@ -7,11 +7,8 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -69,7 +66,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
-import de.mm20.launcher2.ui.gestures.LocalGestureManager
+import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -248,7 +245,7 @@ fun PullDownScaffold(
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
-    val gestureManager = LocalGestureManager.current
+    val gestureManager = LocalGestureDetector.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -297,7 +294,7 @@ fun PullDownScaffold(
                 if (offsetY.value > toggleSearchThreshold || offsetY.value < -toggleSearchThreshold) {
                     viewModel.toggleSearch()
                 }
-                gestureManager.reportDragEnd()
+                gestureManager.dispatchDragEnd()
                 if (offsetY.value != 0f) {
                     offsetY.animateTo(0f)
                     return available
@@ -313,10 +310,10 @@ fun PullDownScaffold(
             .pointerInput(Unit) {
                 detectHorizontalDragGestures(
                     onDragEnd = {
-                        gestureManager.reportDragEnd()
+                        gestureManager.dispatchDragEnd()
                     },
                     onHorizontalDrag = { _, dragAmount ->
-                        gestureManager.reportDrag(Offset(dragAmount, 0f))
+                        gestureManager.dispatchDrag(Offset(dragAmount, 0f))
                     }
                 )
             }
@@ -399,10 +396,10 @@ fun PullDownScaffold(
                             .pointerInput(Unit) {
                                 detectTapGestures(
                                     onDoubleTap = {
-                                        gestureManager.reportDoubleTap(it)
+                                        gestureManager.dispatchDoubleTap(it)
                                     },
                                     onLongPress = {
-                                        gestureManager.reportLongPress(it)
+                                        gestureManager.dispatchLongPress(it)
                                     }
                                 )
                             }
