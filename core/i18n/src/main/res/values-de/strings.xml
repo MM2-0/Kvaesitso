@@ -539,4 +539,14 @@
         <item quantity="one">%1$d Element ausgewählt</item>
         <item quantity="other">%1$d Elemente ausgewählt</item>
     </plurals>
+    <string name="open_search_pull_down">Nach unten wischen</string>
+    <string name="open_search_swipe_left">Nach links wischen</string>
+    <string name="open_search_swipe_right">Nach rechts wischen</string>
+    <string name="search_bar_position_top">Oben</string>
+    <string name="search_bar_position_bottom">Unten</string>
+    <string name="preference_layout_search_results">Anordnung der Suchergebnisse</string>
+    <string name="search_results_order_top_down">Von oben nach unten</string>
+    <string name="search_results_order_bottom_up">Von unten nach oben</string>
+    <string name="preference_layout_open_search">Aktivierung der Suche</string>
+    <string name="preference_layout_search_bar_position">Position der Suchleiste</string>
 </resources>
