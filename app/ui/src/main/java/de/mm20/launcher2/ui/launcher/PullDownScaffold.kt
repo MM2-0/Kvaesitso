@@ -7,6 +7,11 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -51,6 +56,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -63,6 +69,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
+import de.mm20.launcher2.ui.gestures.LocalGestureManager
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -241,6 +248,7 @@ fun PullDownScaffold(
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    val gestureManager = LocalGestureManager.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
@@ -272,21 +280,24 @@ fun PullDownScaffold(
                     else -> 0f
                 }
 
-                val deltaSearchBarOffset = (available.y - consumed) * if (reverseSearchResults && isSearchOpen) -1f else 1f
-
-                searchBarOffset.value =
-                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(
-                        -maxSearchBarOffset,
-                        0f
-                    )
-
                 return Offset(0f, consumed)
+            }
+
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                val deltaSearchBarOffset = consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
+                searchBarOffset.value = (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                return super.onPostScroll(consumed, available, source)
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
                 if (offsetY.value > toggleSearchThreshold || offsetY.value < -toggleSearchThreshold) {
                     viewModel.toggleSearch()
                 }
+                gestureManager.reportDragEnd()
                 if (offsetY.value != 0f) {
                     offsetY.animateTo(0f)
                     return available
@@ -299,6 +310,16 @@ fun PullDownScaffold(
     val insets = WindowInsets.safeDrawing.asPaddingValues()
     Box(
         modifier = modifier
+            .pointerInput(Unit) {
+                detectHorizontalDragGestures(
+                    onDragEnd = {
+                        gestureManager.reportDragEnd()
+                    },
+                    onHorizontalDrag = { _, dragAmount ->
+                        gestureManager.reportDrag(Offset(dragAmount, 0f))
+                    }
+                )
+            }
             .nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
@@ -374,6 +395,16 @@ fun PullDownScaffold(
                                 scaleX = 1 - offset
                                 scaleY = 1 - offset
                                 alpha = 1 - offset
+                            }
+                            .pointerInput(Unit) {
+                                detectTapGestures(
+                                    onDoubleTap = {
+                                        gestureManager.reportDoubleTap(it)
+                                    },
+                                    onLongPress = {
+                                        gestureManager.reportLongPress(it)
+                                    }
+                                )
                             }
                             .fillMaxWidth()
                             .requiredHeight(height)
@@ -461,7 +492,7 @@ fun PullDownScaffold(
                 .offset {
                     IntOffset(
                         0,
-                        if (searchBarFocused) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) -1 else 1)
+                        if (searchBarFocused) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)
                     )
                 }
                 .offset {

@@ -9,14 +9,13 @@ class GestureManager {
     private var currentDrag : Offset? = null
 
     fun reportDoubleTap(position: Offset) {
-        Log.d("MM20", "double tap: $position")
     }
 
     fun reportLongPress(position: Offset) {
-        Log.d("MM20", "long press: $position")
     }
 
     fun reportDrag(offset: Offset) {
+        currentDrag = (currentDrag ?: Offset.Zero) + offset
     }
 
     fun reportDragEnd() {
