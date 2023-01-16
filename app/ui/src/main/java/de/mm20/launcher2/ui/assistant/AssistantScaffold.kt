@@ -37,6 +37,8 @@ fun AssistantScaffold(
     modifier: Modifier = Modifier,
     darkStatusBarIcons: Boolean = false,
     darkNavBarIcons: Boolean = false,
+    bottomSearchBar: Boolean = false,
+    reverseSearchResults: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
 
@@ -54,15 +56,6 @@ fun AssistantScaffold(
         }
     }
 
-    val bottomSearchBar by remember {
-        viewModel.dataStore.data.map { it.appearance.layout != Settings.AppearanceSettings.Layout.PullDown }
-    }.collectAsState(null)
-
-    val reverseResults by remember {
-        viewModel.dataStore.data.map { it.appearance.layout != Settings.AppearanceSettings.Layout.PullDown }
-    }.collectAsState(null)
-
-
     val searchState = rememberLazyListState()
 
     val isSearchAtStart by remember {
@@ -79,14 +72,11 @@ fun AssistantScaffold(
         }
     }
 
-    if (reverseResults == null || bottomSearchBar == null) return
-
-
     val searchBarLevel by remember {
         derivedStateOf {
             when {
-                reverseResults == bottomSearchBar && isSearchAtStart -> SearchBarLevel.Active
-                reverseResults != bottomSearchBar && isSearchAtEnd -> SearchBarLevel.Active
+                reverseSearchResults == bottomSearchBar && isSearchAtStart -> SearchBarLevel.Active
+                reverseSearchResults != bottomSearchBar && isSearchAtEnd -> SearchBarLevel.Active
                 else -> SearchBarLevel.Raised
             }
         }
@@ -95,7 +85,7 @@ fun AssistantScaffold(
     val systemUiController = rememberSystemUiController()
     val showStatusBarScrim by remember {
         derivedStateOf {
-            if (reverseResults == true) {
+            if (reverseSearchResults) {
                 !isSearchAtEnd
             } else {
                 !isSearchAtStart
@@ -104,7 +94,7 @@ fun AssistantScaffold(
     }
     val showNavBarScrim by remember {
         derivedStateOf {
-            if (reverseResults == true) {
+            if (reverseSearchResults) {
                 !isSearchAtStart
             } else {
                 !isSearchAtEnd
@@ -154,7 +144,7 @@ fun AssistantScaffold(
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                val y = available.y * if (reverseResults == true) -1f else 1f
+                val y = available.y * if (reverseSearchResults) -1f else 1f
                 searchBarOffset = (searchBarOffset + y).coerceIn(-maxSearchBarOffset, 0f)
                 return super.onPreScroll(available, source)
             }
@@ -175,10 +165,10 @@ fun AssistantScaffold(
         SearchColumn(
             modifier = Modifier.fillMaxSize(),
             paddingValues = PaddingValues(
-                top = (if (bottomSearchBar == true) 0.dp else 56.dp + webSearchPadding) + 4.dp + windowInsets.calculateTopPadding(),
-                bottom = (if (bottomSearchBar == true) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding()
+                top = (if (bottomSearchBar) 0.dp else 56.dp + webSearchPadding) + 4.dp + windowInsets.calculateTopPadding(),
+                bottom = (if (bottomSearchBar) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding()
             ),
-            reverse = reverseResults == true,
+            reverse = reverseSearchResults,
             state = searchState
         )
 
@@ -191,14 +181,14 @@ fun AssistantScaffold(
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentHeight()
-                .align(if (bottomSearchBar == true) Alignment.BottomCenter else Alignment.TopCenter)
+                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset {
                     if (searchBarFocused) IntOffset.Zero
                     else IntOffset(
                         0,
-                        searchBarOffset.toInt() * if (bottomSearchBar == true) -1 else 1
+                        searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1
                     )
                 },
             level = { searchBarLevel },
@@ -213,7 +203,7 @@ fun AssistantScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar == true
+            reverse = bottomSearchBar
         )
     }
 }

@@ -722,4 +722,14 @@
         <item quantity="one">%1$d item selected</item>
         <item quantity="other">%1$d items selected</item>
     </plurals>
+    <string name="preference_layout_open_search">Search activation</string>
+    <string name="open_search_pull_down">Swipe down</string>
+    <string name="open_search_swipe_left">Swipe left</string>
+    <string name="open_search_swipe_right">Swipe right</string>
+    <string name="preference_layout_search_bar_position">Search bar position</string>
+    <string name="search_bar_position_top">Top</string>
+    <string name="search_bar_position_bottom">Bottom</string>
+    <string name="preference_layout_search_results">Arrangement of search results</string>
+    <string name="search_results_order_top_down">Top-down</string>
+    <string name="search_results_order_bottom_up">Bottom-up</string>
 </resources>

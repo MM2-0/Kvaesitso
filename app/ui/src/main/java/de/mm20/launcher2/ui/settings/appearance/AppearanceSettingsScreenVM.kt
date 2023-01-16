@@ -288,18 +288,4 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
-
-    val layout = dataStore.data.map { it.appearance.layout }.asLiveData()
-    fun setLayout(layout: Settings.AppearanceSettings.Layout) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setLayout(layout)
-                    )
-                    .build()
-            }
-        }
-    }
 }

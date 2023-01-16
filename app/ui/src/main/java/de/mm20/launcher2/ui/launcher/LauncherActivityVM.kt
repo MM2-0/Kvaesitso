@@ -37,5 +37,7 @@ class LauncherActivityVM : ViewModel(), KoinComponent {
         isSystemInDarkMode.value = darkMode
     }
 
-    val layout = dataStore.data.map { it.appearance.layout }.asLiveData()
+    val baseLayout = dataStore.data.map { it.layout.baseLayout }.asLiveData()
+    val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }.asLiveData()
+    val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }.asLiveData()
 }

@@ -162,6 +162,12 @@ fun createFactorySettings(context: Context): Settings {
             Settings.WidgetSettings.newBuilder()
                 .setEditButton(true)
         )
+        .setLayout(
+            Settings.LayoutSettings.newBuilder()
+                .setBaseLayout(Settings.LayoutSettings.Layout.PullDown)
+                .setBottomSearchBar(false)
+                .setReverseSearchResults(false)
+        )
         .build()
 }
 

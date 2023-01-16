@@ -40,6 +40,7 @@ import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
+import de.mm20.launcher2.ui.settings.layout.LayoutSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
@@ -98,6 +99,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/appearance") {
                             AppearanceSettingsScreen()
+                        }
+                        composable("settings/appearance/layout") {
+                            LayoutSettingsScreen()
                         }
                         composable("settings/appearance/colorscheme") {
                             ColorSchemeSettingsScreen()

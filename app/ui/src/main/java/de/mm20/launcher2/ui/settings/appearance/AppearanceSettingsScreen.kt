@@ -54,13 +54,13 @@ fun AppearanceSettingsScreen() {
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
-                val layout by viewModel.layout.observeAsState()
-                LayoutPreference(
+                Preference(
                     title = stringResource(id = R.string.preference_layout),
                     summary = stringResource(id = R.string.preference_layout_summary),
-                    value = layout, onValueChanged = {
-                        viewModel.setLayout(it)
-                    })
+                    onClick = {
+                        navController?.navigate("settings/appearance/layout")
+                    }
+                )
                 val theme by viewModel.theme.observeAsState()
                 ListPreference(
                     title = stringResource(id = R.string.preference_theme),
@@ -480,128 +480,6 @@ fun IconShapePreference(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun LayoutPreference(
-    title: String,
-    summary: String? = null,
-    value: AppearanceSettings.Layout?,
-    onValueChanged: (AppearanceSettings.Layout) -> Unit
-) {
-    var showDialog by remember { mutableStateOf(false) }
-    Preference(title = title, summary = summary, onClick = { showDialog = true })
-
-    if (showDialog && value != null) {
-        val layouts = remember {
-            AppearanceSettings.Layout.values()
-                .filter { it != AppearanceSettings.Layout.UNRECOGNIZED }
-        }
-        val pagerState = rememberPagerState(layouts.indexOf(value))
-        AlertDialog(
-            onDismissRequest = { showDialog = false },
-            confirmButton = {
-                TextButton(onClick = {
-                    showDialog = false
-                    onValueChanged(layouts[pagerState.currentPage])
-                }) {
-                    Text(
-                        text = stringResource(android.R.string.ok),
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { showDialog = false }) {
-                    Text(
-                        text = stringResource(android.R.string.cancel),
-                    )
-                }
-            },
-
-            text = {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    HorizontalPager(
-                        count = layouts.size,
-                        state = pagerState,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 16.dp)
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .height(250.dp)
-                                .width(141.dp)
-                                .background(MaterialTheme.colorScheme.secondary)
-                        ) {
-
-                            val composition by rememberLottieComposition(
-                                LottieCompositionSpec.RawRes(
-                                    when (layouts[it]) {
-                                        AppearanceSettings.Layout.PullDown -> R.raw.lottie_scaffold_pulldown
-                                        AppearanceSettings.Layout.Pager -> R.raw.lottie_scaffold_pager
-                                        AppearanceSettings.Layout.PagerReversed -> R.raw.lottie_scaffold_pager_reverse
-                                        else -> 0
-                                    }
-                                )
-                            )
-
-                            val dynamicProperties = rememberLottieDynamicProperties(
-                                rememberLottieDynamicProperty(
-                                    property = LottieProperty.COLOR,
-                                    value = MaterialTheme.colorScheme.primaryContainer.toArgb(),
-                                    keyPath = arrayOf("Pointer", "**")
-                                ),
-                                rememberLottieDynamicProperty(
-                                    property = LottieProperty.COLOR,
-                                    value = MaterialTheme.colorScheme.surface.toArgb(),
-                                    keyPath = arrayOf("SearchBar", "**")
-                                ),
-                                rememberLottieDynamicProperty(
-                                    property = LottieProperty.COLOR,
-                                    value = MaterialTheme.colorScheme.surface.toArgb(),
-                                    keyPath = arrayOf("Favorites", "**")
-                                ),
-                                rememberLottieDynamicProperty(
-                                    property = LottieProperty.COLOR,
-                                    value = MaterialTheme.colorScheme.surface.toArgb(),
-                                    keyPath = arrayOf("Apps", "**")
-                                ),
-                                rememberLottieDynamicProperty(
-                                    property = LottieProperty.COLOR,
-                                    value = Color.White.toArgb(),
-                                    keyPath = arrayOf("ClockWidget", "**")
-                                )
-                            )
-
-                            /*LaunchedEffect(null) {
-                                val drw = LottieDrawable()
-                                drw.composition = composition
-                                val list = drw.resolveKeyPath(KeyPath("**"))
-                                list.forEach {
-                                    Log.d("MM20", it.keysToString())
-                                }
-                            }*/
-
-
-                            val progress by animateLottieCompositionAsState(
-                                composition,
-                                iterations = LottieConstants.IterateForever
-                            )
-
-                            LottieAnimation(
-                                composition = composition,
-                                progress = progress,
-                                dynamicProperties = dynamicProperties
-                            )
-                        }
-                    }
-                    HorizontalPagerIndicator(pagerState = pagerState)
-                }
-            }
-        )
     }
 }
 

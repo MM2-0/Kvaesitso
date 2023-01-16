@@ -18,6 +18,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -117,7 +118,9 @@ abstract class SharedLauncherActivity(
 
                             val hideStatus by viewModel.hideStatusBar.observeAsState(false)
                             val hideNav by viewModel.hideNavBar.observeAsState(false)
-                            val layout by viewModel.layout.observeAsState(null)
+                            val layout by viewModel.baseLayout.observeAsState(null)
+                            val bottomSearchBar by viewModel.bottomSearchBar.observeAsState(false)
+                            val reverseSearchResults by viewModel.reverseSearchResults.observeAsState(false)
 
                             val systemUiController = rememberSystemUiController()
 
@@ -167,44 +170,56 @@ abstract class SharedLauncherActivity(
                             ) {
                                 NavBarEffects(modifier = Modifier.fillMaxSize())
                                 if (mode == LauncherActivityMode.Assistant) {
-                                    AssistantScaffold(
-                                        modifier = Modifier
-                                            .fillMaxSize(),
-                                        darkStatusBarIcons = lightStatus,
-                                        darkNavBarIcons = lightNav,
-                                    )
+                                    key(bottomSearchBar, reverseSearchResults) {
+                                        AssistantScaffold(
+                                            modifier = Modifier
+                                                .fillMaxSize(),
+                                            darkStatusBarIcons = lightStatus,
+                                            darkNavBarIcons = lightNav,
+                                            bottomSearchBar = bottomSearchBar,
+                                            reverseSearchResults = reverseSearchResults,
+                                        )
+                                    }
                                 } else {
                                     when (layout) {
-                                        Settings.AppearanceSettings.Layout.PullDown -> {
-                                            PullDownScaffold(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .graphicsLayer {
-                                                        scaleX =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        scaleY =
-                                                            0.5f + enterTransitionProgress.value * 0.5f
-                                                        alpha = enterTransitionProgress.value
-                                                    },
-                                                darkStatusBarIcons = lightStatus,
-                                                darkNavBarIcons = lightNav,
-                                            )
+                                        Settings.LayoutSettings.Layout.PullDown -> {
+                                            key(bottomSearchBar, reverseSearchResults) {
+                                                PullDownScaffold(
+                                                    modifier = Modifier
+                                                        .fillMaxSize()
+                                                        .graphicsLayer {
+                                                            scaleX =
+                                                                0.5f + enterTransitionProgress.value * 0.5f
+                                                            scaleY =
+                                                                0.5f + enterTransitionProgress.value * 0.5f
+                                                            alpha = enterTransitionProgress.value
+                                                        },
+                                                    darkStatusBarIcons = lightStatus,
+                                                    darkNavBarIcons = lightNav,
+                                                    bottomSearchBar = bottomSearchBar,
+                                                    reverseSearchResults = reverseSearchResults,
+                                                )
+                                            }
                                         }
 
-                                        Settings.AppearanceSettings.Layout.Pager,
-                                        Settings.AppearanceSettings.Layout.PagerReversed -> {
-                                            PagerScaffold(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .graphicsLayer {
-                                                        scaleX = enterTransitionProgress.value
-                                                        scaleY = enterTransitionProgress.value
-                                                        alpha = enterTransitionProgress.value
-                                                    },
-                                                darkStatusBarIcons = lightStatus,
-                                                darkNavBarIcons = lightNav,
-                                                reverse = layout == Settings.AppearanceSettings.Layout.PagerReversed
-                                            )
+                                        Settings.LayoutSettings.Layout.Pager,
+                                        Settings.LayoutSettings.Layout.PagerReversed -> {
+                                            key(bottomSearchBar, reverseSearchResults) {
+                                                PagerScaffold(
+                                                    modifier = Modifier
+                                                        .fillMaxSize()
+                                                        .graphicsLayer {
+                                                            scaleX = enterTransitionProgress.value
+                                                            scaleY = enterTransitionProgress.value
+                                                            alpha = enterTransitionProgress.value
+                                                        },
+                                                    darkStatusBarIcons = lightStatus,
+                                                    darkNavBarIcons = lightNav,
+                                                    reverse = layout == Settings.LayoutSettings.Layout.PagerReversed,
+                                                    bottomSearchBar = bottomSearchBar,
+                                                    reverseSearchResults = reverseSearchResults,
+                                                )
+                                            }
                                         }
 
                                         else -> {}

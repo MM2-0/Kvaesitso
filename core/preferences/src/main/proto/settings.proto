@@ -68,12 +68,10 @@ message Settings {
     CustomColors custom_colors = 8;
     bool dim_wallpaper = 7;
 
-    enum Layout {
-      PullDown = 0;
-      Pager = 1;
-      PagerReversed = 2;
-    }
-    Layout layout = 9;
+    /**
+     * Deprecated, use layout instead
+     */
+    LayoutSettings.Layout layout = 9 [deprecated = true];
 
     enum Font {
       Outfit = 0;
@@ -288,4 +286,17 @@ message Settings {
     bool edit_button = 1;
   }
   WidgetSettings widgets = 26;
+
+  message LayoutSettings {
+    enum Layout {
+      PullDown = 0;
+      Pager = 1;
+      PagerReversed = 2;
+    }
+
+    Layout base_layout = 1;
+    bool bottom_search_bar = 2;
+    bool reverse_search_results = 3;
+  }
+  LayoutSettings layout = 27;
 }

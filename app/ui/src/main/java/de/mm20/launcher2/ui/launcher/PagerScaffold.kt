@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -117,15 +116,13 @@ fun PagerScaffold(
     }
 
     val isSearchAtTop by remember {
-        if (reverseSearchResults) {
-            derivedStateOf {
+        derivedStateOf {
+            if (reverseSearchResults) {
                 val lastItem =
                     searchState.layoutInfo.visibleItemsInfo.lastOrNull()
                         ?: return@derivedStateOf true
                 lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
-            }
-        } else {
-            derivedStateOf {
+            } else {
                 searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
             }
         }
@@ -255,8 +252,10 @@ fun PagerScaffold(
                 source: NestedScrollSource
             ): Offset {
                 if (source == NestedScrollSource.Drag) gestureManager.dispatchDrag(available)
-                val deltaSearchBarOffset = consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
-                searchBarOffset.value = (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                val deltaSearchBarOffset =
+                    consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
+                searchBarOffset.value =
+                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
                 return super.onPostScroll(consumed, available, source)
             }
 
@@ -311,8 +310,9 @@ fun PagerScaffold(
                     state = pagerState,
                     userScrollEnabled = !isWidgetEditMode,
                 ) {
-                    val pagerProgress = pagerState.currentPage + pagerState.currentPageOffsetFraction
-                    when(it) {
+                    val pagerProgress =
+                        pagerState.currentPage + pagerState.currentPageOffsetFraction
+                    when (it) {
                         0 -> {
                             val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
 
@@ -382,6 +382,7 @@ fun PagerScaffold(
                                 )
                             }
                         }
+
                         1 -> {
                             val webSearchPadding by animateDpAsState(
                                 if (actions.isEmpty()) 0.dp else 48.dp
@@ -469,7 +470,12 @@ fun PagerScaffold(
                 .padding(8.dp)
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .imePadding()
-                .offset { IntOffset(0, if (focusSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) }
+                .offset {
+                    IntOffset(
+                        0,
+                        if (focusSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1
+                    )
+                }
                 .offset(y = widgetEditModeOffset),
             level = { searchBarLevel },
             focused = focusSearchBar,
