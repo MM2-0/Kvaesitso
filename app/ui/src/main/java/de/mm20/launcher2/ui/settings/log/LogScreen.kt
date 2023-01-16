@@ -56,7 +56,7 @@ fun LogScreen() {
             val inputStream = process.inputStream.bufferedReader()
             while (isActive) {
                 val line = try {
-                    val line = inputStream.readLine()
+                    val line = inputStream.readLine() ?: continue
                     val matcher = pattern.matcher(line)
                     if (matcher.matches()) {
                         FormattedLogcatLine(
