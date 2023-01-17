@@ -722,7 +722,7 @@
         <item quantity="one">%1$d item selected</item>
         <item quantity="other">%1$d items selected</item>
     </plurals>
-    <string name="preference_layout_open_search">Search activation</string>
+    <string name="preference_layout_open_search">Search / app drawer</string>
     <string name="open_search_pull_down">Swipe down</string>
     <string name="open_search_swipe_left">Swipe left</string>
     <string name="open_search_swipe_right">Swipe right</string>
