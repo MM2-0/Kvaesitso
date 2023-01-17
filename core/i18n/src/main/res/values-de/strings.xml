@@ -547,6 +547,6 @@
     <string name="preference_layout_search_results">Anordnung der Suchergebnisse</string>
     <string name="search_results_order_top_down">Von oben nach unten</string>
     <string name="search_results_order_bottom_up">Von unten nach oben</string>
-    <string name="preference_layout_open_search">Aktivierung der Suche</string>
+    <string name="preference_layout_open_search">Suche / App-Übersicht</string>
     <string name="preference_layout_search_bar_position">Position der Suchleiste</string>
 </resources>
