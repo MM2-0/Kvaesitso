@@ -549,4 +549,21 @@
     <string name="search_results_order_bottom_up">Von unten nach oben</string>
     <string name="preference_layout_open_search">Suche / App-Übersicht</string>
     <string name="preference_layout_search_bar_position">Position der Suchleiste</string>
+    <string name="preference_screen_gestures">Gesten</string>
+    <string name="preference_gesture_swipe_down">Nach unten wischen</string>
+    <string name="preference_gesture_swipe_left">Nach links wischen</string>
+    <string name="preference_gesture_swipe_right">Nach rechts wischen</string>
+    <string name="preference_gesture_double_tap">Doppeltippen</string>
+    <string name="preference_gesture_long_press">Lange drücken</string>
+    <string name="gesture_action_none">Keine</string>
+    <string name="gesture_action_open_search">Suche öffnen</string>
+    <string name="gesture_action_notifications">Benachrichtigungen öffnen</string>
+    <string name="gesture_action_lock_screen">Bildschirm ausschalten</string>
+    <string name="gesture_action_quick_settings">Schnelleinstellungen öffnen</string>
+    <string name="gesture_action_power_menu">Power-Menü anzeigen</string>
+    <string name="gesture_action_recents">App-Übersicht anzeigen</string>
+    <string name="missing_permission_accessibility_gesture_failed">Der Launcher muss als Bedienungshilfe eingestellt werden, um diese Aktion ausführen zu können.</string>
+    <string name="missing_permission_accessibility_gesture_settings">Diese Aktion erfordert, dass der Launcher als Bedienungshilfe eingestellt ist.</string>
+    <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen konfigurieren</string>
+    <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
 </resources>
