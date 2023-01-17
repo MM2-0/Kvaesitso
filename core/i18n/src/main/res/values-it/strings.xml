@@ -553,4 +553,5 @@
     <string name="search_results_order_bottom_up">Dal basso verso l\'alto</string>
     <string name="search_results_order_top_down">Dall\'alto verso il basso</string>
     <string name="preference_layout_search_results">Organizzazione risultati della ricerca</string>
+    <string name="preference_layout_open_search">Attivazione ricerca</string>
 </resources>
