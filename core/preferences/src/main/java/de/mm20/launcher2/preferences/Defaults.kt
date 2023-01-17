@@ -1,7 +1,6 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
-import android.graphics.Color
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import scheme.Scheme
 
@@ -14,11 +13,12 @@ fun createFactorySettings(context: Context): Settings {
                 .setColorScheme(Settings.AppearanceSettings.ColorScheme.Default)
                 .setDimWallpaper(false)
                 .setBlurWallpaper(true)
-                .setCustomColors(Settings.AppearanceSettings.CustomColors.newBuilder()
-                    .setAdvancedMode(false)
-                    .setBaseColors(DefaultCustomColorsBase)
-                    .setLightScheme(DefaultLightCustomColorScheme)
-                    .setDarkScheme(DefaultDarkCustomColorScheme)
+                .setCustomColors(
+                    Settings.AppearanceSettings.CustomColors.newBuilder()
+                        .setAdvancedMode(false)
+                        .setBaseColors(DefaultCustomColorsBase)
+                        .setLightScheme(DefaultLightCustomColorScheme)
+                        .setDarkScheme(DefaultDarkCustomColorScheme)
                 )
                 .setFont(Settings.AppearanceSettings.Font.Outfit)
                 .build()
@@ -168,21 +168,29 @@ fun createFactorySettings(context: Context): Settings {
                 .setBottomSearchBar(false)
                 .setReverseSearchResults(false)
         )
+        .setGestures(
+            Settings.GestureSettings.newBuilder()
+                .setDoubleTap(Settings.GestureSettings.GestureAction.LockScreen)
+                .setLongPress(Settings.GestureSettings.GestureAction.None)
+                .setSwipeDown(Settings.GestureSettings.GestureAction.OpenNotificationDrawer)
+                .setSwipeLeft(Settings.GestureSettings.GestureAction.None)
+                .setSwipeRight(Settings.GestureSettings.GestureAction.None)
+        )
         .build()
 }
 
 internal val DefaultCustomColorsBase: Settings.AppearanceSettings.CustomColors.BaseColors
-get() {
-    val scheme = Scheme.light(0xFFACE330.toInt())
-    return Settings.AppearanceSettings.CustomColors.BaseColors.newBuilder()
-        .setAccent1(scheme.primary)
-        .setAccent2(scheme.secondary)
-        .setAccent3(scheme.tertiary)
-        .setNeutral1(scheme.surface)
-        .setNeutral2(scheme.surfaceVariant)
-        .setError(scheme.error)
-        .build()
-}
+    get() {
+        val scheme = Scheme.light(0xFFACE330.toInt())
+        return Settings.AppearanceSettings.CustomColors.BaseColors.newBuilder()
+            .setAccent1(scheme.primary)
+            .setAccent2(scheme.secondary)
+            .setAccent3(scheme.tertiary)
+            .setNeutral1(scheme.surface)
+            .setNeutral2(scheme.surfaceVariant)
+            .setError(scheme.error)
+            .build()
+    }
 
 internal val DefaultLightCustomColorScheme: Settings.AppearanceSettings.CustomColors.Scheme
     get() {

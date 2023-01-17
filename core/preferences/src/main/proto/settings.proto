@@ -299,4 +299,22 @@ message Settings {
     bool reverse_search_results = 3;
   }
   LayoutSettings layout = 27;
+
+  message GestureSettings {
+    enum GestureAction {
+      None = 0;
+      OpenSearch = 1;
+      OpenNotificationDrawer = 2;
+      LockScreen = 3;
+      OpenQuickSettings = 4;
+      OpenRecents = 5;
+      OpenPowerDialog = 6;
+    }
+    GestureAction swipe_down = 1;
+    GestureAction swipe_left = 2;
+    GestureAction swipe_right = 3;
+    GestureAction double_tap = 4;
+    GestureAction long_press = 5;
+  }
+  GestureSettings gestures = 28;
 }

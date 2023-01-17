@@ -24,6 +24,7 @@ import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.database.databaseModule
+import de.mm20.launcher2.globalactions.globalActionsModule
 import de.mm20.launcher2.notifications.notificationsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.preferences.preferencesModule
@@ -64,6 +65,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     databaseModule,
                     favoritesModule,
                     filesModule,
+                    globalActionsModule,
                     iconsModule,
                     musicModule,
                     notificationsModule,

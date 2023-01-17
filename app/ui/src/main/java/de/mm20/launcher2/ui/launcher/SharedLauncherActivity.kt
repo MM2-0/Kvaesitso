@@ -4,7 +4,6 @@ import android.app.WallpaperManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -37,6 +36,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
@@ -44,13 +44,14 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
+import de.mm20.launcher2.ui.gestures.Gesture
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.GestureHandler
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.ktx.toPixels
-import de.mm20.launcher2.ui.launcher.sheets.CustomizeSearchableSheet
-import de.mm20.launcher2.ui.launcher.sheets.EditFavoritesSheet
+import de.mm20.launcher2.ui.launcher.sheets.FailedGestureSheet
+import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
@@ -62,6 +63,7 @@ import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
+import org.koin.android.ext.android.inject
 import kotlin.math.absoluteValue
 import kotlin.math.pow
 
@@ -70,7 +72,9 @@ abstract class SharedLauncherActivity(
     private val mode: LauncherActivityMode
 ) : BaseActivity() {
 
-    private val viewModel: LauncherActivityVM by viewModels()
+    private val viewModel: LauncherScaffoldVM by viewModels()
+
+    private val globalActionsService: GlobalActionsService by inject()
 
     internal val homeTransitionManager = HomeTransitionManager()
 
@@ -256,52 +260,43 @@ abstract class SharedLauncherActivity(
                                         ) { enterTransitionProgress.value }
                                     }
                                 }
-
-                                bottomSheetManager.customizeSearchableSheetShown.value?.let {
-                                    CustomizeSearchableSheet(
-                                        searchable = it,
-                                        onDismiss = { bottomSheetManager.dismissCustomizeSearchableModal() })
-                                }
-                                if (bottomSheetManager.editFavoritesSheetShown.value) {
-                                    EditFavoritesSheet(onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })
-                                }
+                                LauncherBottomSheets()
                             }
 
                             val swipeThreshold = 150.dp.toPixels()
                             GestureHandler(
                                 detector = gestureDetector,
                                 onDoubleTap = {
-                                    Log.d("MM20", "Double tap")
+                                    viewModel.handleGesture(Gesture.DoubleTap)
                                 },
                                 onLongPress = {
-                                    Log.d("MM20", "Long press")
+                                    viewModel.handleGesture(Gesture.LongPress)
                                 },
                                 onDrag = {
                                     return@GestureHandler when {
                                         it.x > swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
-                                            Log.d("MM20", "Swipe right")
-                                            true
+                                            viewModel.handleGesture(Gesture.SwipeRight)
                                         }
 
                                         it.x < -swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
-                                            Log.d("MM20", "Swipe left")
-                                            true
+                                            viewModel.handleGesture(Gesture.SwipeLeft)
                                         }
 
                                         it.y > swipeThreshold && it.y.absoluteValue > it.x.absoluteValue * 2f -> {
-                                            Log.d("MM20", "Swipe down")
-                                            true
+                                            viewModel.handleGesture(Gesture.SwipeDown)
                                         }
-
-                                        it.y < -swipeThreshold && it.y.absoluteValue > it.x.absoluteValue * 2f -> {
-                                            Log.d("MM20", "Swipe up")
-                                            true
-                                        }
-
                                         else -> false
                                     }
                                 }
                             )
+                            if (viewModel.failedGestureState != null) {
+                                FailedGestureSheet(
+                                    failedGesture = viewModel.failedGestureState!!,
+                                    onDismiss = {
+                                        viewModel.dismissGestureFailedSheet()
+                                    }
+                                )
+                            }
                         }
                     }
                 }

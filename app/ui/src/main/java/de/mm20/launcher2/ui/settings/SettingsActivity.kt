@@ -39,6 +39,7 @@ import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
 import de.mm20.launcher2.ui.settings.easteregg.EasterEggSettingsScreen
 import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
+import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
 import de.mm20.launcher2.ui.settings.layout.LayoutSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
@@ -114,6 +115,9 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search") {
                             SearchSettingsScreen()
+                        }
+                        composable("settings/gestures") {
+                            GestureSettingsScreen()
                         }
                         composable("settings/search/unitconverter") {
                             UnitConverterSettingsScreen()

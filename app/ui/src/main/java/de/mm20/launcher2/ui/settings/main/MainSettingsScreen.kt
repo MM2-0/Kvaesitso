@@ -47,6 +47,14 @@ fun MainSettingsScreen() {
                         }
                     )
                     Preference(
+                        icon = Icons.Rounded.Gesture,
+                        title = stringResource(id = R.string.preference_screen_gestures),
+                        summary = stringResource(id = R.string.preference_screen_gestures_summary),
+                        onClick = {
+                            navController?.navigate("settings/gestures")
+                        }
+                    )
+                    Preference(
                         icon = Icons.Rounded.NotificationBadge,
                         title = stringResource(id = R.string.preference_screen_badges),
                         summary = stringResource(id = R.string.preference_screen_badges_summary),

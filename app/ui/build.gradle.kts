@@ -143,4 +143,5 @@ dependencies {
     implementation(project(":services:accounts"))
     implementation(project(":services:backup"))
     implementation(project(":data:search-actions"))
+    implementation(project(":services:global-actions"))
 }

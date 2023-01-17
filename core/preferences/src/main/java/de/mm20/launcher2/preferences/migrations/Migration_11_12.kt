@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences.migrations
 
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.GestureSettings
 import de.mm20.launcher2.preferences.Settings.LayoutSettings
 
 class Migration_11_12: VersionedMigration(11, 12) {
@@ -30,6 +31,14 @@ class Migration_11_12: VersionedMigration(11, 12) {
                         .setBottomSearchBar(false)
                         .setReverseSearchResults(false)
                 )
+                    .setGestures(
+                        GestureSettings.newBuilder()
+                            .setDoubleTap(GestureSettings.GestureAction.LockScreen)
+                            .setLongPress(GestureSettings.GestureAction.None)
+                            .setSwipeDown(GestureSettings.GestureAction.OpenNotificationDrawer)
+                            .setSwipeLeft(GestureSettings.GestureAction.None)
+                            .setSwipeRight(GestureSettings.GestureAction.None)
+                    )
             }
         }
         return builder

@@ -47,6 +47,12 @@ interface PermissionsManager {
      * May not be called by anything else.
      */
     fun reportNotificationListenerState(running: Boolean)
+
+    /**
+     * Special function for the accessibility service to report its status.
+     * May not be called by anything else.
+     */
+    fun reportAccessibilityServiceState(running: Boolean)
 }
 
 enum class PermissionGroup {
@@ -56,6 +62,7 @@ enum class PermissionGroup {
     ExternalStorage,
     Notifications,
     AppShortcuts,
+    Accessibility,
 }
 
 internal class PermissionsManagerImpl(
@@ -77,6 +84,7 @@ internal class PermissionsManagerImpl(
         checkPermissionOnce(PermissionGroup.Location)
     )
     private val notificationsPermissionState = MutableStateFlow(false)
+    private val accessibilityPermissionState = MutableStateFlow(false)
     private val appShortcutsPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.AppShortcuts)
     )
@@ -90,6 +98,7 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
             PermissionGroup.Location -> {
                 ActivityCompat.requestPermissions(
                     context,
@@ -97,6 +106,7 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
             PermissionGroup.Contacts -> {
                 ActivityCompat.requestPermissions(
                     context,
@@ -104,6 +114,7 @@ internal class PermissionsManagerImpl(
                     permissionGroup.ordinal
                 )
             }
+
             PermissionGroup.ExternalStorage -> {
                 if (isAtLeastApiLevel(Build.VERSION_CODES.R)) {
                     val intent =
@@ -120,6 +131,7 @@ internal class PermissionsManagerImpl(
                     )
                 }
             }
+
             PermissionGroup.Notifications -> {
                 try {
                     context.startActivity(Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS))
@@ -127,9 +139,19 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
             PermissionGroup.AppShortcuts -> {
                 context.tryStartActivity(Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS))
                 pendingPermissionRequests.add(PermissionGroup.AppShortcuts)
+            }
+
+            PermissionGroup.Accessibility -> {
+                try {
+                    context.tryStartActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+                    pendingPermissionRequests.add(PermissionGroup.Accessibility)
+                } catch (e: ActivityNotFoundException) {
+                    CrashReporter.logException(e)
+                }
             }
         }
     }
@@ -139,12 +161,15 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Calendar -> {
                 calendarPermissions.all { context.checkPermission(it) }
             }
+
             PermissionGroup.Location -> {
                 locationPermissions.all { context.checkPermission(it) }
             }
+
             PermissionGroup.Contacts -> {
                 contactPermissions.all { context.checkPermission(it) }
             }
+
             PermissionGroup.ExternalStorage -> {
                 if (isAtLeastApiLevel(Build.VERSION_CODES.R)) {
                     Environment.isExternalStorageManager()
@@ -152,11 +177,17 @@ internal class PermissionsManagerImpl(
                     externalStoragePermissions.all { context.checkPermission(it) }
                 }
             }
+
             PermissionGroup.Notifications -> {
                 notificationsPermissionState.value
             }
+
             PermissionGroup.AppShortcuts -> {
                 context.getSystemService<LauncherApps>()?.hasShortcutHostPermission() == true
+            }
+
+            PermissionGroup.Accessibility -> {
+                accessibilityPermissionState.value
             }
         }
     }
@@ -169,6 +200,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.ExternalStorage -> externalStoragePermissionState
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
+            PermissionGroup.Accessibility -> accessibilityPermissionState
         }
     }
 
@@ -186,6 +218,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.ExternalStorage -> externalStoragePermissionState.value = granted
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
+            PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
         }
     }
 
@@ -197,10 +230,12 @@ internal class PermissionsManagerImpl(
                     externalStoragePermissionState.value =
                         checkPermissionOnce(PermissionGroup.ExternalStorage)
                 }
+
                 PermissionGroup.AppShortcuts -> {
                     appShortcutsPermissionState.value =
                         checkPermissionOnce(PermissionGroup.AppShortcuts)
                 }
+
                 else -> {}
             }
             iterator.remove()
@@ -209,6 +244,10 @@ internal class PermissionsManagerImpl(
 
     override fun reportNotificationListenerState(running: Boolean) {
         notificationsPermissionState.value = running
+    }
+
+    override fun reportAccessibilityServiceState(running: Boolean) {
+        accessibilityPermissionState.value = running
     }
 
     companion object {
