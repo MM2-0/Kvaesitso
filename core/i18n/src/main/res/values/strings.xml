@@ -733,7 +733,7 @@
     <string name="search_results_order_top_down">Top-down</string>
     <string name="search_results_order_bottom_up">Bottom-up</string>
     <string name="preference_screen_gestures">Gestures</string>
-    <string name="preference_screen_gestures_summary">Gestures</string>
+    <string name="preference_screen_gestures_summary">Configure gestures and gesture actions</string>
     <string name="preference_gesture_swipe_down">Swipe down</string>
     <string name="preference_gesture_swipe_left">Swipe left</string>
     <string name="preference_gesture_swipe_right">Swipe right</string>
