@@ -544,4 +544,13 @@
     <string name="tag_empty_message">Il nome del tag non deve essere vuoto.</string>
     <string name="tag_select_items">Seleziona elementi:</string>
     <string name="tag_name">Nome tag</string>
+    <string name="open_search_pull_down">Scorri in basso</string>
+    <string name="open_search_swipe_left">Scorri a sinistra</string>
+    <string name="open_search_swipe_right">Scorri a destra</string>
+    <string name="preference_layout_search_bar_position">Posizione barra di ricerca</string>
+    <string name="search_bar_position_top">Alto</string>
+    <string name="search_bar_position_bottom">Basso</string>
+    <string name="search_results_order_bottom_up">Dal basso verso l\'alto</string>
+    <string name="search_results_order_top_down">Dall\'alto verso il basso</string>
+    <string name="preference_layout_search_results">Organizzazione risultati della ricerca</string>
 </resources>
