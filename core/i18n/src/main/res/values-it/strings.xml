@@ -553,5 +553,22 @@
     <string name="search_results_order_bottom_up">Dal basso verso l\'alto</string>
     <string name="search_results_order_top_down">Dall\'alto verso il basso</string>
     <string name="preference_layout_search_results">Organizzazione risultati della ricerca</string>
-    <string name="preference_layout_open_search">Attivazione ricerca</string>
+    <string name="preference_layout_open_search">Ricerca / cassetto app</string>
+    <string name="preference_screen_gestures">Gesti</string>
+    <string name="preference_gesture_swipe_down">Scorri in basso</string>
+    <string name="preference_gesture_swipe_left">Scorri a sinistra</string>
+    <string name="preference_gesture_swipe_right">Scorri a destra</string>
+    <string name="gesture_action_none">Nessuno</string>
+    <string name="gesture_action_open_search">Apri ricerca</string>
+    <string name="gesture_action_notifications">Apri cassetto notifiche</string>
+    <string name="gesture_action_lock_screen">Spegni schermo</string>
+    <string name="gesture_action_quick_settings">Apri il pannello Impostazioni rapide di Android</string>
+    <string name="gesture_action_power_menu">Mostra menu alimentazione</string>
+    <string name="gesture_action_recents">Apri la schermata App recenti di Android (Panoramica)</string>
+    <string name="missing_permission_accessibility_gesture_settings">Questa azione richiede che il servizio di accessibilità del launcher sia abilitato.</string>
+    <string name="preference_gesture_double_tap">Doppio tocco</string>
+    <string name="preference_gesture_long_press">Pressione lunga</string>
+    <string name="missing_permission_accessibility_gesture_failed">Il servizio di accessibilità del launcher deve essere abilitato per eseguire questa azione.</string>
+    <string name="preference_screen_gestures_summary">Gesti e azioni gestuali</string>
+    <string name="gesture_failed_message">Hai eseguito un gesto \"%1$s\". Questo gesto è attualmente impostato per attivare un\'azione \"%2$s\". Tuttavia, l\'azione non può essere eseguita per il seguente motivo:</string>
 </resources>
