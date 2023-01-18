@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <!-- Name of the app -->
-    <string name="app_name">Kvæsitso</string>
+    <string name="app_name">Kvaesitso</string>
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store

@@ -1,8 +1,8 @@
-# Kvæsitso
+# Kvaesitso
 
 <img src="https://raw.githubusercontent.com/MM2-0/Kvaesitso/main/assets/icons/ic_launcher.png" width="128">
 
-Kvæsitso is a search focused, free and open source launcher for Android.
+Kvaesitso is a search focused, free and open source launcher for Android.
 
 [Website and documentation](https://kvaesitso.mm20.de)
 
@@ -11,7 +11,7 @@ Kvæsitso is a search focused, free and open source launcher for Android.
 ### Using the F-Droid application
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
-you will always be notified about updates. However, Kvæsitso is not avaiable in the official F-Droid
+you will always be notified about updates. However, Kvaesitso is not avaiable in the official F-Droid
 repositories (and if it ever will be, all features depending on external APIs will probably be
 disabled). Instead there is a [repository](https://github.com/MM2-0/fdroid) for all of MM20's apps. Just scan the code below or open
 the link on your phone:
@@ -65,7 +65,7 @@ This software is free software licensed under the GNU General Public License 3.0
 
 ```
 
-Copyright (C) 2021–2022 MM2-0 and the Kvæsitso contributors
+Copyright (C) 2021–2022 MM2-0 and the Kvaesitso contributors
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

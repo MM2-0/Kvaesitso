@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="app_name">Kvæsitso</string>
+    <string name="app_name">Kvaesitso</string>
     <string name="menu_open_file">Abrir</string>
     <string name="menu_calendar_open_externally">Abrir en la aplicación de calendario</string>
     <string name="file_meta_type">Tipo: %1$s</string>

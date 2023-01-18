@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula')
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'Kvæsitso',
+  title: 'Kvaesitso',
   tagline: 'A search-focused, free and open source launcher for Android',
   url: 'https://kvaesitso.mm20.de',
   baseUrl: '/',
@@ -50,7 +50,7 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'Kvæsitso',
+        title: 'Kvaesitso',
         logo: {
           alt: 'App Icon',
           src: 'img/ic_launcher.png',
@@ -132,7 +132,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} MM2-0 and the Kvæsitso contributors. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} MM2-0 and the Kvaesitso contributors. Built with Docusaurus.`,
       },
       prism: {
         theme: lightCodeTheme,

@@ -252,7 +252,7 @@
         <item quantity="many">Naładowany w %1$s minut</item>
         <item quantity="other">Naładowany w %1$s minut</item>
     </plurals>
-    <string name="app_name">Kvæsitso</string>
+    <string name="app_name">Kvaesitso</string>
     <string name="menu_app_info">Informacje o aplikacji</string>
     <string name="menu_delete">Usuń</string>
     <string name="preference_google_signin">Zaloguj się przez Google</string>

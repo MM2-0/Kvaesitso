@@ -23,7 +23,7 @@ internal class StringKtTest {
             "文件" to "jiàn",
             "文件" to "文",
             "génération" to "Generation",
-            "Kvæsitso" to "kvaes",
+            "Kvaesitso" to "kvaes",
             "Übersetzer" to "uberset",
         )
         for ((str, q) in pairs) {
@@ -39,7 +39,7 @@ internal class StringKtTest {
         val pairs = listOf(
             "文件" to "文",
             "génération" to "énér",
-            "Kvæsitso" to "æ",
+            "Kvaesitso" to "æ",
             "Übersetzer" to "übe",
         )
         for ((str, q) in pairs) {

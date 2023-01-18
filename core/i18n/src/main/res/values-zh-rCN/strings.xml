@@ -16,7 +16,7 @@
     <string name="preference_google_signin_summary">登陆以查找Google Drive</string>
     <string name="preference_music_filter_sources">限制为音乐应用</string>
     <string name="weather_widget_hide_details">隐藏详细信息</string>
-    <string name="app_name">Kvæsitso</string>
+    <string name="app_name">Kvaesitso</string>
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="owncloud_login_2fa_hint">如果你开启了两步验证，你必须在此使用一个应用密码。</string>

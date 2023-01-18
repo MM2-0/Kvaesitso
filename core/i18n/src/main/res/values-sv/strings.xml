@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kvæsitso</string>
+    <string name="app_name">Kvaesitso</string>
     <string name="menu_item_edit_favs">Redigera favoriter</string>
     <string name="app_info_version">Version %1$s</string>
     <string name="menu_share_apk_file">APK-fil</string>

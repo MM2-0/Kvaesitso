@@ -11,9 +11,9 @@ Themed icons can be enabled in Settings > Appearance > Themed Icons.
 
 It was first introduced by Google on Android 12. Unfortunately, Google did not provide an official API for third party app developers to support themed icons in their apps until Android 13. Instead they hardcoded all the themed icons into the Pixel Launcher. This is the reason why only Google icons could be themed on Android 12 Pixel devices.
 
-In order to not violate any trademarks, Kvæsitso does not ship any third party icons. However, it can extract these themed icons from the Pixel launcher if it is installed on the device. The issue remains, that only Google icons are supported. Fortunately, the Lawnchair developers started a community effort to bring themed icon support to all apps for their launcher: [Lawnicons](https://github.com/LawnchairLauncher/lawnicons).
+In order to not violate any trademarks, Kvaesitso does not ship any third party icons. However, it can extract these themed icons from the Pixel launcher if it is installed on the device. The issue remains, that only Google icons are supported. Fortunately, the Lawnchair developers started a community effort to bring themed icon support to all apps for their launcher: [Lawnicons](https://github.com/LawnchairLauncher/lawnicons).
 
-Kvæsitso supports themed icons through Lawnicons natively. All you need to do is to install the latest Lawnicons APK and enable Themed icons in the launcher settings (Settings > Appearance > Themed Icons). Kvæsitso will detect that Lawnicons is installed and extract the icons automatically.
+Kvaesitso supports themed icons through Lawnicons natively. All you need to do is to install the latest Lawnicons APK and enable Themed icons in the launcher settings (Settings > Appearance > Themed Icons). Kvaesitso will detect that Lawnicons is installed and extract the icons automatically.
 
 ## Themed icons on Android 13+
 

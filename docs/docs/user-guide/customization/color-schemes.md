@@ -16,7 +16,7 @@ A high contrast theme using only black and white.
 
 Customize the launchers color scheme to your likings. There is a simple mode and an advanced mode. You can toggle between them using the overflow menu in the top right corner.
 
-Since Kvæsitso uses Material Design 3, all colors are based on the [Material 3 color system](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
+Since Kvaesitso uses Material Design 3, all colors are based on the [Material 3 color system](https://m3.material.io/styles/color/the-color-system/key-colors-tones).
 
 ### Simple mode
 

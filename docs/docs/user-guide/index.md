@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Get Started
 
-Kvæsitso is available for Android devices running Android 8.0 or higher.
+Kvaesitso is available for Android devices running Android 8.0 or higher.
 
 ## Installation
 
