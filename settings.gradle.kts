@@ -207,13 +207,13 @@ dependencyResolutionManagement {
                 .version("4.4.2")
 
             library("google.auth", "com.google.auth", "google-auth-library-oauth2-http")
-                .version("1.11.0")
-            library("google.apiclient", "com.google.api-client", "google-api-client-android")
-                .version("2.0.0")
+                .version("1.14.0")
+            library("google.apiclient", "com.google.api-client", "google-api-client")
+                .version("2.1.2")
             library("google.drive", "com.google.apis", "google-api-services-drive")
-                .version("v3-rev197-1.25.0")
+                .version("v3-rev20221219-2.0.0")
             library("google.oauth2", "com.google.apis", "google-api-services-oauth2")
-                .version("v2-rev157-1.25.0")
+                .version("v2-rev20200213-2.0.0")
 
             library("gson", "com.google.code.gson", "gson")
                 .version("2.9.1")
