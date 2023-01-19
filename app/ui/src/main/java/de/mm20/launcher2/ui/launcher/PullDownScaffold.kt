@@ -2,8 +2,9 @@ package de.mm20.launcher2.ui.launcher
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -21,11 +22,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.pager.VerticalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -100,11 +102,14 @@ fun PullDownScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
 
+    val pagerState = rememberPagerState()
+
     val isSearchAtTop by remember {
         derivedStateOf {
             if (reverseSearchResults) {
                 val lastItem =
-                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull()
+                        ?: return@derivedStateOf true
                 lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
             } else {
                 searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
@@ -118,7 +123,8 @@ fun PullDownScaffold(
                 searchState.firstVisibleItemIndex == 0 && searchState.firstVisibleItemScrollOffset == 0
             } else {
                 val lastItem =
-                    searchState.layoutInfo.visibleItemsInfo.lastOrNull() ?: return@derivedStateOf true
+                    searchState.layoutInfo.visibleItemsInfo.lastOrNull()
+                        ?: return@derivedStateOf true
                 lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
             }
         }
@@ -216,9 +222,22 @@ fun PullDownScaffold(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(isSearchOpen) {
-        if (isSearchOpen) searchState.scrollToItem(0)
-        if (!isSearchOpen) searchVM.search("")
-        searchBarOffset.animateTo(0f)
+        launch {
+            searchBarOffset.animateTo(0f)
+        }
+        if (isSearchOpen) {
+            searchState.scrollToItem(0)
+            pagerState.animateScrollToPage(
+                1,
+                animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
+            )
+        } else {
+            searchVM.search("")
+            pagerState.animateScrollToPage(
+                0,
+                animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
+            )
+        }
     }
 
     LaunchedEffect(isWidgetEditMode) {
@@ -250,8 +269,8 @@ fun PullDownScaffold(
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (isWidgetEditMode) return Offset.Zero
-                if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                if (isWidgetEditMode || source != NestedScrollSource.Drag) return Offset.Zero
+                if (available.y.absoluteValue > available.x.absoluteValue * 2) {
                     keyboardController?.hide()
                 }
                 val canPullDown = if (isSearchOpen) {
@@ -285,8 +304,10 @@ fun PullDownScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                val deltaSearchBarOffset = consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
-                searchBarOffset.value = (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
+                val deltaSearchBarOffset =
+                    consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
+                searchBarOffset.value =
+                    (searchBarOffset.value + deltaSearchBarOffset).coerceIn(0f, maxSearchBarOffset)
                 return super.onPostScroll(consumed, available, source)
             }
 
@@ -321,7 +342,6 @@ fun PullDownScaffold(
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
-
         BoxWithConstraints(
             modifier = modifier
                 .fillMaxSize()
@@ -332,108 +352,113 @@ fun PullDownScaffold(
             CompositionLocalProvider(
                 LocalOverscrollConfiguration provides null
             ) {
-                val offset by animateFloatAsState(if (isSearchOpen) 1f else 0f)
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .requiredHeight(height * 2)
-                        .offset {
-                            IntOffset(
-                                0,
-                                ((-0.5f + offset) * height.toPx()).roundToInt()
-                            )
-                        }
+                VerticalPager(
+                    modifier = Modifier.fillMaxSize(),
+                    pageCount = 2,
+                    beyondBoundsPageCount = 1,
+                    state = pagerState,
+                    reverseLayout = true,
+                    userScrollEnabled = false,
                 ) {
-                    val webSearchPadding by animateDpAsState(
-                        if (actions.isEmpty()) 0.dp else 48.dp
-                    )
-                    val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
-                    SearchColumn(
-                        modifier = Modifier
-                            .graphicsLayer {
-                                transformOrigin = TransformOrigin.Center
-                                scaleX = offset
-                                scaleY = offset
-                                alpha = offset
-                            }
-                            .fillMaxWidth()
-                            .requiredHeight(height)
-                            .padding(
-                                start = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
-                                end = windowInsets.calculateStartPadding(LocalLayoutDirection.current),
-                            ),
-                        paddingValues = PaddingValues(
-                            top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 60.dp + webSearchPadding else 4.dp,
-                            bottom = windowInsets.calculateBottomPadding() + if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
-                        ),
-                        state = searchState,
-                        reverse = reverseSearchResults,
-                        )
-                    val clockPadding by animateDpAsState(
-                        if (isWidgetsAtStart && fillClockHeight)
-                            insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
-                        else 0.dp
+                    when (it) {
 
-                    )
-                    val clockHeight by remember {
-                        derivedStateOf {
-                            if (fillClockHeight) {
-                                height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding + 56.dp)
-                            } else {
-                                null
-                            }
-                        }
-                    }
+                        0 -> {
+                            val clockPadding by animateDpAsState(
+                                if (isWidgetsAtStart && fillClockHeight)
+                                    insets.calculateBottomPadding() + if (bottomSearchBar) 64.dp else 0.dp
+                                else 0.dp
 
-                    Column(
-                        modifier = Modifier
-                            .graphicsLayer {
-                                transformOrigin = TransformOrigin.Center
-                                scaleX = 1 - offset
-                                scaleY = 1 - offset
-                                alpha = 1 - offset
+                            )
+                            val clockHeight by remember {
+                                derivedStateOf {
+                                    if (fillClockHeight) {
+                                        height - (insets.calculateTopPadding() + insets.calculateBottomPadding() - clockPadding + 56.dp)
+                                    } else {
+                                        null
+                                    }
+                                }
                             }
-                            .pointerInput(Unit) {
-                                detectTapGestures(
-                                    onDoubleTap = {
-                                        gestureManager.dispatchDoubleTap(it)
-                                    },
-                                    onLongPress = {
-                                        gestureManager.dispatchLongPress(it)
+                            Column(
+                                modifier = Modifier
+                                    .graphicsLayer {
+                                        val progress = pagerState.currentPage + pagerState.currentPageOffsetFraction
+                                        transformOrigin = TransformOrigin.Center
+                                        alpha = 1 - progress
+                                    }
+                                    .pointerInput(Unit) {
+                                        detectTapGestures(
+                                            onDoubleTap = {
+                                                gestureManager.dispatchDoubleTap(it)
+                                            },
+                                            onLongPress = {
+                                                gestureManager.dispatchLongPress(it)
+                                            }
+                                        )
+                                    }
+                                    .fillMaxSize()
+                                    .verticalScroll(widgetsScrollState)
+                                    .windowInsetsPadding(WindowInsets.safeDrawing)
+                                    .padding(8.dp)
+                                    .padding(
+                                        top = if (bottomSearchBar) 0.dp else 56.dp,
+                                        bottom = if (bottomSearchBar) 56.dp else 0.dp,
+                                    )
+                            ) {
+                                AnimatedVisibility(!isWidgetEditMode) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .then(clockHeight?.let { Modifier.height(it) }
+                                                ?: Modifier)
+                                            .padding(bottom = clockPadding),
+                                        contentAlignment = Alignment.BottomCenter
+                                    ) {
+                                        ClockWidget(
+                                            modifier = Modifier.fillMaxWidth()
+                                        )
+                                    }
+                                }
+                                WidgetColumn(
+                                    editMode = isWidgetEditMode,
+                                    onEditModeChange = {
+                                        viewModel.setWidgetEditMode(it)
                                     }
                                 )
                             }
-                            .fillMaxWidth()
-                            .requiredHeight(height)
-                            .verticalScroll(widgetsScrollState)
-                            .windowInsetsPadding(WindowInsets.safeDrawing)
-                            .padding(8.dp)
-                            .padding(
-                                top = if (bottomSearchBar) 0.dp else 56.dp,
-                                bottom = if (bottomSearchBar) 56.dp else 0.dp,
-                            )
-                    ) {
-                        AnimatedVisibility(!isWidgetEditMode) {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
-                                    .padding(bottom = clockPadding),
-                                contentAlignment = Alignment.BottomCenter
-                            ) {
-                                ClockWidget(
-                                    modifier = Modifier.fillMaxWidth()
-                                )
-                            }
                         }
-                        WidgetColumn(
-                            editMode = isWidgetEditMode,
-                            onEditModeChange = {
-                                viewModel.setWidgetEditMode(it)
-                            }
-                        )
+
+                        1 -> {
+                            val webSearchPadding by animateDpAsState(
+                                if (actions.isEmpty()) 0.dp else 48.dp
+                            )
+                            val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
+                            SearchColumn(
+                                modifier = Modifier
+                                    .graphicsLayer {
+                                        val progress = pagerState.currentPage + pagerState.currentPageOffsetFraction
+                                        transformOrigin = TransformOrigin.Center
+                                        alpha = progress
+                                    }
+                                    .fillMaxSize()
+                                    .padding(
+                                        start = windowInsets.calculateStartPadding(
+                                            LocalLayoutDirection.current
+                                        ),
+                                        end = windowInsets.calculateStartPadding(
+                                            LocalLayoutDirection.current
+                                        ),
+                                    ),
+                                paddingValues = PaddingValues(
+                                    top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 60.dp + webSearchPadding else 4.dp,
+                                    bottom = windowInsets.calculateBottomPadding() + if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
+                                ),
+                                state = searchState,
+                                reverse = reverseSearchResults,
+                            )
+                        }
                     }
                 }
+
 
             }
 
