@@ -2,7 +2,9 @@ package de.mm20.launcher2.ui.launcher
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -27,6 +29,7 @@ import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerDefaults
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -309,9 +312,13 @@ fun PagerScaffold(
                     reverseLayout = reverse,
                     state = pagerState,
                     userScrollEnabled = !isWidgetEditMode,
+                    flingBehavior = PagerDefaults.flingBehavior(
+                        state = pagerState,
+                        lowVelocityAnimationSpec = spring(
+                            stiffness = Spring.StiffnessMediumLow,
+                        ),
+                    )
                 ) {
-                    val pagerProgress =
-                        pagerState.currentPage + pagerState.currentPageOffsetFraction
                     when (it) {
                         0 -> {
                             val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
@@ -349,6 +356,8 @@ fun PagerScaffold(
                                     .verticalScroll(widgetsScrollState)
                                     .windowInsetsPadding(WindowInsets.safeDrawing)
                                     .graphicsLayer {
+                                        val pagerProgress =
+                                            pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         alpha = 1f - pagerProgress
                                     }
                                     .padding(8.dp)
@@ -404,6 +413,8 @@ fun PagerScaffold(
                                     .requiredWidth(width)
                                     .fillMaxHeight()
                                     .graphicsLayer {
+                                        val pagerProgress =
+                                            pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         alpha = pagerProgress
                                     }
                                     .nestedScroll(searchNestedScrollConnection)
