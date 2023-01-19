@@ -561,7 +561,7 @@
     <string name="gesture_action_lock_screen">Bildschirm ausschalten</string>
     <string name="gesture_action_quick_settings">Schnelleinstellungen öffnen</string>
     <string name="gesture_action_power_menu">Power-Menü anzeigen</string>
-    <string name="gesture_action_recents">App-Übersicht anzeigen</string>
+    <string name="gesture_action_recents">Zuletzt verwendete Apps anzeigen</string>
     <string name="missing_permission_accessibility_gesture_failed">Der Launcher muss als Bedienungshilfe eingestellt werden, um diese Aktion ausführen zu können.</string>
     <string name="missing_permission_accessibility_gesture_settings">Diese Aktion erfordert, dass der Launcher als Bedienungshilfe eingestellt ist.</string>
     <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen</string>
