@@ -1,5 +1,6 @@
 package de.mm20.launcher2.preferences.migrations
 
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.GestureSettings
 import de.mm20.launcher2.preferences.Settings.LayoutSettings
@@ -33,7 +34,13 @@ class Migration_11_12: VersionedMigration(11, 12) {
                 )
                     .setGestures(
                         GestureSettings.newBuilder()
-                            .setDoubleTap(GestureSettings.GestureAction.LockScreen)
+                            .setDoubleTap(
+                                if (isAtLeastApiLevel(28)) {
+                                    GestureSettings.GestureAction.LockScreen
+                                } else {
+                                    GestureSettings.GestureAction.None
+                                }
+                            )
                             .setLongPress(GestureSettings.GestureAction.None)
                             .setSwipeDown(GestureSettings.GestureAction.OpenNotificationDrawer)
                             .setSwipeLeft(GestureSettings.GestureAction.None)

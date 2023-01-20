@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import scheme.Scheme
 
@@ -170,7 +171,12 @@ fun createFactorySettings(context: Context): Settings {
         )
         .setGestures(
             Settings.GestureSettings.newBuilder()
-                .setDoubleTap(Settings.GestureSettings.GestureAction.LockScreen)
+                .setDoubleTap(
+                    if (isAtLeastApiLevel(28)) {
+                        Settings.GestureSettings.GestureAction.LockScreen
+                    } else {
+                        Settings.GestureSettings.GestureAction.None
+                    })
                 .setLongPress(Settings.GestureSettings.GestureAction.None)
                 .setSwipeDown(Settings.GestureSettings.GestureAction.OpenNotificationDrawer)
                 .setSwipeLeft(Settings.GestureSettings.GestureAction.None)
