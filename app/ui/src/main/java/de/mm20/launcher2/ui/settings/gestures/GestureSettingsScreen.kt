@@ -70,7 +70,8 @@ fun GestureSettingsScreen() {
                     onValueChanged = { if (it != null) viewModel.setLongPress(it) }
                 )
                 val swipeDown by viewModel.swipeDown.observeAsState()
-                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeDown)) {
+                val swipeDownIsSearch = layout == Layout.PullDown
+                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeDown) && !swipeDownIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
                         text = stringResource(R.string.missing_permission_accessibility_gesture_settings),
@@ -79,13 +80,14 @@ fun GestureSettingsScreen() {
                 }
                 ListPreference(
                     title = stringResource(R.string.preference_gesture_swipe_down),
-                    enabled = layout != Layout.PullDown,
+                    enabled = !swipeDownIsSearch,
                     items = options,
-                    value = if (layout == Layout.PullDown) GestureAction.OpenSearch else swipeDown,
+                    value = if (swipeDownIsSearch) GestureAction.OpenSearch else swipeDown,
                     onValueChanged = { if (it != null) viewModel.setSwipeDown(it) }
                 )
                 val swipeLeft by viewModel.swipeLeft.observeAsState()
-                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeLeft)) {
+                val swipeLeftIsSearch = layout == Layout.Pager
+                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeLeft) && !swipeLeftIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
                         text = stringResource(R.string.missing_permission_accessibility_gesture_settings),
@@ -94,13 +96,14 @@ fun GestureSettingsScreen() {
                 }
                 ListPreference(
                     title = stringResource(R.string.preference_gesture_swipe_left),
-                    enabled = layout != Layout.Pager,
+                    enabled = !swipeLeftIsSearch,
                     items = options,
-                    value = if (layout == Layout.Pager) GestureAction.OpenSearch else swipeLeft,
+                    value = if (swipeLeftIsSearch) GestureAction.OpenSearch else swipeLeft,
                     onValueChanged = { if (it != null) viewModel.setSwipeLeft(it) }
                 )
                 val swipeRight by viewModel.swipeRight.observeAsState()
-                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeRight)) {
+                val swipeRightIsSearch = layout == Layout.PagerReversed
+                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeRight) && !swipeRightIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
                         text = stringResource(R.string.missing_permission_accessibility_gesture_settings),
@@ -109,9 +112,9 @@ fun GestureSettingsScreen() {
                 }
                 ListPreference(
                     title = stringResource(R.string.preference_gesture_swipe_right),
-                    enabled = layout != Layout.PagerReversed,
+                    enabled = !swipeRightIsSearch,
                     items = options,
-                    value = if (layout == Layout.PagerReversed) GestureAction.OpenSearch else swipeRight,
+                    value = if (swipeRightIsSearch) GestureAction.OpenSearch else swipeRight,
                     onValueChanged = { if (it != null) viewModel.setSwipeRight(it) }
                 )
             }
