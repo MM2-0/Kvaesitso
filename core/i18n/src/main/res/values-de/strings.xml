@@ -566,4 +566,6 @@
     <string name="missing_permission_accessibility_gesture_settings">Diese Aktion erfordert, dass der Launcher als Bedienungshilfe eingestellt ist.</string>
     <string name="preference_screen_gestures_summary">Gesten und Gestenaktionen</string>
     <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
+    <string name="preference_layout_fixed_search_bar">Angeheftete Suchleiste</string>
+    <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
 </resources>
