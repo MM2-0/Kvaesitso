@@ -505,7 +505,7 @@ fun PagerScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = true
+            reverse = bottomSearchBar
         )
     }
 }
