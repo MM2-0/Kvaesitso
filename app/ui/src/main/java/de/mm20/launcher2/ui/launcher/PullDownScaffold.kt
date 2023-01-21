@@ -369,6 +369,8 @@ fun PullDownScaffold(
                                 else 0.dp
 
                             )
+                            val editModePadding by animateDpAsState(if (isWidgetEditMode && bottomSearchBar) 56.dp else 0.dp)
+
                             val clockHeight by remember {
                                 derivedStateOf {
                                     if (fillClockHeight) {
@@ -403,6 +405,7 @@ fun PullDownScaffold(
                                         top = if (bottomSearchBar) 0.dp else 56.dp,
                                         bottom = if (bottomSearchBar) 56.dp else 0.dp,
                                     )
+                                    .padding(top = editModePadding)
                             ) {
                                 AnimatedVisibility(!isWidgetEditMode) {
                                     Box(
