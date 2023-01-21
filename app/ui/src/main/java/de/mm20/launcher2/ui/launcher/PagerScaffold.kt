@@ -91,6 +91,7 @@ fun PagerScaffold(
     reverse: Boolean = false,
     bottomSearchBar: Boolean = true,
     reverseSearchResults: Boolean = true,
+    fixedSearchBar: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -488,7 +489,7 @@ fun PagerScaffold(
                 .offset {
                     IntOffset(
                         0,
-                        if (focusSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1
+                        if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1
                     )
                 }
                 .offset(y = widgetEditModeOffset),

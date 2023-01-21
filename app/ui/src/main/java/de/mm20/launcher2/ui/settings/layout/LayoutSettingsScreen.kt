@@ -10,6 +10,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 
 @Composable
 fun LayoutSettingsScreen() {
@@ -41,6 +42,15 @@ fun LayoutSettingsScreen() {
                     value = bottomSearchBar,
                     onValueChanged = {
                         if (it != null) viewModel.setBottomSearchBar(it)
+                    },
+                )
+                val fixedSearchBar by viewModel.fixedSearchBar.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_layout_fixed_search_bar),
+                    summary = stringResource(R.string.preference_layout_fixed_search_bar_summary),
+                    value = fixedSearchBar == true,
+                    onValueChanged = {
+                        viewModel.setFixedSearchBar(it)
                     },
                 )
                 val reverseSearchResults by viewModel.reverseSearchResults.observeAsState()

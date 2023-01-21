@@ -125,6 +125,7 @@ abstract class SharedLauncherActivity(
                             val layout by viewModel.baseLayout.observeAsState(null)
                             val bottomSearchBar by viewModel.bottomSearchBar.observeAsState(false)
                             val reverseSearchResults by viewModel.reverseSearchResults.observeAsState(false)
+                            val fixedSearchBar by viewModel.fixedSearchBar.observeAsState(false)
 
                             val systemUiController = rememberSystemUiController()
 
@@ -182,6 +183,7 @@ abstract class SharedLauncherActivity(
                                             darkNavBarIcons = lightNav,
                                             bottomSearchBar = bottomSearchBar,
                                             reverseSearchResults = reverseSearchResults,
+                                            fixedSearchBar = fixedSearchBar,
                                         )
                                     }
                                 } else {
@@ -202,6 +204,7 @@ abstract class SharedLauncherActivity(
                                                     darkNavBarIcons = lightNav,
                                                     bottomSearchBar = bottomSearchBar,
                                                     reverseSearchResults = reverseSearchResults,
+                                                    fixedSearchBar = fixedSearchBar,
                                                 )
                                             }
                                         }
@@ -222,6 +225,7 @@ abstract class SharedLauncherActivity(
                                                     reverse = layout == Settings.LayoutSettings.Layout.PagerReversed,
                                                     bottomSearchBar = bottomSearchBar,
                                                     reverseSearchResults = reverseSearchResults,
+                                                    fixedSearchBar = fixedSearchBar,
                                                 )
                                             }
                                         }

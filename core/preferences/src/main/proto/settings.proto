@@ -297,6 +297,7 @@ message Settings {
     Layout base_layout = 1;
     bool bottom_search_bar = 2;
     bool reverse_search_results = 3;
+    bool fixed_search_bar = 4;
   }
   LayoutSettings layout = 27;
 

@@ -66,6 +66,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val baseLayout = dataStore.data.map { it.layout.baseLayout }.asLiveData()
     val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }.asLiveData()
     val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }.asLiveData()
+    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }.asLiveData()
 
     val isSearchOpen = MutableLiveData(false)
     val isWidgetEditMode = MutableLiveData(false)

@@ -39,6 +39,7 @@ fun AssistantScaffold(
     darkNavBarIcons: Boolean = false,
     bottomSearchBar: Boolean = false,
     reverseSearchResults: Boolean = false,
+    fixedSearchBar: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
 
@@ -185,7 +186,7 @@ fun AssistantScaffold(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset {
-                    if (searchBarFocused) IntOffset.Zero
+                    if (searchBarFocused || fixedSearchBar) IntOffset.Zero
                     else IntOffset(
                         0,
                         searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1

@@ -88,6 +88,7 @@ fun PullDownScaffold(
     darkNavBarIcons: Boolean = false,
     bottomSearchBar: Boolean = false,
     reverseSearchResults: Boolean = false,
+    fixedSearchBar: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -520,7 +521,7 @@ fun PullDownScaffold(
                 .offset {
                     IntOffset(
                         0,
-                        if (searchBarFocused) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)
+                        if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)
                     )
                 }
                 .offset {

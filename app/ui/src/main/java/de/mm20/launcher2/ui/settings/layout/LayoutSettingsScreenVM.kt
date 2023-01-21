@@ -46,4 +46,15 @@ class LayoutSettingsScreenVM: ViewModel(), KoinComponent {
             }
         }
     }
+
+    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }.asLiveData()
+    fun setFixedSearchBar(fixedSearchBar: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLayout(it.layout.toBuilder().setFixedSearchBar(fixedSearchBar))
+                    .build()
+            }
+        }
+    }
 }

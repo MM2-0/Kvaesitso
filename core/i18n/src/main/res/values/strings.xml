@@ -732,6 +732,8 @@
     <string name="preference_layout_search_results">Arrangement of search results</string>
     <string name="search_results_order_top_down">Top-down</string>
     <string name="search_results_order_bottom_up">Bottom-up</string>
+    <string name="preference_layout_fixed_search_bar">Fixed search bar</string>
+    <string name="preference_layout_fixed_search_bar_summary">Don\'t scroll the search bar out of view</string>
     <string name="preference_screen_gestures">Gestures</string>
     <string name="preference_screen_gestures_summary">Gestures and gesture actions</string>
     <string name="preference_gesture_swipe_down">Swipe down</string>
