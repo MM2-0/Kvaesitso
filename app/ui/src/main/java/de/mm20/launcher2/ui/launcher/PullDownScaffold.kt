@@ -315,7 +315,7 @@ fun PullDownScaffold(
                 if (offsetY.value > toggleSearchThreshold || offsetY.value < -toggleSearchThreshold) {
                     viewModel.toggleSearch()
                 }
-                gestureManager.dispatchDragEnd()
+                if (!isWidgetEditMode) gestureManager.dispatchDragEnd()
                 if (offsetY.value != 0f) {
                     offsetY.animateTo(0f)
                     return available
@@ -331,10 +331,10 @@ fun PullDownScaffold(
             .pointerInput(Unit) {
                 detectHorizontalDragGestures(
                     onDragEnd = {
-                        gestureManager.dispatchDragEnd()
+                        if (!isWidgetEditMode) gestureManager.dispatchDragEnd()
                     },
                     onHorizontalDrag = { _, dragAmount ->
-                        gestureManager.dispatchDrag(Offset(dragAmount, 0f))
+                        if (!isWidgetEditMode) gestureManager.dispatchDrag(Offset(dragAmount, 0f))
                     }
                 )
             }
@@ -388,10 +388,10 @@ fun PullDownScaffold(
                                     .pointerInput(Unit) {
                                         detectTapGestures(
                                             onDoubleTap = {
-                                                gestureManager.dispatchDoubleTap(it)
+                                                if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
                                             },
                                             onLongPress = {
-                                                gestureManager.dispatchLongPress(it)
+                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(it)
                                             }
                                         )
                                     }

@@ -254,7 +254,7 @@ fun PagerScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag) gestureManager.dispatchDrag(available)
+                if (source == NestedScrollSource.Drag && !isWidgetEditMode) gestureManager.dispatchDrag(available)
                 val deltaSearchBarOffset =
                     consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
                 searchBarOffset.value =
@@ -263,7 +263,7 @@ fun PagerScaffold(
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                gestureManager.dispatchDragEnd()
+                if (!isWidgetEditMode) gestureManager.dispatchDragEnd()
                 return super.onPreFling(available)
             }
         }
@@ -346,10 +346,10 @@ fun PagerScaffold(
                                     .pointerInput(Unit) {
                                         detectTapGestures(
                                             onDoubleTap = {
-                                                gestureManager.dispatchDoubleTap(it)
+                                                if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
                                             },
                                             onLongPress = {
-                                                gestureManager.dispatchLongPress(it)
+                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(it)
                                             }
                                         )
                                     }
