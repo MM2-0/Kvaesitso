@@ -219,6 +219,8 @@ fun PagerScaffold(
         }
     }
 
+    val searchBarOffset = remember { mutableStateOf(0f) }
+
     val scope = rememberCoroutineScope()
     BackHandler {
         when {
@@ -235,6 +237,9 @@ fun PagerScaffold(
                 scope.launch {
                     widgetsScrollState.animateScrollTo(0)
                 }
+                scope.launch {
+                    searchBarOffset.animateTo(0f)
+                }
             }
         }
     }
@@ -243,7 +248,6 @@ fun PagerScaffold(
 
     val gestureManager = LocalGestureDetector.current
 
-    val searchBarOffset = remember { mutableStateOf(0f) }
     val density = LocalDensity.current
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 

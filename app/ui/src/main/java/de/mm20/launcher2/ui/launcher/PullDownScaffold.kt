@@ -259,6 +259,9 @@ fun PullDownScaffold(
                 scope.launch {
                     widgetsScrollState.animateScrollTo(0)
                 }
+                scope.launch {
+                    searchBarOffset.animateTo(0f)
+                }
             }
         }
     }
