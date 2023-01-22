@@ -571,4 +571,6 @@
     <string name="missing_permission_accessibility_gesture_failed">Il servizio di accessibilità del launcher deve essere abilitato per eseguire questa azione.</string>
     <string name="preference_screen_gestures_summary">Gesti e azioni gestuali</string>
     <string name="gesture_failed_message">Hai eseguito un gesto \"%1$s\". Questo gesto è attualmente impostato per attivare un\'azione \"%2$s\". Tuttavia, l\'azione non può essere eseguita per il seguente motivo:</string>
+    <string name="preference_layout_fixed_search_bar">Barra di ricerca fissa</string>
+    <string name="preference_layout_fixed_search_bar_summary">Non far scorrere la barra di ricerca fuori dalla vista</string>
 </resources>
