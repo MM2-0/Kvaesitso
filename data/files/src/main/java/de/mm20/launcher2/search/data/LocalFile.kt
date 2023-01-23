@@ -15,6 +15,7 @@ import android.text.format.DateUtils
 import android.util.Size
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.formatToString
@@ -291,6 +292,10 @@ data class LocalFile(
                         }
                         retriever.release()
                     } catch (e: RuntimeException) {
+                        CrashReporter.logException(e)
+                    } catch (e: IOException) {
+                        CrashReporter.logException(e)
+                    } finally {
                         retriever.release()
                     }
                 }

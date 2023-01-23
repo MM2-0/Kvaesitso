@@ -52,4 +52,5 @@ dependencies {
     implementation(project(":libs:owncloud"))
     implementation(project(":core:i18n"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:crashreporter"))
 }
