@@ -20,7 +20,7 @@ the link on your phone:
 
 https://raw.githubusercontent.com/MM2-0/fdroid/main/fdroid/repo/?fingerprint=156FBAB952F6996415F198F3F29628D24B30E725B0F07A2B49C3A9B5161EEE1A
 
-Note: the link should open in the F-Droid app but if it doesn't, you'll see a 404 error. That's fine, just copy the URL and paste it into your F-Droid client, it knows how to deal with that URL.
+Note: the link should open in the F-Droid app but if it doesn't, you'll see a 400 error. That's fine, just copy the URL and paste it into your F-Droid client, it knows how to deal with that URL.
 
 The same version is also available in IzzyOnDroid's repository.
 
