@@ -9,7 +9,7 @@ dependencyResolutionManagement {
             version("targetSdk", "33")
         }
         create("libs") {
-            version("kotlin", "1.7.21")
+            version("kotlin", "1.8.0")
             version("kotlinx.coroutines", "1.6.4")
             library("kotlin.stdlib", "org.jetbrains.kotlin", "kotlin-stdlib")
                 .versionRef("kotlin")
@@ -31,7 +31,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("androidx.compose.compiler", "1.4.0-alpha02")
+            version("androidx.compose.compiler", "1.4.0")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
                 .version("1.4.0-alpha04")
             library("androidx.compose.livedata", "androidx.compose.runtime", "runtime-livedata")

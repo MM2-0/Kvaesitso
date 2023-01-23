@@ -1,5 +1,4 @@
 import android.annotation.SuppressLint
-import java.util.*
 
 plugins {
     id("com.android.application")
