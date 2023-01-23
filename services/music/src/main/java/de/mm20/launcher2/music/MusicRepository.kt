@@ -467,6 +467,7 @@ internal class MusicRepositoryImpl(
             "com.qobuz.music", // Qobuz
             "tv.plex.labs.plexamp", // Plexamp
             "de.ph1b.audiobook", // Voice
+            "de.eindm.boum", // Boum
         )
         var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
         apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
