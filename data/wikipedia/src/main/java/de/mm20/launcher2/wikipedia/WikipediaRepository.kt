@@ -1,7 +1,6 @@
 package de.mm20.launcher2.wikipedia
 
 import android.content.Context
-import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.Wikipedia
@@ -9,7 +8,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import okhttp3.OkHttpClient
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
@@ -77,7 +75,8 @@ internal class WikipediaRepositoryImpl(
         val wikipediaUrl = retrofit.baseUrl().toString()
 
         val result = try {
-            wikipediaService.search(query)
+            val imageWidth = context.resources.displayMetrics.widthPixels / 2
+            wikipediaService.search(query, imageWidth)
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return null
@@ -86,14 +85,7 @@ internal class WikipediaRepositoryImpl(
         val page = result.query?.pages?.values?.toList()?.getOrNull(0) ?: return null
 
         val image = if (loadImages) {
-            val width = context.resources.displayMetrics.widthPixels / 2
-            val imageResult = try {
-                wikipediaService.getPageImage(page.pageid, width)
-            } catch (e: Exception) {
-                CrashReporter.logException(e)
-                return null
-            }
-            imageResult.query?.pages?.values?.toList()?.getOrNull(0)?.thumbnail?.source
+            result.query.pages.values.toList().getOrNull(0)?.thumbnail?.source
         } else null
 
         return Wikipedia(
@@ -101,6 +93,7 @@ internal class WikipediaRepositoryImpl(
             id = page.pageid,
             text = page.extract,
             image = image,
+            url = page.fullurl,
             wikipediaUrl = wikipediaUrl
         )
     }

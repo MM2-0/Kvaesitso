@@ -19,6 +19,7 @@ data class Wikipedia(
     val id: Long,
     val text: String,
     val image: String?,
+    val url: String,
     val wikipediaUrl: String,
     override val labelOverride: String? = null,
 ) : SavableSearchable {
@@ -45,15 +46,7 @@ data class Wikipedia(
     }
 
     private fun getLaunchIntent(): Intent {
-        val intent = CustomTabsIntent
-            .Builder()
-            .setToolbarColor(Color.BLACK)
-            .enableUrlBarHiding()
-            .setShowTitle(true)
-            .build()
-        val uri = "${wikipediaUrl.padEnd(1, '/')}wiki?curid=$id"
-        intent.intent.data = Uri.parse(uri)
-        return intent.intent
+        return Intent(Intent.ACTION_VIEW, Uri.parse(url))
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {

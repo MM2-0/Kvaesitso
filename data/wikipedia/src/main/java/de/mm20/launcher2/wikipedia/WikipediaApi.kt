@@ -15,28 +15,16 @@ data class WikipediaSearchResultQueryPage(
     val pageid: Long,
     val title: String,
     val extract: String,
+    val thumbnail: WikipediaSearchResultQueryPageThumnail?,
+    val fullurl: String,
+    val canonicalurl: String,
 )
 
-data class WikipediaGetPageImageResult(
-    val query: WikipediaGetPageImageResultQuery?,
-)
-
-data class WikipediaGetPageImageResultQuery(
-    val pages: Map<String, WikipediaGetPageImageResultQueryPage>
-)
-
-data class WikipediaGetPageImageResultQueryPage(
-    val thumbnail: WikipediaGetPageImageResultQueryPageThumnail?
-)
-
-data class WikipediaGetPageImageResultQueryPageThumnail(
+data class WikipediaSearchResultQueryPageThumnail(
     val source: String
 )
 
 interface WikipediaApi {
-    @GET("w/api.php?action=query&generator=search&redirects=true&gsrlimit=1&exchars=500&prop=extracts&exintro=true&format=json")
-    suspend fun search(@Query("gsrsearch") query: String): WikipediaSearchResult
-
-    @GET("w/api.php?action=query&prop=pageimages&format=json")
-    suspend fun getPageImage(@Query("pageids") pageId: Long, @Query("pithumbsize") thumbnailSize: Int): WikipediaGetPageImageResult
+    @GET("w/api.php?action=query&generator=search&redirects=true&gsrlimit=1&prop=extracts|info|pageimages&exchars=500&exintro=true&inprop=url&format=json")
+    suspend fun search(@Query("gsrsearch") query: String, @Query("pithumbsize") thumbnailSize: Int): WikipediaSearchResult
 }
