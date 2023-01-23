@@ -20,7 +20,7 @@ the link on your phone:
 
 https://raw.githubusercontent.com/MM2-0/fdroid/main/fdroid/repo/?fingerprint=156FBAB952F6996415F198F3F29628D24B30E725B0F07A2B49C3A9B5161EEE1A
 
-### Using a F-Droid client and the official repo
+### Using an F-Droid client and the official repo
 
 Kvaesitso is available in the official F-Droid repo [here](https://f-droid.org/packages/de.mm20.launcher2.release/).
 
