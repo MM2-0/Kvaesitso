@@ -8,22 +8,30 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 
 ## Installation
 
-### Using the F-Droid application
+### Using a F-Droid client and the official repo
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
-you will always be notified about updates. However, Kvaesitso is not avaiable in the official F-Droid
-repositories (and if it ever will be, all features depending on external APIs will probably be
-disabled). Instead there is a [repository](https://github.com/MM2-0/fdroid) for all of MM20's apps. Just scan the code below or open
+you will always be notified about updates. Kvaesitso is available in the official F-Droid
+repository (see below), but all features depending on non-foss external APIs were removed.
+Instead there is a [repository](https://github.com/MM2-0/fdroid) for all of MM20's apps. Just scan the code below or open
 the link on your phone:
 
 ![qr code](https://raw.githubusercontent.com/MM2-0/fdroid/main/qrcode.png)
 
 https://raw.githubusercontent.com/MM2-0/fdroid/main/fdroid/repo/?fingerprint=156FBAB952F6996415F198F3F29628D24B30E725B0F07A2B49C3A9B5161EEE1A
 
+### Using a F-Droid client and the official repo
+
+Kvæsitso is available in the official F-Droid repo [here](https://f-droid.org/packages/de.mm20.launcher2.release/).
+
+F-Droid build has the following changes:
+* Disabled OneDrive, GDrive and weather integration;
+* F-Droid version uses a different versionCode.
+
 ### Manual installation
 
 You can also download the latest release from
-the [releases page](https://github.com/MM2-0/Kvaesitso/releases) and install it manually.
+the [releases page](https://github.com/MM2-0/Kvaesitso/releases/latest) and install it manually.
 
 ## Report issues
 
