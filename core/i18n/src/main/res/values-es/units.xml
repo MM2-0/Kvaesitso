@@ -1,2 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unit_meter_symbol">m</string>
+    <plurals name="unit_meter">
+        <item quantity="one">metro</item>
+        <item quantity="many">metros</item>
+        <item quantity="other">metros</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">km</string>
+    <string name="unit_centimeter_symbol">cm</string>
+    <string name="unit_millimeter_symbol">mm</string>
+    <string name="unit_inch_symbol">in</string>
+    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_yard_symbol">yd</string>
+    <string name="unit_mile_symbol">mi</string>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_sqfoot_symbol">sqft</string>
+    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_hectare_symbol">ha</string>
+    <string name="unit_acre_symbol">ac</string>
+    <string name="unit_millisecond_symbol">ms</string>
+    <string name="unit_minute_symbol">min</string>
+    <string name="unit_hour_symbol">h</string>
+    <string name="unit_day_symbol">d</string>
+    <string name="unit_year_symbol">a</string>
+    <string name="unit_byte_symbol">B</string>
+    <string name="unit_kilobyte_symbol">kB</string>
+    <string name="unit_megabyte_symbol">MB</string>
+    <string name="unit_gigabyte_symbol">GB</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabyte</item>
+        <item quantity="many">gigabyte</item>
+        <item quantity="other">gigabyte</item>
+    </plurals>
+    <plurals name="unit_megabyte">
+        <item quantity="one">megabytes</item>
+        <item quantity="many">megabytes</item>
+        <item quantity="other">megabytes</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">TB</string>
+    <string name="unit_kibibyte_symbol">kiB</string>
+    <plurals name="unit_yard">
+        <item quantity="one">yarda</item>
+        <item quantity="many">yardas</item>
+        <item quantity="other">yardas</item>
+    </plurals>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometro</item>
+        <item quantity="many">kilometros</item>
+        <item quantity="other">kilometros</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centimetro</item>
+        <item quantity="many">centímetros</item>
+        <item quantity="other">centímetros</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetro</item>
+        <item quantity="many">milimetros</item>
+        <item quantity="other">milimetros</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">pulgada</item>
+        <item quantity="many">pulgadas</item>
+        <item quantity="other">pulgadas</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">pie</item>
+        <item quantity="many">pies</item>
+        <item quantity="other">pies</item>
+    </plurals>
+    <plurals name="unit_mile">
+        <item quantity="one">milla</item>
+        <item quantity="many">millas</item>
+        <item quantity="other">millas</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">milla náutica</item>
+        <item quantity="many">millas náuticas</item>
+        <item quantity="other">millas náuticas</item>
+    </plurals>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metro cuadrado</item>
+        <item quantity="many">metros cuadrados</item>
+        <item quantity="other">metros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilómetro cuadrado</item>
+        <item quantity="many">kilómetros cuadrados</item>
+        <item quantity="other">kilómetros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">centímetro cuadrado</item>
+        <item quantity="many">centímetros cuadrados</item>
+        <item quantity="other">centímetros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milímetro cuadrado</item>
+        <item quantity="many">milímetros cuadrados</item>
+        <item quantity="other">milímetros cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqinch">
+        <item quantity="one">pulgada cuadrada</item>
+        <item quantity="many">pulgadas cuadradas</item>
+        <item quantity="other">pulgadas cuadradas</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">pie cuadrado</item>
+        <item quantity="many">pies cuadrados</item>
+        <item quantity="other">pies cuadrados</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yarda cuadrada</item>
+        <item quantity="many">yardas cuadradas</item>
+        <item quantity="other">yardas cuadradas</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hectárea</item>
+        <item quantity="many">hectáreas</item>
+        <item quantity="other">hectáreas</item>
+    </plurals>
+    <plurals name="unit_second">
+        <item quantity="one">segundo</item>
+        <item quantity="many">segundos</item>
+        <item quantity="other">segundos</item>
+    </plurals>
+    <plurals name="unit_minute">
+        <item quantity="one">minuto</item>
+        <item quantity="many">minutos</item>
+        <item quantity="other">minutos</item>
+    </plurals>
+    <plurals name="unit_hour">
+        <item quantity="one">hora</item>
+        <item quantity="many">horas</item>
+        <item quantity="other">horas</item>
+    </plurals>
+    <plurals name="unit_day">
+        <item quantity="one">día</item>
+        <item quantity="many">días</item>
+        <item quantity="other">días</item>
+    </plurals>
+    <plurals name="unit_year">
+        <item quantity="one">año</item>
+        <item quantity="many">años</item>
+        <item quantity="other">años</item>
+    </plurals>
+    <plurals name="unit_byte">
+        <item quantity="one">byte</item>
+        <item quantity="many">bytes</item>
+        <item quantity="other">bytes</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilobyte</item>
+        <item quantity="many">kilobytes</item>
+        <item quantity="other">kilobytes</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibibyte</item>
+        <item quantity="many">kibibytes</item>
+        <item quantity="other">kibibytes</item>
+    </plurals>
+    <plurals name="unit_millisecond">
+        <item quantity="one">milisegundo</item>
+        <item quantity="many">milisegundos</item>
+        <item quantity="other">milisegundos</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabyte</item>
+        <item quantity="many">terabytes</item>
+        <item quantity="other">terabytes</item>
+    </plurals>
+</resources>
