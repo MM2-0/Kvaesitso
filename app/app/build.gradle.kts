@@ -1,4 +1,4 @@
-import java.text.SimpleDateFormat
+import android.annotation.SuppressLint
 import java.util.*
 
 plugins {
@@ -25,7 +25,8 @@ android {
         applicationId = "de.mm20.launcher2"
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
-        versionCode = versionCodeDate()
+        @SuppressLint("HighAppVersionCode")
+        versionCode = 2023012300
         versionName = "1.21.0"
         signingConfig = signingConfigs.getByName("debug")
     }
@@ -38,14 +39,23 @@ android {
                 isObfuscate = false
                 isOptimizeCode = true
             }
-
-            versionNameSuffix = "-" + buildTime()
         }
         debug {
             applicationIdSuffix = ".debug"
             // Jetpack Compose is unusably laggy in debug builds, it's ridiculous
             // This somehow seems to resolve that issue.
             isDebuggable = false
+        }
+
+        flavorDimensions += "variant"
+        productFlavors {
+            create("default") {
+                dimension = "variant"
+            }
+            create("fdroid") {
+                dimension = "variant"
+                versionNameSuffix = "-fdroid"
+            }
         }
     }
     configurations.all {
@@ -66,16 +76,6 @@ android {
         abortOnError = false
     }
     namespace = "de.mm20.launcher2"
-}
-
-fun buildTime(): String {
-    val df = SimpleDateFormat("yyyyMMdd")
-    return df.format(Date())
-}
-
-fun versionCodeDate(): Int {
-    val df = SimpleDateFormat("yyyyMMdd00")
-    return df.format(Date()).toInt()
 }
 
 
