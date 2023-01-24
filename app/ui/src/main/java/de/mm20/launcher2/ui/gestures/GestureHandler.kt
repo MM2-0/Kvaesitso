@@ -7,12 +7,17 @@ import androidx.compose.ui.geometry.Offset
 @Composable
 fun GestureHandler(
     detector: GestureDetector,
+    onTap: (Offset) -> Unit = {},
     onLongPress: (Offset) -> Unit = {},
     onDoubleTap: (Offset) -> Unit = {},
     onDrag: (Offset) -> Boolean = { false },
 ) {
     DisposableEffect(detector) {
         detector.gestureListener = object : GestureDetector.OnGestureListener {
+            override fun onTap(position: Offset) {
+                onTap(position)
+            }
+
             override fun onLongPress(position: Offset) {
                 onLongPress(position)
             }

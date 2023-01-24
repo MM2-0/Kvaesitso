@@ -111,6 +111,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
 
 
+    val shouldDetectDoubleTapGesture = dataStore.data.map { it.gestures.doubleTap != GestureAction.None }.asLiveData()
     var failedGestureState by mutableStateOf<FailedGesture?>(null)
     fun handleGesture(gesture: Gesture): Boolean {
         val action = when (gesture) {

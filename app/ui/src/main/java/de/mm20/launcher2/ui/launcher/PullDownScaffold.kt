@@ -387,18 +387,24 @@ fun PullDownScaffold(
                             Column(
                                 modifier = Modifier
                                     .graphicsLayer {
-                                        val progress = pagerState.currentPage + pagerState.currentPageOffsetFraction
+                                        val progress =
+                                            pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         transformOrigin = TransformOrigin.Center
                                         alpha = 1 - progress
                                     }
-                                    .pointerInput(Unit) {
+                                    .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
-                                            onDoubleTap = {
+                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {{
                                                 if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
-                                            },
+                                            }} else null,
                                             onLongPress = {
-                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(it)
-                                            }
+                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(
+                                                    it
+                                                )
+                                            },
+                                            onTap = {
+                                                if (!isWidgetEditMode) gestureManager.dispatchTap(it)
+                                            },
                                         )
                                     }
                                     .fillMaxSize()
@@ -442,7 +448,8 @@ fun PullDownScaffold(
                             SearchColumn(
                                 modifier = Modifier
                                     .graphicsLayer {
-                                        val progress = pagerState.currentPage + pagerState.currentPageOffsetFraction
+                                        val progress =
+                                            pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         transformOrigin = TransformOrigin.Center
                                         alpha = progress
                                     }

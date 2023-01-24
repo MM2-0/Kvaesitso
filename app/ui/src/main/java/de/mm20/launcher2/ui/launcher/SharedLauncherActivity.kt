@@ -4,6 +4,7 @@ import android.app.WallpaperManager
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
@@ -94,6 +95,10 @@ abstract class SharedLauncherActivity(
         val bottomSheetManager = LauncherBottomSheetManager()
         val gestureDetector = GestureDetector()
 
+        viewModel.shouldDetectDoubleTapGesture.observe(this) {
+            gestureDetector.shouldDetectDoubleTaps = it
+        }
+
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
@@ -158,18 +163,6 @@ abstract class SharedLauncherActivity(
                             Box(
                                 modifier = Modifier
                                     .fillMaxSize()
-                                    .pointerInput(null) {
-                                        detectTapGestures {
-                                            wallpaperManager?.sendWallpaperCommand(
-                                                window.decorView.applicationWindowToken,
-                                                WallpaperManager.COMMAND_TAP,
-                                                it.x.toInt(),
-                                                it.y.toInt(),
-                                                0,
-                                                null
-                                            )
-                                        }
-                                    }
                                     .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
                                 contentAlignment = Alignment.BottomCenter
                             ) {
@@ -291,6 +284,16 @@ abstract class SharedLauncherActivity(
                                         }
                                         else -> false
                                     }
+                                },
+                                onTap = {
+                                    wallpaperManager.sendWallpaperCommand(g
+                                        window.decorView.windowToken,
+                                        WallpaperManager.COMMAND_TAP,
+                                        it.x.toInt(),
+                                        it.y.toInt(),
+                                        0,
+                                        null
+                                    )
                                 }
                             )
                             if (viewModel.failedGestureState != null) {

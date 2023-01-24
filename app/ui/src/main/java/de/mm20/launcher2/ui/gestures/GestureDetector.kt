@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.gestures
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.geometry.Offset
 
@@ -8,6 +11,12 @@ class GestureDetector {
     private var currentDrag : Offset? = null
 
     var gestureListener: OnGestureListener? = null
+
+    var shouldDetectDoubleTaps by mutableStateOf(false)
+
+    fun dispatchTap(position: Offset) {
+        gestureListener?.onTap(position)
+    }
 
     fun dispatchDoubleTap(position: Offset) {
         gestureListener?.onDoubleTap(position)
@@ -33,6 +42,7 @@ class GestureDetector {
 
 
     interface OnGestureListener {
+        fun onTap(position: Offset) {}
         fun onDoubleTap(position: Offset) {}
         fun onLongPress(position: Offset) {}
 

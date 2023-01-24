@@ -348,14 +348,17 @@ fun PagerScaffold(
                                 modifier = Modifier
                                     .requiredWidth(width)
                                     .fillMaxHeight()
-                                    .pointerInput(Unit) {
+                                    .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
-                                            onDoubleTap = {
+                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {{
                                                 if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
-                                            },
+                                            }} else null,
                                             onLongPress = {
                                                 if (!isWidgetEditMode) gestureManager.dispatchLongPress(it)
-                                            }
+                                            },
+                                            onTap = {
+                                                if (!isWidgetEditMode) gestureManager.dispatchTap(it)
+                                            },
                                         )
                                     }
                                     .verticalScroll(widgetsScrollState)
