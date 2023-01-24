@@ -286,7 +286,7 @@ abstract class SharedLauncherActivity(
                                     }
                                 },
                                 onTap = {
-                                    wallpaperManager.sendWallpaperCommand(g
+                                    wallpaperManager.sendWallpaperCommand(
                                         window.decorView.windowToken,
                                         WallpaperManager.COMMAND_TAP,
                                         it.x.toInt(),
