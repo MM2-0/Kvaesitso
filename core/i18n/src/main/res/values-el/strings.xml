@@ -491,4 +491,11 @@
     </plurals>
     <string name="preference_music_filter_sources_summary">Αγνόηση περιόδων σύνδεσης πολυμέσων εφαρμογών που δεν είναι εφαρμογές μουσικής</string>
     <string name="preference_search_bar_style_summary">Παραμετροποίηση εμφάνισης γραμμής αναζήτησης</string>
+    <string name="action_continue">Συνέχεια</string>
+    <string name="action_next">Επόμενο</string>
+    <string name="duplicate">Διπλότυπο</string>
+    <string name="preference_logs">Αρχεία καταγραφής</string>
+    <string name="preference_logs_summary">Προβολή και εξαγωγή αρχείων καταγραφής</string>
+    <string name="help">Βοήθεια</string>
+    <string name="skip">Παράλειψη</string>
 </resources>
