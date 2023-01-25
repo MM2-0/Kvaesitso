@@ -188,4 +188,9 @@
         <item quantity="many">gibibiytes</item>
         <item quantity="other">gibibytes</item>
     </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">acre</item>
+        <item quantity="many">acres</item>
+        <item quantity="other">acres</item>
+    </plurals>
 </resources>
