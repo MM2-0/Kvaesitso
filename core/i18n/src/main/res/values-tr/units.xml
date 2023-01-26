@@ -1,2 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unit_kilometer_symbol">km</string>
+    <plurals name="unit_meter">
+        <item quantity="one">metre</item>
+        <item quantity="other">metre</item>
+    </plurals>
+    <string name="unit_meter_symbol">m</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometre</item>
+        <item quantity="other">kilometre</item>
+    </plurals>
+</resources>
