@@ -534,4 +534,33 @@
     </plurals>
     <string name="preference_screen_tags_summary">管理标签与标记项目</string>
     <string name="preference_screen_tags">标签</string>
+    <string name="open_search_swipe_left">左滑</string>
+    <string name="open_search_swipe_right">右滑</string>
+    <string name="search_bar_position_top">顶部</string>
+    <string name="search_bar_position_bottom">底部</string>
+    <string name="preference_layout_search_results">搜索结果排列方式</string>
+    <string name="search_results_order_top_down">从顶部到底部</string>
+    <string name="search_results_order_bottom_up">从底部到顶部</string>
+    <string name="open_search_pull_down">下滑</string>
+    <string name="preference_layout_search_bar_position">搜索栏位置</string>
+    <string name="preference_layout_open_search">搜索 / 应用抽屉</string>
+    <string name="preference_screen_gestures">手势</string>
+    <string name="preference_screen_gestures_summary">手势与动作</string>
+    <string name="preference_gesture_swipe_down">下滑</string>
+    <string name="preference_gesture_swipe_left">左滑</string>
+    <string name="preference_gesture_swipe_right">右滑</string>
+    <string name="preference_gesture_double_tap">双击</string>
+    <string name="preference_gesture_long_press">长按</string>
+    <string name="gesture_action_none">无</string>
+    <string name="gesture_action_open_search">打开搜索</string>
+    <string name="gesture_action_notifications">打开通知栏</string>
+    <string name="gesture_action_lock_screen">关闭屏幕</string>
+    <string name="gesture_action_quick_settings">打开快速设置</string>
+    <string name="gesture_action_power_menu">显示电源菜单</string>
+    <string name="gesture_action_recents">打开最近任务</string>
+    <string name="gesture_failed_message">您已执行“%1$s”手势. 此手势当前设置为触发“%2$s”操作. 然而, 由于以下原因, 无法执行该操作:</string>
+    <string name="missing_permission_accessibility_gesture_failed">需要启用启动器的无障碍服务才能执行此操作.</string>
+    <string name="missing_permission_accessibility_gesture_settings">这个动作要求开启无障碍服务.</string>
+    <string name="preference_layout_fixed_search_bar">修正搜索栏</string>
+    <string name="preference_layout_fixed_search_bar_summary">在离开主页面视图时禁止滚动搜索栏</string>
 </resources>
