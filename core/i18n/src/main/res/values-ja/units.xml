@@ -95,4 +95,59 @@
     <plurals name="unit_short_ton">
         <item quantity="other">米トン</item>
     </plurals>
+    <plurals name="unit_byte">
+        <item quantity="other">バイト</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">キロバイト</item>
+    </plurals>
+    <string name="unit_megabyte_symbol">MB</string>
+    <plurals name="unit_megabyte">
+        <item quantity="other">メガバイト</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">GB</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">ギガバイト</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">TB</string>
+    <plurals name="unit_terabyte">
+        <item quantity="other">テラバイト</item>
+    </plurals>
+    <string name="unit_kibibyte_symbol">kiB</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">キビバイト</item>
+    </plurals>
+    <string name="unit_mebibyte_symbol">MiB</string>
+    <string name="unit_gibibyte_symbol">GiB</string>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">ギビバイト</item>
+    </plurals>
+    <string name="unit_tebibyte_symbol">TiB</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">テビバイト</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="other">ビット</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="other">キロビット</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="other">メガビット</item>
+    </plurals>
+    <string name="unit_megabit_symbol"></string>
+    <string name="unit_bit_symbol"></string>
+    <plurals name="unit_gigabit">
+        <item quantity="other">ギガビット</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="other">テラビット</item>
+    </plurals>
+    <string name="unit_terabit_symbol"></string>
+    <string name="unit_byte_symbol">B</string>
+    <string name="unit_kilobyte_symbol">kB</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">メビバイト</item>
+    </plurals>
+    <string name="unit_gigabit_symbol"></string>
 </resources>
