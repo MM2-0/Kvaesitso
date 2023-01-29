@@ -174,4 +174,23 @@
         <item quantity="many">terabytes</item>
         <item quantity="other">terabytes</item>
     </plurals>
+    <string name="unit_second_symbol">s</string>
+    <string name="unit_mebibyte_symbol">MiB</string>
+    <string name="unit_gibibyte_symbol">GiB</string>
+    <string name="unit_tebibyte_symbol">TiB</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebibyte</item>
+        <item quantity="many">mebibytes</item>
+        <item quantity="other">mebibytes</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibibiyte</item>
+        <item quantity="many">gibibiytes</item>
+        <item quantity="other">gibibytes</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">acre</item>
+        <item quantity="many">acres</item>
+        <item quantity="other">acres</item>
+    </plurals>
 </resources>

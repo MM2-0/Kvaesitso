@@ -2,4 +2,6 @@
 <resources>
     <string name="app_name">Kvaesitso</string>
     <string name="menu_share">Paylaş</string>
+    <string name="menu_share_apk_file">Paket Dosyası</string>
+    <string name="menu_share_store_link">link %1$s</string>
 </resources>
