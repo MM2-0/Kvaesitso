@@ -6,6 +6,7 @@
         </intent>
         <intent>
             <action android:name="com.novalauncher.THEME" />
+            <category android:name="com.novalauncher.category.CUSTOM_ICON_PICKER" />
         </intent>
     </queries>
 </manifest>
