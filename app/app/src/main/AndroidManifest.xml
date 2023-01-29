@@ -43,7 +43,8 @@
         <activity
             android:name=".activity.AddItemActivity"
             android:exported="true"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:theme="@android:style/Theme.NoDisplay"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.content.pm.action.CONFIRM_PIN_SHORTCUT" />
                 <category android:name="android.intent.category.DEFAULT" />
