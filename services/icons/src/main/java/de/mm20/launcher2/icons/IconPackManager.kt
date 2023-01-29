@@ -21,7 +21,8 @@ import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
 import org.xmlpull.v1.XmlPullParserFactory
-import java.io.InputStreamReader
+import java.io.IOException
+import java.io.Reader
 import kotlin.math.roundToInt
 
 private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
@@ -91,6 +92,7 @@ class IconPackManager(
                     } ?: TransparentLayer,
                 )
             }
+
             else -> {
                 StaticLauncherIcon(
                     foregroundLayer = StaticIconLayer(
@@ -308,18 +310,22 @@ class IconPackManager(
                         i++
                         drawable = array.getDrawable(i) as? LayerDrawable
                     }
+
                     "com.android.launcher3.HOUR_LAYER_INDEX" -> {
                         i++
                         hourIndex = array.getInt(i, -1).takeIf { it != -1 }
                     }
+
                     "com.android.launcher3.MINUTE_LAYER_INDEX" -> {
                         i++
                         minuteIndex = array.getInt(i, -1).takeIf { it != -1 }
                     }
+
                     "com.android.launcher3.DEFAULT_HOUR" -> {
                         i++
                         defaultHour = array.getInt(i, 0)
                     }
+
                     "com.android.launcher3.DEFAULT_MINUTE" -> {
                         i++
                         defaultMinute = array.getInt(i, 0)
@@ -338,9 +344,11 @@ class IconPackManager(
                                     hourIndex -> {
                                         (12 - defaultHour) * 60
                                     }
+
                                     minuteIndex -> {
                                         (60 - defaultMinute)
                                     }
+
                                     else -> 0
                                 }
                             }
@@ -468,21 +476,37 @@ class UpdateIconPacksWorker(val context: Context) {
             try {
                 val res = context.packageManager.getResourcesForApplication(pkgName)
                 val parser: XmlPullParser
-                var inStream: InputStreamReader? = null
+                var inStream: Reader? = null
                 val xmlId = res.getIdentifier("appfilter", "xml", pkgName)
-                if (xmlId != 0) parser = res.getXml(xmlId)
-                else {
-                    val rawId = res.getIdentifier("appfilter", "raw", pkgName)
-                    if (rawId == 0) {
-                        Log.e(
-                            "MM20",
-                            "Icon pack $pkgName has no appfilter.xml, neither in xml nor in raw"
-                        )
-                        return@runInTransaction
+                val rawId = res.getIdentifier("appfilter", "raw", pkgName)
+                parser = when {
+                    xmlId != 0 -> res.getXml(xmlId)
+                    rawId != 0 -> {
+                        inStream = res.openRawResource(rawId).reader()
+                        XmlPullParserFactory.newInstance().newPullParser().apply {
+                            setInput(inStream)
+                        }
                     }
-                    parser = XmlPullParserFactory.newInstance().newPullParser()
-                    inStream = res.openRawResource(rawId).reader()
-                    parser.setInput(inStream)
+
+                    else -> {
+                        val iconPackContext = context.createPackageContext(
+                            pkgName,
+                            Context.CONTEXT_IGNORE_SECURITY
+                        )
+                        inStream = try {
+                            iconPackContext.assets.open("appfilter.xml").reader()
+                        } catch (e: IOException) {
+                            CrashReporter.logException(e)
+                            Log.e(
+                                "MM20",
+                                "appfilter.xml not found in $pkgName. Searched locations: res/xml/appfilter.xml, res/raw/appfilter.xml, assets/appfilter.xml"
+                            )
+                            return@runInTransaction
+                        }
+                        XmlPullParserFactory.newInstance().newPullParser().apply {
+                            setInput(inStream)
+                        }
+                    }
                 }
                 val iconDao = database.iconDao()
 
@@ -513,6 +537,7 @@ class UpdateIconPacksWorker(val context: Context) {
                             )
                             icons.add(icon)
                         }
+
                         "calendar" -> {
                             val component = parser.getAttributeValue(null, "component")
                                 ?: continue@loop
@@ -534,6 +559,7 @@ class UpdateIconPacksWorker(val context: Context) {
                             )
                             icons.add(icon)
                         }
+
                         "iconback" -> {
                             for (i in 0 until parser.attributeCount) {
                                 if (parser.getAttributeName(i).startsWith("img")) {
@@ -548,6 +574,7 @@ class UpdateIconPacksWorker(val context: Context) {
                                 }
                             }
                         }
+
                         "iconupon" -> {
                             for (i in 0 until parser.attributeCount) {
                                 if (parser.getAttributeName(i).startsWith("img")) {
@@ -562,6 +589,7 @@ class UpdateIconPacksWorker(val context: Context) {
                                 }
                             }
                         }
+
                         "iconmask" -> {
                             for (i in 0 until parser.attributeCount) {
                                 if (parser.getAttributeName(i).startsWith("img")) {
@@ -576,6 +604,7 @@ class UpdateIconPacksWorker(val context: Context) {
                                 }
                             }
                         }
+
                         "scale" -> {
                             val scale = parser.getAttributeValue(null, "factor")?.toFloatOrNull()
                                 ?: continue@loop
@@ -613,7 +642,7 @@ class UpdateIconPacksWorker(val context: Context) {
             try {
                 val resources = context.packageManager.getResourcesForApplication(packageName)
                 val resId = resources.getIdentifier("grayscale_icon_map", "xml", packageName)
-                iconDao.deleteIcons(packageName)
+                iconDao.deleteGrayscaleIcons(packageName)
                 if (resId == 0) {
                     return@runInTransaction
                 }
@@ -645,7 +674,7 @@ class UpdateIconPacksWorker(val context: Context) {
                     iconDao.insertAll(icons.map { it.toDatabaseEntity() })
                 }
             } catch (e: PackageManager.NameNotFoundException) {
-                iconDao.deleteIcons(packageName)
+                iconDao.deleteGrayscaleIcons(packageName)
                 return@runInTransaction
             }
 
