@@ -1,0 +1,31 @@
+name: Build Nightly APK
+
+on:
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build APK
+      run: ./gradlew assembleDefaultNightly
+    - name: Upload APK
+      uses: actions/upload-artifact@v1
+      with:
+        name: flavorName.apk
+        path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
+
