@@ -7,25 +7,41 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-    - name: set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-        cache: gradle
-
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build APK
-      run: ./gradlew assembleDefaultNightly
-    - name: Upload APK
-      uses: actions/upload-artifact@v1
-      with:
-        name: flavorName.apk
-        path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+      - name: Setup Gradle Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Decode Keystore
+        env:
+          ENCODED_STRING: ${{ secrets.KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/keystore.jks
+      - name: Build and sign APK
+        run: ./gradlew
+          -PKEYSTORE_FILE="${RUNNER_TEMP}/keystore/keystore.jks"
+          -PKEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}
+          -PSIGNING_KEY_ALIAS=${{ secrets.SIGNING_KEY_ALIAS }}
+          -PSIGNING_KEY_PASSWORD=${{ secrets.SIGNING_KEY_PASSWORD }}
+          assembleDefaultNightly
+      - name: Upload APK
+        uses: actions/upload-artifact@v1
+        with:
+          name: de.mm20.launcher2.nightly.apk
+          path: app/app/build/outputs/apk/default/nightly/app-default-nightly.apk
 
