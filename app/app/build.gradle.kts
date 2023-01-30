@@ -31,6 +31,16 @@ android {
         versionName = "1.21.2"
         signingConfig = signingConfigs.getByName("debug")
     }
+
+    signingConfigs {
+        create("gh-actions") {
+            storeFile = file(System.getenv("KEYSTORE_FILE"))
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             applicationIdSuffix = ".release"
@@ -52,6 +62,7 @@ android {
             matchingFallbacks += "release"
             applicationIdSuffix = ".nightly"
             versionNameSuffix = "-${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}-nightly"
+            signingConfig = signingConfigs.findByName("gh-actions")
         }
 
         flavorDimensions += "variant"
