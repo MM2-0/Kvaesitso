@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_share">Поделиться</string>
-    <string name="app_name">Kvaesitso</string>
     <string name="menu_uninstall">Удалить</string>
     <string name="menu_share_apk_file">Файл пакета</string>
     <string name="menu_favorites_pin">Закрепить в избранном</string>

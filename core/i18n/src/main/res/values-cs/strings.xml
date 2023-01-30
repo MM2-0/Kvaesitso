@@ -62,7 +62,6 @@
     </plurals>
     <string name="restore_invalid_file">Zdá se, že vybraný soubor není záloha. Opravdu jste vybrali správný soubor\?</string>
     <string name="restore_different_minor_version">Tato záloha byla vytvořena v jiné verzi %1$s. Některá data nemusí být správně obnovena.</string>
-    <string name="app_name">Kvaesitso</string>
     <string name="menu_share">Sdílet</string>
     <string name="menu_share_store_link">Odkaz na %1$s</string>
     <string name="menu_share_apk_file">Balíček</string>

@@ -94,7 +94,6 @@
     <string name="owncloud_server_url">URL do servidor Owncloud</string>
     <string name="owncloud_password">Senha</string>
     <string name="owncloud_username">Usuário</string>
-    <string name="app_name">Kvaesitso</string>
     <string name="menu_share_store_link">%1$s link</string>
     <string name="menu_share_apk_file">Arquivo APK</string>
     <string name="menu_uninstall">Desinstalar</string>

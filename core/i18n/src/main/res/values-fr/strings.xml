@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="fr">
-    <string name="app_name">Kvaesitso</string>
     <!-- Shown in the search bar when the search field is empty -->
     <string name="search_bar_placeholder">Rechercher</string>
     <!-- Shown in the app detail share menu if the application was installed from an app store -->
