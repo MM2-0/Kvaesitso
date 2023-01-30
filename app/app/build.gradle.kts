@@ -34,7 +34,7 @@ android {
 
     signingConfigs {
         create("gh-actions") {
-            storeFile = file(System.getenv("KEYSTORE_FILE"))
+            storeFile = file("${System.getenv("RUNNER_TEMP")}/keystore/keystore.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("SIGNING_KEY_ALIAS")
             keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
