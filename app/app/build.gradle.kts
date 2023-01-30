@@ -1,4 +1,6 @@
 import android.annotation.SuppressLint
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 plugins {
     id("com.android.application")
@@ -44,6 +46,12 @@ android {
             // Jetpack Compose is unusably laggy in debug builds, it's ridiculous
             // This somehow seems to resolve that issue.
             isDebuggable = false
+        }
+        create("nightly") {
+            initWith(getByName("release"))
+            matchingFallbacks += "release"
+            applicationIdSuffix = ".nightly"
+            versionNameSuffix = "-${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}-nightly"
         }
 
         flavorDimensions += "variant"
