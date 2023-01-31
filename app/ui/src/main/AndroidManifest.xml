@@ -12,7 +12,8 @@
             android:theme="@style/LauncherTheme"
             android:stateNotNeeded="true"
             android:resumeWhilePausing="true"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
