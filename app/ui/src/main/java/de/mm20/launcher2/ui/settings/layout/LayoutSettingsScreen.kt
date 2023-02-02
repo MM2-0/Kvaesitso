@@ -64,6 +64,15 @@ fun LayoutSettingsScreen() {
                         if (it != null) viewModel.setReverseSearchResults(it)
                     },
                 )
+                val fixedRotation by viewModel.fixedRotation.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_layout_fixed_rotation),
+                    summary = stringResource(R.string.preference_layout_fixed_rotation_summary),
+                    value = fixedRotation == true,
+                    onValueChanged = {
+                        viewModel.setFixedRotation(it)
+                    },
+                )
             }
         }
     }
