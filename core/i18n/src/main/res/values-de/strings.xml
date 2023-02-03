@@ -567,4 +567,6 @@
     <string name="gesture_failed_message">Sie haben eine „%1$s“-Geste ausgeführt. Diese Geste ist momentan konfiguriert, eine „%2$s“-Aktion auszulösen. Diese Aktion konnte aus dem folgenden Grund nicht durchgeführt werden:</string>
     <string name="preference_layout_fixed_search_bar">Angeheftete Suchleiste</string>
     <string name="preference_layout_fixed_search_bar_summary">Suchleiste nicht aus dem Sichtbereich herausscrollen</string>
+    <string name="preference_layout_fixed_rotation">Fixierte Bildschirmausrichtung</string>
+    <string name="preference_layout_fixed_rotation_summary">Erzwingt Porträtmodus des Launchers</string>
 </resources>

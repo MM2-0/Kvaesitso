@@ -298,6 +298,7 @@ message Settings {
     bool bottom_search_bar = 2;
     bool reverse_search_results = 3;
     bool fixed_search_bar = 4;
+    bool fixed_rotation = 5;
   }
   LayoutSettings layout = 27;
 

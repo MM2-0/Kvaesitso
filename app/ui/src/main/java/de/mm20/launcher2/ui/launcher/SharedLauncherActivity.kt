@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher
 
 import android.app.WallpaperManager
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.globalactions.GlobalActionsService
@@ -131,6 +133,15 @@ abstract class SharedLauncherActivity(
                             val bottomSearchBar by viewModel.bottomSearchBar.observeAsState(false)
                             val reverseSearchResults by viewModel.reverseSearchResults.observeAsState(false)
                             val fixedSearchBar by viewModel.fixedSearchBar.observeAsState(false)
+
+                            viewModel.fixedRotation.observe(this) { fixedRotation ->
+                                requestedOrientation = if (fixedRotation) {
+                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                                } else {
+                                    ActivityInfo.SCREEN_ORIENTATION_USER
+                                }
+                            }
+
 
                             val systemUiController = rememberSystemUiController()
 

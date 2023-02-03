@@ -168,6 +168,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setBaseLayout(Settings.LayoutSettings.Layout.PullDown)
                 .setBottomSearchBar(false)
                 .setReverseSearchResults(false)
+                .setFixedRotation(false)
         )
         .setGestures(
             Settings.GestureSettings.newBuilder()

@@ -57,4 +57,15 @@ class LayoutSettingsScreenVM: ViewModel(), KoinComponent {
             }
         }
     }
+
+    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }.asLiveData()
+    fun setFixedRotation(fixedRotation: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLayout(it.layout.toBuilder().setFixedRotation(fixedRotation))
+                    .build()
+            }
+        }
+    }
 }
