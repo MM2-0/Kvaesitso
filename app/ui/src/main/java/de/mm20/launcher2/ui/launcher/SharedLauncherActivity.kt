@@ -136,9 +136,9 @@ abstract class SharedLauncherActivity(
 
                             viewModel.fixedRotation.observe(this) { fixedRotation ->
                                 requestedOrientation = if (fixedRotation) {
-                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT + ActivityInfo.SCREEN_ORIENTATION_NOSENSOR
+                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                                 } else {
-                                    ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                                    ActivityInfo.SCREEN_ORIENTATION_USER
                                 }
                             }
 
