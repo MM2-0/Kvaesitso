@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.settings.layout
 
-import android.content.pm.ActivityInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -59,7 +58,7 @@ class LayoutSettingsScreenVM: ViewModel(), KoinComponent {
         }
     }
 
-    val fixedRotation = dataStore.data.map { it.layout.fixedRoation }.asLiveData()
+    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }.asLiveData()
     fun setFixedRotation(fixedRotation: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
