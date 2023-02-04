@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="menu_share">Поделиться</string>
-    <string name="app_name">Kvaesitso</string>
     <string name="menu_uninstall">Удалить</string>
     <string name="menu_share_apk_file">Файл пакета</string>
     <string name="menu_favorites_pin">Закрепить в избранном</string>
@@ -348,8 +347,8 @@
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">Была удалена %1$d запись.</item>
         <item quantity="few">Было удалено %1$d записей.</item>
-        <item quantity="many"></item>
-        <item quantity="other"></item>
+        <item quantity="many"/>
+        <item quantity="other"/>
     </plurals>
     <string name="preference_force_themed_icons">Форсировать использование значков темы.</string>
     <string name="preference_force_themed_icons_summary">Применить цветовую схему приложения ко всем значкам, включая неподдерживающиеся (не рекомендуется)</string>
@@ -385,4 +384,20 @@
     <string name="skip">Пропустить</string>
     <string name="preference_nav_bar_icons">Значки в панели навигации</string>
     <string name="preference_system_bar_icons_auto">Авто</string>
+    <string name="missing_permission_appshortcuts_create">Сделать %1$s стандартным приложением для создания ярлыков.</string>
+    <string name="duplicate">Дублировать</string>
+    <string name="action_next">Далее</string>
+    <string name="preference_notification_badges_summary">Показывать значок возле приложений с непрочитанными уведомлениями</string>
+    <string name="preference_enforce_icon_shape">Принудительная форма</string>
+    <string name="preference_enforce_icon_shape_summary">Применить форму ко всем значкам, включая неподдерживаемые</string>
+    <string name="preference_grid_labels">Показывать названия</string>
+    <string name="preference_screen_widgets_summary">Настроить виджеты</string>
+    <string name="preference_suspended_badges_summary">Показывать значок для приостановленных приложений</string>
+    <string name="preference_about_license_summary">Под лицензией GNU General Public License 3.0</string>
+    <string name="preference_grid_icon_size">Размер значков</string>
+    <string name="preference_clockwidget_layout_vertical">Стандартный</string>
+    <string name="preference_grid_labels_summary">Отображать название приложения под значком</string>
+    <string name="preference_screen_debug_summary">Устранение неполадок</string>
+    <string name="preference_clockwidget_layout">Макет</string>
+    <string name="preference_clockwidget_layout_horizontal">Компактный</string>
 </resources>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Kvaesitso</string>
     <string name="menu_share_store_link">Collegamento a %1$s</string>
     <string name="menu_contacts_open_externally">Apri nell\'app contatti</string>
     <string name="wind_south_south_west">Sud sud ovest</string>

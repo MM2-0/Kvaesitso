@@ -1,4 +1,6 @@
 import android.annotation.SuppressLint
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 plugins {
     id("com.android.application")
@@ -29,6 +31,16 @@ android {
         versionName = "1.21.2"
         signingConfig = signingConfigs.getByName("debug")
     }
+
+    signingConfigs {
+        create("gh-actions") {
+            storeFile = file("${System.getenv("RUNNER_TEMP")}/keystore/keystore.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("SIGNING_KEY_ALIAS")
+            keyPassword = System.getenv("SIGNING_KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             applicationIdSuffix = ".release"
@@ -44,6 +56,13 @@ android {
             // Jetpack Compose is unusably laggy in debug builds, it's ridiculous
             // This somehow seems to resolve that issue.
             isDebuggable = false
+        }
+        create("nightly") {
+            initWith(getByName("release"))
+            matchingFallbacks += "release"
+            applicationIdSuffix = ".nightly"
+            versionNameSuffix = "-${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}-nightly"
+            signingConfig = signingConfigs.findByName("gh-actions")
         }
 
         flavorDimensions += "variant"

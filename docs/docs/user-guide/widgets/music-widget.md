@@ -10,7 +10,7 @@ Per default, only media sessions from "music apps" are shown in the music widget
 
 ## I can't grant notification access permission!
 
-Please refer to [notification access on Android 13+](/docs/user-guide/troubleshooting/notification-access)
+Please refer to [notification access on Android 13+](/docs/user-guide/troubleshooting/restricted-settings#notification-access).
 
 ## Why do I need to grant access to my notifications just to control some stupid media session?
 

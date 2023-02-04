@@ -13,7 +13,6 @@ import de.mm20.launcher2.calculator.calculatorModule
 import de.mm20.launcher2.calendar.calendarModule
 import de.mm20.launcher2.contacts.contactsModule
 import de.mm20.launcher2.data.customattrs.customAttrsModule
-import de.mm20.launcher2.debug.Debug
 import de.mm20.launcher2.favorites.favoritesModule
 import de.mm20.launcher2.files.filesModule
 import de.mm20.launcher2.icons.iconsModule
@@ -24,6 +23,7 @@ import de.mm20.launcher2.websites.websitesModule
 import de.mm20.launcher2.widgets.widgetsModule
 import de.mm20.launcher2.wikipedia.wikipediaModule
 import de.mm20.launcher2.database.databaseModule
+import de.mm20.launcher2.debug.initDebugMode
 import de.mm20.launcher2.globalactions.globalActionsModule
 import de.mm20.launcher2.notifications.notificationsModule
 import de.mm20.launcher2.permissions.permissionsModule
@@ -46,7 +46,8 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
-        Debug()
+
+        if (BuildConfig.BUILD_TYPE == "debug") initDebugMode()
 
         startKoin {
             androidLogger(if (BuildConfig.DEBUG) Level.ERROR else Level.NONE)
