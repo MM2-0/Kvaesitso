@@ -41,7 +41,8 @@ fun ClockWidgetSettingsScreen() {
                     value = layout,
                     items = listOf(
                         stringResource(R.string.preference_clockwidget_layout_vertical) to ClockWidgetLayout.Vertical,
-                        stringResource(R.string.preference_clockwidget_layout_horizontal) to ClockWidgetLayout.Horizontal
+                        stringResource(R.string.preference_clockwidget_layout_horizontal) to ClockWidgetLayout.Horizontal,
+                        stringResource(R.string.preference_clockwidget_layout_extended) to ClockWidgetLayout.Extended
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLayout(it)
@@ -79,25 +80,29 @@ fun ClockWidgetSettingsScreen() {
         }
         item {
             PreferenceCategory {
+                val layout by viewModel.layout.observeAsState()
+
                 val datePart by viewModel.datePart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_date_part),
                     summary = stringResource(R.string.preference_clockwidget_date_part_summary),
                     icon = Icons.Rounded.CalendarToday,
-                    value = datePart == true,
+                    value = layout == ClockWidgetLayout.Extended || datePart == true,
                     onValueChanged = {
                         viewModel.setDatePart(it)
-                    }
+                    },
+                    enabled = layout != ClockWidgetLayout.Extended
                 )
                 val favoritesPart by viewModel.favoritesPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
                     summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
                     icon = Icons.Rounded.Star,
-                    value = favoritesPart == true,
+                    value = layout != ClockWidgetLayout.Extended && favoritesPart == true,
                     onValueChanged = {
                         viewModel.setFavoritesPart(it)
-                    }
+                    },
+                    enabled = layout != ClockWidgetLayout.Extended
                 )
             }
         }

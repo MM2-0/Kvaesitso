@@ -22,6 +22,7 @@ import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetCol
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.FavoritesPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 
@@ -57,7 +58,7 @@ fun ClockWidget(
         CompositionLocalProvider(
             LocalContentColor provides contentColor
         ) {
-            if (layout == ClockWidgetLayout.Vertical) {
+            if (layout == ClockWidgetLayout.Vertical || layout == ClockWidgetLayout.Extended) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
@@ -74,10 +75,22 @@ fun ClockWidget(
                     }
 
                     DynamicZone(
-                        modifier = Modifier.padding(bottom = 16.dp),
+                        modifier = if (layout == ClockWidgetLayout.Extended) {
+                            Modifier.padding(top = 16.dp)
+                        } else {
+                            Modifier.padding(bottom = 16.dp)
+                        },
                         ClockWidgetLayout.Vertical,
                         provider = partProvider,
                     )
+
+                    if (layout == ClockWidgetLayout.Extended) {
+                        DynamicZone(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            ClockWidgetLayout.Vertical,
+                            provider = FavoritesPartProvider(),
+                        )
+                    }
                 }
             }
             if (layout == ClockWidgetLayout.Horizontal) {
