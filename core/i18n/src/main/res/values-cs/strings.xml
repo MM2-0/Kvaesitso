@@ -572,4 +572,6 @@
     <string name="preference_favorites_frequently_used_summary">Zobrazit často používané položky v oblíbených</string>
     <string name="websearch_dialog_advanced">Pokročilé</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="preference_layout_fixed_rotation_summary">Uzamknout rotaci obrazovky na režim na výšku</string>
+    <string name="preference_layout_fixed_rotation">Pevná rotace obrazovky</string>
 </resources>
