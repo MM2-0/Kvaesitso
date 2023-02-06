@@ -24,14 +24,6 @@ Note: the link should open in the F-Droid app but if it doesn't, you'll see a 40
 
 The same version is also available in IzzyOnDroid's repository.
 
-### Using an F-Droid client and the official F-Droid repo
-
-A limited version of Kvaesitso is also available in the official F-Droid repo [here](https://f-droid.org/packages/de.mm20.launcher2.release/).
-
-F-Droid build has the following changes:
-* Disabled OneDrive, GDrive and weather integration;
-* F-Droid version uses a different versionCode.
-
 ### Manual installation
 
 You can also download the latest release from
