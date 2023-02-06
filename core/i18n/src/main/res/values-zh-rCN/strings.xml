@@ -562,4 +562,6 @@
     <string name="missing_permission_accessibility_gesture_settings">这个动作要求开启无障碍服务.</string>
     <string name="preference_layout_fixed_search_bar">修正搜索栏</string>
     <string name="preference_layout_fixed_search_bar_summary">在离开主页面视图时禁止滚动搜索栏</string>
+    <string name="preference_layout_fixed_rotation">修正屏幕方向</string>
+    <string name="preference_layout_fixed_rotation_summary">锁定屏幕方向为竖屏模式</string>
 </resources>
