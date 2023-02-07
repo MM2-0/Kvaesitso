@@ -60,7 +60,6 @@ fun ClockWidget(
         CompositionLocalProvider(
             LocalContentColor provides contentColor
         ) {
-
             if (layout == ClockWidgetLayout.Vertical) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
