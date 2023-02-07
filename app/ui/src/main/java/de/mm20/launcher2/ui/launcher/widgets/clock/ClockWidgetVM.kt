@@ -27,16 +27,18 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     init {
         viewModelScope.launch {
             dataStore.data.map { it.clockWidget }.distinctUntilChanged().collectLatest {
-                val providers = mutableListOf<PartProvider>()
-                if (it.datePart) providers += DatePartProvider()
+                val providers = mutableListOf<PartProvider>(
+                    DatePartProvider()
+                )
                 if (it.musicPart) providers += MusicPartProvider()
                 if (it.batteryPart) providers += BatteryPartProvider()
                 if (it.alarmPart) providers += AlarmPartProvider()
-                if (it.favoritesPart) providers += FavoritesPartProvider()
                 partProviders.value = providers
             }
         }
     }
+
+    val withFavorites = dataStore.data.map { it.clockWidget.favoritesPart }.asLiveData()
 
     val time = MutableStateFlow(System.currentTimeMillis())
 

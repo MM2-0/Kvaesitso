@@ -80,19 +80,6 @@ fun ClockWidgetSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val layout by viewModel.layout.observeAsState()
-
-                val datePart by viewModel.datePart.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_clockwidget_date_part),
-                    summary = stringResource(R.string.preference_clockwidget_date_part_summary),
-                    icon = Icons.Rounded.CalendarToday,
-                    value = layout == ClockWidgetLayout.Extended || datePart == true,
-                    onValueChanged = {
-                        viewModel.setDatePart(it)
-                    },
-                    enabled = layout != ClockWidgetLayout.Extended
-                )
                 val favoritesPart by viewModel.favoritesPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
