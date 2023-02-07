@@ -73,11 +73,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
                     .setClockWidget(
                         it.clockWidget.toBuilder()
                             .setDatePart(datePart)
-                            .also {
-                                if (datePart) {
-                                    it.setFavoritesPart(false)
-                                }
-                            }
                     ).build()
             }
         }
@@ -91,11 +86,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
                     .setClockWidget(
                         it.clockWidget.toBuilder()
                             .setFavoritesPart(favoritesPart)
-                            .also {
-                                if (favoritesPart) {
-                                    it.setDatePart(false)
-                                }
-                            }
                     ).build()
             }
         }

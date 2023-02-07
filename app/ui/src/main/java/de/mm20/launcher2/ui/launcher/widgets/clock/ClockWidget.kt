@@ -16,12 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import com.google.accompanist.pager.HorizontalPager
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.FavoritesPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 
@@ -41,6 +42,7 @@ fun ClockWidget(
     }
 
     val partProvider by viewModel.getActivePart(LocalContext.current).collectAsState(null)
+    val withFavoriteBar by viewModel.withFavorites.observeAsState()
 
     Box(
         modifier = Modifier
@@ -48,15 +50,17 @@ fun ClockWidget(
         contentAlignment = Alignment.BottomCenter
     ) {
 
-        val contentColor = if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
-            Color(0,0,0, 180)
-        } else {
-            Color.White
-        }
+        val contentColor =
+            if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
+                Color(0, 0, 0, 180)
+            } else {
+                Color.White
+            }
 
         CompositionLocalProvider(
             LocalContentColor provides contentColor
         ) {
+
             if (layout == ClockWidgetLayout.Vertical) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -74,10 +78,22 @@ fun ClockWidget(
                     }
 
                     DynamicZone(
-                        modifier = Modifier.padding(bottom = 16.dp),
+                        modifier = if (true == withFavoriteBar) {
+                            Modifier.padding(bottom = 8.dp, top = 8.dp)
+                        } else {
+                            Modifier.padding(bottom = 16.dp)
+                        },
                         ClockWidgetLayout.Vertical,
                         provider = partProvider,
                     )
+
+                    if (true == withFavoriteBar) {
+                        DynamicZone(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            ClockWidgetLayout.Vertical,
+                            provider = FavoritesPartProvider(),
+                        )
+                    }
                 }
             }
             if (layout == ClockWidgetLayout.Horizontal) {
@@ -95,11 +111,19 @@ fun ClockWidget(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        DynamicZone(
-                            modifier = Modifier.weight(1f),
-                            ClockWidgetLayout.Horizontal,
-                            provider = partProvider,
-                        )
+                        HorizontalPager(
+                            count = 2,
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            DynamicZone(
+                                Modifier,
+                                ClockWidgetLayout.Horizontal,
+                                provider = when (it) {
+                                    0 -> FavoritesPartProvider()
+                                    else -> partProvider
+                                }
+                            )
+                        }
                         Box(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
@@ -124,7 +148,6 @@ fun ClockWidget(
                 }
             }
         }
-
     }
 }
 
