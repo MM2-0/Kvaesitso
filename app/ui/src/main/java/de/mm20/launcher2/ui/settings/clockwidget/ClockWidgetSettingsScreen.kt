@@ -42,7 +42,6 @@ fun ClockWidgetSettingsScreen() {
                     items = listOf(
                         stringResource(R.string.preference_clockwidget_layout_vertical) to ClockWidgetLayout.Vertical,
                         stringResource(R.string.preference_clockwidget_layout_horizontal) to ClockWidgetLayout.Horizontal,
-                        stringResource(R.string.preference_clockwidget_layout_extended) to ClockWidgetLayout.Extended
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLayout(it)
@@ -85,11 +84,10 @@ fun ClockWidgetSettingsScreen() {
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
                     summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
                     icon = Icons.Rounded.Star,
-                    value = layout != ClockWidgetLayout.Extended && favoritesPart == true,
+                    value = favoritesPart == true,
                     onValueChanged = {
                         viewModel.setFavoritesPart(it)
                     },
-                    enabled = layout != ClockWidgetLayout.Extended
                 )
             }
         }

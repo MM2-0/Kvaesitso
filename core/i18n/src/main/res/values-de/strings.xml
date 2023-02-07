@@ -295,7 +295,6 @@
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Standard</string>
     <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
-    <string name="preference_clockwidget_layout_extended">Erweitert</string>
     <string name="preference_clock_widget_style">Stil</string>
     <string name="preference_clock_widget_style_summary">Uhr auswählen</string>
     <string name="preference_crash_reporter">Crash-Reporter</string>

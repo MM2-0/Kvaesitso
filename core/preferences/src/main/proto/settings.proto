@@ -104,7 +104,6 @@ message Settings {
     enum ClockWidgetLayout {
       Vertical = 0;
       Horizontal = 1;
-      Extended = 2;
     }
     ClockWidgetLayout layout = 1;
     enum ClockStyle {
