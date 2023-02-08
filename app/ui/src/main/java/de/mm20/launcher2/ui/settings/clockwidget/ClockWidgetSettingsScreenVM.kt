@@ -66,19 +66,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val datePart = dataStore.data.map { it.clockWidget.datePart }.asLiveData()
-    fun setDatePart(datePart: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setClockWidget(
-                        it.clockWidget.toBuilder()
-                            .setDatePart(datePart)
-                    ).build()
-            }
-        }
-    }
-
     val favoritesPart = dataStore.data.map { it.clockWidget.favoritesPart }.asLiveData()
     fun setFavoritesPart(favoritesPart: Boolean) {
         viewModelScope.launch {
