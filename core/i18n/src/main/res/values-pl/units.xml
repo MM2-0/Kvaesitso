@@ -230,10 +230,10 @@
         <item quantity="other">kelwinów</item>
     </plurals>
     <plurals name="unit_metric_ton">
-        <item quantity="one">ton</item>
+        <item quantity="one">tona</item>
         <item quantity="few">tony</item>
-        <item quantity="many">tonów</item>
-        <item quantity="other">tonów</item>
+        <item quantity="many">ton</item>
+        <item quantity="other">ton</item>
     </plurals>
     <plurals name="unit_long_ton">
         <item quantity="one">długa tona</item>
