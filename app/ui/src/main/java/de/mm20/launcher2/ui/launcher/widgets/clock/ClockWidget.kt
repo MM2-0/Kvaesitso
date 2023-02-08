@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material3.Icon
@@ -16,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.pager.HorizontalPager
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
@@ -112,12 +112,13 @@ fun ClockWidget(
                     ) {
                         if (true == withFavoriteBar) {
                             HorizontalPager(
-                                count = 2,
+                                pageCount = 2,
+                                beyondBoundsPageCount = 1,
                                 modifier = Modifier.weight(1f)
                             ) {
                                 DynamicZone(
-                                    Modifier,
-                                    ClockWidgetLayout.Horizontal,
+                                    modifier = Modifier.fillMaxWidth(),
+                                    layout = ClockWidgetLayout.Horizontal,
                                     provider = when (it) {
                                         0 -> FavoritesPartProvider()
                                         else -> partProvider
