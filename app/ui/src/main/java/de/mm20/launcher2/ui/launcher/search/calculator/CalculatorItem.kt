@@ -3,9 +3,11 @@ package de.mm20.launcher2.ui.launcher.search.calculator
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.ContentAlpha
+import androidx.compose.material.LocalContentAlpha
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontFamily
@@ -22,11 +24,13 @@ fun CalculatorItem(
             .fillMaxWidth()
     ) {
 
-        Text(
-            text = calculator.getBeatifiedTerm(),
-            style = MaterialTheme.typography.labelLarge,
-            color = MaterialTheme.colorScheme.secondary
-        )
+        CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
+            Text(
+                text = calculator.getBeatifiedTerm(),
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.secondary
+            )
+        }
         Text(
             text = "= ${calculator.formattedString}",
             style = MaterialTheme.typography.titleLarge,
@@ -35,19 +39,19 @@ fun CalculatorItem(
         if (calculator.term.matches(Regex("(0x|0b)?[0-9]+"))) {
             Text(
                 calculator.formattedBinaryString,
-                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily =  FontFamily.Monospace),
                 modifier = Modifier
                     .align(Alignment.End)
                     .padding(top = 8.dp),
             )
             Text(
                 calculator.formattedHexString,
-                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily =  FontFamily.Monospace),
                 modifier = Modifier.align(Alignment.End),
             )
             Text(
                 calculator.formattedOctString,
-                style = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
+                style = MaterialTheme.typography.bodyMedium.copy(fontFamily =  FontFamily.Monospace),
                 modifier = Modifier.align(Alignment.End),
             )
         }
