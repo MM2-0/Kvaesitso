@@ -75,10 +75,6 @@ fun ClockWidgetSettingsScreen() {
                     value = fillHeight == true,
                     onValueChanged = { viewModel.setFillHeight(it) }
                 )
-            }
-        }
-        item {
-            PreferenceCategory {
                 val favoritesPart by viewModel.favoritesPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
