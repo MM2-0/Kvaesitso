@@ -41,7 +41,7 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProvider by viewModel.getActivePart(LocalContext.current).collectAsState(null)
+    val partProvider by remember { viewModel.getActivePart(context) }.collectAsState(null)
     val withFavoriteBar by viewModel.withFavorites.observeAsState()
 
     Box(
@@ -82,15 +82,15 @@ fun ClockWidget(
                         } else {
                             Modifier.padding(bottom = 16.dp)
                         },
-                        ClockWidgetLayout.Vertical,
+                        layout = ClockWidgetLayout.Vertical,
                         provider = partProvider,
                     )
 
                     if (true == withFavoriteBar) {
                         DynamicZone(
                             modifier = Modifier.padding(bottom = 16.dp),
-                            ClockWidgetLayout.Vertical,
-                            provider = FavoritesPartProvider(),
+                            layout = ClockWidgetLayout.Vertical,
+                            provider = viewModel.favoritesPartProvider,
                         )
                     }
                 }
@@ -120,15 +120,15 @@ fun ClockWidget(
                                     modifier = Modifier.fillMaxWidth(),
                                     layout = ClockWidgetLayout.Horizontal,
                                     provider = when (it) {
-                                        0 -> FavoritesPartProvider()
+                                        0 -> viewModel.favoritesPartProvider
                                         else -> partProvider
                                     }
                                 )
                             }
                         } else {
                             DynamicZone(
-                                Modifier.weight(1f),
-                                ClockWidgetLayout.Horizontal,
+                                modifier = Modifier.weight(1f),
+                                layout = ClockWidgetLayout.Horizontal,
                                 provider = partProvider
                             )
                         }

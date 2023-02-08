@@ -39,6 +39,7 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     }
 
     val withFavorites = dataStore.data.map { it.clockWidget.favoritesPart }.asLiveData()
+    val favoritesPartProvider = FavoritesPartProvider()
 
     val time = MutableStateFlow(System.currentTimeMillis())
 
