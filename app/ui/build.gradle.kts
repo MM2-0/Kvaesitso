@@ -39,7 +39,6 @@ android {
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
             "-opt-in=androidx.compose.ui.text.ExperimentalTextApi",
             "-opt-in=androidx.compose.ui.unit.ExperimentalUnitApi",
-            "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
             "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
             "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
@@ -72,7 +71,6 @@ dependencies {
     implementation(libs.androidx.compose.foundationlayout)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.uitooling)
-    implementation(libs.androidx.compose.material)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.materialicons)
     implementation(libs.androidx.compose.animation)

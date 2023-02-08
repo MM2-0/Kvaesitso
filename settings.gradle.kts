@@ -44,8 +44,6 @@ dependencyResolutionManagement {
                 .version("1.4.0-beta01")
             library("androidx.compose.uitooling", "androidx.compose.ui", "ui-tooling")
                 .version("1.4.0-beta01")
-            library("androidx.compose.material", "androidx.compose.material", "material")
-                .version("1.4.0-beta01")
             library("androidx.compose.materialicons", "androidx.compose.material", "material-icons-extended")
                 .version("1.4.0-beta01")
             library("androidx.compose.animation", "androidx.compose.animation", "animation")
