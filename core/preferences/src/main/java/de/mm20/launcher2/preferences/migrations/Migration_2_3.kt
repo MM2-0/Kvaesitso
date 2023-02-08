@@ -8,7 +8,6 @@ class Migration_2_3: VersionedMigration(2, 3) {
             builder.clockWidget.toBuilder()
                 .setAlarmPart(true)
                 .setBatteryPart(true)
-                .setDatePart(true)
                 .setMusicPart(true)
         )
     }

@@ -41,7 +41,7 @@ fun ClockWidgetSettingsScreen() {
                     value = layout,
                     items = listOf(
                         stringResource(R.string.preference_clockwidget_layout_vertical) to ClockWidgetLayout.Vertical,
-                        stringResource(R.string.preference_clockwidget_layout_horizontal) to ClockWidgetLayout.Horizontal
+                        stringResource(R.string.preference_clockwidget_layout_horizontal) to ClockWidgetLayout.Horizontal,
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLayout(it)
@@ -75,20 +75,6 @@ fun ClockWidgetSettingsScreen() {
                     value = fillHeight == true,
                     onValueChanged = { viewModel.setFillHeight(it) }
                 )
-            }
-        }
-        item {
-            PreferenceCategory {
-                val datePart by viewModel.datePart.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_clockwidget_date_part),
-                    summary = stringResource(R.string.preference_clockwidget_date_part_summary),
-                    icon = Icons.Rounded.CalendarToday,
-                    value = datePart == true,
-                    onValueChanged = {
-                        viewModel.setDatePart(it)
-                    }
-                )
                 val favoritesPart by viewModel.favoritesPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
@@ -97,7 +83,7 @@ fun ClockWidgetSettingsScreen() {
                     value = favoritesPart == true,
                     onValueChanged = {
                         viewModel.setFavoritesPart(it)
-                    }
+                    },
                 )
             }
         }

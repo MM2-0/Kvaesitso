@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -65,24 +66,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val datePart = dataStore.data.map { it.clockWidget.datePart }.asLiveData()
-    fun setDatePart(datePart: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setClockWidget(
-                        it.clockWidget.toBuilder()
-                            .setDatePart(datePart)
-                            .also {
-                                if (datePart) {
-                                    it.setFavoritesPart(false)
-                                }
-                            }
-                    ).build()
-            }
-        }
-    }
-
     val favoritesPart = dataStore.data.map { it.clockWidget.favoritesPart }.asLiveData()
     fun setFavoritesPart(favoritesPart: Boolean) {
         viewModelScope.launch {
@@ -91,11 +74,6 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
                     .setClockWidget(
                         it.clockWidget.toBuilder()
                             .setFavoritesPart(favoritesPart)
-                            .also {
-                                if (favoritesPart) {
-                                    it.setDatePart(false)
-                                }
-                            }
                     ).build()
             }
         }

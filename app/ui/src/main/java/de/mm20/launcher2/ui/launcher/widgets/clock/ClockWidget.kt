@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material3.Icon
@@ -16,12 +17,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
+import de.mm20.launcher2.ui.launcher.widgets.clock.parts.FavoritesPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 
@@ -40,7 +41,8 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProvider by viewModel.getActivePart(LocalContext.current).collectAsState(null)
+    val partProvider by remember { viewModel.getActivePart(context) }.collectAsState(null)
+    val withFavoriteBar by viewModel.withFavorites.observeAsState()
 
     Box(
         modifier = Modifier
@@ -48,11 +50,12 @@ fun ClockWidget(
         contentAlignment = Alignment.BottomCenter
     ) {
 
-        val contentColor = if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
-            Color(0,0,0, 180)
-        } else {
-            Color.White
-        }
+        val contentColor =
+            if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
+                Color(0, 0, 0, 180)
+            } else {
+                Color.White
+            }
 
         CompositionLocalProvider(
             LocalContentColor provides contentColor
@@ -74,10 +77,22 @@ fun ClockWidget(
                     }
 
                     DynamicZone(
-                        modifier = Modifier.padding(bottom = 16.dp),
-                        ClockWidgetLayout.Vertical,
+                        modifier = if (true == withFavoriteBar) {
+                            Modifier.padding(bottom = 8.dp, top = 8.dp)
+                        } else {
+                            Modifier.padding(bottom = 16.dp)
+                        },
+                        layout = ClockWidgetLayout.Vertical,
                         provider = partProvider,
                     )
+
+                    if (true == withFavoriteBar) {
+                        DynamicZone(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            layout = ClockWidgetLayout.Vertical,
+                            provider = viewModel.favoritesPartProvider,
+                        )
+                    }
                 }
             }
             if (layout == ClockWidgetLayout.Horizontal) {
@@ -95,11 +110,28 @@ fun ClockWidget(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        DynamicZone(
-                            modifier = Modifier.weight(1f),
-                            ClockWidgetLayout.Horizontal,
-                            provider = partProvider,
-                        )
+                        if (true == withFavoriteBar) {
+                            HorizontalPager(
+                                pageCount = 2,
+                                beyondBoundsPageCount = 1,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                DynamicZone(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    layout = ClockWidgetLayout.Horizontal,
+                                    provider = when (it) {
+                                        0 -> viewModel.favoritesPartProvider
+                                        else -> partProvider
+                                    }
+                                )
+                            }
+                        } else {
+                            DynamicZone(
+                                modifier = Modifier.weight(1f),
+                                layout = ClockWidgetLayout.Horizontal,
+                                provider = partProvider
+                            )
+                        }
                         Box(
                             modifier = Modifier
                                 .padding(horizontal = 16.dp)
@@ -124,7 +156,6 @@ fun ClockWidget(
                 }
             }
         }
-
     }
 }
 

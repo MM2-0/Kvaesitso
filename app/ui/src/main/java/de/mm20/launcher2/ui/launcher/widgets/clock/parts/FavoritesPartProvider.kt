@@ -65,7 +65,6 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
             SearchResultGrid(
                 items = favorites, showLabels = false, columns = columns,
             )
-
         }
     }
 }
