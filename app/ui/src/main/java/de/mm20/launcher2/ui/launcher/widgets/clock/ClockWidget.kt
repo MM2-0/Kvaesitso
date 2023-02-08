@@ -110,17 +110,25 @@ fun ClockWidget(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        HorizontalPager(
-                            count = 2,
-                            modifier = Modifier.weight(1f)
-                        ) {
+                        if (true == withFavoriteBar) {
+                            HorizontalPager(
+                                count = 2,
+                                modifier = Modifier.weight(1f)
+                            ) {
+                                DynamicZone(
+                                    Modifier,
+                                    ClockWidgetLayout.Horizontal,
+                                    provider = when (it) {
+                                        0 -> FavoritesPartProvider()
+                                        else -> partProvider
+                                    }
+                                )
+                            }
+                        } else {
                             DynamicZone(
-                                Modifier,
+                                Modifier.weight(1f),
                                 ClockWidgetLayout.Horizontal,
-                                provider = when (it) {
-                                    0 -> FavoritesPartProvider()
-                                    else -> partProvider
-                                }
+                                provider = partProvider
                             )
                         }
                         Box(
