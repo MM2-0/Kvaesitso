@@ -4,13 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.LightMode
@@ -55,7 +57,7 @@ fun WeatherWidget() {
         }
     }
 
-    val selectedForecast by viewModel.currentForecast.observeAsState()
+    val todaysForecast by viewModel.currentDailyForecast.observeAsState()
 
     val imperialUnits by viewModel.imperialUnits.observeAsState(false)
 
@@ -65,7 +67,7 @@ fun WeatherWidget() {
         WeatherLocationSearchDialog(onDismissRequest = { showLocationDialog = false })
     }
 
-    val forecast = selectedForecast ?: run {
+    val forecast = todaysForecast ?: run {
         val hasPermission by viewModel.hasLocationPermission.observeAsState()
         val autoLocation by viewModel.autoLocation.observeAsState()
         Column {
@@ -94,14 +96,16 @@ fun WeatherWidget() {
         return
     }
 
+
     Column {
-        CurrentWeather(forecast, imperialUnits)
+        WeatherToday(forecast, imperialUnits)
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 2.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End
         ) {
             val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
             val selectedDayForecast by viewModel.currentDailyForecast.observeAsState()
@@ -113,30 +117,67 @@ fun WeatherWidget() {
                         viewModel.selectDay(it)
                     },
                     modifier = Modifier
-                        .weight(1f)
                         .padding(horizontal = 4.dp),
                     imperialUnits = imperialUnits
                 )
             }
-            val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
-            WeatherTimeSelector(
-                forecasts = currentDayForecasts,
-                selectedForecast = forecast,
-                imperialUnits = imperialUnits,
-                onTimeSelected = {
-                    viewModel.selectForecast(it)
-                },
+        }
+
+        Spacer(Modifier.height(5.dp))
+
+        val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
+        val dailyForecasts by viewModel.dailyForecasts.observeAsState()
+
+        val nScrollableForecasts = 24 // todo add weather widget setting
+        val scrollableForecasts = forecast.hourlyForecasts.toMutableList()
+
+        for (i in 0..nScrollableForecasts - scrollableForecasts.size)
+            scrollableForecasts.add(dailyForecasts!![1].hourlyForecasts[i])
+
+        Surface(
+            shape = MaterialTheme.shapes.extraSmall.copy(bottomEnd = CornerSize(0), topEnd = CornerSize(0)),
+            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+        ) {
+            LazyRow(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(horizontal = 4.dp),
-            )
+                    .fillMaxWidth()
+                    .padding(vertical = 12.dp, horizontal = 18.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(36.dp),
+            ) {
+                items(scrollableForecasts) {
+                    Column {
+                        WeatherIcon(
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
+                            icon = weatherIconById(it.icon),
+                            night = it.night
+                        )
+                        Text(
+                            text = dateFormat.format(it.timestamp),
+                            style = MaterialTheme.typography.titleSmall,
+                            softWrap = false,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                        Text(
+                            text = "${convertTemperature(imperialUnits, it.temperature)}°",
+                            softWrap = false,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                        )
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
+fun WeatherToday(forecast: DailyForecast, imperialUnits: Boolean) {
+
+    val location = forecast.hourlyForecasts.first().location
+    val noonForecast = forecast.hourlyForecasts[forecast.hourlyForecasts.size / 2]
     var detailsExpanded by remember { mutableStateOf(false) }
+
     Row {
         Column(
             modifier = Modifier
@@ -144,22 +185,14 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 .weight(1f)
         ) {
             Text(
-                text = forecast.location,
+                text = location,
                 style = MaterialTheme.typography.titleMedium
             )
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
-                text = convertTemperature(
-                    imperialUnits = imperialUnits,
-                    temp = forecast.temperature
-                ).toString() + "°",
-                style = MaterialTheme.typography.headlineLarge,
-            )
-            Text(
-                text = forecast.condition,
+                text = noonForecast.condition,
                 style = MaterialTheme.typography.bodySmall
             )
-
             Row(
                 modifier = Modifier
                     .clickable(onClick = {
@@ -178,11 +211,11 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (forecast.humidity >= 0) {
+                    if (forecast.medianHumidity >= 0) {
                         Text(
                             stringResource(
                                 id = R.string.weather_details_humidity,
-                                "${forecast.humidity.roundToInt()} %"
+                                "${forecast.medianHumidity.roundToInt()} %"
                             ),
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -190,11 +223,11 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     Text(
                         stringResource(
                             id = R.string.weather_details_wind,
-                            formatWindSpeed(imperialUnits, forecast)
+                            formatWindSpeed(imperialUnits, forecast.medianWindspeed, forecast.medianWindDirection)
                         ),
                         style = MaterialTheme.typography.bodySmall,
                     )
-                    val precipitation = formatPrecipitation(imperialUnits, forecast)
+                    val precipitation = formatPrecipitation(imperialUnits, forecast.medianPrecipitation, forecast.medianPrecipProbability)
                     if (precipitation != null) {
                         Text(
                             stringResource(
@@ -209,59 +242,53 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
         }
         Column(
             verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.End
+            horizontalAlignment = Alignment.End,
+            modifier = Modifier.weight(2f),
         ) {
             val context = LocalContext.current
-            AnimatedWeatherIcon(
-                modifier = Modifier.padding(all = 16.dp),
-                icon = weatherIconById(forecast.icon),
-                night = forecast.night
-            )
+            Row {
+                Surface(
+                    shape = MaterialTheme.shapes.extraSmall.copy(bottomEnd = CornerSize(0), topEnd = CornerSize(0)),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+                ) {
+                    Text(
+                        text = "${noonForecast.provider} (${
+                            formatTime(
+                                LocalContext.current,
+                                noonForecast.updateTime
+                            )
+                        })",
+                        style = TextStyle(
+                            fontSize = 10.sp
+                        ),
+                        modifier = Modifier
+                            .clickable(onClick = {
+                                val intent = Intent(Intent.ACTION_VIEW).apply {
+                                    data = Uri.parse(noonForecast.providerUrl)
+                                        ?: return@clickable
+                                }
+                                context.tryStartActivity(intent)
+                            })
+                            .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
+                    )
+                }
+            }
             Spacer(modifier = Modifier.weight(1f))
-            Surface(
-                shape = MaterialTheme.shapes.extraSmall.copy(bottomEnd = CornerSize(0), topEnd = CornerSize(0)),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
-                modifier = Modifier.align(Alignment.End)
-
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-
+                AnimatedWeatherIcon(
+                    icon = weatherIconById(forecast.icon),
+                    night = false
+                )
                 Text(
-                    text = "${forecast.provider} (${
-                        formatTime(
-                            LocalContext.current,
-                            forecast.updateTime
-                        )
-                    })",
-                    style = TextStyle(
-                        fontSize = 10.sp
-                    ),
-                    modifier = Modifier
-                        .clickable(onClick = {
-                            val intent = Intent(Intent.ACTION_VIEW).apply {
-                                data = Uri.parse(forecast.providerUrl)
-                                    ?: return@clickable
-                            }
-                            context.tryStartActivity(intent)
-                        })
-                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
+                    text = formatMinMaxTemperature(imperialUnits, forecast),
+                    style = MaterialTheme.typography.titleLarge
                 )
             }
         }
-    }
-}
-
-@Composable
-fun WeatherDetailRow(title: String, value: String) {
-    Row {
-        Text(
-            text = title,
-            modifier = Modifier,//.padding(end = 8.dp),
-            style = MaterialTheme.typography.bodySmall,
-        )
-        Text(
-            text = value,
-            style = MaterialTheme.typography.bodySmall,
-        )
     }
 }
 
@@ -289,16 +316,6 @@ fun WeatherDaySelector(
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .padding(start = 16.dp, end = 8.dp)
-            )
-            Text(
-                text = "${
-                    convertTemperature(
-                        imperialUnits,
-                        selectedDay.minTemp
-                    )
-                }° / ${convertTemperature(imperialUnits, selectedDay.maxTemp)}°",
-                style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.align(Alignment.CenterVertically)
             )
             Icon(
                 imageVector = Icons.Rounded.ArrowDropDown,
@@ -347,75 +364,12 @@ fun WeatherDaySelector(
     }
 }
 
-@Composable
-fun WeatherTimeSelector(
-    modifier: Modifier = Modifier,
-    forecasts: List<Forecast>,
-    selectedForecast: Forecast,
-    imperialUnits: Boolean,
-    onTimeSelected: (Int) -> Unit
-) {
-    val menuExpanded = remember { mutableStateOf(false) }
+private fun formatMinMaxTemperature(imperialUnits: Boolean, forecast: DailyForecast): String {
+    val min = convertTemperature(imperialUnits, forecast.minTemp)
+    val max = convertTemperature(imperialUnits, forecast.maxTemp)
+    val unit = "°" + if (imperialUnits) "F" else "C"
 
-    val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
-
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.CenterEnd
-    ) {
-        TextButton(
-            onClick = {
-                menuExpanded.value = true
-            },
-            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
-        ) {
-            Text(
-                text = dateFormat.format(selectedForecast.timestamp),
-                style = MaterialTheme.typography.titleSmall,
-            )
-            Icon(
-                imageVector = Icons.Rounded.ArrowDropDown,
-                contentDescription = null
-            )
-        }
-        DropdownMenu(
-            expanded = menuExpanded.value,
-            offset = DpOffset(0.dp, 0.dp),
-            onDismissRequest = {
-                menuExpanded.value = false
-            }) {
-
-            for ((i, fc) in forecasts.withIndex()) {
-                DropdownMenuItem(
-                    onClick = {
-                        menuExpanded.value = false
-                        onTimeSelected(i)
-                    },
-                    text = {
-                        Row {
-                            WeatherIcon(icon = weatherIconById(fc.icon), night = fc.night)
-                            Text(
-                                text = dateFormat.format(fc.timestamp),
-                                style = MaterialTheme.typography.titleSmall,
-                                softWrap = false,
-                                modifier = Modifier
-                                    .align(Alignment.CenterVertically)
-                                    .padding(start = 16.dp, end = 8.dp)
-                                    .weight(1f)
-                            )
-                            Text(
-                                text = "${convertTemperature(imperialUnits, fc.temperature)}°",
-                                softWrap = false,
-                                style = MaterialTheme.typography.titleSmall,
-                                modifier = Modifier.align(Alignment.CenterVertically)
-                            )
-                        }
-                    }
-                )
-            }
-
-        }
-    }
+    return "$min$unit | $max$unit"
 }
 
 private fun formatTime(context: Context, timestamp: Long): String {
@@ -427,27 +381,27 @@ private fun convertTemperature(imperialUnits: Boolean, temp: Double): Int {
 }
 
 @Composable
-private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String {
+private fun formatWindSpeed(imperialUnits: Boolean, windSpeed: Double, windDirection: Double): String {
     val formatter = DecimalFormat("0.#")
-    val speedValue = formatter.format(forecast.windSpeed * if (imperialUnits) 0.621371 else 1.0)
+    val speedValue = formatter.format(windSpeed * if (imperialUnits) 0.621371 else 1.0)
     val speedUnit =
         stringResource(id = if (imperialUnits) R.string.unit_mile_per_hour_symbol else R.string.unit_meter_per_second_symbol)
-    return "$speedValue $speedUnit • ${windDirectionAsWord(forecast.windDirection)}"
+    return "$speedValue $speedUnit • ${windDirectionAsWord(windDirection)}"
 }
 
 @Composable
-private fun formatPrecipitation(imperialUnits: Boolean, forecast: Forecast): String? {
+private fun formatPrecipitation(imperialUnits: Boolean, precipitation: Double, precipProbability: Int): String? {
     val formatter = if (imperialUnits) DecimalFormat("#.##") else DecimalFormat("#.#")
     val precipUnit =
         if (imperialUnits) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)
-    if (forecast.precipProbability >= 0 && forecast.precipitation >= 0.0) {
-        return "${formatter.format(forecast.precipitation)} $precipUnit • ${forecast.precipProbability} %"
+    if (precipProbability >= 0 && precipitation >= 0.0) {
+        return "${formatter.format(precipitation)} $precipUnit • $precipProbability %"
     }
-    if (forecast.precipProbability >= 0) {
-        return "${forecast.precipProbability} %"
+    if (precipProbability >= 0) {
+        return "$precipProbability %"
     }
-    if (forecast.precipitation >= 0.0) {
-        return "${formatter.format(forecast.precipitation)} $precipUnit"
+    if (precipitation >= 0.0) {
+        return "${formatter.format(precipitation)} $precipUnit"
     }
     return null
 }

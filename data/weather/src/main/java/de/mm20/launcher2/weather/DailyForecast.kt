@@ -1,13 +1,19 @@
 package de.mm20.launcher2.weather
 
 import kotlin.math.abs
+import de.mm20.launcher2.helper.IterableUtils.medianBy
 
 data class DailyForecast(
-        val timestamp: Long,
-        val minTemp: Double,
-        val maxTemp: Double,
-        val hourlyForecasts: List<Forecast>,
-        val icon: Int = getAverageIcon(hourlyForecasts)
+    val timestamp: Long,
+    val minTemp: Double,
+    val maxTemp: Double,
+    val hourlyForecasts: List<Forecast>,
+    val medianHumidity: Double = hourlyForecasts.medianBy { it.humidity }!!.humidity,
+    val medianWindspeed: Double = hourlyForecasts.medianBy { it.windSpeed }!!.windSpeed,
+    val medianWindDirection: Double = hourlyForecasts.medianBy { it.windDirection }!!.windDirection,
+    val medianPrecipitation: Double = hourlyForecasts.medianBy { it.precipitation }!!.precipitation,
+    val medianPrecipProbability: Int = hourlyForecasts.medianBy { it.precipProbability }!!.precipProbability,
+    val icon: Int = getAverageIcon(hourlyForecasts),
 ) {
     companion object {
         private fun getAverageIcon(forecasts: List<Forecast>): Int {
@@ -73,12 +79,12 @@ data class DailyForecast(
                 }
             }
             val pairs = listOf(
-                    "clear" to clear,
-                    "clouds" to clouds,
-                    "rain" to rain,
-                    "thunder" to thunder,
-                    "wind" to wind,
-                    "snow" to snow
+                "clear" to clear,
+                "clouds" to clouds,
+                "rain" to rain,
+                "thunder" to thunder,
+                "wind" to wind,
+                "snow" to snow
             ).sortedByDescending { it.second }
             val first = pairs[0]
             val second = pairs[1]
@@ -94,13 +100,15 @@ data class DailyForecast(
                 }
                 "rain" -> {
                     val heavy = first.second / forecasts.size > 0.8f
-                    val withSnow = second.first == "snow" && abs(1 - (first.second / second.second)) < 0.2
+                    val withSnow =
+                        second.first == "snow" && abs(1 - (first.second / second.second)) < 0.2
                     if (withSnow) return Forecast.SLEET
                     if (heavy) return Forecast.SHOWERS
                     return Forecast.DRIZZLE
                 }
                 "snow" -> {
-                    val withRain = second.first == "rain" && abs(1 - (first.second / second.second)) < 0.2
+                    val withRain =
+                        second.first == "rain" && abs(1 - (first.second / second.second)) < 0.2
                     if (withRain) return Forecast.SLEET
                     return Forecast.SNOW
                 }

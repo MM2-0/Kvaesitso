@@ -20,10 +20,11 @@ import de.mm20.launcher2.ui.icons.*
 @Composable
 fun WeatherIcon(
     icon: WeatherIcon,
-    night: Boolean = false
+    modifier: Modifier = Modifier,
+    night: Boolean = false,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(24.dp),
         contentAlignment = Alignment.Center
     ) {
