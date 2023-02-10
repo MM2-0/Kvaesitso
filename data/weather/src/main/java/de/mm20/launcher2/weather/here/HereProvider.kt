@@ -41,7 +41,7 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
         val lang = Locale.getDefault().language
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ", Locale.ROOT)
 
-        val forecastList = mutableListOf<Forecast>()
+        val forecastList = mutableListOf<HourlyForecast>()
 
         try {
             val apiKey = getApiKey() ?: return null
@@ -88,7 +88,7 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
                 val windSpeed = forecast.windSpeed?.toDoubleOrNull() ?: 0.0
 
                 forecastList.add(
-                    Forecast(
+                    HourlyForecast(
                         timestamp = timestamp,
                         clouds = -1,
                         condition = condition,
@@ -127,7 +127,7 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
 
 
     private fun getIcon(iconName: String): Int {
-        with(Forecast) {
+        with(HourlyForecast) {
             return when (iconName) {
                 "sunny" -> CLEAR
                 "clear" -> CLEAR

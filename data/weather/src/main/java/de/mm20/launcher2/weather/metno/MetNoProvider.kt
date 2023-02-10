@@ -100,27 +100,27 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
 
     private fun iconForCode(code: String): Int {
         return when (code.substringBefore("_")) {
-            "clearsky" -> Forecast.CLEAR
-            "fair" -> Forecast.PARTLY_CLOUDY
-            "partlycloudy" -> Forecast.MOSTLY_CLOUDY
-            "cloudy" -> Forecast.CLOUDY
-            "rainshowers", "rain", "lightrainshowers", "lightrain" -> Forecast.DRIZZLE
+            "clearsky" -> HourlyForecast.CLEAR
+            "fair" -> HourlyForecast.PARTLY_CLOUDY
+            "partlycloudy" -> HourlyForecast.MOSTLY_CLOUDY
+            "cloudy" -> HourlyForecast.CLOUDY
+            "rainshowers", "rain", "lightrainshowers", "lightrain" -> HourlyForecast.DRIZZLE
             "rainshowersandthunder", "snowandthunder", "snowshowersandthunder",
             "lightssnowshowersandthunder", "lightsleetandthunder",
-            "lightsnowandthunder" -> Forecast.THUNDERSTORM
+            "lightsnowandthunder" -> HourlyForecast.THUNDERSTORM
             "sleetshowers", "sleet", "lightsleetshowers", "heavysleetshowers", "lightsleet",
-            "heavysleet" -> Forecast.SLEET
+            "heavysleet" -> HourlyForecast.SLEET
             "snowshowers", "snow", "lightsnowshowers", "heavysnowshowers", "lightsnow",
-            "heavysnow" -> Forecast.SNOW
-            "heavyrain", "heavyrainshowers" -> Forecast.SHOWERS
+            "heavysnow" -> HourlyForecast.SNOW
+            "heavyrain", "heavyrainshowers" -> HourlyForecast.SHOWERS
             "heavyrainandthunder", "sleetshowersandthunder", "rainandthunder", "sleetandthunder",
             "lightrainshowersandthunder", "heavyrainshowersandthunder",
-            "lightssleetshowersandthunder", "lightrainandthunder" -> Forecast.THUNDERSTORM_WITH_RAIN
-            "fog" -> Forecast.FOG
+            "lightssleetshowersandthunder", "lightrainandthunder" -> HourlyForecast.THUNDERSTORM_WITH_RAIN
+            "fog" -> HourlyForecast.FOG
             "heavysleetshowersandthunder",
-            "heavysleetandthunder" -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
-            "heavysnowshowersandthunder", "heavysnowandthunder" -> Forecast.HEAVY_THUNDERSTORM
-            else -> Forecast.NONE
+            "heavysleetandthunder" -> HourlyForecast.HEAVY_THUNDERSTORM_WITH_RAIN
+            "heavysnowshowersandthunder", "heavysnowandthunder" -> HourlyForecast.HEAVY_THUNDERSTORM
+            else -> HourlyForecast.NONE
         }
     }
 
@@ -175,7 +175,7 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
         val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
         val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
         try {
-            val forecasts = mutableListOf<Forecast>()
+            val forecasts = mutableListOf<HourlyForecast>()
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
 
@@ -217,7 +217,7 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
                     (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
                         ?: 0.0) / hours
                 forecasts.add(
-                    Forecast(
+                    HourlyForecast(
                         timestamp = timestamp,
                         temperature = details.getDouble("air_temperature") + 273.15,
                         updateTime = updatedAt,

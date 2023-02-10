@@ -1,22 +1,22 @@
 package de.mm20.launcher2.weather
 
 import kotlin.math.abs
-import de.mm20.launcher2.ktx.medianBy
+import de.mm20.launcher2.ktx.pseudoMedianBy
 
 data class DailyForecast(
     val timestamp: Long,
     val minTemp: Double,
     val maxTemp: Double,
-    val hourlyForecasts: List<Forecast>,
-    val medianHumidity: Double = hourlyForecasts.medianBy { it.humidity }!!.humidity,
-    val medianWindspeed: Double = hourlyForecasts.medianBy { it.windSpeed }!!.windSpeed,
-    val medianWindDirection: Double = hourlyForecasts.medianBy { it.windDirection }!!.windDirection,
-    val medianPrecipitation: Double = hourlyForecasts.medianBy { it.precipitation }!!.precipitation,
-    val medianPrecipProbability: Int = hourlyForecasts.medianBy { it.precipProbability }!!.precipProbability,
-    val icon: Int = getAverageIcon(hourlyForecasts),
+    val hourlyForecasts: List<HourlyForecast>,
+    val medianHumidity: Double = hourlyForecasts.pseudoMedianBy { it.humidity }!!.humidity,
+    val medianWindspeed: Double = hourlyForecasts.pseudoMedianBy { it.windSpeed }!!.windSpeed,
+    val medianWindDirection: Double = hourlyForecasts.pseudoMedianBy { it.windDirection }!!.windDirection,
+    val medianPrecipitation: Double = hourlyForecasts.pseudoMedianBy { it.precipitation }!!.precipitation,
+    val medianPrecipProbability: Int = hourlyForecasts.pseudoMedianBy { it.precipProbability }!!.precipProbability,
+    val icon: Int = getAverageIcon(hourlyForecasts)
 ) {
     companion object {
-        private fun getAverageIcon(forecasts: List<Forecast>): Int {
+        private fun getAverageIcon(forecasts: List<HourlyForecast>): Int {
             var clear = 0f
             var clouds = 0f
             var rain = 0f
@@ -25,55 +25,55 @@ data class DailyForecast(
             var snow = 0f
             for (f in forecasts) {
                 when (f.icon) {
-                    Forecast.SHOWERS, Forecast.HAIL -> {
+                    HourlyForecast.SHOWERS, HourlyForecast.HAIL -> {
                         rain += 2f
                         clouds += 1f
                     }
-                    Forecast.THUNDERSTORM_WITH_RAIN -> {
+                    HourlyForecast.THUNDERSTORM_WITH_RAIN -> {
                         rain += 2f
                         thunder += 5f
                         clouds += 1f
                     }
-                    Forecast.THUNDERSTORM -> {
+                    HourlyForecast.THUNDERSTORM -> {
                         thunder += 5f
                         clouds += 1f
                     }
-                    Forecast.BROKEN_CLOUDS, Forecast.MOSTLY_CLOUDY -> {
+                    HourlyForecast.BROKEN_CLOUDS, HourlyForecast.MOSTLY_CLOUDY -> {
                         clouds += 0.7f
                         clear += 0.3f
                     }
-                    Forecast.PARTLY_CLOUDY -> {
+                    HourlyForecast.PARTLY_CLOUDY -> {
                         clouds += 0.3f
                         clear += 0.7f
                     }
-                    Forecast.CLOUDY -> {
+                    HourlyForecast.CLOUDY -> {
                         clouds += 1f
                     }
-                    Forecast.SNOW -> {
+                    HourlyForecast.SNOW -> {
                         snow += 2f
                         clouds += 1f
                     }
-                    Forecast.DRIZZLE -> {
+                    HourlyForecast.DRIZZLE -> {
                         rain += 1f
                     }
-                    Forecast.HEAVY_THUNDERSTORM -> {
+                    HourlyForecast.HEAVY_THUNDERSTORM -> {
                         thunder += 8f
                     }
-                    Forecast.HEAVY_THUNDERSTORM_WITH_RAIN -> {
+                    HourlyForecast.HEAVY_THUNDERSTORM_WITH_RAIN -> {
                         thunder += 8f
                         clouds += 1f
                     }
-                    Forecast.SLEET -> {
+                    HourlyForecast.SLEET -> {
                         rain += 1f
                         snow += 1f
                     }
-                    Forecast.STORM -> {
+                    HourlyForecast.STORM -> {
                         wind += 8f
                     }
-                    Forecast.WIND -> {
+                    HourlyForecast.WIND -> {
                         wind += 5f
                     }
-                    Forecast.CLEAR -> {
+                    HourlyForecast.CLEAR -> {
                         clear += 1f
                     }
                 }
@@ -89,39 +89,39 @@ data class DailyForecast(
             val first = pairs[0]
             val second = pairs[1]
             when (first.first) {
-                "wind" -> return if (first.second / forecasts.size > 6f) Forecast.STORM else Forecast.WIND
+                "wind" -> return if (first.second / forecasts.size > 6f) HourlyForecast.STORM else HourlyForecast.WIND
                 "thunder" -> {
                     val heavy = first.second / forecasts.size > 6f
                     val withRain = second.first == "rain"
-                    if (heavy && withRain) return Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
-                    if (heavy && !withRain) return Forecast.HEAVY_THUNDERSTORM
-                    if (!heavy && withRain) return Forecast.THUNDERSTORM_WITH_RAIN
-                    return Forecast.THUNDERSTORM
+                    if (heavy && withRain) return HourlyForecast.HEAVY_THUNDERSTORM_WITH_RAIN
+                    if (heavy && !withRain) return HourlyForecast.HEAVY_THUNDERSTORM
+                    if (!heavy && withRain) return HourlyForecast.THUNDERSTORM_WITH_RAIN
+                    return HourlyForecast.THUNDERSTORM
                 }
                 "rain" -> {
                     val heavy = first.second / forecasts.size > 0.8f
                     val withSnow =
                         second.first == "snow" && abs(1 - (first.second / second.second)) < 0.2
-                    if (withSnow) return Forecast.SLEET
-                    if (heavy) return Forecast.SHOWERS
-                    return Forecast.DRIZZLE
+                    if (withSnow) return HourlyForecast.SLEET
+                    if (heavy) return HourlyForecast.SHOWERS
+                    return HourlyForecast.DRIZZLE
                 }
                 "snow" -> {
                     val withRain =
                         second.first == "rain" && abs(1 - (first.second / second.second)) < 0.2
-                    if (withRain) return Forecast.SLEET
-                    return Forecast.SNOW
+                    if (withRain) return HourlyForecast.SLEET
+                    return HourlyForecast.SNOW
                 }
                 else -> {
-                    if (clouds == 0f) return Forecast.CLEAR
-                    if (clear == 0f) return Forecast.CLOUDY
+                    if (clouds == 0f) return HourlyForecast.CLEAR
+                    if (clear == 0f) return HourlyForecast.CLOUDY
                     if (clouds > clear) {
-                        if (clear > snow && clear > rain) return Forecast.MOSTLY_CLOUDY
-                        if (clear < snow && clear < rain) return Forecast.SLEET
-                        if (clear < snow && clear > rain) return Forecast.SNOW
-                        if (clear > snow && clear < rain) return Forecast.DRIZZLE
+                        if (clear > snow && clear > rain) return HourlyForecast.MOSTLY_CLOUDY
+                        if (clear < snow && clear < rain) return HourlyForecast.SLEET
+                        if (clear < snow && clear > rain) return HourlyForecast.SNOW
+                        if (clear > snow && clear < rain) return HourlyForecast.DRIZZLE
                     }
-                    return Forecast.PARTLY_CLOUDY
+                    return HourlyForecast.PARTLY_CLOUDY
                 }
             }
         }

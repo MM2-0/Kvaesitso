@@ -6,7 +6,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.weather.DailyForecast
-import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.HourlyForecast
 import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -71,7 +71,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
     /**
      * Currently selected forecast, one of [currentDayForecasts]
      */
-    val currentForecast = MutableLiveData<Forecast?>(getCurrentlySelectedForecast())
+    val currentForecast = MutableLiveData<HourlyForecast?>(getCurrentlySelectedForecast())
 
     /**
      * List of forecast summaries for each day
@@ -82,7 +82,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
      * Forecasts of the currently selected day (hourly in most cases).
      * This is [DailyForecast.hourlyForecasts] of [currentDailyForecast]
      */
-    val currentDayForecasts = MutableLiveData<List<Forecast>>(emptyList())
+    val currentDayForecasts = MutableLiveData<List<HourlyForecast>>(emptyList())
 
     /**
      * Daily forecast summary for the currently selected day, one of [dailyForecasts] or null
@@ -114,7 +114,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
         selectedForecastIndex = index
     }
 
-    private fun getCurrentlySelectedForecast(): Forecast? {
+    private fun getCurrentlySelectedForecast(): HourlyForecast? {
         return forecasts.getOrNull(selectedDayIndex)?.hourlyForecasts?.getOrNull(selectedForecastIndex)
     }
 

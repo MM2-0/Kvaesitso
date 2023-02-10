@@ -43,6 +43,8 @@
     <string name="preference_location">Standort</string>
     <string name="preference_imperial_units_summary">Grad Fahrenheit und Meilen pro Stunde verwenden</string>
     <string name="preference_imperial_units">Imperiale Einheiten</string>
+    <string name="preference_display_daily_forecast">Tagesvorhersage anzeigen</string>
+    <string name="preference_display_daily_forecast_summary">Anstelle der stündlichen Vorhersage eine Zusammenfassung für den Tag anzeigen</string>
     <string name="preference_category_debug">Debug</string>
     <string name="wikipedia_url">https://de.wikipedia.org</string>
     <string name="wikipedia_source">Aus Wikipedia</string>

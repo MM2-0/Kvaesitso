@@ -84,7 +84,7 @@ class OpenWeatherMapProvider(override val context: Context) :
             return null
         }
 
-        val forecastList = mutableListOf<Forecast>()
+        val forecastList = mutableListOf<HourlyForecast>()
 
         val city = currentWeather.name
         val country = currentWeather.sys?.country ?: return null
@@ -105,7 +105,7 @@ class OpenWeatherMapProvider(override val context: Context) :
         forecasts.list ?: return null
 
         forecastList.add(
-            Forecast(
+            HourlyForecast(
                 timestamp = currentWeather.dt?.times(1000) ?: return null,
                 condition = currentWeather.weather?.getOrNull(0)?.description ?: "Unknown",
                 temperature = currentWeather.main?.temp ?: return null,
@@ -133,7 +133,7 @@ class OpenWeatherMapProvider(override val context: Context) :
 
         forecastList.addAll(
             forecasts.list.map {
-                Forecast(
+                HourlyForecast(
                     timestamp = it.dt?.times(1000) ?: return null,
                     icon = iconForId(it.weather?.getOrNull(0)?.id ?: 0),
                     condition = it.weather?.getOrNull(0)?.description ?: "Unknown",
@@ -184,27 +184,27 @@ class OpenWeatherMapProvider(override val context: Context) :
 
     private fun iconForId(id: Int): Int {
         return when (id) {
-            200, 201, in 230..232 -> Forecast.THUNDERSTORM_WITH_RAIN
-            202 -> Forecast.HEAVY_THUNDERSTORM_WITH_RAIN
-            210, 211 -> Forecast.THUNDERSTORM
-            212, 221 -> Forecast.HEAVY_THUNDERSTORM
-            in 300..302, in 310..312 -> Forecast.DRIZZLE
-            313, 314, 321, in 500..504, 511, in 520..522, 531 -> Forecast.SHOWERS
-            in 600..602 -> Forecast.SNOW
-            611, 612, 615, 616, in 620..622 -> Forecast.SLEET
-            701, 711, 731, 741, 761, 762 -> Forecast.FOG
-            721 -> Forecast.HAZE
-            771, 781, in 900..902, in 958..962 -> Forecast.STORM
-            800 -> Forecast.CLEAR
-            801 -> Forecast.PARTLY_CLOUDY
-            802 -> Forecast.MOSTLY_CLOUDY
-            803 -> Forecast.BROKEN_CLOUDS
-            804, 951 -> Forecast.CLOUDY
-            903 -> Forecast.COLD
-            904 -> Forecast.HOT
-            905, in 952..957 -> Forecast.WIND
-            906 -> Forecast.HAIL
-            else -> Forecast.NONE
+            200, 201, in 230..232 -> HourlyForecast.THUNDERSTORM_WITH_RAIN
+            202 -> HourlyForecast.HEAVY_THUNDERSTORM_WITH_RAIN
+            210, 211 -> HourlyForecast.THUNDERSTORM
+            212, 221 -> HourlyForecast.HEAVY_THUNDERSTORM
+            in 300..302, in 310..312 -> HourlyForecast.DRIZZLE
+            313, 314, 321, in 500..504, 511, in 520..522, 531 -> HourlyForecast.SHOWERS
+            in 600..602 -> HourlyForecast.SNOW
+            611, 612, 615, 616, in 620..622 -> HourlyForecast.SLEET
+            701, 711, 731, 741, 761, 762 -> HourlyForecast.FOG
+            721 -> HourlyForecast.HAZE
+            771, 781, in 900..902, in 958..962 -> HourlyForecast.STORM
+            800 -> HourlyForecast.CLEAR
+            801 -> HourlyForecast.PARTLY_CLOUDY
+            802 -> HourlyForecast.MOSTLY_CLOUDY
+            803 -> HourlyForecast.BROKEN_CLOUDS
+            804, 951 -> HourlyForecast.CLOUDY
+            903 -> HourlyForecast.COLD
+            904 -> HourlyForecast.HOT
+            905, in 952..957 -> HourlyForecast.WIND
+            906 -> HourlyForecast.HAIL
+            else -> HourlyForecast.NONE
         }
     }
 

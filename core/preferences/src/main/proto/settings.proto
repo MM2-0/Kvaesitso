@@ -92,6 +92,7 @@ message Settings {
     }
     WeatherProvider provider = 1;
     bool imperial_units = 2;
+    bool display_daily_forecast = 3;
   }
   WeatherSettings weather = 5;
 

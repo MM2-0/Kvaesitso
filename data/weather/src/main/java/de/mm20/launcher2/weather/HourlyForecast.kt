@@ -1,29 +1,29 @@
 package de.mm20.launcher2.weather
 
 import de.mm20.launcher2.database.entities.ForecastEntity
-import de.mm20.launcher2.weather.Forecast.Companion.BROKEN_CLOUDS
-import de.mm20.launcher2.weather.Forecast.Companion.CLEAR
-import de.mm20.launcher2.weather.Forecast.Companion.CLOUDY
-import de.mm20.launcher2.weather.Forecast.Companion.COLD
-import de.mm20.launcher2.weather.Forecast.Companion.DRIZZLE
-import de.mm20.launcher2.weather.Forecast.Companion.FOG
-import de.mm20.launcher2.weather.Forecast.Companion.HAIL
-import de.mm20.launcher2.weather.Forecast.Companion.HAZE
-import de.mm20.launcher2.weather.Forecast.Companion.HEAVY_THUNDERSTORM
-import de.mm20.launcher2.weather.Forecast.Companion.HEAVY_THUNDERSTORM_WITH_RAIN
-import de.mm20.launcher2.weather.Forecast.Companion.HOT
-import de.mm20.launcher2.weather.Forecast.Companion.MOSTLY_CLOUDY
-import de.mm20.launcher2.weather.Forecast.Companion.NONE
-import de.mm20.launcher2.weather.Forecast.Companion.PARTLY_CLOUDY
-import de.mm20.launcher2.weather.Forecast.Companion.SHOWERS
-import de.mm20.launcher2.weather.Forecast.Companion.SLEET
-import de.mm20.launcher2.weather.Forecast.Companion.SNOW
-import de.mm20.launcher2.weather.Forecast.Companion.STORM
-import de.mm20.launcher2.weather.Forecast.Companion.THUNDERSTORM
-import de.mm20.launcher2.weather.Forecast.Companion.THUNDERSTORM_WITH_RAIN
-import de.mm20.launcher2.weather.Forecast.Companion.WIND
+import de.mm20.launcher2.weather.HourlyForecast.Companion.BROKEN_CLOUDS
+import de.mm20.launcher2.weather.HourlyForecast.Companion.CLEAR
+import de.mm20.launcher2.weather.HourlyForecast.Companion.CLOUDY
+import de.mm20.launcher2.weather.HourlyForecast.Companion.COLD
+import de.mm20.launcher2.weather.HourlyForecast.Companion.DRIZZLE
+import de.mm20.launcher2.weather.HourlyForecast.Companion.FOG
+import de.mm20.launcher2.weather.HourlyForecast.Companion.HAIL
+import de.mm20.launcher2.weather.HourlyForecast.Companion.HAZE
+import de.mm20.launcher2.weather.HourlyForecast.Companion.HEAVY_THUNDERSTORM
+import de.mm20.launcher2.weather.HourlyForecast.Companion.HEAVY_THUNDERSTORM_WITH_RAIN
+import de.mm20.launcher2.weather.HourlyForecast.Companion.HOT
+import de.mm20.launcher2.weather.HourlyForecast.Companion.MOSTLY_CLOUDY
+import de.mm20.launcher2.weather.HourlyForecast.Companion.NONE
+import de.mm20.launcher2.weather.HourlyForecast.Companion.PARTLY_CLOUDY
+import de.mm20.launcher2.weather.HourlyForecast.Companion.SHOWERS
+import de.mm20.launcher2.weather.HourlyForecast.Companion.SLEET
+import de.mm20.launcher2.weather.HourlyForecast.Companion.SNOW
+import de.mm20.launcher2.weather.HourlyForecast.Companion.STORM
+import de.mm20.launcher2.weather.HourlyForecast.Companion.THUNDERSTORM
+import de.mm20.launcher2.weather.HourlyForecast.Companion.THUNDERSTORM_WITH_RAIN
+import de.mm20.launcher2.weather.HourlyForecast.Companion.WIND
 
-data class Forecast(
+data class HourlyForecast(
         val timestamp: Long,
         /** The temperature, in Kelvin **/
         val temperature: Double,

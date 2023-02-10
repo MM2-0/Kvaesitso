@@ -46,6 +46,17 @@ class WeatherWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         repository.setAutoLocation(autoLocation)
     }
 
+    val displayDailyForecast = dataStore.data.map { it.weather.displayDailyForecast }.asLiveData()
+    fun setDisplayDailyForecast(displayDailsForecast: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setWeather(it.weather.toBuilder().setDisplayDailyForecast(displayDailsForecast))
+                    .build()
+            }
+        }
+    }
+
     val location = MutableLiveData<WeatherLocation?>(null)
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()

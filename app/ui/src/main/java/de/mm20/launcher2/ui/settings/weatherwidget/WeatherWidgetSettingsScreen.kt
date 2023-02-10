@@ -55,6 +55,15 @@ fun WeatherWidgetSettingsScreen() {
                         viewModel.setImperialUnits(it)
                     }
                 )
+                val displayDailyForecast by viewModel.displayDailyForecast.observeAsState(false)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_display_daily_forecast),
+                    summary = stringResource(R.string.preference_display_daily_forecast_summary),
+                    value = displayDailyForecast,
+                    onValueChanged = {
+                        viewModel.setDisplayDailyForecast(it)
+                    }
+                )
             }
         }
         item {

@@ -36,7 +36,7 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.weather.DailyForecast
-import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.HourlyForecast
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
@@ -430,26 +430,26 @@ private fun windDirectionAsWord(direction: Double): String {
 
 private fun weatherIconById(id: Int): WeatherIcon {
     return when (id) {
-        Forecast.CLEAR -> WeatherIcon.Clear
-        Forecast.CLOUDY -> WeatherIcon.Cloudy
-        Forecast.COLD -> WeatherIcon.Cold
-        Forecast.DRIZZLE -> WeatherIcon.Drizzle
-        Forecast.HAZE -> WeatherIcon.Haze
-        Forecast.FOG -> WeatherIcon.Fog
-        Forecast.HAIL -> WeatherIcon.Hail
-        Forecast.HEAVY_THUNDERSTORM -> WeatherIcon.HeavyThunderstorm
-        Forecast.HEAVY_THUNDERSTORM_WITH_RAIN -> WeatherIcon.HeavyThunderstormWithRain
-        Forecast.HOT -> WeatherIcon.Hot
-        Forecast.MOSTLY_CLOUDY -> WeatherIcon.MostlyCloudy
-        Forecast.PARTLY_CLOUDY -> WeatherIcon.PartlyCloudy
-        Forecast.SHOWERS -> WeatherIcon.Showers
-        Forecast.SLEET -> WeatherIcon.Sleet
-        Forecast.SNOW -> WeatherIcon.Snow
-        Forecast.STORM -> WeatherIcon.Storm
-        Forecast.THUNDERSTORM -> WeatherIcon.Thunderstorm
-        Forecast.THUNDERSTORM_WITH_RAIN -> WeatherIcon.ThunderstormWithRain
-        Forecast.WIND -> WeatherIcon.Wind
-        Forecast.BROKEN_CLOUDS -> WeatherIcon.BrokenClouds
+        HourlyForecast.CLEAR -> WeatherIcon.Clear
+        HourlyForecast.CLOUDY -> WeatherIcon.Cloudy
+        HourlyForecast.COLD -> WeatherIcon.Cold
+        HourlyForecast.DRIZZLE -> WeatherIcon.Drizzle
+        HourlyForecast.HAZE -> WeatherIcon.Haze
+        HourlyForecast.FOG -> WeatherIcon.Fog
+        HourlyForecast.HAIL -> WeatherIcon.Hail
+        HourlyForecast.HEAVY_THUNDERSTORM -> WeatherIcon.HeavyThunderstorm
+        HourlyForecast.HEAVY_THUNDERSTORM_WITH_RAIN -> WeatherIcon.HeavyThunderstormWithRain
+        HourlyForecast.HOT -> WeatherIcon.Hot
+        HourlyForecast.MOSTLY_CLOUDY -> WeatherIcon.MostlyCloudy
+        HourlyForecast.PARTLY_CLOUDY -> WeatherIcon.PartlyCloudy
+        HourlyForecast.SHOWERS -> WeatherIcon.Showers
+        HourlyForecast.SLEET -> WeatherIcon.Sleet
+        HourlyForecast.SNOW -> WeatherIcon.Snow
+        HourlyForecast.STORM -> WeatherIcon.Storm
+        HourlyForecast.THUNDERSTORM -> WeatherIcon.Thunderstorm
+        HourlyForecast.THUNDERSTORM_WITH_RAIN -> WeatherIcon.ThunderstormWithRain
+        HourlyForecast.WIND -> WeatherIcon.Wind
+        HourlyForecast.BROKEN_CLOUDS -> WeatherIcon.BrokenClouds
         else -> WeatherIcon.None
     }
 }

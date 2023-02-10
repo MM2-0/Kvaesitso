@@ -61,7 +61,7 @@ internal class WeatherRepositoryImpl(
 
     override val forecasts: Flow<List<DailyForecast>>
         get() = database.weatherDao().getForecasts()
-            .map { it.map { Forecast(it) } }
+            .map { it.map { HourlyForecast(it) } }
             .map {
                 groupForecastsPerDay(it)
             }
@@ -143,11 +143,11 @@ internal class WeatherRepositoryImpl(
         }
     }
 
-    private fun groupForecastsPerDay(forecasts: List<Forecast>): List<DailyForecast> {
+    private fun groupForecastsPerDay(forecasts: List<HourlyForecast>): List<DailyForecast> {
         val dailyForecasts = mutableListOf<DailyForecast>()
         val calendar = Calendar.getInstance()
         var currentDay = 0
-        var currentDayForecasts: MutableList<Forecast> = mutableListOf()
+        var currentDayForecasts: MutableList<HourlyForecast> = mutableListOf()
         for (fc in forecasts) {
             calendar.timeInMillis = fc.timestamp
             if (currentDay != calendar.get(Calendar.DAY_OF_YEAR)) {

@@ -45,11 +45,11 @@ class BrightskyProvider(
             return null
         }
         val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
-        val forecasts = mutableListOf<Forecast>()
+        val forecasts = mutableListOf<HourlyForecast>()
         val updateTime = System.currentTimeMillis()
         for (weather in result.weather) {
             forecasts.add(
-                Forecast(
+                HourlyForecast(
                     timestamp = format.parse(weather.timestamp)?.time ?: continue,
                     clouds = weather.cloudCover?.roundToInt() ?: -1,
                     condition = getCondition(weather.icon ?: continue) ?: continue,
@@ -78,16 +78,16 @@ class BrightskyProvider(
 
     private fun getIcon(icon: String): Int? {
         return when (icon) {
-            "clear-day", "clear-night" -> Forecast.CLEAR
-            "partly-cloudy-day", "partly-cloudy-night" -> Forecast.PARTLY_CLOUDY
-            "cloudy" -> Forecast.CLOUDY
-            "fog" -> Forecast.FOG
-            "wind" -> Forecast.WIND
-            "rain" -> Forecast.SHOWERS
-            "sleet" -> Forecast.SLEET
-            "snow" -> Forecast.SNOW
-            "hail" -> Forecast.HAIL
-            "thunderstorm" -> Forecast.THUNDERSTORM
+            "clear-day", "clear-night" -> HourlyForecast.CLEAR
+            "partly-cloudy-day", "partly-cloudy-night" -> HourlyForecast.PARTLY_CLOUDY
+            "cloudy" -> HourlyForecast.CLOUDY
+            "fog" -> HourlyForecast.FOG
+            "wind" -> HourlyForecast.WIND
+            "rain" -> HourlyForecast.SHOWERS
+            "sleet" -> HourlyForecast.SLEET
+            "snow" -> HourlyForecast.SNOW
+            "hail" -> HourlyForecast.HAIL
+            "thunderstorm" -> HourlyForecast.THUNDERSTORM
             else -> null
         }
     }

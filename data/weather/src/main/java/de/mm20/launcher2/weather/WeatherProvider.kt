@@ -25,7 +25,7 @@ abstract class WeatherProvider<T : WeatherLocation> {
         }
 
 
-    suspend fun fetchNewWeatherData(): List<Forecast>? {
+    suspend fun fetchNewWeatherData(): List<HourlyForecast>? {
         val result: WeatherUpdateResult<T>
         if (autoLocation) {
             if (context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
@@ -100,6 +100,6 @@ abstract class WeatherProvider<T : WeatherLocation> {
 }
 
 data class WeatherUpdateResult<T : WeatherLocation>(
-    val forecasts: List<Forecast>,
+    val forecasts: List<HourlyForecast>,
     val location: T
 )
