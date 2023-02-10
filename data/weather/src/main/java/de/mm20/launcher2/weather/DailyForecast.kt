@@ -1,7 +1,7 @@
 package de.mm20.launcher2.weather
 
 import kotlin.math.abs
-import de.mm20.launcher2.helper.IterableUtils.medianBy
+import de.mm20.launcher2.ktx.medianBy
 
 data class DailyForecast(
     val timestamp: Long,

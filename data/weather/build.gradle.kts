@@ -50,6 +50,5 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:permissions"))
     implementation(project(":core:i18n"))
-    implementation(project(mapOf("path" to ":core:base")))
 
 }
