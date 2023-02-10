@@ -4,14 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.text.format.DateUtils
-import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
@@ -136,7 +134,7 @@ fun WeatherWidget() {
 
         Surface(
             shape = MaterialTheme.shapes.extraSmall.copy(bottomEnd = CornerSize(0), topEnd = CornerSize(0)),
-            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
+            color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.12f)
         ) {
             LazyRow(
                 modifier = Modifier
