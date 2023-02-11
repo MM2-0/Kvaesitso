@@ -106,8 +106,8 @@ fun WeatherWidget() {
     Column {
         Surface(
             shape = MaterialTheme.shapes.extraSmall.copy(
-                bottomEnd = CornerSize(0),
-                topEnd = CornerSize(0)
+                topStart = CornerSize(0),
+                bottomEnd = CornerSize(0)
             ),
             color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
             modifier = Modifier.align(Alignment.End)
@@ -311,9 +311,7 @@ fun WeatherTimeSelector(
         itemsIndexed(forecasts) { idx, fc ->
             val alpha = if (fc == selectedForecast) 0.12f else 0.0f
             Surface(
-                shape = MaterialTheme.shapes.extraSmall.copy(
-                    CornerSize(5)
-                ),
+                shape = MaterialTheme.shapes.extraSmall,
                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha)
             ) {
                 Column(
@@ -366,9 +364,7 @@ fun WeatherDaySelector(
             val alpha = if (day == selectedDay) 0.12f else 0.0f
 
             Surface(
-                shape = MaterialTheme.shapes.extraSmall.copy(
-                    CornerSize(5)
-                ),
+                shape = MaterialTheme.shapes.extraSmall,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha)
             ) {
                 Row(
