@@ -66,6 +66,8 @@ fun WeatherWidget() {
 
     val imperialUnits by viewModel.imperialUnits.observeAsState(false)
 
+    val compactMode by viewModel.compactMode.observeAsState(false)
+
     var showLocationDialog by remember { mutableStateOf(false) }
 
     if (showLocationDialog) {
@@ -134,40 +136,43 @@ fun WeatherWidget() {
 
         CurrentWeather(forecast, imperialUnits)
 
-        val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
-        val selectedDayForecast by viewModel.currentDailyForecast.observeAsState()
-        val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
+        if (!compactMode) {
 
-        Surface(
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            modifier = Modifier.fillMaxWidth().padding(top = 16.dp)
-        ) {
-            Column(
-                modifier = Modifier.padding(12.dp)
+            val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
+            val selectedDayForecast by viewModel.currentDailyForecast.observeAsState()
+            val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
+
+            Surface(
+                color = MaterialTheme.colorScheme.surfaceVariant,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                WeatherTimeSelector(
-                    forecasts = currentDayForecasts,
-                    selectedForecast = forecast,
-                    imperialUnits = imperialUnits,
-                    onTimeSelected = {
-                        viewModel.selectForecast(it)
-                    },
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Divider(
-                    thickness = 1.dp,
-                    color = MaterialTheme.colorScheme.secondary,
-                )
-                selectedDayForecast?.let {
-                    WeatherDaySelector(
-                        days = dailyForecasts,
-                        selectedDay = it,
-                        onDaySelected = {
-                            viewModel.selectDay(it)
-                        },
+                Column(
+                    modifier = Modifier.padding(18.dp)
+                ) {
+                    WeatherTimeSelector(
+                        forecasts = currentDayForecasts,
+                        selectedForecast = forecast,
                         imperialUnits = imperialUnits,
-                        modifier = Modifier.padding(top = 8.dp)
+                        onTimeSelected = {
+                            viewModel.selectForecast(it)
+                        },
+                        modifier = Modifier.padding(bottom = 12.dp)
                     )
+                    Divider(
+                        thickness = 1.dp,
+                        color = MaterialTheme.colorScheme.secondary,
+                    )
+                    selectedDayForecast?.let {
+                        WeatherDaySelector(
+                            days = dailyForecasts,
+                            selectedDay = it,
+                            onDaySelected = {
+                                viewModel.selectDay(it)
+                            },
+                            imperialUnits = imperialUnits,
+                            modifier = Modifier.padding(top = 12.dp)
+                        )
+                    }
                 }
             }
         }
@@ -232,7 +237,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
     }
     Row(
         modifier = Modifier
-            .padding(horizontal = 24.dp)
+            .padding(start = 24.dp, end = 24.dp, bottom = 16.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -289,67 +294,6 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
 }
 
 @Composable
-fun WeatherDaySelector(
-    modifier: Modifier = Modifier,
-    days: List<DailyForecast>,
-    selectedDay: DailyForecast,
-    onDaySelected: (Int) -> Unit,
-    imperialUnits: Boolean
-) {
-    val dateFormat = SimpleDateFormat("EEE")
-
-    LazyRow(
-        modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(36.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        itemsIndexed(days) {idx, day ->
-            val surfaceColor = if (day == selectedDay) {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            }
-
-            Surface(
-                shape = MaterialTheme.shapes.extraSmall.copy(
-                    bottomEnd = CornerSize(0),
-                    topEnd = CornerSize(0)
-                ),
-                color = surfaceColor
-            ) {
-                Row(
-                    modifier = Modifier
-                        .clickable { onDaySelected(idx) }
-                        .animateItemPlacement(),
-                    horizontalArrangement = Arrangement.SpaceAround,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    WeatherIcon(icon = weatherIconById(day.icon))
-                    Text(
-                        text = dateFormat.format(day.timestamp),
-                        style = MaterialTheme.typography.titleSmall,
-                        softWrap = false,
-                        modifier = Modifier
-                            .padding(start = 16.dp, end = 8.dp)
-                            .weight(1f)
-                    )
-                    Text(
-                        text = "${
-                            convertTemperature(
-                                imperialUnits,
-                                day.minTemp
-                            )
-                        }° / ${convertTemperature(imperialUnits, day.maxTemp)}°",
-                        softWrap = false,
-                        style = MaterialTheme.typography.titleSmall,
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
 fun WeatherTimeSelector(
     modifier: Modifier = Modifier,
     forecasts: List<Forecast>,
@@ -365,22 +309,17 @@ fun WeatherTimeSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(forecasts) { idx, fc ->
-            val surfaceColor = if (fc == selectedForecast) {
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f)
-            } else {
-                MaterialTheme.colorScheme.onSurfaceVariant
-            }
+            val alpha = if (fc == selectedForecast) 0.12f else 0.0f
             Surface(
                 shape = MaterialTheme.shapes.extraSmall.copy(
-                    bottomEnd = CornerSize(0),
-                    topEnd = CornerSize(0)
+                    CornerSize(5)
                 ),
-                color = surfaceColor
+                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha)
             ) {
                 Column(
                     modifier = Modifier
                         .clickable { onTimeSelected(idx) }
-                        .animateItemPlacement(),
+                        .padding(6.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
@@ -400,6 +339,61 @@ fun WeatherTimeSelector(
                         softWrap = false,
                         style = MaterialTheme.typography.titleSmall,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun WeatherDaySelector(
+    modifier: Modifier = Modifier,
+    days: List<DailyForecast>,
+    selectedDay: DailyForecast,
+    onDaySelected: (Int) -> Unit,
+    imperialUnits: Boolean
+) {
+    val dateFormat = SimpleDateFormat("EEE")
+
+    LazyRow(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.spacedBy(36.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        itemsIndexed(days) { idx, day ->
+            val alpha = if (day == selectedDay) 0.12f else 0.0f
+
+            Surface(
+                shape = MaterialTheme.shapes.extraSmall.copy(
+                    CornerSize(5)
+                ),
+                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .clickable { onDaySelected(idx) }
+                        .padding(6.dp),
+                    horizontalArrangement = Arrangement.SpaceAround,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    WeatherIcon(icon = weatherIconById(day.icon))
+                    Text(
+                        text = dateFormat.format(day.timestamp),
+                        style = MaterialTheme.typography.titleSmall,
+                        softWrap = false,
+                        modifier = Modifier.padding(start = 12.dp, end = 6.dp)
+                    )
+                    Text(
+                        text = "${
+                            convertTemperature(
+                                imperialUnits,
+                                day.minTemp
+                            )
+                        }° / ${convertTemperature(imperialUnits, day.maxTemp)}°",
+                        softWrap = false,
+                        style = MaterialTheme.typography.titleSmall,
                     )
                 }
             }
