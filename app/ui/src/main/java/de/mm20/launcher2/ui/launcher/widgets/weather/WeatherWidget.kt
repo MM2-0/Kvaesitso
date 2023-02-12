@@ -171,7 +171,8 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            val latLonRegexp = remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
+            val latLonRegexp =
+                remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
             val isLatLon = latLonRegexp.matches(forecast.location)
             Row(
                 modifier = Modifier
@@ -304,22 +305,19 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             }
         }
         if (validPrecip) {
-            val precipitation = formatPrecipitation(imperialUnits, forecast)
-            if (precipitation != null) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Rain,
-                        modifier = Modifier.size(20.dp),
-                        contentDescription = null
-                    )
-                    Spacer(modifier = Modifier.padding(3.dp))
-                    Text(
-                        text = precipitation,
-                        style = MaterialTheme.typography.labelMedium
-                    )
-                }
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Rounded.Rain,
+                    modifier = Modifier.size(20.dp),
+                    contentDescription = null
+                )
+                Spacer(modifier = Modifier.padding(3.dp))
+                Text(
+                    text = formatPrecipitation(imperialUnits, forecast),
+                    style = MaterialTheme.typography.labelMedium
+                )
             }
         }
     }
@@ -450,14 +448,12 @@ private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String 
 }
 
 @Composable
-private fun formatPrecipitation(imperialUnits: Boolean, forecast: Forecast): String? {
+private fun formatPrecipitation(imperialUnits: Boolean, forecast: Forecast): String {
     val formatter = if (imperialUnits) DecimalFormat("#.##") else DecimalFormat("#.#")
     val precipUnit =
         if (imperialUnits) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)
-    if (forecast.precipitation >= 0.0) {
-        return "${formatter.format(forecast.precipitation)} $precipUnit"
-    }
-    return null
+
+    return "${formatter.format(forecast.precipitation)} $precipUnit"
 }
 
 @Composable
