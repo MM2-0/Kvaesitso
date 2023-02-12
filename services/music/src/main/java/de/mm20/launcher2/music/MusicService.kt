@@ -50,6 +50,7 @@ interface MusicService {
     val artist: Flow<String?>
     val album: Flow<String?>
     val albumArt: Flow<Bitmap?>
+    val duration: Flow<Long?>
 
     val lastPlayerPackage: String?
 
@@ -58,6 +59,7 @@ interface MusicService {
     fun pause()
     fun play()
     fun togglePause()
+    fun seekTo(position: Long)
     fun openPlayer(): PendingIntent?
 
     fun openPlayerChooser(context: Context)
@@ -310,6 +312,18 @@ internal class MusicServiceImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
+    override val duration: Flow<Long?> = channelFlow {
+        currentMetadata.collectLatest { metadata ->
+            if (metadata == null) {
+                send(null)
+                return@collectLatest
+            }
+            val duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION)
+            send(duration.takeIf { it >  0 })
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+
     private suspend fun loadBitmapFromUri(uri: Uri, size: Int): Bitmap? {
         try {
             val request = ImageRequest.Builder(context)
@@ -416,6 +430,13 @@ internal class MusicServiceImpl(
             } else {
                 play()
             }
+        }
+    }
+
+    override fun seekTo(position: Long) {
+        scope.launch {
+            val controller = currentMediaController.firstOrNull()
+            controller?.transportControls?.seekTo(position)
         }
     }
 
