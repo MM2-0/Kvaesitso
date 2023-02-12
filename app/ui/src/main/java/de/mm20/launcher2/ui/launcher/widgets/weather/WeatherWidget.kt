@@ -23,9 +23,7 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.LightMode
-import androidx.compose.material.icons.rounded.LocationCity
-import androidx.compose.material.icons.rounded.North
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -173,6 +171,8 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             verticalAlignment = Alignment.Top,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
+            val latLonRegexp = remember { Regex("^\\d{1,2}°\\d{1,2}'[NS] \\d{1,3}°\\d{1,2}'[EW]\$") }
+            val isLatLon = latLonRegexp.matches(forecast.location)
             Row(
                 modifier = Modifier
                     .weight(1f)
@@ -180,7 +180,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.LocationCity,
+                    imageVector = if (isLatLon) Icons.Rounded.MyLocation else Icons.Rounded.LocationCity,
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -243,59 +243,83 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             )
         }
     }
+
+    val validHumidity = forecast.humidity != -1.0
+    val validWindDirection = forecast.windDirection != -1.0
+    val validWindSpeed = forecast.windSpeed != -1.0
+    val validPrecip = forecast.precipitation != -1.0
+
     Row(
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 8.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                imageVector = Icons.Rounded.HumidityPercentage,
-                modifier = Modifier.size(20.dp),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.padding(3.dp))
-            Text(
-                text = "${forecast.humidity.roundToInt()} %",
-                style = MaterialTheme.typography.labelMedium
-            )
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction.
-            val angle by animateFloatAsState(forecast.windDirection.toFloat() + 180f)
-            Icon(
-                imageVector = Icons.Rounded.North,
-                modifier = Modifier
-                    .rotate(angle)
-                    .size(20.dp),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.padding(3.dp))
-            Text(
-                text = formatWindSpeed(imperialUnits, forecast),
-                style = MaterialTheme.typography.labelMedium
-            )
-        }
-        val precipitation = formatPrecipitation(imperialUnits, forecast)
-        if (precipitation != null) {
+        if (validHumidity) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Rain,
+                    imageVector = Icons.Rounded.HumidityPercentage,
                     modifier = Modifier.size(20.dp),
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
-                    text = precipitation,
+                    text = "${forecast.humidity.roundToInt()} %",
                     style = MaterialTheme.typography.labelMedium
                 )
+            }
+        }
+        if (validWindDirection || validWindSpeed) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (validWindDirection) {
+                    // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
+                    val angle by animateFloatAsState(forecast.windDirection.toFloat() + 180f)
+                    Icon(
+                        imageVector = Icons.Rounded.North,
+                        modifier = Modifier
+                            .rotate(angle)
+                            .size(20.dp),
+                        contentDescription = null
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Rounded.WindPower,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+                Spacer(modifier = Modifier.padding(3.dp))
+                Text(
+                    text = if (validWindSpeed) {
+                        formatWindSpeed(imperialUnits, forecast)
+                    } else {
+                        windDirectionAsWord(forecast.windDirection)
+                    },
+                    style = MaterialTheme.typography.labelMedium
+                )
+            }
+        }
+        if (validPrecip) {
+            val precipitation = formatPrecipitation(imperialUnits, forecast)
+            if (precipitation != null) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Rain,
+                        modifier = Modifier.size(20.dp),
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.padding(3.dp))
+                    Text(
+                        text = precipitation,
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
             }
         }
     }
