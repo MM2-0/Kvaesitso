@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -131,7 +133,7 @@ fun WeatherWidget() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp, bottom = 12.dp)
                 ) {
                     WeatherTimeSelector(
                         forecasts = currentDayForecasts,
@@ -311,7 +313,7 @@ fun WeatherTimeSelector(
 
     LazyRow(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(36.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -319,6 +321,7 @@ fun WeatherTimeSelector(
             val alpha = if (fc == selectedForecast) 0.12f else 0.0f
             Surface(
                 shape = MaterialTheme.shapes.extraSmall,
+                modifier = Modifier.widthIn(min = 56.dp),
                 color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha)
             ) {
                 Column(
