@@ -318,11 +318,11 @@ fun WeatherTimeSelector(
         verticalAlignment = Alignment.CenterVertically
     ) {
         itemsIndexed(forecasts) { idx, fc ->
-            val alpha = if (fc == selectedForecast) 0.12f else 0.0f
+            val alpha = if (fc == selectedForecast) 0.2f else 0.0f
             Surface(
                 shape = MaterialTheme.shapes.extraSmall,
                 modifier = Modifier.widthIn(min = 56.dp),
-                color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha)
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha)
             ) {
                 Column(
                     modifier = Modifier
@@ -372,11 +372,11 @@ fun WeatherDaySelector(
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
     ) {
         itemsIndexed(days) { idx, day ->
-            val alpha = if (day == selectedDay) 0.12f else 0.0f
+            val alpha = if (day == selectedDay) 0.2f else 0.0f
 
             Surface(
                 shape = MaterialTheme.shapes.extraSmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha)
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha)
             ) {
                 Row(
                     modifier = Modifier
