@@ -40,7 +40,6 @@ fun AnimatedWeatherIcon(
 
     Box(
         modifier = modifier
-            .padding(8.dp)
             .size(64.dp)
             .clipToBounds(),
         contentAlignment = Alignment.Center
