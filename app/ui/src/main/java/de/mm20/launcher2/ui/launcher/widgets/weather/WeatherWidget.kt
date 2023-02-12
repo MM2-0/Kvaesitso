@@ -42,10 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -57,6 +54,8 @@ import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
+import de.mm20.launcher2.ui.icons.HumidityPercentage
+import de.mm20.launcher2.ui.icons.Rain
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import java.text.DateFormat
@@ -173,7 +172,9 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Row(
-                modifier = Modifier.weight(1f).padding(top = 16.dp, start = 16.dp, end = 16.dp),
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Icon(
@@ -250,7 +251,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                painter = painterResource(R.drawable.humidity_percentage_fill0_rounded),
+                imageVector = Icons.Rounded.HumidityPercentage,
                 modifier = Modifier.size(20.dp),
                 contentDescription = null
             )
@@ -284,7 +285,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.rainy_fill0_rounded),
+                    imageVector = Icons.Rounded.Rain,
                     modifier = Modifier.size(20.dp),
                     contentDescription = null
                 )
