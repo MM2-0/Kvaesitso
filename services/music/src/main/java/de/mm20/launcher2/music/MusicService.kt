@@ -44,7 +44,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
 
-interface MusicRepository {
+interface MusicService {
     val playbackState: Flow<PlaybackState>
     val title: Flow<String?>
     val artist: Flow<String?>
@@ -65,10 +65,10 @@ interface MusicRepository {
     fun resetPlayer()
 }
 
-internal class MusicRepositoryImpl(
+internal class MusicServiceImpl(
     private val context: Context,
     notificationRepository: NotificationRepository
-) : MusicRepository, KoinComponent {
+) : MusicService, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
     private val dataStore: LauncherDataStore by inject()
