@@ -4,7 +4,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -22,7 +21,6 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
@@ -35,7 +33,8 @@ import kotlin.math.sin
 fun AnimatedWeatherIcon(
     modifier: Modifier = Modifier,
     icon: WeatherIcon,
-    night: Boolean = false
+    night: Boolean = false,
+    colors: WeatherIconColors = WeatherIconDefaults.colors(),
 ) {
 
     Box(
@@ -44,29 +43,27 @@ fun AnimatedWeatherIcon(
             .clipToBounds(),
         contentAlignment = Alignment.Center
     ) {
-        SunMoon(icon, night)
-        Precipitation(icon)
-        LightningBolt(icon)
-        LightningBolt2(icon)
-        Cloud1(icon)
-        Wind2(icon)
-        Cloud2(icon)
-        Cloud3(icon)
-        Fog(icon)
-        Hot(icon)
-        Cold(icon)
-        Wind1(icon)
+        SunMoon(icon, night, colors)
+        Precipitation(icon, colors)
+        LightningBolt(icon, colors)
+        LightningBolt2(icon, colors)
+        Cloud1(icon, colors)
+        Wind2(icon, colors)
+        Cloud2(icon, colors)
+        Cloud3(icon, colors)
+        Fog(icon, colors)
+        Hot(icon, colors)
+        Cold(icon, colors)
+        Wind1(icon, colors)
     }
 }
 
 @Composable
-private fun SunMoon(icon: WeatherIcon, night: Boolean) {
+private fun SunMoon(icon: WeatherIcon, night: Boolean, colors: WeatherIconColors) {
     val sunMoonIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_weather_sun_moon)
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIcon")
 
-    val color by animateColorAsState(
-        if (night) colorResource(id = R.color.weather_moon) else colorResource(id = R.color.weather_sun)
-    )
+    val color by animateColorAsState(if (night) colors.moon else colors.sun)
     val scale by transition.animateFloat(label = "sunScale") {
         when (it) {
             WeatherIcon.Clear,
@@ -100,7 +97,7 @@ private fun SunMoon(icon: WeatherIcon, night: Boolean) {
 }
 
 @Composable
-private fun LightningBolt(icon: WeatherIcon) {
+private fun LightningBolt(icon: WeatherIcon, colors: WeatherIconColors) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIconBolt")
 
     val scale by transition.animateFloat(label = "scale") {
@@ -129,12 +126,12 @@ private fun LightningBolt(icon: WeatherIcon) {
             .size(32.dp)
             .offset(offset.x.dp, offset.y.dp)
             .scale(scale),
-        tint = colorResource(id = R.color.weather_lightning_bolt)
+        tint = colors.lightningBolt
     )
 }
 
 @Composable
-private fun LightningBolt2(icon: WeatherIcon) {
+private fun LightningBolt2(icon: WeatherIcon, colors: WeatherIconColors) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIconBolt2")
 
     val scale by transition.animateFloat(label = "scale") {
@@ -159,12 +156,12 @@ private fun LightningBolt2(icon: WeatherIcon) {
             .size(32.dp)
             .offset(offset.x.dp, offset.y.dp)
             .scale(scale),
-        tint = colorResource(id = R.color.weather_lightning_bolt)
+        tint = colors.lightningBolt
     )
 }
 
 @Composable
-private fun Cloud1(icon: WeatherIcon) {
+private fun Cloud1(icon: WeatherIcon, colors: WeatherIconColors) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIconCloud1")
 
     val scale by transition.animateFloat(label = "scale") {
@@ -216,19 +213,19 @@ private fun Cloud1(icon: WeatherIcon) {
             WeatherIcon.ThunderstormWithRain,
             WeatherIcon.HeavyThunderstorm,
             WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colorResource(id = R.color.weather_cloud_dark_2)
+            WeatherIcon.Storm -> colors.cloudDark2
             WeatherIcon.Showers,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
             WeatherIcon.Cloudy,
             WeatherIcon.Wind,
-            WeatherIcon.Fog -> colorResource(id = R.color.weather_cloud_dark_1)
+            WeatherIcon.Fog -> colors.cloudDark1
             WeatherIcon.Drizzle,
-            WeatherIcon.Snow -> colorResource(id = R.color.weather_cloud_medium_2)
-            WeatherIcon.MostlyCloudy -> colorResource(id = R.color.weather_cloud_light_2)
+            WeatherIcon.Snow -> colors.cloudMedium2
+            WeatherIcon.MostlyCloudy -> colors.cloudLight2
             WeatherIcon.PartlyCloudy,
-            WeatherIcon.BrokenClouds -> colorResource(id = R.color.weather_cloud_light_1)
-            else -> colorResource(id = R.color.weather_cloud_medium_2)
+            WeatherIcon.BrokenClouds -> colors.cloudLight1
+            else -> colors.cloudMedium2
         }
     }
 
@@ -244,7 +241,7 @@ private fun Cloud1(icon: WeatherIcon) {
 }
 
 @Composable
-private fun Cloud2(icon: WeatherIcon) {
+private fun Cloud2(icon: WeatherIcon, colors: WeatherIconColors) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIconCloud2")
 
     val scale by transition.animateFloat(label = "scale") {
@@ -289,12 +286,12 @@ private fun Cloud2(icon: WeatherIcon) {
     }
     val color by transition.animateColor(label = "color") {
         when (it) {
-            WeatherIcon.BrokenClouds -> colorResource(id = R.color.weather_cloud_light_2)
+            WeatherIcon.BrokenClouds -> colors.cloudLight2
             WeatherIcon.Thunderstorm,
             WeatherIcon.ThunderstormWithRain,
             WeatherIcon.HeavyThunderstorm,
             WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colorResource(id = R.color.weather_cloud_medium_2)
+            WeatherIcon.Storm -> colors.cloudMedium2
             WeatherIcon.Showers,
             WeatherIcon.Drizzle,
             WeatherIcon.Sleet,
@@ -302,9 +299,9 @@ private fun Cloud2(icon: WeatherIcon) {
             WeatherIcon.Hail,
             WeatherIcon.Cloudy,
             WeatherIcon.Wind,
-            WeatherIcon.Fog -> colorResource(id = R.color.weather_cloud_medium_1)
-            WeatherIcon.MostlyCloudy -> colorResource(id = R.color.weather_cloud_medium_1)
-            else -> colorResource(id = R.color.weather_cloud_medium_2)
+            WeatherIcon.Fog -> colors.cloudMedium1
+            WeatherIcon.MostlyCloudy -> colors.cloudMedium1
+            else -> colors.cloudMedium2
         }
     }
 
@@ -320,7 +317,7 @@ private fun Cloud2(icon: WeatherIcon) {
 }
 
 @Composable
-private fun Cloud3(icon: WeatherIcon) {
+private fun Cloud3(icon: WeatherIcon, colors: WeatherIconColors) {
     val transition = updateTransition(targetState = icon, "AnimatedWeatherIconCloud3")
 
     val scale by transition.animateFloat(label = "scale") {
@@ -363,15 +360,15 @@ private fun Cloud3(icon: WeatherIcon) {
             WeatherIcon.ThunderstormWithRain,
             WeatherIcon.HeavyThunderstorm,
             WeatherIcon.HeavyThunderstormWithRain,
-            WeatherIcon.Storm -> colorResource(id = R.color.weather_cloud_dark_1)
+            WeatherIcon.Storm -> colors.cloudDark1
             WeatherIcon.Showers,
             WeatherIcon.Sleet,
             WeatherIcon.Hail,
             WeatherIcon.Cloudy,
-            WeatherIcon.Wind -> colorResource(id = R.color.weather_cloud_medium_2)
+            WeatherIcon.Wind -> colors.cloudMedium2
             WeatherIcon.Drizzle,
-            WeatherIcon.Snow -> colorResource(id = R.color.weather_cloud_light_2)
-            else -> colorResource(id = R.color.weather_cloud_medium_2)
+            WeatherIcon.Snow -> colors.cloudLight2
+            else -> colors.cloudMedium2
         }
     }
 
@@ -387,7 +384,7 @@ private fun Cloud3(icon: WeatherIcon) {
 }
 
 @Composable
-private fun Hot(icon: WeatherIcon) {
+private fun Hot(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
         if (icon == WeatherIcon.Hot) {
             1f
@@ -401,12 +398,12 @@ private fun Hot(icon: WeatherIcon) {
         modifier = Modifier
             .scale(scale)
             .size(32.dp),
-        tint = colorResource(id = R.color.weather_hot)
+        tint = colors.hot
     )
 }
 
 @Composable
-private fun Cold(icon: WeatherIcon) {
+private fun Cold(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
         if (icon == WeatherIcon.Cold) {
             1f
@@ -420,12 +417,12 @@ private fun Cold(icon: WeatherIcon) {
         modifier = Modifier
             .scale(scale)
             .size(32.dp),
-        tint = colorResource(id = R.color.weather_cold)
+        tint = colors.cold
     )
 }
 
 @Composable
-private fun Wind1(icon: WeatherIcon) {
+private fun Wind1(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
         if (icon == WeatherIcon.Wind || icon == WeatherIcon.Storm) {
             0.6f
@@ -440,12 +437,12 @@ private fun Wind1(icon: WeatherIcon) {
             .scale(scale)
             .offset(12.dp, 11.dp)
             .size(32.dp),
-        tint = colorResource(id = R.color.weather_wind)
+        tint = colors.wind
     )
 }
 
 @Composable
-private fun Wind2(icon: WeatherIcon) {
+private fun Wind2(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(
         if (icon == WeatherIcon.Storm) {
             0.6f
@@ -460,7 +457,7 @@ private fun Wind2(icon: WeatherIcon) {
             .scale(scale)
             .offset(8.dp, -1.dp)
             .size(32.dp),
-        tint = colorResource(id = R.color.weather_wind_dark)
+        tint = colors.windDark
     )
 }
 
@@ -508,7 +505,7 @@ fun AnimatedWeatherIconTestPanel() {
 }
 
 @Composable
-private fun Precipitation(icon: WeatherIcon) {
+private fun Precipitation(icon: WeatherIcon, colors: WeatherIconColors) {
 
     Box(
         modifier = Modifier
@@ -531,7 +528,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             .offset(y = 8.dp + 11.dp * animProgress),
                         imageVector = Icons.Rounded.WeatherLightRainAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_rain)
+                        tint = colors.rain
                     )
                 }
                 WeatherIcon.Hail -> {
@@ -547,7 +544,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             .offset(y = 8.dp + 11.dp * animProgress),
                         imageVector = Icons.Rounded.WeatherHailAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_hail)
+                        tint = colors.hail,
                     )
                 }
                 WeatherIcon.Snow -> {
@@ -566,7 +563,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             ),
                         imageVector = Icons.Rounded.WeatherHailAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_snow)
+                        tint = colors.snow,
                     )
                 }
                 WeatherIcon.Showers,
@@ -584,7 +581,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             .offset(y = 8.dp + 11.dp * animProgress),
                         imageVector = Icons.Rounded.WeatherRainAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_rain)
+                        tint = colors.rain,
                     )
                 }
                 WeatherIcon.Sleet -> {
@@ -600,7 +597,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             .offset(y = 8.dp + 11.dp * animProgress),
                         imageVector = Icons.Rounded.WeatherSleetRainAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_rain)
+                        tint = colors.rain,
                     )
                     Icon(
                         modifier = Modifier
@@ -608,7 +605,7 @@ private fun Precipitation(icon: WeatherIcon) {
                             .offset(y = 8.dp + 11.dp * animProgress),
                         imageVector = Icons.Rounded.WeatherSleetSnowAnimatable,
                         contentDescription = null,
-                        tint = colorResource(id = R.color.weather_snow)
+                        tint = colors.snow,
                     )
                 }
                 else -> {}
@@ -618,7 +615,7 @@ private fun Precipitation(icon: WeatherIcon) {
 }
 
 @Composable
-private fun Fog(icon: WeatherIcon) {
+private fun Fog(icon: WeatherIcon, colors: WeatherIconColors) {
     val scale by animateFloatAsState(if (icon == WeatherIcon.Fog || icon == WeatherIcon.Haze) 1f else 0f)
 
     Icon(
@@ -628,7 +625,7 @@ private fun Fog(icon: WeatherIcon) {
             .offset(x = 6.dp, y = 7.dp),
         imageVector = Icons.Rounded.WeatherFog,
         contentDescription = null,
-        tint = colorResource(id = R.color.weather_fog)
+        tint = colors.fog
     )
 }
 
