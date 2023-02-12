@@ -45,6 +45,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
@@ -143,9 +144,8 @@ fun WeatherWidget() {
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                     Divider(
-                        thickness = 1.dp,
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.secondary,
+                        color = MaterialTheme.colorScheme.outlineVariant,
                     )
                     selectedDayForecast?.let {
                         WeatherDaySelector(
@@ -189,9 +189,10 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             Surface(
                 shape = MaterialTheme.shapes.extraSmall.copy(
                     topStart = CornerSize(0),
+                    topEnd = CornerSize(0),
                     bottomEnd = CornerSize(0)
                 ),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.12f),
+                color = MaterialTheme.colorScheme.secondaryContainer,
             ) {
                 Text(
                     text = "${forecast.provider} (${
@@ -200,9 +201,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             forecast.updateTime
                         )
                     })",
-                    style = TextStyle(
-                        fontSize = 10.sp
-                    ),
+                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 8.sp),
                     modifier = Modifier
                         .clickable(onClick = {
                             val intent = Intent(Intent.ACTION_VIEW).apply {
@@ -211,7 +210,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             }
                             context.tryStartActivity(intent)
                         })
-                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 16.dp)
+                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 8.dp)
                 )
             }
         }
@@ -258,7 +257,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             Spacer(modifier = Modifier.padding(3.dp))
             Text(
                 text = "${forecast.humidity.roundToInt()} %",
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.labelMedium
             )
         }
         Row(
@@ -276,7 +275,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             Spacer(modifier = Modifier.padding(3.dp))
             Text(
                 text = formatWindSpeed(imperialUnits, forecast),
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.labelMedium
             )
         }
         val precipitation = formatPrecipitation(imperialUnits, forecast)
@@ -292,7 +291,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
                     text = precipitation,
-                    style = MaterialTheme.typography.titleSmall
+                    style = MaterialTheme.typography.labelMedium
                 )
             }
         }
@@ -335,14 +334,14 @@ fun WeatherTimeSelector(
                     )
                     Text(
                         text = dateFormat.format(fc.timestamp),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelMedium,
                         softWrap = false,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Text(
                         text = "${convertTemperature(imperialUnits, fc.temperature)}°",
                         softWrap = false,
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelMedium,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }
@@ -385,7 +384,7 @@ fun WeatherDaySelector(
                     WeatherIcon(icon = weatherIconById(day.icon))
                     Text(
                         text = dateFormat.format(day.timestamp),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelMedium,
                         softWrap = false,
                         modifier = Modifier.padding(start = 12.dp, end = 6.dp)
                     )
@@ -397,7 +396,7 @@ fun WeatherDaySelector(
                             )
                         }° / ${convertTemperature(imperialUnits, day.maxTemp)}°",
                         softWrap = false,
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.labelMedium,
                     )
                 }
             }
