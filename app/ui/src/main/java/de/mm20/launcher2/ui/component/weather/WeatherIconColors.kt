@@ -1,9 +1,14 @@
 package de.mm20.launcher2.ui.component.weather
 
+import android.content.Context
+import androidx.annotation.ColorRes
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import blend.Blend
 import de.mm20.launcher2.ui.R
 
 
@@ -31,26 +36,33 @@ object WeatherIconDefaults {
     @Composable
     fun colors(): WeatherIconColors {
         val context = LocalContext.current
-        return remember {
+
+        val themeColor = MaterialTheme.colorScheme.primary
+
+        return remember(themeColor) {
             WeatherIconColors(
-                sun = Color(context.getColor(R.color.weather_sun)),
-                moon = Color(context.getColor(R.color.weather_moon)),
-                cloudDark1 = Color(context.getColor(R.color.weather_cloud_dark_1)),
-                cloudDark2 = Color(context.getColor(R.color.weather_cloud_dark_2)),
-                cloudMedium1 = Color(context.getColor(R.color.weather_cloud_medium_1)),
-                cloudMedium2 = Color(context.getColor(R.color.weather_cloud_medium_2)),
-                cloudLight1 = Color(context.getColor(R.color.weather_cloud_light_1)),
-                cloudLight2 = Color(context.getColor(R.color.weather_cloud_light_2)),
-                rain = Color(context.getColor(R.color.weather_rain)),
-                snow = Color(context.getColor(R.color.weather_snow)),
-                hail = Color(context.getColor(R.color.weather_hail)),
-                fog = Color(context.getColor(R.color.weather_fog)),
-                wind = Color(context.getColor(R.color.weather_wind)),
-                windDark = Color(context.getColor(R.color.weather_wind_dark)),
-                lightningBolt = Color(context.getColor(R.color.weather_lightning_bolt)),
-                hot = Color(context.getColor(R.color.weather_hot)),
-                cold = Color(context.getColor(R.color.weather_cold)),
+                sun = harmonize(context, R.color.weather_sun, themeColor),
+                moon = harmonize(context, R.color.weather_moon, themeColor),
+                cloudDark1 = harmonize(context, R.color.weather_cloud_dark_1, themeColor),
+                cloudDark2 = harmonize(context, R.color.weather_cloud_dark_2, themeColor),
+                cloudMedium1 = harmonize(context, R.color.weather_cloud_medium_1, themeColor),
+                cloudMedium2 = harmonize(context, R.color.weather_cloud_medium_2, themeColor),
+                cloudLight1 = harmonize(context, R.color.weather_cloud_light_1, themeColor),
+                cloudLight2 = harmonize(context, R.color.weather_cloud_light_2, themeColor),
+                rain = harmonize(context, R.color.weather_rain, themeColor),
+                snow = harmonize(context, R.color.weather_snow, themeColor),
+                hail = harmonize(context, R.color.weather_hail, themeColor),
+                fog = harmonize(context, R.color.weather_fog, themeColor),
+                wind = harmonize(context, R.color.weather_wind, themeColor),
+                windDark = harmonize(context, R.color.weather_wind_dark, themeColor),
+                lightningBolt = harmonize(context, R.color.weather_lightning_bolt, themeColor),
+                hot = harmonize(context, R.color.weather_hot, themeColor),
+                cold = harmonize(context, R.color.weather_cold, themeColor),
             )
         }
     }
+}
+
+private fun harmonize(context: Context, @ColorRes baseColor: Int, themeColor: Color): Color {
+    return Color(Blend.harmonize(context.getColor(baseColor), themeColor.toArgb()))
 }
