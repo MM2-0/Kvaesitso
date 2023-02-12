@@ -227,7 +227,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 text = convertTemperature(
                     imperialUnits = imperialUnits,
                     temp = forecast.temperature
-                ).toString() + "°" + if (imperialUnits) "F" else "C",
+                ).toString() + "°",
                 style = MaterialTheme.typography.headlineMedium,
             )
             Text(
