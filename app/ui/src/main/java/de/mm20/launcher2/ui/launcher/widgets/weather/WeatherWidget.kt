@@ -146,7 +146,7 @@ fun WeatherWidget() {
                     )
                     Divider(
                         modifier = Modifier.padding(horizontal = 16.dp),
-                        color = MaterialTheme.colorScheme.outlineVariant,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.12f),
                     )
                     selectedDayForecast?.let {
                         WeatherDaySelector(
