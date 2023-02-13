@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.music
 import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
+import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
@@ -11,6 +12,7 @@ import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +30,8 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
     val playbackState: Flow<PlaybackState> = musicService.playbackState
     val duration: Flow<Long?> = musicService.duration
     val position: Flow<Long?> = musicService.position
+
+    val supportedActions: Flow<SupportedActions> = musicService.supportedActions
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
 

@@ -58,6 +58,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
@@ -76,6 +77,8 @@ fun MusicWidget() {
     val playbackState by viewModel.playbackState.collectAsStateWithLifecycle(PlaybackState.Stopped)
     val position by viewModel.position.collectAsStateWithLifecycle(null)
     val duration by viewModel.duration.collectAsStateWithLifecycle(null)
+
+    val supportedActions by viewModel.supportedActions.collectAsStateWithLifecycle(SupportedActions())
 
     val context = LocalContext.current
 
@@ -142,13 +145,13 @@ fun MusicWidget() {
                         var seekPosition by remember { mutableStateOf<Float?>(null) }
 
                         if (pos != null && dur != null && dur > 0) {
-                            if (playbackState != PlaybackState.Stopped) {
+                            if (playbackState != PlaybackState.Stopped || supportedActions.seekTo) {
                                 Slider(
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(horizontal = 8.dp)
                                         .requiredHeightIn(max = 20.dp),
-                                    value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f ,
+                                    value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f,
                                     valueRange = 0f..dur.toFloat(),
                                     interactionSource = interactionSource,
                                     onValueChange = {
@@ -276,14 +279,16 @@ fun MusicWidget() {
             verticalAlignment = Alignment.CenterVertically,
 
             ) {
-            IconButton(
-                onClick = {
-                    viewModel.skipPrevious()
-                }) {
-                Icon(
-                    imageVector = Icons.Rounded.SkipPrevious,
-                    null
-                )
+            if (supportedActions.skipToPrevious) {
+                IconButton(
+                    onClick = {
+                        viewModel.skipPrevious()
+                    }) {
+                    Icon(
+                        imageVector = Icons.Rounded.SkipPrevious,
+                        null
+                    )
+                }
             }
             val playPauseIcon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
@@ -301,13 +306,15 @@ fun MusicWidget() {
                     contentDescription = null
                 )
             }
-            IconButton(onClick = {
-                viewModel.skipNext()
-            }) {
-                Icon(
-                    imageVector = Icons.Rounded.SkipNext,
-                    null
-                )
+            if (supportedActions.skipToNext) {
+                IconButton(onClick = {
+                    viewModel.skipNext()
+                }) {
+                    Icon(
+                        imageVector = Icons.Rounded.SkipNext,
+                        null
+                    )
+                }
             }
         }
     }
