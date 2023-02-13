@@ -10,12 +10,12 @@ import android.media.AudioManager
 import android.media.MediaMetadata
 import android.media.session.MediaController
 import android.media.session.MediaSession
+import android.media.session.PlaybackState.CustomAction
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
@@ -56,6 +56,8 @@ interface MusicService {
     val albumArt: Flow<Bitmap?>
     val position: Flow<Long?>
     val duration: Flow<Long?>
+
+    val supportedActions: Flow<SupportedActions>
 
     val lastPlayerPackage: String?
 
@@ -203,7 +205,12 @@ internal class MusicServiceImpl(
                 send(lastPosition)
                 return@collectLatest
             }
-            while(isActive) {
+            if (state.position < 0 || state.lastPositionUpdateTime == 0L) {
+                send(null)
+                lastPosition = null
+                return@collectLatest
+            }
+            while (isActive) {
                 val offset = SystemClock.elapsedRealtime() - state.lastPositionUpdateTime
                 val position = state.position + offset
                 lastPosition = position
@@ -356,7 +363,7 @@ internal class MusicServiceImpl(
     private var lastDuration: Long? = null
         get() {
             if (field == null) {
-                field = preferences.getLong(PREFS_KEY_DURATION, -1).takeIf { it >= 0 }
+                field = preferences.getLong(PREFS_KEY_DURATION, -1).takeIf { it > 0 }
             }
             return field
         }
@@ -373,12 +380,21 @@ internal class MusicServiceImpl(
                 send(lastDuration)
                 return@collectLatest
             }
-            val duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION)
+            val duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION).takeIf { it > 0 }
             lastDuration = duration
-            send(duration.takeIf { it >  0 })
+            send(duration)
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
+    override val supportedActions: Flow<SupportedActions> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null) {
+                send(SupportedActions())
+                return@collectLatest
+            }
+            send(SupportedActions(state.actions, state.customActions))
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
     private suspend fun loadBitmapFromUri(uri: Uri, size: Int): Bitmap? {
         try {
