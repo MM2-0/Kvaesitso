@@ -2,24 +2,41 @@ package de.mm20.launcher2.ui.launcher.widgets.music
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsDraggedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Audiotrack
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,15 +46,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.music.PlaybackState
@@ -56,8 +75,9 @@ fun MusicWidget() {
     val albumArt by viewModel.albumArt.observeAsState()
     val title by viewModel.title.observeAsState()
     val artist by viewModel.artist.observeAsState()
-    val album by viewModel.album.observeAsState()
     val playbackState by viewModel.playbackState.observeAsState()
+    val position by viewModel.position.observeAsState()
+    val duration by viewModel.duration.observeAsState()
 
     val context = LocalContext.current
 
@@ -74,7 +94,7 @@ fun MusicWidget() {
                 }
             )
         }
-        if (title == null && artist == null && album == null) {
+        if (title == null && artist == null) {
             NoData()
         } else {
             Row(
@@ -84,71 +104,109 @@ fun MusicWidget() {
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .fillMaxHeight()
-                        .weight(2f),
-                    verticalArrangement = Arrangement.SpaceBetween
+                        .weight(2f)
                 ) {
                     Column(
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 8.dp)
                     ) {
                         Text(
                             text = title ?: "",
+                            modifier = if (playbackState != PlaybackState.Playing) Modifier
+                            else Modifier.basicMarquee(iterations = Int.MAX_VALUE),
                             style = MaterialTheme.typography.titleMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                         Text(
                             text = artist ?: "",
-                            modifier = Modifier.padding(vertical = 4.dp),
-                            style = MaterialTheme.typography.bodySmall,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        Text(
-                            text = album ?: "",
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                                .then(
+                                    if (playbackState != PlaybackState.Playing) Modifier
+                                    else Modifier.basicMarquee(iterations = Int.MAX_VALUE)
+                                ),
                             style = MaterialTheme.typography.bodySmall,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 4.dp, end = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        IconButton(
-                            onClick = {
-                                viewModel.skipPrevious()
-                            }) {
-                            Icon(
-                                imageVector = Icons.Rounded.SkipPrevious,
-                                null
+                    Column {
+
+
+                        val dur = duration
+                        var pos by remember(position) { mutableStateOf(position) }
+
+                        val interactionSource = remember { MutableInteractionSource() }
+                        val isDragged by interactionSource.collectIsDraggedAsState()
+
+                        var seekPosition by remember { mutableStateOf<Float?>(null) }
+
+                        if (pos != null && dur != null && dur > 0) {
+                            if (playbackState != PlaybackState.Stopped) {
+                                Slider(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 8.dp)
+                                        .requiredHeightIn(max = 20.dp),
+                                    value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f ,
+                                    valueRange = 0f..dur.toFloat(),
+                                    interactionSource = interactionSource,
+                                    onValueChange = {
+                                        seekPosition = it
+                                    },
+                                    onValueChangeFinished = {
+                                        seekPosition?.let {
+                                            viewModel.seekTo(it.toLong())
+                                            pos = it.toLong()
+                                        }
+                                    },
+                                )
+                            } else {
+                                LinearProgressIndicator(
+                                    progress = (pos?.toFloat() ?: 0f) / dur.toFloat(),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 8.dp, horizontal = 16.dp),
+                                    strokeCap = StrokeCap.Round,
+                                )
+                            }
+                        } else {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 8.dp, horizontal = 16.dp)
+                                    .height(4.dp)
+                                    .clip(RoundedCornerShape(2.dp))
+                                    .background(MaterialTheme.colorScheme.surfaceVariant)
                             )
                         }
-                        val playPauseIcon =
-                            AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
-                        IconButton(onClick = { viewModel.togglePause() }) {
-                            Icon(
-                                painter = rememberAnimatedVectorPainter(
-                                    playPauseIcon,
-                                    atEnd = playbackState == PlaybackState.Playing
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp, start = 16.dp, end = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            Text(
+                                text = formatTimestamp(
+                                    if (isDragged) seekPosition?.toLong() else pos
                                 ),
-                                contentDescription = ""
+                                style = MaterialTheme.typography.labelSmall,
                             )
-                        }
-                        IconButton(onClick = {
-                            viewModel.skipNext()
-                        }) {
-                            Icon(
-                                imageVector = Icons.Rounded.SkipNext,
-                                null
+                            Text(
+                                text = formatTimestamp(duration),
+                                style = MaterialTheme.typography.labelSmall,
                             )
                         }
                     }
                 }
                 Box(
                     modifier = Modifier
-                        .size(144.dp)
+                        .padding(top = 16.dp, end = 16.dp)
+                        .size(96.dp)
+                        .clip(MaterialTheme.shapes.small)
                         .combinedClickable(
                             onClick = {
                                 viewModel.openPlayer()
@@ -160,7 +218,7 @@ fun MusicWidget() {
                         .conditional(
                             albumArt == null,
                             Modifier.background(
-                                MaterialTheme.colorScheme.primaryContainer,
+                                MaterialTheme.colorScheme.secondaryContainer,
                             )
                         ),
                     contentAlignment = Alignment.Center
@@ -183,24 +241,16 @@ fun MusicWidget() {
                                 if (
                                     it.componentName.packageName == viewModel.currentPlayerPackage &&
                                     bounds.right > 0f && bounds.left < windowSize.width &&
-                                        bounds.bottom > 0f && bounds.top < windowSize.height
+                                    bounds.bottom > 0f && bounds.top < windowSize.height
                                 ) {
                                     return@HandleHomeTransition HomeTransitionParams(
                                         bounds
                                     ) { _, _ ->
-                                        val shape = MaterialTheme.shapes.medium
+                                        val shape = MaterialTheme.shapes.small
                                         Image(
                                             bitmap = art.asImageBitmap(),
                                             modifier = Modifier
-                                                .size(144.dp)
-                                                .graphicsLayer {
-                                                   this.clip = true
-                                                   this.shape = shape.copy(
-                                                       topStart = CornerSize(0f),
-                                                       bottomStart = CornerSize(0f),
-                                                   )
-                                                }
-                                            ,
+                                                .size(96.dp),
                                             contentDescription = null,
                                             contentScale = ContentScale.Crop
                                         )
@@ -213,11 +263,53 @@ fun MusicWidget() {
                         Icon(
                             imageVector = Icons.Rounded.MusicNote,
                             contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier.size(56.dp)
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                            modifier = Modifier.size(48.dp)
                         )
                     }
                 }
+            }
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically,
+
+            ) {
+            IconButton(
+                onClick = {
+                    viewModel.skipPrevious()
+                }) {
+                Icon(
+                    imageVector = Icons.Rounded.SkipPrevious,
+                    null
+                )
+            }
+            val playPauseIcon =
+                AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
+            FilledTonalIconButton(
+                modifier = Modifier
+                    .size(40.dp),
+                onClick = { viewModel.togglePause() },
+                shape = MaterialTheme.shapes.extraSmall,
+            ) {
+                Icon(
+                    painter = rememberAnimatedVectorPainter(
+                        playPauseIcon,
+                        atEnd = playbackState == PlaybackState.Playing
+                    ),
+                    contentDescription = null
+                )
+            }
+            IconButton(onClick = {
+                viewModel.skipNext()
+            }) {
+                Icon(
+                    imageVector = Icons.Rounded.SkipNext,
+                    null
+                )
             }
         }
     }
@@ -244,4 +336,11 @@ fun NoData() {
             style = MaterialTheme.typography.bodySmall
         )
     }
+}
+
+private fun formatTimestamp(timestamp: Long?): String {
+    if (timestamp == null) return "--:--"
+    val minutes = timestamp / 1000 / 60
+    val seconds = timestamp / 1000 % 60
+    return String.format("%02d:%02d", minutes, seconds)
 }

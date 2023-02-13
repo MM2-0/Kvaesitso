@@ -21,9 +21,10 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
 
     val title: LiveData<String?> = musicService.title.asLiveData()
     val artist: LiveData<String?> = musicService.artist.asLiveData()
-    val album: LiveData<String?> = musicService.album.asLiveData()
     val albumArt: LiveData<Bitmap?> = musicService.albumArt.asLiveData()
     val playbackState: LiveData<PlaybackState> = musicService.playbackState.asLiveData()
+    val duration: LiveData<Long?> = musicService.duration.asLiveData()
+    val position: LiveData<Long?> = musicService.position.asLiveData()
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Notifications).asLiveData()
 
@@ -36,6 +37,10 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
 
     fun skipNext() {
         musicService.next()
+    }
+
+    fun seekTo(position: Long) {
+        musicService.seekTo(position)
     }
 
     fun togglePause() {
