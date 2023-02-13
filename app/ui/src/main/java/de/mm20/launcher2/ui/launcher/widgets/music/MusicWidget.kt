@@ -36,11 +36,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
-import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -56,8 +54,8 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.ui.R
@@ -72,20 +70,20 @@ fun MusicWidget() {
 
     val viewModel: MusicWidgetVM = viewModel()
 
-    val albumArt by viewModel.albumArt.observeAsState()
-    val title by viewModel.title.observeAsState()
-    val artist by viewModel.artist.observeAsState()
-    val playbackState by viewModel.playbackState.observeAsState()
-    val position by viewModel.position.observeAsState()
-    val duration by viewModel.duration.observeAsState()
+    val albumArt by viewModel.albumArt.collectAsStateWithLifecycle(null)
+    val title by viewModel.title.collectAsStateWithLifecycle(null)
+    val artist by viewModel.artist.collectAsStateWithLifecycle(null)
+    val playbackState by viewModel.playbackState.collectAsStateWithLifecycle(PlaybackState.Stopped)
+    val position by viewModel.position.collectAsStateWithLifecycle(null)
+    val duration by viewModel.duration.collectAsStateWithLifecycle(null)
 
     val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        val hasPermission by viewModel.hasPermission.observeAsState()
-        AnimatedVisibility(hasPermission == false) {
+        val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(true)
+        AnimatedVisibility(!hasPermission) {
             MissingPermissionBanner(
                 modifier = Modifier.padding(16.dp),
                 text = stringResource(R.string.missing_permission_music_widget),
