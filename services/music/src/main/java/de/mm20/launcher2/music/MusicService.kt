@@ -13,7 +13,9 @@ import android.media.session.MediaSession
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
@@ -28,6 +30,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,6 +41,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -50,6 +54,7 @@ interface MusicService {
     val artist: Flow<String?>
     val album: Flow<String?>
     val albumArt: Flow<Bitmap?>
+    val position: Flow<Long?>
     val duration: Flow<Long?>
 
     val lastPlayerPackage: String?
@@ -141,26 +146,17 @@ internal class MusicServiceImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
-    override val playbackState: SharedFlow<PlaybackState> = channelFlow {
+    private val currentState: SharedFlow<android.media.session.PlaybackState?> = channelFlow {
         currentMediaController.collectLatest { controller ->
-            if (controller == null) return@collectLatest send(PlaybackState.Stopped)
-            send(
-                when (controller.playbackState?.state) {
-                    android.media.session.PlaybackState.STATE_PLAYING -> PlaybackState.Playing
-                    android.media.session.PlaybackState.STATE_PAUSED -> PlaybackState.Paused
-                    else -> PlaybackState.Stopped
-                }
-            )
+            if (controller == null) {
+                send(null)
+                return@collectLatest
+            }
+            send(controller.playbackState)
             val callback = object : MediaController.Callback() {
                 override fun onPlaybackStateChanged(state: android.media.session.PlaybackState?) {
                     super.onPlaybackStateChanged(state)
-                    trySend(
-                        when (state?.state) {
-                            android.media.session.PlaybackState.STATE_PLAYING -> PlaybackState.Playing
-                            android.media.session.PlaybackState.STATE_PAUSED -> PlaybackState.Paused
-                            else -> PlaybackState.Stopped
-                        }
-                    )
+                    trySend(state)
                 }
             }
             try {
@@ -168,6 +164,51 @@ internal class MusicServiceImpl(
                 awaitCancellation()
             } finally {
                 controller.unregisterCallback(callback)
+            }
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+    override val playbackState: SharedFlow<PlaybackState> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null) {
+                send(PlaybackState.Stopped)
+                return@collectLatest
+            }
+            when (state.state) {
+                android.media.session.PlaybackState.STATE_PLAYING -> send(PlaybackState.Playing)
+                android.media.session.PlaybackState.STATE_PAUSED -> send(PlaybackState.Paused)
+                android.media.session.PlaybackState.STATE_STOPPED -> send(PlaybackState.Stopped)
+                else -> send(PlaybackState.Stopped)
+            }
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+    private var lastPosition: Long? = null
+        get() {
+            if (field == null) {
+                field = preferences.getLong(PREFS_KEY_POSITION, -1).takeIf { it >= 0 }
+            }
+            return field
+        }
+        set(value) {
+            preferences.edit {
+                putLong(PREFS_KEY_POSITION, value ?: -1)
+            }
+            field = value
+        }
+
+    override val position: SharedFlow<Long?> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null || state.state != android.media.session.PlaybackState.STATE_PLAYING) {
+                send(lastPosition)
+                return@collectLatest
+            }
+            while(isActive) {
+                val offset = SystemClock.elapsedRealtime() - state.lastPositionUpdateTime
+                val position = state.position + offset
+                lastPosition = position
+                send(position)
+                delay(1000)
             }
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
@@ -312,13 +353,28 @@ internal class MusicServiceImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
+    private var lastDuration: Long? = null
+        get() {
+            if (field == null) {
+                field = preferences.getLong(PREFS_KEY_DURATION, -1).takeIf { it >= 0 }
+            }
+            return field
+        }
+        set(value) {
+            preferences.edit {
+                putLong(PREFS_KEY_DURATION, value ?: -1)
+            }
+            field = value
+        }
+
     override val duration: Flow<Long?> = channelFlow {
         currentMetadata.collectLatest { metadata ->
             if (metadata == null) {
-                send(null)
+                send(lastDuration)
                 return@collectLatest
             }
             val duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION)
+            lastDuration = duration
             send(duration.takeIf { it >  0 })
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
@@ -511,6 +567,8 @@ internal class MusicServiceImpl(
 
         private const val PREFS = "music"
         private const val PREFS_KEY_TITLE = "title"
+        private const val PREFS_KEY_DURATION = "duration"
+        private const val PREFS_KEY_POSITION = "position"
         private const val PREFS_KEY_ARTIST = "artist"
         private const val PREFS_KEY_ALBUM = "album"
         private const val PREFS_KEY_ALBUM_ART = "album_art"
