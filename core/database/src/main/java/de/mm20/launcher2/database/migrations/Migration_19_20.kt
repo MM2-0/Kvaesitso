@@ -12,11 +12,11 @@ class Migration_19_20: Migration(19, 20) {
                 `componentName` TEXT,
                 `drawable` TEXT,
                 `iconPack` TEXT NOT NULL,
-                `themed` INTEGER NOT NULL,
                 `name` TEXT,
                 `id` INTEGER PRIMARY KEY AUTOINCREMENT)
             """)
-        database.execSQL("INSERT INTO `Icons` (`type`, `componentName`, `drawable`, `iconPack`, `themed`, `name`) SELECT `type`, `componentName`, `drawable`, `iconPack`, 0, null FROM `Icons_old`")
+        database.execSQL("INSERT INTO `Icons` (`type`, `componentName`, `drawable`, `iconPack`, `themed`, `name`) SELECT `type`, `componentName`, `drawable`, `iconPack`, null FROM `Icons_old`")
         database.execSQL("DROP TABLE `Icons_old`")
+        database.execSQL("ALTER TABLE `IconPacks` ADD COLUMN `themed` INTEGER NOT NULL DEFAULT 0")
     }
 }

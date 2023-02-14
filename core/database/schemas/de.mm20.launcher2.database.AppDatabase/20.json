@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 20,
-    "identityHash": "c7974043c131f664d2e80126533340b4",
+    "identityHash": "0e23c747bfe32759849ee85dcd5d23cb",
     "entities": [
       {
         "tableName": "forecasts",
@@ -222,7 +222,7 @@
       },
       {
         "tableName": "Icons",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `componentName` TEXT, `drawable` TEXT, `iconPack` TEXT NOT NULL, `themed` INTEGER NOT NULL, `name` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `componentName` TEXT, `drawable` TEXT, `iconPack` TEXT NOT NULL, `name` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "type",
@@ -249,12 +249,6 @@
             "notNull": true
           },
           {
-            "fieldPath": "themed",
-            "columnName": "themed",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
             "fieldPath": "name",
             "columnName": "name",
             "affinity": "TEXT",
@@ -278,7 +272,7 @@
       },
       {
         "tableName": "IconPack",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `packageName` TEXT NOT NULL, `version` TEXT NOT NULL, `scale` REAL NOT NULL, PRIMARY KEY(`packageName`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name` TEXT NOT NULL, `packageName` TEXT NOT NULL, `version` TEXT NOT NULL, `scale` REAL NOT NULL, `themed` INTEGER NOT NULL, PRIMARY KEY(`packageName`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -302,6 +296,12 @@
             "fieldPath": "scale",
             "columnName": "scale",
             "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "themed",
+            "columnName": "themed",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -468,7 +468,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c7974043c131f664d2e80126533340b4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e23c747bfe32759849ee85dcd5d23cb')"
     ]
   }
 }
