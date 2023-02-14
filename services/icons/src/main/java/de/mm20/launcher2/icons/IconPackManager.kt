@@ -394,7 +394,12 @@ class IconPackManager(
 
     suspend fun searchIconPackIcon(query: String): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
-        return iconDao.searchIconPackIcons("%$query%").map {
+        val drawableQuery = query.replace(" ", "_").lowercase()
+        return iconDao.searchIconPackIcons(
+            drawableQuery = "%$drawableQuery%",
+            componentQuery = "%$query%",
+            nameQuery = "%$query%",
+        ).map {
             IconPackIcon(it)
         }
     }
@@ -529,10 +534,14 @@ class UpdateIconPacksWorker(val context: Context) {
                                 )
                             )
                                 ?: continue@loop
+
+                            val name = parser.getAttributeValue(null, "name")
+
                             val icon = IconPackIcon(
                                 componentName = componentName,
                                 drawable = drawable,
                                 iconPack = pkgName,
+                                name = name,
                                 type = "app"
                             )
                             icons.add(icon)
@@ -551,11 +560,14 @@ class UpdateIconPacksWorker(val context: Context) {
                             )
                                 ?: continue@loop
 
+                            val name = parser.getAttributeValue(null, "name")
+
                             val icon = IconPackIcon(
                                 componentName = componentName,
                                 drawable = drawable,
                                 iconPack = pkgName,
-                                type = "calendar"
+                                type = "calendar",
+                                name = name,
                             )
                             icons.add(icon)
                         }
