@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
@@ -53,6 +54,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
         val title by musicService.title.collectAsState(null)
         val artist by musicService.artist.collectAsState(null)
         val state by musicService.playbackState.collectAsState(PlaybackState.Stopped)
+        val supportedActions by musicService.supportedActions.collectAsState(SupportedActions())
 
         val playIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
 
@@ -101,11 +103,13 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         ), contentDescription = null
                     )
                 }
-                IconButton(onClick = { musicService.next() }) {
-                    Icon(
-                        imageVector = Icons.Rounded.SkipNext,
-                        contentDescription = null
-                    )
+                if (supportedActions.skipToNext) {
+                    IconButton(onClick = { musicService.next() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.SkipNext,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }
@@ -149,11 +153,13 @@ class MusicPartProvider : PartProvider, KoinComponent {
                     }
                 }
                 Row {
-                    IconButton(onClick = { musicService.previous() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
-                            contentDescription = null
-                        )
+                    if (supportedActions.skipToPrevious) {
+                        IconButton(onClick = { musicService.previous() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipPrevious,
+                                contentDescription = null
+                            )
+                        }
                     }
                     IconButton(onClick = { musicService.togglePause() }) {
                         Icon(
@@ -163,11 +169,13 @@ class MusicPartProvider : PartProvider, KoinComponent {
                             ), contentDescription = null
                         )
                     }
-                    IconButton(onClick = { musicService.next() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipNext,
-                            contentDescription = null
-                        )
+                    if (supportedActions.skipToPrevious) {
+                        IconButton(onClick = { musicService.next() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipNext,
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }
