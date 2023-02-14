@@ -51,6 +51,9 @@ interface IconDao {
     @Query("SELECT * FROM IconPack")
     suspend fun getInstalledIconPacks(): List<IconPackEntity>
 
+    @Query("SELECT * FROM IconPack WHERE packageName = :packageName LIMIT 1")
+    suspend fun getIconPack(packageName: String): IconPackEntity?
+
     @Query("SELECT * FROM IconPack")
     fun getInstalledIconPacksLiveData(): LiveData<List<IconPackEntity>>
 

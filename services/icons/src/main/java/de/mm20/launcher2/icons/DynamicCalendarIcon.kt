@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -33,36 +34,59 @@ internal class DynamicCalendarIcon(
             backgroundLayer = ColorLayer()
         )
 
-        var icon = if (isThemed) {
-            StaticLauncherIcon(
-                foregroundLayer = TintedIconLayer(
+        var icon = when {
+            isThemed && drawable is AdaptiveIconDrawable -> {
+                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
+                    return@withContext StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.monochrome!!,
+                            scale = 1f,
+                        ),
+                        backgroundLayer = ColorLayer()
+                    )
+                } else {
+                    return@withContext StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.foreground!!,
+                            scale = 1.5f,
+                        ),
+                        backgroundLayer = ColorLayer()
+                    )
+                }
+            }
+            isThemed -> {
+                StaticLauncherIcon(
+                    foregroundLayer = TintedIconLayer(
+                        icon = drawable,
+                        scale = 0.5f,
+                    ),
+                    backgroundLayer = ColorLayer()
+                )
+            }
+            drawable is AdaptiveIconDrawable -> {
+                return@withContext StaticLauncherIcon(
+                    foregroundLayer = drawable.foreground?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                    backgroundLayer = drawable.background?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                )
+            }
+            else -> StaticLauncherIcon(
+                foregroundLayer = StaticIconLayer(
                     icon = drawable,
-                    scale = 0.5f,
+                    scale = 1f,
                 ),
-                backgroundLayer = ColorLayer()
+                backgroundLayer = TransparentLayer
             )
-        } else if (drawable is AdaptiveIconDrawable) {
-            return@withContext StaticLauncherIcon(
-                foregroundLayer = drawable.foreground?.let {
-                    StaticIconLayer(
-                        icon = it,
-                        scale = 1.5f,
-                    )
-                } ?: TransparentLayer,
-                backgroundLayer = drawable.background?.let {
-                    StaticIconLayer(
-                        icon = it,
-                        scale = 1.5f,
-                    )
-                } ?: TransparentLayer,
-            )
-        } else StaticLauncherIcon(
-            foregroundLayer = StaticIconLayer(
-                icon = drawable,
-                scale = 1f,
-            ),
-            backgroundLayer = TransparentLayer
-        )
+        }
 
         for (transformation in transformations) {
             icon = transformation.transform(icon)

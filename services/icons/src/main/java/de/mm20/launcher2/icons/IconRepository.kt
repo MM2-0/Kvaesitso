@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.util.Log
 import android.util.LruCache
 import de.mm20.launcher2.data.customattrs.AdaptifiedLegacyIcon
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
@@ -94,13 +95,18 @@ class IconRepository(
                 }
 
                 if (settings.iconPack.isNotBlank()) {
-                    providers.add(
-                        IconPackIconProvider(
-                            context,
-                            settings.iconPack,
-                            iconPackManager
+                    val pack = iconPackManager.getIconPack(settings.iconPack)
+                    if (pack != null) {
+                        providers.add(
+                            IconPackIconProvider(
+                                context,
+                                pack,
+                                iconPackManager
+                            )
                         )
-                    )
+                    } else {
+                        Log.w("MM20", "Icon pack ${settings.iconPack} not found")
+                    }
                 }
                 providers.add(GoogleClockIconProvider(context))
                 providers.add(CalendarIconProvider(context))

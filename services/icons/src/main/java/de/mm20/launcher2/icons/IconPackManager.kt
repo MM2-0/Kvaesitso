@@ -14,6 +14,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
@@ -46,13 +47,21 @@ class IconPackManager(
         }
     }
 
+    suspend fun getIconPack(packageName: String): IconPack? {
+        return withContext(Dispatchers.IO) {
+            appDatabase.iconDao().getIconPack(packageName)?.let {
+                IconPack(it)
+            }
+        }
+    }
+
     suspend fun updateIconPacks() {
         withContext(Dispatchers.IO) {
             UpdateIconPacksWorker(context).doWork()
         }
     }
 
-    suspend fun getIcon(iconPack: String, componentName: ComponentName): LauncherIcon? {
+    suspend fun getIcon(iconPack: String, componentName: ComponentName, themed: Boolean = false): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -66,7 +75,7 @@ class IconPackManager(
         val drawableName = icon.drawable ?: return null
 
         if (icon.type == "calendar") {
-            return getIconPackCalendarIcon(context, iconPack, drawableName)
+            return getIconPackCalendarIcon(context, iconPack, drawableName, themed)
         }
         val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
             ?: return null
@@ -75,8 +84,27 @@ class IconPackManager(
         } catch (e: Resources.NotFoundException) {
             return null
         }
-        return when (drawable) {
-            is AdaptiveIconDrawable -> {
+        return when {
+            themed && drawable is AdaptiveIconDrawable -> {
+                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
+                    return StaticLauncherIcon(
+                        foregroundLayer = StaticIconLayer(
+                            icon = drawable.monochrome!!,
+                            scale = 1f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                } else {
+                    return StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.foreground,
+                            scale = 1.5f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                }
+            }
+            drawable is AdaptiveIconDrawable -> {
                 return StaticLauncherIcon(
                     foregroundLayer = drawable.foreground?.let {
                         StaticIconLayer(
@@ -237,7 +265,8 @@ class IconPackManager(
     private fun getIconPackCalendarIcon(
         context: Context,
         iconPack: String,
-        baseIconName: String
+        baseIconName: String,
+        themed: Boolean,
     ): DynamicCalendarIcon? {
         val resources = try {
             context.packageManager.getResourcesForApplication(iconPack)
@@ -252,7 +281,8 @@ class IconPackManager(
         }.toIntArray()
         return DynamicCalendarIcon(
             resources = resources,
-            resourceIds = drawableIds
+            resourceIds = drawableIds,
+            isThemed = themed,
         )
     }
 
@@ -417,23 +447,16 @@ class IconPackManager(
 class UpdateIconPacksWorker(val context: Context) {
 
     fun doWork() {
-        val packs = loadInstalledPacks(context).map { it.activityInfo.packageName }
+        val packs = loadInstalledPacks(context)
         val grayscaleProviders = loadInstalledGreyscaleProviders(context)
         val iconDao = AppDatabase.getInstance(context).iconDao()
         iconDao.uninstallIconPacksExcept(
-            packs.union(grayscaleProviders).toList()
+            packs.map { it.packageName }.union(grayscaleProviders).toList()
         )
 
         for (pack in packs) {
             try {
-                val packInfo = context.packageManager.getPackageInfo(pack, 0)
-                val iconPack = IconPack(
-                    name = packInfo.applicationInfo.loadLabel(context.packageManager).toString(),
-                    packageName = pack,
-                    version = packInfo.versionName
-                )
-                //if (iconDao.isInstalled(iconPack)) continue
-                installIconPack(iconPack)
+                installIconPack(pack)
             } catch (e: PackageManager.NameNotFoundException) {
                 continue
             }
@@ -455,21 +478,19 @@ class UpdateIconPacksWorker(val context: Context) {
         }
     }
 
-    private fun loadInstalledPacks(context: Context): List<ResolveInfo> {
-        val packs = mutableListOf<ResolveInfo>()
+    private fun loadInstalledPacks(context: Context): List<IconPack> {
+        val packs = mutableListOf<IconPack>()
         val pm = context.packageManager
-        var intent = Intent("org.adw.ActivityStarter.THEMES")
+        var intent = Intent("app.lawnchair.icons.THEMED_ICON")
+        val themedPacks = pm.queryIntentActivities(intent, 0)
+        packs.addAll(themedPacks.map { IconPack(context, it, true) })
+        intent = Intent("org.adw.ActivityStarter.THEMES")
         val adwPacks = pm.queryIntentActivities(intent, 0)
-        packs.addAll(adwPacks)
+        packs.addAll(adwPacks.map { IconPack(context, it, false) })
         intent = Intent("com.novalauncher.THEME")
         val novaPacks = pm.queryIntentActivities(intent, 0)
-        novaPacks.forEach {
-            if (packs.none { p -> p.activityInfo.packageName == it.activityInfo.packageName }) packs.add(
-                it
-            )
-        }
-        packs.sortWith(ResolveInfo.DisplayNameComparator(pm))
-        return packs
+        packs.addAll(novaPacks.map { IconPack(context, it, false) })
+        return packs.distinctBy { it.packageName }
     }
 
     private fun installIconPack(iconPack: IconPack) {
