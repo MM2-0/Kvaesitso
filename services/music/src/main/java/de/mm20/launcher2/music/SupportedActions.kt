@@ -2,6 +2,8 @@ package de.mm20.launcher2.music
 
 import android.media.session.PlaybackState
 import android.media.session.PlaybackState.CustomAction
+import android.os.Bundle
+import android.util.Log
 
 data class SupportedActions(
     val stop: Boolean = false,
@@ -24,5 +26,14 @@ data class SupportedActions(
         setPlaybackSpeed = actions?.and(PlaybackState.ACTION_SET_PLAYBACK_SPEED) == PlaybackState.ACTION_SET_PLAYBACK_SPEED,
         setRating = actions?.and(PlaybackState.ACTION_SET_RATING) == PlaybackState.ACTION_SET_RATING,
         customActions = customActions ?: emptyList(),
-    )
+    ) {
+        for (action in customActions ?: emptyList()) {
+            Log.d("MM20", action.action.toString())
+            val extras = action.extras ?: Bundle.EMPTY
+            val keySet = extras.keySet()
+            for (key in keySet) {
+                Log.d("MM20", "$key: ${extras.get(key)}")
+            }
+        }
+    }
 }

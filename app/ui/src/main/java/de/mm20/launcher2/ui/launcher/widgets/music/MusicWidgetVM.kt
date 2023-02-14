@@ -66,6 +66,10 @@ class MusicWidgetVM: ViewModel(), KoinComponent {
         musicService.openPlayerChooser(context)
     }
 
+    fun performCustomAction(action: CustomAction) {
+        musicService.performCustomAction(action)
+    }
+
     fun requestPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Notifications)
     }

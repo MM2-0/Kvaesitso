@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.music
 
+import android.content.res.Resources
+import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.graphics.res.animatedVectorResource
@@ -27,14 +29,18 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Audiotrack
+import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.SkipNext
 import androidx.compose.material.icons.rounded.SkipPrevious
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,8 +61,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.ui.R
@@ -65,6 +74,7 @@ import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import kotlin.math.min
 
 @Composable
 fun MusicWidget() {
@@ -251,7 +261,8 @@ fun MusicWidget() {
                                         Image(
                                             bitmap = art.asImageBitmap(),
                                             modifier = Modifier
-                                                .size(96.dp),
+                                                .size(96.dp)
+                                                .clip(shape),
                                             contentDescription = null,
                                             contentScale = ContentScale.Crop
                                         )
@@ -316,8 +327,120 @@ fun MusicWidget() {
                     )
                 }
             }
+            CustomActions(
+                actions = supportedActions,
+                onActionSelected = {
+                    viewModel.performCustomAction(it)
+                },
+                playerPackage = viewModel.currentPlayerPackage,
+            )
         }
     }
+}
+
+@Composable
+fun CustomActions(
+    actions: SupportedActions,
+    onActionSelected: (CustomAction) -> Unit,
+    playerPackage: String?
+) {
+    val usedSlots = 1 + (if (actions.skipToPrevious) 1 else 0) + (if (actions.skipToNext) 1 else 0)
+    val slots = 5 - usedSlots
+
+    for (i in 0 until min(actions.customActions.size, slots - 1)) {
+        val action = actions.customActions[i]
+        PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
+            IconButton(
+                modifier = Modifier.tooltipAnchor(),
+                onClick = {
+                    onActionSelected(action)
+                }
+            ) {
+                CustomActionIcon(action, playerPackage)
+            }
+        }
+    }
+    if (slots < actions.customActions.size) {
+        var showOverflowMenu by remember { mutableStateOf(false) }
+        Box {
+            IconButton(onClick = { showOverflowMenu = true }) {
+                Icon(imageVector = Icons.Rounded.MoreVert, contentDescription = null)
+            }
+            DropdownMenu(
+                expanded = showOverflowMenu,
+                onDismissRequest = { showOverflowMenu = false },
+            ) {
+                for (i in slots - 1 until actions.customActions.size) {
+                    val action = actions.customActions[i]
+                    DropdownMenuItem(
+                        leadingIcon = {
+                            CustomActionIcon(action, playerPackage)
+                        },
+                        text = {
+                            Text(
+                                text = action.name.toString(),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                        },
+                        onClick = {
+                            showOverflowMenu = false
+                            onActionSelected(action)
+                        }
+                    )
+                }
+            }
+        }
+    } else if (slots == actions.customActions.size) {
+        val action = actions.customActions.last()
+        PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
+            IconButton(
+                modifier = Modifier.tooltipAnchor(),
+                onClick = {
+                    onActionSelected(action)
+                }
+            ) {
+                CustomActionIcon(action, playerPackage)
+            }
+        }
+    }
+}
+
+@Composable
+fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
+    val context = LocalContext.current
+    val resources = remember(playerPackage) {
+        playerPackage?.let {
+            context.packageManager.getResourcesForApplication(it)
+        }
+    }
+
+    val drawable = remember(action, resources) {
+        if (resources != null) {
+            try {
+                ResourcesCompat.getDrawable(
+                    resources, action.icon, null
+                )
+            } catch (e: Resources.NotFoundException) {
+                null
+            }
+        } else {
+            null
+        }
+    }
+
+    val painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(context)
+            .data(drawable)
+            .crossfade(false)
+            .placeholder(drawable)
+            .build(),
+    )
+    Icon(
+        modifier = Modifier.size(24.dp),
+        painter = painter,
+        contentDescription = null,
+    )
 }
 
 @Composable

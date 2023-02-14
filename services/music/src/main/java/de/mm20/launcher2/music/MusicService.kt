@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadata
+import android.media.Rating
 import android.media.session.MediaController
 import android.media.session.MediaSession
 import android.media.session.PlaybackState.CustomAction
@@ -67,6 +68,7 @@ interface MusicService {
     fun play()
     fun togglePause()
     fun seekTo(position: Long)
+    fun performCustomAction(action: CustomAction)
     fun openPlayer(): PendingIntent?
 
     fun openPlayerChooser(context: Context)
@@ -550,6 +552,13 @@ internal class MusicServiceImpl(
                 null
             )
         )
+    }
+
+    override fun performCustomAction(action: CustomAction) {
+        scope.launch {
+            val controller = currentMediaController.firstOrNull()
+            controller?.transportControls?.sendCustomAction(action.action, action.extras)
+        }
     }
 
     private fun getMusicApps(): Set<String> {
