@@ -17,11 +17,13 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -399,19 +401,23 @@ internal class MusicServiceImpl(
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
     private suspend fun loadBitmapFromUri(uri: Uri, size: Int): Bitmap? {
+        var bitmap: Bitmap? = null
         try {
             val request = ImageRequest.Builder(context)
                 .data(uri)
                 .size(size)
                 .scale(Scale.FILL)
+                .target {
+                    bitmap = it.toBitmap()
+                }
                 .build()
-            context.imageLoader.execute(request).drawable?.toBitmap()
+            val result = context.imageLoader.execute(request)
         } catch (e: IOException) {
             CrashReporter.logException(e)
         } catch (e: SecurityException) {
             CrashReporter.logException(e)
         }
-        return null
+        return bitmap
     }
 
     private suspend fun resize(bitmap: Bitmap, size: Int): Bitmap? {
