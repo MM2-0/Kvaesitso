@@ -16,11 +16,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyListLayoutInfo
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
@@ -40,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
@@ -61,6 +63,7 @@ import de.mm20.launcher2.weather.Forecast
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable
@@ -333,18 +336,24 @@ fun WeatherTimeSelector(
 ) {
     val dateFormat = remember { DateFormat.getTimeInstance(DateFormat.SHORT) }
 
+    val listState = rememberLazyListState()
     LazyRow(
+        state = listState,
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        itemsIndexed(forecasts) { idx, fc ->
-            val alpha = if (fc == selectedForecast) 0.2f else 0.0f
+        itemsIndexed(forecasts, key = { idx, _ -> idx }) { idx, fc ->
+            val backgroundAlpha = if (fc == selectedForecast) 0.2f else 0.0f
             Surface(
                 shape = MaterialTheme.shapes.extraSmall,
-                modifier = Modifier.widthIn(min = 56.dp),
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha)
+                modifier = Modifier
+                    .widthIn(min = 56.dp)
+                    .graphicsLayer {
+                        alpha = listState.layoutInfo.blendIntoViewAlpha(idx, 2f)
+                    },
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
             ) {
                 Column(
                     modifier = Modifier
@@ -376,7 +385,6 @@ fun WeatherTimeSelector(
     }
 }
 
-
 @Composable
 fun WeatherDaySelector(
     modifier: Modifier = Modifier,
@@ -387,18 +395,23 @@ fun WeatherDaySelector(
 ) {
     val dateFormat = SimpleDateFormat("EEE")
 
+    val listState = rememberLazyListState()
     LazyRow(
+        state = listState,
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         contentPadding = PaddingValues(start = 16.dp, end = 16.dp),
     ) {
-        itemsIndexed(days) { idx, day ->
-            val alpha = if (day == selectedDay) 0.2f else 0.0f
+        itemsIndexed(days, key = { idx, _ -> idx }) { idx, day ->
+            val backgroundAlpha = if (day == selectedDay) 0.2f else 0.0f
 
             Surface(
+                modifier = Modifier.graphicsLayer {
+                    alpha = listState.layoutInfo.blendIntoViewAlpha(idx, 0.5f)
+                },
                 shape = MaterialTheme.shapes.extraSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha)
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
             ) {
                 Row(
                     modifier = Modifier
@@ -429,6 +442,25 @@ fun WeatherDaySelector(
         }
     }
 }
+
+private fun LazyListLayoutInfo.blendIntoViewAlpha(key: Any, degree: Float = 1f): Float =
+    visibleItemsInfo.firstOrNull { it.key == key }?.let {
+
+        val itemStart = it.offset
+        val itemEnd = it.offset + it.size
+
+        val atLeftEnd = itemStart < viewportStartOffset
+        val atRightEnd = itemEnd > viewportEndOffset
+
+        if (!atLeftEnd && !atRightEnd) {
+            return 1f
+        }
+
+        val alpha = 1f - (if (atLeftEnd) viewportStartOffset - itemStart else itemEnd - viewportEndOffset) / it.size.toFloat()
+
+        if (degree != 1f) alpha.pow(degree) else alpha
+
+    } ?: 1f
 
 private fun formatTime(context: Context, timestamp: Long): String {
     return DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
