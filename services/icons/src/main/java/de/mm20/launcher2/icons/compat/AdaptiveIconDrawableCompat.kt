@@ -62,8 +62,6 @@ data class AdaptiveIconDrawableCompat(
                 val attrs = Xml.asAttributeSet(xmlParser)
                 if (!xmlParser.skipToNextTag()) return null
 
-                Log.d("MM20", "xmlParser.name: ${xmlParser.name}")
-
                 if (xmlParser.name != "adaptive-icon") {
                     return null
                 }
@@ -87,10 +85,6 @@ data class AdaptiveIconDrawableCompat(
                         }
                     }
                 }
-                Log.d(
-                    "MM20",
-                    "background: $background, foreground: $foreground, monochrome: $monochrome"
-                )
                 if (foreground != null && background != null) {
                     return AdaptiveIconDrawableCompat(
                         background = background,
