@@ -8,10 +8,13 @@ import android.graphics.drawable.LayerDrawable
 import android.graphics.drawable.RotateDrawable
 import androidx.core.content.res.ResourcesCompat
 import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
+import de.mm20.launcher2.icons.compat.ClockIconConfig
+import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
 
-class GoogleClockIconProvider(val context: Context) : IconProvider {
+class GoogleClockIconProvider(val context: Context, private val themed: Boolean) : IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
         if (searchable.`package` != "com.google.android.deskclock") return null
@@ -24,22 +27,15 @@ class GoogleClockIconProvider(val context: Context) : IconProvider {
         } catch (e: PackageManager.NameNotFoundException) {
             return null
         }
-        val drawable =
+        val drawableId =
             appInfo.metaData.getInt("com.android.launcher3.LEVEL_PER_TICK_ICON_ROUND")
-        val resources = pm.getResourcesForApplication(appInfo)
-        val baseIcon = try {
-            ResourcesCompat.getDrawable(resources, drawable, null) as? AdaptiveIconDrawable
-                ?: return null
-        } catch (e: Resources.NotFoundException) {
+        val resources = try {
+            pm.getResourcesForApplication(appInfo)
+        } catch (e: PackageManager.NameNotFoundException) {
             return null
         }
-        val foreground = baseIcon.foreground as? LayerDrawable ?: return null
-        val hourLayer =
-            appInfo.metaData.getInt("com.android.launcher3.HOUR_LAYER_INDEX")
-        val minuteLayer =
-            appInfo.metaData.getInt("com.android.launcher3.MINUTE_LAYER_INDEX")
-        val secondLayer =
-            appInfo.metaData.getInt("com.android.launcher3.SECOND_LAYER_INDEX")
+
+        val icon = AdaptiveIconDrawableCompat.from(resources, drawableId) ?: return null
 
         val defaultHour =
             appInfo.metaData.getInt("com.android.launcher3.DEFAULT_HOUR")
@@ -48,40 +44,37 @@ class GoogleClockIconProvider(val context: Context) : IconProvider {
         val defaultSecond =
             appInfo.metaData.getInt("com.android.launcher3.DEFAULT_SECOND")
 
-        return StaticLauncherIcon(
-            foregroundLayer = ClockLayer(
-                sublayers = (0 until foreground.numberOfLayers).map {
-                    val drw = foreground.getDrawable(it)
-                    if (drw is RotateDrawable) {
-                        drw.level = when (it) {
-                            hourLayer -> {
-                                (12 - defaultHour) * 60
-                            }
-                            minuteLayer -> {
-                                (60 - defaultMinute)
-                            }
-                            secondLayer -> {
-                                (60 - defaultSecond) * 10
-                            }
-                            else -> 0
-                        }
-                    }
-                    ClockSublayer(
-                        drawable = drw,
-                        role = when (it) {
-                            hourLayer -> ClockSublayerRole.Hour
-                            minuteLayer -> ClockSublayerRole.Minute
-                            secondLayer -> ClockSublayerRole.Second
-                            else -> ClockSublayerRole.Static
-                        }
-                    )
-                },
-                scale = 1.5f,
-            ),
-            backgroundLayer = StaticIconLayer(
-                icon = baseIcon.background,
-                scale = 1.5f,
+        // Workaround for Google Clock themed icon because it is weird and I don't understand
+        // how to get the correct layers from the drawable without hardcoding them here.
+        val clockConfig = if (themed && searchable.`package` == "com.google.android.deskclock") {
+            ClockIconConfig(
+                hourLayer = 0,
+                minuteLayer = 1,
+                secondLayer = -1,
+                defaultHour = defaultHour,
+                defaultMinute = defaultMinute,
+                defaultSecond = defaultSecond
             )
+        } else {
+            val hourLayer =
+                appInfo.metaData.getInt("com.android.launcher3.HOUR_LAYER_INDEX", -1)
+            val minuteLayer =
+                appInfo.metaData.getInt("com.android.launcher3.MINUTE_LAYER_INDEX", -1)
+            val secondLayer =
+                appInfo.metaData.getInt("com.android.launcher3.SECOND_LAYER_INDEX", -1)
+            ClockIconConfig(
+                hourLayer = hourLayer,
+                minuteLayer = minuteLayer,
+                secondLayer = secondLayer,
+                defaultHour = defaultHour,
+                defaultMinute = defaultMinute,
+                defaultSecond = defaultSecond
+            )
+        }
+
+        return icon.toLauncherIcon(
+            themed = themed,
+            clock = clockConfig
         )
     }
 }

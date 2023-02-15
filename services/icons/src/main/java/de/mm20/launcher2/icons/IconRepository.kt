@@ -109,7 +109,7 @@ class IconRepository(
                 if (settings.themedIcons) {
                     providers.add(ThemedIconProvider(iconPackManager))
                 }
-                providers.add(GoogleClockIconProvider(context))
+                providers.add(GoogleClockIconProvider(context, settings.themedIcons))
                 providers.add(CalendarIconProvider(context, settings.themedIcons))
                 if (!isAtLeastApiLevel(33)) {
                     providers.add(CompatIconProvider(context, settings.themedIcons))
