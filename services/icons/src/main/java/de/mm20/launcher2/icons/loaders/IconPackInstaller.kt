@@ -148,6 +148,7 @@ class IconPackInstaller(
                                 drawable = drawable,
                                 iconPack = pkgName,
                                 type = "calendar",
+                                themed = iconPack.themed,
                                 name = name,
                             )
                             icons.add(icon)
