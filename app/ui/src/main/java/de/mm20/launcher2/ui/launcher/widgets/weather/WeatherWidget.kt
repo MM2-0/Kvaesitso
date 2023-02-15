@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyListLayoutInfo
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -58,12 +57,12 @@ import de.mm20.launcher2.ui.component.weather.AnimatedWeatherIcon
 import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.icons.HumidityPercentage
 import de.mm20.launcher2.ui.icons.Rain
+import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
-import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable
@@ -217,7 +216,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                             }
                             context.tryStartActivity(intent)
                         })
-                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 8.dp)
+                        .padding(start = 8.dp, top = 4.dp, bottom = 4.dp, end = 12.dp)
                 )
             }
         }
@@ -351,7 +350,7 @@ fun WeatherTimeSelector(
                 modifier = Modifier
                     .widthIn(min = 56.dp)
                     .graphicsLayer {
-                        alpha = listState.layoutInfo.blendIntoViewAlpha(idx, 2f)
+                        alpha = listState.layoutInfo.blendIntoViewScale(idx, 2f)
                     },
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
             ) {
@@ -408,7 +407,7 @@ fun WeatherDaySelector(
 
             Surface(
                 modifier = Modifier.graphicsLayer {
-                    alpha = listState.layoutInfo.blendIntoViewAlpha(idx, 0.5f)
+                    alpha = listState.layoutInfo.blendIntoViewScale(idx, 0.5f)
                 },
                 shape = MaterialTheme.shapes.extraSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(backgroundAlpha)
@@ -442,25 +441,6 @@ fun WeatherDaySelector(
         }
     }
 }
-
-private fun LazyListLayoutInfo.blendIntoViewAlpha(key: Any, degree: Float = 1f): Float =
-    visibleItemsInfo.firstOrNull { it.key == key }?.let {
-
-        val itemStart = it.offset
-        val itemEnd = it.offset + it.size
-
-        val atLeftEnd = itemStart < viewportStartOffset
-        val atRightEnd = itemEnd > viewportEndOffset
-
-        if (!atLeftEnd && !atRightEnd) {
-            return 1f
-        }
-
-        val alpha = 1f - (if (atLeftEnd) viewportStartOffset - itemStart else itemEnd - viewportEndOffset) / it.size.toFloat()
-
-        if (degree != 1f) alpha.pow(degree) else alpha
-
-    } ?: 1f
 
 private fun formatTime(context: Context, timestamp: Long): String {
     return DateUtils.formatDateTime(context, timestamp, DateUtils.FORMAT_SHOW_TIME)
