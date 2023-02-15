@@ -60,7 +60,6 @@ class IconPackManager(
     suspend fun getIcon(
         iconPack: String,
         componentName: ComponentName,
-        themed: Boolean = false
     ): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
@@ -75,7 +74,7 @@ class IconPackManager(
         val drawableName = icon.drawable ?: return null
 
         if (icon.type == "calendar") {
-            return getIconPackCalendarIcon(context, iconPack, drawableName, themed)
+            return getIconPackCalendarIcon(context, iconPack, drawableName, icon.themed)
         }
         val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
             ?: return null
@@ -85,7 +84,7 @@ class IconPackManager(
             return null
         }
         return when {
-            themed && drawable is AdaptiveIconDrawable -> {
+            icon.themed && drawable is AdaptiveIconDrawable -> {
                 if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
                     return StaticLauncherIcon(
                         foregroundLayer = StaticIconLayer(

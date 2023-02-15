@@ -17,7 +17,7 @@ class IconPackIconProvider(
         if (searchable !is LauncherApp) return null
 
         val component = ComponentName(searchable.`package`, searchable.activity)
-        return iconPackManager.getIcon(iconPack.packageName, component, iconPack.themed)
+        return iconPackManager.getIcon(iconPack.packageName, component)
             ?: iconPackManager.generateIcon(
                 context,
                 iconPack.packageName,

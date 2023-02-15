@@ -13,6 +13,7 @@ class Migration_19_20: Migration(19, 20) {
                 `drawable` TEXT,
                 `iconPack` TEXT NOT NULL,
                 `name` TEXT,
+                `themed` INTEGER NOT NULL DEFAULT 0,
                 `id` INTEGER PRIMARY KEY AUTOINCREMENT)
             """)
         database.execSQL("INSERT INTO `Icons` (`type`, `componentName`, `drawable`, `iconPack`, `themed`, `name`) SELECT `type`, `componentName`, `drawable`, `iconPack`, null FROM `Icons_old`")

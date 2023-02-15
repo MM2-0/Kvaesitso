@@ -8,6 +8,7 @@ data class IconPackIcon(
     val componentName: ComponentName?,
     val drawable: String?,
     val iconPack: String,
+    val themed: Boolean = false,
     val name: String? = null,
 ) {
     constructor(entity: IconEntity) : this(
@@ -16,6 +17,7 @@ data class IconPackIcon(
         drawable = entity.drawable,
         iconPack = entity.iconPack,
         name = entity.name,
+        themed = entity.themed,
     )
 
     fun toDatabaseEntity(): IconEntity {
@@ -25,6 +27,7 @@ data class IconPackIcon(
             drawable = drawable,
             iconPack = iconPack,
             name = name,
+            themed = themed,
         )
     }
 }

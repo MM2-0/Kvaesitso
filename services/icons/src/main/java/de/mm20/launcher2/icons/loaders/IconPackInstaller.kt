@@ -122,6 +122,7 @@ class IconPackInstaller(
                                 drawable = drawable,
                                 iconPack = pkgName,
                                 name = name,
+                                themed = iconPack.themed,
                                 type = "app"
                             )
                             icons.add(icon)

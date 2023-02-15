@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 20,
-    "identityHash": "0e23c747bfe32759849ee85dcd5d23cb",
+    "identityHash": "5b1104c3916482efde9b715c1f3c1273",
     "entities": [
       {
         "tableName": "forecasts",
@@ -222,7 +222,7 @@
       },
       {
         "tableName": "Icons",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `componentName` TEXT, `drawable` TEXT, `iconPack` TEXT NOT NULL, `name` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`type` TEXT NOT NULL, `componentName` TEXT, `drawable` TEXT, `iconPack` TEXT NOT NULL, `name` TEXT, `themed` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT)",
         "fields": [
           {
             "fieldPath": "type",
@@ -253,6 +253,12 @@
             "columnName": "name",
             "affinity": "TEXT",
             "notNull": false
+          },
+          {
+            "fieldPath": "themed",
+            "columnName": "themed",
+            "affinity": "INTEGER",
+            "notNull": true
           },
           {
             "fieldPath": "id",
@@ -468,7 +474,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0e23c747bfe32759849ee85dcd5d23cb')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b1104c3916482efde9b715c1f3c1273')"
     ]
   }
 }
