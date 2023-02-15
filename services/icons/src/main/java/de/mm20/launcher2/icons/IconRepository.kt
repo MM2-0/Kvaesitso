@@ -16,7 +16,7 @@ import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
 import de.mm20.launcher2.data.customattrs.ForceThemedIcon
 import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
-import de.mm20.launcher2.icons.providers.CompatThemedIconProvider
+import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
 import de.mm20.launcher2.icons.providers.GoogleClockIconProvider
@@ -106,13 +106,13 @@ class IconRepository(
                         Log.w("MM20", "Icon pack ${settings.iconPack} not found")
                     }
                 }
-                providers.add(GoogleClockIconProvider(context))
-                providers.add(CalendarIconProvider(context))
                 if (settings.themedIcons) {
-                    if (!isAtLeastApiLevel(33)) {
-                        providers.add(CompatThemedIconProvider(iconPackManager))
-                    }
                     providers.add(ThemedIconProvider(iconPackManager))
+                }
+                providers.add(GoogleClockIconProvider(context))
+                providers.add(CalendarIconProvider(context, settings.themedIcons))
+                if (!isAtLeastApiLevel(33)) {
+                    providers.add(CompatIconProvider(context, settings.themedIcons))
                 }
                 providers.add(SystemIconProvider(context, settings.themedIcons))
                 providers.add(placeholderProvider)

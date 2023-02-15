@@ -3,6 +3,8 @@ package de.mm20.launcher2.icons
 import android.content.res.Resources
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.core.content.res.ResourcesCompat
+import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
+import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
@@ -25,66 +27,30 @@ internal class DynamicCalendarIcon(
         val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
         val resId = resourceIds[day - 1]
 
-        val drawable = try {
-            ResourcesCompat.getDrawable(resources, resId, null)
-        } catch (e: Resources.NotFoundException) {
-            null
-        } ?: return@withContext StaticLauncherIcon(
-            foregroundLayer = TextLayer(day.toString()),
-            backgroundLayer = ColorLayer()
-        )
+        val adaptiveIcon = AdaptiveIconDrawableCompat.from(resources, resId)
 
-        var icon = when {
-            isThemed && drawable is AdaptiveIconDrawable -> {
-                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
-                    return@withContext StaticLauncherIcon(
+        var icon = if (adaptiveIcon != null) {
+            adaptiveIcon.toLauncherIcon(themed = isThemed)
+        } else {
+            try {
+                val drawable = ResourcesCompat.getDrawable(resources, resId, null)
+
+                when {
+                    drawable is AdaptiveIconDrawable -> AdaptiveIconDrawableCompat.from(drawable).toLauncherIcon(themed = isThemed)
+                    drawable != null -> StaticLauncherIcon(
                         foregroundLayer = TintedIconLayer(
-                            icon = drawable.monochrome!!,
+                            icon = drawable,
                             scale = 1f,
                         ),
-                        backgroundLayer = ColorLayer()
+                        backgroundLayer = TransparentLayer,
                     )
-                } else {
-                    return@withContext StaticLauncherIcon(
-                        foregroundLayer = TintedIconLayer(
-                            icon = drawable.foreground!!,
-                            scale = 1.5f,
-                        ),
-                        backgroundLayer = ColorLayer()
-                    )
+                    else -> null
                 }
-            }
-            isThemed -> {
-                StaticLauncherIcon(
-                    foregroundLayer = TintedIconLayer(
-                        icon = drawable,
-                        scale = 0.5f,
-                    ),
-                    backgroundLayer = ColorLayer()
-                )
-            }
-            drawable is AdaptiveIconDrawable -> {
-                return@withContext StaticLauncherIcon(
-                    foregroundLayer = drawable.foreground?.let {
-                        StaticIconLayer(
-                            icon = it,
-                            scale = 1.5f,
-                        )
-                    } ?: TransparentLayer,
-                    backgroundLayer = drawable.background?.let {
-                        StaticIconLayer(
-                            icon = it,
-                            scale = 1.5f,
-                        )
-                    } ?: TransparentLayer,
-                )
-            }
-            else -> StaticLauncherIcon(
-                foregroundLayer = StaticIconLayer(
-                    icon = drawable,
-                    scale = 1f,
-                ),
-                backgroundLayer = TransparentLayer
+            } catch (e: Resources.NotFoundException) {
+                null
+            } ?: return@withContext StaticLauncherIcon(
+                foregroundLayer = TextLayer(day.toString()),
+                backgroundLayer = ColorLayer()
             )
         }
 

@@ -20,7 +20,6 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.icons.loaders.CompatThemedIconInstaller
 import de.mm20.launcher2.icons.loaders.GrayscaleMapInstaller
 import de.mm20.launcher2.icons.loaders.IconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -55,7 +54,6 @@ class IconPackManager(
         withContext(Dispatchers.IO) {
             IconPackInstaller(context, appDatabase).installIcons()
             GrayscaleMapInstaller(context, appDatabase).installIcons()
-            CompatThemedIconInstaller(context, appDatabase).installIcons()
         }
     }
 
@@ -236,37 +234,6 @@ class IconPackManager(
         )
     }
 
-    suspend fun getCompatThemedIcon(componentName: ComponentName): LauncherIcon? {
-        val iconDao = appDatabase.iconDao()
-        val icon = iconDao.getCompatThemedIcon(componentName.flattenToString())
-            ?: return null
-
-        val drawableName = icon.drawable ?: return null
-
-        val res = try {
-            context.packageManager.getResourcesForApplication(componentName.packageName)
-        } catch (e: Resources.NotFoundException) {
-            return null
-        } catch (e: PackageManager.NameNotFoundException) {
-            return null
-        }
-
-        val resourceId = res.getIdentifier(drawableName, null, null)
-        val drawable = try {
-            ResourcesCompat.getDrawable(res, resourceId, null)
-        } catch (e: Resources.NotFoundException) {
-            return null
-        } ?: return null
-
-        return StaticLauncherIcon(
-            foregroundLayer = TintedIconLayer(
-                icon = drawable,
-                scale = 1f,
-            ),
-            backgroundLayer = ColorLayer()
-        )
-    }
-
     suspend fun getAllIconPackIcons(componentName: ComponentName): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
         return iconDao.getIconsFromAllPacks(componentName.flattenToString())
@@ -301,7 +268,7 @@ class IconPackManager(
         iconPack: String,
         baseIconName: String,
         themed: Boolean,
-    ): DynamicCalendarIcon? {
+    ): LauncherIcon? {
         val resources = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -313,10 +280,16 @@ class IconPackManager(
             if (id == 0) return null
             id
         }.toIntArray()
+
+        if (themed) {
+            return ThemedDynamicCalendarIcon(
+                resources = resources,
+                resourceIds = drawableIds,
+            )
+        }
         return DynamicCalendarIcon(
             resources = resources,
             resourceIds = drawableIds,
-            isThemed = themed,
         )
     }
 
@@ -444,12 +417,11 @@ class IconPackManager(
             val array = resources.obtainTypedArrayOrNull(resId) ?: return null
             if (array.length() != 31) return null
 
-            return DynamicCalendarIcon(
+            return ThemedDynamicCalendarIcon(
                 resources = resources,
                 resourceIds = IntArray(31) {
                     array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
                 },
-                isThemed = true
             )
         } catch (e: Resources.NotFoundException) {
         }
