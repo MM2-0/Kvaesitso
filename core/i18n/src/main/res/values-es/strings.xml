@@ -475,7 +475,7 @@
     <string name="preference_search_localfiles_summary">Buscar documentos, imágenes y otros archivos almacenados en este dispositivo</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_layout_fixed_search_bar">Barra de búsqueda fija</string>
-    <string name="preference_layout_fixed_search_bar_summary">No desplazarla barra de búsqueda fuera de vista</string>
+    <string name="preference_layout_fixed_search_bar_summary">No desplazar la barra de búsqueda fuera de vista</string>
     <string name="preference_search_wikipedia_pictures">Mostrar imágenes</string>
     <string name="preference_google_signin_summary">Regístrate para buscar en Google Drive</string>
     <plurals name="preference_calendar_calendars_summary">
@@ -572,4 +572,6 @@
     <string name="preference_theme_system">De acuerdo al sistema</string>
     <string name="preference_themed_icons">Íconos temáticos</string>
     <string name="help">Ayuda</string>
+    <string name="preference_layout_fixed_rotation">Rotación de la pantalla fija</string>
+    <string name="preference_layout_fixed_rotation_summary">Fijar la rotación de la pantalla al modo vertifcal</string>
 </resources>
