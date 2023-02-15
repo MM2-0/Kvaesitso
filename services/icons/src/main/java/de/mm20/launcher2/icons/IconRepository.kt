@@ -16,6 +16,7 @@ import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
 import de.mm20.launcher2.data.customattrs.ForceThemedIcon
 import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
+import de.mm20.launcher2.icons.providers.CompatThemedIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
 import de.mm20.launcher2.icons.providers.GoogleClockIconProvider
@@ -30,6 +31,7 @@ import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
@@ -90,10 +92,6 @@ class IconRepository(
                 }
                 val providers = mutableListOf<IconProvider>()
 
-                if (settings.themedIcons) {
-                    providers.add(ThemedIconProvider(iconPackManager))
-                }
-
                 if (settings.iconPack.isNotBlank()) {
                     val pack = iconPackManager.getIconPack(settings.iconPack)
                     if (pack != null) {
@@ -110,6 +108,12 @@ class IconRepository(
                 }
                 providers.add(GoogleClockIconProvider(context))
                 providers.add(CalendarIconProvider(context))
+                if (settings.themedIcons) {
+                    if (!isAtLeastApiLevel(33)) {
+                        providers.add(CompatThemedIconProvider(iconPackManager))
+                    }
+                    providers.add(ThemedIconProvider(iconPackManager))
+                }
                 providers.add(SystemIconProvider(context, settings.themedIcons))
                 providers.add(placeholderProvider)
                 cache.evictAll()

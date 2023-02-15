@@ -16,6 +16,9 @@ interface IconDao {
     @Query("SELECT * FROM Icons WHERE componentName = :componentName AND iconPack = :iconPack AND (type = 'app' OR type = 'calendar') LIMIT 1")
     suspend fun getIcon(componentName: String, iconPack: String): IconEntity?
 
+    @Query("SELECT * FROM Icons WHERE componentName = :componentName AND (type = 'themed-compat') LIMIT 1")
+    suspend fun getCompatThemedIcon(componentName: String): IconEntity?
+
     @Query("SELECT * FROM Icons WHERE componentName = :componentName AND (type = 'app' OR type = 'calendar')")
     suspend fun getIconsFromAllPacks(componentName: String): List<IconEntity>
 
@@ -41,7 +44,7 @@ interface IconDao {
 
     @Transaction
     suspend fun installGrayscaleIconMap(packageName: String, icons: List<IconEntity>) {
-        deleteIcons(packageName)
+        deleteGrayscaleIcons(packageName)
         insertAll(icons)
     }
 
@@ -68,15 +71,21 @@ interface IconDao {
         return getPacks(iconPack.packageName, iconPack.version).isNotEmpty()
     }
 
-    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:packs)")
-    fun deleteAllIconsExcept(packs: List<String>)
+    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:packs) AND (type = 'calendar' OR type = 'app')")
+    fun deleteAllIconsPackIconsExcept(packs: List<String>)
+
+    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:packs) AND type = 'greyscale_icon'")
+    fun deleteAllGrayscaleIconsExcept(packs: List<String>)
 
     @Query("DELETE FROM IconPack WHERE packageName NOT IN (:packs)")
     fun deleteAllPacksExcept(packs: List<String>)
 
+    @Query("DELETE FROM Icons WHERE type = 'themed-compat'")
+    fun deleteAllCompatThemedIcons()
+
     @Transaction
     fun uninstallIconPacksExcept(packs: List<String>) {
-        deleteAllIconsExcept(packs)
+        deleteAllIconsPackIconsExcept(packs)
         deleteAllPacksExcept(packs)
     }
 
