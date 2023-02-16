@@ -22,6 +22,8 @@ class CalendarIconProvider(val context: Context, val themed: Boolean): IconProvi
         var arrayId = ai.metaData?.getInt("com.teslacoilsw.launcher.calendarIconArray") ?: 0
         if (arrayId == 0) arrayId = ai.metaData?.getInt("com.google.android.calendar.dynamic_icons")
             ?: return null
+        if (arrayId == 0) arrayId = ai.metaData?.getInt("org.lineageos.etar.dynamic_icons")
+            ?: return null
         if (arrayId == 0) return null
         val resources = try {
             pm.getResourcesForActivity(component)
