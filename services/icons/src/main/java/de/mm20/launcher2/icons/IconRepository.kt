@@ -19,7 +19,7 @@ import de.mm20.launcher2.icons.providers.CalendarIconProvider
 import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
-import de.mm20.launcher2.icons.providers.GoogleClockIconProvider
+import de.mm20.launcher2.icons.providers.DynamicClockIconProvider
 import de.mm20.launcher2.icons.providers.IconPackIconProvider
 import de.mm20.launcher2.icons.providers.IconProvider
 import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
@@ -109,7 +109,7 @@ class IconRepository(
                 if (settings.themedIcons) {
                     providers.add(ThemedIconProvider(iconPackManager))
                 }
-                providers.add(GoogleClockIconProvider(context, settings.themedIcons))
+                providers.add(DynamicClockIconProvider(context, settings.themedIcons))
                 providers.add(CalendarIconProvider(context, settings.themedIcons))
                 if (!isAtLeastApiLevel(33)) {
                     providers.add(CompatIconProvider(context, settings.themedIcons))

@@ -176,7 +176,7 @@ fun AdaptiveIconDrawableCompat.toLauncherIcon(
             return StaticLauncherIcon(
                 foregroundLayer = TintedClockLayer(
                     sublayers = clockLayers,
-                    scale = 1f,
+                    scale = 1.5f,
                 ),
                 backgroundLayer = ColorLayer(),
             )
