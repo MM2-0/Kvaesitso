@@ -13,8 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -22,8 +20,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.airbnb.lottie.LottieProperty
-import com.airbnb.lottie.compose.*
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
@@ -388,7 +384,8 @@ fun SearchBarStylePreference(
                             level = level,
                             style = styles[it],
                             value = previewSearchValue,
-                            onValueChange = {})
+                            onValueChange = {}
+                        )
                     }
                     HorizontalPagerIndicator(pagerState = pagerState)
                 }

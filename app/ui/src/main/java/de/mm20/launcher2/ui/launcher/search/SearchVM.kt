@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -40,8 +41,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val searchService: SearchService by inject()
 
-    val isSearching = MutableLiveData(false)
-    val searchQuery = MutableLiveData<String>("")
+    val searchQuery = MutableLiveData("")
     val isSearchEmpty = MutableLiveData(true)
 
     val appResults = MutableLiveData<List<LauncherApp>>(emptyList())
@@ -69,7 +69,21 @@ class SearchVM : ViewModel(), KoinComponent {
         search("", true)
     }
 
-    var searchJob: Job? = null
+    fun launchBestMatch(context: Context) {
+        if (!launchOnEnter)
+            return
+
+        suspend {
+            searchJob?.join()
+        }
+
+        if (false == appResults.value?.first()?.launch(context, null))
+        {
+            searchActionResults.value?.first()?.start(context)
+        }
+    }
+
+    private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
         searchQuery.value = query
@@ -82,7 +96,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         hideFavorites.postValue(query.isNotEmpty())
         searchJob = viewModelScope.launch {
-            isSearching.postValue(true)
 
             dataStore.data.collectLatest {
                 searchService.search(
@@ -143,9 +156,6 @@ class SearchVM : ViewModel(), KoinComponent {
                     }
                 }
             }
-
-
-            isSearching.postValue(false)
         }
     }
 
@@ -168,6 +178,7 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
+    val launchOnEnter = true // todo make setting out of it
 
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),

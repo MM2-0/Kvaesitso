@@ -56,6 +56,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -518,6 +519,8 @@ fun PullDownScaffold(
         val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
 
+        val context = LocalContext.current
+
         LauncherSearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
@@ -553,6 +556,7 @@ fun PullDownScaffold(
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,
+            onKeyboardActionDone = { searchVM.launchBestMatch(context) }
         )
 
     }
