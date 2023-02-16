@@ -80,10 +80,6 @@ class SearchVM : ViewModel(), KoinComponent {
             return
         */
 
-        suspend {
-            searchJob?.join()
-        }
-
         if (false == appResults.value?.firstOrNull()?.launch(context, null)) {
             searchActionResults.value?.firstOrNull()?.start(context)
         }
