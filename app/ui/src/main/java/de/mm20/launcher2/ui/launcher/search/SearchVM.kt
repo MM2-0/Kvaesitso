@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
@@ -58,6 +60,8 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val hiddenResults = MutableLiveData<List<SavableSearchable>>(emptyList())
 
+    private val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }.asLiveData()
+
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = MutableLiveData(false)
 
@@ -70,16 +74,18 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun launchBestMatch(context: Context) {
-        if (!launchOnEnter)
+
+        /*
+        if (launchOnEnter.value != true)
             return
+        */
 
         suspend {
             searchJob?.join()
         }
 
-        if (false == appResults.value?.first()?.launch(context, null))
-        {
-            searchActionResults.value?.first()?.start(context)
+        if (false == appResults.value?.firstOrNull()?.launch(context, null)) {
+            searchActionResults.value?.firstOrNull()?.start(context)
         }
     }
 
@@ -177,8 +183,6 @@ class SearchVM : ViewModel(), KoinComponent {
             }
         }
     }
-
-    val launchOnEnter = true // todo make setting out of it
 
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
