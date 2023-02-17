@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -29,7 +31,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -60,8 +65,6 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val hiddenResults = MutableLiveData<List<SavableSearchable>>(emptyList())
 
-    private val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }.asLiveData()
-
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = MutableLiveData(false)
 
@@ -69,20 +72,31 @@ class SearchVM : ViewModel(), KoinComponent {
         .getHiddenItemKeys()
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
+    private var launchOnEnter = false
+
     init {
         search("", true)
+        dataStore.data
+            .map { it.searchBar.launchOnEnter }
+            .onEach {
+                launchOnEnter = it
+            }.launchIn(viewModelScope)
     }
 
     fun launchBestMatch(context: Context) {
-
-        /*
-        if (launchOnEnter.value != true)
+        if (!launchOnEnter)
             return
-        */
 
-        if (false == appResults.value?.firstOrNull()?.launch(context, null)) {
-            searchActionResults.value?.firstOrNull()?.start(context)
-        }
+        val launched = listOf(
+            appResults,
+            appShortcutResults,
+            contactResults,
+            calendarResults,
+            fileResults
+        ).map { it.value ?: emptyList() }
+            .flatten()
+            .firstOrNull()
+            ?.launch(context, null)
     }
 
     private var searchJob: Job? = null
