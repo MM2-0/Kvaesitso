@@ -7,6 +7,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -97,6 +98,12 @@ class SearchVM : ViewModel(), KoinComponent {
             .flatten()
             .firstOrNull()
             ?.launch(context, null)
+
+        if (launched != true) {
+            searchActionResults.value
+                ?.firstOrNull()
+                ?.start(context)
+        }
     }
 
     private var searchJob: Job? = null
