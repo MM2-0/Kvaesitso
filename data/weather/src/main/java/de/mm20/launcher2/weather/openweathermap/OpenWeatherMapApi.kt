@@ -87,11 +87,11 @@ data class ForecastResultList(
 )
 
 data class ForecastResultRain(
-    @SerializedName("3d") val threeHours: Double?,
+    @SerializedName("3h") val threeHours: Double?,
 )
 
 data class ForecastResultSnow(
-    @SerializedName("3d") val threeHours: Double?,
+    @SerializedName("3h") val threeHours: Double?,
 )
 
 data class ForecastResultSys(

@@ -55,7 +55,7 @@ dependencyResolutionManagement {
             library("androidx.compose.material3", "androidx.compose.material3", "material3")
                 .version("1.1.0-alpha06")
 
-            version("androidx.lifecycle", "2.6.0-alpha04")
+            version("androidx.lifecycle", "2.6.0-beta01")
             library("androidx.lifecycle.viewmodel", "androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.livedata", "androidx.lifecycle", "lifecycle-livedata-ktx")
@@ -65,6 +65,8 @@ dependencyResolutionManagement {
             library("androidx.lifecycle.runtime", "androidx.lifecycle", "lifecycle-runtime-ktx")
                 .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.viewmodelcompose", "androidx.lifecycle", "lifecycle-viewmodel-compose")
+                .versionRef("androidx.lifecycle")
+            library("androidx.lifecycle.runtimecompose", "androidx.lifecycle", "lifecycle-runtime-compose")
                 .versionRef("androidx.lifecycle")
             bundle(
                 "androidx.lifecycle",

@@ -8,17 +8,22 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadata
+import android.media.Rating
 import android.media.session.MediaController
 import android.media.session.MediaSession
+import android.media.session.PlaybackState.CustomAction
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.os.SystemClock
 import android.service.notification.StatusBarNotification
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
+import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -28,6 +33,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -38,18 +44,23 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.IOException
 
-interface MusicRepository {
+interface MusicService {
     val playbackState: Flow<PlaybackState>
     val title: Flow<String?>
     val artist: Flow<String?>
     val album: Flow<String?>
     val albumArt: Flow<Bitmap?>
+    val position: Flow<Long?>
+    val duration: Flow<Long?>
+
+    val supportedActions: Flow<SupportedActions>
 
     val lastPlayerPackage: String?
 
@@ -58,6 +69,8 @@ interface MusicRepository {
     fun pause()
     fun play()
     fun togglePause()
+    fun seekTo(position: Long)
+    fun performCustomAction(action: CustomAction)
     fun openPlayer(): PendingIntent?
 
     fun openPlayerChooser(context: Context)
@@ -65,10 +78,10 @@ interface MusicRepository {
     fun resetPlayer()
 }
 
-internal class MusicRepositoryImpl(
+internal class MusicServiceImpl(
     private val context: Context,
     notificationRepository: NotificationRepository
-) : MusicRepository, KoinComponent {
+) : MusicService, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
     private val dataStore: LauncherDataStore by inject()
@@ -139,26 +152,17 @@ internal class MusicRepositoryImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
-    override val playbackState: SharedFlow<PlaybackState> = channelFlow {
+    private val currentState: SharedFlow<android.media.session.PlaybackState?> = channelFlow {
         currentMediaController.collectLatest { controller ->
-            if (controller == null) return@collectLatest send(PlaybackState.Stopped)
-            send(
-                when (controller.playbackState?.state) {
-                    android.media.session.PlaybackState.STATE_PLAYING -> PlaybackState.Playing
-                    android.media.session.PlaybackState.STATE_PAUSED -> PlaybackState.Paused
-                    else -> PlaybackState.Stopped
-                }
-            )
+            if (controller == null) {
+                send(null)
+                return@collectLatest
+            }
+            send(controller.playbackState)
             val callback = object : MediaController.Callback() {
                 override fun onPlaybackStateChanged(state: android.media.session.PlaybackState?) {
                     super.onPlaybackStateChanged(state)
-                    trySend(
-                        when (state?.state) {
-                            android.media.session.PlaybackState.STATE_PLAYING -> PlaybackState.Playing
-                            android.media.session.PlaybackState.STATE_PAUSED -> PlaybackState.Paused
-                            else -> PlaybackState.Stopped
-                        }
-                    )
+                    trySend(state)
                 }
             }
             try {
@@ -166,6 +170,56 @@ internal class MusicRepositoryImpl(
                 awaitCancellation()
             } finally {
                 controller.unregisterCallback(callback)
+            }
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+    override val playbackState: SharedFlow<PlaybackState> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null) {
+                send(PlaybackState.Stopped)
+                return@collectLatest
+            }
+            when (state.state) {
+                android.media.session.PlaybackState.STATE_PLAYING -> send(PlaybackState.Playing)
+                android.media.session.PlaybackState.STATE_PAUSED -> send(PlaybackState.Paused)
+                android.media.session.PlaybackState.STATE_STOPPED -> send(PlaybackState.Stopped)
+                else -> send(PlaybackState.Stopped)
+            }
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+    private var lastPosition: Long? = null
+        get() {
+            if (field == null) {
+                field = preferences.getLong(PREFS_KEY_POSITION, -1).takeIf { it >= 0 }
+            }
+            return field
+        }
+        set(value) {
+            preferences.edit {
+                putLong(PREFS_KEY_POSITION, value ?: -1)
+            }
+            field = value
+        }
+
+    override val position: SharedFlow<Long?> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null || state.state != android.media.session.PlaybackState.STATE_PLAYING) {
+                send(lastPosition)
+                return@collectLatest
+            }
+            if (state.position < 0 || state.lastPositionUpdateTime == 0L) {
+                send(null)
+                lastPosition = null
+                return@collectLatest
+            }
+            while (isActive) {
+                val offset = SystemClock.elapsedRealtime() - state.lastPositionUpdateTime
+                val position = state.position + offset
+                lastPosition = position
+                send(position)
+                delay(1000)
             }
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
@@ -310,20 +364,60 @@ internal class MusicRepositoryImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
+    private var lastDuration: Long? = null
+        get() {
+            if (field == null) {
+                field = preferences.getLong(PREFS_KEY_DURATION, -1).takeIf { it > 0 }
+            }
+            return field
+        }
+        set(value) {
+            preferences.edit {
+                putLong(PREFS_KEY_DURATION, value ?: -1)
+            }
+            field = value
+        }
+
+    override val duration: Flow<Long?> = channelFlow {
+        currentMetadata.collectLatest { metadata ->
+            if (metadata == null) {
+                send(lastDuration)
+                return@collectLatest
+            }
+            val duration = metadata.getLong(MediaMetadata.METADATA_KEY_DURATION).takeIf { it > 0 }
+            lastDuration = duration
+            send(duration)
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
+    override val supportedActions: Flow<SupportedActions> = channelFlow {
+        currentState.collectLatest { state ->
+            if (state == null) {
+                send(SupportedActions())
+                return@collectLatest
+            }
+            send(SupportedActions(state.actions, state.customActions))
+        }
+    }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
+
     private suspend fun loadBitmapFromUri(uri: Uri, size: Int): Bitmap? {
+        var bitmap: Bitmap? = null
         try {
             val request = ImageRequest.Builder(context)
                 .data(uri)
                 .size(size)
                 .scale(Scale.FILL)
+                .target {
+                    bitmap = it.toBitmap()
+                }
                 .build()
-            context.imageLoader.execute(request).drawable?.toBitmap()
+            val result = context.imageLoader.execute(request)
         } catch (e: IOException) {
             CrashReporter.logException(e)
         } catch (e: SecurityException) {
             CrashReporter.logException(e)
         }
-        return null
+        return bitmap
     }
 
     private suspend fun resize(bitmap: Bitmap, size: Int): Bitmap? {
@@ -419,6 +513,13 @@ internal class MusicRepositoryImpl(
         }
     }
 
+    override fun seekTo(position: Long) {
+        scope.launch {
+            val controller = currentMediaController.firstOrNull()
+            controller?.transportControls?.seekTo(position)
+        }
+    }
+
     override fun openPlayer(): PendingIntent? {
 
         val controller = currentMediaController.replayCache.firstOrNull()
@@ -459,6 +560,13 @@ internal class MusicRepositoryImpl(
         )
     }
 
+    override fun performCustomAction(action: CustomAction) {
+        scope.launch {
+            val controller = currentMediaController.firstOrNull()
+            controller?.transportControls?.sendCustomAction(action.action, action.extras)
+        }
+    }
+
     private fun getMusicApps(): Set<String> {
         // List of known music apps that don't have the correct intent filter
         val apps = mutableSetOf(
@@ -490,6 +598,8 @@ internal class MusicRepositoryImpl(
 
         private const val PREFS = "music"
         private const val PREFS_KEY_TITLE = "title"
+        private const val PREFS_KEY_DURATION = "duration"
+        private const val PREFS_KEY_POSITION = "position"
         private const val PREFS_KEY_ARTIST = "artist"
         private const val PREFS_KEY_ALBUM = "album"
         private const val PREFS_KEY_ALBUM_ART = "album_art"

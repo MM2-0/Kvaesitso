@@ -9,7 +9,7 @@ import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
 
-class CalendarIconProvider(val context: Context): IconProvider {
+class CalendarIconProvider(val context: Context, val themed: Boolean): IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if(searchable !is LauncherApp) return null
         val component = ComponentName(searchable.`package`, searchable.activity)
@@ -21,6 +21,8 @@ class CalendarIconProvider(val context: Context): IconProvider {
         }
         var arrayId = ai.metaData?.getInt("com.teslacoilsw.launcher.calendarIconArray") ?: 0
         if (arrayId == 0) arrayId = ai.metaData?.getInt("com.google.android.calendar.dynamic_icons")
+            ?: return null
+        if (arrayId == 0) arrayId = ai.metaData?.getInt("org.lineageos.etar.dynamic_icons")
             ?: return null
         if (arrayId == 0) return null
         val resources = try {
@@ -40,7 +42,8 @@ class CalendarIconProvider(val context: Context): IconProvider {
         typedArray.recycle()
         return DynamicCalendarIcon(
             resources = resources,
-            resourceIds = drawableIds
+            resourceIds = drawableIds,
+            isThemed = themed
         )
     }
 }

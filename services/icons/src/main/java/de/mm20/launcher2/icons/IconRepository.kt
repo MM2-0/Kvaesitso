@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.util.Log
 import android.util.LruCache
 import de.mm20.launcher2.data.customattrs.AdaptifiedLegacyIcon
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
@@ -15,9 +16,10 @@ import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
 import de.mm20.launcher2.data.customattrs.ForceThemedIcon
 import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
+import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
-import de.mm20.launcher2.icons.providers.GoogleClockIconProvider
+import de.mm20.launcher2.icons.providers.DynamicClockIconProvider
 import de.mm20.launcher2.icons.providers.IconPackIconProvider
 import de.mm20.launcher2.icons.providers.IconProvider
 import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
@@ -29,6 +31,7 @@ import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
@@ -89,21 +92,28 @@ class IconRepository(
                 }
                 val providers = mutableListOf<IconProvider>()
 
+                if (settings.iconPack.isNotBlank()) {
+                    val pack = iconPackManager.getIconPack(settings.iconPack)
+                    if (pack != null) {
+                        providers.add(
+                            IconPackIconProvider(
+                                context,
+                                pack,
+                                iconPackManager
+                            )
+                        )
+                    } else {
+                        Log.w("MM20", "Icon pack ${settings.iconPack} not found")
+                    }
+                }
                 if (settings.themedIcons) {
                     providers.add(ThemedIconProvider(iconPackManager))
                 }
-
-                if (settings.iconPack.isNotBlank()) {
-                    providers.add(
-                        IconPackIconProvider(
-                            context,
-                            settings.iconPack,
-                            iconPackManager
-                        )
-                    )
+                providers.add(DynamicClockIconProvider(context, settings.themedIcons))
+                providers.add(CalendarIconProvider(context, settings.themedIcons))
+                if (!isAtLeastApiLevel(33)) {
+                    providers.add(CompatIconProvider(context, settings.themedIcons))
                 }
-                providers.add(GoogleClockIconProvider(context))
-                providers.add(CalendarIconProvider(context))
                 providers.add(SystemIconProvider(context, settings.themedIcons))
                 providers.add(placeholderProvider)
                 cache.evictAll()

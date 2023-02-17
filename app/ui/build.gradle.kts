@@ -102,6 +102,7 @@ dependencies {
     implementation(libs.androidx.browser)
 
     implementation(libs.androidx.lifecycle.viewmodelcompose)
+    implementation(libs.androidx.lifecycle.runtimecompose)
 
     implementation(libs.jsoup)
 

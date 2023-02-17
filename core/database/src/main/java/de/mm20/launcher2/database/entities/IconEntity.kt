@@ -10,6 +10,7 @@ data class IconEntity(
         val componentName: ComponentName?,
         val drawable: String?,
         val iconPack: String,
-        val scale : Float? = null,
+        val name: String?,
+        val themed: Boolean = false,
         @PrimaryKey(autoGenerate = true) val id : Long? = null
 )

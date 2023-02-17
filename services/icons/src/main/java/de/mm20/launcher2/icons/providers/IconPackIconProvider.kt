@@ -10,17 +10,17 @@ import kotlinx.coroutines.withContext
 
 class IconPackIconProvider(
     private val context: Context,
-    private val iconPack: String,
+    private val iconPack: IconPack,
     private val iconPackManager: IconPackManager,
 ): IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
 
         val component = ComponentName(searchable.`package`, searchable.activity)
-        return iconPackManager.getIcon(iconPack, component)
+        return iconPackManager.getIcon(iconPack.packageName, component)
             ?: iconPackManager.generateIcon(
                 context,
-                iconPack,
+                iconPack.packageName,
                 baseIcon = withContext(Dispatchers.IO) {
                     searchable.launcherActivityInfo.getIcon(context.resources.displayMetrics.densityDpi)
                 },

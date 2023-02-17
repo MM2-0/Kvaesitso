@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.music.MusicRepository
+import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -15,7 +15,7 @@ import org.koin.core.component.inject
 
 class MusicWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
-    private val musicRepository: MusicRepository by inject()
+    private val musicService: MusicService by inject()
     private val dataStore: LauncherDataStore by inject()
     val hasPermission =
         permissionsManager.hasPermission(PermissionGroup.Notifications).asLiveData()
@@ -40,7 +40,7 @@ class MusicWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun resetWidget() {
-        musicRepository.resetPlayer()
+        musicService.resetPlayer()
     }
 
 }

@@ -3,55 +3,71 @@ package de.mm20.launcher2.ui.launcher.widgets.music
 import android.app.PendingIntent
 import android.content.Context
 import android.graphics.Bitmap
+import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.music.MusicRepository
+import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class MusicWidgetVM: ViewModel(), KoinComponent {
-    private val musicRepository: MusicRepository by inject()
+    private val musicService: MusicService by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    val title: LiveData<String?> = musicRepository.title.asLiveData()
-    val artist: LiveData<String?> = musicRepository.artist.asLiveData()
-    val album: LiveData<String?> = musicRepository.album.asLiveData()
-    val albumArt: LiveData<Bitmap?> = musicRepository.albumArt.asLiveData()
-    val playbackState: LiveData<PlaybackState> = musicRepository.playbackState.asLiveData()
+    val title: Flow<String?> = musicService.title
+    val artist: Flow<String?> = musicService.artist
+    val albumArt: Flow<Bitmap?> = musicService.albumArt
+    val playbackState: Flow<PlaybackState> = musicService.playbackState
+    val duration: Flow<Long?> = musicService.duration
+    val position: Flow<Long?> = musicService.position
 
-    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Notifications).asLiveData()
+    val supportedActions: Flow<SupportedActions> = musicService.supportedActions
+
+    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
 
     val currentPlayerPackage
-        get() = musicRepository.lastPlayerPackage
+        get() = musicService.lastPlayerPackage
 
     fun skipPrevious() {
-        musicRepository.previous()
+        musicService.previous()
     }
 
     fun skipNext() {
-        musicRepository.next()
+        musicService.next()
+    }
+
+    fun seekTo(position: Long) {
+        musicService.seekTo(position)
     }
 
     fun togglePause() {
-        musicRepository.togglePause()
+        musicService.togglePause()
     }
 
     fun openPlayer() {
         try {
-            musicRepository.openPlayer()?.send()
+            musicService.openPlayer()?.send()
         } catch (e: PendingIntent.CanceledException) {
             CrashReporter.logException(e)
         }
     }
 
     fun openPlayerSelector(context: Context) {
-        musicRepository.openPlayerChooser(context)
+        musicService.openPlayerChooser(context)
+    }
+
+    fun performCustomAction(action: CustomAction) {
+        musicService.performCustomAction(action)
     }
 
     fun requestPermission(context: AppCompatActivity) {
