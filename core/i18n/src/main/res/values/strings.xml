@@ -486,6 +486,8 @@
     <string name="preference_force_themed_icons_summary">Apply the application\'s color scheme to all icons, including unsupported ones (not recommended)</string>
     <string name="preference_icon_pack">Icon pack</string>
     <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
+    <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
+    <string name="icon_pack_dynamic_colors">Dynamic colors</string>
     <string name="preference_category_system_bars">System bars</string>
     <string name="preference_status_bar_icons">Status bar icons</string>
     <string name="preference_nav_bar_icons">Navigation bar icons</string>

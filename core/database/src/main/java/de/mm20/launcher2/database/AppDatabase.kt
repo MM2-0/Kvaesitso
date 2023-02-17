@@ -18,6 +18,7 @@ import de.mm20.launcher2.database.migrations.Migration_15_16
 import de.mm20.launcher2.database.migrations.Migration_16_17
 import de.mm20.launcher2.database.migrations.Migration_17_18
 import de.mm20.launcher2.database.migrations.Migration_18_19
+import de.mm20.launcher2.database.migrations.Migration_19_20
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -33,7 +34,7 @@ import de.mm20.launcher2.database.migrations.Migration_9_10
         WidgetEntity::class,
         CustomAttributeEntity::class,
         SearchActionEntity::class,
-    ], version = 19, exportSchema = true
+    ], version = 20, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -99,6 +100,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_16_17(),
                         Migration_17_18(),
                         Migration_18_19(),
+                        Migration_19_20(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

@@ -2,11 +2,9 @@ package de.mm20.launcher2.ui.launcher.widgets.clock.parts
 
 import android.app.PendingIntent
 import android.content.Context
-import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -27,8 +25,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.music.MusicRepository
+import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
+import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
@@ -39,10 +38,10 @@ import org.koin.core.component.inject
 
 class MusicPartProvider : PartProvider, KoinComponent {
 
-    private val musicRepository: MusicRepository by inject()
+    private val musicService: MusicService by inject()
 
     override fun getRanking(context: Context): Flow<Int> = channelFlow {
-        musicRepository.playbackState.collectLatest {
+        musicService.playbackState.collectLatest {
             if (it == PlaybackState.Stopped) send(0)
             else send(50)
         }
@@ -52,9 +51,10 @@ class MusicPartProvider : PartProvider, KoinComponent {
     override fun Component(layout: ClockWidgetLayout) {
         val context = LocalContext.current
 
-        val title by musicRepository.title.collectAsState(null)
-        val artist by musicRepository.artist.collectAsState(null)
-        val state by musicRepository.playbackState.collectAsState(PlaybackState.Stopped)
+        val title by musicService.title.collectAsState(null)
+        val artist by musicService.artist.collectAsState(null)
+        val state by musicService.playbackState.collectAsState(PlaybackState.Stopped)
+        val supportedActions by musicService.supportedActions.collectAsState(SupportedActions())
 
         val playIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
 
@@ -69,12 +69,12 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         .combinedClickable(
                             onClick = {
                                 try {
-                                    musicRepository.openPlayer()?.send()
+                                    musicService.openPlayer()?.send()
                                 } catch (e: PendingIntent.CanceledException) {
                                 }
                             },
                             onLongClick = {
-                                musicRepository.openPlayerChooser(context)
+                                musicService.openPlayerChooser(context)
                             }
                         )
                 ) {
@@ -95,7 +95,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         )
                     }
                 }
-                IconButton(onClick = { musicRepository.togglePause() }) {
+                IconButton(onClick = { musicService.togglePause() }) {
                     Icon(
                         painter = rememberAnimatedVectorPainter(
                             animatedImageVector = playIcon,
@@ -103,11 +103,13 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         ), contentDescription = null
                     )
                 }
-                IconButton(onClick = { musicRepository.next() }) {
-                    Icon(
-                        imageVector = Icons.Rounded.SkipNext,
-                        contentDescription = null
-                    )
+                if (supportedActions.skipToNext) {
+                    IconButton(onClick = { musicService.next() }) {
+                        Icon(
+                            imageVector = Icons.Rounded.SkipNext,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
         }
@@ -121,12 +123,12 @@ class MusicPartProvider : PartProvider, KoinComponent {
                         .combinedClickable(
                             onClick = {
                                 try {
-                                    musicRepository.openPlayer()?.send()
+                                    musicService.openPlayer()?.send()
                                 } catch (e: PendingIntent.CanceledException) {
                                 }
                             },
                             onLongClick = {
-                                musicRepository.openPlayerChooser(context)
+                                musicService.openPlayerChooser(context)
                             }
                         ),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -151,13 +153,15 @@ class MusicPartProvider : PartProvider, KoinComponent {
                     }
                 }
                 Row {
-                    IconButton(onClick = { musicRepository.previous() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipPrevious,
-                            contentDescription = null
-                        )
+                    if (supportedActions.skipToPrevious) {
+                        IconButton(onClick = { musicService.previous() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipPrevious,
+                                contentDescription = null
+                            )
+                        }
                     }
-                    IconButton(onClick = { musicRepository.togglePause() }) {
+                    IconButton(onClick = { musicService.togglePause() }) {
                         Icon(
                             painter = rememberAnimatedVectorPainter(
                                 animatedImageVector = playIcon,
@@ -165,11 +169,13 @@ class MusicPartProvider : PartProvider, KoinComponent {
                             ), contentDescription = null
                         )
                     }
-                    IconButton(onClick = { musicRepository.next() }) {
-                        Icon(
-                            imageVector = Icons.Rounded.SkipNext,
-                            contentDescription = null
-                        )
+                    if (supportedActions.skipToPrevious) {
+                        IconButton(onClick = { musicService.next() }) {
+                            Icon(
+                                imageVector = Icons.Rounded.SkipNext,
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
             }

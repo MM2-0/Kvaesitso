@@ -2,36 +2,32 @@ package de.mm20.launcher2.icons
 
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.pm.ResolveInfo
 import android.content.res.Resources
-import android.content.res.XmlResourceParser
-import android.graphics.*
-import android.graphics.drawable.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Rect
+import android.graphics.drawable.AdaptiveIconDrawable
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
+import android.graphics.drawable.LayerDrawable
+import android.graphics.drawable.RotateDrawable
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.icons.loaders.GrayscaleMapInstaller
+import de.mm20.launcher2.icons.loaders.IconPackInstaller
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.xmlpull.v1.XmlPullParser
-import org.xmlpull.v1.XmlPullParserException
-import org.xmlpull.v1.XmlPullParserFactory
-import java.io.IOException
-import java.io.Reader
 import kotlin.math.roundToInt
-
-private val SUPPORTED_GRAYSCALE_MAP_PROVIDERS = arrayOf(
-    "com.google.android.apps.nexuslauncher", // Pixel Launcher
-    "app.lawnchair.lawnicons", // Lawnicons
-    "app.lawnchair", // Lawnchair
-    "de.mm20.launcher2.themedicons",
-    "de.kvaesitso.icons",
-)
 
 
 class IconPackManager(
@@ -46,13 +42,25 @@ class IconPackManager(
         }
     }
 
-    suspend fun updateIconPacks() {
-        withContext(Dispatchers.IO) {
-            UpdateIconPacksWorker(context).doWork()
+    suspend fun getIconPack(packageName: String): IconPack? {
+        return withContext(Dispatchers.IO) {
+            appDatabase.iconDao().getIconPack(packageName)?.let {
+                IconPack(it)
+            }
         }
     }
 
-    suspend fun getIcon(iconPack: String, componentName: ComponentName): LauncherIcon? {
+    suspend fun updateIconPacks() {
+        withContext(Dispatchers.IO) {
+            IconPackInstaller(context, appDatabase).installIcons()
+            GrayscaleMapInstaller(context, appDatabase).installIcons()
+        }
+    }
+
+    suspend fun getIcon(
+        iconPack: String,
+        componentName: ComponentName,
+    ): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -66,7 +74,7 @@ class IconPackManager(
         val drawableName = icon.drawable ?: return null
 
         if (icon.type == "calendar") {
-            return getIconPackCalendarIcon(context, iconPack, drawableName)
+            return getIconPackCalendarIcon(context, iconPack, drawableName, icon.themed)
         }
         val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
             ?: return null
@@ -75,8 +83,28 @@ class IconPackManager(
         } catch (e: Resources.NotFoundException) {
             return null
         }
-        return when (drawable) {
-            is AdaptiveIconDrawable -> {
+        return when {
+            icon.themed && drawable is AdaptiveIconDrawable -> {
+                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
+                    return StaticLauncherIcon(
+                        foregroundLayer = StaticIconLayer(
+                            icon = drawable.monochrome!!,
+                            scale = 1f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                } else {
+                    return StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.foreground,
+                            scale = 1.5f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                }
+            }
+
+            drawable is AdaptiveIconDrawable -> {
                 return StaticLauncherIcon(
                     foregroundLayer = drawable.foreground?.let {
                         StaticIconLayer(
@@ -237,8 +265,9 @@ class IconPackManager(
     private fun getIconPackCalendarIcon(
         context: Context,
         iconPack: String,
-        baseIconName: String
-    ): DynamicCalendarIcon? {
+        baseIconName: String,
+        themed: Boolean,
+    ): LauncherIcon? {
         val resources = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
@@ -250,9 +279,16 @@ class IconPackManager(
             if (id == 0) return null
             id
         }.toIntArray()
+
+        if (themed) {
+            return ThemedDynamicCalendarIcon(
+                resources = resources,
+                resourceIds = drawableIds,
+            )
+        }
         return DynamicCalendarIcon(
             resources = resources,
-            resourceIds = drawableIds
+            resourceIds = drawableIds,
         )
     }
 
@@ -380,12 +416,11 @@ class IconPackManager(
             val array = resources.obtainTypedArrayOrNull(resId) ?: return null
             if (array.length() != 31) return null
 
-            return DynamicCalendarIcon(
+            return ThemedDynamicCalendarIcon(
                 resources = resources,
                 resourceIds = IntArray(31) {
                     array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
                 },
-                isThemed = true
             )
         } catch (e: Resources.NotFoundException) {
         }
@@ -394,7 +429,12 @@ class IconPackManager(
 
     suspend fun searchIconPackIcon(query: String): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
-        return iconDao.searchIconPackIcons("%$query%").map {
+        val drawableQuery = query.replace(" ", "_").lowercase()
+        return iconDao.searchIconPackIcons(
+            drawableQuery = "%$drawableQuery%",
+            componentQuery = "%$query%",
+            nameQuery = "%$query%",
+        ).map {
             IconPackIcon(it)
         }
     }
@@ -408,281 +448,3 @@ class IconPackManager(
 
 }
 
-
-class UpdateIconPacksWorker(val context: Context) {
-
-    fun doWork() {
-        val packs = loadInstalledPacks(context).map { it.activityInfo.packageName }
-        val grayscaleProviders = loadInstalledGreyscaleProviders(context)
-        val iconDao = AppDatabase.getInstance(context).iconDao()
-        iconDao.uninstallIconPacksExcept(
-            packs.union(grayscaleProviders).toList()
-        )
-
-        for (pack in packs) {
-            try {
-                val packInfo = context.packageManager.getPackageInfo(pack, 0)
-                val iconPack = IconPack(
-                    name = packInfo.applicationInfo.loadLabel(context.packageManager).toString(),
-                    packageName = pack,
-                    version = packInfo.versionName
-                )
-                //if (iconDao.isInstalled(iconPack)) continue
-                installIconPack(iconPack)
-            } catch (e: PackageManager.NameNotFoundException) {
-                continue
-            }
-        }
-
-        val supportedGrayscaleMapPackages = SUPPORTED_GRAYSCALE_MAP_PROVIDERS
-        supportedGrayscaleMapPackages.forEach { installGrayscaleIconMap(it) }
-    }
-
-    private fun loadInstalledGreyscaleProviders(context: Context): List<String> {
-        val pm = context.packageManager
-        return SUPPORTED_GRAYSCALE_MAP_PROVIDERS.filter {
-            try {
-                pm.getPackageInfo(it, 0)
-                true
-            } catch (e: PackageManager.NameNotFoundException) {
-                false
-            }
-        }
-    }
-
-    private fun loadInstalledPacks(context: Context): List<ResolveInfo> {
-        val packs = mutableListOf<ResolveInfo>()
-        val pm = context.packageManager
-        var intent = Intent("org.adw.ActivityStarter.THEMES")
-        val adwPacks = pm.queryIntentActivities(intent, 0)
-        packs.addAll(adwPacks)
-        intent = Intent("com.novalauncher.THEME")
-        val novaPacks = pm.queryIntentActivities(intent, 0)
-        novaPacks.forEach {
-            if (packs.none { p -> p.activityInfo.packageName == it.activityInfo.packageName }) packs.add(
-                it
-            )
-        }
-        packs.sortWith(ResolveInfo.DisplayNameComparator(pm))
-        return packs
-    }
-
-    private fun installIconPack(iconPack: IconPack) {
-        val pkgName = iconPack.packageName
-
-        val icons = mutableListOf<IconPackIcon>()
-        val database = AppDatabase.getInstance(context)
-        database.runInTransaction {
-            try {
-                val res = context.packageManager.getResourcesForApplication(pkgName)
-                val parser: XmlPullParser
-                var inStream: Reader? = null
-                val xmlId = res.getIdentifier("appfilter", "xml", pkgName)
-                val rawId = res.getIdentifier("appfilter", "raw", pkgName)
-                parser = when {
-                    xmlId != 0 -> res.getXml(xmlId)
-                    rawId != 0 -> {
-                        inStream = res.openRawResource(rawId).reader()
-                        XmlPullParserFactory.newInstance().newPullParser().apply {
-                            setInput(inStream)
-                        }
-                    }
-
-                    else -> {
-                        val iconPackContext = context.createPackageContext(
-                            pkgName,
-                            Context.CONTEXT_IGNORE_SECURITY
-                        )
-                        inStream = try {
-                            iconPackContext.assets.open("appfilter.xml").reader()
-                        } catch (e: IOException) {
-                            CrashReporter.logException(e)
-                            Log.e(
-                                "MM20",
-                                "appfilter.xml not found in $pkgName. Searched locations: res/xml/appfilter.xml, res/raw/appfilter.xml, assets/appfilter.xml"
-                            )
-                            return@runInTransaction
-                        }
-                        XmlPullParserFactory.newInstance().newPullParser().apply {
-                            setInput(inStream)
-                        }
-                    }
-                }
-                val iconDao = database.iconDao()
-
-                iconDao.deleteIconPack(iconPack.toDatabaseEntity())
-                iconDao.deleteIcons(iconPack.packageName)
-
-                loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.eventType != XmlPullParser.START_TAG) continue
-                    when (parser.name) {
-                        "item" -> {
-                            val component = parser.getAttributeValue(null, "component")
-                                ?: continue@loop
-                            val drawable = parser.getAttributeValue(null, "drawable")
-                                ?: continue@loop
-                            if (component.length <= 14) continue@loop
-                            val componentName = ComponentName.unflattenFromString(
-                                component.substring(
-                                    14,
-                                    component.lastIndex
-                                )
-                            )
-                                ?: continue@loop
-                            val icon = IconPackIcon(
-                                componentName = componentName,
-                                drawable = drawable,
-                                iconPack = pkgName,
-                                type = "app"
-                            )
-                            icons.add(icon)
-                        }
-
-                        "calendar" -> {
-                            val component = parser.getAttributeValue(null, "component")
-                                ?: continue@loop
-                            val drawable = parser.getAttributeValue(null, "prefix") ?: continue@loop
-                            if (component.length < 14) continue@loop
-                            val componentName = ComponentName.unflattenFromString(
-                                component.substring(
-                                    14,
-                                    component.lastIndex
-                                )
-                            )
-                                ?: continue@loop
-
-                            val icon = IconPackIcon(
-                                componentName = componentName,
-                                drawable = drawable,
-                                iconPack = pkgName,
-                                type = "calendar"
-                            )
-                            icons.add(icon)
-                        }
-
-                        "iconback" -> {
-                            for (i in 0 until parser.attributeCount) {
-                                if (parser.getAttributeName(i).startsWith("img")) {
-                                    val drawable = parser.getAttributeValue(i)
-                                    val icon = IconPackIcon(
-                                        componentName = null,
-                                        drawable = drawable,
-                                        iconPack = pkgName,
-                                        type = "iconback"
-                                    )
-                                    icons.add(icon)
-                                }
-                            }
-                        }
-
-                        "iconupon" -> {
-                            for (i in 0 until parser.attributeCount) {
-                                if (parser.getAttributeName(i).startsWith("img")) {
-                                    val drawable = parser.getAttributeValue(i)
-                                    val icon = IconPackIcon(
-                                        componentName = null,
-                                        drawable = drawable,
-                                        iconPack = pkgName,
-                                        type = "iconupon"
-                                    )
-                                    icons.add(icon)
-                                }
-                            }
-                        }
-
-                        "iconmask" -> {
-                            for (i in 0 until parser.attributeCount) {
-                                if (parser.getAttributeName(i).startsWith("img")) {
-                                    val drawable = parser.getAttributeValue(i)
-                                    val icon = IconPackIcon(
-                                        componentName = null,
-                                        drawable = drawable,
-                                        iconPack = pkgName,
-                                        type = "iconmask"
-                                    )
-                                    icons.add(icon)
-                                }
-                            }
-                        }
-
-                        "scale" -> {
-                            val scale = parser.getAttributeValue(null, "factor")?.toFloatOrNull()
-                                ?: continue@loop
-                            iconPack.scale = scale
-                        }
-                    }
-                    if (icons.size >= 100) {
-                        iconDao.insertAll(icons.map { it.toDatabaseEntity() })
-                        icons.clear()
-                    }
-                }
-
-                if (icons.isNotEmpty()) {
-                    iconDao.insertAll(icons.map { it.toDatabaseEntity() })
-                }
-                iconDao.installIconPack(iconPack.toDatabaseEntity())
-
-                (parser as? XmlResourceParser)?.close()
-                inStream?.close()
-
-                Log.d("MM20", "Icon pack has been installed successfully")
-            } catch (e: PackageManager.NameNotFoundException) {
-                Log.e("MM20", "Could not install icon pack $pkgName: package not found.")
-            } catch (e: XmlPullParserException) {
-                CrashReporter.logException(e)
-            }
-
-        }
-    }
-
-    private fun installGrayscaleIconMap(packageName: String) {
-        val database = AppDatabase.getInstance(context)
-        database.runInTransaction {
-            val iconDao = database.iconDao()
-            try {
-                val resources = context.packageManager.getResourcesForApplication(packageName)
-                val resId = resources.getIdentifier("grayscale_icon_map", "xml", packageName)
-                iconDao.deleteGrayscaleIcons(packageName)
-                if (resId == 0) {
-                    return@runInTransaction
-                }
-                val icons = mutableListOf<IconPackIcon>()
-                val parser = resources.getXml(resId)
-                loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
-                    if (parser.eventType != XmlPullParser.START_TAG) continue
-                    when (parser.name) {
-                        "icon" -> {
-                            val drawable =
-                                parser.getAttributeResourceValue(null, "drawable", 0).toString()
-                            val pkg = parser.getAttributeValue(null, "package")
-                            val componentName = ComponentName(pkg, pkg)
-                            val icon = IconPackIcon(
-                                drawable = drawable,
-                                componentName = componentName,
-                                iconPack = packageName,
-                                type = "greyscale_icon"
-                            )
-                            icons.add(icon)
-                        }
-                    }
-                    if (icons.size >= 100) {
-                        iconDao.insertAll(icons.map { it.toDatabaseEntity() })
-                        icons.clear()
-                    }
-                }
-                if (icons.isNotEmpty()) {
-                    iconDao.insertAll(icons.map { it.toDatabaseEntity() })
-                }
-            } catch (e: PackageManager.NameNotFoundException) {
-                iconDao.deleteGrayscaleIcons(packageName)
-                return@runInTransaction
-            }
-
-        }
-    }
-}
-
-private const val PREFERENCE_NAME = "icon_pack"
-private const val KEY_ICON_PACK = "icon_pack"
-private const val KEY_VERSION = "version"
-private const val KEY_ICONSCALE = "iconscale"

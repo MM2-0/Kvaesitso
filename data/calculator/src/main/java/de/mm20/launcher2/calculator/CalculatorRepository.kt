@@ -48,7 +48,7 @@ class CalculatorRepositoryImpl : CalculatorRepository, KoinComponent {
             }
 
             else -> {
-                withContext(Dispatchers.IO) {
+                withContext(Dispatchers.Default) {
                     val exp = Expression(query)
                     if (exp.checkSyntax()) {
                         Calculator(term = query, solution = exp.calculate())

@@ -4,18 +4,39 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.FormatPaint
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
@@ -25,9 +46,11 @@ import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.preferences.Settings.*
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.Settings.IconSettings
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
@@ -36,7 +59,14 @@ import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
-import de.mm20.launcher2.ui.component.preferences.*
+import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
+import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.label
+import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.getTypography
 import kotlinx.coroutines.delay
@@ -217,10 +247,13 @@ fun AppearanceSettingsScreen() {
                     }
                 )
 
-                val iconPack by viewModel.iconPack.observeAsState()
+                val iconPackPackage by viewModel.iconPack.observeAsState()
                 val installedIconPacks by viewModel.installedIconPacks.observeAsState(emptyList())
+                val iconPack by remember {
+                    derivedStateOf { installedIconPacks.firstOrNull { it.packageName == iconPackPackage } }
+                }
                 val items = installedIconPacks.map {
-                    it.name to it.packageName
+                    it.name to it
                 }
                 ListPreference(
                     title = stringResource(R.string.preference_icon_pack),
@@ -228,12 +261,48 @@ fun AppearanceSettingsScreen() {
                     summary = if (items.size <= 1) {
                         stringResource(R.string.preference_icon_pack_summary_empty)
                     } else {
-                        items.firstOrNull { iconPack == it.value }?.label ?: "System"
+                        iconPack?.name ?: "System"
                     },
                     enabled = installedIconPacks.size > 1,
                     value = iconPack,
                     onValueChanged = {
-                        if (it != null) viewModel.setIconPack(it)
+                        if (it != null) viewModel.setIconPack(it.packageName)
+                    },
+                    itemLabel = {
+                        Column(
+                            verticalArrangement = Arrangement.Center,
+                        ) {
+                            Text(
+                                text = it.label,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                            )
+                            if (it.value?.themed == true) {
+                                Surface(
+                                    shape = MaterialTheme.shapes.extraSmall,
+                                    color = MaterialTheme.colorScheme.tertiary,
+                                    modifier = Modifier.padding(top = 8.dp)
+                                ) {
+                                    Row(
+                                        modifier = Modifier.padding(horizontal = 4.dp),
+                                        verticalAlignment = Alignment.CenterVertically,
+                                    ) {
+                                        Icon(
+                                            modifier = Modifier
+                                                .size(20.dp)
+                                                .padding(end = 4.dp),
+                                            imageVector = Icons.Rounded.FormatPaint,
+                                            contentDescription = null,
+                                        )
+                                        Text(
+                                            text = stringResource(R.string.icon_pack_dynamic_colors),
+                                            style = MaterialTheme.typography.labelSmall
+                                        )
+                                    }
+                                }
+                            }
+
+                        }
                     }
                 )
             }

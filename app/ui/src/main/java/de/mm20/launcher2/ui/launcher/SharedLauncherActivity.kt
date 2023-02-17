@@ -53,6 +53,7 @@ import de.mm20.launcher2.ui.gestures.GestureHandler
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.FailedGestureSheet
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
@@ -76,8 +77,7 @@ abstract class SharedLauncherActivity(
 ) : BaseActivity() {
 
     private val viewModel: LauncherScaffoldVM by viewModels()
-
-    private val globalActionsService: GlobalActionsService by inject()
+    private val searchVM: SearchVM by viewModels()
 
     internal val homeTransitionManager = HomeTransitionManager()
 
@@ -319,6 +319,20 @@ abstract class SharedLauncherActivity(
                     }
                 }
             }
+        }
+    }
+
+    private var pauseTime = 0L
+    override fun onPause() {
+        super.onPause()
+        pauseTime = System.currentTimeMillis()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (System.currentTimeMillis() - pauseTime > 60000) {
+            viewModel.closeSearch()
+            searchVM.search("")
         }
     }
 
