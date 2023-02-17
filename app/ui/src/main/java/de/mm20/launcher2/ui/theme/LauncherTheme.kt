@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.coerceAtMost
 import androidx.compose.ui.unit.dp
@@ -136,9 +137,15 @@ fun colorSchemeAsState(
             if (Build.VERSION.SDK_INT >= 31) {
                 return remember(darkTheme) {
                     mutableStateOf(
-                        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
-                            context
-                        )
+                        if (darkTheme) {
+                            dynamicDarkColorScheme(context).copy(
+                                outlineVariant = Color(context.getColor(android.R.color.system_neutral2_700))
+                            )
+                        } else {
+                            dynamicLightColorScheme(context).copy(
+                                outlineVariant = Color(context.getColor(android.R.color.system_neutral2_200))
+                            )
+                        }
                     )
                 }
             }

@@ -36,6 +36,17 @@ class WeatherWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val compactMode = dataStore.data.map { it.weather.compactMode }.asLiveData()
+    fun setCompactMode(compactMode: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setWeather(it.weather.toBuilder().setCompactMode(compactMode))
+                    .build()
+            }
+        }
+    }
+
     val weatherProvider = repository.selectedProvider.asLiveData()
     fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
         repository.selectProvider(provider)

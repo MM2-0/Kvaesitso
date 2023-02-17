@@ -55,6 +55,14 @@ fun WeatherWidgetSettingsScreen() {
                         viewModel.setImperialUnits(it)
                     }
                 )
+                val compactMode by viewModel.compactMode.observeAsState(false)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_compact_mode),
+                    summary = stringResource(R.string.preference_compact_mode_summary),
+                    value = compactMode,
+                    onValueChanged = {
+                        viewModel.setCompactMode(it)
+                    })
             }
         }
         item {
