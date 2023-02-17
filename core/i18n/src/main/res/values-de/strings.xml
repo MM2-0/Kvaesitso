@@ -345,8 +345,8 @@
     <string name="preference_search_bar_style_summary">Erscheinungsbild der Suchleiste anpassen</string>
     <string name="preference_search_bar_auto_focus">Tastatur öffnen</string>
     <string name="preference_search_bar_auto_focus_summary">Bildschirmtastatur beim Öffnen der Suche automatisch einblenden</string>
-    <string name="preference_search_bar_launch_on_enter">Enter zum Starten</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Erste App oder Aktivität beim Berühren der Eingabetaste starten</string>
+    <string name="preference_search_bar_launch_on_enter">Eingabe zum Starten</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Erste App oder Schnellaktion beim Berühren der Fertig-Taste starten</string>
     <string name="preference_wikipedia_customurl">Wikipedia-URL</string>
     <string name="music_widget_default_title">%1$s spielt Medien</string>
     <string name="music_widget_no_data">Bisher wurden keine Medien abgespielt</string>
