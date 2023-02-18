@@ -67,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
@@ -555,6 +556,7 @@ fun PullDownScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },

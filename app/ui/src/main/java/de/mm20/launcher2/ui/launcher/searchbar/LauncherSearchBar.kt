@@ -36,6 +36,7 @@ fun LauncherSearchBar(
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
+    highlightedAction: SearchAction?,
     showHiddenItemsButton: Boolean = false,
     reverse: Boolean = false,
     darkColors: Boolean = false,
@@ -78,7 +79,7 @@ fun LauncherSearchBar(
             SearchBarMenu(searchBarValue = _value, onSearchBarValueChange = onValueChange)
         },
         actions = {
-            SearchBarActions(actions = actions, reverse = reverse)
+            SearchBarActions(actions = actions, reverse = reverse, highlightedAction = highlightedAction)
         },
         focusRequester = focusRequester,
         onFocus = { onFocusChange(true) },

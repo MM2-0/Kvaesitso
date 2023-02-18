@@ -21,6 +21,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.LauncherScaffoldVM
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
@@ -199,6 +200,7 @@ fun AssistantScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = true,
             value = { value },
             onValueChange = { searchVM.search(it) },

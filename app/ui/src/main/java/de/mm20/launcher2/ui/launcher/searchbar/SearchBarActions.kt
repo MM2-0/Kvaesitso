@@ -11,8 +11,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,6 +30,7 @@ import de.mm20.launcher2.ui.settings.SettingsActivity
 fun ColumnScope.SearchBarActions(
     modifier: Modifier = Modifier,
     actions: List<SearchAction>,
+    highlightedAction: SearchAction?,
     reverse: Boolean = false,
 ) {
     val context = LocalContext.current
@@ -42,6 +45,16 @@ fun ColumnScope.SearchBarActions(
             items(actions) {
                 AssistChip(
                     modifier = Modifier.padding(4.dp),
+                    colors = if (it == highlightedAction) {
+                        AssistChipDefaults.assistChipColors(
+                            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                        )
+                    } else AssistChipDefaults.assistChipColors(),
+                    border = if (it == highlightedAction) {
+                        AssistChipDefaults.assistChipBorder(
+                            borderColor = MaterialTheme.colorScheme.secondary,
+                        )
+                    } else AssistChipDefaults.assistChipBorder(),
                     onClick = {
                         it.start(context)
                     },
@@ -51,24 +64,6 @@ fun ColumnScope.SearchBarActions(
                             action = it
                         )
                     }
-                    /*leadingIcon = {
-                        val icon = it.icon
-                        if (icon == null) {
-                            Icon(
-                                imageVector = Icons.Rounded.Search,
-                                contentDescription = null,
-                                tint = if (it.color == 0) MaterialTheme.colorScheme.primary else Color(
-                                    it.color
-                                )
-                            )
-                        } else {
-                            AsyncImage(
-                                modifier = Modifier.size(24.dp),
-                                model = File(icon),
-                                contentDescription = null
-                            )
-                        }
-                    }*/
                 )
             }
             item {
