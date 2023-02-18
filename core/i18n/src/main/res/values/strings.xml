@@ -632,7 +632,7 @@
     <string name="preference_search_bar_auto_focus">Open keyboard</string>
     <string name="preference_search_bar_auto_focus_summary">Automatically show the keyboard when opening the search</string>
     <string name="preference_search_bar_launch_on_enter">Launch on enter</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Launch first match or quick-action upon tapping done</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Launch first match or quick-action upon tapping go</string>
     <string name="preference_hidden_items">Hidden search results</string>
     <string name="preference_hidden_items_summary">Manage hidden apps and search results</string>
     <string name="preference_screen_tags">Tags</string>
