@@ -48,7 +48,7 @@ class DynamicClockIconProvider(val context: Context, private val themed: Boolean
         val clockConfig = if (themed && searchable.`package` == "com.google.android.deskclock") {
             ClockIconConfig(
                 hourLayer = 0,
-                minuteLayer = 1,
+                minuteLayer = 2,
                 secondLayer = -1,
                 defaultHour = defaultHour,
                 defaultMinute = defaultMinute,
