@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -15,6 +16,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.CalendarEvent
@@ -27,6 +29,7 @@ import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -37,6 +40,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -46,6 +50,9 @@ class SearchVM : ViewModel(), KoinComponent {
     private val favoritesRepository: FavoritesRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
+
+    private val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val searchService: SearchService by inject()
 
@@ -71,27 +78,22 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val hiddenItemKeys = favoritesRepository
         .getHiddenItemKeys()
-        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
+
+    val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
         search("", true)
     }
 
-    fun getBestMatch(): SavableSearchable? = if (isSearchEmpty.value != false) null else listOf(
-        appResults,
-        appShortcutResults,
-        contactResults,
-        calendarResults,
-        fileResults
-    ).firstNotNullOfOrNull { it.value?.firstOrNull() }
-
     fun launchBestMatchOrAction(context: Context) {
-        val launched = getBestMatch()?.launch(context, null)
-
-        if (launched != true) {
-            searchActionResults.value
-                ?.firstOrNull()
-                ?.start(context)
+        val bestMatch = bestMatch.value
+        if (bestMatch is SavableSearchable) {
+            bestMatch.launch(context, null)
+            return
+        } else if (bestMatch is SearchAction) {
+            bestMatch.start(context)
+            return
         }
     }
 
@@ -101,6 +103,7 @@ class SearchVM : ViewModel(), KoinComponent {
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
+        bestMatch.value = null
 
         try {
             searchJob?.cancel()
@@ -153,6 +156,20 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is SearchAction -> actions.add(r)
                             }
                         }
+                        if (query.isNotEmpty() && launchOnEnter.value)  {
+                            bestMatch.value = listOf(
+                                apps,
+                                workApps,
+                                shortcuts,
+                                files,
+                                contacts,
+                                events,
+                                wikipedia,
+                                website,
+                                actions
+                            ).firstNotNullOfOrNull { it.firstOrNull() }
+                        }
+
                         searchActionResults.value = actions
                         appResults.value = apps
                         workAppResults.value = workApps

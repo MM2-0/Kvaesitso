@@ -94,6 +94,8 @@ fun SearchColumn(
     val website by viewModel.websiteResults.observeAsState(emptyList())
     val hiddenResults by viewModel.hiddenResults.observeAsState(emptyList())
 
+    val bestMatch by viewModel.bestMatch
+
     val isSearchEmpty by viewModel.isSearchEmpty.observeAsState(true)
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
@@ -192,7 +194,7 @@ fun SearchColumn(
                         }
                     }
                 },
-                highlightedItem = viewModel.getBestMatch()
+                highlightedItem = bestMatch as? SavableSearchable
             )
         }
         GridResults(
@@ -243,7 +245,7 @@ fun SearchColumn(
                     }
                 }
             } else null,
-            highlightedItem = viewModel.getBestMatch()
+            highlightedItem = bestMatch as? SavableSearchable
         )
         ListResults(
             before = if (missingShortcutsPermission && !isSearchEmpty) {
@@ -270,7 +272,7 @@ fun SearchColumn(
             items = appShortcuts.toImmutableList(),
             reverse = reverse,
             key = "shortcuts",
-            highlightedItem = viewModel.getBestMatch()
+            highlightedItem = bestMatch as? SavableSearchable
         )
         for (conv in unitConverter) {
             SingleResult {
@@ -304,7 +306,7 @@ fun SearchColumn(
             items = events.toImmutableList(),
             reverse = reverse,
             key = "events",
-            highlightedItem = viewModel.getBestMatch()
+            highlightedItem = bestMatch as? SavableSearchable
         )
         ListResults(
             before = if (missingContactsPermission && !isSearchEmpty) {
@@ -328,7 +330,7 @@ fun SearchColumn(
             items = contacts.toImmutableList(),
             reverse = reverse,
             key = "contacts",
-            highlightedItem = viewModel.getBestMatch()
+            highlightedItem = bestMatch as? SavableSearchable
         )
         for (wiki in wikipedia) {
             SingleResult {
@@ -362,7 +364,7 @@ fun SearchColumn(
             items = files.toImmutableList(),
             reverse = reverse,
             key = "files",
-            highlightedItem = viewModel.getBestMatch()
+            highlightedItem = bestMatch as? SavableSearchable
         )
     }
 
