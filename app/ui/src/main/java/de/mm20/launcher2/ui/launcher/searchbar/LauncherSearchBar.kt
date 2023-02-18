@@ -39,7 +39,7 @@ fun LauncherSearchBar(
     showHiddenItemsButton: Boolean = false,
     reverse: Boolean = false,
     darkColors: Boolean = false,
-    onKeyboardActionDone: (KeyboardActionScope.() -> Unit)? = null
+    onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
@@ -83,6 +83,6 @@ fun LauncherSearchBar(
         focusRequester = focusRequester,
         onFocus = { onFocusChange(true) },
         onUnfocus = { onFocusChange(false) },
-        onKeyboardActionDone = onKeyboardActionDone
+        onKeyboardActionGo = onKeyboardActionGo
     )
 }

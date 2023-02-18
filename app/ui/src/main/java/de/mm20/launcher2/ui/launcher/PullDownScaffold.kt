@@ -90,6 +90,7 @@ fun PullDownScaffold(
     bottomSearchBar: Boolean = false,
     reverseSearchResults: Boolean = false,
     fixedSearchBar: Boolean = false,
+    launchOnEnter: Boolean = false
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -395,9 +396,13 @@ fun PullDownScaffold(
                                     }
                                     .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
-                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {{
-                                                if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
-                                            }} else null,
+                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {
+                                                {
+                                                    if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(
+                                                        it
+                                                    )
+                                                }
+                                            } else null,
                                             onLongPress = {
                                                 if (!isWidgetEditMode) gestureManager.dispatchLongPress(
                                                     it
@@ -556,7 +561,9 @@ fun PullDownScaffold(
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,
-            onKeyboardActionDone = { searchVM.launchBestMatch(context) }
+            onKeyboardActionGo = if (launchOnEnter) {
+                { searchVM.launchBestMatch(context) }
+            } else null
         )
 
     }

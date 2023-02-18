@@ -73,21 +73,11 @@ class SearchVM : ViewModel(), KoinComponent {
         .getHiddenItemKeys()
         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(), replay = 1)
 
-    private var launchOnEnter = false
-
     init {
         search("", true)
-        dataStore.data
-            .map { it.searchBar.launchOnEnter }
-            .onEach {
-                launchOnEnter = it
-            }.launchIn(viewModelScope)
     }
 
     fun launchBestMatch(context: Context) {
-        if (!launchOnEnter)
-            return
-
         val launched = listOf(
             appResults,
             appShortcutResults,
