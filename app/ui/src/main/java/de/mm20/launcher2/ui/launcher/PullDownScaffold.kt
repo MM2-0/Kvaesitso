@@ -562,7 +562,7 @@ fun PullDownScaffold(
             style = searchBarStyle,
             reverse = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {
-                { searchVM.launchBestMatch(context) }
+                { searchVM.launchBestMatchOrAction(context) }
             } else null
         )
 

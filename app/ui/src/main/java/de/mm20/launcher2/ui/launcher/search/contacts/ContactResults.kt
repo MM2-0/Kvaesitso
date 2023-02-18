@@ -18,6 +18,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -60,7 +62,8 @@ fun ColumnScope.ContactResults(reverse: Boolean = false) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
-                    reverse = reverse
+                    reverse = reverse,
+                    highlightedItem = viewModel.getBestMatch() as? Contact
                 )
             }
         }

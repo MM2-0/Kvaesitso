@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -61,7 +61,8 @@ fun ColumnScope.CalendarResults(reverse: Boolean = false) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(12.dp),
-                    reverse = reverse
+                    reverse = reverse,
+                    highlightedItem = viewModel.getBestMatch() as? CalendarEvent
                 )
             }
         }

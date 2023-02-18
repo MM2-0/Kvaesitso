@@ -191,7 +191,8 @@ fun SearchColumn(
                             }
                         }
                     }
-                }
+                },
+                highlightedItem = viewModel.getBestMatch()
             )
         }
         GridResults(
@@ -241,7 +242,8 @@ fun SearchColumn(
                         )
                     }
                 }
-            } else null
+            } else null,
+            highlightedItem = viewModel.getBestMatch()
         )
         ListResults(
             before = if (missingShortcutsPermission && !isSearchEmpty) {
@@ -267,7 +269,8 @@ fun SearchColumn(
             } else null,
             items = appShortcuts.toImmutableList(),
             reverse = reverse,
-            key = "shortcuts"
+            key = "shortcuts",
+            highlightedItem = viewModel.getBestMatch()
         )
         for (conv in unitConverter) {
             SingleResult {
@@ -300,7 +303,8 @@ fun SearchColumn(
             } else null,
             items = events.toImmutableList(),
             reverse = reverse,
-            key = "events"
+            key = "events",
+            highlightedItem = viewModel.getBestMatch()
         )
         ListResults(
             before = if (missingContactsPermission && !isSearchEmpty) {
@@ -323,7 +327,8 @@ fun SearchColumn(
             } else null,
             items = contacts.toImmutableList(),
             reverse = reverse,
-            key = "contacts"
+            key = "contacts",
+            highlightedItem = viewModel.getBestMatch()
         )
         for (wiki in wikipedia) {
             SingleResult {
@@ -356,7 +361,8 @@ fun SearchColumn(
             } else null,
             items = files.toImmutableList(),
             reverse = reverse,
-            key = "files"
+            key = "files",
+            highlightedItem = viewModel.getBestMatch()
         )
     }
 
@@ -373,6 +379,7 @@ fun LazyListScope.GridResults(
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
+    highlightedItem: SavableSearchable?
 ) {
     if (items.isEmpty() && before == null && after == null) return
 
@@ -410,6 +417,7 @@ fun LazyListScope.GridResults(
                     (it * columns + columns).coerceAtMost(items.size)
                 ),
                 columns = columns,
+                highlightedItem = highlightedItem
             )
         }
     }
@@ -433,6 +441,7 @@ fun GridRow(
     items: ImmutableList<SavableSearchable>,
     columns: Int,
     showLabels: Boolean = LocalGridSettings.current.showLabels,
+    highlightedItem: SavableSearchable?
 ) {
 
     Row(
@@ -444,7 +453,8 @@ fun GridRow(
                     .weight(1f)
                     .padding(4.dp, 8.dp),
                 item = item,
-                showLabels = showLabels
+                showLabels = showLabels,
+                highlight = item.key == highlightedItem?.key
             )
         }
         for (i in 0 until columns - items.size) {
@@ -459,6 +469,7 @@ fun LazyListScope.ListResults(
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
+    highlightedItem: SavableSearchable?
 ) {
     if (before != null) {
         item(key = "$key-before") {
@@ -488,6 +499,7 @@ fun LazyListScope.ListResults(
                     bottom = if (if (reverse) it == 0 else it == items.size - 1) 8.dp else 4.dp,
                 ),
                 item = items[it],
+                highlight = items[it].key == highlightedItem?.key
             )
         }
     }
@@ -508,6 +520,7 @@ fun LazyListScope.ListResults(
 fun ListRow(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
+    highlight: Boolean
 ) {
     Box(
         modifier = modifier.padding(
@@ -518,7 +531,8 @@ fun ListRow(
         ListItem(
             modifier = Modifier
                 .fillMaxWidth(),
-            item = item
+            item = item,
+            highlight = highlight
         )
     }
 }

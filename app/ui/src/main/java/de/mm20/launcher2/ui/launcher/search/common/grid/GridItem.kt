@@ -4,12 +4,16 @@ import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
@@ -45,7 +49,12 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels: Boolean = true) {
+fun GridItem(
+    modifier: Modifier = Modifier,
+    item: SavableSearchable,
+    showLabels: Boolean = true,
+    highlight: Boolean = false
+) {
     val viewModel = remember(item.key) { GridItemVM(item) }
 
     val context = LocalContext.current
@@ -72,7 +81,9 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                     return@HandleHomeTransition HomeTransitionParams(
                         bounds
                     ) { _, _ ->
-                        ShapedLauncherIcon(size = LocalGridSettings.current.iconSize.dp, icon = { icon })
+                        ShapedLauncherIcon(
+                            size = LocalGridSettings.current.iconSize.dp,
+                            icon = { icon })
                     }
                 }
                 return@HandleHomeTransition null
@@ -80,24 +91,34 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
         }
 
         val hapticFeedback = LocalHapticFeedback.current
-        ShapedLauncherIcon(
-            modifier = Modifier
-                .onGloballyPositioned {
-                    bounds = it.boundsInWindow()
+
+        Surface(
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = if (highlight) 0.2f else 0f),
+            border = if (highlight) BorderStroke(
+                1.dp,
+                MaterialTheme.colorScheme.outlineVariant
+            ) else null,
+            shape = MaterialTheme.shapes.extraSmall
+        ) {
+            ShapedLauncherIcon(
+                modifier = Modifier
+                    .onGloballyPositioned {
+                        bounds = it.boundsInWindow()
+                    },
+                size = LocalGridSettings.current.iconSize.dp,
+                badge = { badge },
+                icon = { icon },
+                onClick = {
+                    if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                        showPopup = true
+                    }
                 },
-            size = LocalGridSettings.current.iconSize.dp,
-            badge = { badge },
-            icon = { icon },
-            onClick = {
-                if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                onLongClick = {
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                     showPopup = true
                 }
-            },
-            onLongClick = {
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                showPopup = true
-            }
-        )
+            )
+        }
         if (showLabels) {
             Text(
                 modifier = Modifier
@@ -105,11 +126,12 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                     .padding(top = 8.dp),
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodySmall,
+                style = if (highlight) MaterialTheme.typography.labelMedium else MaterialTheme.typography.bodySmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         }
+
         if (showPopup) {
             ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
         }
@@ -171,6 +193,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Website -> {
                             WebsiteItemGridPopup(
                                 website = searchable,
@@ -182,6 +205,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Wikipedia -> {
                             WikipediaItemGridPopup(
                                 wikipedia = searchable,
@@ -193,6 +217,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Contact -> {
                             ContactItemGridPopup(
                                 contact = searchable,
@@ -204,6 +229,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is File -> {
                             FileItemGridPopup(
                                 file = searchable,
@@ -215,6 +241,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is CalendarEvent -> {
                             CalendarItemGridPopup(
                                 calendar = searchable,
@@ -226,6 +253,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is AppShortcut -> {
                             ShortcutItemGridPopup(
                                 shortcut = searchable,

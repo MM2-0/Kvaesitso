@@ -17,7 +17,11 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 
 @Composable
-fun ListItem(modifier: Modifier = Modifier, item: SavableSearchable) {
+fun ListItem(
+    modifier: Modifier = Modifier,
+    item: SavableSearchable,
+    highlight: Boolean = false
+) {
     var showDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
 

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -18,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -35,13 +35,17 @@ fun ColumnScope.AppShortcutResults(reverse: Boolean = false) {
 
     AnimatedVisibility(shortcuts.isNotEmpty() || (!isSearchEmpty && missingPermission)) {
         LauncherCard(
-            modifier = Modifier
-                .padding(bottom = if (reverse) 0.dp else 8.dp, top = if (reverse) 8.dp else 0.dp)
+            modifier = Modifier.padding(
+                    bottom = if (reverse) 0.dp else 8.dp,
+                    top = if (reverse) 8.dp else 0.dp
+                )
         ) {
             Column {
                 AnimatedVisibility(!isSearchEmpty && missingPermission) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_appshortcuts_search, stringResource(R.string.app_name)),
+                    MissingPermissionBanner(text = stringResource(
+                        R.string.missing_permission_appshortcuts_search,
+                        stringResource(R.string.app_name)
+                    ),
                         onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
                         modifier = Modifier.padding(16.dp),
                         secondaryAction = {
@@ -52,8 +56,7 @@ fun ColumnScope.AppShortcutResults(reverse: Boolean = false) {
                                     stringResource(R.string.turn_off),
                                 )
                             }
-                        }
-                    )
+                        })
                 }
             }
             SearchResultList(
@@ -61,7 +64,8 @@ fun ColumnScope.AppShortcutResults(reverse: Boolean = false) {
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(12.dp),
-                reverse = reverse
+                reverse = reverse,
+                highlightedItem = viewModel.getBestMatch() as? AppShortcut
             )
         }
     }

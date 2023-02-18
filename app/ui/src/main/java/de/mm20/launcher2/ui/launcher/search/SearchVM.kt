@@ -77,15 +77,16 @@ class SearchVM : ViewModel(), KoinComponent {
         search("", true)
     }
 
-    fun launchBestMatch(context: Context) {
-        val launched = listOf(
-            appResults,
-            appShortcutResults,
-            contactResults,
-            calendarResults,
-            fileResults
-        ).firstNotNullOfOrNull { it.value?.firstOrNull() }
-            ?.launch(context, null)
+    fun getBestMatch(): SavableSearchable? = if (isSearchEmpty.value != false) null else listOf(
+        appResults,
+        appShortcutResults,
+        contactResults,
+        calendarResults,
+        fileResults
+    ).firstNotNullOfOrNull { it.value?.firstOrNull() }
+
+    fun launchBestMatchOrAction(context: Context) {
+        val launched = getBestMatch()?.launch(context, null)
 
         if (launched != true) {
             searchActionResults.value

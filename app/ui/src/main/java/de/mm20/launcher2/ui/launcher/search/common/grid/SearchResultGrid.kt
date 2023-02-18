@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.search.common.grid
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,7 +17,8 @@ fun SearchResultGrid(
     modifier: Modifier = Modifier,
     showLabels: Boolean = LocalGridSettings.current.showLabels,
     columns: Int = LocalGridSettings.current.columnCount,
-    reverse: Boolean = false
+    reverse: Boolean = false,
+    highlightedItem: SavableSearchable? = null
 ) {
     Column(
         modifier = modifier
@@ -35,7 +37,8 @@ fun SearchResultGrid(
                                 .weight(1f)
                                 .padding(4.dp, 8.dp),
                             item = item,
-                            showLabels = showLabels
+                            showLabels = showLabels,
+                            highlight = item.key == highlightedItem?.key
                         )
                     } else {
                         Spacer(modifier = Modifier.weight(1f))
