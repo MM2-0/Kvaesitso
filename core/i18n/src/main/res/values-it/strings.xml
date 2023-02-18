@@ -575,4 +575,6 @@
     <string name="preference_layout_fixed_rotation">Rotazione schermo fissa</string>
     <string name="preference_layout_fixed_rotation_summary">Blocca rotazione dello schermo in modalità verticale</string>
     <string name="icon_pack_dynamic_colors">Colori dinamici</string>
+    <string name="preference_compact_mode">Modalità compatta</string>
+    <string name="preference_compact_mode_summary">Nascondi previsioni orarie e giornaliere</string>
 </resources>
