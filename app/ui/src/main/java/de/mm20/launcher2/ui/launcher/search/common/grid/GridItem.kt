@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -32,6 +33,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -46,6 +48,7 @@ import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.LocalIconShape
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -108,14 +111,15 @@ fun GridItem(
         }
 
         val hapticFeedback = LocalHapticFeedback.current
+        val iconShape = LocalIconShape.current
 
         Box(
             modifier = if (highlight) {
                 Modifier
-                    .border(1.dp, MaterialTheme.colorScheme.secondary, MaterialTheme.shapes.small)
+                    .border(Dp.Hairline, MaterialTheme.colorScheme.secondary, iconShape)
                     .background(
                         MaterialTheme.colorScheme.secondaryContainer,
-                        MaterialTheme.shapes.small
+                        iconShape
                     )
             } else Modifier,
         ) {
