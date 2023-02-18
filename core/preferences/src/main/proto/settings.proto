@@ -92,6 +92,7 @@ message Settings {
     }
     WeatherProvider provider = 1;
     bool imperial_units = 2;
+    bool compact_mode = 3;
   }
   WeatherSettings weather = 5;
 

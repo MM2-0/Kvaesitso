@@ -106,6 +106,8 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
 
+    val compactMode = dataStore.data.map { it.weather.compactMode }.asLiveData()
+
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)
     }

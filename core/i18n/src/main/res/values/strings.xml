@@ -450,6 +450,8 @@
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
+    <string name="preference_compact_mode">Compact mode</string>
+    <string name="preference_compact_mode_summary">Hide rows displaying hourly and daily forecasts</string>
     <string name="preference_category_debug">Debug</string>
     <string name="preference_category_debug_tools">Tools</string>
     <string name="preference_debug_cleanup_database">Clean up database</string>
