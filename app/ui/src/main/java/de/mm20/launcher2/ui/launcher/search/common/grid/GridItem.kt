@@ -4,16 +4,26 @@ import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
@@ -28,7 +38,13 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.Contact
+import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toDp
@@ -61,6 +77,7 @@ fun GridItem(
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
+
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
         val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
@@ -92,16 +109,19 @@ fun GridItem(
 
         val hapticFeedback = LocalHapticFeedback.current
 
-        Surface(
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = if (highlight) 0.2f else 0f),
-            border = if (highlight) BorderStroke(
-                1.dp,
-                MaterialTheme.colorScheme.outlineVariant
-            ) else null,
-            shape = MaterialTheme.shapes.extraSmall
+        Box(
+            modifier = if (highlight) {
+                Modifier
+                    .border(1.dp, MaterialTheme.colorScheme.secondary, MaterialTheme.shapes.small)
+                    .background(
+                        MaterialTheme.colorScheme.secondaryContainer,
+                        MaterialTheme.shapes.small
+                    )
+            } else Modifier,
         ) {
             ShapedLauncherIcon(
                 modifier = Modifier
+                    .padding(4.dp)
                     .onGloballyPositioned {
                         bounds = it.boundsInWindow()
                     },
@@ -123,10 +143,10 @@ fun GridItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(vertical = 4.dp),
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
-                style = if (highlight) MaterialTheme.typography.labelMedium else MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodySmall,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -180,6 +200,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                             x = ((1 - animationProgress) * origin.left).toDp() - 16.dp * (1 - animationProgress),
                         )
                         .wrapContentSize()
+                        .padding(4.dp)
                 ) {
                     when (searchable) {
                         is LauncherApp -> {

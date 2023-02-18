@@ -33,6 +33,7 @@ fun ListItem(
             .onGloballyPositioned {
                 bounds = it.boundsInWindow()
             },
+        highlight = highlight,
         raised = showDetails
     ) {
         when (item) {
