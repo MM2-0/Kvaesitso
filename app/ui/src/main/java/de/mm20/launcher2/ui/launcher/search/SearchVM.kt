@@ -94,9 +94,7 @@ class SearchVM : ViewModel(), KoinComponent {
             contactResults,
             calendarResults,
             fileResults
-        ).map { it.value ?: emptyList() }
-            .flatten()
-            .firstOrNull()
+        ).firstNotNullOfOrNull { it.value?.firstOrNull() }
             ?.launch(context, null)
 
         if (launched != true) {
