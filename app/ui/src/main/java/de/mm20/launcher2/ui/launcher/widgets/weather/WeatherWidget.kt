@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -234,7 +235,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
             )
             Text(
                 text = forecast.condition,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.labelMedium,
             )
             AnimatedWeatherIcon(
                 modifier = Modifier.padding(
@@ -270,7 +271,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
                     text = "${forecast.humidity.roundToInt()} %",
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -302,7 +303,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     } else {
                         windDirectionAsWord(forecast.windDirection)
                     },
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -318,7 +319,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
                     text = formatPrecipitation(imperialUnits, forecast),
-                    style = MaterialTheme.typography.labelMedium
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -357,7 +358,7 @@ fun WeatherTimeSelector(
                 Column(
                     modifier = Modifier
                         .clickable { onTimeSelected(idx) }
-                        .padding(6.dp),
+                        .padding(4.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceEvenly
                 ) {
@@ -368,14 +369,14 @@ fun WeatherTimeSelector(
                     )
                     Text(
                         text = dateFormat.format(fc.timestamp),
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelSmall,
                         softWrap = false,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                     Text(
                         text = "${convertTemperature(imperialUnits, fc.temperature)}°",
                         softWrap = false,
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelSmall,
                         modifier = Modifier.align(Alignment.CenterHorizontally)
                     )
                 }
@@ -415,14 +416,14 @@ fun WeatherDaySelector(
                 Row(
                     modifier = Modifier
                         .clickable { onDaySelected(idx) }
-                        .padding(6.dp),
+                        .padding(4.dp),
                     horizontalArrangement = Arrangement.SpaceAround,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     WeatherIcon(icon = weatherIconById(day.icon))
                     Text(
                         text = dateFormat.format(day.timestamp),
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelSmall,
                         softWrap = false,
                         modifier = Modifier.padding(start = 12.dp, end = 6.dp)
                     )
@@ -434,7 +435,7 @@ fun WeatherDaySelector(
                             )
                         }° / ${convertTemperature(imperialUnits, day.maxTemp)}°",
                         softWrap = false,
-                        style = MaterialTheme.typography.labelMedium,
+                        style = MaterialTheme.typography.labelSmall,
                     )
                 }
             }
