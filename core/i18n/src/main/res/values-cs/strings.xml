@@ -575,4 +575,6 @@
     <string name="preference_layout_fixed_rotation_summary">Uzamknout rotaci obrazovky na režim na výšku</string>
     <string name="preference_layout_fixed_rotation">Pevná rotace obrazovky</string>
     <string name="icon_pack_dynamic_colors">Dynamické barvy</string>
+    <string name="preference_compact_mode">Kompaktní režim</string>
+    <string name="preference_compact_mode_summary">Skrýt hodinovou a denní předpověď</string>
 </resources>
