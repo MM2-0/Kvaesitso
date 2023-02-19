@@ -1,10 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
@@ -27,7 +25,6 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -51,25 +48,25 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val searchService: SearchService by inject()
 
-    val searchQuery = MutableLiveData("")
-    val isSearchEmpty = MutableLiveData(true)
+    val searchQuery = mutableStateOf("")
+    val isSearchEmpty = mutableStateOf(true)
 
-    val appResults = MutableLiveData<List<LauncherApp>>(emptyList())
-    val workAppResults = MutableLiveData<List<LauncherApp>>(emptyList())
-    val appShortcutResults = MutableLiveData<List<AppShortcut>>(emptyList())
-    val fileResults = MutableLiveData<List<File>>(emptyList())
-    val contactResults = MutableLiveData<List<Contact>>(emptyList())
-    val calendarResults = MutableLiveData<List<CalendarEvent>>(emptyList())
-    val wikipediaResults = MutableLiveData<List<Wikipedia>>(emptyList())
-    val websiteResults = MutableLiveData<List<Website>>(emptyList())
-    val calculatorResults = MutableLiveData<List<Calculator>>(emptyList())
-    val unitConverterResults = MutableLiveData<List<UnitConverter>>(emptyList())
-    val searchActionResults = MutableLiveData<List<SearchAction>>(emptyList())
+    val appResults = mutableStateOf<List<LauncherApp>>(emptyList())
+    val workAppResults = mutableStateOf<List<LauncherApp>>(emptyList())
+    val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
+    val fileResults = mutableStateOf<List<File>>(emptyList())
+    val contactResults = mutableStateOf<List<Contact>>(emptyList())
+    val calendarResults = mutableStateOf<List<CalendarEvent>>(emptyList())
+    val wikipediaResults = mutableStateOf<List<Wikipedia>>(emptyList())
+    val websiteResults = mutableStateOf<List<Website>>(emptyList())
+    val calculatorResults = mutableStateOf<List<Calculator>>(emptyList())
+    val unitConverterResults = mutableStateOf<List<UnitConverter>>(emptyList())
+    val searchActionResults = mutableStateOf<List<SearchAction>>(emptyList())
 
-    val hiddenResults = MutableLiveData<List<SavableSearchable>>(emptyList())
+    val hiddenResults = mutableStateOf<List<SavableSearchable>>(emptyList())
 
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
-    val hideFavorites = MutableLiveData(false)
+    val hideFavorites = mutableStateOf(false)
 
     private val hiddenItemKeys = favoritesRepository
         .getHiddenItemKeys()
@@ -104,7 +101,7 @@ class SearchVM : ViewModel(), KoinComponent {
             searchJob?.cancel()
         } catch (_: CancellationException) {
         }
-        hideFavorites.postValue(query.isNotEmpty())
+        hideFavorites.value = query.isNotEmpty()
         searchJob = viewModelScope.launch {
             dataStore.data.collectLatest {
                 searchService.search(

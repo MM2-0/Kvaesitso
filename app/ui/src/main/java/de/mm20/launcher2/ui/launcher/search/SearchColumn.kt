@@ -80,23 +80,23 @@ fun SearchColumn(
 
     var showWorkProfileApps by remember { mutableStateOf(false) }
 
-    val hideFavs by viewModel.hideFavorites.observeAsState(true)
+    val hideFavs by viewModel.hideFavorites
     val favoritesEnabled by viewModel.favoritesEnabled.collectAsState(false)
-    val apps by viewModel.appResults.observeAsState(emptyList())
-    val workApps by viewModel.workAppResults.observeAsState(emptyList())
-    val appShortcuts by viewModel.appShortcutResults.observeAsState(emptyList())
-    val contacts by viewModel.contactResults.observeAsState(emptyList())
-    val files by viewModel.fileResults.observeAsState(emptyList())
-    val events by viewModel.calendarResults.observeAsState(emptyList())
-    val unitConverter by viewModel.unitConverterResults.observeAsState(emptyList())
-    val calculator by viewModel.calculatorResults.observeAsState(emptyList())
-    val wikipedia by viewModel.wikipediaResults.observeAsState(emptyList())
-    val website by viewModel.websiteResults.observeAsState(emptyList())
-    val hiddenResults by viewModel.hiddenResults.observeAsState(emptyList())
+    val apps by viewModel.appResults
+    val workApps by viewModel.workAppResults
+    val appShortcuts by viewModel.appShortcutResults
+    val contacts by viewModel.contactResults
+    val files by viewModel.fileResults
+    val events by viewModel.calendarResults
+    val unitConverter by viewModel.unitConverterResults
+    val calculator by viewModel.calculatorResults
+    val wikipedia by viewModel.wikipediaResults
+    val website by viewModel.websiteResults
+    val hiddenResults by viewModel.hiddenResults
 
     val bestMatch by viewModel.bestMatch
 
-    val isSearchEmpty by viewModel.isSearchEmpty.observeAsState(true)
+    val isSearchEmpty by viewModel.isSearchEmpty
 
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)

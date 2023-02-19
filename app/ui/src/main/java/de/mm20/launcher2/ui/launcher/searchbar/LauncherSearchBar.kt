@@ -49,7 +49,7 @@ fun LauncherSearchBar(
 
     val searchVM: SearchVM = viewModel()
 
-    val hiddenItems by searchVM.hiddenResults.observeAsState(emptyList())
+    val hiddenItems by searchVM.hiddenResults
 
     LaunchedEffect(focused) {
         if (focused) focusRequester.requestFocus()

@@ -154,7 +154,7 @@ fun AssistantScaffold(
     }
 
     val searchVM: SearchVM = viewModel()
-    val actions by searchVM.searchActionResults.observeAsState(emptyList())
+    val actions by searchVM.searchActionResults
     val webSearchPadding by animateDpAsState(
         if (actions.isEmpty()) 0.dp else 48.dp
     )
@@ -174,7 +174,7 @@ fun AssistantScaffold(
             state = searchState
         )
 
-        val value by searchVM.searchQuery.observeAsState("")
+        val value by searchVM.searchQuery
 
         val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)

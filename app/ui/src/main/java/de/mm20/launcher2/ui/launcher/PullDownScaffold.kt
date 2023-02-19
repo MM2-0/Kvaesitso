@@ -98,7 +98,7 @@ fun PullDownScaffold(
 
     val density = LocalDensity.current
 
-    val actions by searchVM.searchActionResults.observeAsState(emptyList())
+    val actions by searchVM.searchActionResults
 
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
@@ -520,7 +520,7 @@ fun PullDownScaffold(
             (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
         )
 
-        val value by searchVM.searchQuery.observeAsState("")
+        val value by searchVM.searchQuery
 
         val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
