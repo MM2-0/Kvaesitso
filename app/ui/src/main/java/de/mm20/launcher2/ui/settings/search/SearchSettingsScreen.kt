@@ -181,14 +181,24 @@ fun SearchSettingsScreen() {
         }
         item {
             val autoFocus by viewModel.autoFocus.observeAsState()
+            val launchOnEnter by viewModel.launchOnEnter.observeAsState()
             PreferenceCategory {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_auto_focus),
                     summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
                     value = autoFocus == true,
                     onValueChanged = {
-                    viewModel.setAutoFocus(it)
-                })
+                        viewModel.setAutoFocus(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_launch_on_enter),
+                    summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
+                    value = launchOnEnter == true,
+                    onValueChanged = {
+                        viewModel.setLaunchOnEnter(it)
+                    }
+                )
                 Preference(
                     title = stringResource(R.string.preference_hidden_items),
                     summary = stringResource(R.string.preference_hidden_items_summary),

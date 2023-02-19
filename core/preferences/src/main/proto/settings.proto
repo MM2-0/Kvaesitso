@@ -222,6 +222,7 @@ message Settings {
       Dark = 2;
     }
     SearchBarColors color = 3;
+    bool launch_on_enter = 4;
   }
   SearchBarSettings search_bar = 20;
 

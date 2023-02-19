@@ -69,6 +69,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
@@ -503,6 +504,7 @@ fun PagerScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },

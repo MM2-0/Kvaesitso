@@ -15,6 +15,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActionScope
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
@@ -34,6 +37,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
@@ -54,6 +58,7 @@ fun SearchBar(
     darkColors: Boolean = false,
     menu: @Composable RowScope.() -> Unit = {},
     actions: @Composable ColumnScope.() -> Unit = {},
+    onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
 
     val transition = updateTransition(level, label = "Searchbar")
@@ -171,7 +176,17 @@ fun SearchBar(
                             singleLine = true,
                             value = value,
                             onValueChange = onValueChange,
-                            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
+                            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                            keyboardOptions = KeyboardOptions(
+                                imeAction = if (onKeyboardActionGo == null) {
+                                    ImeAction.Search
+                                } else {
+                                    ImeAction.Go
+                                }
+                            ),
+                            keyboardActions = KeyboardActions(
+                                onGo = onKeyboardActionGo
+                            )
                         )
                     }
                     Row(

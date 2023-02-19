@@ -4,13 +4,28 @@ import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.absoluteOffset
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -18,14 +33,22 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.data.*
+import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.data.Contact
+import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.component.LauncherCard
+import de.mm20.launcher2.ui.component.LocalIconShape
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -45,13 +68,19 @@ import kotlinx.coroutines.delay
 
 
 @Composable
-fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels: Boolean = true) {
+fun GridItem(
+    modifier: Modifier = Modifier,
+    item: SavableSearchable,
+    showLabels: Boolean = true,
+    highlight: Boolean = false
+) {
     val viewModel = remember(item.key) { GridItemVM(item) }
 
     val context = LocalContext.current
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
+
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
         val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
@@ -72,7 +101,9 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                     return@HandleHomeTransition HomeTransitionParams(
                         bounds
                     ) { _, _ ->
-                        ShapedLauncherIcon(size = LocalGridSettings.current.iconSize.dp, icon = { icon })
+                        ShapedLauncherIcon(
+                            size = LocalGridSettings.current.iconSize.dp,
+                            icon = { icon })
                     }
                 }
                 return@HandleHomeTransition null
@@ -80,29 +111,42 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
         }
 
         val hapticFeedback = LocalHapticFeedback.current
-        ShapedLauncherIcon(
-            modifier = Modifier
-                .onGloballyPositioned {
-                    bounds = it.boundsInWindow()
+        val iconShape = LocalIconShape.current
+
+        Box(
+            modifier = if (highlight) {
+                Modifier
+                    .background(
+                        MaterialTheme.colorScheme.outlineVariant,
+                        iconShape
+                    )
+            } else Modifier,
+        ) {
+            ShapedLauncherIcon(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .onGloballyPositioned {
+                        bounds = it.boundsInWindow()
+                    },
+                size = LocalGridSettings.current.iconSize.dp,
+                badge = { badge },
+                icon = { icon },
+                onClick = {
+                    if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                        showPopup = true
+                    }
                 },
-            size = LocalGridSettings.current.iconSize.dp,
-            badge = { badge },
-            icon = { icon },
-            onClick = {
-                if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                onLongClick = {
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
                     showPopup = true
                 }
-            },
-            onLongClick = {
-                hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                showPopup = true
-            }
-        )
+            )
+        }
         if (showLabels) {
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(vertical = 4.dp),
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
@@ -110,6 +154,7 @@ fun GridItem(modifier: Modifier = Modifier, item: SavableSearchable, showLabels:
                 overflow = TextOverflow.Ellipsis
             )
         }
+
         if (showPopup) {
             ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
         }
@@ -158,6 +203,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                             x = ((1 - animationProgress) * origin.left).toDp() - 16.dp * (1 - animationProgress),
                         )
                         .wrapContentSize()
+                        .padding(4.dp)
                 ) {
                     when (searchable) {
                         is LauncherApp -> {
@@ -171,6 +217,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Website -> {
                             WebsiteItemGridPopup(
                                 website = searchable,
@@ -182,6 +229,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Wikipedia -> {
                             WikipediaItemGridPopup(
                                 wikipedia = searchable,
@@ -193,6 +241,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is Contact -> {
                             ContactItemGridPopup(
                                 contact = searchable,
@@ -204,6 +253,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is File -> {
                             FileItemGridPopup(
                                 file = searchable,
@@ -215,6 +265,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is CalendarEvent -> {
                             CalendarItemGridPopup(
                                 calendar = searchable,
@@ -226,6 +277,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                                 }
                             )
                         }
+
                         is AppShortcut -> {
                             ShortcutItemGridPopup(
                                 shortcut = searchable,

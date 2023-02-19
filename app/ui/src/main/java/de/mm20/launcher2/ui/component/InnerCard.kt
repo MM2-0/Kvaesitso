@@ -8,11 +8,9 @@ import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
@@ -24,40 +22,55 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import kotlin.math.ln
 
 @Composable
 fun InnerCard(
     modifier: Modifier = Modifier,
     raised: Boolean = false,
+    highlight: Boolean = false,
     content: @Composable () -> Unit
 ) {
-    val transition = updateTransition(raised, label = "InnerCard")
+    val transition = updateTransition(InnerCardStyle(raised, highlight), label = "InnerCard")
 
     val absoluteTonalElevation = LocalAbsoluteTonalElevation.current
 
     val elevation by transition.animateDp(label = "elevation", transitionSpec = {
-        tween(250, if (targetState) 250 else 0)
+        tween(250, if (targetState == InnerCardStyle.Raised) 250 else 0)
     }) {
-        if(it) 4.dp else 0.dp
+        if (it == InnerCardStyle.Raised) 2.dp else 0.dp
     }
 
-    val borderWidth by transition.animateDp(label = "borderWidth", transitionSpec = { tween(500) }) {
-        if (it) 0.dp else 1.dp
+    val borderWidth by transition.animateDp(
+        label = "borderWidth",
+        transitionSpec = { tween(500) }) {
+        when (it) {
+            InnerCardStyle.Raised -> 0.dp
+            InnerCardStyle.Highlighted -> 1.dp
+            InnerCardStyle.Default -> 1.dp
+        }
     }
-    val borderColor by transition.animateColor(label = "borderColor", transitionSpec = { tween(500) }) {
-        MaterialTheme.colorScheme.outline.copy(alpha = if (it) 0f else 0.7f)
+    val borderColor by transition.animateColor(
+        label = "borderColor",
+        transitionSpec = { tween(500) }) {
+        when (it) {
+            InnerCardStyle.Raised -> Color.Transparent
+            InnerCardStyle.Highlighted -> MaterialTheme.colorScheme.secondary
+            InnerCardStyle.Default -> MaterialTheme.colorScheme.outlineVariant
+        }
     }
-    val bgAlpha by transition.animateFloat(label = "bgAlpha", transitionSpec = {
-        tween(250, if (targetState) 0 else 250)
+
+    val bgColor by transition.animateColor(label = "bgColor", transitionSpec = {
+        tween(250, if (targetState == InnerCardStyle.Raised) 0 else 250)
     }) {
-        if (it) 1f else 0f
+        if (it == InnerCardStyle.Highlighted) {
+            MaterialTheme.colorScheme.secondaryContainer
+        } else {
+            MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
+        }
     }
 
     val shape = MaterialTheme.shapes.small
-
-    val bgColor = MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
 
     Box(
         modifier = modifier
@@ -66,16 +79,29 @@ fun InnerCard(
             .clip(shape)
             .drawBehind {
                 drawRect(
-                    bgColor.copy(alpha = bgAlpha)
+                    bgColor
                 )
-            }
-        ,
+            },
     ) {
         CompositionLocalProvider(
             LocalAbsoluteTonalElevation provides absoluteTonalElevation
         ) {
             content()
         }
+    }
+}
+
+internal enum class InnerCardStyle {
+    Default,
+    Highlighted,
+    Raised,
+}
+
+internal fun InnerCardStyle(raised: Boolean, highlight: Boolean): InnerCardStyle {
+    return when {
+        raised -> InnerCardStyle.Raised
+        highlight -> InnerCardStyle.Highlighted
+        else -> InnerCardStyle.Default
     }
 }
 

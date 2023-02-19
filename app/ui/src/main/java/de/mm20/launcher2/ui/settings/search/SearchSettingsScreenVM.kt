@@ -151,6 +151,20 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }.asLiveData()
+    fun setLaunchOnEnter(launchOnEnter: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setLaunchOnEnter(launchOnEnter)
+                    )
+                    .build()
+            }
+        }
+    }
+
 
     val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
     val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }.asLiveData()

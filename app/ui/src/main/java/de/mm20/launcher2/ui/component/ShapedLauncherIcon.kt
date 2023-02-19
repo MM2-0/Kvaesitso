@@ -229,13 +229,6 @@ fun ShapedLauncherIcon(
 }
 
 @Composable
-private fun Badge(
-    badge: () -> Badge?
-) {
-
-}
-
-@Composable
 private fun IconLayer(
     layer: LauncherIconLayer,
     size: Dp,

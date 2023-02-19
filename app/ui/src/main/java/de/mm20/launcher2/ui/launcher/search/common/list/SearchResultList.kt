@@ -15,7 +15,8 @@ import de.mm20.launcher2.ui.layout.BottomReversed
 fun SearchResultList(
     items: List<SavableSearchable>,
     modifier: Modifier = Modifier,
-    reverse: Boolean = false
+    reverse: Boolean = false,
+    highlightedItem: SavableSearchable? = null
 ) {
     Column(
         modifier = modifier,
@@ -27,7 +28,8 @@ fun SearchResultList(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(4.dp),
-                    item = item
+                    item = item,
+                    highlight = item.key == highlightedItem?.key
                 )
             }
         }

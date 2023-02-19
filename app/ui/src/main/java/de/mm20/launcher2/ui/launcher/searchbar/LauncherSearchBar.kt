@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.FilledIconButton
@@ -13,9 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
@@ -24,7 +23,6 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
-import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
@@ -38,9 +36,11 @@ fun LauncherSearchBar(
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
+    highlightedAction: SearchAction?,
     showHiddenItemsButton: Boolean = false,
     reverse: Boolean = false,
     darkColors: Boolean = false,
+    onKeyboardActionGo: (KeyboardActionScope.() -> Unit)? = null
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
@@ -50,7 +50,6 @@ fun LauncherSearchBar(
     val searchVM: SearchVM = viewModel()
 
     val hiddenItems by searchVM.hiddenResults.observeAsState(emptyList())
-
 
     LaunchedEffect(focused) {
         if (focused) focusRequester.requestFocus()
@@ -80,10 +79,11 @@ fun LauncherSearchBar(
             SearchBarMenu(searchBarValue = _value, onSearchBarValueChange = onValueChange)
         },
         actions = {
-            SearchBarActions(actions = actions, reverse = reverse)
+            SearchBarActions(actions = actions, reverse = reverse, highlightedAction = highlightedAction)
         },
         focusRequester = focusRequester,
         onFocus = { onFocusChange(true) },
         onUnfocus = { onFocusChange(false) },
+        onKeyboardActionGo = onKeyboardActionGo
     )
 }

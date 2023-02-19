@@ -56,6 +56,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -66,6 +67,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
@@ -89,6 +91,7 @@ fun PullDownScaffold(
     bottomSearchBar: Boolean = false,
     reverseSearchResults: Boolean = false,
     fixedSearchBar: Boolean = false,
+    launchOnEnter: Boolean = false
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -394,9 +397,13 @@ fun PullDownScaffold(
                                     }
                                     .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
-                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {{
-                                                if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
-                                            }} else null,
+                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {
+                                                {
+                                                    if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(
+                                                        it
+                                                    )
+                                                }
+                                            } else null,
                                             onLongPress = {
                                                 if (!isWidgetEditMode) gestureManager.dispatchLongPress(
                                                     it
@@ -518,6 +525,8 @@ fun PullDownScaffold(
         val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
 
+        val context = LocalContext.current
+
         LauncherSearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
@@ -547,12 +556,16 @@ fun PullDownScaffold(
                 viewModel.setSearchbarFocus(it)
             },
             actions = actions,
+            highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,
+            onKeyboardActionGo = if (launchOnEnter) {
+                { searchVM.launchBestMatchOrAction(context) }
+            } else null
         )
 
     }

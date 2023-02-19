@@ -453,7 +453,8 @@ fun SearchBarStylePreference(
                             level = level,
                             style = styles[it],
                             value = previewSearchValue,
-                            onValueChange = {})
+                            onValueChange = {}
+                        )
                     }
                     HorizontalPagerIndicator(pagerState = pagerState)
                 }
