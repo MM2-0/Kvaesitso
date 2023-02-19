@@ -30,8 +30,8 @@ import de.mm20.launcher2.search.data.OwncloudFile
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.search.data.Wikipedia
-import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.SearchActionService
+import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
 import de.mm20.launcher2.websites.WebsiteRepository
 import de.mm20.launcher2.wikipedia.WikipediaRepository
@@ -58,7 +58,7 @@ interface SearchService {
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-    ): Flow<ImmutableList<Searchable>>
+    ): Flow<SearchResults>
 }
 
 internal class SearchServiceImpl(
@@ -85,16 +85,23 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-    ): Flow<ImmutableList<Searchable>> = channelFlow {
-        var searchActionsReady = false
+    ): Flow<SearchResults> = channelFlow {
+        val results = MutableStateFlow(SearchResults())
         supervisorScope {
-            val results = MutableStateFlow(SearchResults())
+            launch {
+                searchActionService.search(query)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(searchActions = r)
+                        }
+                    }
+            }
             launch {
                 appRepository.search(query)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
-                            it.copy(apps = r)
+                            it.copy(apps = r.toImmutableList())
                         }
                     }
             }
@@ -104,7 +111,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(shortcuts = r)
+                                it.copy(shortcuts = r.toImmutableList())
                             }
                         }
                 }
@@ -115,7 +122,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(contacts = r)
+                                it.copy(contacts = r.toImmutableList())
                             }
                         }
                 }
@@ -126,7 +133,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(calendars = r)
+                                it.copy(calendars = r.toImmutableList())
                             }
                         }
                 }
@@ -143,12 +150,13 @@ internal class SearchServiceImpl(
             }
             if (unitConverter.enabled) {
                 launch {
-                    unitConverterRepository.search(query, unitConverter.currencies).collectLatest { r ->
-                        results.update {
-                            it.copy(unitConverters = r?.let { persistentListOf(it) }
-                                ?: persistentListOf())
+                    unitConverterRepository.search(query, unitConverter.currencies)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(unitConverters = r?.let { persistentListOf(it) }
+                                    ?: persistentListOf())
+                            }
                         }
-                    }
                 }
             }
             if (websites.enabled) {
@@ -158,7 +166,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(websites = r)
+                                it.copy(websites = r.toImmutableList())
                             }
                         }
                 }
@@ -170,7 +178,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(wikipedia = r)
+                                it.copy(wikipedia = r.toImmutableList())
                             }
                         }
                 }
@@ -188,7 +196,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(files = r)
+                                it.copy(files = r.toImmutableList())
                             }
                         }
                 }
@@ -218,39 +226,23 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                searchActionService.search(query)
-                    .collectLatest { r ->
-                        results.update {
-                            searchActionsReady = true
-                            it.copy(searchActions = r)
-                        }
-                    }
+                results.collectLatest { send(it) }
             }
-            launch {
-                results
-                    .map { it.toList().sortedBy { it as? SavableSearchable }.toImmutableList() }
-                    .collectLatest {
-                        if (searchActionsReady) send(it)
-                    }
-            }
+
         }
     }
 }
 
-internal data class SearchResults(
-    val apps: List<LauncherApp> = emptyList(),
-    val shortcuts: List<AppShortcut> = emptyList(),
-    val contacts: List<Contact> = emptyList(),
-    val calendars: List<CalendarEvent> = emptyList(),
-    val files: List<File> = emptyList(),
-    val calculators: List<Calculator> = emptyList(),
-    val unitConverters: List<UnitConverter> = emptyList(),
-    val websites: List<Website> = emptyList(),
-    val wikipedia: List<Wikipedia> = emptyList(),
-    val searchActions: List<SearchAction> = emptyList(),
-    val other: List<SavableSearchable> = emptyList(),
-) {
-    fun toList(): List<Searchable> {
-        return searchActions + (apps + shortcuts + contacts + calendars  + files + websites + wikipedia + other).distinctBy { it.key } + calculators + unitConverters
-    }
-}
+data class SearchResults(
+    val apps: ImmutableList<LauncherApp>? = null,
+    val shortcuts: ImmutableList<AppShortcut>? = null,
+    val contacts: ImmutableList<Contact>? = null,
+    val calendars: ImmutableList<CalendarEvent>? = null,
+    val files: ImmutableList<File>? = null,
+    val calculators: ImmutableList<Calculator>? = null,
+    val unitConverters: ImmutableList<UnitConverter>? = null,
+    val websites: ImmutableList<Website>? = null,
+    val wikipedia: ImmutableList<Wikipedia>? = null,
+    val searchActions: ImmutableList<SearchAction>? = null,
+    val other: ImmutableList<SavableSearchable>? = null,
+)

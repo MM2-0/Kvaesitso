@@ -21,8 +21,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -37,7 +36,7 @@ import java.net.URL
 import java.util.UUID
 
 interface SearchActionService {
-    fun search(query: String): Flow<ImmutableList<SearchAction>>
+    suspend fun search(query: String): Flow<ImmutableList<SearchAction>>
 
     fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>>
     fun getDisabledActionBuilders(): Flow<List<SearchActionBuilder>>
@@ -56,23 +55,21 @@ internal class SearchActionServiceImpl(
     private val repository: SearchActionRepository,
     private val textClassifier: TextClassifier,
 ) : SearchActionService {
-    override fun search(
+    override suspend fun search(
         query: String
-    ): Flow<ImmutableList<SearchAction>> = flow {
+    ): Flow<ImmutableList<SearchAction>> {
+
         if (query.isBlank()) {
-            emit(persistentListOf())
-            return@flow
+            return flowOf(persistentListOf())
         }
 
         val classificationResult = textClassifier.classify(context, query)
 
         val builders = repository.getSearchActionBuilders()
 
-        emitAll(
-            builders.map {
-                it.mapNotNull { it.build(context, classificationResult) }.toImmutableList()
-            }
-        )
+        return builders.map {
+            it.mapNotNull { it.build(context, classificationResult) }.toImmutableList()
+        }
     }
 
     override fun getSearchActionBuilders(): Flow<List<SearchActionBuilder>> {
@@ -136,7 +133,10 @@ internal class SearchActionServiceImpl(
             return@withContext null
         }
 
-    private suspend fun importOpenSearch(openSearchHref: String, iconSize: Int): WebsearchActionBuilder? {
+    private suspend fun importOpenSearch(
+        openSearchHref: String,
+        iconSize: Int
+    ): WebsearchActionBuilder? {
         try {
             val httpClient = OkHttpClient()
             val request = Request.Builder()
@@ -217,7 +217,8 @@ internal class SearchActionServiceImpl(
             }
         } catch (e: IOException) {
 
-        } catch (e: XmlPullParserException) {}
+        } catch (e: XmlPullParserException) {
+        }
         return null
     }
 
@@ -242,7 +243,8 @@ internal class SearchActionServiceImpl(
     override suspend fun getSearchActivities(): List<ComponentName> {
         return withContext(Dispatchers.Default) {
             val resolveInfos = context.packageManager.queryIntentActivities(
-                Intent(Intent.ACTION_SEARCH).addCategory(Intent.CATEGORY_DEFAULT), PackageManager.GET_META_DATA,
+                Intent(Intent.ACTION_SEARCH).addCategory(Intent.CATEGORY_DEFAULT),
+                PackageManager.GET_META_DATA,
             )
             resolveInfos.mapNotNull {
                 if (!it.activityInfo.exported || !it.activityInfo.enabled) return@mapNotNull null

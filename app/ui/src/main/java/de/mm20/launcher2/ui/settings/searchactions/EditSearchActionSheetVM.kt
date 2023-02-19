@@ -21,7 +21,6 @@ import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File
@@ -51,15 +50,13 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     }
 
     fun getSearchableApps(context: Context) = flow {
-        val items = withContext(Dispatchers.Default) {
-            searchActionService.getSearchActivities().map {
-                SearchableApp(
-                    label = context.packageManager.getActivityInfo(it, 0)
-                        .loadLabel(context.packageManager).toString(),
-                    componentName = it
-                )
-            }.sortedBy { it.label.romanize().lowercase() }
-        }
+        val items = searchActionService.getSearchActivities().map {
+            SearchableApp(
+                label = context.packageManager.getActivityInfo(it, 0)
+                    .loadLabel(context.packageManager).toString(),
+                componentName = it
+            )
+        }.sortedBy { it.label.romanize().lowercase() }
         emit(items)
     }
 
@@ -122,6 +119,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             is AppSearchActionBuilder -> action.also {
                 it.baseIntent.setComponent(componentName)
             }
+
             is WebsearchActionBuilder -> action
         }
 
@@ -130,6 +128,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
 
     val initWebsearchUrl = mutableStateOf("")
+
     /**
      * Last imported URL that failed (if the current URL is equal to this, show an error banner)
      */
@@ -138,7 +137,8 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         derivedStateOf { websearchImportErrorUrl.value == initWebsearchUrl.value }
     val loadingWebsearch = mutableStateOf(false)
 
-    val skipWebsearchImport = derivedStateOf { websearchImportError.value || initWebsearchUrl.value.isEmpty() }
+    val skipWebsearchImport =
+        derivedStateOf { websearchImportError.value || initWebsearchUrl.value.isEmpty() }
 
     fun importWebsearch(density: Density) {
         if (loadingWebsearch.value) return
@@ -180,14 +180,15 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
 
     private val invalidWebsearchUrl = mutableStateOf<String?>(null)
-    val websearchInvalidUrlError = derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? WebsearchActionBuilder)?.urlTemplate }
+    val websearchInvalidUrlError =
+        derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? WebsearchActionBuilder)?.urlTemplate }
     val customIntentKeyError = mutableStateOf(false)
-    fun validate() : Boolean {
+    fun validate(): Boolean {
         val action = searchAction.value ?: return false
 
         if (action is WebsearchActionBuilder) {
             val valid = action.urlTemplate.contains("\${1}")
-            invalidWebsearchUrl.value = if(valid) null else action.urlTemplate
+            invalidWebsearchUrl.value = if (valid) null else action.urlTemplate
             return valid
         }
         if (action is CustomIntentActionBuilder) {
@@ -216,9 +217,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         if (action.customIcon != initialCustomIcon) {
             deleteCustomIcon(action.customIcon)
         }
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is WebsearchActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
-            is CustomIntentActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
+            is CustomIntentActionBuilder -> action.copy(
+                icon = icon,
+                customIcon = null,
+                iconColor = 0
+            )
+
             is AppSearchActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
         }
     }
@@ -228,10 +234,24 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         if (action.customIcon != initialCustomIcon) {
             deleteCustomIcon(action.customIcon)
         }
-        searchAction.value = when(action) {
-            is WebsearchActionBuilder -> action.copy(customIcon = iconPath, iconColor = 1, icon = SearchActionIcon.Custom)
-            is CustomIntentActionBuilder -> action.copy(customIcon = iconPath, iconColor = 1, icon = SearchActionIcon.Custom)
-            is AppSearchActionBuilder -> action.copy(customIcon = iconPath, iconColor = 1, icon = SearchActionIcon.Custom)
+        searchAction.value = when (action) {
+            is WebsearchActionBuilder -> action.copy(
+                customIcon = iconPath,
+                iconColor = 1,
+                icon = SearchActionIcon.Custom
+            )
+
+            is CustomIntentActionBuilder -> action.copy(
+                customIcon = iconPath,
+                iconColor = 1,
+                icon = SearchActionIcon.Custom
+            )
+
+            is AppSearchActionBuilder -> action.copy(
+                customIcon = iconPath,
+                iconColor = 1,
+                icon = SearchActionIcon.Custom
+            )
         }
     }
 
@@ -247,7 +267,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     }
 
     fun applyIcon() {
-        currentPage.value = when(searchAction.value) {
+        currentPage.value = when (searchAction.value) {
             is AppSearchActionBuilder -> EditSearchActionPage.CustomizeAppSearch
             is WebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
             is CustomIntentActionBuilder -> EditSearchActionPage.CustomizeCustomIntent
@@ -257,7 +277,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     fun setIconColor(color: Int) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is WebsearchActionBuilder -> action.copy(iconColor = color)
             is CustomIntentActionBuilder -> action.copy(iconColor = color)
             is AppSearchActionBuilder -> action.copy(iconColor = color)
@@ -273,7 +293,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     fun removeExtra(key: String) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -281,6 +301,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -288,13 +309,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 }
             )
+
             else -> action
         }
     }
 
     fun putStringExtra(key: String, value: String = "") {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -302,6 +324,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -309,13 +332,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun putIntExtra(key: String, value: Int = 0) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -323,6 +347,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -330,13 +355,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun putLongExtra(key: String, value: Long = 0L) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -344,6 +370,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -351,13 +378,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun putFloatExtra(key: String, value: Float = 0f) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -365,6 +393,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -372,13 +401,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun putDoubleExtra(key: String, value: Double = 0.0) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -386,6 +416,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -393,13 +424,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun putBooleanExtra(key: String, value: Boolean = false) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -407,6 +439,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             is AppSearchActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -414,13 +447,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.replaceExtras(extras)
                 },
             )
+
             else -> action
         }
     }
 
     fun setIntentAction(action: String) {
         val searchAction = searchAction.value ?: return
-        this.searchAction.value = when(searchAction) {
+        this.searchAction.value = when (searchAction) {
             is CustomIntentActionBuilder -> searchAction.copy(
                 baseIntent = searchAction.baseIntent.cloneFilter().also {
                     val extras = searchAction.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -428,13 +462,14 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     it.action = action
                 },
             )
+
             else -> searchAction
         }
     }
 
     fun setIntentCategory(category: String) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 baseIntent = action.baseIntent.cloneFilter().also {
                     val extras = action.baseIntent.extras?.deepCopy() ?: Bundle()
@@ -444,26 +479,29 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                     if (category.isNotBlank()) it.addCategory(category)
                 },
             )
+
             else -> action
         }
     }
 
     fun setIntentQueryExtra(key: String) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is CustomIntentActionBuilder -> action.copy(
                 queryKey = key,
             )
+
             else -> action
         }
     }
 
     fun setQueryEncoding(encoding: WebsearchActionBuilder.QueryEncoding) {
         val action = searchAction.value ?: return
-        searchAction.value = when(action) {
+        searchAction.value = when (action) {
             is WebsearchActionBuilder -> action.copy(
                 encoding = encoding
             )
+
             else -> action
         }
     }

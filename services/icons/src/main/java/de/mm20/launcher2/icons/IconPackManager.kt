@@ -51,7 +51,7 @@ class IconPackManager(
     }
 
     suspend fun updateIconPacks() {
-        withContext(Dispatchers.Default) {
+        withContext(Dispatchers.IO) {
             IconPackInstaller(context, appDatabase).installIcons()
             GrayscaleMapInstaller(context, appDatabase).installIcons()
         }

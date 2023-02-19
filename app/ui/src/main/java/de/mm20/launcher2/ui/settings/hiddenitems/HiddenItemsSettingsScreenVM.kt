@@ -33,9 +33,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
         withContext(Dispatchers.Default) { it.sorted() }
     }.asLiveData()
     val hiddenItems: LiveData<List<SavableSearchable>> = liveData {
-        val hidden = withContext(Dispatchers.Default) {
-            favoritesRepository.getHiddenItems().first().filter { it !is LauncherApp }.sorted()
-        }
+        val hidden = favoritesRepository.getHiddenItems().first().filter { it !is LauncherApp }.sorted()
         emit(hidden)
     }
 

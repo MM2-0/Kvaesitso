@@ -1,14 +1,11 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import android.content.Context
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -28,20 +25,18 @@ import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -111,7 +106,6 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         hideFavorites.postValue(query.isNotEmpty())
         searchJob = viewModelScope.launch {
-
             dataStore.data.collectLatest {
                 searchService.search(
                     query,
@@ -124,6 +118,22 @@ class SearchVM : ViewModel(), KoinComponent {
                     websites = it.websiteSearch,
                     wikipedia = it.wikipediaSearch,
                 ).collectLatest { results ->
+                    val resultsList = withContext(Dispatchers.Default) {
+                        listOfNotNull(
+                            results.apps,
+                            results.other,
+                            results.shortcuts,
+                            results.files,
+                            results.contacts,
+                            results.calendars,
+                            results.wikipedia,
+                            results.websites,
+                            results.calculators,
+                            results.unitConverters,
+                            results.searchActions,
+                        ).flatten().sortedBy { (it as? SavableSearchable)?.label }
+                    }
+
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
                         val apps = mutableListOf<LauncherApp>()
@@ -137,12 +147,11 @@ class SearchVM : ViewModel(), KoinComponent {
                         val wikipedia = mutableListOf<Wikipedia>()
                         val website = mutableListOf<Website>()
                         val actions = mutableListOf<SearchAction>()
-                        for (r in results) {
+                        for (r in resultsList) {
                             when {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) -> {
                                     hidden.add(r)
                                 }
-
                                 r is LauncherApp && !r.isMainProfile -> workApps.add(r)
                                 r is LauncherApp -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
@@ -156,6 +165,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is SearchAction -> actions.add(r)
                             }
                         }
+
                         if (query.isNotEmpty() && launchOnEnter.value)  {
                             bestMatch.value = listOf(
                                 apps,
@@ -170,7 +180,6 @@ class SearchVM : ViewModel(), KoinComponent {
                             ).firstNotNullOfOrNull { it.firstOrNull() }
                         }
 
-                        searchActionResults.value = actions
                         appResults.value = apps
                         workAppResults.value = workApps
                         appShortcutResults.value = shortcuts
@@ -182,6 +191,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         calculatorResults.value = calc
                         unitConverterResults.value = unitConv
                         hiddenResults.value = hidden
+                        if (results.searchActions != null) searchActionResults.value = actions
                     }
                 }
             }

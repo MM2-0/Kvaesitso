@@ -16,10 +16,12 @@ import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
-import java.util.*
+import java.util.Locale
 
 interface AppRepository {
     fun getAllInstalledApps(): Flow<List<LauncherApp>>
@@ -141,9 +143,8 @@ internal class AppRepositoryImpl(
         return LauncherApp(context, launcherActivityInfo)
     }
 
-    override fun search(query: String): Flow<ImmutableList<LauncherApp>> = channelFlow {
-
-        installedApps.collectLatest { apps ->
+    override fun search(query: String): Flow<ImmutableList<LauncherApp>> {
+        return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<LauncherApp>()
                 if (query.isEmpty()) {
@@ -156,10 +157,8 @@ internal class AppRepositoryImpl(
                     val componentName = ComponentName.unflattenFromString(query)
                     getActivityByComponentName(componentName)?.let { appResults.add(it) }
                 }
-
                 appResults.sort()
-
-                send(appResults.toImmutableList())
+                appResults.toImmutableList()
             }
         }
     }
