@@ -168,11 +168,13 @@ class SearchVM : ViewModel(), KoinComponent {
                                 apps,
                                 workApps,
                                 shortcuts,
-                                files,
-                                contacts,
+                                unitConv,
+                                calc,
                                 events,
+                                contacts,
                                 wikipedia,
                                 website,
+                                files,
                                 actions
                             ).firstNotNullOfOrNull { it.firstOrNull() }
                         }
