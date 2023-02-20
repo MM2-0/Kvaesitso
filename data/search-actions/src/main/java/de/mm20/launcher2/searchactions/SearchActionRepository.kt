@@ -144,9 +144,9 @@ internal class SearchActionRepositoryImpl(
 
                     val entity = SearchActionEntity(
                         position = json.getInt("position"),
-                        data = json.getString("data"),
+                        data = json.optString("data").takeIf { it.isNotEmpty() },
                         color = json.optInt("color", 0),
-                        label = json.getString("label"),
+                        label = json.optString("label").takeIf { it.isNotEmpty() },
                         icon = json.optInt("icon", 0),
                         customIcon = iconFile?.absolutePath,
                         options = json.optString("options").takeIf { it.isNotEmpty() },
