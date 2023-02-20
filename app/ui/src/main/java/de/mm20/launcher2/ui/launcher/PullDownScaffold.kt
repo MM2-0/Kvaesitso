@@ -279,6 +279,7 @@ fun PullDownScaffold(
                 if (isWidgetEditMode || source != NestedScrollSource.Drag) return Offset.Zero
                 if (available.y.absoluteValue > available.x.absoluteValue * 2) {
                     keyboardController?.hide()
+                    searchVM.bestMatch.value = null
                 }
                 val canPullDown = if (isSearchOpen) {
                     isSearchAtTop
