@@ -396,7 +396,7 @@ internal class MusicServiceImpl(
                 send(SupportedActions())
                 return@collectLatest
             }
-            send(SupportedActions(state.actions, state.customActions))
+            send(SupportedActions(lastPlayerPackage, state.actions, state.customActions))
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(), 1)
 
