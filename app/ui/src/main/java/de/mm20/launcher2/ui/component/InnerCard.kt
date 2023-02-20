@@ -67,7 +67,8 @@ fun InnerCard(
             InnerCardStyle.Highlighted -> {
                 MaterialTheme.colorScheme.secondaryContainer
             }
-            InnerCardStyle.Default -> Color.Transparent
+            InnerCardStyle.Default -> MaterialTheme
+                .colorScheme.surface.copy(alpha = 0f)
             else -> {
                 MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
             }
