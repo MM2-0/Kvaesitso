@@ -15,10 +15,12 @@ data class OpenUrlAction(
 
 
     override fun start(context: Context) {
-        val url =
-            if (url.startsWith("https://") || url.startsWith("http://")) url else "https://$url"
+        var uri = Uri.parse(url)
+        if (uri.scheme == null) {
+            uri = Uri.parse("https://$url")
+        }
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(url)
+            data = uri
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
         context.tryStartActivity(intent)
