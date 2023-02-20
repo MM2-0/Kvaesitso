@@ -24,13 +24,13 @@ import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -57,6 +57,7 @@ import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItem
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -333,12 +334,12 @@ fun SearchColumn(
             highlightedItem = bestMatch as? SavableSearchable
         )
         for (wiki in wikipedia) {
-            SingleResult {
+            SingleResult(highlight = bestMatch == wiki) {
                 WikipediaItem(wikipedia = wiki)
             }
         }
         for (ws in website) {
-            SingleResult {
+            SingleResult(highlight = bestMatch == ws) {
                 WebsiteItem(website = ws)
             }
         }
@@ -370,7 +371,9 @@ fun SearchColumn(
 
     val sheetManager = LocalBottomSheetManager.current
     if (sheetManager.hiddenItemsSheetShown.value) {
-        HiddenItemsSheet(items = hiddenResults, onDismiss = { sheetManager.dismissHiddenItemsSheet() })
+        HiddenItemsSheet(
+            items = hiddenResults,
+            onDismiss = { sheetManager.dismissHiddenItemsSheet() })
     }
 }
 
@@ -539,7 +542,10 @@ fun ListRow(
     }
 }
 
-fun LazyListScope.SingleResult(content: @Composable (() -> Unit)?) {
+fun LazyListScope.SingleResult(
+    highlight: Boolean = false,
+    content: @Composable (() -> Unit)?
+) {
     if (content == null) return
     item {
         LauncherCard(
@@ -548,7 +554,9 @@ fun LazyListScope.SingleResult(content: @Composable (() -> Unit)?) {
                     horizontal = 8.dp,
                     vertical = 4.dp,
                 )
-                .animateItemPlacement()
+                .animateItemPlacement(),
+            color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
+            else MaterialTheme.colorScheme.surface.copy(LocalCardStyle.current.opacity)
         ) {
             content()
         }

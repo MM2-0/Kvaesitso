@@ -63,10 +63,14 @@ fun InnerCard(
     val bgColor by transition.animateColor(label = "bgColor", transitionSpec = {
         tween(250, if (targetState == InnerCardStyle.Raised) 0 else 250)
     }) {
-        if (it == InnerCardStyle.Highlighted) {
-            MaterialTheme.colorScheme.secondaryContainer
-        } else {
-            MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
+        when (it) {
+            InnerCardStyle.Highlighted -> {
+                MaterialTheme.colorScheme.secondaryContainer
+            }
+            InnerCardStyle.Default -> Color.Transparent
+            else -> {
+                MaterialTheme.colorScheme.surfaceColorAtElevation(absoluteTonalElevation + elevation)
+            }
         }
     }
 

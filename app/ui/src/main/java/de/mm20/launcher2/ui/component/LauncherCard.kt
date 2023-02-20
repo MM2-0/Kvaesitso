@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
@@ -31,16 +32,18 @@ fun LauncherCard(
     elevation: Dp = 2.dp,
     backgroundOpacity: Float = LocalCardStyle.current.opacity,
     shape: Shape = MaterialTheme.shapes.medium,
+    color: Color = MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity.coerceIn(0f, 1f)),
+    border: BorderStroke? = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
+        ?.let { BorderStroke(it.dp, MaterialTheme.colorScheme.surface) },
     content: @Composable () -> Unit = {}
 ) {
     Surface(
         modifier = modifier,
         shape = shape,
-        border = LocalCardStyle.current.borderWidth.takeIf { it > 0 }
-            ?.let { BorderStroke(it.dp, MaterialTheme.colorScheme.surface) },
+        border = border,
         content = content,
         contentColor = MaterialTheme.colorScheme.onSurface,
-        color = MaterialTheme.colorScheme.surface.copy(alpha = backgroundOpacity.coerceIn(0f, 1f)),
+        color = color,
         shadowElevation = if (backgroundOpacity == 1f) elevation else 0.dp,
         tonalElevation = elevation,
     )
