@@ -38,6 +38,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltipBox
@@ -73,6 +74,7 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
 import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import kotlin.math.min
 
@@ -306,6 +308,9 @@ fun MusicWidget() {
             FilledTonalIconButton(
                 modifier = Modifier
                     .size(40.dp),
+                colors = IconButtonDefaults.filledTonalIconButtonColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
+                ),
                 onClick = { viewModel.togglePause() },
                 shape = MaterialTheme.shapes.extraSmall,
             ) {

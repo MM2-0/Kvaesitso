@@ -59,6 +59,7 @@ import de.mm20.launcher2.ui.component.weather.WeatherIcon
 import de.mm20.launcher2.ui.icons.HumidityPercentage
 import de.mm20.launcher2.ui.icons.Rain
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import java.text.DateFormat
@@ -130,7 +131,7 @@ fun WeatherWidget() {
             val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
 
             Surface(
-                color = MaterialTheme.colorScheme.surfaceVariant,
+                color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = LocalCardStyle.current.opacity),
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(
@@ -199,7 +200,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     topEnd = CornerSize(0),
                     bottomEnd = CornerSize(0)
                 ),
-                color = MaterialTheme.colorScheme.secondaryContainer,
+                color = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
             ) {
                 Text(
                     text = "${forecast.provider} (${
