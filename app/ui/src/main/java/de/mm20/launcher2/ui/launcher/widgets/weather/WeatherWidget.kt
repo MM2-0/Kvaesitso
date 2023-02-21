@@ -249,18 +249,13 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
         }
     }
 
-    val validHumidity = forecast.humidity != -1.0
-    val validWindDirection = forecast.windDirection != -1.0
-    val validWindSpeed = forecast.windSpeed != -1.0
-    val validPrecip = forecast.precipitation != -1.0
-
     Row(
         modifier = Modifier
             .padding(start = 16.dp, end = 16.dp, bottom = 12.dp, top = 8.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        if (validHumidity) {
+        if (forecast.humidity != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -271,18 +266,18 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 )
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
-                    text = "${forecast.humidity.roundToInt()} %",
+                    text = "${forecast.humidity!!.roundToInt()} %",
                     style = MaterialTheme.typography.bodySmall
                 )
             }
         }
-        if (validWindDirection || validWindSpeed) {
+        if (forecast.windDirection != null || forecast.windSpeed != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if (validWindDirection) {
+                if (forecast.windDirection != null) {
                     // windDirection is "fromDirection"; Wind (arrow) blows into opposite direction
-                    val angle by animateFloatAsState(forecast.windDirection.toFloat() + 180f)
+                    val angle by animateFloatAsState(forecast.windDirection!!.toFloat() + 180f)
                     Icon(
                         imageVector = Icons.Rounded.North,
                         modifier = Modifier
@@ -292,23 +287,23 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     )
                 } else {
                     Icon(
-                        imageVector = Icons.Rounded.WindPower,
+                        imageVector = Icons.Rounded.Air,
                         contentDescription = null,
                         modifier = Modifier.size(20.dp)
                     )
                 }
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
-                    text = if (validWindSpeed) {
+                    text = if (forecast.windSpeed != null) {
                         formatWindSpeed(imperialUnits, forecast)
                     } else {
-                        windDirectionAsWord(forecast.windDirection)
+                        windDirectionAsWord(forecast.windDirection!!)
                     },
                     style = MaterialTheme.typography.bodySmall
                 )
             }
         }
-        if (validPrecip) {
+        if (forecast.precipitation != null) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -454,8 +449,9 @@ private fun convertTemperature(imperialUnits: Boolean, temp: Double): Int {
 
 @Composable
 private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String {
+    if (forecast.windSpeed == null) return ""
     val formatter = DecimalFormat("0.#")
-    val speedValue = formatter.format(forecast.windSpeed * if (imperialUnits) 0.621371 else 1.0)
+    val speedValue = formatter.format(forecast.windSpeed!! * if (imperialUnits) 0.621371 else 1.0)
     val speedUnit =
         stringResource(id = if (imperialUnits) R.string.unit_mile_per_hour_symbol else R.string.unit_meter_per_second_symbol)
     return "$speedValue $speedUnit"
@@ -463,6 +459,9 @@ private fun formatWindSpeed(imperialUnits: Boolean, forecast: Forecast): String 
 
 @Composable
 private fun formatPrecipitation(imperialUnits: Boolean, forecast: Forecast): String {
+    if (forecast.precipProbability != null) {
+        return "${forecast.precipProbability} %"
+    }
     val formatter = if (imperialUnits) DecimalFormat("#.##") else DecimalFormat("#.#")
     val precipUnit =
         if (imperialUnits) stringResource(id = R.string.unit_inch_symbol) else stringResource(id = R.string.unit_millimeter_symbol)

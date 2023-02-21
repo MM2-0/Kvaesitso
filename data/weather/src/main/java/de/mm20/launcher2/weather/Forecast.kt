@@ -28,13 +28,13 @@ data class Forecast(
         /** The temperature, in Kelvin **/
         val temperature: Double,
         /** The min temperature, in Kelvin **/
-        val minTemp: Double = -1.0,
+        val minTemp: Double? = null,
         /** The max temperature, in Kelvin **/
-        val maxTemp: Double = -1.0,
+        val maxTemp: Double? = null,
         /** The temperature, in hPa **/
-        val pressure: Double = -1.0,
+        val pressure: Double? = null,
         /** The temperature, in percent **/
-        val humidity: Double = -1.0,
+        val humidity: Double? = null,
         /** The icon, one of [NONE], [CLEAR], [CLOUDY], [COLD], [DRIZZLE], [HAZE], [FOG],
          *  [HAIL], [HEAVY_THUNDERSTORM], [HEAVY_THUNDERSTORM_WITH_RAIN], [HOT], [MOSTLY_CLOUDY],
          *  [PARTLY_CLOUDY], [SHOWERS], [SLEET], [SNOW], [STORM], [THUNDERSTORM],
@@ -43,13 +43,13 @@ data class Forecast(
         /** A text describing the current weather condition **/
         val condition: String,
         /** The clouds, percentage **/
-        val clouds: Int = -1,
+        val clouds: Int? = null,
         /** Wind speed, in m/s **/
-        val windSpeed: Double = -1.0,
+        val windSpeed: Double? = null,
         /** wind direction, in degrees **/
-        val windDirection: Double = -1.0,
+        val windDirection: Double? = null,
         /** rain, in mm per hour **/
-        val precipitation: Double = -1.0,
+        val precipitation: Double? = null,
         /** whether this forecast is during night time (whether a moon icon should be used instead of sun) **/
         val night: Boolean = false,
         /** Location string **/
@@ -58,31 +58,31 @@ data class Forecast(
         val provider: String,
         /** Url to the provider and more weather information **/
         val providerUrl: String = "",
-        /** Rain probability, in percent [0..100]. -1 if not available **/
-        val precipProbability: Int = -1,
+        /** Rain probability, in percent [0..100]. null if not available **/
+        val precipProbability: Int? = null,
         /** Timestamp (in millis) when when this forecast was created **/
         val updateTime: Long
 ) {
     fun toDatabaseEntity(): ForecastEntity {
         return ForecastEntity(
                 timestamp = timestamp,
-                clouds = clouds,
+                clouds = clouds ?: -1,
                 condition = condition,
-                humidity = humidity,
+                humidity = humidity ?: -1.0,
                 icon = icon,
                 location = location,
-                maxTemp = maxTemp,
-                minTemp = minTemp,
+                maxTemp = maxTemp ?: -1.0,
+                minTemp = minTemp ?: -1.0,
                 night = night,
-                pressure = pressure,
+                pressure = pressure ?: -1.0,
                 provider = provider,
                 providerUrl = providerUrl,
-                precipitation = precipitation,
-                precipProbability = precipProbability,
+                precipitation = precipitation ?: -1.0,
+                precipProbability = precipProbability ?: -1,
                 temperature = temperature,
                 updateTime = updateTime,
-                windDirection = windDirection,
-                windSpeed = windSpeed,
+                windDirection = windDirection ?: -1.0,
+                windSpeed = windSpeed ?: -1.0,
                 snow = -1.0,
                 snowProbability = -1
         )
@@ -90,23 +90,23 @@ data class Forecast(
 
     constructor(entity: ForecastEntity) : this(
             timestamp = entity.timestamp,
-            clouds = entity.clouds,
+            clouds = entity.clouds.takeIf { it >= 0 },
             condition = entity.condition,
-            humidity = entity.humidity,
+            humidity = entity.humidity.takeIf { it >= 0.0 },
             icon = entity.icon,
             location = entity.location,
-            maxTemp = entity.maxTemp,
-            minTemp = entity.minTemp,
+            maxTemp = entity.maxTemp.takeIf { it >= 0.0 },
+            minTemp = entity.minTemp.takeIf { it >= 0.0 },
             night = entity.night,
-            pressure = entity.pressure,
+            pressure = entity.pressure.takeIf { it >= 0.0 },
             provider = entity.provider,
             providerUrl = entity.providerUrl,
-            precipitation = entity.precipitation,
-            precipProbability = entity.precipProbability,
+            precipitation = entity.precipitation.takeIf { it >= 0.0 },
+            precipProbability = entity.precipProbability.takeIf { it >= 0 },
             temperature = entity.temperature,
             updateTime = entity.updateTime,
-            windDirection = entity.windDirection,
-            windSpeed = entity.windSpeed
+            windDirection = entity.windDirection.takeIf { it >= 0.0 },
+            windSpeed = entity.windSpeed.takeIf { it >= 0.0 },
     )
 
     companion object {
