@@ -40,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -91,7 +92,6 @@ fun PullDownScaffold(
     bottomSearchBar: Boolean = false,
     reverseSearchResults: Boolean = false,
     fixedSearchBar: Boolean = false,
-    launchOnEnter: Boolean = false
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
@@ -527,6 +527,8 @@ fun PullDownScaffold(
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
 
         val context = LocalContext.current
+
+        val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
         LauncherSearchBar(
             modifier = Modifier

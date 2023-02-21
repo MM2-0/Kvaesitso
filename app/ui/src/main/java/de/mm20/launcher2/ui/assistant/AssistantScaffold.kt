@@ -44,6 +44,8 @@ fun AssistantScaffold(
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
 
+    val context = LocalContext.current
+
     var searchBarFocused by remember { mutableStateOf(false) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -179,6 +181,8 @@ fun AssistantScaffold(
         val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
 
+        val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
+
         LauncherSearchBar(
             modifier = Modifier
                 .fillMaxWidth()
@@ -206,7 +210,10 @@ fun AssistantScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar
+            reverse = bottomSearchBar,
+            onKeyboardActionGo = if (launchOnEnter) {
+                { searchVM.launchBestMatchOrAction(context) }
+            } else null
         )
     }
 }
