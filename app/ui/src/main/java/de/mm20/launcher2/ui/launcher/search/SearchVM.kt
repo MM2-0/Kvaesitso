@@ -128,7 +128,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.calculators,
                             results.unitConverters,
                             results.searchActions,
-                        ).flatten().sortedBy { (it as? SavableSearchable)?.label }
+                        ).flatten().sortedBy { (it as? SavableSearchable) }
                     }
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
