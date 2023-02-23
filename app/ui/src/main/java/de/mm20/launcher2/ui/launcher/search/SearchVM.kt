@@ -43,7 +43,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    private val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
+    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val searchService: SearchService by inject()
@@ -132,7 +132,9 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.calculators,
                             results.unitConverters,
                             results.searchActions,
-                        ).flatten().sortedBy { (it as? SavableSearchable)?.label }
+                        ).flatten()
+                            .sortedBy { (it as? SavableSearchable) }
+                            .distinctBy { if (it is SavableSearchable) it.key else it }
                     }
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->

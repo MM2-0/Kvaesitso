@@ -56,8 +56,6 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val statusBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
     val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
 
-    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }.asLiveData()
-
     val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }.asLiveData()
     val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }.asLiveData()
 

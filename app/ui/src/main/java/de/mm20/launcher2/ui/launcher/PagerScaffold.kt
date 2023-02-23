@@ -43,6 +43,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -58,6 +59,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -96,6 +98,8 @@ fun PagerScaffold(
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
     val searchVM: SearchVM = viewModel()
+
+    val context = LocalContext.current
 
     val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
     val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
@@ -485,6 +489,8 @@ fun PagerScaffold(
         val searchBarColor by viewModel.searchBarColor.observeAsState(SearchBarColors.Auto)
         val searchBarStyle by viewModel.searchBarStyle.observeAsState(SearchBarStyle.Transparent)
 
+        val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
+
         LauncherSearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
@@ -511,7 +517,10 @@ fun PagerScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar
+            reverse = bottomSearchBar,
+            onKeyboardActionGo = if (launchOnEnter) {
+                { searchVM.launchBestMatchOrAction(context) }
+            } else null
         )
     }
 }

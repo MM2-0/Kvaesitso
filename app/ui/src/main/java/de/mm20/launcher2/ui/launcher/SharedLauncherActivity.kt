@@ -194,7 +194,6 @@ abstract class SharedLauncherActivity(
                                     when (layout) {
                                         Settings.LayoutSettings.Layout.PullDown -> {
                                             key(bottomSearchBar, reverseSearchResults) {
-                                                val launchOnEnter by viewModel.launchOnEnter.observeAsState(false)
                                                 PullDownScaffold(
                                                     modifier = Modifier
                                                         .fillMaxSize()
@@ -210,7 +209,6 @@ abstract class SharedLauncherActivity(
                                                     bottomSearchBar = bottomSearchBar,
                                                     reverseSearchResults = reverseSearchResults,
                                                     fixedSearchBar = fixedSearchBar,
-                                                    launchOnEnter = launchOnEnter
                                                 )
                                             }
                                         }
