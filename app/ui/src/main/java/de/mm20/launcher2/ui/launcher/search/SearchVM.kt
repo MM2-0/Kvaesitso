@@ -72,6 +72,10 @@ class SearchVM : ViewModel(), KoinComponent {
         .getHiddenItemKeys()
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
+    private val ranksByLaunchCount = favoritesRepository
+        .getRanksByLaunchCount()
+        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
+
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
@@ -149,6 +153,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) -> {
                                     hidden.add(r)
                                 }
+
                                 r is LauncherApp && !r.isMainProfile -> workApps.add(r)
                                 r is LauncherApp -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
@@ -163,34 +168,47 @@ class SearchVM : ViewModel(), KoinComponent {
                             }
                         }
 
-                        if (query.isNotEmpty() && launchOnEnter.value)  {
-                            bestMatch.value = listOf(
-                                apps,
-                                workApps,
-                                shortcuts,
-                                unitConv,
-                                calc,
-                                events,
-                                contacts,
-                                wikipedia,
-                                website,
-                                files,
-                                actions
-                            ).firstNotNullOfOrNull { it.firstOrNull() }
-                        }
+                        ranksByLaunchCount.collectLatest {
 
-                        appResults.value = apps
-                        workAppResults.value = workApps
-                        appShortcutResults.value = shortcuts
-                        fileResults.value = files
-                        contactResults.value = contacts
-                        calendarResults.value = events
-                        wikipediaResults.value = wikipedia
-                        websiteResults.value = website
-                        calculatorResults.value = calc
-                        unitConverterResults.value = unitConv
-                        hiddenResults.value = hidden
-                        if (results.searchActions != null) searchActionResults.value = actions
+                            for ((domain, ranks) in it.groupBy { it.domain }) {
+                                when (domain) {
+                                    "app" -> apps.reorderByRanks(ranks.map { it as LauncherApp })
+
+                                    else -> {
+                                        // todo?
+                                    }
+                                }
+                            }
+
+                            if (query.isNotEmpty() && launchOnEnter.value) {
+                                bestMatch.value = listOf(
+                                    apps,
+                                    workApps,
+                                    shortcuts,
+                                    unitConv,
+                                    calc,
+                                    events,
+                                    contacts,
+                                    wikipedia,
+                                    website,
+                                    files,
+                                    actions
+                                ).firstNotNullOfOrNull { it.firstOrNull() }
+                            }
+
+                            appResults.value = apps
+                            workAppResults.value = workApps
+                            appShortcutResults.value = shortcuts
+                            fileResults.value = files
+                            contactResults.value = contacts
+                            calendarResults.value = events
+                            wikipediaResults.value = wikipedia
+                            websiteResults.value = website
+                            calculatorResults.value = calc
+                            unitConverterResults.value = unitConv
+                            hiddenResults.value = hidden
+                            if (results.searchActions != null) searchActionResults.value = actions
+                        }
                     }
                 }
             }
@@ -270,6 +288,18 @@ class SearchVM : ViewModel(), KoinComponent {
                     .setAppShortcutSearch(it.appShortcutSearch.toBuilder().setEnabled(false))
                     .build()
             }
+        }
+    }
+
+    private fun <T: SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<T>) {
+
+        for ((i, item) in ranks.withIndex()) {
+            if (i >= this.size) break
+
+            val idx = this.indexOfFirst { it.key == item.key }
+            if (idx == -1) continue
+
+            this.add(i, this.removeAt(idx))
         }
     }
 }

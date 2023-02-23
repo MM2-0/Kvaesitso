@@ -53,7 +53,6 @@ abstract class SearchableItemVM(
         return customAttributesRepository.getTags(searchable)
     }
 
-
     open fun launch(context: Context, bounds: Rect? = null): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
