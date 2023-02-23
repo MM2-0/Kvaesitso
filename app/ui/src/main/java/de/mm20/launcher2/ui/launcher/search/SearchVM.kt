@@ -172,14 +172,35 @@ class SearchVM : ViewModel(), KoinComponent {
 
                         ranksByLaunchCount.collectLatest {
 
-                            for ((domain, ranks) in it.groupBy { it.domain }) {
-                                when (domain) {
-                                    "app" -> apps.reorderByRanks(ranks.map { it as LauncherApp })
+                            val fileRanks = mutableListOf<Pair<Int, File>>()
 
-                                    else -> {
-                                        // todo?
+                            for ((domain, ranks) in it.groupBy { it.second.domain }) {
+                                when (domain) {
+                                    "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second as AppShortcut })
+                                    "calendar" -> events.reorderByRanks(ranks.map { it.second as CalendarEvent })
+                                    "contact" -> contacts.reorderByRanks(ranks.map { it.second as Contact })
+                                    "app" -> {
+                                        val ranksAsApps = ranks.map { it.second as LauncherApp }
+                                        apps.reorderByRanks(ranksAsApps)
+                                        workApps.reorderByRanks(ranksAsApps)
                                     }
+
+                                    "file", "gdrive", "onedrive", "nextcloud", "owncloud"
+                                    -> fileRanks.addAll(
+                                        ranks.map {
+                                            Pair(
+                                                it.first,
+                                                it.second as File
+                                            )
+                                        })
                                 }
+                            }
+
+                            if (files.isNotEmpty() && fileRanks.isNotEmpty()) {
+                                files.reorderByRanks(
+                                    fileRanks.sortedByDescending { it.first }
+                                        .map { it.second }
+                                )
                             }
 
                             if (query.isNotEmpty() && launchOnEnter.value) {
@@ -293,7 +314,7 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    private fun <T: SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<T>) {
+    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<T>) {
 
         for ((i, item) in ranks.withIndex()) {
             if (i >= this.size) break
