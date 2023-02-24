@@ -116,7 +116,7 @@ message Settings {
       EmptyClock = 4;
     }
     ClockStyle clock_style = 2;
-    reserved 3;
+    bool date_part = 3;
     bool music_part = 4;
     bool battery_part = 5;
     bool alarm_part = 6;

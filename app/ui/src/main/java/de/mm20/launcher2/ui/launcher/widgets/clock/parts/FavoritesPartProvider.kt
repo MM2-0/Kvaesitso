@@ -30,7 +30,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
     override fun getRanking(context: Context): Flow<Int> = flow {
-        emit(2)
+        emit(Int.MAX_VALUE)
     }
 
     @Composable

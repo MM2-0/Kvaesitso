@@ -75,6 +75,20 @@ fun ClockWidgetSettingsScreen() {
                     value = fillHeight == true,
                     onValueChanged = { viewModel.setFillHeight(it) }
                 )
+            }
+        }
+        item {
+            PreferenceCategory {
+                val datePart by viewModel.datePart.observeAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_clockwidget_date_part),
+                    summary = stringResource(R.string.preference_clockwidget_date_part_summary),
+                    icon = Icons.Rounded.Today,
+                    value = datePart == true,
+                    onValueChanged = {
+                        viewModel.setDatePart(it)
+                    },
+                )
                 val favoritesPart by viewModel.favoritesPart.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
