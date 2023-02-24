@@ -51,6 +51,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setAlarmPart(true)
                 .setBatteryPart(true)
                 .setMusicPart(true)
+                .setDatePart(true)
                 .setFavoritesPart(false)
                 .setFillHeight(true)
                 .build()

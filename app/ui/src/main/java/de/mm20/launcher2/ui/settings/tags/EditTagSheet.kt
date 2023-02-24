@@ -5,26 +5,30 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -36,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
@@ -44,6 +49,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.SmallMessage
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 @Composable
 fun EditTagSheet(
@@ -112,9 +118,10 @@ fun EditTagSheet(
 
 @Composable
 fun CreateNewTagPage(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState())
-        .padding(paddingValues)
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(paddingValues)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -135,9 +142,15 @@ fun CreateNewTagPage(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
 
 @Composable
 fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
-    LazyColumn(modifier = Modifier.fillMaxWidth(), contentPadding = paddingValues) {
-        item {
-            Text(stringResource(id = R.string.tag_select_items),
+    val columns = LocalGridSettings.current.columnCount - 1
+    LazyVerticalGrid(
+        modifier = Modifier.fillMaxWidth(),
+        columns = GridCells.Fixed(columns),
+        contentPadding = paddingValues,
+    ) {
+        item(span = { GridItemSpan(columns) }) {
+            Text(
+                stringResource(id = R.string.tag_select_items),
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.secondary,
                 modifier = Modifier.padding(bottom = 8.dp)
@@ -154,7 +167,7 @@ fun PickItems(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
             })
         }
 
-        item {
+        item(span = { GridItemSpan(columns) }) {
             Box(
                 modifier = Modifier
                     .padding(vertical = 8.dp)
@@ -183,31 +196,43 @@ fun ListItem(
     icon: LauncherIcon?,
     onTagChanged: (Boolean) -> Unit
 ) {
-
-    OutlinedCard(
-        modifier = Modifier
-            .padding(vertical = 4.dp)
-            .fillMaxWidth(),
-        onClick = {
-            onTagChanged(!item.isTagged)
-        }
+    Column(
+        modifier = Modifier.padding(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Row(
-            modifier = Modifier.padding(8.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ShapedLauncherIcon(icon = { icon }, size = 32.dp, modifier = Modifier.padding(4.dp))
-            Text(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .weight(1f),
-                text = item.item.label,
-                style = MaterialTheme.typography.labelLarge
+        Box {
+            ShapedLauncherIcon(
+                icon = { icon },
+                size = 48.dp,
+                modifier = Modifier.padding(4.dp),
+                onClick = {
+                    onTagChanged(!item.isTagged)
+                }
             )
-            Checkbox(checked = item.isTagged, onCheckedChange = { checked ->
-                onTagChanged(checked)
-            })
+            if (item.isTagged) {
+                Surface(
+                    modifier = Modifier
+                        .size(24.dp)
+                        .align(Alignment.BottomEnd),
+                    color = MaterialTheme.colorScheme.primary,
+                    shape = CircleShape,
+                    onClick = {
+                        onTagChanged(false)
+                    }
+                ) {
+                    Icon(Icons.Rounded.Check, null, modifier = Modifier.padding(4.dp))
+                }
+            }
         }
+        Text(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .padding(horizontal = 12.dp),
+            text = item.item.label,
+            style = MaterialTheme.typography.bodySmall,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+        )
     }
 }
 
@@ -215,10 +240,11 @@ fun ListItem(
 @Composable
 fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
     val iconSize = 32.dp.toPixels()
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState())
-        .fillMaxWidth()
-        .padding(paddingValues)
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
+            .padding(paddingValues)
     ) {
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -244,7 +270,8 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
         }?.collectAsState(null)
         TextButton(
             modifier = Modifier
-                .padding(vertical = 16.dp).fillMaxWidth(),
+                .padding(vertical = 16.dp)
+                .fillMaxWidth(),
             onClick = { viewModel.openItemPicker() }) {
             Text(
                 modifier = Modifier.weight(1f),
@@ -254,10 +281,28 @@ fun CustomizeTag(viewModel: EditTagSheetVM, paddingValues: PaddingValues) {
                     viewModel.taggedItems.size
                 )
             )
-            Box(modifier = Modifier.padding(start = 8.dp).width(64.dp).height(32.dp), contentAlignment = Alignment.CenterEnd) {
-                ShapedLauncherIcon(size = 32.dp, icon = { icon1?.value }, modifier = Modifier.offset(x = -0.dp))
-                ShapedLauncherIcon(size = 32.dp, icon = { icon2?.value }, modifier = Modifier.offset(x = -16.dp))
-                ShapedLauncherIcon(size = 32.dp, icon = { icon3?.value }, modifier = Modifier.offset(x = -32.dp))
+            Box(
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .width(64.dp)
+                    .height(32.dp),
+                contentAlignment = Alignment.CenterEnd
+            ) {
+                ShapedLauncherIcon(
+                    size = 32.dp,
+                    icon = { icon1?.value },
+                    modifier = Modifier.offset(x = -0.dp)
+                )
+                ShapedLauncherIcon(
+                    size = 32.dp,
+                    icon = { icon2?.value },
+                    modifier = Modifier.offset(x = -16.dp)
+                )
+                ShapedLauncherIcon(
+                    size = 32.dp,
+                    icon = { icon3?.value },
+                    modifier = Modifier.offset(x = -32.dp)
+                )
             }
         }
         AnimatedVisibility(viewModel.tagNameExists || viewModel.taggedItems.isEmpty()) {
