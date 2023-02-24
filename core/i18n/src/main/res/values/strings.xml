@@ -750,6 +750,7 @@
     <string name="preference_gesture_long_press">Long press</string>
     <string name="gesture_action_none">None</string>
     <string name="gesture_action_open_search">Open search</string>
+    <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
     <string name="gesture_action_lock_screen">Turn off screen</string>
     <string name="gesture_action_quick_settings">Open quick settings</string>

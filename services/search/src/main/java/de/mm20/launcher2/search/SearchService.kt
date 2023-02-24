@@ -8,6 +8,7 @@ import de.mm20.launcher2.contacts.ContactRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
 import de.mm20.launcher2.files.FileRepository
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppShortcutSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
@@ -50,14 +51,34 @@ import kotlinx.coroutines.supervisorScope
 interface SearchService {
     fun search(
         query: String,
-        shortcuts: AppShortcutSearchSettings,
-        contacts: ContactsSearchSettings,
-        calendars: CalendarSearchSettings,
-        files: FilesSearchSettings,
-        calculator: CalculatorSearchSettings,
-        unitConverter: UnitConverterSearchSettings,
-        websites: WebsiteSearchSettings,
-        wikipedia: WikipediaSearchSettings,
+        shortcuts: AppShortcutSearchSettings = Settings.AppShortcutSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        contacts: ContactsSearchSettings = Settings.ContactsSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        calendars: CalendarSearchSettings = Settings.CalendarSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        files: FilesSearchSettings = Settings.FilesSearchSettings.newBuilder()
+            .setLocalFiles(false)
+            .setGdrive(false)
+            .setOnedrive(false)
+            .setOwncloud(false)
+            .setNextcloud(false)
+            .build(),
+        calculator: CalculatorSearchSettings = Settings.CalculatorSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        unitConverter: UnitConverterSearchSettings = Settings.UnitConverterSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        websites: WebsiteSearchSettings = Settings.WebsiteSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        wikipedia: WikipediaSearchSettings = Settings.WikipediaSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
     ): Flow<SearchResults>
 }
 
@@ -246,3 +267,19 @@ data class SearchResults(
     val searchActions: ImmutableList<SearchAction>? = null,
     val other: ImmutableList<SavableSearchable>? = null,
 )
+
+fun SearchResults.toList(): List<Searchable> {
+    return listOfNotNull(
+        apps,
+        shortcuts,
+        contacts,
+        calendars,
+        files,
+        calculators,
+        unitConverters,
+        websites,
+        wikipedia,
+        searchActions,
+        other,
+    ).flatten()
+}
