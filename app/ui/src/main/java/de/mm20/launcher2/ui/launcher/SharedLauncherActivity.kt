@@ -53,6 +53,7 @@ import de.mm20.launcher2.ui.gestures.GestureHandler
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.sheets.FailedGestureSheet
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
@@ -96,10 +97,6 @@ abstract class SharedLauncherActivity(
 
         val bottomSheetManager = LauncherBottomSheetManager()
         val gestureDetector = GestureDetector()
-
-        viewModel.shouldDetectDoubleTapGesture.observe(this) {
-            gestureDetector.shouldDetectDoubleTaps = it
-        }
 
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
@@ -270,51 +267,7 @@ abstract class SharedLauncherActivity(
                                 }
                                 LauncherBottomSheets()
                             }
-
-                            val swipeThreshold = 150.dp.toPixels()
-                            GestureHandler(
-                                detector = gestureDetector,
-                                onDoubleTap = {
-                                    viewModel.handleGesture(Gesture.DoubleTap)
-                                },
-                                onLongPress = {
-                                    viewModel.handleGesture(Gesture.LongPress)
-                                },
-                                onDrag = {
-                                    return@GestureHandler when {
-                                        it.x > swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
-                                            viewModel.handleGesture(Gesture.SwipeRight)
-                                        }
-
-                                        it.x < -swipeThreshold && it.x.absoluteValue > it.y.absoluteValue * 2f -> {
-                                            viewModel.handleGesture(Gesture.SwipeLeft)
-                                        }
-
-                                        it.y > swipeThreshold && it.y.absoluteValue > it.x.absoluteValue * 2f -> {
-                                            viewModel.handleGesture(Gesture.SwipeDown)
-                                        }
-                                        else -> false
-                                    }
-                                },
-                                onTap = {
-                                    wallpaperManager.sendWallpaperCommand(
-                                        window.decorView.windowToken,
-                                        WallpaperManager.COMMAND_TAP,
-                                        it.x.toInt(),
-                                        it.y.toInt(),
-                                        0,
-                                        null
-                                    )
-                                }
-                            )
-                            if (viewModel.failedGestureState != null) {
-                                FailedGestureSheet(
-                                    failedGesture = viewModel.failedGestureState!!,
-                                    onDismiss = {
-                                        viewModel.dismissGestureFailedSheet()
-                                    }
-                                )
-                            }
+                            LauncherGestureHandler()
                         }
                     }
                 }
