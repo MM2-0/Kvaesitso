@@ -313,12 +313,18 @@ message Settings {
       OpenQuickSettings = 4;
       OpenRecents = 5;
       OpenPowerDialog = 6;
+      LaunchApp = 7;
     }
     GestureAction swipe_down = 1;
     GestureAction swipe_left = 2;
     GestureAction swipe_right = 3;
     GestureAction double_tap = 4;
     GestureAction long_press = 5;
+    string swipe_down_app = 6;
+    string swipe_left_app = 7;
+    string swipe_right_app = 8;
+    string double_tap_app = 9;
+    string long_press_app = 10;
   }
   GestureSettings gestures = 28;
 }
