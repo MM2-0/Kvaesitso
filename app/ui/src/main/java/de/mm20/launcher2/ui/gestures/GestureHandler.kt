@@ -11,6 +11,7 @@ fun GestureHandler(
     onLongPress: (Offset) -> Unit = {},
     onDoubleTap: (Offset) -> Unit = {},
     onDrag: (Offset) -> Boolean = { false },
+    onDragEnd: () -> Unit = {},
 ) {
     DisposableEffect(detector) {
         detector.gestureListener = object : GestureDetector.OnGestureListener {
@@ -28,6 +29,10 @@ fun GestureHandler(
 
             override fun onDrag(offset: Offset): Boolean {
                 return onDrag(offset)
+            }
+
+            override fun onDragEnd() {
+                onDragEnd()
             }
         }
         onDispose {

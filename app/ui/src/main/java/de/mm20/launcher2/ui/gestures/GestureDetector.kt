@@ -38,6 +38,7 @@ class GestureDetector {
         dragStart = null
         currentDrag = null
         hasDragEnded = false
+        gestureListener?.onDragEnd()
     }
 
 
@@ -51,6 +52,8 @@ class GestureDetector {
          * The gesture detector will no longer track the drag gesture in this case.
          */
         fun onDrag(offset: Offset): Boolean = false
+
+        fun onDragEnd() {}
     }
 }
 

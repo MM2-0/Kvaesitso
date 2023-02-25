@@ -120,6 +120,9 @@ data class LauncherApp(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         val launcherApps = context.getSystemService<LauncherApps>()!!
+        if (isAtLeastApiLevel(31)) {
+            options?.putInt("android.activity.splashScreenStyle", 1)
+        }
         try {
             launcherApps.startMainActivity(
                 ComponentName(`package`, activity),
