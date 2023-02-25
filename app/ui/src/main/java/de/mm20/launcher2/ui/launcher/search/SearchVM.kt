@@ -46,6 +46,9 @@ class SearchVM : ViewModel(), KoinComponent {
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
+    private val reorderByRelevance = dataStore.data.map { it.searchBar.reorderByRelevance }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
     private val searchService: SearchService by inject()
 
     val searchQuery = mutableStateOf("")
@@ -172,35 +175,37 @@ class SearchVM : ViewModel(), KoinComponent {
 
                         ranksByLaunchCount.collectLatest {
 
-                            val fileRanks = mutableListOf<Pair<Int, File>>()
+                            if (reorderByRelevance.value) {
+                                val fileRanks = mutableListOf<Pair<Int, File>>()
 
-                            for ((domain, ranks) in it.groupBy { it.second.domain }) {
-                                when (domain) {
-                                    "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second as AppShortcut })
-                                    "calendar" -> events.reorderByRanks(ranks.map { it.second as CalendarEvent })
-                                    "contact" -> contacts.reorderByRanks(ranks.map { it.second as Contact })
-                                    "app" -> {
-                                        val ranksAsApps = ranks.map { it.second as LauncherApp }
-                                        apps.reorderByRanks(ranksAsApps)
-                                        workApps.reorderByRanks(ranksAsApps)
+                                for ((domain, ranks) in it.groupBy { it.second.domain }) {
+                                    when (domain) {
+                                        "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second as AppShortcut })
+                                        "calendar" -> events.reorderByRanks(ranks.map { it.second as CalendarEvent })
+                                        "contact" -> contacts.reorderByRanks(ranks.map { it.second as Contact })
+                                        "app" -> {
+                                            val ranksAsApps = ranks.map { it.second as LauncherApp }
+                                            apps.reorderByRanks(ranksAsApps)
+                                            workApps.reorderByRanks(ranksAsApps)
+                                        }
+
+                                        "file", "gdrive", "onedrive", "nextcloud", "owncloud"
+                                        -> fileRanks.addAll(
+                                            ranks.map {
+                                                Pair(
+                                                    it.first,
+                                                    it.second as File
+                                                )
+                                            })
                                     }
-
-                                    "file", "gdrive", "onedrive", "nextcloud", "owncloud"
-                                    -> fileRanks.addAll(
-                                        ranks.map {
-                                            Pair(
-                                                it.first,
-                                                it.second as File
-                                            )
-                                        })
                                 }
-                            }
 
-                            if (files.isNotEmpty() && fileRanks.isNotEmpty()) {
-                                files.reorderByRanks(
-                                    fileRanks.sortedByDescending { it.first }
-                                        .map { it.second }
-                                )
+                                if (files.isNotEmpty() && fileRanks.isNotEmpty()) {
+                                    files.reorderByRanks(
+                                        fileRanks.sortedByDescending { it.first }
+                                            .map { it.second }
+                                    )
+                                }
                             }
 
                             if (query.isNotEmpty() && launchOnEnter.value) {

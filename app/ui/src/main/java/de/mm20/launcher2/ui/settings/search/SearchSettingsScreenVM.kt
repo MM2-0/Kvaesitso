@@ -31,7 +31,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
 
-    val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts).asLiveData()
+    val hasContactsPermission =
+        permissionsManager.hasPermission(PermissionGroup.Contacts).asLiveData()
     val contacts = dataStore.data.map { it.contactsSearch.enabled }.asLiveData()
     fun setContacts(contacts: Boolean) {
         viewModelScope.launch {
@@ -45,11 +46,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestContactsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
+    val hasCalendarPermission =
+        permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
     val calendar = dataStore.data.map { it.calendarSearch.enabled }.asLiveData()
     fun setCalendar(calendar: Boolean) {
         viewModelScope.launch {
@@ -63,6 +66,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestCalendarPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
     }
@@ -165,8 +169,24 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val reorderByRelevance = dataStore.data.map { it.searchBar.reorderByRelevance }.asLiveData()
+    fun setReorderByRelevance(reorderByRelevance: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setReorderByRelevance(reorderByRelevance)
 
-    val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
+                    )
+                    .build()
+            }
+        }
+    }
+
+
+    val hasAppShortcutPermission =
+        permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
     val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }.asLiveData()
     fun setAppShortcuts(appShortcuts: Boolean) {
         viewModelScope.launch {
@@ -180,6 +200,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }

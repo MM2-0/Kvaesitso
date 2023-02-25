@@ -100,7 +100,10 @@ fun SearchSettingsScreen() {
                 val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.observeAsState()
                 AnimatedVisibility(hasAppShortcutsPermission == false) {
                     MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_appshortcuts_search_settings, stringResource(R.string.app_name)),
+                        text = stringResource(
+                            R.string.missing_permission_appshortcuts_search_settings,
+                            stringResource(R.string.app_name)
+                        ),
                         onClick = {
                             viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
                         },
@@ -182,6 +185,7 @@ fun SearchSettingsScreen() {
         item {
             val autoFocus by viewModel.autoFocus.observeAsState()
             val launchOnEnter by viewModel.launchOnEnter.observeAsState()
+            val reorderByRelevance by viewModel.reorderByRelevance.observeAsState()
             PreferenceCategory {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_auto_focus),
@@ -197,6 +201,14 @@ fun SearchSettingsScreen() {
                     value = launchOnEnter == true,
                     onValueChanged = {
                         viewModel.setLaunchOnEnter(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_reorder_by_relevance),
+                    summary = stringResource(R.string.preference_search_bar_reorder_by_relevance_summary),
+                    value = reorderByRelevance == true,
+                    onValueChanged = {
+                        viewModel.setReorderByRelevance(it)
                     }
                 )
                 Preference(

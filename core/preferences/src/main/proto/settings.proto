@@ -223,6 +223,7 @@ message Settings {
     }
     SearchBarColors color = 3;
     bool launch_on_enter = 4;
+    bool reorder_by_relevance = 5;
   }
   SearchBarSettings search_bar = 20;
 
