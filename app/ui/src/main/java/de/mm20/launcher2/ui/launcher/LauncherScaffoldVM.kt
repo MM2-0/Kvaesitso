@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.util.Log
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,19 +8,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.GestureSettings
 import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.gestures.Gesture
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,17 +34,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val globalActionsService: GlobalActionsService by inject()
     private val permissionsManager: PermissionsManager by inject()
-
-    private var gestureSettings : GestureSettings? = null
-
-
-    init {
-        viewModelScope.launch {
-            dataStore.data.map { it.gestures }.collectLatest {
-                gestureSettings = it
-            }
-        }
-    }
+    private val favoritesRepository: FavoritesRepository by inject()
 
     private var isSystemInDarkMode = MutableStateFlow(false)
 
@@ -112,15 +106,46 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
 
 
-    val shouldDetectDoubleTapGesture = dataStore.data.map { it.gestures.doubleTap != GestureAction.None }.asLiveData()
+    val gestureState: StateFlow<GestureState> = dataStore
+        .data.map { it.gestures }
+        .distinctUntilChanged()
+        .map { settings ->
+            val swipeLeftAction = settings?.swipeLeft ?: GestureAction.None
+            val swipeRightAction = settings?.swipeRight ?: GestureAction.None
+            val swipeDownAction = settings?.swipeDown ?: GestureAction.None
+            val longPressAction = settings?.longPress ?: GestureAction.None
+            val doubleTapAction = settings?.doubleTap ?: GestureAction.None
+            val apps = listOfNotNull(
+                if (swipeLeftAction == GestureAction.LaunchApp) settings.swipeLeftApp else null,
+                if (swipeRightAction == GestureAction.LaunchApp) settings.swipeRightApp else null,
+                if (swipeDownAction == GestureAction.LaunchApp) settings.swipeDownApp else null,
+                if (longPressAction == GestureAction.LaunchApp) settings.longPressApp else null,
+                if (doubleTapAction == GestureAction.LaunchApp) settings.doubleTapApp else null
+            ).let { favoritesRepository.getFromKeys(it) }
+
+            GestureState(
+                swipeLeftAction = swipeLeftAction,
+                swipeRightAction = swipeRightAction,
+                swipeDownAction = swipeDownAction,
+                longPressAction = longPressAction,
+                doubleTapAction = doubleTapAction,
+                swipeLeftApp = apps.firstOrNull { it.key == settings?.swipeLeftApp },
+                swipeRightApp = apps.firstOrNull { it.key == settings?.swipeRightApp },
+                swipeDownApp = apps.firstOrNull { it.key == settings?.swipeDownApp },
+                longPressApp = apps.firstOrNull { it.key == settings?.longPressApp },
+                doubleTapApp = apps.firstOrNull { it.key == settings?.doubleTapApp }
+            )
+        }.stateIn(viewModelScope, SharingStarted.Eagerly, GestureState())
+
+
     var failedGestureState by mutableStateOf<FailedGesture?>(null)
-    fun handleGesture(gesture: Gesture): Boolean {
+    fun handleGesture(context: Context, gesture: Gesture): Boolean {
         val action = when (gesture) {
-            Gesture.DoubleTap -> gestureSettings?.doubleTap
-            Gesture.LongPress -> gestureSettings?.longPress
-            Gesture.SwipeDown -> gestureSettings?.swipeDown?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PullDown }
-            Gesture.SwipeLeft -> gestureSettings?.swipeLeft?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.Pager }
-            Gesture.SwipeRight -> gestureSettings?.swipeRight?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PagerReversed }
+            Gesture.DoubleTap -> gestureState.value.doubleTapAction
+            Gesture.LongPress -> gestureState.value.longPressAction
+            Gesture.SwipeDown -> gestureState.value.swipeDownAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PullDown }
+            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.Pager }
+            Gesture.SwipeRight -> gestureState.value.swipeRightAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PagerReversed }
         }
         val requiresAccessibilityService =
             action == GestureAction.OpenRecents
@@ -129,7 +154,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                     || action == GestureAction.OpenNotificationDrawer
                     || action == GestureAction.LockScreen
 
-        if (action != null && requiresAccessibilityService && !permissionsManager.checkPermissionOnce(PermissionGroup.Accessibility)) {
+        if (action != null && requiresAccessibilityService && !permissionsManager.checkPermissionOnce(
+                PermissionGroup.Accessibility
+            )
+        ) {
             failedGestureState = FailedGesture(gesture, action)
             return true
         }
@@ -166,6 +194,17 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 true
             }
 
+            GestureAction.LaunchApp -> {
+                when (gesture) {
+                    Gesture.SwipeLeft -> gestureState.value.swipeLeftApp
+                    Gesture.SwipeRight -> gestureState.value.swipeRightApp
+                    Gesture.SwipeDown -> gestureState.value.swipeDownApp
+                    Gesture.LongPress -> gestureState.value.longPressApp
+                    Gesture.DoubleTap -> gestureState.value.doubleTapApp
+                }?.launch(context, null)
+                true
+            }
+
             else -> false
         }
     }
@@ -174,5 +213,18 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         failedGestureState = null
     }
 }
+
+data class GestureState(
+    val swipeLeftAction: GestureAction = GestureAction.None,
+    val swipeRightAction: GestureAction = GestureAction.None,
+    val swipeDownAction: GestureAction = GestureAction.None,
+    val longPressAction: GestureAction = GestureAction.None,
+    val doubleTapAction: GestureAction = GestureAction.None,
+    val swipeLeftApp: SavableSearchable? = null,
+    val swipeRightApp: SavableSearchable? = null,
+    val swipeDownApp: SavableSearchable? = null,
+    val longPressApp: SavableSearchable? = null,
+    val doubleTapApp: SavableSearchable? = null,
+)
 
 data class FailedGesture(val gesture: Gesture, val action: GestureAction)
