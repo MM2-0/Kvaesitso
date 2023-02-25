@@ -30,7 +30,7 @@ fun LauncherGestureHandler() {
 
     val gestureState by viewModel.gestureState.collectAsState(GestureState())
 
-    val shouldDetectDoubleTapGesture = gestureState.gdoubleTapAction != GestureAction.None
+    val shouldDetectDoubleTapGesture = gestureState.doubleTapAction != GestureAction.None
 
     LaunchedEffect(shouldDetectDoubleTapGesture) {
         gestureDetector.shouldDetectDoubleTaps = shouldDetectDoubleTapGesture
