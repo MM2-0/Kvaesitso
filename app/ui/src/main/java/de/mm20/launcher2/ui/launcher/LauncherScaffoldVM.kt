@@ -1,10 +1,12 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.ActivityOptions
+import android.app.Activity
 import android.content.Context
+import android.graphics.Rect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -211,10 +213,13 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
             }
 
             GestureAction.LaunchApp -> {
-                val options = ActivityOptions.makeCustomAnimation(
-                    context,
-                    android.R.anim.fade_in,
-                    android.R.anim.fade_out,
+                val view = (context as Activity).window.decorView
+                val options = ActivityOptionsCompat.makeScaleUpAnimation(
+                    view,
+                    0,
+                    0,
+                    view.width,
+                    view.height
                 )
                 when (gesture) {
                     Gesture.SwipeLeft -> gestureState.value.swipeLeftApp
