@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.component
 
 import android.content.Context
+import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import androidx.compose.animation.animateColorAsState
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -21,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
@@ -49,8 +53,16 @@ fun FakeSplashScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
+            if (splashScreenData.iconBackground != null) {
+                Surface(
+                    modifier = Modifier.size(192.dp),
+                    shape = CircleShape,
+                    color = splashScreenData.iconBackground
+                ) {
+                }
+            }
             AsyncImage(
-                modifier = Modifier.size(288.dp),
+                modifier = Modifier.size(splashScreenData.iconSize),
                 model = splashScreenData.icon,
                 contentDescription = null
             )
@@ -70,6 +82,7 @@ fun FakeSplashScreen(
 data class SplashScreenData(
     val backgroundColor: Color,
     val icon: Drawable? = null,
+    val iconSize: Dp,
     val brandingIcon: Drawable? = null,
     val iconBackground: Color? = null,
 )
@@ -79,13 +92,24 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
     val context = LocalContext.current
     val defaultBackgroundColor = MaterialTheme.colorScheme.background
     val state = remember {
-        mutableStateOf(SplashScreenData(backgroundColor = defaultBackgroundColor))
+        mutableStateOf(SplashScreenData(backgroundColor = defaultBackgroundColor, iconSize = 288.dp))
     }
 
     LaunchedEffect(searchable) {
         withContext(Dispatchers.IO) {
-            if (searchable is LauncherApp && isAtLeastApiLevel(31)) {
-                val activityInfo = searchable.launcherActivityInfo.activityInfo
+            if (searchable is LauncherApp) {
+                val activityInfo = if (isAtLeastApiLevel(31)) {
+                    searchable.launcherActivityInfo.activityInfo
+                } else {
+                    try {
+                        context.packageManager.getActivityInfo(
+                            searchable.launcherActivityInfo.componentName,
+                            0
+                        )
+                    } catch (e: PackageManager.NameNotFoundException) {
+                        null
+                    }
+                } ?: return@withContext
                 val themeRes = activityInfo.themeResource
                 val ctx = context.createPackageContext(
                     searchable.`package`,
@@ -101,28 +125,28 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                     typedValue,
                     true
                 )
-                if (!typedValue.isColorType || typedValue.data == 0) {
+                if (!typedValue.isColor || typedValue.data == 0) {
                     theme.resolveAttribute(
                         android.R.attr.windowBackground,
                         typedValue,
                         true
                     )
                 }
-                if (!typedValue.isColorType || typedValue.data == 0) {
+                if (!typedValue.isColor || typedValue.data == 0) {
                     theme.resolveAttribute(
                         android.R.attr.colorBackground,
                         typedValue,
                         true
                     )
                 }
-                if (!typedValue.isColorType || typedValue.data == 0) {
+                if (!typedValue.isColor || typedValue.data == 0) {
                     theme.resolveAttribute(
                         android.R.attr.background,
                         typedValue,
                         true
                     )
                 }
-                val backgroundColor = typedValue.takeIf { it.isColorType && it.data != 0 }?.data
+                val backgroundColor = typedValue.takeIf { it.isColor && it.data != 0 }?.data
 
                 theme.resolveAttribute(
                     android.R.attr.windowSplashScreenAnimatedIcon,
@@ -130,8 +154,12 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                     true
                 )
 
-                val icon = if (typedValue.resourceId != 0) {
-                    ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                var icon = if (typedValue.resourceId != 0) {
+                    try {
+                        ContextCompat.getDrawable(ctx, typedValue.resourceId)
+                    } catch (e: Resources.NotFoundException) {
+                        null
+                    }
                 } else {
                     null
                 }
@@ -148,10 +176,32 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                     null
                 }
 
+                theme.resolveAttribute(
+                    android.R.attr.windowSplashScreenIconBackgroundColor,
+                    typedValue,
+                    true
+                )
+
+                var iconSize = 288.dp
+
+                var iconBackground = if (typedValue.isColor && typedValue.data != 0) {
+                    iconSize = 240.dp
+                    Color(typedValue.data)
+                } else {
+                    null
+                }
+
+                if (icon == null) {
+                    icon = activityInfo.loadIcon(context.packageManager)
+                    iconSize = 160.dp
+                }
+
                 state.value = SplashScreenData(
                     backgroundColor = backgroundColor?.let { Color(it) } ?: defaultBackgroundColor,
                     icon = icon,
-                    brandingIcon = brandingIcon
+                    brandingIcon = brandingIcon,
+                    iconBackground = iconBackground,
+                    iconSize = iconSize,
                 )
             }
         }
@@ -159,3 +209,6 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
 
     return state.value
 }
+
+internal val TypedValue.isColor
+    get() = type in TypedValue.TYPE_FIRST_COLOR_INT..TypedValue.TYPE_LAST_COLOR_INT
