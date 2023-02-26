@@ -8,7 +8,7 @@ import androidx.compose.ui.geometry.Offset
 
 class GestureDetector {
     private var dragStart: Offset? = null
-    private var currentDrag : Offset? = null
+    var currentDrag : Offset? = null
 
     var gestureListener: OnGestureListener? = null
 
