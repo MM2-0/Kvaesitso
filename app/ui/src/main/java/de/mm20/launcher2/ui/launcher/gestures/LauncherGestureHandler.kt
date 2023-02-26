@@ -57,9 +57,10 @@ fun LauncherGestureHandler() {
     var swipeGestureProgress = remember { mutableStateOf(0f) }
     var swipeGestureDirection by remember { mutableStateOf<SwipeDirection?>(null) }
 
+    // Min swipe distance to trigger show the launch app preview
     val swipeStartThreshold = 18.dp.toPixels()
+    // Min swipe distance to trigger the action
     val swipeActionThreshold = 150.dp.toPixels()
-    val swipeLaunchAppThreshold = 220.dp.toPixels()
     GestureHandler(
         detector = gestureDetector,
         onDoubleTap = {
@@ -76,9 +77,9 @@ fun LauncherGestureHandler() {
 
                     swipeGestureDirection = SwipeDirection.Right
                     swipeGestureProgress.value =
-                        ((it.x - swipeStartThreshold) / (swipeLaunchAppThreshold - swipeStartThreshold)).coerceIn(
+                        ((it.x - swipeStartThreshold) / (swipeActionThreshold - swipeStartThreshold)).coerceIn(
                             0f,
-                            1f
+                            2f
                         )
                     launchingApp = gestureState.swipeRightApp
                     return@GestureHandler false
@@ -90,9 +91,9 @@ fun LauncherGestureHandler() {
 
                     swipeGestureDirection = SwipeDirection.Left
                     swipeGestureProgress.value =
-                        ((-it.x - swipeStartThreshold) / (swipeLaunchAppThreshold - swipeStartThreshold)).coerceIn(
+                        ((-it.x - swipeStartThreshold) / (swipeActionThreshold - swipeStartThreshold)).coerceIn(
                             0f,
-                            1f
+                            2f
                         )
                     launchingApp = gestureState.swipeLeftApp
                     return@GestureHandler false
@@ -104,9 +105,9 @@ fun LauncherGestureHandler() {
 
                     swipeGestureDirection = SwipeDirection.Down
                     swipeGestureProgress.value =
-                        ((it.y - swipeStartThreshold) / (swipeLaunchAppThreshold - swipeStartThreshold)).coerceIn(
+                        ((it.y - swipeStartThreshold) / (swipeActionThreshold - swipeStartThreshold)).coerceIn(
                             0f,
-                            1f
+                            2f
                         )
                     launchingApp = gestureState.swipeDownApp
                     return@GestureHandler false
@@ -139,10 +140,10 @@ fun LauncherGestureHandler() {
             if (swipeGestureProgress.value > 0f) {
                 scope.launch {
                     val direction = swipeGestureDirection
-                    if ((swipeGestureProgress.value * swipeLaunchAppThreshold) + swipeStartThreshold >= swipeActionThreshold
+                    if (swipeGestureProgress.value >= 1f
                         && direction != null
                     ) {
-                        swipeGestureProgress.animateTo(1f)
+                        swipeGestureProgress.animateTo(2f)
                         viewModel.handleGesture(
                             context,
                             when (direction) {
@@ -183,25 +184,25 @@ fun LauncherGestureHandler() {
                         val p = swipeGestureProgress.value
                         when (swipeGestureDirection) {
                             SwipeDirection.Right -> IntOffset(
-                                (-swipeActionThreshold * (1f - p)).toInt(),
+                                (-minWidth.toPx() * (1f - p * 0.5f)).toInt(),
                                 0
                             )
 
                             SwipeDirection.Left -> IntOffset(
-                                (swipeActionThreshold * (1f - p)).toInt(),
+                                (minWidth.toPx() * (1f - p * 0.5f)).toInt(),
                                 0
                             )
 
                             SwipeDirection.Down -> IntOffset(
                                 0,
-                                (-swipeActionThreshold * (1f - p)).toInt()
+                                (-minHeight.toPx() * (1f - p * 0.5f)).toInt()
                             )
 
                             else -> IntOffset.Zero
                         }
                     }
                     .graphicsLayer {
-                        alpha = (2f * swipeGestureProgress.value).coerceAtMost(1f)
+                        alpha = (swipeGestureProgress.value).coerceAtMost(1f)
                     },
                 searchable = launchingApp,
             )
