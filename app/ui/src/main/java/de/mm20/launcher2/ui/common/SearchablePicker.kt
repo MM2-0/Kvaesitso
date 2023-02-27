@@ -58,7 +58,8 @@ fun SearchablePicker(
                 },
                 placeholder = {
                     Text(stringResource(R.string.search_bar_placeholder))
-                }
+                },
+                singleLine = true,
             )
             LazyColumn(
                 modifier = Modifier
