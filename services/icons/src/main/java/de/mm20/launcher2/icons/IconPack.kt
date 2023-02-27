@@ -1,6 +1,7 @@
 package de.mm20.launcher2.icons
 
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.pm.ResolveInfo
 import de.mm20.launcher2.database.entities.IconPackEntity
 
@@ -8,13 +9,13 @@ data class IconPack(
     val name: String,
     val packageName: String,
     val version: String,
-    var scale: Float = 1f,
+    val scale: Float = 1f,
     val themed: Boolean = false,
 ) {
     constructor(entity: IconPackEntity) : this(
         name = entity.name,
         packageName = entity.packageName,
-        version = entity.packageName,
+        version = entity.version,
         scale = entity.scale,
         themed = entity.themed,
     )
@@ -27,6 +28,17 @@ data class IconPack(
         name = resolveInfo.loadLabel(context.packageManager).toString(),
         packageName = resolveInfo.activityInfo.packageName,
         version = context.packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).versionName,
+        themed = themed,
+    )
+
+    internal constructor(
+        context: Context,
+        packageInfo: PackageInfo,
+        themed: Boolean = false
+    ): this(
+        name = packageInfo.applicationInfo.loadLabel(context.packageManager).toString(),
+        packageName = packageInfo.packageName,
+        version = context.packageManager.getPackageInfo(packageInfo.packageName, 0).versionName,
         themed = themed,
     )
 

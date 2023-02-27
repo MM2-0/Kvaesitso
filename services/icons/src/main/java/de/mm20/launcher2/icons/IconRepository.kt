@@ -1,6 +1,7 @@
 package de.mm20.launcher2.icons
 
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -24,7 +25,6 @@ import de.mm20.launcher2.icons.providers.IconPackIconProvider
 import de.mm20.launcher2.icons.providers.IconProvider
 import de.mm20.launcher2.icons.providers.PlaceholderIconProvider
 import de.mm20.launcher2.icons.providers.SystemIconProvider
-import de.mm20.launcher2.icons.providers.ThemedIconProvider
 import de.mm20.launcher2.icons.providers.ThemedPlaceholderIconProvider
 import de.mm20.launcher2.icons.providers.getFirstIcon
 import de.mm20.launcher2.icons.transformations.ForceThemedIconTransformation
@@ -39,11 +39,13 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.internal.ChannelFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -67,6 +69,11 @@ class IconRepository(
     private var iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
     private var placeholderProvider: IconProvider? = null
 
+    /**
+     * Signal that installed icon packs have been updated. Force a reload of all icons.
+     */
+    private val iconPacksUpdated = MutableSharedFlow<Unit>(1)
+
     private var transformations: MutableStateFlow<List<LauncherIconTransformation>> =
         MutableStateFlow(
             listOf()
@@ -83,51 +90,52 @@ class IconRepository(
             addDataScheme("package")
         })
 
+        iconPacksUpdated.tryEmit(Unit)
+
         scope.launch {
             dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest { settings ->
-                val placeholderProvider = if (settings.themedIcons) {
-                    ThemedPlaceholderIconProvider(context)
-                } else {
-                    PlaceholderIconProvider(context)
-                }
-                val providers = mutableListOf<IconProvider>()
-
-                if (settings.iconPack.isNotBlank()) {
-                    val pack = iconPackManager.getIconPack(settings.iconPack)
-                    if (pack != null) {
-                        providers.add(
-                            IconPackIconProvider(
-                                context,
-                                pack,
-                                iconPackManager
-                            )
-                        )
+                iconPacksUpdated.collectLatest {
+                    val placeholderProvider = if (settings.themedIcons) {
+                        ThemedPlaceholderIconProvider(context)
                     } else {
-                        Log.w("MM20", "Icon pack ${settings.iconPack} not found")
+                        PlaceholderIconProvider(context)
                     }
-                }
-                if (settings.themedIcons) {
-                    providers.add(ThemedIconProvider(iconPackManager))
-                }
-                providers.add(DynamicClockIconProvider(context, settings.themedIcons))
-                providers.add(CalendarIconProvider(context, settings.themedIcons))
-                if (!isAtLeastApiLevel(33)) {
-                    providers.add(CompatIconProvider(context, settings.themedIcons))
-                }
-                providers.add(SystemIconProvider(context, settings.themedIcons))
-                providers.add(placeholderProvider)
-                cache.evictAll()
+                    val providers = mutableListOf<IconProvider>()
 
-                val transformations = mutableListOf<LauncherIconTransformation>()
+                    if (settings.iconPack.isNotBlank()) {
+                        val pack = iconPackManager.getIconPack(settings.iconPack)
+                        if (pack != null) {
+                            providers.add(
+                                IconPackIconProvider(
+                                    context,
+                                    pack,
+                                    iconPackManager
+                                )
+                            )
+                        } else {
+                            Log.w("MM20", "Icon pack ${settings.iconPack} not found")
+                        }
+                    }
+                    providers.add(DynamicClockIconProvider(context, settings.themedIcons))
+                    providers.add(CalendarIconProvider(context, settings.themedIcons))
+                    if (!isAtLeastApiLevel(33)) {
+                        providers.add(CompatIconProvider(context, settings.themedIcons))
+                    }
+                    providers.add(SystemIconProvider(context, settings.themedIcons))
+                    providers.add(placeholderProvider)
+                    cache.evictAll()
 
-                if (settings.adaptify) transformations.add(LegacyToAdaptiveTransformation())
-                if (settings.themedIcons && settings.forceThemed) transformations.add(
-                    ForceThemedIconTransformation()
-                )
+                    val transformations = mutableListOf<LauncherIconTransformation>()
 
-                this@IconRepository.placeholderProvider = placeholderProvider
-                iconProviders.value = providers
-                this@IconRepository.transformations.value = transformations
+                    if (settings.adaptify) transformations.add(LegacyToAdaptiveTransformation())
+                    if (settings.themedIcons && settings.forceThemed) transformations.add(
+                        ForceThemedIconTransformation()
+                    )
+
+                    this@IconRepository.placeholderProvider = placeholderProvider
+                    iconProviders.value = providers
+                    this@IconRepository.transformations.value = transformations
+                }
             }
         }
     }
@@ -215,7 +223,9 @@ class IconRepository(
 
     fun requestIconPackListUpdate() {
         scope.launch {
-            iconPackManager.updateIconPacks()
+            iconPackManager.updateIconPacks().also {
+                if (it)iconPacksUpdated.tryEmit(Unit)
+            }
         }
     }
 
@@ -285,24 +295,14 @@ class IconRepository(
                 iconPackIcons.mapNotNull {
                     CustomIconPackIcon(
                         iconPackPackage = it.iconPack,
-                        iconComponentName = it.componentName?.flattenToString()
-                            ?: return@mapNotNull null
+                        iconActivityName = it.activityName,
+                        iconPackageName = it.packageName,
                     )
                 }
             )
-
-            val themedIcon = iconPackManager.getGreyscaleIcon(searchable.`package`)
-            if (themedIcon != null && themedIcon.componentName?.packageName != null) {
-                providerOptions.add(
-                    CustomThemedIcon(
-                        iconPackageName = themedIcon.componentName.packageName,
-                    )
-                )
-            } else {
-                transformationOptions.add(
-                    ForceThemedIcon
-                )
-            }
+            transformationOptions.add(
+                ForceThemedIcon
+            )
         } else {
             transformationOptions.add(
                 ForceThemedIcon
@@ -359,31 +359,18 @@ class IconRepository(
     suspend fun searchCustomIcons(query: String, iconPack: IconPack?): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).mapNotNull {
-            val componentName = it.componentName ?: return@mapNotNull null
-
             CustomIconWithPreview(
                 customIcon = CustomIconPackIcon(
                     iconPackPackage = it.iconPack,
-                    iconComponentName = componentName.flattenToString(),
+                    iconActivityName = it.activityName,
+                    iconPackageName = it.packageName,
                 ),
-                preview = iconPackManager.getIcon(it.iconPack, componentName)
+                preview = iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName)
                     ?.transform(transformations) ?: return@mapNotNull null
             )
         }
 
-        val themedIcons = iconPackManager.searchThemedIcons(query).mapNotNull {
-            val componentName = it.componentName ?: return@mapNotNull null
-
-            CustomIconWithPreview(
-                customIcon = CustomThemedIcon(
-                    iconPackageName = componentName.packageName,
-                ),
-                preview = iconPackManager.getThemedIcon(componentName.packageName)
-                    ?.transform(transformations) ?: return@mapNotNull null
-            )
-        }
-
-        return iconPackIcons + themedIcons
+        return iconPackIcons
     }
 
     fun setCustomIcon(searchable: SavableSearchable, icon: CustomIcon?) {

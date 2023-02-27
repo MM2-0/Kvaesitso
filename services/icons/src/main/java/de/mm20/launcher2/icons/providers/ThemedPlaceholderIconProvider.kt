@@ -22,6 +22,9 @@ internal class ThemedPlaceholderIconProvider(
             is ClockLayer -> TintedClockLayer(
                 scale = layer.scale,
                 color = 0,
+                defaultHour = layer.defaultHour,
+                defaultMinute = layer.defaultMinute,
+                defaultSecond = layer.defaultSecond,
                 sublayers = layer.sublayers,
             )
             is ColorLayer -> layer.copy(color = 0)

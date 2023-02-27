@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data.customattrs
 
+import android.content.ComponentName
 import android.util.Log
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
@@ -76,10 +77,20 @@ sealed class CustomIcon : CustomAttribute {
             val type = payload.getString("type")
             return when (type) {
                 "custom_icon_pack_icon" -> {
-                    CustomIconPackIcon(
-                        iconComponentName = payload.getString("icon"),
-                        iconPackPackage = payload.getString("icon_pack")
-                    )
+                    val legacyComponentName = payload.optString("icon").let { ComponentName.unflattenFromString(it) }
+                    if (legacyComponentName != null) {
+                        CustomIconPackIcon(
+                            iconPackageName = legacyComponentName.packageName,
+                            iconActivityName = legacyComponentName.className,
+                            iconPackPackage = payload.getString("icon_pack")
+                        )
+                    } else {
+                        CustomIconPackIcon(
+                            iconPackageName = payload.optString("package").takeIf { it.isNotEmpty() } ?: return null,
+                            iconActivityName = payload.optString("activity").takeIf { it.isNotEmpty() },
+                            iconPackPackage = payload.getString("icon_pack")
+                        )
+                    }
                 }
                 "custom_themed_icon" -> {
                     CustomThemedIcon(
@@ -105,12 +116,14 @@ sealed class CustomIcon : CustomAttribute {
 
 data class CustomIconPackIcon(
     val iconPackPackage: String,
-    val iconComponentName: String,
+    val iconPackageName: String,
+    val iconActivityName: String?,
 ) : CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
             "type" to "custom_icon_pack_icon",
-            "icon" to iconComponentName,
+            "package" to iconPackageName,
+            "activity" to iconActivityName,
             "icon_pack" to iconPackPackage,
         ).toString()
     }

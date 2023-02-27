@@ -14,6 +14,9 @@ internal class ForceThemedIconTransformation : LauncherIconTransformation {
         return when(layer) {
             is ClockLayer -> TintedClockLayer(
                 scale = layer.scale,
+                defaultHour = layer.defaultHour,
+                defaultMinute = layer.defaultMinute,
+                defaultSecond = layer.defaultSecond,
                 sublayers = layer.sublayers,
             )
             is ColorLayer -> layer.copy(color = 0)

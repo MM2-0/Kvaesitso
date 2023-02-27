@@ -16,8 +16,7 @@ class IconPackIconProvider(
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
 
-        val component = ComponentName(searchable.`package`, searchable.activity)
-        return iconPackManager.getIcon(iconPack.packageName, component)
+        return iconPackManager.getIcon(iconPack.packageName, searchable.`package`, searchable.activity)
             ?: iconPackManager.generateIcon(
                 context,
                 iconPack.packageName,

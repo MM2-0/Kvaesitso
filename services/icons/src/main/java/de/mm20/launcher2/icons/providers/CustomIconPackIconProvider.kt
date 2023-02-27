@@ -13,7 +13,8 @@ class CustomIconPackIconProvider(
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         return iconPackManager.getIcon(
             customIcon.iconPackPackage,
-            ComponentName.unflattenFromString(customIcon.iconComponentName) ?: return null
+            customIcon.iconPackageName,
+            customIcon.iconActivityName,
         )
     }
 }

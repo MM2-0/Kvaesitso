@@ -145,23 +145,6 @@ fun AdaptiveIconDrawableCompat.toLauncherIcon(
     if (clock != null && clockForeground != null) {
         val clockLayers = (0 until clockForeground.numberOfLayers).map {
             val drw = clockForeground.getDrawable(it)
-            if (drw is RotateDrawable) {
-                drw.level = when (it) {
-                    clock.hourLayer -> {
-                        (12 - clock.defaultHour) * 60
-                    }
-
-                    clock.minuteLayer -> {
-                        (60 - clock.defaultMinute)
-                    }
-
-                    clock.secondLayer -> {
-                        (60 - clock.defaultSecond) * 10
-                    }
-
-                    else -> 0
-                }
-            }
             ClockSublayer(
                 drawable = drw,
                 role = when (it) {
@@ -175,6 +158,9 @@ fun AdaptiveIconDrawableCompat.toLauncherIcon(
         if (themed) {
             return StaticLauncherIcon(
                 foregroundLayer = TintedClockLayer(
+                    defaultHour = clock.defaultHour,
+                    defaultMinute = clock.defaultMinute,
+                    defaultSecond = clock.defaultSecond,
                     sublayers = clockLayers,
                     scale = 1.5f,
                 ),
@@ -183,6 +169,9 @@ fun AdaptiveIconDrawableCompat.toLauncherIcon(
         }
         return StaticLauncherIcon(
             foregroundLayer = ClockLayer(
+                defaultHour = clock.defaultHour,
+                defaultMinute = clock.defaultMinute,
+                defaultSecond = clock.defaultSecond,
                 sublayers = clockLayers,
                 scale = 1.5f,
             ),

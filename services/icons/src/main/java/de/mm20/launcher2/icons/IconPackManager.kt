@@ -18,14 +18,14 @@ import android.graphics.drawable.RotateDrawable
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.icons.loaders.GrayscaleMapInstaller
-import de.mm20.launcher2.icons.loaders.IconPackInstaller
+import de.mm20.launcher2.icons.loaders.AppFilterIconPackInstaller
+import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
 
@@ -50,16 +50,33 @@ class IconPackManager(
         }
     }
 
-    suspend fun updateIconPacks() {
-        withContext(Dispatchers.IO) {
-            IconPackInstaller(context, appDatabase).installIcons()
-            GrayscaleMapInstaller(context, appDatabase).installIcons()
+    private var updateIconPacksMutex = Mutex()
+    suspend fun updateIconPacks(): Boolean {
+        var iconsHaveBeenUpdated = false
+        updateIconPacksMutex.lock()
+        val installers = listOf(
+            AppFilterIconPackInstaller(context, appDatabase),
+            GrayscaleMapIconPackInstaller(context, appDatabase),
+        )
+        for (installer in installers) {
+            val iconPacks = installer.getInstalledIconPacks()
+            for (pack in iconPacks) {
+                if (!installer.isInstalledAndUpToDate(pack)) {
+                    installer.install(pack)
+                    iconsHaveBeenUpdated = true
+                } else {
+                    Log.d("MM20", "Icon pack ${pack.packageName} is up to date")
+                }
+            }
         }
+        updateIconPacksMutex.unlock()
+        return iconsHaveBeenUpdated
     }
 
     suspend fun getIcon(
         iconPack: String,
-        componentName: ComponentName,
+        packageName: String,
+        activityName: String?,
     ): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
@@ -68,69 +85,17 @@ class IconPackManager(
             return null
         }
         val iconDao = appDatabase.iconDao()
-        val icon = iconDao.getIcon(componentName.flattenToString(), iconPack)
+        val icon = iconDao.getIcon(packageName, activityName, iconPack)?.let { IconPackAppIcon(it) }
             ?: return null
 
-        val drawableName = icon.drawable ?: return null
-
-        if (icon.type == "calendar") {
-            return getIconPackCalendarIcon(context, iconPack, drawableName, icon.themed)
+        if (icon is CalendarIcon) {
+            return getIconPackCalendarIcon(icon, res)
+        } else if (icon is AppIcon) {
+            return getIconPackStaticIcon(icon, res)
+        } else if (icon is ClockIcon) {
+            return getIconPackClockIcon(icon, res)
         }
-        val resId = res.getIdentifier(drawableName, "drawable", iconPack).takeIf { it != 0 }
-            ?: return null
-        val drawable = try {
-            ResourcesCompat.getDrawable(res, resId, context.theme) ?: return null
-        } catch (e: Resources.NotFoundException) {
-            return null
-        }
-        return when {
-            icon.themed && drawable is AdaptiveIconDrawable -> {
-                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
-                    return StaticLauncherIcon(
-                        foregroundLayer = StaticIconLayer(
-                            icon = drawable.monochrome!!,
-                            scale = 1f,
-                        ),
-                        backgroundLayer = ColorLayer(),
-                    )
-                } else {
-                    return StaticLauncherIcon(
-                        foregroundLayer = TintedIconLayer(
-                            icon = drawable.foreground,
-                            scale = 1.5f,
-                        ),
-                        backgroundLayer = ColorLayer(),
-                    )
-                }
-            }
-
-            drawable is AdaptiveIconDrawable -> {
-                return StaticLauncherIcon(
-                    foregroundLayer = drawable.foreground?.let {
-                        StaticIconLayer(
-                            icon = it,
-                            scale = 1.5f,
-                        )
-                    } ?: TransparentLayer,
-                    backgroundLayer = drawable.background?.let {
-                        StaticIconLayer(
-                            icon = it,
-                            scale = 1.5f,
-                        )
-                    } ?: TransparentLayer,
-                )
-            }
-
-            else -> {
-                StaticLauncherIcon(
-                    foregroundLayer = StaticIconLayer(
-                        icon = drawable,
-                        scale = 1f
-                    ),
-                    backgroundLayer = TransparentLayer
-                )
-            }
-        }
+        return null
     }
 
     suspend fun generateIcon(
@@ -233,10 +198,10 @@ class IconPackManager(
         )
     }
 
-    suspend fun getAllIconPackIcons(componentName: ComponentName): List<IconPackIcon> {
+    suspend fun getAllIconPackIcons(componentName: ComponentName): List<IconPackAppIcon> {
         val iconDao = appDatabase.iconDao()
-        return iconDao.getIconsFromAllPacks(componentName.flattenToString())
-            .map { IconPackIcon(it) }
+        return iconDao.getIconsFromAllPacks(componentName.packageName, componentName.shortClassName)
+            .mapNotNull { IconPackAppIcon(it) }
     }
 
     private suspend fun getIconBack(iconPack: String): String? {
@@ -262,25 +227,90 @@ class IconPackManager(
         return iconDao.getScale(iconPack) ?: 1f
     }
 
-    private fun getIconPackCalendarIcon(
-        context: Context,
-        iconPack: String,
-        baseIconName: String,
-        themed: Boolean,
+    private fun getIconPackStaticIcon(
+        icon: AppIcon,
+        resources: Resources,
     ): LauncherIcon? {
-        val resources = try {
-            context.packageManager.getResourcesForApplication(iconPack)
-        } catch (e: PackageManager.NameNotFoundException) {
+        val resId =
+            resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
+                ?: return null
+        val drawable = try {
+            ResourcesCompat.getDrawable(resources, resId, context.theme) ?: return null
+        } catch (e: Resources.NotFoundException) {
             return null
         }
-        val drawableIds = (1..31).map {
-            val drawableName = baseIconName + it
-            val id = resources.getIdentifier(drawableName, "drawable", iconPack)
+        return when {
+            icon.themed && drawable is AdaptiveIconDrawable -> {
+                if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
+                    return StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.monochrome!!,
+                            scale = 1f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                } else {
+                    return StaticLauncherIcon(
+                        foregroundLayer = TintedIconLayer(
+                            icon = drawable.foreground,
+                            scale = 1.5f,
+                        ),
+                        backgroundLayer = ColorLayer(),
+                    )
+                }
+            }
+
+            icon.themed -> {
+                return StaticLauncherIcon(
+                    foregroundLayer = TintedIconLayer(
+                        icon = drawable,
+                        scale = 0.5f,
+                    ),
+                    backgroundLayer = ColorLayer(),
+                )
+            }
+
+            drawable is AdaptiveIconDrawable -> {
+                return StaticLauncherIcon(
+                    foregroundLayer = drawable.foreground?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                    backgroundLayer = drawable.background?.let {
+                        StaticIconLayer(
+                            icon = it,
+                            scale = 1.5f,
+                        )
+                    } ?: TransparentLayer,
+                )
+            }
+
+            else -> {
+                StaticLauncherIcon(
+                    foregroundLayer = StaticIconLayer(
+                        icon = drawable,
+                        scale = 1f
+                    ),
+                    backgroundLayer = TransparentLayer
+                )
+            }
+        }
+    }
+
+    private fun getIconPackCalendarIcon(
+        icon: CalendarIcon,
+        resources: Resources,
+    ): LauncherIcon? {
+        val drawableIds = icon.drawables.map {
+            val id = resources.getIdentifier(it, "drawable", icon.iconPack)
             if (id == 0) return null
             id
         }.toIntArray()
 
-        if (themed) {
+
+        if (icon.themed) {
             return ThemedDynamicCalendarIcon(
                 resources = resources,
                 resourceIds = drawableIds,
@@ -292,142 +322,91 @@ class IconPackManager(
         )
     }
 
-    suspend fun getThemedIcon(packageName: String): LauncherIcon? {
-        val icon = getGreyscaleIcon(packageName) ?: return null
-        val resId = icon.drawable?.toIntOrNull() ?: return null
-        try {
-            val resources = context.packageManager.getResourcesForApplication(icon.iconPack)
-            return getThemedClockIcon(resources, resId) ?: getThemedCalendarIcon(
-                resources,
-                resId,
-                iconProviderPackage = icon.iconPack
-            ) ?: getThemedStaticIcon(resources, resId)
-        } catch (e: PackageManager.NameNotFoundException) {
-            CrashReporter.logException(e)
-        }
-        return null
-    }
-
-
-    suspend fun getGreyscaleIcon(packageName: String): IconPackIcon? {
-        val iconDao = AppDatabase.getInstance(context).iconDao()
-        return iconDao.getGreyscaleIcon(ComponentName(packageName, packageName).flattenToString())
-            ?.let { IconPackIcon(it) }
-
-    }
-
-    private fun getThemedStaticIcon(resources: Resources, resId: Int): LauncherIcon? {
-        try {
-            val fg = ResourcesCompat.getDrawable(resources, resId, null) ?: return null
-            return StaticLauncherIcon(
-                foregroundLayer = TintedIconLayer(
-                    icon = fg,
-                    scale = 0.5f,
-                ),
-                backgroundLayer = ColorLayer()
-            )
+    private fun getIconPackClockIcon(
+        icon: ClockIcon,
+        resources: Resources,
+    ): LauncherIcon? {
+        var drawable = try {
+            resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
+                ?.let { ResourcesCompat.getDrawable(resources, it, null) }
         } catch (e: Resources.NotFoundException) {
-            return null
-        }
-    }
+            null
+        } ?: return null
 
-    private fun getThemedClockIcon(resources: Resources, resId: Int): LauncherIcon? {
-        try {
-            val array = resources.obtainTypedArrayOrNull(resId) ?: return null
-            var i = 0
-            var drawable: LayerDrawable? = null
-            var minuteIndex: Int? = null
-            var defaultMinute = 0
-            var hourIndex: Int? = null
-            var defaultHour = 0
-            while (i < array.length()) {
-                when (array.getString(i)) {
-                    "com.android.launcher3.LEVEL_PER_TICK_ICON_ROUND" -> {
-                        i++
-                        drawable = array.getDrawable(i) as? LayerDrawable
-                    }
+        val background = (drawable as? AdaptiveIconDrawable)?.background
+        val foreground = (drawable as? AdaptiveIconDrawable)?.foreground ?: drawable
 
-                    "com.android.launcher3.HOUR_LAYER_INDEX" -> {
-                        i++
-                        hourIndex = array.getInt(i, -1).takeIf { it != -1 }
-                    }
+        if (foreground !is LayerDrawable) return null
 
-                    "com.android.launcher3.MINUTE_LAYER_INDEX" -> {
-                        i++
-                        minuteIndex = array.getInt(i, -1).takeIf { it != -1 }
-                    }
-
-                    "com.android.launcher3.DEFAULT_HOUR" -> {
-                        i++
-                        defaultHour = array.getInt(i, 0)
-                    }
-
-                    "com.android.launcher3.DEFAULT_MINUTE" -> {
-                        i++
-                        defaultMinute = array.getInt(i, 0)
-                    }
+        val layers = (0 until foreground.numberOfLayers).map {
+            val drw = foreground.getDrawable(it)
+            ClockSublayer(
+                drawable = drw,
+                role = when (it) {
+                    icon.config.hourLayer -> ClockSublayerRole.Hour
+                    icon.config.minuteLayer -> ClockSublayerRole.Minute
+                    icon.config.secondLayer -> ClockSublayerRole.Second
+                    else -> ClockSublayerRole.Static
                 }
-                i++
-            }
-            if (drawable != null && minuteIndex != null && hourIndex != null) {
+            )
+        }
 
-                return StaticLauncherIcon(
+        return when {
+            icon.themed && drawable is AdaptiveIconDrawable -> {
+                StaticLauncherIcon(
                     foregroundLayer = TintedClockLayer(
-                        sublayers = (0 until drawable.numberOfLayers).map {
-                            val drw = drawable.getDrawable(it)
-                            if (drw is RotateDrawable) {
-                                drw.level = when (it) {
-                                    hourIndex -> {
-                                        (12 - defaultHour) * 60
-                                    }
-
-                                    minuteIndex -> {
-                                        (60 - defaultMinute)
-                                    }
-
-                                    else -> 0
-                                }
-                            }
-                            ClockSublayer(
-                                drawable = drw,
-                                role = when (it) {
-                                    hourIndex -> ClockSublayerRole.Hour
-                                    minuteIndex -> ClockSublayerRole.Minute
-                                    else -> ClockSublayerRole.Static
-                                }
-                            )
-                        },
+                        defaultHour = icon.config.defaultHour,
+                        defaultMinute = icon.config.defaultMinute,
+                        defaultSecond = icon.config.defaultSecond,
+                        sublayers = layers,
                         scale = 1.5f,
                     ),
-                    backgroundLayer = ColorLayer()
+                    backgroundLayer = ColorLayer(),
                 )
             }
-        } catch (e: Resources.NotFoundException) {
+            icon.themed -> {
+                StaticLauncherIcon(
+                    foregroundLayer = TintedClockLayer(
+                        defaultHour = icon.config.defaultHour,
+                        defaultMinute = icon.config.defaultMinute,
+                        defaultSecond = icon.config.defaultSecond,
+                        sublayers = layers,
+                        scale = 1f,
+                    ),
+                    backgroundLayer = ColorLayer(),
+                )
+            }
+            drawable is AdaptiveIconDrawable -> {
+                StaticLauncherIcon(
+                    foregroundLayer = ClockLayer(
+                        defaultHour = icon.config.defaultHour,
+                        defaultMinute = icon.config.defaultMinute,
+                        defaultSecond = icon.config.defaultSecond,
+                        sublayers = layers,
+                        scale = 1.5f,
+                    ),
+                    backgroundLayer = StaticIconLayer(
+                        icon = background!!,
+                        scale = 1.5f
+                    ),
+                )
+            }
+            else -> {
+                StaticLauncherIcon(
+                    foregroundLayer = ClockLayer(
+                        defaultHour = icon.config.defaultHour,
+                        defaultMinute = icon.config.defaultMinute,
+                        defaultSecond = icon.config.defaultSecond,
+                        sublayers = layers,
+                        scale = 1f,
+                    ),
+                    backgroundLayer = TransparentLayer,
+                )
+            }
         }
-        return null
     }
 
-    private fun getThemedCalendarIcon(
-        resources: Resources,
-        resId: Int,
-        iconProviderPackage: String
-    ): LauncherIcon? {
-        try {
-            val array = resources.obtainTypedArrayOrNull(resId) ?: return null
-            if (array.length() != 31) return null
-
-            return ThemedDynamicCalendarIcon(
-                resources = resources,
-                resourceIds = IntArray(31) {
-                    array.getResourceId(it, 0).takeIf { it != 0 } ?: return null
-                },
-            )
-        } catch (e: Resources.NotFoundException) {
-        }
-        return null
-    }
-
-    suspend fun searchIconPackIcon(query: String, iconPack: IconPack?): List<IconPackIcon> {
+    suspend fun searchIconPackIcon(query: String, iconPack: IconPack?): List<IconPackAppIcon> {
         val iconDao = appDatabase.iconDao()
         val drawableQuery = query.replace(" ", "_").lowercase()
         return iconDao.searchIconPackIcons(
@@ -435,17 +414,11 @@ class IconPackManager(
             componentQuery = "%$query%",
             nameQuery = "%$query%",
             iconPack = iconPack?.packageName,
-        ).map {
-            IconPackIcon(it)
+        ).mapNotNull {
+            IconPackAppIcon(it)
         }
     }
 
-    suspend fun searchThemedIcons(query: String): List<IconPackIcon> {
-        val iconDao = appDatabase.iconDao()
-        return iconDao.searchGreyscaleIcons("%$query%").map {
-            IconPackIcon(it)
-        }
-    }
 
 }
 

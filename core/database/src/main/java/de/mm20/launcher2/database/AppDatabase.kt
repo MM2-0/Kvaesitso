@@ -7,6 +7,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import de.mm20.launcher2.database.entities.*
 import de.mm20.launcher2.database.migrations.Migration_10_11
@@ -19,6 +20,7 @@ import de.mm20.launcher2.database.migrations.Migration_16_17
 import de.mm20.launcher2.database.migrations.Migration_17_18
 import de.mm20.launcher2.database.migrations.Migration_18_19
 import de.mm20.launcher2.database.migrations.Migration_19_20
+import de.mm20.launcher2.database.migrations.Migration_20_21
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -34,7 +36,7 @@ import de.mm20.launcher2.database.migrations.Migration_9_10
         WidgetEntity::class,
         CustomAttributeEntity::class,
         SearchActionEntity::class,
-    ], version = 20, exportSchema = true
+    ], version = 21, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class, StringListConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -101,6 +103,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_17_18(),
                         Migration_18_19(),
                         Migration_19_20(),
+                        Migration_20_21(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

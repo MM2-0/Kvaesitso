@@ -5,21 +5,20 @@ import androidx.room.*
 import de.mm20.launcher2.database.entities.IconEntity
 import de.mm20.launcher2.database.entities.IconPackEntity
 
+internal val AppTypes = listOf("app", "calendar", "clock")
+
 @Dao
 interface IconDao {
     @Insert
-    fun insertAll(icons: List<IconEntity>)
+    suspend fun insertAll(icons: List<IconEntity>)
 
-    @Query("SELECT drawable FROM Icons WHERE componentName = :componentName AND iconPack = :iconPack")
-    suspend fun getIconName(componentName: String, iconPack: String): String?
+    @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND iconPack = :iconPack AND type IN ('app', 'calendar', 'clock') LIMIT 1")
+    suspend fun getIcon(packageName: String, activityName: String?, iconPack: String): IconEntity?
 
-    @Query("SELECT * FROM Icons WHERE componentName = :componentName AND iconPack = :iconPack AND (type = 'app' OR type = 'calendar') LIMIT 1")
-    suspend fun getIcon(componentName: String, iconPack: String): IconEntity?
+    @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND type IN ('app', 'calendar', 'clock')")
+    suspend fun getIconsFromAllPacks(packageName: String, activityName: String): List<IconEntity>
 
-    @Query("SELECT * FROM Icons WHERE componentName = :componentName AND (type = 'app' OR type = 'calendar')")
-    suspend fun getIconsFromAllPacks(componentName: String): List<IconEntity>
-
-    @Query("SELECT * FROM Icons WHERE (type = 'app' OR type = 'calendar') AND (drawable LIKE :drawableQuery OR componentName LIKE :componentQuery OR name LIKE :nameQuery) AND (:iconPack IS NULL OR iconPack = :iconPack) ORDER BY iconPack, drawable LIMIT :limit")
+    @Query("SELECT * FROM Icons WHERE type IN ('app', 'calendar', 'clock') AND (drawable LIKE :drawableQuery OR packageName LIKE :componentQuery OR activityName LIKE :componentQuery OR name LIKE :nameQuery) AND (:iconPack IS NULL OR iconPack = :iconPack) ORDER BY iconPack, drawable LIMIT :limit")
     suspend fun searchIconPackIcons(
         componentQuery: String,
         nameQuery: String,
@@ -28,30 +27,10 @@ interface IconDao {
         limit: Int = 100
     ): List<IconEntity>
 
-    @Query("SELECT * FROM Icons WHERE (type = 'greyscale_icon') AND componentName LIKE :query GROUP BY componentName ORDER BY drawable LIMIT :limit")
-    suspend fun searchGreyscaleIcons(query: String, limit: Int = 100): List<IconEntity>
-
-    @Query("DELETE FROM Icons WHERE iconPack = :iconPack AND type != 'greyscale_icon'")
+    @Query("DELETE FROM Icons WHERE iconPack = :iconPack")
     fun deleteIcons(iconPack: String)
 
-    @Query("DELETE FROM Icons WHERE iconPack = :iconPack AND type = 'greyscale_icon'")
-    fun deleteGrayscaleIcons(iconPack: String)
-
-    @Transaction
-    suspend fun installIconPack(iconPack: IconPackEntity, icons: List<IconEntity>) {
-        deleteIconPack(iconPack)
-        deleteIcons(iconPack.packageName)
-        insertAll(icons)
-        installIconPack(iconPack)
-    }
-
-    @Transaction
-    suspend fun installGrayscaleIconMap(packageName: String, icons: List<IconEntity>) {
-        deleteGrayscaleIcons(packageName)
-        insertAll(icons)
-    }
-
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun installIconPack(iconPack: IconPackEntity)
 
     @Query("SELECT * FROM IconPack")
@@ -60,34 +39,8 @@ interface IconDao {
     @Query("SELECT * FROM IconPack WHERE packageName = :packageName LIMIT 1")
     suspend fun getIconPack(packageName: String): IconPackEntity?
 
-    @Query("SELECT * FROM IconPack")
-    fun getInstalledIconPacksLiveData(): LiveData<List<IconPackEntity>>
-
     @Delete
     fun deleteIconPack(iconPack: IconPackEntity)
-
-    @Query("SELECT * FROM IconPack WHERE packageName = :packageName AND version = :version")
-    suspend fun getPacks(packageName: String, version: String): List<IconPackEntity>
-
-    @Transaction
-    suspend fun isInstalled(iconPack: IconPackEntity): Boolean {
-        return getPacks(iconPack.packageName, iconPack.version).isNotEmpty()
-    }
-
-    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:packs) AND (type = 'calendar' OR type = 'app')")
-    fun deleteAllIconsPackIconsExcept(packs: List<String>)
-
-    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:packs) AND type = 'greyscale_icon'")
-    fun deleteAllGrayscaleIconsExcept(packs: List<String>)
-
-    @Query("DELETE FROM IconPack WHERE packageName NOT IN (:packs)")
-    fun deleteAllPacksExcept(packs: List<String>)
-
-    @Transaction
-    fun uninstallIconPacksExcept(packs: List<String>) {
-        deleteAllIconsPackIconsExcept(packs)
-        deleteAllPacksExcept(packs)
-    }
 
     @Query("SELECT drawable FROM Icons WHERE iconPack = :pack AND type = 'iconback'")
     suspend fun getIconBacks(pack: String): List<String>
@@ -100,7 +53,4 @@ interface IconDao {
 
     @Query("SELECT scale FROM IconPack WHERE packageName = :pack")
     suspend fun getScale(pack: String): Float?
-
-    @Query("SELECT * FROM Icons WHERE type = 'greyscale_icon' AND componentName = :componentName")
-    suspend fun getGreyscaleIcon(componentName: String): IconEntity?
 }

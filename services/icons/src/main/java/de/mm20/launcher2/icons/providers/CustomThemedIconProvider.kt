@@ -10,6 +10,6 @@ class CustomThemedIconProvider(
     private val iconPackManager: IconPackManager,
 ): IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
-        return iconPackManager.getThemedIcon(customIcon.iconPackageName)
+        return null //iconPackManager.getThemedIcon(customIcon.iconPackageName)
     }
 }

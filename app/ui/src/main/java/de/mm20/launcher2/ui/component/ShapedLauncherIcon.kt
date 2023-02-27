@@ -237,13 +237,23 @@ private fun IconLayer(
 ) {
     when (layer) {
         is ClockLayer -> {
-            ClockLayer(layer.sublayers, scale = layer.scale, tintColor = null)
+            ClockLayer(
+                layer.sublayers,
+                scale = layer.scale,
+                defaultSecond = layer.defaultSecond,
+                defaultMinute = layer.defaultMinute,
+                defaultHour = layer.defaultHour,
+                tintColor = null
+            )
         }
 
         is TintedClockLayer -> {
             ClockLayer(
                 layer.sublayers,
                 scale = layer.scale,
+                defaultSecond = layer.defaultSecond,
+                defaultMinute = layer.defaultMinute,
+                defaultHour = layer.defaultHour,
                 tintColor = if (layer.color == 0) defaultTintColor
                 else Color(getTone(layer.color, colorTone))
             )
@@ -323,6 +333,9 @@ private fun getTone(argb: Int, tone: Int): Int {
 @Composable
 private fun ClockLayer(
     sublayers: List<ClockSublayer>,
+    defaultMinute: Int,
+    defaultHour: Int,
+    defaultSecond: Int,
     scale: Float,
     tintColor: Color?,
 ) {
@@ -331,21 +344,22 @@ private fun ClockLayer(
     }
 
     val second = remember {
-        Animatable(time.second.toFloat())
+        Animatable((time.second - defaultSecond).toFloat())
     }
 
     val minute = remember {
-        Animatable(time.minute.toFloat() + time.second.toFloat() / 60f)
+        Animatable((time.minute - defaultMinute).toFloat() + (time.second - defaultSecond).toFloat() / 60f)
     }
 
     val hour = remember {
-        Animatable(time.hour.toFloat() + time.minute.toFloat() / 60f)
+        Animatable((time.hour - defaultHour).toFloat() + (time.minute + defaultMinute).toFloat() / 60f)
     }
 
     LaunchedEffect(time) {
-        val h = time.hour.toFloat() + time.minute.toFloat() / 60f
-        val m = time.minute.toFloat() + time.second.toFloat() / 60f
-        val s = time.second.toFloat() + (time.nano / 1000000f) / 1000f
+        val h = (time.hour - defaultHour).toFloat() + (time.minute - defaultSecond).toFloat() / 60f
+        val m =
+            (time.minute - defaultMinute).toFloat() + (time.second - defaultSecond).toFloat() / 60f
+        val s = (time.second - defaultSecond).toFloat() + (time.nano / 1000000f) / 1000f
         second.snapTo(s)
         hour.snapTo(h)
         minute.snapTo(m)

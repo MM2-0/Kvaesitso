@@ -15,6 +15,9 @@ data class ColorLayer(
 
 data class ClockLayer(
     val sublayers: List<ClockSublayer>,
+    val defaultHour: Int = 0,
+    val defaultMinute: Int = 0,
+    val defaultSecond: Int = 0,
     val scale: Float,
 ) : LauncherIconLayer
 
@@ -38,6 +41,9 @@ data class TintedIconLayer(
 
 data class TintedClockLayer(
     val sublayers: List<ClockSublayer>,
+    val defaultHour: Int = 0,
+    val defaultMinute: Int = 0,
+    val defaultSecond: Int = 0,
     val scale: Float,
     val color: Int = 0,
 ) : LauncherIconLayer

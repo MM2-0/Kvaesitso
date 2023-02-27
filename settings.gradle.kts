@@ -138,7 +138,7 @@ dependencyResolutionManagement {
             library("androidx.datastore", "androidx.datastore", "datastore")
                 .version("1.0.0")
 
-            version("androidx.room", "2.5.0-alpha03")
+            version("androidx.room", "2.5.0")
             library("androidx.roomruntime", "androidx.room", "room-runtime")
                 .versionRef("androidx.room")
             library("androidx.roomcompiler", "androidx.room", "room-compiler")

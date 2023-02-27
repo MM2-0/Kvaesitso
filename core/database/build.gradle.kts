@@ -48,7 +48,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     api(libs.androidx.roomruntime)
     kapt(libs.androidx.roomcompiler)
-    implementation(libs.androidx.room)
+    api(libs.androidx.room)
     implementation(libs.koin.android)
 
     implementation(project(":core:i18n"))
