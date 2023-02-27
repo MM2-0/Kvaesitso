@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.app.ActivityOptions
 import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +16,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
+import de.mm20.launcher2.preferences.Settings.LayoutSettings.Layout
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.gestures.Gesture
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,7 +59,8 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         isSystemInDarkMode.value = darkMode
     }
 
-    val baseLayout = dataStore.data.map { it.layout.baseLayout }.asLiveData()
+    val baseLayout = dataStore.data.map { it.layout.baseLayout }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, null)
     val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }.asLiveData()
     val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }.asLiveData()
     val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }.asLiveData()
@@ -107,18 +110,31 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val gestureState: StateFlow<GestureState> = dataStore
         .data.map { it.gestures }
         .distinctUntilChanged()
-        .map { settings ->
-            val swipeLeftAction = settings?.swipeLeft ?: GestureAction.None
-            val swipeRightAction = settings?.swipeRight ?: GestureAction.None
-            val swipeDownAction = settings?.swipeDown ?: GestureAction.None
+        .combine(baseLayout) { settings, layout ->
+            val swipeLeftAction =
+                settings?.swipeLeft?.takeIf { layout != Layout.Pager } ?: GestureAction.None
+            val swipeRightAction = settings?.swipeRight?.takeIf { layout != Layout.PagerReversed }
+                ?: GestureAction.None
+            val swipeDownAction =
+                settings?.swipeDown?.takeIf { layout != Layout.PullDown } ?: GestureAction.None
             val longPressAction = settings?.longPress ?: GestureAction.None
             val doubleTapAction = settings?.doubleTap ?: GestureAction.None
-            val apps = listOfNotNull(
-                if (swipeLeftAction == GestureAction.LaunchApp) settings.swipeLeftApp else null,
-                if (swipeRightAction == GestureAction.LaunchApp) settings.swipeRightApp else null,
-                if (swipeDownAction == GestureAction.LaunchApp) settings.swipeDownApp else null,
-                if (longPressAction == GestureAction.LaunchApp) settings.longPressApp else null,
+            val swipeLeftAppKey =
+                if (swipeLeftAction == GestureAction.LaunchApp) settings.swipeLeftApp else null
+            val swipeRightAppKey =
+                if (swipeRightAction == GestureAction.LaunchApp) settings.swipeRightApp else null
+            val swipeDownAppKey =
+                if (swipeDownAction == GestureAction.LaunchApp) settings.swipeDownApp else null
+            val longPressAppKey =
+                if (longPressAction == GestureAction.LaunchApp) settings.longPressApp else null
+            val doubleTapAppKey =
                 if (doubleTapAction == GestureAction.LaunchApp) settings.doubleTapApp else null
+            val apps = listOfNotNull(
+                swipeLeftAppKey,
+                swipeRightAppKey,
+                swipeDownAppKey,
+                longPressAppKey,
+                doubleTapAppKey
             ).let { favoritesRepository.getFromKeys(it) }
 
             GestureState(
@@ -127,11 +143,11 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 swipeDownAction = swipeDownAction,
                 longPressAction = longPressAction,
                 doubleTapAction = doubleTapAction,
-                swipeLeftApp = apps.firstOrNull { it.key == settings?.swipeLeftApp },
-                swipeRightApp = apps.firstOrNull { it.key == settings?.swipeRightApp },
-                swipeDownApp = apps.firstOrNull { it.key == settings?.swipeDownApp },
-                longPressApp = apps.firstOrNull { it.key == settings?.longPressApp },
-                doubleTapApp = apps.firstOrNull { it.key == settings?.doubleTapApp }
+                swipeLeftApp = apps.firstOrNull { it.key == swipeLeftAppKey },
+                swipeRightApp = apps.firstOrNull { it.key == swipeRightAppKey },
+                swipeDownApp = apps.firstOrNull { it.key == swipeDownAppKey },
+                longPressApp = apps.firstOrNull { it.key == longPressAppKey },
+                doubleTapApp = apps.firstOrNull { it.key == doubleTapAppKey }
             )
         }.stateIn(viewModelScope, SharingStarted.Eagerly, GestureState())
 
@@ -140,9 +156,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         val action = when (gesture) {
             Gesture.DoubleTap -> gestureState.value.doubleTapAction
             Gesture.LongPress -> gestureState.value.longPressAction
-            Gesture.SwipeDown -> gestureState.value.swipeDownAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PullDown }
-            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.Pager }
-            Gesture.SwipeRight -> gestureState.value.swipeRightAction?.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PagerReversed }
+            Gesture.SwipeDown -> gestureState.value.swipeDownAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PullDown }
+            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.Pager }
+            Gesture.SwipeRight -> gestureState.value.swipeRightAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PagerReversed }
         }
         val requiresAccessibilityService =
             action == GestureAction.OpenRecents
@@ -192,13 +208,18 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
             }
 
             GestureAction.LaunchApp -> {
+                val options = ActivityOptions.makeCustomAnimation(
+                    context,
+                    android.R.anim.fade_in,
+                    android.R.anim.fade_out,
+                )
                 when (gesture) {
                     Gesture.SwipeLeft -> gestureState.value.swipeLeftApp
                     Gesture.SwipeRight -> gestureState.value.swipeRightApp
                     Gesture.SwipeDown -> gestureState.value.swipeDownApp
                     Gesture.LongPress -> gestureState.value.longPressApp
                     Gesture.DoubleTap -> gestureState.value.doubleTapApp
-                }?.launch(context, null)
+                }?.launch(context, options.toBundle())
                 true
             }
 

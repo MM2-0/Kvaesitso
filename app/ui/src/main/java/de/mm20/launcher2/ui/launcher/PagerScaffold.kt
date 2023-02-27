@@ -259,6 +259,14 @@ fun PagerScaffold(
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                val drag = gestureManager.currentDrag
+                if (drag != null && (drag.y > 0 || (reverse && drag.x < 0 || !reverse && drag.x > 0))) {
+                    gestureManager.dispatchDrag(available)
+                    return available
+                }
+                return super.onPreScroll(available, source)
+            }
             override fun onPostScroll(
                 consumed: Offset,
                 available: Offset,
@@ -273,7 +281,12 @@ fun PagerScaffold(
             }
 
             override suspend fun onPreFling(available: Velocity): Velocity {
-                if (!isWidgetEditMode) gestureManager.dispatchDragEnd()
+                val drag = gestureManager.currentDrag
+                if (drag != null && (drag.y > 0 || (reverse && drag.x < 0 || !reverse && drag.x > 0))) {
+                    gestureManager.dispatchDragEnd()
+                    return available
+                }
+                gestureManager.dispatchDragEnd()
                 return super.onPreFling(available)
             }
         }

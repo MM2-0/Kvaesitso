@@ -67,9 +67,6 @@ abstract class SearchableItemVM(
             ActivityOptionsCompat.makeBasic()
         }
         val bundle = options.toBundle()
-        if (isAtLeastApiLevel(31)) {
-            bundle?.putInt("android.activity.splashScreenStyle", 1)
-        }
         if (searchable.launch(context, bundle)) {
             favoritesRepository.incrementLaunchCounter(searchable)
             return true

@@ -18,6 +18,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.livedata.observeAsState
@@ -126,7 +127,7 @@ abstract class SharedLauncherActivity(
 
                             val hideStatus by viewModel.hideStatusBar.observeAsState(false)
                             val hideNav by viewModel.hideNavBar.observeAsState(false)
-                            val layout by viewModel.baseLayout.observeAsState(null)
+                            val layout by viewModel.baseLayout.collectAsState(null)
                             val bottomSearchBar by viewModel.bottomSearchBar.observeAsState(false)
                             val reverseSearchResults by viewModel.reverseSearchResults.observeAsState(false)
                             val fixedSearchBar by viewModel.fixedSearchBar.observeAsState(false)

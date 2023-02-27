@@ -12,7 +12,7 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
 you will always be notified about updates. Kvaesitso is available in the official F-Droid
-repository (see below), but all features depending on non-foss external APIs were removed.
+repository, but all features depending on non-foss external APIs were removed.
 For feature-complete builds you can add [MM20's repository](https://github.com/MM2-0/fdroid). Just scan the code below or open
 the link on your phone:
 
