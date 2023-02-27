@@ -427,13 +427,14 @@ class IconPackManager(
         return null
     }
 
-    suspend fun searchIconPackIcon(query: String): List<IconPackIcon> {
+    suspend fun searchIconPackIcon(query: String, iconPack: IconPack?): List<IconPackIcon> {
         val iconDao = appDatabase.iconDao()
         val drawableQuery = query.replace(" ", "_").lowercase()
         return iconDao.searchIconPackIcons(
             drawableQuery = "%$drawableQuery%",
             componentQuery = "%$query%",
             nameQuery = "%$query%",
+            iconPack = iconPack?.packageName,
         ).map {
             IconPackIcon(it)
         }

@@ -1,18 +1,40 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
+import android.content.pm.PackageManager
 import android.graphics.drawable.InsetDrawable
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
@@ -21,13 +43,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.CustomIconWithPreview
+import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.OutlinedTagsInputField
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.flow.first
@@ -42,7 +66,7 @@ fun CustomizeSearchableSheet(
         remember(searchable.key) { CustomizeSearchableSheetVM(searchable) }
     val context = LocalContext.current
 
-    val pickIcon by viewModel.isIconPickerOpen.observeAsState(false)
+    val pickIcon by viewModel.isIconPickerOpen
 
     BottomSheetDialog(
         onDismissRequest = onDismiss,
@@ -156,8 +180,13 @@ fun CustomizeSearchableSheet(
             }.observeAsState()
 
             var query by remember { mutableStateOf("") }
-            val isSearching by viewModel.isSearchingIcons.observeAsState(initial = false)
-            val iconResults by viewModel.iconSearchResults.observeAsState(emptyList())
+            var filterIconPack by remember { mutableStateOf<IconPack?>(null) }
+            val isSearching by viewModel.isSearchingIcons
+            val iconResults by viewModel.iconSearchResults
+
+            var showIconPackFilter by remember { mutableStateOf(false) }
+            val installedIconPacks by viewModel.installedIconPacks.collectAsState(null)
+            val noPacksInstalled = installedIconPacks?.isEmpty() == true
 
             val columns = LocalGridSettings.current.columnCount
 
@@ -176,18 +205,67 @@ fun CustomizeSearchableSheet(
                                 contentDescription = null
                             )
                         },
+                        enabled = !noPacksInstalled,
+                        placeholder = {
+                            Text(
+                                stringResource(
+                                    if (noPacksInstalled) R.string.icon_picker_no_packs_installed else R.string.icon_picker_search_icon
+                                )
+                            )
+                        },
                         trailingIcon = {
-                            if (query.isNotEmpty()) {
+                            if (query.isNotEmpty() && !installedIconPacks.isNullOrEmpty()) {
                                 IconButton(onClick = {
-                                    query = ""
-                                    scope.launch {
-                                        viewModel.searchIcon("")
-                                    }
+                                    showIconPackFilter = !showIconPackFilter
                                 }) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        contentDescription = null
+                                    if (filterIconPack == null) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.FilterAlt,
+                                            contentDescription = null
+                                        )
+                                    } else {
+                                        val icon = remember(filterIconPack?.packageName) {
+                                            try {
+                                                filterIconPack?.packageName?.let { pkg ->
+                                                    context.packageManager.getApplicationIcon(pkg)
+                                                }
+                                            } catch (e: PackageManager.NameNotFoundException) {
+                                                null
+                                            }
+                                        }
+                                        AsyncImage(
+                                            modifier = Modifier.size(24.dp),
+                                            model = icon,
+                                            contentDescription = null
+                                        )
+                                    }
+                                }
+                                DropdownMenu(
+                                    expanded = showIconPackFilter,
+                                    onDismissRequest = { showIconPackFilter = false }) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
+                                        onClick = {
+                                            showIconPackFilter = false
+                                            filterIconPack = null
+                                            scope.launch {
+                                                viewModel.searchIcon(query, filterIconPack)
+                                            }
+                                        }
                                     )
+                                    installedIconPacks?.forEach { iconPack ->
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                showIconPackFilter = false
+                                                filterIconPack = iconPack
+                                                scope.launch {
+                                                    viewModel.searchIcon(query, filterIconPack)
+                                                }
+                                            },
+                                            text = {
+                                                Text(iconPack.name)
+                                            })
+                                    }
                                 }
                             }
                         },
@@ -195,11 +273,8 @@ fun CustomizeSearchableSheet(
                         onValueChange = {
                             query = it
                             scope.launch {
-                                viewModel.searchIcon(query)
+                                viewModel.searchIcon(query, filterIconPack)
                             }
-                        },
-                        label = {
-                            Text(stringResource(R.string.icon_picker_search_icon))
                         },
                         singleLine = true,
                     )

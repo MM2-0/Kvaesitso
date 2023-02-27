@@ -1,16 +1,22 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.liveData
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.icons.CustomIconWithPreview
+import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
@@ -21,7 +27,7 @@ class CustomizeSearchableSheetVM(
     private val iconRepository: IconRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
 
-    val isIconPickerOpen = MutableLiveData(false)
+    val isIconPickerOpen = mutableStateOf(false)
 
     fun getIcon(size: Int): Flow<LauncherIcon> {
         return iconRepository.getIcon(searchable, size)
@@ -48,11 +54,15 @@ class CustomizeSearchableSheetVM(
         emit(iconRepository.getUncustomizedDefaultIcon(searchable, size))
     }
 
-    val iconSearchResults = MutableLiveData(emptyList<CustomIconWithPreview>())
-    val isSearchingIcons = MutableLiveData(false)
+    val iconSearchResults = mutableStateOf(emptyList<CustomIconWithPreview>())
+    val isSearchingIcons = mutableStateOf(false)
+
+    val installedIconPacks = flow {
+        emit(iconRepository.getInstalledIconPacks().sortedBy { it.name })
+    }
 
     private var debounceSearchJob: Job? = null
-    suspend fun searchIcon(query: String) {
+    suspend fun searchIcon(query: String, iconPack: IconPack?) {
         debounceSearchJob?.cancelAndJoin()
         if (query.isBlank()) {
             iconSearchResults.value = emptyList()
@@ -61,9 +71,10 @@ class CustomizeSearchableSheetVM(
         }
         withContext(coroutineContext) {
             debounceSearchJob = launch {
-                delay(1000)
+                delay(500)
                 isSearchingIcons.value = true
-                iconSearchResults.value = iconRepository.searchCustomIcons(query)
+                iconSearchResults.value = emptyList()
+                iconSearchResults.value = iconRepository.searchCustomIcons(query, iconPack)
                 isSearchingIcons.value = false
             }
         }

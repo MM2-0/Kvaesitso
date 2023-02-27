@@ -356,9 +356,9 @@ class IconRepository(
         )
     }
 
-    suspend fun searchCustomIcons(query: String): List<CustomIconWithPreview> {
+    suspend fun searchCustomIcons(query: String, iconPack: IconPack?): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
-        val iconPackIcons = iconPackManager.searchIconPackIcon(query).mapNotNull {
+        val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).mapNotNull {
             val componentName = it.componentName ?: return@mapNotNull null
 
             CustomIconWithPreview(
