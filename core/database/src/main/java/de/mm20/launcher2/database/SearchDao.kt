@@ -60,7 +60,7 @@ interface SearchDao {
         limit: Int,
     ): Flow<List<SavedSearchableEntity>>
 
-    @Query("SELECT * FROM Searchable ORDER BY launchCount DESC LIMIT :limit")
+    @Query("SELECT * FROM Searchable WHERE launchCount > 0 ORDER BY launchCount DESC LIMIT :limit")
     fun getRanksByLaunchCount(limit: Int): Flow<List<SavedSearchableEntity>>
 
     @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND type = 'calendar'")

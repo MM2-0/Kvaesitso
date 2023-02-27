@@ -176,27 +176,21 @@ class SearchVM : ViewModel(), KoinComponent {
                         ranksByLaunchCount.collectLatest {
 
                             if (reorderByRelevance.value) {
-                                val fileRanks = mutableListOf<Pair<Int, File>>()
+                                val fileRanks = mutableListOf<Pair<Int, SavableSearchable>>()
 
                                 for ((domain, ranks) in it.groupBy { it.second.domain }) {
                                     when (domain) {
-                                        "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second as AppShortcut })
-                                        "calendar" -> events.reorderByRanks(ranks.map { it.second as CalendarEvent })
-                                        "contact" -> contacts.reorderByRanks(ranks.map { it.second as Contact })
+                                        "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second })
+                                        "calendar" -> events.reorderByRanks(ranks.map { it.second })
+                                        "contact" -> contacts.reorderByRanks(ranks.map { it.second })
                                         "app" -> {
-                                            val ranksAsApps = ranks.map { it.second as LauncherApp }
+                                            val ranksAsApps = ranks.map { it.second }
                                             apps.reorderByRanks(ranksAsApps)
                                             workApps.reorderByRanks(ranksAsApps)
                                         }
 
                                         "file", "gdrive", "onedrive", "nextcloud", "owncloud"
-                                        -> fileRanks.addAll(
-                                            ranks.map {
-                                                Pair(
-                                                    it.first,
-                                                    it.second as File
-                                                )
-                                            })
+                                        -> fileRanks.addAll(ranks)
                                     }
                                 }
 
@@ -319,15 +313,17 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<T>) {
+    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavableSearchable>) {
 
-        for ((i, item) in ranks.withIndex()) {
+        var i = 0
+
+        for (item in ranks) {
             if (i >= this.size) break
 
             val idx = this.indexOfFirst { it.key == item.key }
             if (idx == -1) continue
 
-            this.add(i, this.removeAt(idx))
+            this.add(i++, this.removeAt(idx))
         }
     }
 }

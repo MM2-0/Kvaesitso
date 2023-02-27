@@ -299,7 +299,7 @@ internal class FavoritesRepositoryImpl(
                     if (fromDb.searchable == null)
                         return@mapNotNull null
 
-                    Pair(fromDb.launchCount, fromDb.searchable)
+                    fromDb.launchCount to fromDb.searchable
                 }
             }
     }
