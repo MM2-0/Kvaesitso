@@ -10,6 +10,7 @@ import de.mm20.launcher2.favorites.SavedSearchableRankInfo
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
@@ -47,8 +48,9 @@ class SearchVM : ViewModel(), KoinComponent {
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
-    private val reorderByRelevance = dataStore.data.map { it.searchBar.reorderByRelevance }
-        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    private val reorderByRelevance =
+        dataStore.data.map { it.searchBar.searchResultOrdering == Settings.SearchBarSettings.SearchResultOrdering.Relevance }
+            .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val searchService: SearchService by inject()
 

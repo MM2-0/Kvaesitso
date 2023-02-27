@@ -574,6 +574,7 @@
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
     <string name="icon_pack_dynamic_colors">Dynamische Farben</string>
-    <string name="preference_search_bar_reorder_by_relevance">Sortieren nach Relevanz</string>
-    <string name="preference_search_bar_reorder_by_relevance_summary">Relevante Suchergebnisse zuerst anzeigen</string>
+    <string name="preference_search_bar_ordering">Anordnung der Suchergebnisse</string>
+    <string name="preference_search_bar_ordering_alphabetic">Alphabetisch</string>
+    <string name="preference_search_bar_ordering_relevance">Relevanz</string>
 </resources>

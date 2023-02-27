@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchResultOrdering
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -169,15 +170,14 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val reorderByRelevance = dataStore.data.map { it.searchBar.reorderByRelevance }.asLiveData()
-    fun setReorderByRelevance(reorderByRelevance: Boolean) {
+    val searchResultOrdering = dataStore.data.map { it.searchBar.searchResultOrdering }.asLiveData()
+    fun setSearchResultOrdering(searchResultOrdering: SearchResultOrdering) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
                     .setSearchBar(
                         it.searchBar.toBuilder()
-                            .setReorderByRelevance(reorderByRelevance)
-
+                            .setSearchResultOrdering(searchResultOrdering)
                     )
                     .build()
             }

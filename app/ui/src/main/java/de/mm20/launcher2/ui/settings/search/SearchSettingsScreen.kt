@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -185,7 +186,7 @@ fun SearchSettingsScreen() {
         item {
             val autoFocus by viewModel.autoFocus.observeAsState()
             val launchOnEnter by viewModel.launchOnEnter.observeAsState()
-            val reorderByRelevance by viewModel.reorderByRelevance.observeAsState()
+            val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
             PreferenceCategory {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_auto_focus),
@@ -203,12 +204,15 @@ fun SearchSettingsScreen() {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_reorder_by_relevance),
-                    summary = stringResource(R.string.preference_search_bar_reorder_by_relevance_summary),
-                    value = reorderByRelevance == true,
+                ListPreference(
+                    title = stringResource(R.string.preference_search_bar_ordering),
+                    value = searchResultOrdering,
+                    items = listOf(
+                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Settings.SearchBarSettings.SearchResultOrdering.Alphabetic,
+                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.Relevance
+                    ),
                     onValueChanged = {
-                        viewModel.setReorderByRelevance(it)
+                        if (it != null) viewModel.setSearchResultOrdering(it)
                     }
                 )
                 Preference(
