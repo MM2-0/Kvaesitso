@@ -168,4 +168,89 @@
         <item quantity="other">миллисекунд</item>
     </plurals>
     <string name="unit_hour_symbol">ч</string>
+    <string name="unit_byte_symbol">Б</string>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">Килобайт</item>
+        <item quantity="few">Килобайта</item>
+        <item quantity="many">Килобайт</item>
+        <item quantity="other">Килобайт</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">Терабайт</item>
+        <item quantity="few">Терабайта</item>
+        <item quantity="many">Терабайт</item>
+        <item quantity="other">Терабайт</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">Гибибайт</item>
+        <item quantity="few">Гибибайта</item>
+        <item quantity="many">Гибибайт</item>
+        <item quantity="other">Гибибайт</item>
+    </plurals>
+    <plurals name="unit_byte">
+        <item quantity="one">Байт</item>
+        <item quantity="few">Байта</item>
+        <item quantity="many">Байт</item>
+        <item quantity="other">Байт</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">Кбайт</string>
+    <string name="unit_megabyte_symbol">Мбайт</string>
+    <plurals name="unit_megabyte">
+        <item quantity="one">Мегабайт</item>
+        <item quantity="few">Мегабайта</item>
+        <item quantity="many">Мегабайт</item>
+        <item quantity="other">Мегабайт</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">Гбайт</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">Гигабайт</item>
+        <item quantity="few">Гигабайта</item>
+        <item quantity="many">Гигабайт</item>
+        <item quantity="other">Гигабайт</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">Тбайт</string>
+    <string name="unit_kibibyte_symbol">КиБ</string>
+    <string name="unit_mebibyte_symbol">МиБ</string>
+    <string name="unit_gibibyte_symbol">ГиБ</string>
+    <string name="unit_tebibyte_symbol">ТиБ</string>
+    <string name="unit_bit_symbol">Бит</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">Кибибайт</item>
+        <item quantity="few">Кибибайта</item>
+        <item quantity="many">Кибибайт</item>
+        <item quantity="other">Кибибайт</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">Мебибайт</item>
+        <item quantity="few">Мебибайта</item>
+        <item quantity="many">Мебибайт</item>
+        <item quantity="other">Мебибайт</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">Тебибайт</item>
+        <item quantity="few">Тебибайта</item>
+        <item quantity="many">Тебибайт</item>
+        <item quantity="other">Тебибайт</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">кбит</string>
+    <string name="unit_megabit_symbol">Мбит</string>
+    <string name="unit_gigabit_symbol">Гбит</string>
+    <plurals name="unit_bit">
+        <item quantity="one">Бит</item>
+        <item quantity="few">Бита</item>
+        <item quantity="many">Бит</item>
+        <item quantity="other">Бит</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">килобит</item>
+        <item quantity="few">килобита</item>
+        <item quantity="many">килобит</item>
+        <item quantity="other">килобит</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="one">Мегабит</item>
+        <item quantity="few">Мегабита</item>
+        <item quantity="many">Мегабит</item>
+        <item quantity="other">Мегабит</item>
+    </plurals>
 </resources>
