@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.favorites.SavedSearchableRankInfo
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -77,7 +78,8 @@ class SearchVM : ViewModel(), KoinComponent {
 
     private val ranksByLaunchCount = favoritesRepository
         .getRanksByLaunchCount()
-        .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
+        .map { it.groupBy { it.type } }
+        .shareIn(viewModelScope, SharingStarted.Lazily, replay = 1)
 
     val bestMatch = mutableStateOf<Searchable?>(null)
 
@@ -176,17 +178,16 @@ class SearchVM : ViewModel(), KoinComponent {
                         ranksByLaunchCount.collectLatest {
 
                             if (query.isNotEmpty() && reorderByRelevance.value) {
-                                val fileRanks = mutableListOf<Pair<Int, SavableSearchable>>()
+                                val fileRanks = mutableListOf<SavedSearchableRankInfo>()
 
-                                for ((domain, ranks) in it.groupBy { it.second.domain }) {
+                                for ((domain, ranks) in it) {
                                     when (domain) {
-                                        "shortcut" -> shortcuts.reorderByRanks(ranks.map { it.second })
-                                        "calendar" -> events.reorderByRanks(ranks.map { it.second })
-                                        "contact" -> contacts.reorderByRanks(ranks.map { it.second })
+                                        "shortcut" -> shortcuts.reorderByRanks(ranks)
+                                        "calendar" -> events.reorderByRanks(ranks)
+                                        "contact" -> contacts.reorderByRanks(ranks)
                                         "app" -> {
-                                            val ranksAsApps = ranks.map { it.second }
-                                            apps.reorderByRanks(ranksAsApps)
-                                            workApps.reorderByRanks(ranksAsApps)
+                                            apps.reorderByRanks(ranks)
+                                            workApps.reorderByRanks(ranks)
                                         }
 
                                         "file", "gdrive", "onedrive", "nextcloud", "owncloud"
@@ -196,8 +197,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
                                 if (files.isNotEmpty() && fileRanks.isNotEmpty()) {
                                     files.reorderByRanks(
-                                        fileRanks.sortedByDescending { it.first }
-                                            .map { it.second }
+                                        fileRanks.sortedByDescending { it.launchCount }
                                     )
                                 }
                             }
@@ -313,7 +313,7 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
-    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavableSearchable>) {
+    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavedSearchableRankInfo>) {
         if (this.isEmpty())
             return
 
