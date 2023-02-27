@@ -186,8 +186,6 @@ fun SearchSettingsScreen() {
         item {
             PreferenceCategory {
                 val autoFocus by viewModel.autoFocus.observeAsState()
-                val launchOnEnter by viewModel.launchOnEnter.observeAsState()
-                val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_auto_focus),
                     summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
@@ -197,6 +195,7 @@ fun SearchSettingsScreen() {
                         viewModel.setAutoFocus(it)
                     }
                 )
+                val launchOnEnter by viewModel.launchOnEnter.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_launch_on_enter),
                     summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
@@ -206,6 +205,7 @@ fun SearchSettingsScreen() {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
+                val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_search_bar_ordering),
                     value = searchResultOrdering,
@@ -218,6 +218,10 @@ fun SearchSettingsScreen() {
                         if (it != null) viewModel.setSearchResultOrdering(it)
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_hidden_items),
                     summary = stringResource(R.string.preference_hidden_items_summary),
@@ -226,10 +230,6 @@ fun SearchSettingsScreen() {
                         navController?.navigate("settings/search/hiddenitems")
                     }
                 )
-            }
-        }
-        item {
-            PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_screen_tags),
                     summary = stringResource(R.string.preference_screen_tags_summary),
