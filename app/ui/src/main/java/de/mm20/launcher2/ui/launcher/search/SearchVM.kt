@@ -316,7 +316,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavedSearchableRankInfo>) {
-        if (this.isEmpty())
+        if (this.size < 2) // one element does not need reordering
             return
 
         var i = 0
