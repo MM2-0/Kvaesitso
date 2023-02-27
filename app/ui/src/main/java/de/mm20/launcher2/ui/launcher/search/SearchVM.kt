@@ -175,7 +175,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
                         ranksByLaunchCount.collectLatest {
 
-                            if (reorderByRelevance.value) {
+                            if (query.isNotEmpty() && reorderByRelevance.value) {
                                 val fileRanks = mutableListOf<Pair<Int, SavableSearchable>>()
 
                                 for ((domain, ranks) in it.groupBy { it.second.domain }) {
@@ -314,16 +314,18 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavableSearchable>) {
+        if (this.isEmpty())
+            return
 
         var i = 0
 
         for (item in ranks) {
-            if (i >= this.size) break
-
             val idx = this.indexOfFirst { it.key == item.key }
             if (idx == -1) continue
 
             this.add(i++, this.removeAt(idx))
+
+            if (i >= this.size) break
         }
     }
 }
