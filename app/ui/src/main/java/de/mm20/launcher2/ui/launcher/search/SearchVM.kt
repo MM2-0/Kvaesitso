@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.favorites.SavedSearchableRankInfo
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchResultOrdering
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
@@ -29,6 +31,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
@@ -103,19 +106,19 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         hideFavorites.value = query.isNotEmpty()
         searchJob = viewModelScope.launch {
-            dataStore.data.collectLatest {
+            dataStore.data.collectLatest { settings ->
                 searchService.search(
                     query,
-                    calculator = it.calculatorSearch,
-                    unitConverter = it.unitConverterSearch,
-                    calendars = it.calendarSearch,
-                    contacts = it.contactsSearch,
-                    files = it.fileSearch,
-                    shortcuts = it.appShortcutSearch,
-                    websites = it.websiteSearch,
-                    wikipedia = it.wikipediaSearch,
+                    calculator = settings.calculatorSearch,
+                    unitConverter = settings.unitConverterSearch,
+                    calendars = settings.calendarSearch,
+                    contacts = settings.contactsSearch,
+                    files = settings.fileSearch,
+                    shortcuts = settings.appShortcutSearch,
+                    websites = settings.websiteSearch,
+                    wikipedia = settings.wikipediaSearch,
                 ).collectLatest { results ->
-                    val resultsList = withContext(Dispatchers.Default) {
+                    var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
                             results.apps,
                             results.other,
@@ -129,9 +132,41 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.unitConverters,
                             results.searchActions,
                         ).flatten()
-                            .sortedBy { (it as? SavableSearchable) }
                             .distinctBy { if (it is SavableSearchable) it.key else it }
+                            .sortedBy { (it as? SavableSearchable) }
                     }
+
+
+                    val relevance =
+                        if (query.isNotEmpty() && settings.searchBar.searchResultOrdering == SearchResultOrdering.Relevance) {
+                            favoritesRepository.sortByRelevance(
+                                resultsList.mapNotNull { (it as? SavableSearchable)?.key }
+                            ).first()
+                        } else {
+                            emptyList()
+                        }
+
+                    resultsList = resultsList.sortedWith { a, b ->
+                        when {
+                            a is SavableSearchable && b !is SavableSearchable -> -1
+                            a !is SavableSearchable && b is SavableSearchable -> 1
+                            a is SavableSearchable && b is SavableSearchable -> {
+                                val aKey = a.key
+                                val bKey = b.key
+                                val aRank = relevance.indexOf(aKey)
+                                val bRank = relevance.indexOf(bKey)
+                                when {
+                                    aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
+                                    aRank == -1 && bRank != -1 -> 1
+                                    aRank != -1 && bRank == -1 -> -1
+                                    else -> a.compareTo(b)
+                                }
+                            }
+
+                            else -> 0
+                        }
+                    }
+
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
@@ -151,6 +186,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) -> {
                                     hidden.add(r)
                                 }
+
                                 r is LauncherApp && !r.isMainProfile -> workApps.add(r)
                                 r is LauncherApp -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
@@ -165,7 +201,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             }
                         }
 
-                        if (query.isNotEmpty() && launchOnEnter.value)  {
+                        if (query.isNotEmpty() && launchOnEnter.value) {
                             bestMatch.value = listOf(
                                 apps,
                                 workApps,
@@ -272,6 +308,22 @@ class SearchVM : ViewModel(), KoinComponent {
                     .setAppShortcutSearch(it.appShortcutSearch.toBuilder().setEnabled(false))
                     .build()
             }
+        }
+    }
+
+    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavedSearchableRankInfo>) {
+        if (this.size < 2) // one element does not need reordering
+            return
+
+        var i = 0
+
+        for (item in ranks) {
+            val idx = this.indexOfFirst { it.key == item.key }
+            if (idx == -1) continue
+
+            this.add(i++, this.removeAt(idx))
+
+            if (i >= this.size) break
         }
     }
 }

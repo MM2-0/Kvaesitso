@@ -105,11 +105,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     }
 
     val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
-
     val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }.asLiveData()
     val searchBarColor = dataStore.data.map { it.searchBar.color }.asLiveData()
     val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
-
 
     val gestureState: StateFlow<GestureState> = dataStore
         .data.map { it.gestures }
@@ -154,7 +152,6 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 doubleTapApp = apps.firstOrNull { it.key == doubleTapAppKey }
             )
         }.stateIn(viewModelScope, SharingStarted.Eagerly, GestureState())
-
 
     var failedGestureState by mutableStateOf<FailedGesture?>(null)
     fun handleGesture(context: Context, gesture: Gesture): Boolean {

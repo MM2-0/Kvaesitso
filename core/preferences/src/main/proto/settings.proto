@@ -223,6 +223,11 @@ message Settings {
     }
     SearchBarColors color = 3;
     bool launch_on_enter = 4;
+    enum SearchResultOrdering {
+      Alphabetic = 0;
+      Relevance = 1;
+    }
+    SearchResultOrdering search_result_ordering = 5;
   }
   SearchBarSettings search_bar = 20;
 

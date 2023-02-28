@@ -52,6 +52,13 @@ interface FavoritesRepository {
     fun getHiddenItemKeys(): Flow<List<String>>
 
     /**
+     * Returns the given keys sorted by relevance.
+     * The first item in the list is the most relevant.
+     * Unknown keys will not be included in the result.
+     */
+    fun sortByRelevance(keys: List<String>): Flow<List<String>>
+
+    /**
      * Remove this item from the Searchable database
      */
     fun remove(searchable: SavableSearchable)
@@ -107,6 +114,7 @@ internal class FavoritesRepositoryImpl(
                 frequentlyUsed = frequentlyUsed,
                 limit = limit
             )
+
             includeTypes != null && excludeTypes == null -> {
                 dao.getFavoritesWithTypes(
                     includeTypes = includeTypes,
@@ -116,6 +124,7 @@ internal class FavoritesRepositoryImpl(
                     limit = limit
                 )
             }
+
             excludeTypes != null && includeTypes == null -> {
                 dao.getFavoritesWithoutTypes(
                     excludeTypes = excludeTypes,
@@ -125,6 +134,7 @@ internal class FavoritesRepositoryImpl(
                     limit = limit
                 )
             }
+
             else -> throw IllegalArgumentException("You can either use includeTypes or excludeTypes, not both")
         }
         return entities.map {
@@ -137,13 +147,13 @@ internal class FavoritesRepositoryImpl(
     }
 
     override fun isPinned(searchable: SavableSearchable): Flow<Boolean> {
-        return AppDatabase.getInstance(context).searchDao().isPinned(searchable.key)
+        return database.searchDao().isPinned(searchable.key)
     }
 
     override fun pinItem(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val dao = AppDatabase.getInstance(context).searchDao()
+                val dao = database.searchDao()
                 val databaseItem = dao.getFavorite(searchable.key)
                 val savedSearchable = SavedSearchable(
                     key = searchable.key,
@@ -160,19 +170,19 @@ internal class FavoritesRepositoryImpl(
     override fun unpinItem(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).searchDao().unpinFavorite(searchable.key)
+                database.searchDao().unpinFavorite(searchable.key)
             }
         }
     }
 
     override fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
-        return AppDatabase.getInstance(context).searchDao().isHidden(searchable.key)
+        return database.searchDao().isHidden(searchable.key)
     }
 
     override fun hideItem(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val dao = AppDatabase.getInstance(context).searchDao()
+                val dao = database.searchDao()
                 val databaseItem = dao.getFavorite(searchable.key)
                 val savedSearchable = SavedSearchable(
                     key = searchable.key,
@@ -189,7 +199,7 @@ internal class FavoritesRepositoryImpl(
     override fun unhideItem(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                AppDatabase.getInstance(context).searchDao().unhideItem(searchable.key)
+                database.searchDao().unhideItem(searchable.key)
             }
         }
     }
@@ -199,7 +209,7 @@ internal class FavoritesRepositoryImpl(
             withContext(Dispatchers.IO) {
                 val item = SavedSearchable(searchable.key, searchable, 0, 0, false)
                 item.toDatabaseEntity()?.let {
-                    AppDatabase.getInstance(context).searchDao()
+                    database.searchDao()
                         .incrementLaunchCount(it)
                 }
             }
@@ -286,6 +296,9 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
+    override fun sortByRelevance(keys: List<String>): Flow<List<String>> {
+        return database.searchDao().sortByRelevance(keys)
+    }
 
     private fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {
         val deserializer: SearchableDeserializer =

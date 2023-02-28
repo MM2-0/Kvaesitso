@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchResultOrdering
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -31,7 +32,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
 
-    val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts).asLiveData()
+    val hasContactsPermission =
+        permissionsManager.hasPermission(PermissionGroup.Contacts).asLiveData()
     val contacts = dataStore.data.map { it.contactsSearch.enabled }.asLiveData()
     fun setContacts(contacts: Boolean) {
         viewModelScope.launch {
@@ -45,11 +47,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestContactsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
+    val hasCalendarPermission =
+        permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
     val calendar = dataStore.data.map { it.calendarSearch.enabled }.asLiveData()
     fun setCalendar(calendar: Boolean) {
         viewModelScope.launch {
@@ -63,6 +67,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestCalendarPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
     }
@@ -165,8 +170,23 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val searchResultOrdering = dataStore.data.map { it.searchBar.searchResultOrdering }.asLiveData()
+    fun setSearchResultOrdering(searchResultOrdering: SearchResultOrdering) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setSearchBar(
+                        it.searchBar.toBuilder()
+                            .setSearchResultOrdering(searchResultOrdering)
+                    )
+                    .build()
+            }
+        }
+    }
 
-    val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
+
+    val hasAppShortcutPermission =
+        permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
     val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }.asLiveData()
     fun setAppShortcuts(appShortcuts: Boolean) {
         viewModelScope.launch {
@@ -180,6 +200,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }

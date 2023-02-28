@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -100,7 +101,10 @@ fun SearchSettingsScreen() {
                 val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.observeAsState()
                 AnimatedVisibility(hasAppShortcutsPermission == false) {
                     MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_appshortcuts_search_settings, stringResource(R.string.app_name)),
+                        text = stringResource(
+                            R.string.missing_permission_appshortcuts_search_settings,
+                            stringResource(R.string.app_name)
+                        ),
                         onClick = {
                             viewModel.requestAppShortcutsPermission(context as AppCompatActivity)
                         },
@@ -180,28 +184,48 @@ fun SearchSettingsScreen() {
             }
         }
         item {
-            val autoFocus by viewModel.autoFocus.observeAsState()
-            val launchOnEnter by viewModel.launchOnEnter.observeAsState()
             PreferenceCategory {
+                val autoFocus by viewModel.autoFocus.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_auto_focus),
                     summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
+                    icon = Icons.Rounded.Keyboard,
                     value = autoFocus == true,
                     onValueChanged = {
                         viewModel.setAutoFocus(it)
                     }
                 )
+                val launchOnEnter by viewModel.launchOnEnter.observeAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_bar_launch_on_enter),
                     summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
+                    icon = Icons.Rounded.ArrowRightAlt,
                     value = launchOnEnter == true,
                     onValueChanged = {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
+                val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
+                ListPreference(
+                    title = stringResource(R.string.preference_search_bar_ordering),
+                    value = searchResultOrdering,
+                    icon = Icons.Rounded.Sort,
+                    items = listOf(
+                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Settings.SearchBarSettings.SearchResultOrdering.Alphabetic,
+                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.Relevance
+                    ),
+                    onValueChanged = {
+                        if (it != null) viewModel.setSearchResultOrdering(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_hidden_items),
                     summary = stringResource(R.string.preference_hidden_items_summary),
+                    icon = Icons.Rounded.VisibilityOff,
                     onClick = {
                         navController?.navigate("settings/search/hiddenitems")
                     }
@@ -209,6 +233,7 @@ fun SearchSettingsScreen() {
                 Preference(
                     title = stringResource(R.string.preference_screen_tags),
                     summary = stringResource(R.string.preference_screen_tags_summary),
+                    icon = Icons.Rounded.Tag,
                     onClick = {
                         navController?.navigate("settings/search/tags")
                     }

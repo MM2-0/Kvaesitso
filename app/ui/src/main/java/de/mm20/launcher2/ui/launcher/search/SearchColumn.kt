@@ -198,6 +198,7 @@ fun SearchColumn(
                 highlightedItem = bestMatch as? SavableSearchable
             )
         }
+
         GridResults(
             items = if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
             columns = columns,

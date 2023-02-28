@@ -63,11 +63,8 @@ interface SearchDao {
     @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND type = 'calendar'")
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
 
-
-
     @Query("DELETE FROM Searchable WHERE `key` IN (:keys)")
     fun deleteAll(keys: List<String>)
-
 
     @Query("UPDATE Searchable SET pinned = 1, hidden = 0 WHERE `key` = :key")
     fun pinExistingItem(key: String)
@@ -145,4 +142,7 @@ interface SearchDao {
 
     @Query("UPDATE Searchable Set `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
     suspend fun resetPinStatusAndLaunchCounter(key: String)
+
+    @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY launchCount DESC, pinned DESC")
+    fun sortByRelevance(keys: List<String>): Flow<List<String>>
 }
