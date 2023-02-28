@@ -138,7 +138,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
 
                     val relevance =
-                        if (query.isNotEmpty() && settings.searchBar.searchResultOrdering == SearchResultOrdering.Alphabetic) {
+                        if (query.isNotEmpty() && settings.searchBar.searchResultOrdering == SearchResultOrdering.Relevance) {
                             favoritesRepository.sortByRelevance(
                                 resultsList.mapNotNull { (it as? SavableSearchable)?.key }
                             ).first()
