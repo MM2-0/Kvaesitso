@@ -143,6 +143,6 @@ interface SearchDao {
     @Query("UPDATE Searchable Set `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
     suspend fun resetPinStatusAndLaunchCounter(key: String)
 
-    @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY pinned DESC, launchCount DESC")
+    @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY launchCount DESC, pinned DESC")
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
 }
