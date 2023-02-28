@@ -51,7 +51,12 @@ interface FavoritesRepository {
     fun getHiddenItems(): Flow<List<SavableSearchable>>
     fun getHiddenItemKeys(): Flow<List<String>>
 
-    fun getRanksByLaunchCount(limit: Int = 100): Flow<List<SavedSearchableRankInfo>>
+    /**
+     * Returns the given keys sorted by relevance.
+     * The first item in the list is the most relevant.
+     * Unknown keys will not be included in the result.
+     */
+    fun sortByRelevance(keys: List<String>): Flow<List<String>>
 
     /**
      * Remove this item from the Searchable database
@@ -291,10 +296,8 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun getRanksByLaunchCount(limit: Int): Flow<List<SavedSearchableRankInfo>> {
-        return database.searchDao().getRanksByLaunchCount(limit).map {
-            it.map { SavedSearchableRankInfo(it.key, it.type, it.launchCount) }
-        }
+    override fun sortByRelevance(keys: List<String>): Flow<List<String>> {
+        return database.searchDao().sortByRelevance(keys)
     }
 
     private fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {

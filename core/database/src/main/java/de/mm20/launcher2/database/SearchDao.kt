@@ -60,9 +60,6 @@ interface SearchDao {
         limit: Int,
     ): Flow<List<SavedSearchableEntity>>
 
-    @Query("SELECT * FROM Searchable WHERE launchCount > 0 ORDER BY launchCount DESC LIMIT :limit")
-    fun getRanksByLaunchCount(limit: Int): Flow<List<SavedSearchableEntity>>
-
     @Query("SELECT `key` FROM Searchable WHERE hidden = 1 AND type = 'calendar'")
     fun getHiddenCalendarEventKeys(): Flow<List<String>>
 
@@ -145,4 +142,7 @@ interface SearchDao {
 
     @Query("UPDATE Searchable Set `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
     suspend fun resetPinStatusAndLaunchCounter(key: String)
+
+    @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY pinned DESC, launchCount DESC")
+    fun sortByRelevance(keys: List<String>): Flow<List<String>>
 }
