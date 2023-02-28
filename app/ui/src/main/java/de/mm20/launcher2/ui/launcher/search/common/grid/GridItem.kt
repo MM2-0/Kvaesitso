@@ -116,7 +116,8 @@ fun GridItem(
         Box(
             modifier = if (highlight) {
                 Modifier
-                    .background(
+                    .border(
+                        4.dp,
                         MaterialTheme.colorScheme.outlineVariant,
                         iconShape
                     )
