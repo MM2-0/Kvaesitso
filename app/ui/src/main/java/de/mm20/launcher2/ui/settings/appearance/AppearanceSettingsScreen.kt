@@ -281,7 +281,7 @@ fun AppearanceSettingsScreen() {
                                 Surface(
                                     shape = MaterialTheme.shapes.extraSmall,
                                     color = MaterialTheme.colorScheme.tertiary,
-                                    modifier = Modifier.padding(top = 8.dp)
+                                    modifier = Modifier.padding(top = 4.dp)
                                 ) {
                                     Row(
                                         modifier = Modifier.padding(horizontal = 4.dp),
