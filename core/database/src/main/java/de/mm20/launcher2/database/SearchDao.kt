@@ -2,6 +2,7 @@ package de.mm20.launcher2.database
 
 import androidx.room.*
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SearchableLaunchTimestampEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -19,12 +20,13 @@ interface SearchDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllReplaceExisting(items: List<SavedSearchableEntity>)
 
-
-    @Query("SELECT * FROM Searchable " +
-            "WHERE ((:manuallySorted AND pinned > 1) OR " +
-            "(:automaticallySorted AND pinned = 1) OR" +
-            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    @Query(
+        "SELECT * FROM Searchable " +
+                "WHERE ((:manuallySorted AND pinned > 1) OR " +
+                "(:automaticallySorted AND pinned = 1) OR" +
+                "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+    )
     fun getFavorites(
         manuallySorted: Boolean = false,
         automaticallySorted: Boolean = false,
@@ -32,12 +34,14 @@ interface SearchDao {
         limit: Int,
     ): Flow<List<SavedSearchableEntity>>
 
-    @Query("SELECT * FROM Searchable " +
-            "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) IN (:includeTypes) AND (" +
-            "(:manuallySorted AND pinned > 1) OR " +
-            "(:automaticallySorted AND pinned = 1) OR" +
-            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    @Query(
+        "SELECT * FROM Searchable " +
+                "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) IN (:includeTypes) AND (" +
+                "(:manuallySorted AND pinned > 1) OR " +
+                "(:automaticallySorted AND pinned = 1) OR" +
+                "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+    )
     fun getFavoritesWithTypes(
         includeTypes: List<String>,
         manuallySorted: Boolean = false,
@@ -46,12 +50,14 @@ interface SearchDao {
         limit: Int,
     ): Flow<List<SavedSearchableEntity>>
 
-    @Query("SELECT * FROM Searchable " +
-            "WHERE `type` NOT IN (:excludeTypes) AND (" +
-            "(:manuallySorted AND pinned > 1) OR " +
-            "(:automaticallySorted AND pinned = 1) OR" +
-            "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-            ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit")
+    @Query(
+        "SELECT * FROM Searchable " +
+                "WHERE `type` NOT IN (:excludeTypes) AND (" +
+                "(:manuallySorted AND pinned > 1) OR " +
+                "(:automaticallySorted AND pinned = 1) OR" +
+                "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
+                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+    )
     fun getFavoritesWithoutTypes(
         excludeTypes: List<String>,
         manuallySorted: Boolean = false,
@@ -114,8 +120,10 @@ interface SearchDao {
     fun incrementExistingLaunchCount(key: String)
 
     @Transaction
-    fun incrementLaunchCount(item: SavedSearchableEntity) {
+    fun incrementLaunchCount(item: SavedSearchableEntity, alpha: Double) {
         incrementExistingLaunchCount(item.key)
+        increaseWeightWhere(item.key, alpha)
+        reduceWeightExcept(item.key, alpha)
         insertSkipExisting(item)
     }
 
@@ -140,9 +148,36 @@ interface SearchDao {
     @Query("UPDATE Searchable SET `pinned` = 0")
     fun unpinAll()
 
-    @Query("UPDATE Searchable Set `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
+    @Query("UPDATE Searchable SET `pinned` = 0, `launchCount` = 0 WHERE `key` = :key")
     suspend fun resetPinStatusAndLaunchCounter(key: String)
 
     @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY launchCount DESC, pinned DESC")
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
+
+    @Query(
+        "SELECT `key` " +
+                "FROM (" +
+                "SELECT `key`, COUNT(`stamp`) as count " +
+                "FROM LaunchTimestamp " +
+                "WHERE `key` IN (:keys) AND `stamp` > :currentTimeMs - :timespanMs " +
+                "GROUP BY `key` " +
+                "ORDER BY count DESC) as KeysWithCounts"
+    )
+    fun sortByRelevance(
+        keys: List<String>,
+        currentTimeMs: Long,
+        timespanMs: Long
+    ): Flow<List<String>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addStamp(stamp: SearchableLaunchTimestampEntity)
+
+    @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) ORDER BY `weight` DESC, pinned DESC")
+    fun sortByWeight(keys: List<String>): Flow<List<String>>
+
+    @Query("UPDATE Searchable SET `weight` = `weight` * (1.0 - :alpha) WHERE `key` != :key")
+    fun reduceWeightExcept(key: String, alpha: Double)
+
+    @Query("UPDATE Searchable SET `weight` = `weight` + :alpha * (1.0 - `weight`) WHERE `key` == :key")
+    fun increaseWeightWhere(key: String, alpha: Double)
 }

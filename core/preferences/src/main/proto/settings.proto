@@ -225,9 +225,13 @@ message Settings {
     bool launch_on_enter = 4;
     enum SearchResultOrdering {
       Alphabetic = 0;
-      Relevance = 1;
+      TotalLaunchCount = 1;
+      RecentLaunchCount = 2;
+      Weighted = 3;
     }
     SearchResultOrdering search_result_ordering = 5;
+    int64 recent_launch_count_timespan = 6;
+    double weight_factor = 7;
   }
   SearchBarSettings search_bar = 20;
 

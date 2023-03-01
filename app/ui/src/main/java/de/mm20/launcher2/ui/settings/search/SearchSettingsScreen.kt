@@ -212,7 +212,7 @@ fun SearchSettingsScreen() {
                     icon = Icons.Rounded.Sort,
                     items = listOf(
                         stringResource(R.string.preference_search_bar_ordering_alphabetic) to Settings.SearchBarSettings.SearchResultOrdering.Alphabetic,
-                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.Relevance
+                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.TotalLaunchCount
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setSearchResultOrdering(it)

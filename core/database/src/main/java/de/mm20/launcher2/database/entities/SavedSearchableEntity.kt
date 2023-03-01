@@ -11,5 +11,6 @@ data class SavedSearchableEntity(
         @ColumnInfo(name = "searchable") val serializedSearchable: String,
         var launchCount: Int,
         @ColumnInfo(name = "pinned") var pinPosition: Int,
-        var hidden: Boolean
+        var hidden: Boolean,
+        var weight: Double
 )

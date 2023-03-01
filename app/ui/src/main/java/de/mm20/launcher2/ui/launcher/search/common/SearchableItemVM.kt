@@ -10,10 +10,13 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -53,7 +56,7 @@ abstract class SearchableItemVM(
         return customAttributesRepository.getTags(searchable)
     }
 
-    open fun launch(context: Context, bounds: Rect? = null): Boolean {
+    open fun launch(context: Context, bounds: Rect? = null, weightFactor: Double = 0.0): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeClipRevealAnimation(
@@ -68,7 +71,7 @@ abstract class SearchableItemVM(
         }
         val bundle = options.toBundle()
         if (searchable.launch(context, bundle)) {
-            favoritesRepository.incrementLaunchCounter(searchable)
+            favoritesRepository.incrementLaunchCounter(searchable, weightFactor)
             return true
         } else if (searchable is LauncherApp || searchable is AppShortcut) {
             favoritesRepository.remove(searchable)
