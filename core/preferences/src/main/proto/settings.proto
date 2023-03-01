@@ -230,7 +230,7 @@ message Settings {
       Weighted = 3;
     }
     SearchResultOrdering search_result_ordering = 5;
-    int64 recent_launch_count_timespan = 6;
+    int64 recent_launch_count_timespan_ms = 6;
     double weight_factor = 7;
   }
   SearchBarSettings search_bar = 20;

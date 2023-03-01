@@ -87,6 +87,8 @@ abstract class AppDatabase : RoomDatabase() {
                                         "('internal', 'music', -1, 1, '${context.getString(R.string.widget_name_music)}')," +
                                         "('internal', 'calendar', -1, 2, '${context.getString(R.string.widget_name_calendar)}');"
                             )
+
+                            // TODO remove old entries in `LaunchTimestamp`
                         }
                     })
                     .addMigrations(

@@ -62,7 +62,7 @@ interface FavoritesRepository {
      */
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
 
-    fun sortByRelevance(keys: List<String>, timespan: Duration): Flow<List<String>>
+    fun sortByRelevance(keys: List<String>, timespanMs: Long): Flow<List<String>>
 
     fun sortByWeight(keys: List<String>): Flow<List<String>>
 
@@ -316,9 +316,9 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().sortByRelevance(keys)
     }
 
-    override fun sortByRelevance(keys: List<String>, timespan: Duration): Flow<List<String>> {
+    override fun sortByRelevance(keys: List<String>, timespanMs: Long): Flow<List<String>> {
         return database.searchDao()
-            .sortByRelevance(keys, System.currentTimeMillis(), timespan.inWholeMilliseconds)
+            .sortByRelevance(keys, System.currentTimeMillis(), timespanMs)
     }
 
     override fun sortByWeight(keys: List<String>): Flow<List<String>> {
