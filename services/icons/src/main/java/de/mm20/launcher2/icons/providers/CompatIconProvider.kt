@@ -18,19 +18,19 @@ class CompatIconProvider(
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
         val component = ComponentName(searchable.`package`, searchable.activity)
-        val activityInfo = try {
-            context.packageManager.getActivityInfo(component, 0)
-        } catch (e: PackageManager.NameNotFoundException) {
-            return null
-        }
-        val iconRes = activityInfo.iconResource
-        val resources = try {
-            context.packageManager.getResourcesForApplication(activityInfo.packageName)
-        } catch (e: PackageManager.NameNotFoundException) {
-            return null
-        }
 
         val icon = withContext(Dispatchers.IO) {
+            val activityInfo = try {
+                context.packageManager.getActivityInfo(component, 0)
+            } catch (e: PackageManager.NameNotFoundException) {
+                return@withContext null
+            }
+            val iconRes = activityInfo.iconResource
+            val resources = try {
+                context.packageManager.getResourcesForApplication(activityInfo.packageName)
+            } catch (e: PackageManager.NameNotFoundException) {
+                return@withContext null
+            }
             AdaptiveIconDrawableCompat.from(resources, iconRes)
         } ?: return null
 
