@@ -577,4 +577,9 @@
     <string name="icon_pack_dynamic_colors">Colori dinamici</string>
     <string name="preference_compact_mode">Modalità compatta</string>
     <string name="preference_compact_mode_summary">Nascondi previsioni orarie e giornaliere</string>
+    <string name="icon_picker_no_packs_installed">Nessun icon pack installato</string>
+    <string name="preference_search_bar_launch_on_enter">Avvia con invio</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
+    <string name="gesture_action_launch_app">Avvia app</string>
+    <string name="icon_picker_filter_all_packs">Tutti gli icon pack</string>
 </resources>
