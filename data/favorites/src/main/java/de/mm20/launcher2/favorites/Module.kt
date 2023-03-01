@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val favoritesModule = module {
-    single<FavoritesRepository> { FavoritesRepositoryImpl(androidContext(), get()) }
+    single<FavoritesRepository> { FavoritesRepositoryImpl(androidContext(), get(), get()) }
 }

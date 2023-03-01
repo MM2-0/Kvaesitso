@@ -2,10 +2,12 @@ package de.mm20.launcher2.favorites
 
 import android.content.Context
 import android.util.Log
+import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import kotlinx.coroutines.*
@@ -44,7 +46,7 @@ interface FavoritesRepository {
     fun isHidden(searchable: SavableSearchable): Flow<Boolean>
     fun hideItem(searchable: SavableSearchable)
     fun unhideItem(searchable: SavableSearchable)
-    fun incrementLaunchCounter(searchable: SavableSearchable, weightFactor: Double)
+    fun incrementLaunchCounter(searchable: SavableSearchable)
     fun updateFavorites(
         manuallySorted: List<SavableSearchable>,
         automaticallySorted: List<SavableSearchable>,
@@ -100,6 +102,7 @@ interface FavoritesRepository {
 internal class FavoritesRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
+    private val dataStore: LauncherDataStore
 ) : FavoritesRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -212,13 +215,15 @@ internal class FavoritesRepositoryImpl(
         }
     }
 
-    override fun incrementLaunchCounter(searchable: SavableSearchable, alpha: Double) {
+    override fun incrementLaunchCounter(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
+                val weightFactor =
+                    dataStore.data.map { it.searchBar.weightFactor }.firstOrNull() ?: 0.0
                 val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
                 item.toDatabaseEntity()?.let {
                     database.searchDao()
-                        .incrementLaunchCount(it, alpha)
+                        .incrementLaunchCount(it, weightFactor)
                 }
             }
         }

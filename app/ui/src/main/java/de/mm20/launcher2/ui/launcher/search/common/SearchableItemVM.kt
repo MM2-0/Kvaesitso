@@ -56,7 +56,7 @@ abstract class SearchableItemVM(
         return customAttributesRepository.getTags(searchable)
     }
 
-    open fun launch(context: Context, bounds: Rect? = null, weightFactor: Double = 0.0): Boolean {
+    open fun launch(context: Context, bounds: Rect? = null): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
             ActivityOptionsCompat.makeClipRevealAnimation(
@@ -71,7 +71,7 @@ abstract class SearchableItemVM(
         }
         val bundle = options.toBundle()
         if (searchable.launch(context, bundle)) {
-            favoritesRepository.incrementLaunchCounter(searchable, weightFactor)
+            favoritesRepository.incrementLaunchCounter(searchable)
             return true
         } else if (searchable is LauncherApp || searchable is AppShortcut) {
             favoritesRepository.remove(searchable)
