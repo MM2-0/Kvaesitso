@@ -140,4 +140,10 @@
     <string name="weather_widget_show_details">상세 정보 보이기</string>
     <string name="weather_widget_hide_details">상세 정보 숨기기</string>
     <string name="weather_details_precipitation">강수: %1$s</string>
+    <string name="menu_customize">사용자 정의</string>
+    <string name="missing_permission_calendar_widget">다가오는 약속과 일정을 여기에 표시하려면 캘린더 권한을 허용해 주세요.</string>
+    <string name="missing_permission_files_search">이 기기에 있는 사진이나 문서, 미디어를 검색하려면 저장공간 권한을 허용해 주세요.</string>
+    <string name="missing_permission_contact_search">연락처 항목을 검색하려면 권한을 허용해 주세요.</string>
+    <string name="missing_permission_calendar_search">캘린더에서 항목을 검색하려면 권한을 허용해 주세요.</string>
+    <string name="grant_permission">허용</string>
 </resources>
