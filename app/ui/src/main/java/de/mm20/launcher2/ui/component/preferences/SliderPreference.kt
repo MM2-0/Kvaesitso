@@ -130,7 +130,7 @@ inline fun <reified T: Enum<T>> SliderPreference(
     labels: List<EnumLocalization<T>>? = null,
     crossinline onValueChanged: (T) -> Unit
 ) {
-    val values = enumValues<T>()
+    val values = labels?.map { it.value }?.toTypedArray() ?: enumValues()
     SliderPreference(
         title = title,
         icon = icon,
@@ -146,7 +146,7 @@ inline fun <reified T: Enum<T>> SliderPreference(
             {
                 val idx = labels.indexOfFirst { l -> l.value == values[it] }
                 Text(
-                    modifier = Modifier.width(56.dp).padding(start = 24.dp),
+                    modifier = Modifier.width(68.dp).padding(start = 12.dp),
                     text = if (idx != -1) labels[idx].label else "",
                     style = MaterialTheme.typography.titleSmall
                 )

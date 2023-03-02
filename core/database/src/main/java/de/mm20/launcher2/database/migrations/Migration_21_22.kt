@@ -7,7 +7,7 @@ class Migration_21_22: Migration(21, 22) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("""
             ALTER TABLE `Searchable`
-            ADD `weight` DOUBLE DEFAULT 0.0
+            ADD `weight` DOUBLE NOT NULL DEFAULT 0.0
             """)
     }
 }

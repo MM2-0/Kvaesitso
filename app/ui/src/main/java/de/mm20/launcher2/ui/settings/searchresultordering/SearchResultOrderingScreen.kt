@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.searchresultordering
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChangeCircle
 import androidx.compose.material.icons.rounded.Sort
@@ -38,18 +39,21 @@ fun SearchResultOrderingScreen() {
                     },
                     icon = Icons.Rounded.Sort
                 )
-                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
-                SliderPreference(
-                    title = stringResource(R.string.preference_search_result_ordering_weight_factor),
-                    icon = Icons.Rounded.ChangeCircle,
-                    value = searchResultWeightFactor,
-                    enabled = searchResultOrdering == Ordering.Weighted,
-                    labels = listOf(
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
-                    )
-                ) { viewModel.setSearchResultWeightFactor(it) }
+                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(
+                    WeightFactor.Default
+                )
+                AnimatedVisibility(visible = searchResultOrdering == Ordering.Weighted) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_search_result_ordering_weight_factor),
+                        icon = Icons.Rounded.ChangeCircle,
+                        value = searchResultWeightFactor,
+                        labels = listOf(
+                            stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
+                            stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
+                            stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
+                        )
+                    ) { viewModel.setSearchResultWeightFactor(it) }
+                }
             }
         }
     }
