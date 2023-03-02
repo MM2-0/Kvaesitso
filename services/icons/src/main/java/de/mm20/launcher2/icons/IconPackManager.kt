@@ -84,8 +84,9 @@ class IconPackManager(
             Log.e("MM20", "Icon pack package $iconPack not found!")
             return null
         }
+        val activity = activityName?.let { ComponentName(packageName, it) }?.shortClassName
         val iconDao = appDatabase.iconDao()
-        val icon = iconDao.getIcon(packageName, activityName, iconPack)?.let { IconPackAppIcon(it) }
+        val icon = iconDao.getIcon(packageName, activity, iconPack)?.let { IconPackAppIcon(it) }
             ?: return null
 
         if (icon is CalendarIcon) {
