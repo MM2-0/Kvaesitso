@@ -762,7 +762,6 @@
     <string name="missing_permission_accessibility_gesture_failed">The launcher\'s accessibility service needs to be enabled to perform this action.</string>
     <string name="missing_permission_accessibility_gesture_settings">This action requires the launcher\'s accessibility service to be enabled.</string>
     <string name="preference_search_result_ordering">Search-result order</string>
-    <string name="preference_search_result_ordering_summary">Change order of search results</string>
     <string name="preference_search_result_ordering_alphabetic">Alphabetic</string>
     <string name="preference_search_result_ordering_launch_count">Launch count</string>
     <string name="preference_search_result_ordering_weighted">Dynamic</string>
