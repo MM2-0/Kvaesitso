@@ -223,15 +223,7 @@ message Settings {
     }
     SearchBarColors color = 3;
     bool launch_on_enter = 4;
-    enum SearchResultOrdering {
-      Alphabetic = 0;
-      TotalLaunchCount = 1;
-      RecentLaunchCount = 2;
-      Weighted = 3;
-    }
-    SearchResultOrdering search_result_ordering = 5;
-    int64 recent_launch_count_timespan_ms = 6;
-    double weight_factor = 7;
+    reserved 5;
   }
   SearchBarSettings search_bar = 20;
 
@@ -336,4 +328,20 @@ message Settings {
     string long_press_app = 10;
   }
   GestureSettings gestures = 28;
+
+  message SearchResultOrderingSettings {
+    enum Ordering {
+      Alphabetic = 0;
+      LaunchCount = 1;
+      Weighted = 2;
+    }
+    Ordering ordering = 1;
+    enum WeightFactor {
+      Low = 0;
+      Default = 1;
+      High = 2;
+    }
+    WeightFactor weight_factor = 2;
+  }
+  SearchResultOrderingSettings result_ordering = 29;
 }

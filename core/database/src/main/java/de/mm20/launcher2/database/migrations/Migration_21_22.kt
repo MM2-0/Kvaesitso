@@ -9,10 +9,5 @@ class Migration_21_22: Migration(21, 22) {
             ALTER TABLE `Searchable`
             ADD `weight` DOUBLE DEFAULT 0.0
             """)
-        database.execSQL("""
-            CREATE TABLE IF NOT EXISTS `LaunchTimestamp` (
-                `stamp` BIGINT PRIMARY KEY NOT NULL,
-                `key` TEXT NOT NULL)
-            """)
     }
 }

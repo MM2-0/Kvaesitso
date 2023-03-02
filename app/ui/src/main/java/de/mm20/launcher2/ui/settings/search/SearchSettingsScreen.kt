@@ -14,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -211,8 +212,8 @@ fun SearchSettingsScreen() {
                     value = searchResultOrdering,
                     icon = Icons.Rounded.Sort,
                     items = listOf(
-                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Settings.SearchBarSettings.SearchResultOrdering.Alphabetic,
-                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.TotalLaunchCount
+                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Ordering.Alphabetic,
+                        stringResource(R.string.preference_search_bar_ordering_relevance) to Ordering.LaunchCount
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setSearchResultOrdering(it)

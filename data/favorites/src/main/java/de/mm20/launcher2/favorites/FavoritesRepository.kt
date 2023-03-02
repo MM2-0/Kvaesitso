@@ -2,12 +2,12 @@ package de.mm20.launcher2.favorites
 
 import android.content.Context
 import android.util.Log
-import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import kotlinx.coroutines.*
@@ -16,8 +16,6 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.koin.core.component.KoinComponent
 import java.io.File
-import java.time.LocalDateTime
-import kotlin.time.Duration
 
 interface FavoritesRepository {
     /**
@@ -61,8 +59,6 @@ interface FavoritesRepository {
      * Unknown keys will not be included in the result.
      */
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
-
-    fun sortByRelevance(keys: List<String>, timespanMs: Long): Flow<List<String>>
 
     fun sortByWeight(keys: List<String>): Flow<List<String>>
 
@@ -219,7 +215,11 @@ internal class FavoritesRepositoryImpl(
         scope.launch {
             withContext(Dispatchers.IO) {
                 val weightFactor =
-                    dataStore.data.map { it.searchBar.weightFactor }.firstOrNull() ?: 0.0
+                    when (dataStore.data.map { it.resultOrdering.weightFactor }.firstOrNull()) {
+                        WeightFactor.Low -> 0.1
+                        WeightFactor.High -> 0.9
+                        else -> 0.5
+                    }
                 val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
                 item.toDatabaseEntity()?.let {
                     database.searchDao()
@@ -314,11 +314,6 @@ internal class FavoritesRepositoryImpl(
 
     override fun sortByRelevance(keys: List<String>): Flow<List<String>> {
         return database.searchDao().sortByRelevance(keys)
-    }
-
-    override fun sortByRelevance(keys: List<String>, timespanMs: Long): Flow<List<String>> {
-        return database.searchDao()
-            .sortByRelevance(keys, System.currentTimeMillis(), timespanMs)
     }
 
     override fun sortByWeight(keys: List<String>): Flow<List<String>> {

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 22,
-    "identityHash": "5f2b3e542bef8196c43f3a0a813323c1",
+    "identityHash": "d37b8967a52de69284dd9d8765b7edf7",
     "entities": [
       {
         "tableName": "forecasts",
@@ -487,38 +487,12 @@
         },
         "indices": [],
         "foreignKeys": []
-      },
-      {
-        "tableName": "LaunchTimestamp",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`stamp` INTEGER NOT NULL, `key` TEXT NOT NULL, PRIMARY KEY(`stamp`))",
-        "fields": [
-          {
-            "fieldPath": "timestampUnixMs",
-            "columnName": "stamp",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
-          {
-            "fieldPath": "key",
-            "columnName": "key",
-            "affinity": "TEXT",
-            "notNull": true
-          }
-        ],
-        "primaryKey": {
-          "autoGenerate": false,
-          "columnNames": [
-            "stamp"
-          ]
-        },
-        "indices": [],
-        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f2b3e542bef8196c43f3a0a813323c1')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd37b8967a52de69284dd9d8765b7edf7')"
     ]
   }
 }

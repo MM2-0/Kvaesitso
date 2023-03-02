@@ -2,13 +2,12 @@ package de.mm20.launcher2.database
 
 import androidx.room.*
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
-import de.mm20.launcher2.database.entities.SearchableLaunchTimestampEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchDao {
 
-    @Insert()
+    @Insert
     fun insertAll(items: List<SavedSearchableEntity>)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -153,24 +152,6 @@ interface SearchDao {
 
     @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) AND launchCount > 0 ORDER BY launchCount DESC, pinned DESC")
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
-
-    @Query(
-        "SELECT `key` " +
-                "FROM (" +
-                "SELECT `key`, COUNT(`stamp`) as count " +
-                "FROM LaunchTimestamp " +
-                "WHERE `key` IN (:keys) AND `stamp` > :currentTimeMs - :timespanMs " +
-                "GROUP BY `key` " +
-                "ORDER BY count DESC) as KeysWithCounts"
-    )
-    fun sortByRelevance(
-        keys: List<String>,
-        currentTimeMs: Long,
-        timespanMs: Long
-    ): Flow<List<String>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addStamp(stamp: SearchableLaunchTimestampEntity)
 
     @Query("SELECT `key` FROM Searchable WHERE `key` IN (:keys) ORDER BY `weight` DESC, pinned DESC")
     fun sortByWeight(keys: List<String>): Flow<List<String>>
