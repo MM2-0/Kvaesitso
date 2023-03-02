@@ -25,7 +25,8 @@ fun SliderPreference(
     max: Float = 1f,
     step: Float? = null,
     onValueChanged: (Float) -> Unit,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    label: (@Composable (Float) -> Unit)? = null
 ) {
     var sliderValue by remember(value) { mutableStateOf(value) }
     Row(
@@ -72,16 +73,20 @@ fun SliderPreference(
                         onValueChanged(sliderValue)
                     }
                 )
-                val decimalPlaces = -log(step ?: 0.01f, 10f)
-                val format = remember { DecimalFormat().apply {
-                    maximumFractionDigits = floor(decimalPlaces).toInt()
-                    minimumFractionDigits = 0
-                } }
-                Text(
-                    modifier = Modifier.width(56.dp).padding(start = 24.dp),
-                    text = format.format(sliderValue),
-                    style = MaterialTheme.typography.titleSmall
-                )
+                if (label != null) {
+                    label(sliderValue)
+                } else {
+                    val decimalPlaces = -log(step ?: 0.01f, 10f)
+                    val format = remember { DecimalFormat().apply {
+                        maximumFractionDigits = floor(decimalPlaces).toInt()
+                        minimumFractionDigits = 0
+                    } }
+                    Text(
+                        modifier = Modifier.width(56.dp).padding(start = 24.dp),
+                        text = format.format(sliderValue),
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
             }
         }
     }
@@ -96,7 +101,8 @@ fun SliderPreference(
     max: Int = 100,
     step: Int = 1,
     onValueChanged: (Int) -> Unit,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    label: (@Composable (Int) -> Unit)? = null
 ) {
     SliderPreference(
         title = title,
@@ -108,6 +114,45 @@ fun SliderPreference(
         step = step.toFloat(),
         onValueChanged = {
             onValueChanged(it.roundToInt())
+        },
+        label = if (label == null) null else {
+            { label(it.roundToInt()) }
         }
     )
 }
+
+@Composable
+inline fun <reified T: Enum<T>> SliderPreference(
+    title: String,
+    icon: ImageVector? = null,
+    value: T,
+    enabled: Boolean = true,
+    labels: List<EnumLocalization<T>>? = null,
+    crossinline onValueChanged: (T) -> Unit
+) {
+    val values = enumValues<T>()
+    SliderPreference(
+        title = title,
+        icon = icon,
+        value = values.indexOf(value),
+        min = 0,
+        max = values.size - 1,
+        step = 1,
+        onValueChanged = {
+            onValueChanged(values[it])
+        },
+        enabled = enabled,
+        label = if (labels == null) null else {
+            {
+                val idx = labels.indexOfFirst { l -> l.value == values[it] }
+                Text(
+                    modifier = Modifier.width(56.dp).padding(start = 24.dp),
+                    text = if (idx != -1) labels[idx].label else "",
+                    style = MaterialTheme.typography.titleSmall
+                )
+            }
+        }
+    )
+}
+
+typealias EnumLocalization<T> = ListPreferenceItem<T>

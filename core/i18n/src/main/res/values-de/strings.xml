@@ -574,7 +574,13 @@
     <string name="preference_layout_fixed_rotation">Feste Bildschirmausrichtung</string>
     <string name="preference_layout_fixed_rotation_summary">Porträtmodus erzwingen</string>
     <string name="icon_pack_dynamic_colors">Dynamische Farben</string>
-    <string name="preference_search_bar_ordering">Anordnung der Suchergebnisse</string>
-    <string name="preference_search_bar_ordering_alphabetic">Alphabetisch</string>
-    <string name="preference_search_bar_ordering_relevance">Relevanz</string>
+    <string name="preference_search_result_ordering">Anordnung der Suchergebnisse</string>
+    <string name="preference_search_result_ordering_summary">Reihenfolge der Suchergebnisse anpassen</string>
+    <string name="preference_search_result_ordering_alphabetic">Alphabetisch</string>
+    <string name="preference_search_result_ordering_launch_count">Aufrufhäufigkeit</string>
+    <string name="preference_search_result_ordering_weighted">Dynamisch</string>
+    <string name="preference_search_result_ordering_weight_factor">Variabilität</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Niedrig</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Standard</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Hoch</string>
 </resources>

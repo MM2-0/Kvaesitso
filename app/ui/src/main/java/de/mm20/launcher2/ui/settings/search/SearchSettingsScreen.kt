@@ -13,8 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -206,17 +204,12 @@ fun SearchSettingsScreen() {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
-                val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
-                ListPreference(
-                    title = stringResource(R.string.preference_search_bar_ordering),
-                    value = searchResultOrdering,
+                Preference(
+                    title = stringResource(R.string.preference_search_result_ordering),
+                    summary = stringResource(R.string.preference_search_result_ordering_summary),
                     icon = Icons.Rounded.Sort,
-                    items = listOf(
-                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Ordering.Alphabetic,
-                        stringResource(R.string.preference_search_bar_ordering_relevance) to Ordering.LaunchCount
-                    ),
-                    onValueChanged = {
-                        if (it != null) viewModel.setSearchResultOrdering(it)
+                    onClick = {
+                        navController?.navigate("settings/search/searchresultordering")
                     }
                 )
             }
