@@ -48,7 +48,6 @@ import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
-import de.mm20.launcher2.ui.settings.searchresultordering.SearchResultOrderingScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
 import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
@@ -134,9 +133,6 @@ class SettingsActivity : BaseActivity() {
                         }
                         composable("settings/search/hiddenitems") {
                             HiddenItemsSettingsScreen()
-                        }
-                        composable("settings/search/searchresultordering") {
-                            SearchResultOrderingScreen()
                         }
                         composable("settings/search/tags") {
                             TagsSettingsScreen()

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -146,6 +147,28 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
                 it.toBuilder().setAppShortcutSearch(
                         it.appShortcutSearch.toBuilder().setEnabled(appShortcuts)
                     ).build()
+            }
+        }
+    }
+
+    val searchResultOrdering = dataStore.data.map { it.resultOrdering.ordering }.asLiveData()
+    fun setSearchResultOrdering(searchResultOrdering: Settings.SearchResultOrderingSettings.Ordering) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder().setResultOrdering(
+                    it.resultOrdering.toBuilder().setOrdering(searchResultOrdering)
+                ).build()
+            }
+        }
+    }
+
+    val searchResultWeightFactor = dataStore.data.map { it.resultOrdering.weightFactor }.asLiveData()
+    fun setSearchResultWeightFactor(searchResultWeightFactor: Settings.SearchResultOrderingSettings.WeightFactor) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder().setResultOrdering(
+                    it.resultOrdering.toBuilder().setWeightFactor(searchResultWeightFactor)
+                ).build()
             }
         }
     }
