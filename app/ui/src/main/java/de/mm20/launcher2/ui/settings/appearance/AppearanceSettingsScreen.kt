@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -248,7 +249,7 @@ fun AppearanceSettingsScreen() {
                 )
 
                 val iconPackPackage by viewModel.iconPack.observeAsState()
-                val installedIconPacks by viewModel.installedIconPacks.observeAsState(emptyList())
+                val installedIconPacks by viewModel.installedIconPacks.collectAsState(emptyList())
                 val iconPack by remember {
                     derivedStateOf { installedIconPacks.firstOrNull { it.packageName == iconPackPackage } }
                 }

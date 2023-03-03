@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.IconEntity
 import de.mm20.launcher2.database.entities.IconPackEntity
+import kotlinx.coroutines.flow.Flow
 
 internal val AppTypes = listOf("app", "calendar", "clock")
 
@@ -33,8 +34,8 @@ interface IconDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun installIconPack(iconPack: IconPackEntity)
 
-    @Query("SELECT * FROM IconPack")
-    suspend fun getInstalledIconPacks(): List<IconPackEntity>
+    @Query("SELECT * FROM IconPack ORDER BY name ASC")
+    fun getInstalledIconPacks(): Flow<List<IconPackEntity>>
 
     @Query("SELECT * FROM IconPack WHERE packageName = :packageName LIMIT 1")
     suspend fun getIconPack(packageName: String): IconPackEntity?

@@ -24,6 +24,8 @@ import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -33,11 +35,9 @@ class IconPackManager(
     private val context: Context,
     private val appDatabase: AppDatabase,
 ) {
-    suspend fun getInstalledIconPacks(): List<IconPack> {
-        return withContext(Dispatchers.IO) {
-            appDatabase.iconDao().getInstalledIconPacks().map {
-                IconPack(it)
-            }
+    fun getInstalledIconPacks(): Flow<List<IconPack>> {
+        return appDatabase.iconDao().getInstalledIconPacks().map {
+            it.map { IconPack(it) }
         }
     }
 
@@ -375,6 +375,7 @@ class IconPackManager(
                     backgroundLayer = ColorLayer(),
                 )
             }
+
             icon.themed -> {
                 StaticLauncherIcon(
                     foregroundLayer = TintedClockLayer(
@@ -387,6 +388,7 @@ class IconPackManager(
                     backgroundLayer = ColorLayer(),
                 )
             }
+
             drawable is AdaptiveIconDrawable -> {
                 StaticLauncherIcon(
                     foregroundLayer = ClockLayer(
@@ -402,6 +404,7 @@ class IconPackManager(
                     ),
                 )
             }
+
             else -> {
                 StaticLauncherIcon(
                     foregroundLayer = ClockLayer(

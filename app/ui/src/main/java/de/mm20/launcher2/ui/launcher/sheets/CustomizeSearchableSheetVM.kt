@@ -57,9 +57,7 @@ class CustomizeSearchableSheetVM(
     val iconSearchResults = mutableStateOf(emptyList<CustomIconWithPreview>())
     val isSearchingIcons = mutableStateOf(false)
 
-    val installedIconPacks = flow {
-        emit(iconRepository.getInstalledIconPacks().sortedBy { it.name })
-    }
+    val installedIconPacks = iconRepository.getInstalledIconPacks()
 
     private var debounceSearchJob: Job? = null
     suspend fun searchIcon(query: String, iconPack: IconPack?) {

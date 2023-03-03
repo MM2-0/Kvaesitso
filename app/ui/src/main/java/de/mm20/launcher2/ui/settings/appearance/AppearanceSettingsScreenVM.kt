@@ -5,16 +5,21 @@ import android.content.Intent
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.getSystemService
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.*
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Font
+import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -193,18 +198,14 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val installedIconPacks: LiveData<List<IconPack>> = liveData {
-        emit(
-            listOf(
-                IconPack(
-                    name = "System",
-                    packageName = "",
-                    version = "",
-                )
-            ) +
-                    iconRepository.getInstalledIconPacks()
-        )
-    }
+    val installedIconPacks: Flow<List<IconPack>> = iconRepository.getInstalledIconPacks().map {
+            listOf(IconPack(
+                name = "System",
+                packageName = "",
+                version = "",
+            )) + it
+        }
+
     val iconPack = dataStore.data.map { it.icons.iconPack }.asLiveData()
     fun setIconPack(iconPack: String) {
         viewModelScope.launch {
