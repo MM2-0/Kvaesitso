@@ -53,4 +53,10 @@ interface IconDao {
 
     @Query("SELECT scale FROM IconPack WHERE packageName = :pack")
     suspend fun getScale(pack: String): Float?
+
+    @Query("DELETE FROM Icons WHERE iconPack NOT IN (:keep)")
+    suspend fun deleteIconsNotIn(keep: List<String>)
+
+    @Query("DELETE FROM IconPack WHERE packageName NOT IN (:keep)")
+    suspend fun deleteIconPacksNotIn(keep: List<String>)
 }
