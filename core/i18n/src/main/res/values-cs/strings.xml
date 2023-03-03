@@ -582,4 +582,7 @@
     <string name="gesture_action_launch_app">Spustit aplikaci</string>
     <string name="icon_picker_no_packs_installed">Nejsou nainstalovány žádné balíčky ikon</string>
     <string name="icon_picker_filter_all_packs">Všechny balíčky ikon</string>
+    <string name="preference_search_bar_ordering_alphabetic">Abecedně</string>
+    <string name="preference_search_bar_ordering_relevance">Relevantnost</string>
+    <string name="preference_search_bar_ordering">Pořadí výsledků vyhledávání</string>
 </resources>
