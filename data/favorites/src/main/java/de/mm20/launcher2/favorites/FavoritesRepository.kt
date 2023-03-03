@@ -217,7 +217,7 @@ internal class FavoritesRepositoryImpl(
                 val weightFactor =
                     when (dataStore.data.map { it.resultOrdering.weightFactor }.firstOrNull()) {
                         WeightFactor.Low -> 0.1
-                        WeightFactor.High -> 0.3
+                        WeightFactor.High -> 0.5
                         else -> 0.2
                     }
                 val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
