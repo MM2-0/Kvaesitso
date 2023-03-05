@@ -12,5 +12,5 @@ data class SavedSearchableEntity(
         var launchCount: Int,
         @ColumnInfo(name = "pinned") var pinPosition: Int,
         var hidden: Boolean,
-        var weight: Double
+        @ColumnInfo(defaultValue = "0.0") var weight: Double
 )
