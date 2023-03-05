@@ -765,7 +765,7 @@
     <string name="preference_search_result_ordering_alphabetic">Alphabetic</string>
     <string name="preference_search_result_ordering_launch_count">Launch count</string>
     <string name="preference_search_result_ordering_weighted">Dynamic</string>
-    <string name="preference_search_result_ordering_weight_factor">Variability</string>
+    <string name="preference_search_result_ordering_weight_factor">Automatic sorting variability</string>
     <string name="preference_search_result_ordering_weight_factor_low">Low</string>
     <string name="preference_search_result_ordering_weight_factor_default">Default</string>
     <string name="preference_search_result_ordering_weight_factor_high">High</string>

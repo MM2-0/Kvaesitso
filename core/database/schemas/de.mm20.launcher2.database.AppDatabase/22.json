@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 22,
-    "identityHash": "d37b8967a52de69284dd9d8765b7edf7",
+    "identityHash": "5d3853b609231cdcab5fb3c681d05ebb",
     "entities": [
       {
         "tableName": "forecasts",
@@ -140,7 +140,7 @@
       },
       {
         "tableName": "Searchable",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` TEXT NOT NULL, `type` TEXT NOT NULL, `searchable` TEXT NOT NULL, `launchCount` INTEGER NOT NULL, `pinned` INTEGER NOT NULL, `hidden` INTEGER NOT NULL, `weight` REAL NOT NULL, PRIMARY KEY(`key`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`key` TEXT NOT NULL, `type` TEXT NOT NULL, `searchable` TEXT NOT NULL, `launchCount` INTEGER NOT NULL, `pinned` INTEGER NOT NULL, `hidden` INTEGER NOT NULL, `weight` REAL NOT NULL DEFAULT 0.0, PRIMARY KEY(`key`))",
         "fields": [
           {
             "fieldPath": "key",
@@ -182,7 +182,8 @@
             "fieldPath": "weight",
             "columnName": "weight",
             "affinity": "REAL",
-            "notNull": true
+            "notNull": true,
+            "defaultValue": "0.0"
           }
         ],
         "primaryKey": {
@@ -492,7 +493,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd37b8967a52de69284dd9d8765b7edf7')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5d3853b609231cdcab5fb3c681d05ebb')"
     ]
   }
 }

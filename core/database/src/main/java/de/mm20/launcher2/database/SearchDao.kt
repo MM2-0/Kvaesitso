@@ -24,7 +24,7 @@ interface SearchDao {
                 "WHERE ((:manuallySorted AND pinned > 1) OR " +
                 "(:automaticallySorted AND pinned = 1) OR" +
                 "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+                ") ORDER BY pinned DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
     fun getFavorites(
         manuallySorted: Boolean = false,
@@ -39,7 +39,7 @@ interface SearchDao {
                 "(:manuallySorted AND pinned > 1) OR " +
                 "(:automaticallySorted AND pinned = 1) OR" +
                 "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+                ") ORDER BY pinned DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
     fun getFavoritesWithTypes(
         includeTypes: List<String>,
@@ -55,7 +55,7 @@ interface SearchDao {
                 "(:manuallySorted AND pinned > 1) OR " +
                 "(:automaticallySorted AND pinned = 1) OR" +
                 "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
-                ") ORDER BY pinned DESC, launchCount DESC LIMIT :limit"
+                ") ORDER BY pinned DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
     fun getFavoritesWithoutTypes(
         excludeTypes: List<String>,

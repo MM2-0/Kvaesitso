@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.favorites
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -8,6 +10,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -56,6 +60,17 @@ fun FavoritesSettingsScreen() {
                         viewModel.setFrequentlyUsedRows(it)
                     }
                 )
+                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
+                SliderPreference(
+                    title = stringResource(R.string.preference_search_result_ordering_weight_factor),
+                    icon = Icons.Rounded.SwapVert,
+                    value = searchResultWeightFactor,
+                    labels = listOf(
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
+                    )
+                ) { viewModel.setSearchResultWeightFactor(it) }
             }
         }
         item {

@@ -162,17 +162,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val searchResultWeightFactor = dataStore.data.map { it.resultOrdering.weightFactor }.asLiveData()
-    fun setSearchResultWeightFactor(searchResultWeightFactor: Settings.SearchResultOrderingSettings.WeightFactor) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setResultOrdering(
-                    it.resultOrdering.toBuilder().setWeightFactor(searchResultWeightFactor)
-                ).build()
-            }
-        }
-    }
-
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }

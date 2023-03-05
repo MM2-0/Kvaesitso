@@ -205,10 +205,6 @@ fun SearchSettingsScreen() {
                         viewModel.setLaunchOnEnter(it)
                     }
                 )
-            }
-        }
-        item {
-            PreferenceCategory {
                 val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering),
@@ -223,21 +219,6 @@ fun SearchSettingsScreen() {
                     },
                     icon = Icons.Rounded.Sort
                 )
-                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(
-                    Settings.SearchResultOrderingSettings.WeightFactor.Default
-                )
-                AnimatedVisibility(visible = searchResultOrdering == Settings.SearchResultOrderingSettings.Ordering.Weighted) {
-                    SliderPreference(
-                        title = stringResource(R.string.preference_search_result_ordering_weight_factor),
-                        icon = Icons.Rounded.SwapVert,
-                        value = searchResultWeightFactor,
-                        labels = listOf(
-                            stringResource(R.string.preference_search_result_ordering_weight_factor_low) to Settings.SearchResultOrderingSettings.WeightFactor.Low,
-                            stringResource(R.string.preference_search_result_ordering_weight_factor_default) to Settings.SearchResultOrderingSettings.WeightFactor.Default,
-                            stringResource(R.string.preference_search_result_ordering_weight_factor_high) to Settings.SearchResultOrderingSettings.WeightFactor.High
-                        )
-                    ) { viewModel.setSearchResultWeightFactor(it) }
-                }
             }
         }
         item {

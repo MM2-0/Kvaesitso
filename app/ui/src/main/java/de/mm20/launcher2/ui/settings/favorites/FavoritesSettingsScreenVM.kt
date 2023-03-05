@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -48,6 +49,20 @@ class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
                     .setFavorites(
                         it.favorites.toBuilder()
                             .setEditButton(editButton)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val searchResultWeightFactor = dataStore.data.map { it.resultOrdering.weightFactor }.asLiveData()
+    fun setSearchResultWeightFactor(searchResultWeightFactor: WeightFactor) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setResultOrdering(
+                        it.resultOrdering.toBuilder()
+                            .setWeightFactor(searchResultWeightFactor)
                     )
                     .build()
             }
