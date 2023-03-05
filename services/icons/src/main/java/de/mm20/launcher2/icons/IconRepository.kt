@@ -229,7 +229,7 @@ class IconRepository(
         }
     }
 
-    suspend fun getInstalledIconPacks(): List<IconPack> {
+    fun getInstalledIconPacks(): Flow<List<IconPack>> {
         return iconPackManager.getInstalledIconPacks()
     }
 

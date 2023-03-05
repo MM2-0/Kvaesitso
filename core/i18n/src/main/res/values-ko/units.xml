@@ -1,2 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unit_meter_symbol">m</string>
+    <plurals name="unit_meter">
+        <item quantity="other">미터</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">km</string>
+    <plurals name="unit_kilometer">
+        <item quantity="other">킬로미터</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_centimeter">
+        <item quantity="other">센티미터</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <plurals name="unit_millimeter">
+        <item quantity="other">밀리미터</item>
+    </plurals>
+    <string name="unit_inch_symbol">in</string>
+    <plurals name="unit_inch">
+        <item quantity="other">인치</item>
+    </plurals>
+    <string name="unit_foot_symbol">ft</string>
+    <plurals name="unit_foot">
+        <item quantity="other">피트</item>
+    </plurals>
+    <string name="unit_yard_symbol">yd</string>
+    <plurals name="unit_yard">
+        <item quantity="other">야드</item>
+    </plurals>
+    <string name="unit_mile_symbol">mi</string>
+    <plurals name="unit_mile">
+        <item quantity="other">마일</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">해리</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="other">제곱미터</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">제곱킬로미터</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">제곱센티미터</item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">제곱밀리미터</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">sqin</string>
+    <plurals name="unit_sqinch">
+        <item quantity="other">제곱인치</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">sqft</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">제곱피트</item>
+    </plurals>
+</resources>

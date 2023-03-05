@@ -14,17 +14,18 @@ import android.graphics.drawable.AdaptiveIconDrawable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.LayerDrawable
-import android.graphics.drawable.RotateDrawable
 import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.room.withTransaction
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.icons.loaders.AppFilterIconPackInstaller
 import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.ktx.obtainTypedArrayOrNull
 import de.mm20.launcher2.ktx.randomElementOrNull
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.withContext
 import kotlin.math.roundToInt
@@ -34,11 +35,9 @@ class IconPackManager(
     private val context: Context,
     private val appDatabase: AppDatabase,
 ) {
-    suspend fun getInstalledIconPacks(): List<IconPack> {
-        return withContext(Dispatchers.IO) {
-            appDatabase.iconDao().getInstalledIconPacks().map {
-                IconPack(it)
-            }
+    fun getInstalledIconPacks(): Flow<List<IconPack>> {
+        return appDatabase.iconDao().getInstalledIconPacks().map {
+            it.map { IconPack(it) }
         }
     }
 
@@ -58,6 +57,7 @@ class IconPackManager(
             AppFilterIconPackInstaller(context, appDatabase),
             GrayscaleMapIconPackInstaller(context, appDatabase),
         )
+        val installedPacks = mutableListOf<IconPack>()
         for (installer in installers) {
             val iconPacks = installer.getInstalledIconPacks()
             for (pack in iconPacks) {
@@ -68,9 +68,19 @@ class IconPackManager(
                     Log.d("MM20", "Icon pack ${pack.packageName} is up to date")
                 }
             }
+            installedPacks.addAll(iconPacks)
         }
+        uninstallAllIconPacksExcept(installedPacks)
         updateIconPacksMutex.unlock()
         return iconsHaveBeenUpdated
+    }
+
+    private suspend fun uninstallAllIconPacksExcept(keep: List<IconPack>) {
+        val dao = appDatabase.iconDao()
+        appDatabase.withTransaction {
+            dao.deleteIconsNotIn(keep.map { it.packageName })
+            dao.deleteIconPacksNotIn(keep.map { it.packageName })
+        }
     }
 
     suspend fun getIcon(
@@ -84,8 +94,9 @@ class IconPackManager(
             Log.e("MM20", "Icon pack package $iconPack not found!")
             return null
         }
+        val activity = activityName?.let { ComponentName(packageName, it) }?.shortClassName
         val iconDao = appDatabase.iconDao()
-        val icon = iconDao.getIcon(packageName, activityName, iconPack)?.let { IconPackAppIcon(it) }
+        val icon = iconDao.getIcon(packageName, activity, iconPack)?.let { IconPackAppIcon(it) }
             ?: return null
 
         if (icon is CalendarIcon) {
@@ -364,6 +375,7 @@ class IconPackManager(
                     backgroundLayer = ColorLayer(),
                 )
             }
+
             icon.themed -> {
                 StaticLauncherIcon(
                     foregroundLayer = TintedClockLayer(
@@ -376,6 +388,7 @@ class IconPackManager(
                     backgroundLayer = ColorLayer(),
                 )
             }
+
             drawable is AdaptiveIconDrawable -> {
                 StaticLauncherIcon(
                     foregroundLayer = ClockLayer(
@@ -391,6 +404,7 @@ class IconPackManager(
                     ),
                 )
             }
+
             else -> {
                 StaticLauncherIcon(
                     foregroundLayer = ClockLayer(

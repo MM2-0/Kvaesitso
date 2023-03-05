@@ -436,7 +436,7 @@
     <string name="alert_delete_shortcut">快捷方式%1$s将被永久移除. 继续\?</string>
     <string name="preference_force_themed_icons_summary">将应用程序的配色方案应用于所有的图标，包括不支持的图标(不建议)</string>
     <string name="backup_component_customizations">定制化</string>
-    <string name="icon_picker_title">选择器图标</string>
+    <string name="icon_picker_title">选择图标</string>
     <string name="icon_picker_default_icon">默认</string>
     <string name="icon_picker_suggestions">建议</string>
     <string name="icon_picker_search_icon">搜索图标</string>
@@ -567,4 +567,12 @@
     <string name="preference_compact_mode">紧凑模式</string>
     <string name="preference_compact_mode_summary">隐藏每小时和每日预测</string>
     <string name="icon_pack_dynamic_colors">动态颜色</string>
+    <string name="preference_search_bar_ordering">搜索结果顺序</string>
+    <string name="preference_search_bar_ordering_alphabetic">字母排序式的</string>
+    <string name="preference_search_bar_ordering_relevance">关联排序式的</string>
+    <string name="icon_picker_no_packs_installed">没有已安装的图标包</string>
+    <string name="preference_search_bar_launch_on_enter">按下回车键以启动</string>
+    <string name="preference_search_bar_launch_on_enter_summary">点击go时启动高亮的匹配或快捷操作</string>
+    <string name="gesture_action_launch_app">打开应用</string>
+    <string name="icon_picker_filter_all_packs">全部图标包</string>
 </resources>
