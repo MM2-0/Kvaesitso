@@ -54,17 +54,6 @@ fun FavoritesSettingsScreen() {
                     },
                     icon = Icons.Rounded.Insights
                 )
-                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
-                SliderPreference(
-                    title = stringResource(R.string.preference_search_result_ordering_weight_factor),
-                    icon = Icons.Rounded.SwapVert,
-                    value = searchResultWeightFactor,
-                    labels = listOf(
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
-                        stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
-                    )
-                ) { viewModel.setSearchResultWeightFactor(it) }
                 val frequentlyUsedRows by viewModel.frequentlyUsedRows.observeAsState(1)
                 SliderPreference(
                     title = stringResource(R.string.frequently_used_rows),
@@ -77,6 +66,17 @@ fun FavoritesSettingsScreen() {
                     },
                     icon = Icons.Rounded.TableRows
                 )
+                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
+                SliderPreference(
+                    title = stringResource(R.string.preference_search_result_ordering_weight_factor),
+                    icon = Icons.Rounded.SwapVert,
+                    value = searchResultWeightFactor,
+                    labels = listOf(
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
+                        stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
+                    )
+                ) { viewModel.setSearchResultWeightFactor(it) }
             }
         }
         item {
