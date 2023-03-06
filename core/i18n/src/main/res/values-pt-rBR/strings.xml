@@ -309,7 +309,7 @@
     <string name="preference_clock_widget_style">Estilo</string>
     <string name="preference_clock_widget_style_summary">Selecionar um relógio</string>
     <string name="preference_clockwidget_date_part">Data</string>
-    <string name="preference_clockwidget_date_part_summary">Mostrar a data atual</string>
+    <string name="preference_clockwidget_date_part_summary">Mostra a data atual</string>
     <string name="websearch_dialog_query_encoding_none">Nenhum</string>
     <string name="websearch_dialog_query_encoding">Codificação de consulta</string>
     <string name="websearch_dialog_query_encoding_url">Codificação de porcentagem</string>
@@ -437,7 +437,7 @@
     <string name="preference_search_bar_auto_focus">Abrir o teclado</string>
     <string name="preference_search_bar_auto_focus_summary">Mostra o teclado automaticamente ao abrir a pesquisa</string>
     <string name="preference_screen_tags">Etiquetas</string>
-    <string name="preference_search_bar_launch_on_enter_summary">Inicie a correspondência destacada ou a ação rápida ao tocar em ir</string>
+    <string name="preference_search_bar_launch_on_enter_summary">Inicia a correspondência destacada ou a ação rápida ao tocar em ir</string>
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendário selecionado</item>
         <item quantity="many">%1$d calendários selecionados</item>
@@ -445,7 +445,7 @@
     </plurals>
     <string name="preference_search_bar_launch_on_enter">Iniciar ao entrar</string>
     <string name="preference_hidden_items">Resultados de pesquisa ocultos</string>
-    <string name="preference_hidden_items_summary">Gerencia aplicativos ocultos e resultados de pesquisa</string>
+    <string name="preference_hidden_items_summary">Gerenciar aplicativos ocultos e resultados de pesquisa</string>
     <string name="preference_icon_shape_hexagon">Hexágono</string>
     <string name="preference_icon_shape_pebble">Seixo</string>
     <string name="preference_category_debug_tools">Ferramentas</string>
@@ -488,7 +488,7 @@
     <string name="preference_edit_favorites_summary">Alterar a ordem dos ícones fixados</string>
     <string name="preference_category_favorites_frequently_used">Usado frequentemente</string>
     <string name="preference_favorites_frequently_used_summary">Mostra itens usados com frequência nos favoritos</string>
-    <string name="preference_edit_button">botão editar</string>
+    <string name="preference_edit_button">Botão editar</string>
     <string name="preference_favorites_edit_button_summary">Mostra um botão para reorganizar os favoritos</string>
     <string name="preference_widgets_edit_button_summary">Mostra um botão para adicionar, remover e reorganizar widgets</string>
     <string name="preference_wikipedia_customurl">URL da Wikipédia</string>
@@ -531,7 +531,7 @@
     <plurals name="tag_selected_items">
         <item quantity="one">%1$d item selecionado</item>
         <item quantity="many">%1$d itens selecionados</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="tag_exists_error">Já existe uma etiqueta com este nome.</string>
     <string name="tag_empty_message">O nome da etiqueta não deve ficar em branco.</string>
