@@ -1,7 +1,9 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.text.format.DateFormat
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.AnimationVector2D
+import androidx.compose.animation.core.TwoWayConverter
+import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,25 +25,51 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings
 import java.util.Calendar
 import kotlin.math.PI
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
+private const val TWO_PI_F = (2.0 * PI).toFloat()
+
+// https://stackoverflow.com/a/68651222
+private val Float.Companion.radiansConverter
+    get() = TwoWayConverter<Float, AnimationVector2D>({ rad ->
+        AnimationVector2D(sin(rad), cos(rad))
+    }, {
+        (atan2(it.v1, it.v2) + TWO_PI_F) % TWO_PI_F
+    })
+
 @Composable
 fun OrbitClock(
-    time: Long,
     layout: Settings.ClockWidgetSettings.ClockWidgetLayout
 ) {
+    val vm: OrbitClockVM = viewModel()
+    val millis by vm.time
+
     val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
     val date = Calendar.getInstance()
-    date.timeInMillis = time
+    date.timeInMillis = millis
+    val second = date[Calendar.SECOND]
     val minute = date[Calendar.MINUTE]
-    val hour = if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
+    val hour =
+        if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
 
-    val mu by animateFloatAsState(minute / 60f * 2f * PI.toFloat())
-    val heta by animateFloatAsState((hour % 12) / 12f * 2f * PI.toFloat() + (minute / 60f) * 1f / 6f * PI.toFloat())
+    val animatedSecs by animateValueAsState(
+        second / 60f * TWO_PI_F,
+        Float.radiansConverter
+    )
+    val animatedMins by animateValueAsState(
+        (minute + second / 60f) / 60f * TWO_PI_F,
+        Float.radiansConverter
+    )
+    val animatedHrs by animateValueAsState(
+        (hour % 12 + minute / 60f) / 12f * TWO_PI_F,
+        Float.radiansConverter
+    )
 
     val color = LocalContentColor.current
 
@@ -50,39 +78,62 @@ fun OrbitClock(
 
     val strokeWidth = if (verticalLayout) 2.dp else 1.dp
 
-    Canvas(modifier = Modifier
-        .padding(bottom = if (verticalLayout) 8.dp else 0.dp)
-        .size(if (verticalLayout) 192.dp else 56.dp)
+    Canvas(
+        modifier = Modifier
+            .padding(bottom = if (verticalLayout) 8.dp else 0.dp)
+            .size(if (verticalLayout) 192.dp else 56.dp)
     ) {
-        val rm = size.width * 0.45f
-        val rh = size.width * 0.25f
+        val rs = size.width * 0.1f
+        val rm = size.width * 0.25f
+        val rh = size.width * 0.45f
+        if (verticalLayout) {
+            drawCircle(
+                color = color.copy(alpha = 0.5f),
+                radius = rs,
+                style = Stroke(
+                    width = strokeWidth.toPx(),
+                    pathEffect = PathEffect.dashPathEffect(floatArrayOf(2.dp.toPx(), 2.dp.toPx()))
+                )
+            )
+        }
         drawCircle(
             color = color.copy(alpha = 0.5f),
             radius = rm,
-            style = Stroke(width = strokeWidth.toPx(),
+            style = Stroke(
+                width = strokeWidth.toPx(),
                 pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx()))
             )
         )
         drawCircle(
             color = color.copy(alpha = 0.5f),
             radius = rh,
-            style = Stroke(width = strokeWidth.toPx(),
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx())),
+            style = Stroke(
+                width = strokeWidth.toPx(),
+                pathEffect = PathEffect.dashPathEffect(floatArrayOf(8.dp.toPx(), 8.dp.toPx())),
             )
         )
 
-        val mPos = Offset(x = sin(mu) * rm, y = -cos(mu) * rm)
-        val hPos = Offset(x = sin(heta) * rh, y = -cos(heta) * rh)
+        val sPos = Offset(x = sin(animatedSecs) * rs, y = -cos(animatedSecs) * rs)
+        val mPos = Offset(x = sin(animatedMins) * rm, y = -cos(animatedMins) * rm)
+        val hPos = Offset(x = sin(animatedHrs) * rh, y = -cos(animatedHrs) * rh)
 
+        if (verticalLayout) {
+            drawCircle(
+                color = Color.Black,
+                radius = size.width * 0.02f,
+                center = size.center + sPos,
+                blendMode = BlendMode.DstOut
+            )
+        }
         drawCircle(
             color = Color.Black,
-            radius = size.width * 0.08f,
+            radius = size.width * 0.07f,
             center = size.center + mPos,
             blendMode = BlendMode.DstOut
         )
         drawCircle(
             color = Color.Black,
-            radius = size.width * 0.08f,
+            radius = size.width * 0.09f,
             center = size.center + hPos,
             blendMode = BlendMode.DstOut
         )
@@ -113,16 +164,24 @@ fun OrbitClock(
             )
         }
 
+        if (verticalLayout) {
+            drawCircle(
+                color = color,
+                radius = size.width * 0.02f,
+                center = size.center + sPos,
+                blendMode = BlendMode.SrcOut
+            )
+        }
         drawCircle(
             color = color,
-            radius = size.width * 0.08f,
-            center = size.center + hPos,
+            radius = size.width * 0.07f,
+            center = size.center + mPos,
             blendMode = BlendMode.SrcOut
         )
         drawCircle(
             color = color,
-            radius = size.width * 0.08f,
-            center = size.center + mPos,
+            radius = size.width * 0.09f,
+            center = size.center + hPos,
             blendMode = BlendMode.SrcOut
         )
 

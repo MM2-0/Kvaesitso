@@ -3,18 +3,21 @@ package de.mm20.launcher2.ui.launcher.widgets.clock
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
-import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.AlarmPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.BatteryPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.FavoritesPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.MusicPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.channelFlow
@@ -56,11 +59,11 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
-
     val layout = dataStore.data.map { it.clockWidget.layout }.asLiveData()
     val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }.asLiveData()
 
     val color = dataStore.data.map { it.clockWidget.color }.asLiveData()
+    val time = mutableStateOf(System.currentTimeMillis())
 
     fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }

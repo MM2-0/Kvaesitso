@@ -55,7 +55,7 @@ android {
             applicationIdSuffix = ".debug"
             // Jetpack Compose is unusably laggy in debug builds, it's ridiculous
             // This somehow seems to resolve that issue.
-            isDebuggable = false
+            isDebuggable = true
         }
         create("nightly") {
             initWith(getByName("release"))
