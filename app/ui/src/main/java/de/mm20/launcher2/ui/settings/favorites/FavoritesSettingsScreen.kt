@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -67,16 +68,17 @@ fun FavoritesSettingsScreen() {
                     icon = Icons.Rounded.TableRows
                 )
                 val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
-                SliderPreference(
+                ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering_weight_factor),
                     icon = Icons.Rounded.SwapVert,
                     value = searchResultWeightFactor,
-                    labels = listOf(
+                    items = listOf(
                         stringResource(R.string.preference_search_result_ordering_weight_factor_low) to WeightFactor.Low,
                         stringResource(R.string.preference_search_result_ordering_weight_factor_default) to WeightFactor.Default,
                         stringResource(R.string.preference_search_result_ordering_weight_factor_high) to WeightFactor.High
-                    )
-                ) { viewModel.setSearchResultWeightFactor(it) }
+                    ),
+                    onValueChanged = { viewModel.setSearchResultWeightFactor(it) }
+                )
             }
         }
         item {
