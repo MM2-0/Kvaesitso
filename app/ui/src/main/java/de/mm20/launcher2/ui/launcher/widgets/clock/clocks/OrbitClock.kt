@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.AnnotatedString
@@ -67,7 +66,6 @@ fun OrbitClock(
                 millisState.value = System.currentTimeMillis()
                 delay(1000)
             }
-            // if (style != orbit) cancel?
         }
     }
 
@@ -98,7 +96,8 @@ fun OrbitClock(
     val color = LocalContentColor.current
 
     val measurer = rememberTextMeasurer()
-    val textStyle = MaterialTheme.typography.labelMedium
+    val minuteStyle = MaterialTheme.typography.labelMedium
+    val hourStyle = MaterialTheme.typography.labelLarge
 
     val strokeWidth = if (verticalLayout) 2.dp else 1.dp
 
@@ -107,9 +106,15 @@ fun OrbitClock(
             .padding(bottom = if (verticalLayout) 8.dp else 0.dp)
             .size(if (verticalLayout) 192.dp else 56.dp)
     ) {
+
         val rs = size.width * 0.1f
         val rm = size.width * 0.24f
         val rh = rm + (rm - rs) * PHI_F
+
+        val sSize = size.width * 0.02f
+        val mSize = size.width * 0.07f
+        val hSize = rh + sSize + rs - 2f * rm
+
         if (verticalLayout) {
             drawCircle(
                 color = color.copy(alpha = 0.5f),
@@ -125,7 +130,12 @@ fun OrbitClock(
             radius = rm,
             style = Stroke(
                 width = strokeWidth.toPx(),
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(4.dp.toPx(), 4.dp.toPx()))
+                pathEffect = PathEffect.dashPathEffect(
+                    floatArrayOf(
+                        (2 * PHI_F).dp.toPx(),
+                        (2 * PHI_F).dp.toPx()
+                    )
+                )
             )
         )
         drawCircle(
@@ -133,7 +143,12 @@ fun OrbitClock(
             radius = rh,
             style = Stroke(
                 width = strokeWidth.toPx(),
-                pathEffect = PathEffect.dashPathEffect(floatArrayOf(8.dp.toPx(), 8.dp.toPx())),
+                pathEffect = PathEffect.dashPathEffect(
+                    floatArrayOf(
+                        (2 * PHI_F * PHI_F).dp.toPx(),
+                        (2 * PHI_F * PHI_F).dp.toPx()
+                    )
+                ),
             )
         )
 
@@ -141,24 +156,23 @@ fun OrbitClock(
         val mPos = Offset(x = sin(animatedMins) * rm, y = -cos(animatedMins) * rm)
         val hPos = Offset(x = sin(animatedHrs) * rh, y = -cos(animatedHrs) * rh)
 
-
         if (verticalLayout) {
             drawCircle(
                 color = Color.Black,
-                radius = size.width * 0.02f,
+                radius = sSize,
                 center = size.center + sPos,
                 blendMode = BlendMode.DstOut
             )
         }
         drawCircle(
             color = Color.Black,
-            radius = size.width * 0.07f,
+            radius = mSize,
             center = size.center + mPos,
             blendMode = BlendMode.DstOut
         )
         drawCircle(
             color = Color.Black,
-            radius = size.width * 0.09f,
+            radius = hSize,
             center = size.center + hPos,
             blendMode = BlendMode.DstOut
         )
@@ -168,24 +182,24 @@ fun OrbitClock(
             val textMResult = measurer.measure(
                 AnnotatedString(minute.toString()),
                 maxLines = 1,
-                style = textStyle
+                style = minuteStyle
             )
 
             val textHResult = measurer.measure(
                 AnnotatedString(hour.toString()),
                 maxLines = 1,
-                style = textStyle
+                style = hourStyle
             )
 
             drawText(
                 textMResult,
-                color = color.invert(),
+                color = color.invert(alpha = 0.65f),
                 topLeft = size.center - textMResult.size.center.toOffset() + mPos,
                 blendMode = BlendMode.Overlay
             )
             drawText(
                 textHResult,
-                color = color.invert(),
+                color = color.invert(alpha = 0.65f),
                 topLeft = size.center - textHResult.size.center.toOffset() + hPos,
                 blendMode = BlendMode.Overlay
             )
@@ -194,33 +208,31 @@ fun OrbitClock(
         if (verticalLayout) {
             drawCircle(
                 color = color,
-                radius = size.width * 0.02f,
+                radius = sSize,
                 center = size.center + sPos,
                 blendMode = BlendMode.Overlay
             )
         }
         drawCircle(
             color = color,
-            radius = size.width * 0.07f,
+            radius = mSize,
             center = size.center + mPos,
             blendMode = BlendMode.Overlay
         )
         drawCircle(
             color = color,
-            radius = size.width * 0.09f,
+            radius = hSize,
             center = size.center + hPos,
             blendMode = BlendMode.Overlay
         )
-
-
     }
 }
 
-private fun Color.invert(): Color {
-    val c = this.toArgb()
-    val a = c shr 24
-    val r = 255 - ((c shr 16) and 0xff)
-    val g = 255 - (c shr 8) and 0xff
-    val b = 255 - (c and 0xff)
-    return Color(r, g, b, a)
-}
+private fun Color.invert(alpha: Float? = null): Color =
+    Color(
+        1f - red,
+        1f - green,
+        1f - blue,
+        alpha ?: this.alpha, colorSpace
+    )
+
