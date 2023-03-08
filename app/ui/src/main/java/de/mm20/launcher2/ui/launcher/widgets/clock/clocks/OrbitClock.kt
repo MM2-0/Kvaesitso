@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.AnnotatedString
@@ -42,6 +43,7 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 private const val TWO_PI_F = (2.0 * PI).toFloat()
+private const val PHI_F = 1.618033988749895.toFloat()
 
 // https://stackoverflow.com/a/68651222
 private val Float.Companion.radiansConverter
@@ -106,8 +108,8 @@ fun OrbitClock(
             .size(if (verticalLayout) 192.dp else 56.dp)
     ) {
         val rs = size.width * 0.1f
-        val rm = size.width * 0.25f
-        val rh = size.width * 0.45f
+        val rm = size.width * 0.24f
+        val rh = rm + (rm - rs) * PHI_F
         if (verticalLayout) {
             drawCircle(
                 color = color.copy(alpha = 0.5f),
@@ -138,6 +140,7 @@ fun OrbitClock(
         val sPos = Offset(x = sin(animatedSecs) * rs, y = -cos(animatedSecs) * rs)
         val mPos = Offset(x = sin(animatedMins) * rm, y = -cos(animatedMins) * rm)
         val hPos = Offset(x = sin(animatedHrs) * rh, y = -cos(animatedHrs) * rh)
+
 
         if (verticalLayout) {
             drawCircle(
@@ -176,13 +179,15 @@ fun OrbitClock(
 
             drawText(
                 textMResult,
-                color = Color.Black,
-                topLeft = size.center - textMResult.size.center.toOffset() + mPos
+                color = color.invert(),
+                topLeft = size.center - textMResult.size.center.toOffset() + mPos,
+                blendMode = BlendMode.Overlay
             )
             drawText(
                 textHResult,
-                color = Color.Black,
-                topLeft = size.center - textHResult.size.center.toOffset() + hPos
+                color = color.invert(),
+                topLeft = size.center - textHResult.size.center.toOffset() + hPos,
+                blendMode = BlendMode.Overlay
             )
         }
 
@@ -191,21 +196,31 @@ fun OrbitClock(
                 color = color,
                 radius = size.width * 0.02f,
                 center = size.center + sPos,
-                blendMode = BlendMode.SrcOut
+                blendMode = BlendMode.Overlay
             )
         }
         drawCircle(
             color = color,
             radius = size.width * 0.07f,
             center = size.center + mPos,
-            blendMode = BlendMode.SrcOut
+            blendMode = BlendMode.Overlay
         )
         drawCircle(
             color = color,
             radius = size.width * 0.09f,
             center = size.center + hPos,
-            blendMode = BlendMode.SrcOut
+            blendMode = BlendMode.Overlay
         )
 
+
     }
+}
+
+private fun Color.invert(): Color {
+    val c = this.toArgb()
+    val a = c shr 24
+    val r = 255 - ((c shr 16) and 0xff)
+    val g = 255 - (c shr 8) and 0xff
+    val b = 255 - (c and 0xff)
+    return Color(r, g, b, a)
 }
