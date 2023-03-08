@@ -9,7 +9,7 @@ class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
         super.onNewIntent(intent)
         val navContract = intent?.let { GestureNavContract.fromIntent(it) }
         if (navContract != null) {
-            homeTransitionManager.resolve(navContract, window)
+            enterHomeTransitionManager.resolve(navContract, window)
         } else {
             onBackPressed()
         }
@@ -17,7 +17,7 @@ class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
 
     override fun onPause() {
         super.onPause()
-        homeTransitionManager.clear()
+        enterHomeTransitionManager.clear()
     }
 
     override fun onBackPressed() {

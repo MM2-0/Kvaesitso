@@ -5,11 +5,9 @@ import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.imePadding
@@ -32,15 +30,11 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
@@ -48,29 +42,23 @@ import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.component.NavBarEffects
-import de.mm20.launcher2.ui.gestures.Gesture
 import de.mm20.launcher2.ui.gestures.GestureDetector
-import de.mm20.launcher2.ui.gestures.GestureHandler
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.search.SearchVM
-import de.mm20.launcher2.ui.launcher.sheets.FailedGestureSheet
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.launcher.transitions.HomeTransition
-import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionManager
-import de.mm20.launcher2.ui.launcher.transitions.LocalHomeTransitionManager
+import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransition
+import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionManager
+import de.mm20.launcher2.ui.launcher.transitions.LocalEnterHomeTransitionManager
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
-import org.koin.android.ext.android.inject
-import kotlin.math.absoluteValue
 import kotlin.math.pow
 
 
@@ -81,7 +69,7 @@ abstract class SharedLauncherActivity(
     private val viewModel: LauncherScaffoldVM by viewModels()
     private val searchVM: SearchVM by viewModels()
 
-    internal val homeTransitionManager = HomeTransitionManager()
+    internal val enterHomeTransitionManager = EnterHomeTransitionManager()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +92,7 @@ abstract class SharedLauncherActivity(
             val wallpaperColors by wallpaperColorsAsState()
             val dimBackground by viewModel.dimBackground.observeAsState(false)
             CompositionLocalProvider(
-                LocalHomeTransitionManager provides homeTransitionManager,
+                LocalEnterHomeTransitionManager provides enterHomeTransitionManager,
                 LocalWindowSize provides windowSize,
                 LocalSnackbarHostState provides snackbarHostState,
                 LocalWallpaperColors provides wallpaperColors,
@@ -145,13 +133,13 @@ abstract class SharedLauncherActivity(
 
                             val enterTransitionProgress = remember { mutableStateOf(1f) }
                             var enterTransition by remember {
-                                mutableStateOf<HomeTransition?>(
+                                mutableStateOf<EnterHomeTransition?>(
                                     null
                                 )
                             }
 
                             LaunchedEffect(null) {
-                                homeTransitionManager
+                                enterHomeTransitionManager
                                     .currentTransition
                                     .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                                     .collect {

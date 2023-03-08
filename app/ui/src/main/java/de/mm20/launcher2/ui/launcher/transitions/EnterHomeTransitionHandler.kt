@@ -4,13 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import com.android.launcher3.GestureNavContract
 
-fun interface HomeTransitionHandler {
-    fun handle(gestureNavContract: GestureNavContract): HomeTransitionParams?
+fun interface EnterHomeTransitionHandler {
+    fun handle(gestureNavContract: GestureNavContract): EnterHomeTransitionParams?
 }
 
 @Composable
-fun HandleHomeTransition(handler: HomeTransitionHandler) {
-    val transitionManager = LocalHomeTransitionManager.current
+fun HandleEnterHomeTransition(handler: EnterHomeTransitionHandler) {
+    val transitionManager = LocalEnterHomeTransitionManager.current
     DisposableEffect(null) {
         transitionManager?.registerHandler(handler)
 

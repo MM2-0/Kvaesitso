@@ -72,8 +72,8 @@ import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
-import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
-import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
+import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
+import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import kotlin.math.min
@@ -250,13 +250,13 @@ fun MusicWidget() {
                                 contentDescription = null,
                                 contentScale = ContentScale.Crop
                             )
-                            HandleHomeTransition {
+                            HandleEnterHomeTransition {
                                 if (
                                     it.componentName.packageName == viewModel.currentPlayerPackage &&
                                     bounds.right > 0f && bounds.left < windowSize.width &&
                                     bounds.bottom > 0f && bounds.top < windowSize.height
                                 ) {
-                                    return@HandleHomeTransition HomeTransitionParams(
+                                    return@HandleEnterHomeTransition EnterHomeTransitionParams(
                                         bounds
                                     ) { _, _ ->
                                         val shape = MaterialTheme.shapes.small
@@ -270,7 +270,7 @@ fun MusicWidget() {
                                         )
                                     }
                                 }
-                                return@HandleHomeTransition null
+                                return@HandleEnterHomeTransition null
                             }
                         }
                     } else {

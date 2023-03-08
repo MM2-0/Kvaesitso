@@ -7,6 +7,10 @@ import android.content.IntentFilter
 import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.awaitCancellation
 
 @Composable
 fun ProvideCurrentTime(content: @Composable () -> Unit) {
@@ -15,18 +19,24 @@ fun ProvideCurrentTime(content: @Composable () -> Unit) {
 
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
 
-    DisposableEffect(null) {
-        val receiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                time = System.currentTimeMillis()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(null) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            time = System.currentTimeMillis()
+            val receiver = object : BroadcastReceiver() {
+                override fun onReceive(context: Context?, intent: Intent?) {
+                    time = System.currentTimeMillis()
+                }
             }
-        }
-        context.registerReceiver(receiver, IntentFilter().apply {
-            addAction(Intent.ACTION_TIME_TICK)
-            addAction(Intent.ACTION_TIME_CHANGED)
-        })
-        onDispose {
-            context.unregisterReceiver(receiver)
+            context.registerReceiver(receiver, IntentFilter().apply {
+                addAction(Intent.ACTION_TIME_TICK)
+                addAction(Intent.ACTION_TIME_CHANGED)
+            })
+            try {
+                awaitCancellation()
+            } finally {
+                context.unregisterReceiver(receiver)
+            }
         }
     }
 
