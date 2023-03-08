@@ -2,15 +2,20 @@ package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.text.format.DateFormat
 import androidx.compose.animation.core.AnimationVector2D
+import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
@@ -19,14 +24,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.preferences.Settings
+import kotlinx.coroutines.delay
 import java.util.Calendar
 import kotlin.math.PI
 import kotlin.math.atan2
@@ -47,8 +55,19 @@ private val Float.Companion.radiansConverter
 fun OrbitClock(
     layout: Settings.ClockWidgetSettings.ClockWidgetLayout
 ) {
-    val vm: OrbitClockVM = viewModel()
-    val millis by vm.time
+    val lifecycleOwner = LocalLifecycleOwner.current
+    val millisState = remember { mutableStateOf(System.currentTimeMillis()) }
+    val millis by millisState
+
+    LaunchedEffect(null) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            while (true) {
+                millisState.value = System.currentTimeMillis()
+                delay(1000)
+            }
+            // if (style != orbit) cancel?
+        }
+    }
 
     val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
     val date = Calendar.getInstance()
@@ -60,15 +79,18 @@ fun OrbitClock(
 
     val animatedSecs by animateValueAsState(
         second / 60f * TWO_PI_F,
-        Float.radiansConverter
+        Float.radiansConverter,
+        tween(easing = EaseInOutSine)
     )
     val animatedMins by animateValueAsState(
         (minute + second / 60f) / 60f * TWO_PI_F,
-        Float.radiansConverter
+        Float.radiansConverter,
+        tween(easing = EaseInOutSine)
     )
     val animatedHrs by animateValueAsState(
         (hour % 12 + minute / 60f) / 12f * TWO_PI_F,
-        Float.radiansConverter
+        Float.radiansConverter,
+        tween(easing = EaseInOutSine)
     )
 
     val color = LocalContentColor.current
