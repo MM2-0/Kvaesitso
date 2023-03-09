@@ -156,7 +156,7 @@ fun Clock(
         ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)
         ClockStyle.BinaryClock -> BinaryClock(time, layout)
         ClockStyle.AnalogClock -> AnalogClock(time, layout)
-        ClockStyle.OrbitClock -> OrbitClock(layout)
+        ClockStyle.OrbitClock -> OrbitClock(time, layout)
         else -> {}
     }
 }

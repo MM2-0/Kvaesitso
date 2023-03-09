@@ -1,10 +1,10 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.text.format.DateFormat
-import androidx.compose.animation.core.AnimationVector2D
-import androidx.compose.animation.core.EaseInOutSine
-import androidx.compose.animation.core.TwoWayConverter
-import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding
@@ -12,10 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
@@ -24,78 +21,76 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.preferences.Settings
-import kotlinx.coroutines.delay
+import de.mm20.launcher2.ui.ktx.TWO_PI_F
 import java.util.Calendar
-import kotlin.math.PI
-import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
 
-private const val TWO_PI_F = (2.0 * PI).toFloat()
 private const val PHI_F = 1.618033988749895.toFloat()
-
-// https://stackoverflow.com/a/68651222
-private val Float.Companion.radiansConverter
-    get() = TwoWayConverter<Float, AnimationVector2D>({ rad ->
-        AnimationVector2D(sin(rad), cos(rad))
-    }, {
-        (atan2(it.v1, it.v2) + TWO_PI_F) % TWO_PI_F
-    })
 
 @Composable
 fun OrbitClock(
+    time: Long,
     layout: Settings.ClockWidgetSettings.ClockWidgetLayout
 ) {
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val millisState = remember { mutableStateOf(System.currentTimeMillis()) }
-    val millis by millisState
-
-    LaunchedEffect(null) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            while (true) {
-                millisState.value = System.currentTimeMillis()
-                delay(1000)
-            }
-        }
-    }
-
     val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
     val date = Calendar.getInstance()
-    date.timeInMillis = millis
+    date.timeInMillis = time
     val second = date[Calendar.SECOND]
     val minute = date[Calendar.MINUTE]
     val hour =
         if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
 
-    val animatedSecs by animateValueAsState(
-        second / 60f * TWO_PI_F,
-        Float.radiansConverter,
-        tween(easing = EaseInOutSine)
+    val secsAngleStart = second / 60f * TWO_PI_F
+    val minsAngleStart = minute / 60f * TWO_PI_F + secsAngleStart / 60f
+    val hourAngleStart = hour % 12 / 12f * TWO_PI_F + minsAngleStart / 12f
+
+    val infiniteTransition = rememberInfiniteTransition(label = "timeInfiniteTransition")
+
+    val animatedSecs by infiniteTransition.animateFloat(
+        initialValue = secsAngleStart,
+        targetValue = secsAngleStart + TWO_PI_F,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 60 * 1000,
+                easing = LinearEasing
+            )
+        ),
+        label = "secondsAnimation"
     )
-    val animatedMins by animateValueAsState(
-        (minute + second / 60f) / 60f * TWO_PI_F,
-        Float.radiansConverter,
-        tween(easing = EaseInOutSine)
+    val animatedMins by infiniteTransition.animateFloat(
+        initialValue = minsAngleStart,
+        targetValue = minsAngleStart + TWO_PI_F,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 60 * 60 * 1000,
+                easing = LinearEasing
+            )
+        ),
+        label = "minutesAnimation"
     )
-    val animatedHrs by animateValueAsState(
-        (hour % 12 + minute / 60f) / 12f * TWO_PI_F,
-        Float.radiansConverter,
-        tween(easing = EaseInOutSine)
+    val animatedHrs by infiniteTransition.animateFloat(
+        initialValue = hourAngleStart,
+        targetValue = hourAngleStart + TWO_PI_F,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = 12 * 60 * 60 * 1000,
+                easing = LinearEasing
+            )
+        ),
+        label = "hoursAnimation"
     )
 
     val color = LocalContentColor.current
 
-    val measurer = rememberTextMeasurer()
+    val textMeasurer = rememberTextMeasurer()
     val minuteStyle = MaterialTheme.typography.labelMedium
     val hourStyle = MaterialTheme.typography.labelLarge
 
@@ -111,7 +106,7 @@ fun OrbitClock(
         val rm = size.width * 0.22f
         val rh = rm + (rm - rs) * PHI_F
 
-        val sSize = size.width * 0.015f
+        val sSize = size.width * 0.0175f
         val mSize = size.width * 0.08f
         val hSize = rh + sSize + rs - 2f * rm
 
@@ -179,13 +174,13 @@ fun OrbitClock(
 
         if (verticalLayout) {
 
-            val textMResult = measurer.measure(
+            val textMResult = textMeasurer.measure(
                 AnnotatedString(minute.toString()),
                 maxLines = 1,
                 style = minuteStyle
             )
 
-            val textHResult = measurer.measure(
+            val textHResult = textMeasurer.measure(
                 AnnotatedString(hour.toString()),
                 maxLines = 1,
                 style = hourStyle
