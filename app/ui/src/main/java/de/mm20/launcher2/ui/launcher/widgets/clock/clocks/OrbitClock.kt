@@ -43,12 +43,13 @@ fun OrbitClock(
     val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
     val date = Calendar.getInstance()
     date.timeInMillis = time
+    val millis = date[Calendar.MILLISECOND]
     val second = date[Calendar.SECOND]
     val minute = date[Calendar.MINUTE]
     val hour =
         if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
 
-    val secsAngleStart = second / 60f * TWO_PI_F
+    val secsAngleStart = (second / 60f + millis / 1000f) * TWO_PI_F
     val minsAngleStart = minute / 60f * TWO_PI_F + secsAngleStart / 60f
     val hourAngleStart = hour % 12 / 12f * TWO_PI_F + minsAngleStart / 12f
 
