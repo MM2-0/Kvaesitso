@@ -107,12 +107,12 @@ fun OrbitClock(
             .size(if (verticalLayout) 192.dp else 56.dp)
     ) {
 
-        val rs = size.width * 0.1f
-        val rm = size.width * 0.24f
+        val rs = size.width * 0.08f
+        val rm = size.width * 0.22f
         val rh = rm + (rm - rs) * PHI_F
 
-        val sSize = size.width * 0.02f
-        val mSize = size.width * 0.07f
+        val sSize = size.width * 0.015f
+        val mSize = size.width * 0.08f
         val hSize = rh + sSize + rs - 2f * rm
 
         if (verticalLayout) {
