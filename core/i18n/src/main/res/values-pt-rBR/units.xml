@@ -2,32 +2,38 @@
 <resources>
     <plurals name="unit_meter">
         <item quantity="one">metro</item>
-        <item quantity="other">metros</item>
+        <item quantity="many">metros</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_kilometer_symbol">km</string>
     <plurals name="unit_kilometer">
         <item quantity="one">quilômetro</item>
-        <item quantity="other">quilômetros</item>
+        <item quantity="many">quilômetros</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centímetro</item>
-        <item quantity="other">centímetros</item>
+        <item quantity="many">centímetros</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_millimeter_symbol">mm</string>
     <plurals name="unit_inch">
         <item quantity="one">polegada</item>
-        <item quantity="other">polegadas</item>
+        <item quantity="many">polegadas</item>
+        <item quantity="other"></item>
     </plurals>
     <plurals name="unit_foot">
         <item quantity="one">pé</item>
-        <item quantity="other">pés</item>
+        <item quantity="many">pés</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_foot_symbol">ft</string>
     <string name="unit_inch_symbol">in</string>
     <plurals name="unit_yard">
         <item quantity="one">jarda</item>
-        <item quantity="other">jardas</item>
+        <item quantity="many">jardas</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_mile_symbol">mi</string>
     <plurals name="unit_mile">
@@ -245,7 +251,8 @@
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_millimeter">
         <item quantity="one">milímetro</item>
-        <item quantity="other">milímetros</item>
+        <item quantity="many">milímetros</item>
+        <item quantity="other"></item>
     </plurals>
     <string name="unit_yard_symbol">yd</string>
     <plurals name="unit_nautic_mile">

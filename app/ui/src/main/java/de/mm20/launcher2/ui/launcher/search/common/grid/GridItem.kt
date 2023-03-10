@@ -4,7 +4,6 @@ import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -33,7 +31,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
@@ -59,8 +56,8 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
-import de.mm20.launcher2.ui.launcher.transitions.HandleHomeTransition
-import de.mm20.launcher2.ui.launcher.transitions.HomeTransitionParams
+import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
+import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
 import de.mm20.launcher2.ui.locals.LocalWindowSize
@@ -91,14 +88,14 @@ fun GridItem(
         val windowSize = LocalWindowSize.current
 
         if (item is LauncherApp) {
-            HandleHomeTransition {
+            HandleEnterHomeTransition {
                 val cn = ComponentName(item.`package`, item.activity)
                 if (
                     it.componentName == cn &&
                     bounds.right > 0f && bounds.left < windowSize.width &&
                     bounds.bottom > 0f && bounds.top < windowSize.height
                 ) {
-                    return@HandleHomeTransition HomeTransitionParams(
+                    return@HandleEnterHomeTransition EnterHomeTransitionParams(
                         bounds
                     ) { _, _ ->
                         ShapedLauncherIcon(
@@ -106,7 +103,7 @@ fun GridItem(
                             icon = { icon })
                     }
                 }
-                return@HandleHomeTransition null
+                return@HandleEnterHomeTransition null
             }
         }
 

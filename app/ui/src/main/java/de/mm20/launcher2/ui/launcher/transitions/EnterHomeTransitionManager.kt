@@ -9,11 +9,11 @@ import androidx.compose.ui.graphics.toAndroidRectF
 import com.android.launcher3.GestureNavContract
 import kotlinx.coroutines.flow.MutableSharedFlow
 
-class HomeTransitionManager {
+class EnterHomeTransitionManager {
 
-    val currentTransition = MutableSharedFlow<HomeTransition?>(1)
+    val currentTransition = MutableSharedFlow<EnterHomeTransition?>(1)
 
-    private val handlers = mutableSetOf<HomeTransitionHandler>()
+    private val handlers = mutableSetOf<EnterHomeTransitionHandler>()
 
     fun resolve(gestureNavContract: GestureNavContract, window: Window) {
         for (handler in handlers) {
@@ -22,7 +22,7 @@ class HomeTransitionManager {
                 val startRect = Rect(Offset(0f, 0f), Size(window.decorView.width.toFloat(), window.decorView.height.toFloat()))
                 val targetBounds = result.targetBounds
                 gestureNavContract.sendEndPosition(targetBounds.toAndroidRectF())
-                currentTransition.tryEmit(HomeTransition(
+                currentTransition.tryEmit(EnterHomeTransition(
                     startBounds = startRect,
                     icon = result.icon,
                     targetBounds = targetBounds,
@@ -37,13 +37,13 @@ class HomeTransitionManager {
         currentTransition.tryEmit(null)
     }
 
-    fun registerHandler(handler: HomeTransitionHandler) {
+    fun registerHandler(handler: EnterHomeTransitionHandler) {
         handlers.add(handler)
     }
 
-    fun unregisterHandler(handler: HomeTransitionHandler) {
+    fun unregisterHandler(handler: EnterHomeTransitionHandler) {
         handlers.remove(handler)
     }
 }
 
-val LocalHomeTransitionManager = compositionLocalOf<HomeTransitionManager?> { null }
+val LocalEnterHomeTransitionManager = compositionLocalOf<EnterHomeTransitionManager?> { null }
