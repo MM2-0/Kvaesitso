@@ -507,10 +507,8 @@
     <string name="create_app_shortcut">Создать ярлык</string>
     <string name="favorites">Избранные</string>
     <string name="favorites_empty">Закрепленные и часто используемые приложения и действия будут находиться здесь</string>
-    <string name="preference_search_bar_ordering">Порядок результатов поиска</string>
     <string name="preference_search_bar_ordering_alphabetic">По алфавиту</string>
     <string name="preference_clock_widget_fill_height_summary">Добавить дополнительное пространство над часами, чтобы заполнить всю высоту экрана</string>
-    <string name="preference_search_bar_ordering_relevance">По релевантности</string>
     <string name="preference_compact_mode">Компактный вид</string>
     <string name="preference_compact_mode_summary">Скрыть почасовой и ежедневный прогноз погоды</string>
     <string name="preference_clock_widget_fill_height">Заполнить весь экран</string>

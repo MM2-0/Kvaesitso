@@ -582,7 +582,5 @@
     <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
     <string name="gesture_action_launch_app">Avvia app</string>
     <string name="icon_picker_filter_all_packs">Tutti gli icon pack</string>
-    <string name="preference_search_bar_ordering">Ordine risultati ricerca</string>
     <string name="preference_search_bar_ordering_relevance">Rilevanza</string>
-    <string name="preference_search_bar_ordering_alphabetic">Alfabetico</string>
 </resources>

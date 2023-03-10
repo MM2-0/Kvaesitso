@@ -552,9 +552,7 @@
     <string name="preference_gesture_swipe_down">下滑</string>
     <string name="preference_gesture_swipe_left">左滑</string>
     <string name="login_flow_login">登入</string>
-    <string name="preference_search_bar_ordering">搜尋結果排序</string>
     <string name="preference_search_bar_ordering_alphabetic">字母</string>
-    <string name="preference_search_bar_ordering_relevance">關連</string>
     <string name="icon_picker_no_packs_installed">未安裝任何圖示包</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="other">從過去%1$d天運行的事件</item>
