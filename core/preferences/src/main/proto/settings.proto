@@ -343,4 +343,13 @@ message Settings {
     WeightFactor weight_factor = 2;
   }
   SearchResultOrderingSettings result_ordering = 29;
+
+  /**
+    * Persistent UI state that does not have a corresponding setting.
+   */
+  message UiState {
+    bool search_tags_multiline = 1;
+    bool widget_tags_multiline = 2;
+  }
+  UiState ui = 30;
 }

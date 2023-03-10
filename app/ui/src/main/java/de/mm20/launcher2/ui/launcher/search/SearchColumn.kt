@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +18,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
@@ -24,12 +26,14 @@ import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -44,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.FavoritesTagSelector
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -108,6 +113,7 @@ fun SearchColumn(
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
     val tagsScrollState = rememberScrollState()
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
+    val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
     LazyColumn(
         state = state,
@@ -136,63 +142,16 @@ fun SearchColumn(
                     null
                 } else {
                     {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    top = if (reverse) 8.dp else 4.dp,
-                                    bottom = if (reverse) 4.dp else 8.dp,
-                                    end = if (favoritesEditButton) 8.dp else 0.dp
-                                ),
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            Row(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .horizontalScroll(tagsScrollState)
-                                    .padding(end = 12.dp),
-                            ) {
-                                FilterChip(
-                                    modifier = Modifier.padding(start = 16.dp),
-                                    selected = selectedTag == null,
-                                    onClick = { favoritesVM.selectTag(null) },
-                                    leadingIcon = {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Star,
-                                            contentDescription = null
-                                        )
-                                    },
-                                    label = { Text(stringResource(R.string.favorites)) }
-                                )
-                                for (tag in pinnedTags) {
-                                    FilterChip(
-                                        modifier = Modifier.padding(start = 8.dp),
-                                        selected = selectedTag == tag.tag,
-                                        onClick = { favoritesVM.selectTag(tag.tag) },
-                                        leadingIcon = {
-                                            Icon(
-                                                imageVector = Icons.Rounded.Tag,
-                                                contentDescription = null
-                                            )
-                                        },
-                                        label = { Text(tag.label) }
-                                    )
-                                }
-                            }
-                            if (favoritesEditButton) {
-                                val sheetManager = LocalBottomSheetManager.current
-                                SmallFloatingActionButton(
-                                    elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                                    onClick = { sheetManager.showEditFavoritesSheet() }
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Edit,
-                                        contentDescription = null
-                                    )
-                                }
-                            }
-                        }
+                        FavoritesTagSelector(
+                            tags = pinnedTags,
+                            selectedTag = selectedTag,
+                            editButton = favoritesEditButton,
+                            reverse = reverse,
+                            onSelectTag = { favoritesVM.selectTag(it) },
+                            scrollState = tagsScrollState,
+                            expanded = favoritesTagsExpanded,
+                            onExpand = { favoritesVM.setTagsExpanded(it) }
+                        )
                     }
                 },
                 highlightedItem = bestMatch as? SavableSearchable
