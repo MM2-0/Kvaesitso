@@ -575,7 +575,6 @@
     <string name="preference_compact_mode_summary">Voorspellingen per uur en per dag verbergen</string>
     <string name="icon_pack_dynamic_colors">Dynamische kleuren</string>
     <string name="gesture_action_launch_app">Applicatie starten</string>
-    <string name="preference_search_bar_ordering_alphabetic">Alfabetisch</string>
     <string name="icon_picker_no_packs_installed">Geen pictogrammenpakketten geïnstalleerd</string>
     <string name="icon_picker_filter_all_packs">Alle pictogrammenpakketten</string>
 </resources>

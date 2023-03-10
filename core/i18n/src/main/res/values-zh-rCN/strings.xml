@@ -567,7 +567,6 @@
     <string name="preference_compact_mode">紧凑模式</string>
     <string name="preference_compact_mode_summary">隐藏每小时和每日预测</string>
     <string name="icon_pack_dynamic_colors">动态颜色</string>
-    <string name="preference_search_bar_ordering_alphabetic">字母排序式的</string>
     <string name="icon_picker_no_packs_installed">没有已安装的图标包</string>
     <string name="preference_search_bar_launch_on_enter">按下回车键以启动</string>
     <string name="preference_search_bar_launch_on_enter_summary">点击go时启动高亮的匹配或快捷操作</string>
