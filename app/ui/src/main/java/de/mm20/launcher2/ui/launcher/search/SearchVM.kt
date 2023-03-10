@@ -10,7 +10,8 @@ import de.mm20.launcher2.favorites.SavedSearchableRankInfo
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchResultOrdering
+import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
@@ -136,14 +137,23 @@ class SearchVM : ViewModel(), KoinComponent {
                             .sortedBy { (it as? SavableSearchable) }
                     }
 
-
                     val relevance =
-                        if (query.isNotEmpty() && settings.searchBar.searchResultOrdering == SearchResultOrdering.Relevance) {
-                            favoritesRepository.sortByRelevance(
-                                resultsList.mapNotNull { (it as? SavableSearchable)?.key }
-                            ).first()
-                        } else {
+                        if (query.isEmpty()) {
                             emptyList()
+                        } else {
+                            val keys = resultsList.mapNotNull { (it as? SavableSearchable)?.key }
+                            when (settings.resultOrdering.ordering) {
+
+                                Ordering.LaunchCount -> favoritesRepository.sortByRelevance(
+                                    keys
+                                ).first()
+
+                                Ordering.Weighted -> favoritesRepository.sortByWeight(
+                                    keys
+                                ).first()
+
+                                else -> emptyList()
+                            }
                         }
 
                     resultsList = resultsList.sortedWith { a, b ->

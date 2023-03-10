@@ -6,6 +6,8 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import kotlinx.coroutines.*
@@ -58,6 +60,8 @@ interface FavoritesRepository {
      */
     fun sortByRelevance(keys: List<String>): Flow<List<String>>
 
+    fun sortByWeight(keys: List<String>): Flow<List<String>>
+
     /**
      * Remove this item from the Searchable database
      */
@@ -94,6 +98,7 @@ interface FavoritesRepository {
 internal class FavoritesRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
+    private val dataStore: LauncherDataStore
 ) : FavoritesRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -160,7 +165,8 @@ internal class FavoritesRepositoryImpl(
                     searchable = searchable,
                     launchCount = databaseItem?.launchCount ?: 0,
                     pinPosition = 1,
-                    hidden = false
+                    hidden = false,
+                    weight = databaseItem?.weight ?: 0.0
                 )
                 savedSearchable.toDatabaseEntity()?.let { dao.insertReplaceExisting(it) }
             }
@@ -189,7 +195,8 @@ internal class FavoritesRepositoryImpl(
                     searchable = searchable,
                     launchCount = databaseItem?.launchCount ?: 0,
                     pinPosition = 0,
-                    hidden = true
+                    hidden = true,
+                    weight = databaseItem?.weight ?: 0.0
                 )
                 savedSearchable.toDatabaseEntity()?.let { dao.insertReplaceExisting(it) }
             }
@@ -207,10 +214,16 @@ internal class FavoritesRepositoryImpl(
     override fun incrementLaunchCounter(searchable: SavableSearchable) {
         scope.launch {
             withContext(Dispatchers.IO) {
-                val item = SavedSearchable(searchable.key, searchable, 0, 0, false)
+                val weightFactor =
+                    when (dataStore.data.map { it.resultOrdering.weightFactor }.firstOrNull()) {
+                        WeightFactor.Low -> 0.1
+                        WeightFactor.High -> 0.5
+                        else -> 0.2
+                    }
+                val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
                 item.toDatabaseEntity()?.let {
                     database.searchDao()
-                        .incrementLaunchCount(it)
+                        .incrementLaunchCount(it, weightFactor)
                 }
             }
         }
@@ -249,6 +262,7 @@ internal class FavoritesRepositoryImpl(
                     launchCount = 0,
                     pinPosition = 0,
                     hidden = false,
+                    weight = 0.0
                 ).toDatabaseEntity() ?: return@withContext
                 database.searchDao().insertSkipExisting(entity)
             }
@@ -271,6 +285,7 @@ internal class FavoritesRepositoryImpl(
                         launchCount = 0,
                         pinPosition = 0,
                         hidden = false,
+                        weight = 0.0
                     ).toDatabaseEntity() ?: return@mapIndexedNotNull null
                     entity.pinPosition = manuallySorted.size - index + 1
                     entity
@@ -283,6 +298,7 @@ internal class FavoritesRepositoryImpl(
                             launchCount = 0,
                             pinPosition = 0,
                             hidden = false,
+                            weight = 0.0
                         ).toDatabaseEntity() ?: return@mapIndexedNotNull null
                         entity.pinPosition = 1
                         entity
@@ -300,6 +316,10 @@ internal class FavoritesRepositoryImpl(
         return database.searchDao().sortByRelevance(keys)
     }
 
+    override fun sortByWeight(keys: List<String>): Flow<List<String>> {
+        return database.searchDao().sortByWeight(keys)
+    }
+
     private fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {
         val deserializer: SearchableDeserializer =
             getDeserializer(context, entity.type)
@@ -310,7 +330,8 @@ internal class FavoritesRepositoryImpl(
             searchable = searchable,
             launchCount = entity.launchCount,
             pinPosition = entity.pinPosition,
-            hidden = entity.hidden
+            hidden = entity.hidden,
+            weight = entity.weight
         )
     }
 
@@ -340,7 +361,8 @@ internal class FavoritesRepositoryImpl(
                         "hidden" to fav.hidden,
                         "launchCount" to fav.launchCount,
                         "pinPosition" to fav.pinPosition,
-                        "searchable" to fav.serializedSearchable
+                        "searchable" to fav.serializedSearchable,
+                        "weight" to fav.weight,
                     )
                 )
             }
@@ -373,7 +395,8 @@ internal class FavoritesRepositoryImpl(
                         serializedSearchable = json.getString("searchable"),
                         launchCount = json.getInt("launchCount"),
                         hidden = json.getBoolean("hidden"),
-                        pinPosition = json.getInt("pinPosition")
+                        pinPosition = json.getInt("pinPosition"),
+                        weight = json.optDouble("weight").takeIf { !it.isNaN() } ?: 0.0
                     )
                     favorites.add(entity)
                 }

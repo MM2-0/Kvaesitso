@@ -207,16 +207,17 @@ fun SearchSettingsScreen() {
                 )
                 val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
                 ListPreference(
-                    title = stringResource(R.string.preference_search_bar_ordering),
-                    value = searchResultOrdering,
-                    icon = Icons.Rounded.Sort,
+                    title = stringResource(R.string.preference_search_result_ordering),
                     items = listOf(
-                        stringResource(R.string.preference_search_bar_ordering_alphabetic) to Settings.SearchBarSettings.SearchResultOrdering.Alphabetic,
-                        stringResource(R.string.preference_search_bar_ordering_relevance) to Settings.SearchBarSettings.SearchResultOrdering.Relevance
+                        stringResource(R.string.preference_search_result_ordering_alphabetic) to Settings.SearchResultOrderingSettings.Ordering.Alphabetic,
+                        stringResource(R.string.preference_search_result_ordering_launch_count) to Settings.SearchResultOrderingSettings.Ordering.LaunchCount,
+                        stringResource(R.string.preference_search_result_ordering_weighted) to Settings.SearchResultOrderingSettings.Ordering.Weighted
                     ),
+                    value = searchResultOrdering,
                     onValueChanged = {
                         if (it != null) viewModel.setSearchResultOrdering(it)
-                    }
+                    },
+                    icon = Icons.Rounded.Sort
                 )
             }
         }

@@ -183,6 +183,11 @@ fun createFactorySettings(context: Context): Settings {
                 .setSwipeLeft(Settings.GestureSettings.GestureAction.None)
                 .setSwipeRight(Settings.GestureSettings.GestureAction.None)
         )
+        .setResultOrdering(
+            Settings.SearchResultOrderingSettings.newBuilder()
+                .setOrdering(Settings.SearchResultOrderingSettings.Ordering.Weighted)
+                .setWeightFactor(Settings.SearchResultOrderingSettings.WeightFactor.Default)
+        )
         .build()
 }
 

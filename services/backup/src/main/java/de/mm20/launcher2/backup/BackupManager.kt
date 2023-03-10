@@ -182,8 +182,13 @@ class BackupManager(
     }
 
     companion object {
+        /**
+         * Format changelog:
+         * - 1.5: added `weight` to favorites
+         */
+
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 4
+        private const val BackupFormatMinor = 5
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }
