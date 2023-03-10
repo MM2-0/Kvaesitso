@@ -134,7 +134,8 @@ fun createFactorySettings(context: Context): Settings {
         .setSearchBar(
             Settings.SearchBarSettings.newBuilder()
                 .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
-                .setAutoFocus(false)
+                .setAutoFocus(true)
+                .setLaunchOnEnter(true)
                 .setColor(SearchBarColors.Auto)
                 .build()
         )
