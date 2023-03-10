@@ -578,8 +578,8 @@
     <string name="preference_search_result_ordering_alphabetic">Alphabetisch</string>
     <string name="preference_search_result_ordering_launch_count">Aufrufhäufigkeit</string>
     <string name="preference_search_result_ordering_weighted">Dynamisch</string>
-    <string name="preference_search_result_ordering_weight_factor">Variabilität</string>
-    <string name="preference_search_result_ordering_weight_factor_low">Niedrig</string>
-    <string name="preference_search_result_ordering_weight_factor_default">Standard</string>
-    <string name="preference_search_result_ordering_weight_factor_high">Hoch</string>
+    <string name="preference_search_result_ordering_weight_factor">Ranking-Flexibilität</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Ausgewogen</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
 </resources>
