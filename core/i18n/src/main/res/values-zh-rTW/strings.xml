@@ -552,4 +552,27 @@
     <string name="preference_gesture_swipe_down">下滑</string>
     <string name="preference_gesture_swipe_left">左滑</string>
     <string name="login_flow_login">登入</string>
+    <string name="preference_search_bar_ordering">搜尋結果排序</string>
+    <string name="preference_search_bar_ordering_alphabetic">字母</string>
+    <string name="preference_search_bar_ordering_relevance">關連</string>
+    <string name="icon_picker_no_packs_installed">未安裝任何圖示包</string>
+    <plurals name="calendar_widget_running_events">
+        <item quantity="other">從過去%1$d天運行的事件</item>
+    </plurals>
+    <plurals name="debug_cleanup_database_result">
+        <item quantity="other">已刪除%1$d條目。</item>
+    </plurals>
+    <plurals name="preference_calendar_calendars_summary">
+        <item quantity="other">已選擇 %1$d 個日曆</item>
+    </plurals>
+    <string name="preference_search_bar_launch_on_enter">輸入時啟動</string>
+    <string name="preference_search_bar_launch_on_enter_summary">在點擊「前往」後啟動突顯顯示的匹配項或快速操作</string>
+    <plurals name="battery_part_remaining_charge_time">
+        <item quantity="other">%1$s 分鐘內完成</item>
+    </plurals>
+    <plurals name="tag_selected_items">
+        <item quantity="other">已選擇 %1$d 項目</item>
+    </plurals>
+    <string name="gesture_action_launch_app">啟動應用程式</string>
+    <string name="icon_picker_filter_all_packs">所有圖示包</string>
 </resources>
