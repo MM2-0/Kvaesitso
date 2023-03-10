@@ -35,7 +35,7 @@ interface SearchDao {
 
     @Query(
         "SELECT * FROM Searchable " +
-                "WHERE SUBSTR(`key`, 0, INSTR(`key`, '://')) IN (:includeTypes) AND (" +
+                "WHERE `type` IN (:includeTypes) AND (" +
                 "(:manuallySorted AND pinned > 1) OR " +
                 "(:automaticallySorted AND pinned = 1) OR" +
                 "(:frequentlyUsed AND pinned = 0 AND launchCount > 0)" +
