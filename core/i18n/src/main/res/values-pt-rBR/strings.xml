@@ -467,7 +467,6 @@
         <item quantity="other"/>
     </plurals>
     <string name="preference_logs">Logs</string>
-    <string name="preference_search_bar_ordering_relevance">Relevância</string>
     <string name="search_action_event">Agendar evento</string>
     <string name="create_search_action_title">Nova ação rápida</string>
     <string name="create_search_action_website_invalid_url">O site fornecido não pode ser importado automaticamente como uma pesquisa na web. Você pode tentar um site diferente ou inserir os dados necessários manualmente na próxima etapa.</string>
