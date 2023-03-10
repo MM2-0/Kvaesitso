@@ -114,7 +114,7 @@ class AppFilterIconPackInstaller(
                             val icon = CalendarIcon(
                                 packageName = componentName.packageName,
                                 activityName = componentName.shortClassName,
-                                drawables = (0..31).map { "$drawable$it" },
+                                drawables = (1..31).map { "$drawable$it" },
                                 iconPack = pkgName,
                                 themed = iconPack.themed,
                                 name = name,
