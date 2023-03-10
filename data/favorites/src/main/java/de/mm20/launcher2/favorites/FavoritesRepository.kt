@@ -361,7 +361,8 @@ internal class FavoritesRepositoryImpl(
                         "hidden" to fav.hidden,
                         "launchCount" to fav.launchCount,
                         "pinPosition" to fav.pinPosition,
-                        "searchable" to fav.serializedSearchable
+                        "searchable" to fav.serializedSearchable,
+                        "weight" to fav.weight,
                     )
                 )
             }
