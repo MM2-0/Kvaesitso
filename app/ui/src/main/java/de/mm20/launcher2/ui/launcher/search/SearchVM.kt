@@ -10,7 +10,6 @@ import de.mm20.launcher2.favorites.SavedSearchableRankInfo
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
@@ -86,6 +85,7 @@ class SearchVM : ViewModel(), KoinComponent {
         val bestMatch = bestMatch.value
         if (bestMatch is SavableSearchable) {
             bestMatch.launch(context, null)
+            favoritesRepository.incrementLaunchCounter(bestMatch)
             return
         } else if (bestMatch is SearchAction) {
             bestMatch.start(context)
