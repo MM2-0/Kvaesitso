@@ -320,20 +320,4 @@ class SearchVM : ViewModel(), KoinComponent {
             }
         }
     }
-
-    private fun <T : SavableSearchable> MutableList<T>.reorderByRanks(ranks: List<SavedSearchableRankInfo>) {
-        if (this.size < 2) // one element does not need reordering
-            return
-
-        var i = 0
-
-        for (item in ranks) {
-            val idx = this.indexOfFirst { it.key == item.key }
-            if (idx == -1) continue
-
-            this.add(i++, this.removeAt(idx))
-
-            if (i >= this.size) break
-        }
-    }
 }
