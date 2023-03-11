@@ -12,7 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
@@ -27,37 +30,53 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
+import de.mm20.launcher2.ktx.TWO_PI
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.ui.ktx.TWO_PI_F
-import java.util.Calendar
+import java.time.Instant
+import java.time.ZoneId
+import java.time.ZonedDateTime
 import kotlin.math.cos
 import kotlin.math.sin
 
 private const val PHI_F = 1.618033988749895.toFloat()
 
+private val currentTime
+    get() = Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
+
 @Composable
 fun OrbitClock(
-    time: Long,
+    _time: Long,
     layout: Settings.ClockWidgetSettings.ClockWidgetLayout
 ) {
     val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
-    val date = Calendar.getInstance()
-    date.timeInMillis = time
-    val millis = date[Calendar.MILLISECOND]
-    val second = date[Calendar.SECOND]
-    val minute = date[Calendar.MINUTE]
-    val hour =
-        if (DateFormat.is24HourFormat(LocalContext.current)) date[Calendar.HOUR_OF_DAY] else date[Calendar.HOUR]
 
-    val secsAngleStart = (second / 60f + millis / 1000f) * TWO_PI_F
-    val minsAngleStart = minute / 60f * TWO_PI_F + secsAngleStart / 60f
-    val hourAngleStart = hour % 12 / 12f * TWO_PI_F + minsAngleStart / 12f
+    val timeState = remember { mutableStateOf<ZonedDateTime>(currentTime) }
+
+    LaunchedEffect(_time) {
+        timeState.value = currentTime
+    }
+
+    val time by timeState
+
+    val second = time.second
+    val minute = time.minute
+    val hour = time.hour
+    val formattedHour = (
+            if (DateFormat.is24HourFormat(LocalContext.current))
+                hour
+            else
+                hour % 12
+            ).toString()
+
+    val secsAngleStart = second / 60f * Float.TWO_PI
+    val minsAngleStart = minute / 60f * Float.TWO_PI + secsAngleStart / 60f
+    val hourAngleStart = hour % 12 / 12f * Float.TWO_PI + minsAngleStart / 12f
 
     val infiniteTransition = rememberInfiniteTransition(label = "timeInfiniteTransition")
 
     val animatedSecs by infiniteTransition.animateFloat(
         initialValue = secsAngleStart,
-        targetValue = secsAngleStart + TWO_PI_F,
+        targetValue = secsAngleStart + Float.TWO_PI,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 60 * 1000,
@@ -68,7 +87,7 @@ fun OrbitClock(
     )
     val animatedMins by infiniteTransition.animateFloat(
         initialValue = minsAngleStart,
-        targetValue = minsAngleStart + TWO_PI_F,
+        targetValue = minsAngleStart + Float.TWO_PI,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 60 * 60 * 1000,
@@ -79,7 +98,7 @@ fun OrbitClock(
     )
     val animatedHrs by infiniteTransition.animateFloat(
         initialValue = hourAngleStart,
-        targetValue = hourAngleStart + TWO_PI_F,
+        targetValue = hourAngleStart + Float.TWO_PI,
         animationSpec = infiniteRepeatable(
             animation = tween(
                 durationMillis = 12 * 60 * 60 * 1000,
@@ -182,7 +201,7 @@ fun OrbitClock(
             )
 
             val textHResult = textMeasurer.measure(
-                AnnotatedString(hour.toString()),
+                AnnotatedString(formattedHour),
                 maxLines = 1,
                 style = hourStyle
             )
