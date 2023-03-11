@@ -582,4 +582,11 @@
     <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
     <string name="gesture_action_launch_app">Avvia app</string>
     <string name="icon_picker_filter_all_packs">Tutti gli icon pack</string>
+    <string name="preference_search_result_ordering_alphabetic">Alfabetico</string>
+    <string name="preference_search_result_ordering_weight_factor">Flessibilità classificazione</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Bilanciato</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variabile</string>
+    <string name="preference_search_result_ordering">Ordinamento risultati ricerca</string>
+    <string name="preference_search_result_ordering_launch_count">Conteggio avvii</string>
 </resources>
