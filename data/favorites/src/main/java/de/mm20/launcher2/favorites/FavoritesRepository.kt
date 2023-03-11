@@ -216,9 +216,9 @@ internal class FavoritesRepositoryImpl(
             withContext(Dispatchers.IO) {
                 val weightFactor =
                     when (dataStore.data.map { it.resultOrdering.weightFactor }.firstOrNull()) {
-                        WeightFactor.Low -> 0.1
-                        WeightFactor.High -> 0.5
-                        else -> 0.2
+                        WeightFactor.Low -> WEIGHT_FACTOR_LOW
+                        WeightFactor.High -> WEIGHT_FACTOR_HIGH
+                        else -> WEIGHT_FACTOR_MEDIUM
                     }
                 val item = SavedSearchable(searchable.key, searchable, 0, 0, false, 0.0)
                 item.toDatabaseEntity()?.let {
@@ -432,5 +432,11 @@ internal class FavoritesRepositoryImpl(
         }
         job.join()
         return removed
+    }
+
+    companion object {
+        private const val WEIGHT_FACTOR_LOW = 0.01
+        private const val WEIGHT_FACTOR_MEDIUM = 0.05
+        private const val WEIGHT_FACTOR_HIGH = 0.1
     }
 }
