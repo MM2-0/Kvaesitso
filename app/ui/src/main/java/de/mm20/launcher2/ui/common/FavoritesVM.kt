@@ -16,7 +16,7 @@ import org.koin.core.component.inject
 abstract class FavoritesVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
-    private val widgetRepository: WidgetRepository by inject()
+    internal val widgetRepository: WidgetRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
     internal val dataStore: LauncherDataStore by inject()
 
@@ -33,7 +33,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
         it.filterIsInstance<Tag>()
     }
 
-    val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
+    open val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
             val columns = dataStore.data.map { it.grid.columnCount }
             val excludeCalendar = widgetRepository.isCalendarWidgetEnabled()

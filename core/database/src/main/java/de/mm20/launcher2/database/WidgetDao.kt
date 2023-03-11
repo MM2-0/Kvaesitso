@@ -36,4 +36,7 @@ interface WidgetDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM Widget WHERE type = :type AND data = :data)")
     fun exists(type: String, data: String) : Flow<Boolean>
+
+    @Query("SELECT * FROM Widget ORDER BY position ASC LIMIT 1")
+    fun getFirst() : Flow<WidgetEntity?>
 }
