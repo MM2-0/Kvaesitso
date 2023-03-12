@@ -436,7 +436,7 @@ internal class FavoritesRepositoryImpl(
 
     companion object {
         private const val WEIGHT_FACTOR_LOW = 0.01
-        private const val WEIGHT_FACTOR_MEDIUM = 0.05
+        private const val WEIGHT_FACTOR_MEDIUM = 0.03
         private const val WEIGHT_FACTOR_HIGH = 0.1
     }
 }
