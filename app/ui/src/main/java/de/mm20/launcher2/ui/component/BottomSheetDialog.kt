@@ -2,7 +2,10 @@ package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -31,23 +34,29 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
@@ -61,12 +70,15 @@ fun BottomSheetDialog(
     dismissOnBackPress: () -> Boolean = { true },
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
+    val scope = rememberCoroutineScope()
     val swipeState = remember {
         SwipeableState(
             initialValue = SwipeState.Dismiss,
             confirmStateChange = {
                 if (it == SwipeState.Dismiss) {
-                    if (swipeToDismiss()) onDismissRequest()
+                    if (swipeToDismiss()) {
+                        onDismissRequest()
+                    }
                     else return@SwipeableState false
                 }
                 return@SwipeableState true
@@ -121,11 +133,10 @@ fun BottomSheetDialog(
         }
     }
 
-    Dialog(
-        properties = DialogProperties(
-            usePlatformDefaultWidth = false,
-            dismissOnClickOutside = true,
-            dismissOnBackPress = dismissOnBackPress()
+    Popup(
+        properties = PopupProperties(
+            dismissOnBackPress = dismissOnBackPress(),
+            dismissOnClickOutside = swipeToDismiss(),
         ),
         onDismissRequest = onDismissRequest,
     ) {
@@ -135,6 +146,25 @@ fun BottomSheetDialog(
             contentAlignment = Alignment.BottomCenter
         ) {
             val maxHeightPx = maxHeight.toPixels()
+            val scrimAlpha by animateFloatAsState(
+                if (swipeState.targetValue == SwipeState.Dismiss) 0f else 0.32f,
+                label = "Scrim alpha"
+            )
+
+            Box(modifier = Modifier
+                .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrimAlpha))
+                .fillMaxSize()
+                .pointerInput(onDismissRequest, swipeToDismiss) {
+                    detectTapGestures {
+                        if (swipeToDismiss()) {
+                            scope.launch {
+                                swipeState.animateTo(SwipeState.Dismiss)
+                                onDismissRequest()
+                            }
+                        }
+                    }
+                }
+            )
 
             Column(
                 modifier = Modifier
@@ -164,6 +194,11 @@ fun BottomSheetDialog(
                 Surface(
                     modifier = Modifier
                         .nestedScroll(nestedScrollConnection)
+                        .animateContentSize()
+                        .onSizeChanged {
+                            height = it.height.toFloat()
+                        }
+                        .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
                         .swipeable(
                             swipeState,
                             anchors = anchors,
@@ -177,11 +212,6 @@ fun BottomSheetDialog(
                             },
                             resistance = null
                         )
-                        .animateContentSize()
-                        .onSizeChanged {
-                            height = it.height.toFloat()
-                        }
-                        .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
                         .fillMaxWidth()
                         .weight(1f, false),
                     shape = MaterialTheme.shapes.extraLarge.copy(
@@ -213,6 +243,7 @@ fun BottomSheetDialog(
 
                 if (confirmButton != null || dismissButton != null) {
                     val elevation by animateDpAsState(if (swipeState.offset.value == 0f) 0.dp else 1.dp)
+                    val alpha by animateFloatAsState(if (swipeState.targetValue == SwipeState.Dismiss) 0f else 1f)
                     Surface(
                         modifier = Modifier
                             .wrapContentHeight()
