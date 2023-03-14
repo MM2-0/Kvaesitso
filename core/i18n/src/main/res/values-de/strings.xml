@@ -582,4 +582,7 @@
     <string name="preference_search_result_ordering_weight_factor_low">Stabil</string>
     <string name="preference_search_result_ordering_weight_factor_default">Ausgewogen</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
+    <string name="icon_picker_no_packs_installed">Keine Symbolpakete installiert</string>
+    <string name="gesture_action_launch_app">App starten</string>
+    <string name="icon_picker_filter_all_packs">Alle Symbolpakete</string>
 </resources>
