@@ -133,10 +133,11 @@ fun BottomSheetDialog(
         }
     }
 
-    Popup(
-        properties = PopupProperties(
+    Dialog(
+        properties = DialogProperties(
             dismissOnBackPress = dismissOnBackPress(),
             dismissOnClickOutside = swipeToDismiss(),
+            usePlatformDefaultWidth = false,
         ),
         onDismissRequest = onDismissRequest,
     ) {
