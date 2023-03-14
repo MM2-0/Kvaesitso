@@ -210,7 +210,6 @@ fun SearchSettingsScreen() {
                     title = stringResource(R.string.preference_search_result_ordering),
                     items = listOf(
                         stringResource(R.string.preference_search_result_ordering_alphabetic) to Settings.SearchResultOrderingSettings.Ordering.Alphabetic,
-                        stringResource(R.string.preference_search_result_ordering_launch_count) to Settings.SearchResultOrderingSettings.Ordering.LaunchCount,
                         stringResource(R.string.preference_search_result_ordering_weighted) to Settings.SearchResultOrderingSettings.Ordering.Weighted
                     ),
                     value = searchResultOrdering,
