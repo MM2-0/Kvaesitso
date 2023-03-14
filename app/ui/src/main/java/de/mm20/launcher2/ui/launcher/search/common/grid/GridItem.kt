@@ -4,7 +4,7 @@ import android.content.ComponentName
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absoluteOffset
@@ -56,8 +56,8 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
-import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
+import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
 import de.mm20.launcher2.ui.locals.LocalWindowSize
@@ -113,8 +113,7 @@ fun GridItem(
         Box(
             modifier = if (highlight) {
                 Modifier
-                    .border(
-                        4.dp,
+                    .background(
                         MaterialTheme.colorScheme.outlineVariant,
                         iconShape
                     )
@@ -125,7 +124,12 @@ fun GridItem(
                     .padding(4.dp)
                     .onGloballyPositioned {
                         bounds = it.boundsInWindow()
-                    },
+                    } then
+                        if (highlight) Modifier.background(
+                            MaterialTheme.colorScheme.surface,
+                            iconShape
+                        )
+                        else Modifier,
                 size = LocalGridSettings.current.iconSize.dp,
                 badge = { badge },
                 icon = { icon },
