@@ -467,14 +467,11 @@
         <item quantity="other"/>
     </plurals>
     <string name="preference_logs">Logs</string>
-    <string name="preference_search_bar_ordering_alphabetic">Alfabética</string>
-    <string name="preference_search_bar_ordering_relevance">Relevância</string>
     <string name="search_action_event">Agendar evento</string>
     <string name="create_search_action_title">Nova ação rápida</string>
     <string name="create_search_action_website_invalid_url">O site fornecido não pode ser importado automaticamente como uma pesquisa na web. Você pode tentar um site diferente ou inserir os dados necessários manualmente na próxima etapa.</string>
     <string name="tag_exists_message">Já existe uma etiqueta com este nome. Se você continuar, as duas etiquetas serão mescladas.</string>
     <string name="preference_layout_fixed_search_bar_summary">Não rola a barra de pesquisa para fora da visão</string>
-    <string name="preference_search_bar_ordering">Ordem dos resultados da pesquisa</string>
     <string name="search_action_label">Nome</string>
     <string name="icon_picker_default_icon">Padrão</string>
     <string name="icon_picker_suggestions">Sugestões</string>

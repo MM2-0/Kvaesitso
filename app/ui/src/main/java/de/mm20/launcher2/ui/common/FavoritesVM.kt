@@ -13,16 +13,17 @@ import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-open class FavoritesVM : ViewModel(), KoinComponent {
+abstract class FavoritesVM : ViewModel(), KoinComponent {
 
     private val favoritesRepository: FavoritesRepository by inject()
-    private val widgetRepository: WidgetRepository by inject()
+    internal val widgetRepository: WidgetRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
-    private val dataStore: LauncherDataStore by inject()
+    internal val dataStore: LauncherDataStore by inject()
 
     val selectedTag = MutableStateFlow<String?>(null)
 
     val showEditButton = dataStore.data.map { it.favorites.editButton }
+    abstract val tagsExpanded: Flow<Boolean>
 
     val pinnedTags = favoritesRepository.getFavorites(
         includeTypes = listOf("tag"),
@@ -32,7 +33,7 @@ open class FavoritesVM : ViewModel(), KoinComponent {
         it.filterIsInstance<Tag>()
     }
 
-    val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
+    open val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
             val columns = dataStore.data.map { it.grid.columnCount }
             val excludeCalendar = widgetRepository.isCalendarWidgetEnabled()
@@ -88,4 +89,6 @@ open class FavoritesVM : ViewModel(), KoinComponent {
     fun selectTag(tag: String?) {
         selectedTag.value = tag
     }
+
+    abstract fun setTagsExpanded(expanded: Boolean)
 }

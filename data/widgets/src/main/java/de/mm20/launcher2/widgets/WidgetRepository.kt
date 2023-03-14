@@ -24,6 +24,8 @@ interface WidgetRepository {
     fun isCalendarWidgetEnabled(): Flow<Boolean>
     fun isFavoritesWidgetEnabled(): Flow<Boolean>
 
+    fun isFavoritesWidgetFirst(): Flow<Boolean>
+
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
 }
@@ -103,6 +105,10 @@ internal class WidgetRepositoryImpl(
 
     override fun isFavoritesWidgetEnabled(): Flow<Boolean> {
         return database.widgetDao().exists("internal", "favorites")
+    }
+
+    override fun isFavoritesWidgetFirst(): Flow<Boolean> {
+        return database.widgetDao().getFirst().map { it?.type == "internal" && it.data == "favorites" }
     }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {

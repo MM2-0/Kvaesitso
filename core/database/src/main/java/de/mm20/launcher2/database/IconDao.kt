@@ -13,7 +13,7 @@ interface IconDao {
     @Insert
     suspend fun insertAll(icons: List<IconEntity>)
 
-    @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND iconPack = :iconPack AND type IN ('app', 'calendar', 'clock') LIMIT 1")
+    @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND iconPack = :iconPack AND type IN ('app', 'calendar', 'clock') ORDER BY type DESC LIMIT 1")
     suspend fun getIcon(packageName: String, activityName: String?, iconPack: String): IconEntity?
 
     @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND type IN ('app', 'calendar', 'clock')")

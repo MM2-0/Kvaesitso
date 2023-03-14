@@ -134,7 +134,8 @@ fun createFactorySettings(context: Context): Settings {
         .setSearchBar(
             Settings.SearchBarSettings.newBuilder()
                 .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
-                .setAutoFocus(false)
+                .setAutoFocus(true)
+                .setLaunchOnEnter(true)
                 .setColor(SearchBarColors.Auto)
                 .build()
         )
@@ -182,6 +183,11 @@ fun createFactorySettings(context: Context): Settings {
                 .setSwipeDown(Settings.GestureSettings.GestureAction.OpenNotificationDrawer)
                 .setSwipeLeft(Settings.GestureSettings.GestureAction.None)
                 .setSwipeRight(Settings.GestureSettings.GestureAction.None)
+        )
+        .setResultOrdering(
+            Settings.SearchResultOrderingSettings.newBuilder()
+                .setOrdering(Settings.SearchResultOrderingSettings.Ordering.Weighted)
+                .setWeightFactor(Settings.SearchResultOrderingSettings.WeightFactor.Default)
         )
         .build()
 }

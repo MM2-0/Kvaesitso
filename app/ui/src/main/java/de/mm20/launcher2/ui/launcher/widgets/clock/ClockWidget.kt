@@ -3,14 +3,22 @@ package de.mm20.launcher2.ui.launcher.widgets.clock
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ExpandLess
-import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +30,12 @@ import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.base.LocalTime
-import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.*
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.EmptyClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 
@@ -41,7 +54,9 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProviders by remember { viewModel.getActiveParts(context) }.collectAsStateWithLifecycle(emptyList())
+    val partProviders by remember { viewModel.getActiveParts(context) }.collectAsStateWithLifecycle(
+        emptyList()
+    )
 
     Box(
         modifier = Modifier
@@ -85,59 +100,51 @@ fun ClockWidget(
                 }
             }
             if (layout == ClockWidgetLayout.Horizontal) {
-                Column(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(end = 8.dp, bottom = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(imageVector = Icons.Rounded.ExpandLess, contentDescription = "")
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(end = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        if (partProviders.size > 1) {
-                            HorizontalPager(
-                                pageCount = 2,
-                                beyondBoundsPageCount = 1,
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                DynamicZone(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    layout = ClockWidgetLayout.Horizontal,
-                                    provider = partProviders[it],
-                                )
-                            }
-                        } else if (partProviders.isNotEmpty()) {
+                    if (partProviders.size > 1) {
+                        HorizontalPager(
+                            pageCount = 2,
+                            beyondBoundsPageCount = 1,
+                            modifier = Modifier.weight(1f)
+                        ) {
                             DynamicZone(
-                                modifier = Modifier.weight(1f),
+                                modifier = Modifier.fillMaxWidth(),
                                 layout = ClockWidgetLayout.Horizontal,
-                                provider = partProviders[0],
+                                provider = partProviders[it],
                             )
                         }
-                        Box(
-                            modifier = Modifier
-                                .padding(horizontal = 16.dp)
-                                .height(56.dp)
-                                .width(2.dp)
-                                .background(
-                                    LocalContentColor.current
-                                ),
+                    } else if (partProviders.isNotEmpty()) {
+                        DynamicZone(
+                            modifier = Modifier.weight(1f),
+                            layout = ClockWidgetLayout.Horizontal,
+                            provider = partProviders[0],
                         )
-                        Box(
-                            modifier = Modifier.clickable(
-                                enabled = clockStyle != ClockStyle.EmptyClock,
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
-                            ) {
-                                viewModel.launchClockApp(context)
-                            }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .height(56.dp)
+                            .width(2.dp)
+                            .background(
+                                LocalContentColor.current
+                            ),
+                    )
+                    Box(
+                        modifier = Modifier.clickable(
+                            enabled = clockStyle != ClockStyle.EmptyClock,
+                            indication = null,
+                            interactionSource = remember { MutableInteractionSource() }
                         ) {
-                            Clock(clockStyle, ClockWidgetLayout.Horizontal)
+                            viewModel.launchClockApp(context)
                         }
+                    ) {
+                        Clock(clockStyle, ClockWidgetLayout.Horizontal)
                     }
                 }
             }
