@@ -589,5 +589,5 @@
     <string name="preference_search_result_ordering_weight_factor_high">Variabile</string>
     <string name="preference_search_result_ordering">Ordinamento risultati ricerca</string>
     <string name="preference_search_result_ordering_launch_count">Conteggio avvii</string>
-    <string name="preference_search_result_ordering_weighted">Dinamico</string>
+    <string name="preference_search_result_ordering_weighted">Utilizzo</string>
 </resources>

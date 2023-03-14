@@ -582,4 +582,12 @@
     <string name="gesture_action_launch_app">Spustit aplikaci</string>
     <string name="icon_picker_no_packs_installed">Nejsou nainstalovány žádné balíčky ikon</string>
     <string name="icon_picker_filter_all_packs">Všechny balíčky ikon</string>
+    <string name="preference_search_result_ordering_alphabetic">Abecedně</string>
+    <string name="preference_search_result_ordering_launch_count">Počet spuštění</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabilní</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Vyvážené</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Různé</string>
+    <string name="preference_search_result_ordering">Pořadí výsledků vyhledávání</string>
+    <string name="preference_search_result_ordering_weighted">Využití</string>
+    <string name="preference_search_result_ordering_weight_factor">Flexibilita hodnocení</string>
 </resources>
