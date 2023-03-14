@@ -59,7 +59,7 @@ abstract class SearchableItemVM(
     open fun launch(context: Context, bounds: Rect? = null): Boolean {
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
-            ActivityOptionsCompat.makeClipRevealAnimation(
+            ActivityOptionsCompat.makeScaleUpAnimation(
                 view,
                 bounds.left.toInt(),
                 bounds.top.toInt(),
