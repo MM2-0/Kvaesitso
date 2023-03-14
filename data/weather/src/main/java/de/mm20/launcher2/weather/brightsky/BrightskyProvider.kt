@@ -98,7 +98,7 @@ class BrightskyProvider(
             "partly-cloudy-day", "partly-cloudy-night" -> R.string.weather_condition_partlycloudy
             "cloudy" -> R.string.weather_condition_cloudy
             "fog" -> R.string.weather_condition_fog
-            "wind" -> R.string.weather_details_wind
+            "wind" -> R.string.weather_condition_wind
             "rain" -> R.string.weather_condition_rain
             "sleet" -> R.string.weather_condition_sleet
             "snow" -> R.string.weather_condition_snow
