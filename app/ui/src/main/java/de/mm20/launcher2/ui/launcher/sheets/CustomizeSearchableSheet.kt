@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.sheets
 
 import android.content.pm.PackageManager
 import android.graphics.drawable.InsetDrawable
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -67,6 +68,12 @@ fun CustomizeSearchableSheet(
     val context = LocalContext.current
 
     val pickIcon by viewModel.isIconPickerOpen
+
+    if (pickIcon) {
+        BackHandler {
+            viewModel.closeIconPicker()
+        }
+    }
 
     BottomSheetDialog(
         onDismissRequest = onDismiss,
