@@ -23,6 +23,7 @@ import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -330,15 +331,18 @@ fun AppearanceSettingsScreen() {
                             modifier = Modifier
                                 .padding(12.dp)
                         ) {
-                            FilledIconToggleButton(
-                                checked = iconPackThemed,
-                                onCheckedChange = {
-                                    viewModel.setIconPackThemed(it)
-                                }) {
-                                Icon(
-                                    Icons.Rounded.FormatPaint,
-                                    stringResource(R.string.icon_pack_dynamic_colors)
-                                )
+                            PlainTooltipBox(tooltip = { Text(stringResource(R.string.icon_pack_dynamic_colors)) }) {
+                                FilledIconToggleButton(
+                                    modifier = Modifier.tooltipAnchor(),
+                                    checked = iconPackThemed,
+                                    onCheckedChange = {
+                                        viewModel.setIconPackThemed(it)
+                                    }) {
+                                    Icon(
+                                        Icons.Rounded.FormatPaint,
+                                        stringResource(R.string.icon_pack_dynamic_colors)
+                                    )
+                                }
                             }
                         }
                     }
