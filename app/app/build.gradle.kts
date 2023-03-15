@@ -27,8 +27,8 @@ android {
         minSdk = sdk.versions.minSdk.get().toInt()
         targetSdk = sdk.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = 2023031400
-        versionName = "1.23.0"
+        versionCode = 2023031500
+        versionName = "1.23.1"
         signingConfig = signingConfigs.getByName("debug")
     }
 
