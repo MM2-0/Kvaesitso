@@ -9,4 +9,131 @@
         <item quantity="other">公里</item>
     </plurals>
     <string name="unit_centimeter_symbol">公分</string>
+    <plurals name="unit_sqyard">
+        <item quantity="other">平方碼</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="other">英畝</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="other">千位元組</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="other">公分</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="other">毫米</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="other">英寸</item>
+    </plurals>
+    <string name="unit_foot_symbol">ft</string>
+    <plurals name="unit_foot">
+        <item quantity="other">英尺</item>
+    </plurals>
+    <string name="unit_inch_symbol">in</string>
+    <string name="unit_millimeter_symbol">mm</string>
+    <string name="unit_yard_symbol">yd</string>
+    <plurals name="unit_yard">
+        <item quantity="other">碼</item>
+    </plurals>
+    <string name="unit_mile_symbol">mi</string>
+    <plurals name="unit_mile">
+        <item quantity="other">英里</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="other">海哩</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="other">平方公尺</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="other">平方公里</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="other">平方公分</item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="other">平方公分</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">in²</string>
+    <plurals name="unit_sqinch">
+        <item quantity="other">平方英吋</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="other">平方英尺</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
+    <string name="unit_hectare_symbol">ha</string>
+    <plurals name="unit_hectare">
+        <item quantity="other">公頃</item>
+    </plurals>
+    <string name="unit_acre_symbol">ac</string>
+    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_second">
+        <item quantity="other">秒</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">ms</string>
+    <plurals name="unit_millisecond">
+        <item quantity="other">微秒</item>
+    </plurals>
+    <string name="unit_minute_symbol">min</string>
+    <plurals name="unit_minute">
+        <item quantity="other">分鐘</item>
+    </plurals>
+    <string name="unit_hour_symbol">h</string>
+    <plurals name="unit_hour">
+        <item quantity="other">小時</item>
+    </plurals>
+    <string name="unit_day_symbol">d</string>
+    <plurals name="unit_day">
+        <item quantity="other">天</item>
+    </plurals>
+    <string name="unit_year_symbol">a</string>
+    <plurals name="unit_year">
+        <item quantity="other">年</item>
+    </plurals>
+    <string name="unit_byte_symbol">B</string>
+    <plurals name="unit_byte">
+        <item quantity="other">位元組</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">kB</string>
+    <string name="unit_megabyte_symbol">MB</string>
+    <plurals name="unit_megabyte">
+        <item quantity="other">兆位元組</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">GB</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="other">吉位元組</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">TB</string>
+    <plurals name="unit_terabyte">
+        <item quantity="other">兆位元組</item>
+    </plurals>
+    <string name="unit_kibibyte_symbol">kiB</string>
+    <plurals name="unit_kibibyte">
+        <item quantity="other">基比位元組</item>
+    </plurals>
+    <string name="unit_mebibyte_symbol">MiB</string>
+    <plurals name="unit_mebibyte">
+        <item quantity="other">百萬位元組</item>
+    </plurals>
+    <string name="unit_gibibyte_symbol">GiB</string>
+    <plurals name="unit_gibibyte">
+        <item quantity="other">吉比位元組</item>
+    </plurals>
+    <string name="unit_tebibyte_symbol">TiB</string>
+    <plurals name="unit_tebibyte">
+        <item quantity="other">特比位元組</item>
+    </plurals>
+    <string name="unit_bit_symbol">bit</string>
+    <plurals name="unit_bit">
+        <item quantity="other">位元</item>
+    </plurals>
 </resources>

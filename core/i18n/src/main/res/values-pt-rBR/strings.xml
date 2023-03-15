@@ -126,7 +126,7 @@
     <string name="preference_category_links">Links</string>
     <string name="preference_version">Versão</string>
     <string name="preference_category_licenses">Licenças open-source</string>
-    <string name="preference_category_debug">Debug</string>
+    <string name="preference_category_debug">Depuração</string>
     <string name="preference_imperial_units">Unidades imperiais</string>
     <string name="preference_icon_shape_platform">Padrão do sistema</string>
     <string name="owncloud_login_2fa_hint">Se a autenticação em dois passos estiver ativada, você deverá usar um aplicativo de senha aqui.</string>
@@ -168,7 +168,7 @@
     <string name="preference_crash_reporter">Reportar falha</string>
     <string name="preference_export_log">Exportar arquivo log</string>
     <string name="preference_screen_search">Pesquisar</string>
-    <string name="preference_screen_search_summary">Configurar mecanismo de pesquisa</string>
+    <string name="preference_screen_search_summary">Configurar mecanismos de pesquisa</string>
     <string name="preference_search_favorites">Favoritos</string>
     <string name="preference_search_files">Arquivos</string>
     <string name="preference_search_contacts">Contatos</string>
@@ -208,7 +208,7 @@
     <string name="preference_dim_wallpaper">Escurecer papel de parede</string>
     <string name="preference_wallpaper_summary">Escolher o papel de parede</string>
     <string name="preference_screen_badges">Selos</string>
-    <string name="preference_screen_badges_summary">Configura os selos dos ícones</string>
+    <string name="preference_screen_badges_summary">Configurar os selos dos ícones</string>
     <string name="preference_notification_badges">Selos de notificação</string>
     <string name="preference_category_services_microsoft">Microsoft</string>
     <string name="preference_category_wallpaper">Papel de parede</string>
@@ -260,7 +260,7 @@
     <string name="weather_condition_heavysnowshowersandthunder">Neve intensa e trovões</string>
     <string name="weather_condition_lightsleetshowers">Neve molhada pouco intensa</string>
     <string name="weather_condition_snowshowersandthunder">Neve e trovões</string>
-    <string name="preference_screen_about_summary">Informação sobre o aplicativo e licenças</string>
+    <string name="preference_screen_about_summary">Informações sobre o aplicativo e licenças</string>
     <string name="preference_screen_appearance_summary">Personalizar a aparência</string>
     <string name="preference_weather_provider">Provedor</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (Germany only)</string>
@@ -296,7 +296,7 @@
     <string name="preference_about_license_summary">Licenciado sob a GNU General Public License 3.0</string>
     <string name="preference_category_grid">Grade</string>
     <string name="preference_grid_column_count">Número de colunas</string>
-    <string name="preference_screen_debug">Debug</string>
+    <string name="preference_screen_debug">Depuração</string>
     <string name="preference_screen_debug_summary">Ferramentas de solução de problemas</string>
     <string name="preference_screen_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Configurar widgets</string>
@@ -319,7 +319,7 @@
     <string name="preference_custom_colors_a1">Primária</string>
     <string name="preference_custom_colors_a3">Terciária</string>
     <string name="preference_category_custom_colors_light">Esquema de cores claras</string>
-    <string name="duplicate">Duplicado</string>
+    <string name="duplicate">Duplicar</string>
     <string name="action_next">Próximo</string>
     <string name="msg_item_hidden">%1$s foi ocultado.</string>
     <string name="action_undo">Desfazer</string>
@@ -329,7 +329,7 @@
     <string name="preference_custom_colors_simple_mode">Modo simples</string>
     <string name="preference_colors_auto_generate">Gerar a partir da cor primária</string>
     <string name="preference_category_custom_colors_dark">Esquema de cores escuras</string>
-    <string name="menu_customize">Customizar</string>
+    <string name="menu_customize">Personalizar</string>
     <string name="edit_favorites_dialog_new_tag">Criar etiqueta…</string>
     <string name="missing_permission_calendar_search_settings">A permissão de calendário é necessária para pesquisar o calendário</string>
     <string name="missing_permission_file_search_settings">Permissão de armazenamento externo é necessária para pesquisar arquivos locais</string>
@@ -343,7 +343,7 @@
     <string name="weather_location_search_no_result">Localização não encontrada.</string>
     <string name="missing_permission_calendar_widget">Conceda permissão de calendário para exibir compromissos e eventos futuros aqui.</string>
     <string name="preference_font">Fonte</string>
-    <string name="preference_font_system">Fonte padrão do sistema, depende da fabricante (Google Sans nos smartphonez Google Pixel, Roboto no AOSP)</string>
+    <string name="preference_font_system">Fonte padrão do sistema, depende da fabricante (Google Sans nos smartphones Google Pixel, Roboto no AOSP)</string>
     <string name="alert_delete_shortcut">O atalho %1$s vai ser removido permanentemente. Continuar\?</string>
     <string name="menu_remove">Remover</string>
     <string name="save">Salvar</string>
@@ -450,7 +450,7 @@
     <string name="preference_icon_shape_pebble">Seixo</string>
     <string name="preference_category_debug_tools">Ferramentas</string>
     <string name="preference_debug_cleanup_database">Limpar banco de dados</string>
-    <string name="preference_debug_cleanup_database_summary">Remova entradas quebradas e não utilizadas do banco de dados do iniciador</string>
+    <string name="preference_debug_cleanup_database_summary">Remove entradas quebradas e não utilizadas do banco de dados do iniciador</string>
     <string name="preference_cards_corner_radius">Raio de canto</string>
     <string name="preference_cards_stroke_width">Largura do traçado</string>
     <string name="preference_blur_wallpaper">Desfocar papel de parede</string>
@@ -580,4 +580,12 @@
     <string name="gesture_action_none">Nenhum</string>
     <string name="gesture_action_open_search">Abrir a pesquisa</string>
     <string name="gesture_action_notifications">Descer a barra de notificaçōes</string>
+    <string name="preference_search_result_ordering">Ordem dos resultados da pesquisa</string>
+    <string name="preference_search_result_ordering_alphabetic">Alfabética</string>
+    <string name="preference_search_result_ordering_launch_count">Quantidade de vezes aberto</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Estável</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variável</string>
+    <string name="preference_search_result_ordering_weighted">Uso</string>
+    <string name="preference_search_result_ordering_weight_factor">Flexibilidade da classificação</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Balanceada</string>
 </resources>
