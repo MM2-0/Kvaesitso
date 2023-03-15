@@ -17,7 +17,7 @@ class FavoritesWidgetVM : FavoritesVM() {
 
     private val isTopWidget = widgetRepository.isFavoritesWidgetFirst()
     private val clockWidgetFavSlots = dataStore.data.combine(isTopWidget) { data, isTop ->
-        if (!isTop) 0
+        if (!isTop || !data.clockWidget.favoritesPart) 0
         else {
             if (data.clockWidget.layout == ClockWidgetLayout.Horizontal) data.grid.columnCount - 2
             else data.grid.columnCount
