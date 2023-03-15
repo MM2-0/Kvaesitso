@@ -26,7 +26,8 @@ class FavoritesWidgetVM : FavoritesVM() {
 
     override val favorites = super.favorites.combine(clockWidgetFavSlots) { favs, slots ->
         if (selectedTag.value == null) {
-            favs.subList(slots, favs.size)
+            if (favs.lastIndex < slots) emptyList()
+            else favs.subList(slots, favs.size)
         } else {
             favs
         }
