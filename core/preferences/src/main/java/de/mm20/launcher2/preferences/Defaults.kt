@@ -145,6 +145,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setShape(Settings.IconSettings.IconShape.PlatformDefault)
                 .setThemedIcons(false)
                 .setIconPack("")
+                .setIconPackThemed(true)
         )
         .setEasterEgg(false)
         .setSystemBars(

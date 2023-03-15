@@ -4,21 +4,24 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FormatPaint
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -34,6 +37,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -249,6 +253,7 @@ fun AppearanceSettingsScreen() {
                 )
 
                 val iconPackPackage by viewModel.iconPack.observeAsState()
+                val iconPackThemed by viewModel.iconPackThemed.collectAsState(true)
                 val installedIconPacks by viewModel.installedIconPacks.collectAsState(emptyList())
                 val iconPack by remember {
                     derivedStateOf { installedIconPacks.firstOrNull { it.packageName == iconPackPackage } }
@@ -256,56 +261,88 @@ fun AppearanceSettingsScreen() {
                 val items = installedIconPacks.map {
                     it.name to it
                 }
-                ListPreference(
-                    title = stringResource(R.string.preference_icon_pack),
-                    items = items,
-                    summary = if (items.size <= 1) {
-                        stringResource(R.string.preference_icon_pack_summary_empty)
-                    } else {
-                        iconPack?.name ?: "System"
-                    },
-                    enabled = installedIconPacks.size > 1,
-                    value = iconPack,
-                    onValueChanged = {
-                        if (it != null) viewModel.setIconPack(it.packageName)
-                    },
-                    itemLabel = {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                        ) {
-                            Text(
-                                text = it.label,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                            )
-                            if (it.value?.themed == true) {
-                                Surface(
-                                    shape = MaterialTheme.shapes.extraSmall,
-                                    color = MaterialTheme.colorScheme.tertiary,
-                                    modifier = Modifier.padding(top = 4.dp)
+                Row(
+                    verticalAlignment = (Alignment.CenterVertically)
+                ) {
+                    Box(
+                        modifier = Modifier.weight(1f)
+                    ) {
+                        ListPreference(
+                            title = stringResource(R.string.preference_icon_pack),
+                            items = items,
+                            summary = if (items.size <= 1) {
+                                stringResource(R.string.preference_icon_pack_summary_empty)
+                            } else {
+                                iconPack?.name ?: "System"
+                            },
+                            enabled = installedIconPacks.size > 1,
+                            value = iconPack,
+                            onValueChanged = {
+                                if (it != null) viewModel.setIconPack(it.packageName)
+                            },
+                            itemLabel = {
+                                Column(
+                                    verticalArrangement = Arrangement.Center,
                                 ) {
-                                    Row(
-                                        modifier = Modifier.padding(horizontal = 4.dp),
-                                        verticalAlignment = Alignment.CenterVertically,
-                                    ) {
-                                        Icon(
-                                            modifier = Modifier
-                                                .size(20.dp)
-                                                .padding(end = 4.dp),
-                                            imageVector = Icons.Rounded.FormatPaint,
-                                            contentDescription = null,
-                                        )
-                                        Text(
-                                            text = stringResource(R.string.icon_pack_dynamic_colors),
-                                            style = MaterialTheme.typography.labelSmall
-                                        )
+                                    Text(
+                                        text = it.label,
+                                        maxLines = 1,
+                                        overflow = TextOverflow.Ellipsis,
+                                    )
+                                    if (it.value?.themed == true) {
+                                        Surface(
+                                            shape = MaterialTheme.shapes.extraSmall,
+                                            color = MaterialTheme.colorScheme.tertiary,
+                                            modifier = Modifier.padding(top = 4.dp)
+                                        ) {
+                                            Row(
+                                                modifier = Modifier.padding(horizontal = 4.dp),
+                                                verticalAlignment = Alignment.CenterVertically,
+                                            ) {
+                                                Icon(
+                                                    modifier = Modifier
+                                                        .size(20.dp)
+                                                        .padding(end = 4.dp),
+                                                    imageVector = Icons.Rounded.FormatPaint,
+                                                    contentDescription = null,
+                                                )
+                                                Text(
+                                                    text = stringResource(R.string.icon_pack_dynamic_colors),
+                                                    style = MaterialTheme.typography.labelSmall
+                                                )
+                                            }
+                                        }
                                     }
+
                                 }
                             }
-
+                        )
+                    }
+                    if (iconPack?.themed == true) {
+                        Box(
+                            modifier = Modifier
+                                .height(36.dp)
+                                .width(1.dp)
+                                .alpha(0.38f)
+                                .background(LocalContentColor.current)
+                        )
+                        Box(
+                            modifier = Modifier
+                                .padding(12.dp)
+                        ) {
+                            FilledIconToggleButton(
+                                checked = iconPackThemed,
+                                onCheckedChange = {
+                                    viewModel.setIconPackThemed(it)
+                                }) {
+                                Icon(
+                                    Icons.Rounded.FormatPaint,
+                                    stringResource(R.string.icon_pack_dynamic_colors)
+                                )
+                            }
                         }
                     }
-                )
+                }
             }
             PreferenceCategory(stringResource(R.string.preference_category_searchbar)) {
                 val searchBarStyle by viewModel.searchBarStyle.observeAsState()

@@ -246,6 +246,7 @@ message Settings {
     reserved 4;
     bool adaptify = 5;
     bool force_themed = 6;
+    bool icon_pack_themed = 7;
   }
   IconSettings icons = 21;
 

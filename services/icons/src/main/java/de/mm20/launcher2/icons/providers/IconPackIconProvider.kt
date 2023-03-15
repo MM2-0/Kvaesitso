@@ -12,11 +12,12 @@ class IconPackIconProvider(
     private val context: Context,
     private val iconPack: IconPack,
     private val iconPackManager: IconPackManager,
+    private val allowThemed: Boolean,
 ): IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
         if (searchable !is LauncherApp) return null
 
-        return iconPackManager.getIcon(iconPack.packageName, searchable.`package`, searchable.activity)
+        return iconPackManager.getIcon(iconPack.packageName, searchable.`package`, searchable.activity, allowThemed)
             ?: iconPackManager.generateIcon(
                 context,
                 iconPack.packageName,

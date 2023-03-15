@@ -20,7 +20,9 @@ import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -199,12 +201,29 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val installedIconPacks: Flow<List<IconPack>> = iconRepository.getInstalledIconPacks().map {
-            listOf(IconPack(
+        listOf(
+            IconPack(
                 name = "System",
                 packageName = "",
                 version = "",
-            )) + it
+            )
+        ) + it
+    }
+
+    val iconPackThemed = dataStore.data.map { it.icons.iconPackThemed }
+    fun setIconPackThemed(iconPackThemed: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setIcons(
+                        it.icons
+                            .toBuilder()
+                            .setIconPackThemed(iconPackThemed)
+                    )
+                    .build()
+            }
         }
+    }
 
     val iconPack = dataStore.data.map { it.icons.iconPack }.asLiveData()
     fun setIconPack(iconPack: String) {

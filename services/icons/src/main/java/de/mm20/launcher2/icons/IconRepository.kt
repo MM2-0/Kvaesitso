@@ -109,7 +109,8 @@ class IconRepository(
                                 IconPackIconProvider(
                                     context,
                                     pack,
-                                    iconPackManager
+                                    iconPackManager,
+                                    settings.iconPackThemed,
                                 )
                             )
                         } else {

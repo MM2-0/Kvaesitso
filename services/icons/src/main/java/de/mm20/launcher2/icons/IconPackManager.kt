@@ -87,6 +87,7 @@ class IconPackManager(
         iconPack: String,
         packageName: String,
         activityName: String?,
+        allowThemed: Boolean = true
     ): LauncherIcon? {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
@@ -100,11 +101,11 @@ class IconPackManager(
             ?: return null
 
         if (icon is CalendarIcon) {
-            return getIconPackCalendarIcon(icon, res)
+            return getIconPackCalendarIcon(icon, res, allowThemed)
         } else if (icon is AppIcon) {
-            return getIconPackStaticIcon(icon, res)
+            return getIconPackStaticIcon(icon, res, allowThemed)
         } else if (icon is ClockIcon) {
-            return getIconPackClockIcon(icon, res)
+            return getIconPackClockIcon(icon, res, allowThemed)
         }
         return null
     }
@@ -241,6 +242,7 @@ class IconPackManager(
     private fun getIconPackStaticIcon(
         icon: AppIcon,
         resources: Resources,
+        allowThemed: Boolean,
     ): LauncherIcon? {
         val resId =
             resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
@@ -250,8 +252,9 @@ class IconPackManager(
         } catch (e: Resources.NotFoundException) {
             return null
         }
+        val themed = icon.themed && allowThemed
         return when {
-            icon.themed && drawable is AdaptiveIconDrawable -> {
+            themed && drawable is AdaptiveIconDrawable -> {
                 if (isAtLeastApiLevel(33) && drawable.monochrome != null) {
                     return StaticLauncherIcon(
                         foregroundLayer = TintedIconLayer(
@@ -271,7 +274,7 @@ class IconPackManager(
                 }
             }
 
-            icon.themed -> {
+            themed -> {
                 return StaticLauncherIcon(
                     foregroundLayer = TintedIconLayer(
                         icon = drawable,
@@ -313,6 +316,7 @@ class IconPackManager(
     private fun getIconPackCalendarIcon(
         icon: CalendarIcon,
         resources: Resources,
+        allowThemed: Boolean,
     ): LauncherIcon? {
         val drawableIds = icon.drawables.map {
             val id = resources.getIdentifier(it, "drawable", icon.iconPack)
@@ -321,7 +325,7 @@ class IconPackManager(
         }.toIntArray()
 
 
-        if (icon.themed) {
+        if (icon.themed && allowThemed) {
             return ThemedDynamicCalendarIcon(
                 resources = resources,
                 resourceIds = drawableIds,
@@ -336,6 +340,7 @@ class IconPackManager(
     private fun getIconPackClockIcon(
         icon: ClockIcon,
         resources: Resources,
+        allowThemed: Boolean,
     ): LauncherIcon? {
         var drawable = try {
             resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
@@ -362,8 +367,10 @@ class IconPackManager(
             )
         }
 
+        val themed = icon.themed && allowThemed
+
         return when {
-            icon.themed && drawable is AdaptiveIconDrawable -> {
+            themed && drawable is AdaptiveIconDrawable -> {
                 StaticLauncherIcon(
                     foregroundLayer = TintedClockLayer(
                         defaultHour = icon.config.defaultHour,
@@ -376,7 +383,7 @@ class IconPackManager(
                 )
             }
 
-            icon.themed -> {
+            themed -> {
                 StaticLauncherIcon(
                     foregroundLayer = TintedClockLayer(
                         defaultHour = icon.config.defaultHour,
