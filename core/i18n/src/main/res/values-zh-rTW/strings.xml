@@ -572,4 +572,12 @@
     </plurals>
     <string name="gesture_action_launch_app">啟動應用程式</string>
     <string name="icon_picker_filter_all_packs">所有圖示包</string>
+    <string name="preference_search_result_ordering">搜尋結果排序</string>
+    <string name="preference_search_result_ordering_alphabetic">字母順序</string>
+    <string name="preference_search_result_ordering_launch_count">啟動次數</string>
+    <string name="preference_search_result_ordering_weighted">依使用率排序</string>
+    <string name="preference_search_result_ordering_weight_factor">排名靈活性</string>
+    <string name="preference_search_result_ordering_weight_factor_low">穩定</string>
+    <string name="preference_search_result_ordering_weight_factor_default">平衡</string>
+    <string name="preference_search_result_ordering_weight_factor_high">變數</string>
 </resources>
