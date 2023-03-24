@@ -572,4 +572,8 @@
     <string name="preference_search_bar_launch_on_enter_summary">点击go时启动高亮的匹配或快捷操作</string>
     <string name="gesture_action_launch_app">打开应用</string>
     <string name="icon_picker_filter_all_packs">全部图标包</string>
+    <string name="preference_search_result_ordering_alphabetic">按字母顺序排列</string>
+    <string name="preference_search_result_ordering_launch_count">按启动次数排列</string>
+    <string name="preference_search_result_ordering_weighted">按使用情况排列</string>
+    <string name="preference_search_result_ordering">搜索结果的顺序</string>
 </resources>
