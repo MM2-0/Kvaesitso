@@ -10,4 +10,89 @@
         <item quantity="one">kilometre</item>
         <item quantity="other">kilometre</item>
     </plurals>
+    <string name="unit_centimeter_symbol">cm</string>
+    <string name="unit_millimeter_symbol">milimetre</string>
+    <string name="unit_inch_symbol">inç</string>
+    <string name="unit_yard_symbol">yard</string>
+    <string name="unit_foot_symbol">ft</string>
+    <string name="unit_nautic_mile_symbol">NM</string>
+    <string name="unit_mile_symbol">mil</string>
+    <plurals name="unit_mile">
+        <item quantity="one">mil</item>
+        <item quantity="other">mil</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">inçkare</item>
+        <item quantity="other">inçkare</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">yd²</string>
+    <string name="unit_hectare_symbol">ha</string>
+    <string name="unit_acre_symbol">dönüm</string>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <string name="unit_sqinch_symbol">in²</string>
+    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">santimetre</item>
+        <item quantity="other">santimetre</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milimetre</item>
+        <item quantity="other">milimetre</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">inç</item>
+        <item quantity="other">inç</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">deniz mili</item>
+        <item quantity="other">deniz mili</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">ayak</item>
+        <item quantity="other">ayak</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">yarda</item>
+        <item quantity="other">yarda</item>
+    </plurals>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metrekare</item>
+        <item quantity="other">metrekare</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kilometrekare</item>
+        <item quantity="other">kilometrekare</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">santimetrekare</item>
+        <item quantity="other">santimetrekare</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">milimetrekare</item>
+        <item quantity="other">milimetrekare</item>
+    </plurals>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">ayak kare</item>
+        <item quantity="other">ayak kare</item>
+    </plurals>
+    <plurals name="unit_sqyard">
+        <item quantity="one">yarda kare</item>
+        <item quantity="other">yarda kare</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektar</item>
+    </plurals>
+    <plurals name="unit_acre">
+        <item quantity="one">dönüm</item>
+        <item quantity="other">dönüm</item>
+    </plurals>
+    <plurals name="unit_second">
+        <item quantity="one">saniye</item>
+        <item quantity="other">saniye</item>
+    </plurals>
 </resources>
