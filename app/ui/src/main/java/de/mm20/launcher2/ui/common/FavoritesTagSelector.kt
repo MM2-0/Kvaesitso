@@ -12,13 +12,11 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -57,7 +55,7 @@ fun FavoritesTagSelector(
                 bottom = if (reverse) 4.dp else 8.dp,
                 end = if (editButton) 8.dp else 0.dp
             )
-            then
+                then
                 if (editButton && expanded) Modifier.height(IntrinsicSize.Min) else Modifier,
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.CenterVertically,
@@ -85,17 +83,11 @@ fun FavoritesTagSelector(
                     label = { Text(stringResource(R.string.favorites)) }
                 )
                 for (tag in tags) {
-                    FilterChip(
+                    TagChip(
                         modifier = Modifier.padding(start = 8.dp),
+                        tag = tag,
                         selected = selectedTag == tag.tag,
                         onClick = { onSelectTag(tag.tag) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Tag,
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text(tag.label) }
                     )
                 }
                 if (canScroll) {
@@ -124,17 +116,11 @@ fun FavoritesTagSelector(
                     label = { Text(stringResource(R.string.favorites)) }
                 )
                 for (tag in tags) {
-                    FilterChip(
+                    TagChip(
                         modifier = Modifier.padding(end = 8.dp),
+                        tag = tag,
                         selected = selectedTag == tag.tag,
                         onClick = { onSelectTag(tag.tag) },
-                        leadingIcon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Tag,
-                                contentDescription = null
-                            )
-                        },
-                        label = { Text(tag.label) }
                     )
                 }
             }

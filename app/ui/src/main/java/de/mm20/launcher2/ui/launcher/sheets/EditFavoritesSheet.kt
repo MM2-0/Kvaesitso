@@ -91,6 +91,7 @@ import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.TagChip
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -101,7 +102,6 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import kotlinx.coroutines.currentCoroutineContext
 import kotlin.math.roundToInt
 
 @Composable
@@ -532,9 +532,13 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                             Icon(Icons.Rounded.Create, null)
                                         },
                                         contentPadding = PaddingValues(
-                                            start = MenuDefaults.DropdownMenuItemContentPadding.calculateStartPadding(LocalLayoutDirection.current),
-                                            end = MenuDefaults.DropdownMenuItemContentPadding.calculateEndPadding(LocalLayoutDirection.current),
-                                            top = if(availableTags.isNotEmpty()) 8.dp else 0.dp,
+                                            start = MenuDefaults.DropdownMenuItemContentPadding.calculateStartPadding(
+                                                LocalLayoutDirection.current
+                                            ),
+                                            end = MenuDefaults.DropdownMenuItemContentPadding.calculateEndPadding(
+                                                LocalLayoutDirection.current
+                                            ),
+                                            top = if (availableTags.isNotEmpty()) 8.dp else 0.dp,
                                         ),
                                         text = {
                                             Box {
@@ -546,7 +550,9 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                                 }
                                                 BasicTextField(
                                                     value = newTag,
-                                                    onValueChange = { newTag = it.replace(",", "") },
+                                                    onValueChange = {
+                                                        newTag = it.replace(",", "")
+                                                    },
                                                     textStyle = LocalTextStyle.current.copy(
                                                         color = LocalContentColor.current
                                                     ),
@@ -573,7 +579,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                                 contentDescription = null
                                             )
                                         },
-                                        onClick = {  }
+                                        onClick = { }
                                     )
                                 }
                             }
@@ -595,34 +601,22 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                 ) { tag ->
                                     DraggableItem(state = rowState, key = tag.key) { dragged ->
 
-                                        FilterChip(
+                                        TagChip(
                                             modifier = Modifier
                                                 .padding(end = 12.dp)
                                                 .pointerInput(null) {
-                                                    val coroutineContext =
-                                                        currentCoroutineContext()
-
                                                 },
+                                            tag = tag,
                                             selected = tag.tag == hoveredTag,
-                                            onClick = {},
-                                            label = { Text(tag.label) },
-                                            leadingIcon = {
-                                                Icon(Icons.Rounded.Tag, null)
-                                            },
-                                            trailingIcon = {
-                                                Icon(
-                                                    modifier = Modifier.clickable {
-                                                        viewModel.unpinTag(tag)
-                                                    },
-                                                    imageVector = Icons.Rounded.Close,
-                                                    contentDescription = null
-                                                )
-                                            },
                                             elevation = if (dragged) FilterChipDefaults.elevatedFilterChipElevation() else FilterChipDefaults.filterChipElevation(),
                                             colors = if (dragged) FilterChipDefaults.elevatedFilterChipColors()
                                             else FilterChipDefaults.filterChipColors(
                                                 containerColor = MaterialTheme.colorScheme.surface
-                                            )
+                                            ),
+                                            clearable = true,
+                                            onClear = {
+                                                viewModel.unpinTag(tag)
+                                            }
                                         )
                                     }
                                 }
