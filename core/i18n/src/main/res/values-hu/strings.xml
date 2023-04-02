@@ -1,2 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_share">Megosztás</string>
+    <string name="menu_share_apk_file">Csomagfájl</string>
+    <string name="menu_uninstall">Eltávolítás</string>
+    <string name="menu_favorites_pin">Hozzáadás a kedvencekhez</string>
+    <string name="menu_favorites_unpin">Eltávolítás</string>
+    <string name="menu_back">Vissza</string>
+    <string name="menu_app_info">Alkalmazás információ</string>
+    <string name="menu_launch">Futtatás</string>
+    <string name="menu_customize">Testreszabás</string>
+    <string name="menu_hide">Elrejtés</string>
+    <string name="menu_unhide">Ne rejtse el</string>
+    <string name="msg_item_hidden">%1$s el lett rejtve.</string>
+    <string name="action_undo">Visszavonás</string>
+    <string name="menu_delete">Törlés</string>
+    <string name="menu_remove">Eltávolítás</string>
+    <string name="menu_contacts_open_externally">Megnyitás a névjegyek alkalmazásban</string>
+    <string name="search_bar_placeholder">Keresés</string>
+    <string name="app_info_version">%1$s verzió</string>
+    <string name="settings">Beállítások</string>
+    <string name="help">Segítség</string>
+    <string name="wallpaper">Háttérkép</string>
+    <string name="menu_share_store_link">%1$s hivatkozás</string>
+    <string name="menu_open_file">Megnyitás</string>
+    <string name="menu_calendar_open_externally">Megnyitás a naptár alkalmazásban</string>
+</resources>
