@@ -577,4 +577,12 @@
     <string name="gesture_action_launch_app">Applicatie starten</string>
     <string name="icon_picker_no_packs_installed">Geen pictogrammenpakketten geïnstalleerd</string>
     <string name="icon_picker_filter_all_packs">Alle pictogrammenpakketten</string>
+    <string name="preference_search_result_ordering_weight_factor">Flexibiliteit sortering</string>
+    <string name="preference_search_result_ordering_weight_factor_low">Stabiel</string>
+    <string name="preference_search_result_ordering_weight_factor_default">Gebalanceerd</string>
+    <string name="preference_search_result_ordering_weight_factor_high">Variabel</string>
+    <string name="preference_search_result_ordering_weighted">Gebruik</string>
+    <string name="preference_search_result_ordering">Volgorde van de zoekresultaten</string>
+    <string name="preference_search_result_ordering_alphabetic">Alfabetisch</string>
+    <string name="preference_search_result_ordering_launch_count">Aantal starts</string>
 </resources>
