@@ -1,2 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_share">Поділитися</string>
+    <string name="menu_share_store_link">%1$s Посилання</string>
+    <string name="menu_share_apk_file">Файл пакету</string>
+    <string name="menu_uninstall">Деінсталювати</string>
+    <string name="menu_favorites_pin">Зберегти до улюблених</string>
+    <string name="menu_favorites_unpin">Видалити з улюблених</string>
+    <string name="menu_back">Назад</string>
+    <string name="menu_app_info">Інформація про додаток</string>
+    <string name="menu_launch">Запустити</string>
+    <string name="menu_customize">Редагувати</string>
+    <string name="menu_open_file">Відкрити</string>
+    <string name="menu_hide">Сховати</string>
+    <string name="menu_unhide">Не приховувати</string>
+    <string name="action_undo">Скасувати</string>
+    <string name="menu_delete">Видалити</string>
+    <string name="menu_remove">Прибрати</string>
+    <string name="menu_contacts_open_externally">Відкрити у додатку Контакти</string>
+    <string name="menu_calendar_open_externally">Відкрити у Календарі</string>
+    <string name="search_bar_placeholder">Пошук</string>
+    <string name="app_info_version">Версія %1$s</string>
+    <string name="settings">Налаштування</string>
+    <string name="help">Допомога</string>
+    <string name="wallpaper">Фон</string>
+    <string name="wind_north">Північ</string>
+    <string name="wind_north_east">Північний Схід</string>
+    <string name="wind_north_north_east">Північний Схід</string>
+    <string name="file_meta_duration">Довжина: %1$s</string>
+    <string name="file_meta_year">Рік: %1$s</string>
+    <string name="file_meta_size">Розмір: %1$s</string>
+    <string name="file_meta_path">Шлях: %1$s</string>
+    <string name="file_meta_type">Тип: %1$s</string>
+    <string name="file_meta_dimensions">Розмір кадру: %1$s</string>
+    <string name="file_meta_app_name">Назва додатку: %1$s</string>
+    <string name="file_meta_app_version">Версія: %1$s</string>
+    <string name="file_meta_app_pkgname">Назва пакета: %1$s</string>
+    <string name="file_meta_owner">Власник: %1$s</string>
+    <string name="file_meta_location">Розташування: %1$s</string>
+    <string name="file_type_directory">Шлях</string>
+    <string name="msg_item_hidden">%1$s заховано.</string>
+    <string name="wikipedia_url">https://uk.wikipedia.org</string>
+    <string name="wikipedia_source">З Вікіпедії</string>
+    <string name="file_meta_title">Назва: %1$s</string>
+    <string name="file_meta_artist">Виконавець: %1$s</string>
+    <string name="file_meta_album">Альбом: %1$s</string>
+    <string name="file_meta_app_min_sdk">Мін. версія SDK: %1$s</string>
+</resources>
