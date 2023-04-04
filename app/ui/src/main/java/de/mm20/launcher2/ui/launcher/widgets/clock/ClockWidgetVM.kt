@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.launcher.widgets.clock
 import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -55,7 +54,6 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
             }
         }
     }
-
 
     val layout = dataStore.data.map { it.clockWidget.layout }.asLiveData()
     val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }.asLiveData()
