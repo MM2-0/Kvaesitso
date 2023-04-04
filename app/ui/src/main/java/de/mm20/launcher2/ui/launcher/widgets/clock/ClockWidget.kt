@@ -34,7 +34,6 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
-import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.EmptyClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -164,6 +163,7 @@ fun Clock(
         ClockStyle.BinaryClock -> BinaryClock(time, layout)
         ClockStyle.AnalogClock -> AnalogClock(time, layout)
         ClockStyle.OrbitClock -> OrbitClock(time, layout)
+        ClockStyle.EmptyClock -> {}
         else -> {}
     }
 }
