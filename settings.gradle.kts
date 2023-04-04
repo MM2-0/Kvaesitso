@@ -78,7 +78,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("accompanist", "0.30.0")
+            version("accompanist", "0.31.0-alpha")
             library("accompanist.insets", "com.google.accompanist", "accompanist-insets")
                 .versionRef("accompanist")
             library("accompanist.systemuicontroller", "com.google.accompanist", "accompanist-systemuicontroller")
