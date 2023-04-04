@@ -359,16 +359,38 @@ class IconRepository(
 
     suspend fun searchCustomIcons(query: String, iconPack: IconPack?): List<CustomIconWithPreview> {
         val transformations = this.transformations.first()
-        val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).mapNotNull {
-            CustomIconWithPreview(
-                customIcon = CustomIconPackIcon(
-                    iconPackPackage = it.iconPack,
-                    iconActivityName = it.activityName,
-                    iconPackageName = it.packageName,
-                ),
-                preview = iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName)
-                    ?.transform(transformations) ?: return@mapNotNull null
-            )
+        val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
+            val unthemedIcon = if (it.themed) {
+                iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName, false)
+                    ?.transform(transformations)
+            } else null
+            val icon = iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName, true)
+                ?.transform(transformations)
+
+            buildList<CustomIconWithPreview> {
+                if (icon != null) {
+                    add(CustomIconWithPreview(
+                        customIcon = CustomIconPackIcon(
+                            iconPackPackage = it.iconPack,
+                            iconActivityName = it.activityName,
+                            iconPackageName = it.packageName,
+                            allowThemed = true
+                        ),
+                        preview = icon
+                    ))
+                }
+                if (unthemedIcon != null) {
+                    add(CustomIconWithPreview(
+                        customIcon = CustomIconPackIcon(
+                            iconPackPackage = it.iconPack,
+                            iconActivityName = it.activityName,
+                            iconPackageName = it.packageName,
+                            allowThemed = false
+                        ),
+                        preview = unthemedIcon
+                    ))
+                }
+            }
         }
 
         return iconPackIcons

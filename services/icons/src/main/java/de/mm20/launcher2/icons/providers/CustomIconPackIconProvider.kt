@@ -15,6 +15,7 @@ class CustomIconPackIconProvider(
             customIcon.iconPackPackage,
             customIcon.iconPackageName,
             customIcon.iconActivityName,
+            customIcon.allowThemed,
         )
     }
 }

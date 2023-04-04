@@ -82,13 +82,15 @@ sealed class CustomIcon : CustomAttribute {
                         CustomIconPackIcon(
                             iconPackageName = legacyComponentName.packageName,
                             iconActivityName = legacyComponentName.className,
-                            iconPackPackage = payload.getString("icon_pack")
+                            iconPackPackage = payload.getString("icon_pack"),
+                            allowThemed = payload.optBoolean("allow_themed", true),
                         )
                     } else {
                         CustomIconPackIcon(
                             iconPackageName = payload.optString("package").takeIf { it.isNotEmpty() } ?: return null,
                             iconActivityName = payload.optString("activity").takeIf { it.isNotEmpty() },
-                            iconPackPackage = payload.getString("icon_pack")
+                            iconPackPackage = payload.getString("icon_pack"),
+                            allowThemed = payload.optBoolean("allow_themed", true),
                         )
                     }
                 }
@@ -118,6 +120,7 @@ data class CustomIconPackIcon(
     val iconPackPackage: String,
     val iconPackageName: String,
     val iconActivityName: String?,
+    val allowThemed: Boolean = true,
 ) : CustomIcon() {
     override fun toDatabaseValue(): String {
         return jsonObjectOf(
@@ -125,6 +128,7 @@ data class CustomIconPackIcon(
             "package" to iconPackageName,
             "activity" to iconActivityName,
             "icon_pack" to iconPackPackage,
+            "allow_themed" to allowThemed,
         ).toString()
     }
 }
