@@ -84,7 +84,7 @@ abstract class SharedLauncherActivity(
 
         viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
-        val bottomSheetManager = LauncherBottomSheetManager()
+        val bottomSheetManager = LauncherBottomSheetManager(this)
         val gestureDetector = GestureDetector()
 
         setContent {
