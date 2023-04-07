@@ -202,7 +202,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .absoluteOffset(
-                            x = ((1 - animationProgress) * origin.left).toDp() - 16.dp * (1 - animationProgress),
+                            x = ((1 - animationProgress) * origin.left).toDp() - 20.dp * (1 - animationProgress),
                         )
                         .wrapContentSize()
                         .padding(4.dp)
