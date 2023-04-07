@@ -9,9 +9,9 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/LauncherTheme"
-            android:stateNotNeeded="true"
             android:resumeWhilePausing="true"
+            android:stateNotNeeded="true"
+            android:theme="@style/LauncherTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,9 +31,9 @@
             android:excludeFromRecents="true"
             android:exported="true"
             android:launchMode="singleTask"
-            android:theme="@style/LauncherTheme"
-            android:stateNotNeeded="true"
             android:resumeWhilePausing="true"
+            android:stateNotNeeded="true"
+            android:theme="@style/LauncherTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.ASSIST" />
@@ -70,6 +70,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
         </activity>
+
+        <activity
+            android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity"
+             />
     </application>
 
 </manifest>

@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.materialcomponents.core)
 
+    implementation(libs.koin.android)
+
     implementation(libs.androidx.palette)
 
     implementation(project(":core:ktx"))

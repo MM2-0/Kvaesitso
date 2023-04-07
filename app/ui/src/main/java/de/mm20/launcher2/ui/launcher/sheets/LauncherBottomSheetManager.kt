@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import android.os.Bundle
-import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.core.os.bundleOf
@@ -16,6 +15,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     val customizeSearchableSheetShown = mutableStateOf<SavableSearchable?>(null)
     val editFavoritesSheetShown = mutableStateOf(false)
     val hiddenItemsSheetShown = mutableStateOf(false)
+    val widgetPickerSheetShown = mutableStateOf(false)
 
     init {
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
@@ -28,6 +28,7 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
                 editFavoritesSheetShown.value = state?.getBoolean(FAVORITES) ?: false
                 hiddenItemsSheetShown.value = state?.getBoolean(HIDDEN) ?: false
+                widgetPickerSheetShown.value = state?.getBoolean(WIDGETS) ?: false
             }
         })
     }
@@ -35,7 +36,8 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     override fun saveState(): Bundle {
         return bundleOf(
             FAVORITES to editFavoritesSheetShown.value,
-            HIDDEN to hiddenItemsSheetShown.value
+            HIDDEN to hiddenItemsSheetShown.value,
+            WIDGETS to widgetPickerSheetShown.value,
         )
     }
 
@@ -63,10 +65,19 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
         hiddenItemsSheetShown.value = false
     }
 
+    fun showWidgetPickerSheet() {
+        widgetPickerSheetShown.value = true
+    }
+
+    fun dismissWidgetPickerSheet() {
+        widgetPickerSheetShown.value = false
+    }
+
     companion object {
         private const val PROVIDER = "bottom_sheet_manager"
         private const val FAVORITES = "favorites"
         private const val HIDDEN = "hidden"
+        private const val WIDGETS = "widgets"
 
     }
 }

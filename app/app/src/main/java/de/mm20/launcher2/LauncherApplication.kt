@@ -57,6 +57,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     accountsModule,
                     applicationsModule,
                     appShortcutsModule,
+                    baseModule,
                     calculatorModule,
                     backupModule,
                     badgesModule,

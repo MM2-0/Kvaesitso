@@ -1,6 +1,11 @@
 package de.mm20.launcher2.widgets
 
+import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
+import android.content.pm.LauncherApps
+import android.content.pm.PackageManager
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.WidgetEntity
@@ -15,6 +20,8 @@ import java.io.File
 interface WidgetRepository {
     fun getWidgets(): Flow<List<Widget>>
     fun getInternalWidgets(): List<Widget>
+
+    suspend fun getAppWidgets(): List<AppWidgetProviderInfo>
     fun saveWidgets(widgets: List<Widget>)
     fun addWidget(widget: Widget, position: Int)
     fun removeWidget(widget: Widget)
@@ -47,6 +54,18 @@ internal class WidgetRepositoryImpl(
         return listOf(WeatherWidget, MusicWidget, CalendarWidget, FavoritesWidget)
     }
 
+    override suspend fun getAppWidgets(): List<AppWidgetProviderInfo> {
+        val appWidgetManager = AppWidgetManager.getInstance(context)
+        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        val profiles = launcherApps.profiles
+        val widgets = mutableListOf<AppWidgetProviderInfo>()
+        withContext(Dispatchers.IO) {
+            for (profile in profiles) {
+                widgets.addAll(appWidgetManager.getInstalledProvidersForProfile(profile))
+            }
+        }
+        return widgets
+    }
 
     override fun saveWidgets(widgets: List<Widget>) {
         scope.launch {

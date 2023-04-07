@@ -13,4 +13,9 @@ fun LauncherBottomSheets() {
     if (bottomSheetManager.editFavoritesSheetShown.value) {
         EditFavoritesSheet(onDismiss = { bottomSheetManager.dismissEditFavoritesSheet() })
     }
+    if (bottomSheetManager.widgetPickerSheetShown.value) {
+        WidgetPickerSheet(
+            onDismiss = { bottomSheetManager.dismissWidgetPickerSheet() }
+        )
+    }
 }

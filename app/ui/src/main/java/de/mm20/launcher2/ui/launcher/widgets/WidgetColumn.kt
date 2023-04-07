@@ -54,6 +54,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.ExternalWidget
@@ -69,6 +70,7 @@ fun WidgetColumn(
 
     val viewModel: WidgetsVM = viewModel()
     val context = LocalContext.current
+    val bottomSheetManager = LocalBottomSheetManager.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val widgetHost = remember { AppWidgetHost(context.applicationContext, 44203) }
 
@@ -100,7 +102,6 @@ fun WidgetColumn(
         modifier = modifier
     ) {
         val scope = rememberCoroutineScope()
-        var showAddDialog by remember { mutableStateOf(false) }
         Column {
             val widgets by viewModel.widgets.observeAsState(emptyList())
             val swapThresholds = remember(widgets) {
@@ -196,118 +197,10 @@ fun WidgetColumn(
                     if (!editMode) {
                         onEditModeChange(true)
                     } else {
-                        if (viewModel.getAvailableBuiltInWidgets().isEmpty()) {
-                            pickWidgetLauncher.launch(
-                                Intent(
-                                    context,
-                                    PickAppWidgetActivity::class.java
-                                )
-                            )
-                        } else {
-                            showAddDialog = true
-                        }
+                        bottomSheetManager.showWidgetPickerSheet()
                     }
                 })
 
-        }
-
-        if (showAddDialog) {
-            val availableBuiltInWidgets =
-                remember { viewModel.getAvailableBuiltInWidgets() }
-            Dialog(onDismissRequest = { showAddDialog = false }) {
-                Surface(
-                    tonalElevation = 16.dp,
-                    shadowElevation = 16.dp,
-                    shape = MaterialTheme.shapes.extraLarge,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text(
-                            text = stringResource(R.string.widget_add_widget),
-                            style = MaterialTheme.typography.titleLarge,
-                            modifier = Modifier.padding(
-                                start = 24.dp,
-                                end = 24.dp,
-                                top = 24.dp,
-                                bottom = 8.dp
-                            )
-                        )
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    top = 16.dp
-                                )
-                        ) {
-                            items(availableBuiltInWidgets) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .clickable {
-                                            viewModel.addWidget(it)
-                                            showAddDialog = false
-                                        }
-                                        .padding(
-                                            horizontal = 24.dp,
-                                            vertical = 16.dp
-                                        )
-                                ) {
-                                    Text(
-                                        text = it.loadLabel(LocalContext.current),
-                                        style = MaterialTheme.typography.bodyLarge
-                                    )
-                                }
-                            }
-                            item {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(top = 16.dp)
-                                        .clickable {
-                                            pickWidgetLauncher.launch(
-                                                Intent(
-                                                    context,
-                                                    PickAppWidgetActivity::class.java
-                                                )
-                                            )
-                                            showAddDialog = false
-                                        }
-                                        .padding(
-                                            horizontal = 24.dp,
-                                            vertical = 16.dp
-                                        ),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Add,
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(end = 8.dp)
-                                    )
-                                    Text(
-                                        text = stringResource(R.string.widget_add_external),
-                                        style = MaterialTheme.typography.titleMedium
-                                    )
-                                }
-                            }
-                        }
-
-                        TextButton(
-                            onClick = { showAddDialog = false },
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .padding(bottom = 16.dp, end = 24.dp)
-                        ) {
-                            Text(
-                                stringResource(android.R.string.cancel)
-                            )
-                        }
-                    }
-                }
-            }
         }
     }
 }
