@@ -1,14 +1,21 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
+import WidgetsService
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.PackageManager
+import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.normalize
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +31,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class WidgetPickerSheetVM(
-    private val widgetRepository: WidgetRepository,
+    private val widgetsService: WidgetsService,
     private val context: Context,
 ) : ViewModel() {
 
@@ -32,11 +39,11 @@ class WidgetPickerSheetVM(
 
     val searchQuery = MutableStateFlow("")
 
-    private val enabledWidgets = widgetRepository.getWidgets()
+    private val enabledWidgets = widgetsService.getWidgets()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(100), emptyList())
 
     private val allBuiltInWidgets = enabledWidgets.map { w ->
-        widgetRepository.getInternalWidgets().filter { !w.contains(it) }
+        widgetsService.getBuiltInWidgets().filter { b -> !w.any { it::class == b::class } }
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
     val builtInWidgets = allBuiltInWidgets
@@ -45,13 +52,13 @@ class WidgetPickerSheetVM(
             withContext(Dispatchers.IO) {
                 val normalizedQuery = query.normalize()
                 widgets.filter {
-                    it.loadLabel(context).normalize().contains(normalizedQuery)
+                    it.label.normalize().contains(normalizedQuery)
                 }
             }
         }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
     private val allAppWidgets = flow {
-        val widgets = widgetRepository.getAppWidgets()
+        val widgets = widgetsService.getAppWidgetProviders()
         emit(widgets)
     }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
@@ -105,7 +112,7 @@ class WidgetPickerSheetVM(
 
     fun pickWidget(widget: Widget) {
         val position = enabledWidgets.value.size
-        widgetRepository.addWidget(widget, position)
+        widgetsService.addWidget(widget, position)
     }
 
     fun toggleGroup(group: String) {
@@ -123,10 +130,17 @@ class WidgetPickerSheetVM(
             }
         }
     }
+
 }
 
 data class AppWidgetGroup(
     val appName: String,
     val packageName: String,
     val widgets: List<AppWidgetProviderInfo>
+)
+
+data class BuiltInWidgetInfo(
+    val type: String,
+    @StringRes val label: Int,
+    val icon: ImageVector
 )

@@ -1,4 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    kotlin("plugin.serialization") version libs.versions.kotlin apply false
+    id("org.jetbrains.kotlin.android") version libs.versions.kotlin apply false
+}
 
 buildscript {
     repositories {

@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets
 
 import android.app.Activity
 import android.appwidget.AppWidgetHost
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.gestures.*
@@ -29,7 +30,6 @@ import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.widgets.*
-import java.lang.Integer.max
 import kotlin.math.roundToInt
 
 @Composable
@@ -38,7 +38,7 @@ fun WidgetItem(
     appWidgetHost: AppWidgetHost,
     modifier: Modifier = Modifier,
     editMode: Boolean = false,
-    onWidgetResize: (newHeight: Int) -> Unit = {},
+    onWidgetUpdate: (widget: Widget) -> Unit = {},
     onWidgetRemove: () -> Unit = {},
     draggableState: DraggableState = rememberDraggableState {},
     onDragStopped: () -> Unit = {}
@@ -84,7 +84,7 @@ fun WidgetItem(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-                    if (widget is ExternalWidget) {
+                    if (widget is AppWidget) {
                         IconButton(onClick = { resizeMode = !resizeMode }) {
                             Icon(
                                 imageVector = Icons.Rounded.Edit,
@@ -124,19 +124,19 @@ fun WidgetItem(
                     is FavoritesWidget -> {
                         FavoritesWidget()
                     }
-                    is ExternalWidget -> {
-                        var height by remember(widget) { mutableStateOf(widget.height) }
+                    is AppWidget -> {
+                        var dragDelta by remember { mutableStateOf(0) }
                         Column {
                             ExternalWidget(
                                 appWidgetHost = appWidgetHost,
-                                widgetId = widget.widgetId,
+                                widgetId = widget.config.widgetId,
                                 modifier = Modifier.fillMaxWidth(),
-                                height = height,
+                                height = widget.config.height + dragDelta,
                             )
                             if (resizeMode) {
                                 val density = LocalDensity.current
                                 val drgStt = rememberDraggableState {
-                                    height += (it / density.density).roundToInt()
+                                    dragDelta += (it / density.density).roundToInt()
                                 }
                                 Icon(
                                     imageVector = Icons.Rounded.DragHandle,
@@ -150,7 +150,12 @@ fun WidgetItem(
                                             orientation = Orientation.Vertical,
                                             startDragImmediately = true,
                                             onDragStopped = {
-                                                onWidgetResize(height)
+                                                onWidgetUpdate(widget.copy(
+                                                    config = widget.config.copy(
+                                                        height = widget.config.height + dragDelta
+                                                    )
+                                                ))
+                                                dragDelta = 0
                                             }
                                         )
                                 )

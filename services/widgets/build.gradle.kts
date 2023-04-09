@@ -1,7 +1,6 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    kotlin("plugin.serialization")
 }
 
 android {
@@ -18,8 +17,8 @@ android {
     buildTypes {
         release {
             proguardFiles(
-                    getDefaultProguardFile("proguard-android-optimize.txt"),
-                    "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -32,28 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "de.mm20.launcher2.widgets"
+    namespace = "de.mm20.launcher2.services.widgets"
 }
 
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.androidx.constraintlayout)
-
-    implementation(libs.bundles.androidx.lifecycle)
-
-    implementation(libs.kotlinx.serialization.json)
-
     implementation(libs.koin.android)
 
-    implementation(project(":data:weather"))
-    implementation(project(":data:calendar"))
-    implementation(project(":services:music"))
-    implementation(project(":core:ktx"))
     implementation(project(":core:base"))
-    implementation(project(":core:preferences"))
-    implementation(project(":core:database"))
-    implementation(project(":core:crashreporter"))
+    implementation(project(":core:i18n"))
+    implementation(project(":data:widgets"))
 
 }

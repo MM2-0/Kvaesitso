@@ -1,11 +1,7 @@
 package de.mm20.launcher2.widgets
 
-import android.appwidget.AppWidgetManager
-import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
-import android.content.pm.LauncherApps
-import android.content.pm.PackageManager
-import android.util.Log
+import androidx.room.withTransaction
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.WidgetEntity
@@ -16,22 +12,16 @@ import kotlinx.coroutines.flow.map
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.File
+import java.util.UUID
 
 interface WidgetRepository {
-    fun getWidgets(): Flow<List<Widget>>
-    fun getInternalWidgets(): List<Widget>
+    fun get(parent: UUID? = null, limit: Int = 100, offset: Int = 0): Flow<List<Widget>>
+    fun update(widget: Widget)
+    fun create(widget: Widget, position: Int, parentId: UUID? = null)
+    fun delete(widget: Widget)
+    fun set(widgets: List<Widget>, parentId: UUID? = null)
 
-    suspend fun getAppWidgets(): List<AppWidgetProviderInfo>
-    fun saveWidgets(widgets: List<Widget>)
-    fun addWidget(widget: Widget, position: Int)
-    fun removeWidget(widget: Widget)
-    fun setWidgetHeight(widget: Widget, newHeight: Int)
-    fun isWeatherWidgetEnabled(): Flow<Boolean>
-    fun isMusicWidgetEnabled(): Flow<Boolean>
-    fun isCalendarWidgetEnabled(): Flow<Boolean>
-    fun isFavoritesWidgetEnabled(): Flow<Boolean>
-
-    fun isFavoritesWidgetFirst(): Flow<Boolean>
+    fun exists(type: String): Flow<Boolean>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -43,92 +33,60 @@ internal class WidgetRepositoryImpl(
 ) : WidgetRepository {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
-    override fun getWidgets(): Flow<List<Widget>> {
-        return database.widgetDao()
-            .getWidgets()
-            .map { it.mapNotNull { Widget.fromDatabaseEntity(context, it) } }
-    }
-
-    override fun getInternalWidgets(): List<Widget> {
-        return listOf(WeatherWidget, MusicWidget, CalendarWidget, FavoritesWidget)
-    }
-
-    override suspend fun getAppWidgets(): List<AppWidgetProviderInfo> {
-        val appWidgetManager = AppWidgetManager.getInstance(context)
-        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        val profiles = launcherApps.profiles
-        val widgets = mutableListOf<AppWidgetProviderInfo>()
-        withContext(Dispatchers.IO) {
-            for (profile in profiles) {
-                widgets.addAll(appWidgetManager.getInstalledProvidersForProfile(profile))
-            }
+    override fun get(parent: UUID?, limit: Int, offset: Int): Flow<List<Widget>> {
+        val dao = database.widgetDao()
+        return if (parent == null) {
+            dao.queryRoot(limit, offset)
+        } else {
+            dao.queryByParent(parent, limit, offset)
+        }.map {
+            it.mapNotNull { Widget.fromDatabaseEntity(context, it) }
         }
-        return widgets
     }
 
-    override fun saveWidgets(widgets: List<Widget>) {
+    override fun update(widget: Widget) {
+        val dao = database.widgetDao()
         scope.launch {
-            withContext(Dispatchers.IO) {
-                database.widgetDao()
-                    .updateWidgets(widgets.mapIndexed { i, widget -> widget.toDatabaseEntity(i) })
-            }
+            dao.patch(widget.toDatabaseEntity())
         }
     }
 
-    override fun addWidget(widget: Widget, position: Int) {
+    override fun create(widget: Widget, position: Int, parentId: UUID?) {
+        val dao = database.widgetDao()
         scope.launch {
-            withContext(Dispatchers.IO) {
-                database.widgetDao()
-                    .insert(widget.toDatabaseEntity(position))
-            }
+            val entity = widget.toDatabaseEntity(position = position, parentId = parentId)
+            dao.insert(entity)
         }
     }
 
-    override fun removeWidget(widget: Widget) {
+    override fun delete(widget: Widget) {
+        val dao = database.widgetDao()
         scope.launch {
-            withContext(Dispatchers.IO) {
-                val ent = widget.toDatabaseEntity()
-                database.widgetDao().deleteWidget(
-                    ent.type,
-                    ent.data
-                )
-            }
+            dao.delete(widget.id)
         }
     }
 
-    override fun setWidgetHeight(widget: Widget, newHeight: Int) {
+    override fun set(widgets: List<Widget>, parentId: UUID?) {
+        val dao = database.widgetDao()
         scope.launch {
-            withContext(Dispatchers.IO) {
-                val ent = widget.toDatabaseEntity()
-                database.widgetDao().updateHeight(
-                    ent.type,
-                    ent.data,
-                    newHeight
-                )
+            database.withTransaction {
+                if (parentId == null) {
+                    dao.deleteRoot()
+                } else {
+                    dao.deleteByParent(parentId)
+                }
+                dao.insert(widgets.mapIndexed { index, widget ->
+                    widget.toDatabaseEntity(position = index, parentId = parentId)
+                })
             }
         }
     }
 
-    override fun isWeatherWidgetEnabled(): Flow<Boolean> {
-        return database.widgetDao().exists("internal", "weather")
+    override fun exists(type: String): Flow<Boolean> {
+        val dao = database.widgetDao()
+        return dao.exists(type = type)
     }
 
-    override fun isMusicWidgetEnabled(): Flow<Boolean> {
-        return database.widgetDao().exists("internal", "music")
-    }
-
-    override fun isCalendarWidgetEnabled(): Flow<Boolean> {
-        return database.widgetDao().exists("internal", "calendar")
-    }
-
-    override fun isFavoritesWidgetEnabled(): Flow<Boolean> {
-        return database.widgetDao().exists("internal", "favorites")
-    }
-
-    override fun isFavoritesWidgetFirst(): Flow<Boolean> {
-        return database.widgetDao().getFirst().map { it?.type == "internal" && it.data == "favorites" }
-    }
 
     override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
         val dao = database.backupDao()
@@ -140,13 +98,16 @@ internal class WidgetRepositoryImpl(
                 if (widget.type != WidgetType.INTERNAL.value) continue
                 jsonArray.put(
                     jsonObjectOf(
-                        "data" to widget.data,
+                        "config" to widget.config,
                         "position" to widget.position,
+                        "type" to widget.type,
+                        "id" to widget.id.toString(),
+                        "parentId" to widget.parentId?.toString(),
                     )
                 )
             }
 
-            val file = File(toDir, "widgets.${page.toString().padStart(4, '0')}")
+            val file = File(toDir, "widgets2.${page.toString().padStart(4, '0')}")
             file.bufferedWriter().use {
                 it.write(jsonArray.toString())
             }
@@ -158,7 +119,8 @@ internal class WidgetRepositoryImpl(
         val dao = database.backupDao()
         dao.wipeWidgets()
 
-        val files = fromDir.listFiles { _, name -> name.startsWith("widgets.") } ?: return@withContext
+        val files =
+            fromDir.listFiles { _, name -> name.startsWith("widgets2.") } ?: return@withContext
 
         for (file in files) {
             val widgets = mutableListOf<WidgetEntity>()
@@ -168,10 +130,11 @@ internal class WidgetRepositoryImpl(
                 for (i in 0 until jsonArray.length()) {
                     val json = jsonArray.getJSONObject(i)
                     val entity = WidgetEntity(
-                        type = WidgetType.INTERNAL.value,
+                        type = json.getString("type"),
                         position = json.getInt("position"),
-                        data = json.getString("data"),
-                        height = -1,
+                        config = json.optString("config"),
+                        id = json.getString("id").let { UUID.fromString(it) },
+                        parentId = json.optString("parentId").let { if (it.isEmpty()) null else UUID.fromString(it) }
                     )
                     widgets.add(entity)
                 }

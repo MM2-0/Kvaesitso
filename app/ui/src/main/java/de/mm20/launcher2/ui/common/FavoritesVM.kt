@@ -8,6 +8,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
@@ -36,7 +37,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
     open val favorites: Flow<List<SavableSearchable>> = selectedTag.flatMapLatest { tag ->
         if (tag == null) {
             val columns = dataStore.data.map { it.grid.columnCount }
-            val excludeCalendar = widgetRepository.isCalendarWidgetEnabled()
+            val excludeCalendar = widgetRepository.exists(CalendarWidget.Type)
             val includeFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }
             val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }
 

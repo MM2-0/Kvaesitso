@@ -150,4 +150,5 @@ dependencies {
     implementation(project(":services:backup"))
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))
+    implementation(project(":services:widgets"))
 }

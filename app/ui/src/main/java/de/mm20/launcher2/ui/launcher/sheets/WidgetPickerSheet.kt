@@ -61,11 +61,13 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.CalendarWidget
-import de.mm20.launcher2.widgets.ExternalWidget
+import de.mm20.launcher2.widgets.AppWidget
+import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import java.util.UUID
 import kotlin.math.roundToInt
 
 class BindAndConfigureAppWidgetActivity : Activity() {
@@ -191,9 +193,12 @@ private class BindAndConfigureAppWidgetContract(
             )
 
             if (widgetId != null && widgetProviderInfo != null) {
-                return ExternalWidget(
-                    height = widgetProviderInfo.minHeight,
-                    widgetId = widgetId,
+                return AppWidget(
+                    id = UUID.randomUUID(),
+                    config = AppWidgetConfig(
+                        height = widgetProviderInfo.minHeight,
+                        widgetId = widgetId,
+                    ),
                     widgetProviderInfo = widgetProviderInfo,
                 )
             }
@@ -277,7 +282,15 @@ fun WidgetPickerSheet(
                         .fillMaxWidth()
                         .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
                     onClick = {
-                        viewModel.pickWidget(it)
+                        val id = UUID.randomUUID()
+                        val widget = when(it.type) {
+                            WeatherWidget.Type -> WeatherWidget(id)
+                            CalendarWidget.Type -> CalendarWidget(id)
+                            MusicWidget.Type -> MusicWidget(id)
+                            FavoritesWidget.Type -> FavoritesWidget(id)
+                            else -> return@OutlinedCard
+                        }
+                        viewModel.pickWidget(widget)
                         onDismiss()
                     }) {
                     Row(
@@ -285,18 +298,18 @@ fun WidgetPickerSheet(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
-                            imageVector = when (it) {
-                                is WeatherWidget -> Icons.Rounded.LightMode
-                                is CalendarWidget -> Icons.Rounded.Today
-                                is MusicWidget -> Icons.Rounded.MusicNote
-                                is FavoritesWidget -> Icons.Rounded.Star
+                            imageVector = when (it.type) {
+                                WeatherWidget.Type -> Icons.Rounded.LightMode
+                                CalendarWidget.Type -> Icons.Rounded.Today
+                                MusicWidget.Type -> Icons.Rounded.MusicNote
+                                FavoritesWidget.Type -> Icons.Rounded.Star
                                 else -> Icons.Rounded.Widgets
                             },
                             contentDescription = null,
                             modifier = Modifier.padding(end = 16.dp)
                         )
                         Text(
-                            text = it.loadLabel(context),
+                            text = it.label,
                             style = MaterialTheme.typography.titleSmall
                         )
                     }

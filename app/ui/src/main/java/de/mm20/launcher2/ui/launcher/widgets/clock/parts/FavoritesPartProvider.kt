@@ -16,6 +16,7 @@ import de.mm20.launcher2.favorites.FavoritesRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
+import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -41,7 +42,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
                 if (layout == ClockWidgetLayout.Horizontal) c - 2 else c
             }
         }.collectAsState(0)
-        val excludeCalendar by remember { widgetRepository.isCalendarWidgetEnabled() }.collectAsState(
+        val excludeCalendar by remember { widgetRepository.exists(CalendarWidget.Type) }.collectAsState(
             true
         )
 

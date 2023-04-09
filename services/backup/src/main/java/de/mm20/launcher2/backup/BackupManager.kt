@@ -188,7 +188,7 @@ class BackupManager(
          */
 
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 5
+        private const val BackupFormatMinor = 6
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }

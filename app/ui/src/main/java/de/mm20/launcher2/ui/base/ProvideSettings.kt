@@ -8,6 +8,7 @@ import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -35,7 +36,7 @@ fun ProvideSettings(
 
     val favoritesEnabled by remember {
         combine(
-            widgetRepository.isFavoritesWidgetEnabled(),
+            widgetRepository.exists(FavoritesWidget.Type),
             dataStore.data.map { it.favorites.enabled },
             dataStore.data.map { it.clockWidget.favoritesPart },
         ) { a, b, c -> a || b || c }.distinctUntilChanged()

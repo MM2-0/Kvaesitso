@@ -1,11 +1,9 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import android.appwidget.AppWidgetManager
-import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.widgets.ExternalWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.map
@@ -19,49 +17,28 @@ class WidgetsVM : ViewModel(), KoinComponent {
 
     val editButton = dataStore.data.map { it.widgets.editButton }.asLiveData()
 
-    val widgets = widgetRepository.getWidgets().asLiveData()
+    val widgets = widgetRepository.get().asLiveData()
 
-    fun addWidget(widget: Widget) {
-        widgetRepository.addWidget(widget, widgets.value?.size ?: 0)
-    }
-
-    fun addAppWidget(context: Context, widgetId: Int) {
-        if (widgetId == AppWidgetManager.INVALID_APPWIDGET_ID) return
-        val appWidget = AppWidgetManager.getInstance(context)
-            .getAppWidgetInfo(widgetId) ?: return
-        val widget = ExternalWidget(
-            widgetProviderInfo = appWidget,
-            height = appWidget.minHeight,
-            widgetId =  widgetId,
-        )
-        addWidget(widget)
-    }
 
     fun removeWidget(widget: Widget) {
-        widgetRepository.removeWidget(widget)
+        widgetRepository.delete(widget)
     }
 
-    fun setWidgetHeight(widget: Widget, newHeight: Int) {
-        widgetRepository.setWidgetHeight(widget, newHeight)
-    }
-
-    fun getAvailableBuiltInWidgets(): List<Widget> {
-        return widgetRepository.getInternalWidgets().filter {
-            widgets.value?.contains(it)?.not() ?: false
-        }
+    fun updateWidget(widget: Widget) {
+        widgetRepository.update(widget)
     }
 
     fun moveUp(index: Int) {
         val widgets = widgets.value?.toMutableList() ?: return
         val widget = widgets.removeAt(index)
         widgets.add(index - 1, widget)
-        widgetRepository.saveWidgets(widgets)
+        widgetRepository.set(widgets)
     }
 
     fun moveDown(index: Int) {
         val widgets = widgets.value?.toMutableList() ?: return
         val widget = widgets.removeAt(index)
         widgets.add(index + 1, widget)
-        widgetRepository.saveWidgets(widgets)
+        widgetRepository.set(widgets)
     }
 }

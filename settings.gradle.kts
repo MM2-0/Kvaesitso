@@ -30,6 +30,9 @@ dependencyResolutionManagement {
                     "kotlinx.collections.immutable"
                 )
             )
+            version("kotlinx.serialization", "1.5.0")
+            library("kotlinx.serialization.json", "org.jetbrains.kotlinx", "kotlinx-serialization-json")
+                .versionRef("kotlinx.serialization")
 
             version("androidx.compose.compiler", "1.4.4")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
@@ -297,3 +300,4 @@ include(":libs:webdav")
 include(":libs:g-services")
 include(":libs:ms-services")
 include(":services:global-actions")
+include(":services:widgets")
