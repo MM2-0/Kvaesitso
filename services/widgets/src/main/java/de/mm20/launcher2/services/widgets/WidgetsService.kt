@@ -23,13 +23,26 @@ class WidgetsService(
 ) {
     suspend fun getAppWidgetProviders(): List<AppWidgetProviderInfo> = withContext(Dispatchers.IO) {
         val appWidgetManager = AppWidgetManager.getInstance(context)
-        val launcherApps = context.getSystemService<LauncherApps>() ?: return@withContext emptyList()
+        val launcherApps =
+            context.getSystemService<LauncherApps>() ?: return@withContext emptyList()
         val profiles = launcherApps.profiles
         val widgets = mutableListOf<AppWidgetProviderInfo>()
         for (profile in profiles) {
             widgets.addAll(appWidgetManager.getInstalledProvidersForProfile(profile))
         }
         widgets
+    }
+
+    fun getAvailableBuiltInWidgets(): Flow<List<BuiltInWidgetInfo>> {
+        return widgetRepository.get().map { widgets ->
+            getBuiltInWidgets().filter {
+                it.type == FavoritesWidget.Type && !widgets.any { it is FavoritesWidget } ||
+                        it.type == WeatherWidget.Type && !widgets.any { it is WeatherWidget } ||
+                        it.type == MusicWidget.Type && !widgets.any { it is MusicWidget } ||
+                        it.type == CalendarWidget.Type && !widgets.any { it is CalendarWidget }
+
+            }
+        }
     }
 
     fun getBuiltInWidgets(): List<BuiltInWidgetInfo> {

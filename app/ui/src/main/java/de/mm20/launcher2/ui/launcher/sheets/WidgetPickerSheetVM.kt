@@ -42,9 +42,9 @@ class WidgetPickerSheetVM(
     private val enabledWidgets = widgetsService.getWidgets()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(100), emptyList())
 
-    private val allBuiltInWidgets = enabledWidgets.map { w ->
-        widgetsService.getBuiltInWidgets().filter { b -> !w.any { it::class == b::class } }
-    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
+    private val allBuiltInWidgets =
+        widgetsService.getAvailableBuiltInWidgets()
+            .shareIn(viewModelScope, SharingStarted.WhileSubscribed(100))
 
     val builtInWidgets = allBuiltInWidgets
         .combine(searchQuery) { widgets, query ->
