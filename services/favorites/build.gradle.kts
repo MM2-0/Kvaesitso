@@ -1,6 +1,6 @@
 plugins {
     id("com.android.library")
-    id("org.jetbrains.kotlin.android")
+    id("kotlin-android")
 }
 
 android {
@@ -31,23 +31,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "de.mm20.launcher2.services.tags"
+    namespace = "de.mm20.launcher2.services.favorites"
 }
 
 dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.core)
-    implementation(libs.androidx.appcompat)
-
-    implementation(libs.bundles.androidx.lifecycle)
-
     implementation(libs.koin.android)
 
-    implementation(project(":core:preferences"))
     implementation(project(":core:base"))
-    implementation(project(":core:ktx"))
-    implementation(project(":core:crashreporter"))
-    implementation(project(":data:customattrs"))
+    implementation(project(":core:i18n"))
     implementation(project(":data:searchable"))
 
 }

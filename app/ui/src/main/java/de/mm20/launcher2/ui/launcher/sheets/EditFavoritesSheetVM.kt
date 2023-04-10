@@ -13,7 +13,7 @@ import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.normalize
@@ -24,6 +24,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
@@ -34,7 +35,7 @@ import org.koin.core.component.inject
 
 class EditFavoritesSheetVM : ViewModel(), KoinComponent {
 
-    private val repository: FavoritesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
     private val shortcutRepository: AppShortcutRepository by inject()
     private val iconRepository: IconRepository by inject()
     private val badgeRepository: BadgeRepository by inject()
@@ -58,19 +59,19 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     suspend fun reload(showLoadingIndicator: Boolean = true) {
         loading.value = showLoadingIndicator
         manuallySorted = mutableListOf()
-        manuallySorted = repository.getFavorites(
+        manuallySorted = favoritesService.getFavorites(
             manuallySorted = true,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
-        automaticallySorted = repository.getFavorites(
+        automaticallySorted = favoritesService.getFavorites(
             automaticallySorted = true,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
-        frequentlyUsed = repository.getFavorites(
+        frequentlyUsed = favoritesService.getFavorites(
             frequentlyUsed = true,
             excludeTypes = listOf("tag"),
         ).first().toMutableList()
-        val pinnedTags = repository.getFavorites(
+        val pinnedTags = favoritesService.getFavorites(
             includeTypes = listOf("tag"),
             manuallySorted = true,
             automaticallySorted = true,
@@ -169,7 +170,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     }
 
     private fun save() {
-        repository.updateFavorites(
+        favoritesService.updateFavorites(
             manuallySorted = buildList {
                 pinnedTags.value?.let { addAll(it) }
                 addAll(manuallySorted)
@@ -236,7 +237,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         val item =
             gridItems.find { it is FavoritesSheetGridItem.Favorite && it.item.key == key } as FavoritesSheetGridItem.Favorite?
         if (item != null) {
-            repository.removeFromFavorites(item.item)
+            favoritesService.reset(item.item)
             automaticallySorted.removeAll { it.key == item.item.key }
                     || manuallySorted.removeAll { it.key == item.item.key }
                     || frequentlyUsed.removeAll { it.key == item.item.key }
@@ -310,9 +311,9 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
                     || frequentlyUsed.removeAll { it.key == item.item.key }
             buildItemList()
             customAttributesRepository.addTag(item.item, tag)
-            repository.unpinItem(item.item)
+            favoritesService.unpinItem(item.item)
             viewModelScope.launch {
-                frequentlyUsed = repository.getFavorites(
+                frequentlyUsed = favoritesService.getFavorites(
                     frequentlyUsed = true,
                     excludeTypes = listOf("tag"),
                 ).first().toMutableList()

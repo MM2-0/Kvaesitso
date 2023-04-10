@@ -1,4 +1,4 @@
-package de.mm20.launcher2.favorites
+package de.mm20.launcher2.searchable
 
 import android.content.Context
 import de.mm20.launcher2.appshortcuts.LauncherShortcutDeserializer
@@ -12,6 +12,7 @@ import de.mm20.launcher2.contacts.ContactSerializer
 import de.mm20.launcher2.files.*
 import de.mm20.launcher2.search.NullDeserializer
 import de.mm20.launcher2.search.NullSerializer
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
@@ -21,6 +22,10 @@ import de.mm20.launcher2.websites.WebsiteSerializer
 import de.mm20.launcher2.wikipedia.WikipediaDeserializer
 import de.mm20.launcher2.wikipedia.WikipediaSerializer
 
+internal fun SavableSearchable.serialize(): String? {
+    val serializer = getSerializer(this)
+    return serializer.serialize(this)
+}
 
 internal fun getSerializer(searchable: Searchable?): SearchableSerializer {
     if (searchable is LauncherApp) {

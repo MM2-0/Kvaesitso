@@ -10,12 +10,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
@@ -31,11 +32,12 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
     private val calendarRepository: CalendarRepository by inject()
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
+    private val searchableRepository: SearchableRepository by inject()
 
     val calendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
-        favoritesRepository.getFavorites(
+        favoritesService.getFavorites(
             includeTypes = listOf(CalendarEvent.Domain),
             automaticallySorted = true,
             manuallySorted = true,
@@ -158,7 +160,10 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 excludeAllDayEvents = settings.hideAlldayEvents,
                 excludeCalendars = settings.excludeCalendarsList
             ).collectLatest { events ->
-                favoritesRepository.getHiddenCalendarEventKeys().collectLatest { hidden ->
+                searchableRepository.getKeys(
+                    includeTypes = listOf(CalendarEvent.Domain),
+                    hidden = true,
+                ).collectLatest { hidden ->
                     upcomingEvents = events.filter { !hidden.contains(it.key) }
                 }
             }

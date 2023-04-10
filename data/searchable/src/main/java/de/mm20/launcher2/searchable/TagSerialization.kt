@@ -1,4 +1,4 @@
-package de.mm20.launcher2.favorites
+package de.mm20.launcher2.searchable
 
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer

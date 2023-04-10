@@ -120,15 +120,15 @@ class AppItemVM(
     }
 
     fun isShortcutPinned(shortcut: AppShortcut): Flow<Boolean> {
-        return favoritesRepository.isPinned(shortcut)
+        return searchableRepository.isPinned(shortcut)
     }
 
     fun pinShortcut(shortcut: AppShortcut) {
-        favoritesRepository.pinItem(shortcut)
+        favoritesService.pinItem(shortcut)
     }
 
     fun unpinShortcut(shortcut: AppShortcut) {
-        favoritesRepository.unpinItem(shortcut)
+        favoritesService.unpinItem(shortcut)
     }
 
     fun launchShortcut(context: Context, shortcut: AppShortcut) {

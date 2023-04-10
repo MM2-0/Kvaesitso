@@ -133,7 +133,7 @@ dependencies {
     implementation(project(":data:calculator"))
     implementation(project(":data:files"))
     implementation(project(":data:widgets"))
-    implementation(project(":data:favorites"))
+    implementation(project(":data:searchable"))
     implementation(project(":data:wikipedia"))
     implementation(project(":services:badges"))
     implementation(project(":core:crashreporter"))
@@ -151,4 +151,5 @@ dependencies {
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
+    implementation(project(":services:favorites"))
 }

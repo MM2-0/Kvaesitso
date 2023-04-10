@@ -3,7 +3,7 @@ package de.mm20.launcher2.data.customattrs
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.collections.immutable.ImmutableList
@@ -46,7 +46,7 @@ interface CustomAttributesRepository {
 
 internal class CustomAttributesRepositoryImpl(
     private val appDatabase: AppDatabase,
-    private val favoritesRepository: FavoritesRepository
+    private val searchableRepository: SearchableRepository
 ) : CustomAttributesRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
@@ -79,7 +79,7 @@ internal class CustomAttributesRepositoryImpl(
     override fun setCustomLabel(searchable: SavableSearchable, label: String) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
-            favoritesRepository.save(searchable)
+            searchableRepository.insert(searchable)
             appDatabase.runInTransaction {
                 dao.clearCustomAttribute(searchable.key, CustomAttributeType.Label.value)
                 dao.setCustomAttribute(
@@ -102,7 +102,7 @@ internal class CustomAttributesRepositoryImpl(
     override fun setTags(searchable: SavableSearchable, tags: List<String>) {
         val dao = appDatabase.customAttrsDao()
         scope.launch {
-            favoritesRepository.save(searchable)
+            searchableRepository.insert(searchable)
             dao.setTags(searchable.key, tags.map {
                 CustomTag(it).toDatabaseEntity(searchable.key)
             })
@@ -128,7 +128,7 @@ internal class CustomAttributesRepositoryImpl(
     override fun getItemsForTag(tag: String): Flow<List<SavableSearchable>> {
         val dao = appDatabase.customAttrsDao()
         return dao.getItemsWithTag(tag).map {
-            favoritesRepository.getFromKeys(it)
+            searchableRepository.getByKeys(it)
         }
     }
 
@@ -137,7 +137,7 @@ internal class CustomAttributesRepositoryImpl(
         return scope.launch {
             dao.setItemsWithTag(tag, items.map { it.key })
             for (item in items) {
-                favoritesRepository.save(item)
+                searchableRepository.insert(item)
             }
         }
     }
@@ -172,7 +172,7 @@ internal class CustomAttributesRepositoryImpl(
         }
         val dao = appDatabase.customAttrsDao()
         return dao.search("%$query%").map {
-            favoritesRepository.getFromKeys(it).toImmutableList()
+            searchableRepository.getByKeys(it).toImmutableList()
         }
     }
 

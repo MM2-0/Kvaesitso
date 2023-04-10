@@ -1,7 +1,7 @@
 package de.mm20.launcher2.services.tags.impl
 
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.services.tags.TagsService
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 internal class TagsServiceImpl(
     private val customAttributesRepository: CustomAttributesRepository,
-    private val favoritesRepository: FavoritesRepository,
+    private val searchableRepository: SearchableRepository,
 ) : TagsService {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
     override fun getAllTags(startsWith: String?): Flow<List<String>> {
@@ -22,7 +22,7 @@ internal class TagsServiceImpl(
     }
 
     override fun deleteTag(tag: String) {
-        favoritesRepository.remove(Tag(tag))
+        searchableRepository.delete(Tag(tag))
         customAttributesRepository.deleteTag(tag)
     }
 
@@ -44,15 +44,15 @@ internal class TagsServiceImpl(
             }
             if (newName != null && newName != tag) {
                 customAttributesRepository.renameTag(tag, newName).join()
-                val pinnedTags = favoritesRepository.getFavorites(
+                val pinnedTags = searchableRepository.get(
                     includeTypes = listOf(Tag.Domain),
                     manuallySorted = true,
                     automaticallySorted = true
                 ).first()
                 val oldTag = Tag(tag)
                 if (pinnedTags.any { it.key == oldTag.key }) {
-                    favoritesRepository.unpinItem(oldTag)
-                    favoritesRepository.pinItem(Tag(newName))
+                    searchableRepository.update(oldTag, pinned = false)
+                    searchableRepository.update(Tag(newName), pinned = true)
                 }
             }
 

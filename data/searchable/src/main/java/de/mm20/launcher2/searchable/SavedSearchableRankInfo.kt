@@ -1,4 +1,4 @@
-package de.mm20.launcher2.favorites
+package de.mm20.launcher2.searchable
 
 data class SavedSearchableRankInfo(
     val key: String,

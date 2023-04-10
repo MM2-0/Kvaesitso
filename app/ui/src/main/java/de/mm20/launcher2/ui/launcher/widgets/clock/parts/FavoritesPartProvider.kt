@@ -5,16 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
+import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.ui.launcher.search.common.grid.SearchResultGrid
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -26,7 +26,7 @@ import org.koin.core.component.inject
 
 class FavoritesPartProvider : PartProvider, KoinComponent {
 
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
     private val widgetRepository: WidgetRepository by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -47,7 +47,7 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         )
 
         val favorites by remember(columns, excludeCalendar, layout) {
-            favoritesRepository.getFavorites(
+            favoritesService.getFavorites(
                 excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                 manuallySorted = true,
                 automaticallySorted = true,

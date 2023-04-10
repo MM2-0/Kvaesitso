@@ -132,7 +132,7 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":data:currencies"))
     implementation(project(":data:customattrs"))
-    implementation(project(":data:favorites"))
+    implementation(project(":data:searchable"))
     implementation(project(":data:files"))
     implementation(project(":libs:g-services"))
     implementation(project(":core:i18n"))
@@ -157,6 +157,7 @@ dependencies {
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
+    implementation(project(":services:favorites"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)

@@ -5,8 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.favorites.FavoritesRepository
-import de.mm20.launcher2.favorites.SavedSearchableRankInfo
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -24,6 +23,7 @@ import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.searchactions.actions.SearchAction
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -42,7 +42,8 @@ import org.koin.core.component.inject
 
 class SearchVM : ViewModel(), KoinComponent {
 
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
+    private val searchableRepository: SearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -71,8 +72,10 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
     val hideFavorites = mutableStateOf(false)
 
-    private val hiddenItemKeys = favoritesRepository
-        .getHiddenItemKeys()
+    private val hiddenItemKeys = searchableRepository
+        .getKeys(
+            hidden = true,
+        )
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
     val bestMatch = mutableStateOf<Searchable?>(null)
@@ -85,7 +88,7 @@ class SearchVM : ViewModel(), KoinComponent {
         val bestMatch = bestMatch.value
         if (bestMatch is SavableSearchable) {
             bestMatch.launch(context, null)
-            favoritesRepository.incrementLaunchCounter(bestMatch)
+            favoritesService.reportLaunch(bestMatch)
             return
         } else if (bestMatch is SearchAction) {
             bestMatch.start(context)
@@ -144,11 +147,11 @@ class SearchVM : ViewModel(), KoinComponent {
                             val keys = resultsList.mapNotNull { (it as? SavableSearchable)?.key }
                             when (settings.resultOrdering.ordering) {
 
-                                Ordering.LaunchCount -> favoritesRepository.sortByRelevance(
+                                Ordering.LaunchCount -> searchableRepository.sortByRelevance(
                                     keys
                                 ).first()
 
-                                Ordering.Weighted -> favoritesRepository.sortByWeight(
+                                Ordering.Weighted -> searchableRepository.sortByWeight(
                                     keys
                                 ).first()
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
-import android.util.Log
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.AppShortcut
@@ -37,6 +36,6 @@ class ShortcutItemVM(private val shortcut: AppShortcut) : SearchableItemVM(short
     fun deleteShortcut() {
         if (!canDelete) return
         if (shortcut is LauncherShortcut) shortcutRepository.removePinnedShortcut(shortcut)
-        favoritesRepository.unpinItem(shortcut)
+        searchableRepository.delete(shortcut)
     }
 }

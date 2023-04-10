@@ -9,8 +9,15 @@ data class SavedSearchableEntity(
         @PrimaryKey val key: String,
         val type: String,
         @ColumnInfo(name = "searchable") val serializedSearchable: String,
-        var launchCount: Int,
-        @ColumnInfo(name = "pinned") var pinPosition: Int,
-        var hidden: Boolean,
-        @ColumnInfo(defaultValue = "0.0") var weight: Double
+        @ColumnInfo(defaultValue = "0") val launchCount: Int,
+        @ColumnInfo(defaultValue = "0") val pinPosition: Int,
+        @ColumnInfo(defaultValue = "0") val hidden: Boolean,
+        @ColumnInfo(defaultValue = "0.0") val weight: Double
+)
+
+data class SavedSearchableUpdatePinEntity(
+        val key: String,
+        val type: String,
+        @ColumnInfo(name = "searchable") val serializedSearchable: String,
+        val pinPosition: Int? = null,
 )

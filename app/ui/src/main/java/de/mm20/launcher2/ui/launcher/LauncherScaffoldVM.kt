@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Rect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -11,7 +10,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -38,7 +37,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val globalActionsService: GlobalActionsService by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val searchableRepository: SearchableRepository by inject()
 
     private var isSystemInDarkMode = MutableStateFlow(false)
 
@@ -137,7 +136,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 swipeDownAppKey,
                 longPressAppKey,
                 doubleTapAppKey
-            ).let { favoritesRepository.getFromKeys(it) }
+            ).let { searchableRepository.getByKeys(it) }
 
             GestureState(
                 swipeLeftAction = swipeLeftAction,

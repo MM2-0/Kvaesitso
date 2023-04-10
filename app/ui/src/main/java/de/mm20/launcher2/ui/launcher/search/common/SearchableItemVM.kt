@@ -6,44 +6,42 @@ import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.badges.BadgeRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 abstract class SearchableItemVM(
     private val searchable: SavableSearchable
 ) : KoinComponent {
-    protected val favoritesRepository: FavoritesRepository by inject()
+    protected val favoritesService: FavoritesService by inject()
+    protected val searchableRepository: SearchableRepository by inject()
     protected val badgeRepository: BadgeRepository by inject()
     protected val iconRepository: IconRepository by inject()
     protected val customAttributesRepository: CustomAttributesRepository by inject()
 
-    val isPinned = favoritesRepository.isPinned(searchable)
+    val isPinned = searchableRepository.isPinned(searchable)
     fun pin() {
-        favoritesRepository.pinItem(searchable)
+        favoritesService.pinItem(searchable)
     }
 
     fun unpin() {
-        favoritesRepository.unpinItem(searchable)
+        favoritesService.unpinItem(searchable)
     }
 
-    val isHidden = favoritesRepository.isHidden(searchable)
+    val isHidden = searchableRepository.isHidden(searchable)
     fun hide() {
-        favoritesRepository.hideItem(searchable)
+        searchableRepository.upsert(searchable, hidden = true, pinned = false)
     }
 
     fun unhide() {
-        favoritesRepository.unhideItem(searchable)
+        searchableRepository.update(searchable, hidden = false)
     }
 
     val badge = badgeRepository.getBadge(searchable)
@@ -71,10 +69,10 @@ abstract class SearchableItemVM(
         }
         val bundle = options.toBundle()
         if (searchable.launch(context, bundle)) {
-            favoritesRepository.incrementLaunchCounter(searchable)
+            favoritesService.reportLaunch(searchable)
             return true
         } else if (searchable is LauncherApp || searchable is AppShortcut) {
-            favoritesRepository.remove(searchable)
+            searchableRepository.delete(searchable)
         }
         return false
     }

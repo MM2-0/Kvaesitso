@@ -4,10 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
+import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.*
@@ -16,7 +17,7 @@ import org.koin.core.component.inject
 
 abstract class FavoritesVM : ViewModel(), KoinComponent {
 
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val favoritesService: FavoritesService by inject()
     internal val widgetRepository: WidgetRepository by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
     internal val dataStore: LauncherDataStore by inject()
@@ -26,7 +27,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
     val showEditButton = dataStore.data.map { it.favorites.editButton }
     abstract val tagsExpanded: Flow<Boolean>
 
-    val pinnedTags = favoritesRepository.getFavorites(
+    val pinnedTags = favoritesService.getFavorites(
         includeTypes = listOf("tag"),
         manuallySorted = true,
         automaticallySorted = true,
@@ -55,7 +56,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
                 val includeFrequentlyUsed = it[2] as Boolean
                 val frequentlyUsedRows = it[3] as Int
 
-                val pinned = favoritesRepository.getFavorites(
+                val pinned = favoritesService.getFavorites(
                     excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                     manuallySorted = true,
                     automaticallySorted = true,
@@ -63,7 +64,7 @@ abstract class FavoritesVM : ViewModel(), KoinComponent {
                 )
                 if (includeFrequentlyUsed) {
                     emitAll(pinned.flatMapLatest { pinned ->
-                        favoritesRepository.getFavorites(
+                        favoritesService.getFavorites(
                             excludeTypes = if (excludeCalendar) listOf("calendar", "tag") else listOf("tag"),
                             frequentlyUsed = true,
                             limit = frequentlyUsedRows * columns - pinned.size % columns,

@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import de.mm20.launcher2.applications.AppRepository
-import de.mm20.launcher2.favorites.FavoritesRepository
+import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -26,26 +26,26 @@ import org.koin.core.component.inject
 
 class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     private val appRepository: AppRepository by inject()
-    private val favoritesRepository: FavoritesRepository by inject()
+    private val searchableRepository: SearchableRepository by inject()
     private val iconRepository: IconRepository by inject()
 
     val allApps = appRepository.getAllInstalledApps().map {
         withContext(Dispatchers.Default) { it.sorted() }
     }.asLiveData()
     val hiddenItems: LiveData<List<SavableSearchable>> = liveData {
-        val hidden = favoritesRepository.getHiddenItems().first().filter { it !is LauncherApp }.sorted()
+        val hidden = searchableRepository.get(hidden = true).first().filter { it !is LauncherApp }.sorted()
         emit(hidden)
     }
 
     fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
-        return favoritesRepository.isHidden(searchable)
+        return searchableRepository.isHidden(searchable)
     }
 
     fun setHidden(searchable: SavableSearchable, hidden: Boolean) {
         if(hidden) {
-            favoritesRepository.hideItem(searchable)
+            searchableRepository.upsert(searchable, hidden = true, pinned = false)
         } else {
-            favoritesRepository.unhideItem(searchable)
+            searchableRepository.update(searchable, hidden = false)
         }
     }
 

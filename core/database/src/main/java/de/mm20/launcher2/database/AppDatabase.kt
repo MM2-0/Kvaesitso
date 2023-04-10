@@ -22,6 +22,7 @@ import de.mm20.launcher2.database.migrations.Migration_19_20
 import de.mm20.launcher2.database.migrations.Migration_20_21
 import de.mm20.launcher2.database.migrations.Migration_21_22
 import de.mm20.launcher2.database.migrations.Migration_22_23
+import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -39,14 +40,15 @@ import java.util.UUID
         WidgetEntity::class,
         CustomAttributeEntity::class,
         SearchActionEntity::class
-    ], version = 23, exportSchema = true
+    ], version = 24, exportSchema = true
 )
-@TypeConverters(ComponentNameConverter::class, StringListConverter::class)
+@TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun weatherDao(): WeatherDao
-    abstract fun searchDao(): SearchDao
     abstract fun iconDao(): IconDao
+
+    abstract fun searchableDao(): SearchableDao
     abstract fun widgetDao(): WidgetDao
     abstract fun currencyDao(): CurrencyDao
     abstract fun backupDao(): BackupRestoreDao
@@ -114,6 +116,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_20_21(),
                         Migration_21_22(),
                         Migration_22_23(),
+                        Migration_23_24(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

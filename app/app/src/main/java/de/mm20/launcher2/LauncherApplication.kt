@@ -13,7 +13,7 @@ import de.mm20.launcher2.calculator.calculatorModule
 import de.mm20.launcher2.calendar.calendarModule
 import de.mm20.launcher2.contacts.contactsModule
 import de.mm20.launcher2.data.customattrs.customAttrsModule
-import de.mm20.launcher2.favorites.favoritesModule
+import de.mm20.launcher2.searchable.searchableModule
 import de.mm20.launcher2.files.filesModule
 import de.mm20.launcher2.icons.iconsModule
 import de.mm20.launcher2.music.musicModule
@@ -29,6 +29,7 @@ import de.mm20.launcher2.notifications.notificationsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.searchactions.searchActionsModule
+import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
 import de.mm20.launcher2.services.widgets.widgetsServiceModule
 import de.mm20.launcher2.weather.weatherModule
@@ -67,6 +68,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     customAttrsModule,
                     databaseModule,
                     favoritesModule,
+                    searchableModule,
                     filesModule,
                     globalActionsModule,
                     iconsModule,
