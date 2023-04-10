@@ -40,10 +40,12 @@ digraph {
   ":services:accounts" [fillcolor="#ff9498"];
   ":services:backup" [fillcolor="#ff9498"];
   ":services:badges" [fillcolor="#ff9498"];
+  ":services:global-actions" [fillcolor="#ff9498"];
   ":services:icons" [fillcolor="#ff9498"];
   ":services:music" [fillcolor="#ff9498"];
   ":services:search" [fillcolor="#ff9498"];
   ":services:tags" [fillcolor="#ff9498"];
+  ":services:widgets" [fillcolor="#ff9498"];
 
   {rank = same;}
 
@@ -76,6 +78,7 @@ digraph {
   ":app:app" -> ":core:permissions" [style=dotted]
   ":app:app" -> ":core:preferences" [style=dotted]
   ":app:app" -> ":services:search" [style=dotted]
+  ":app:app" -> ":services:tags" [style=dotted]
   ":app:app" -> ":data:unitconverter" [style=dotted]
   ":app:app" -> ":app:ui" [style=dotted]
   ":app:app" -> ":data:weather" [style=dotted]
@@ -84,6 +87,8 @@ digraph {
   ":app:app" -> ":data:wikipedia" [style=dotted]
   ":app:app" -> ":core:database" [style=dotted]
   ":app:app" -> ":data:search-actions" [style=dotted]
+  ":app:app" -> ":services:global-actions" [style=dotted]
+  ":app:app" -> ":services:widgets" [style=dotted]
   ":app:ui" -> ":app:ui"
   ":app:ui" -> ":libs:material-color-utilities" [style=dotted]
   ":app:ui" -> ":core:base" [style=dotted]
@@ -92,6 +97,7 @@ digraph {
   ":app:ui" -> ":core:ktx" [style=dotted]
   ":app:ui" -> ":services:icons" [style=dotted]
   ":app:ui" -> ":services:music" [style=dotted]
+  ":app:ui" -> ":services:tags" [style=dotted]
   ":app:ui" -> ":data:weather" [style=dotted]
   ":app:ui" -> ":data:calendar" [style=dotted]
   ":app:ui" -> ":services:search" [style=dotted]
@@ -117,6 +123,8 @@ digraph {
   ":app:ui" -> ":services:accounts" [style=dotted]
   ":app:ui" -> ":services:backup" [style=dotted]
   ":app:ui" -> ":data:search-actions" [style=dotted]
+  ":app:ui" -> ":services:global-actions" [style=dotted]
+  ":app:ui" -> ":services:widgets" [style=dotted]
   ":core:base" -> ":core:base"
   ":core:base" -> ":core:ktx" [style=dotted]
   ":core:base" -> ":core:i18n" [style=dotted]
@@ -192,6 +200,7 @@ digraph {
   ":data:files" -> ":libs:owncloud" [style=dotted]
   ":data:files" -> ":core:i18n" [style=dotted]
   ":data:files" -> ":core:permissions" [style=dotted]
+  ":data:files" -> ":core:crashreporter" [style=dotted]
   ":data:notifications" -> ":data:notifications"
   ":data:notifications" -> ":core:permissions" [style=dotted]
   ":data:search-actions" -> ":data:search-actions"
@@ -266,6 +275,11 @@ digraph {
   ":services:badges" -> ":core:preferences" [style=dotted]
   ":services:badges" -> ":core:base" [style=dotted]
   ":services:badges" -> ":data:files" [style=dotted]
+  ":services:global-actions" -> ":services:global-actions"
+  ":services:global-actions" -> ":core:preferences" [style=dotted]
+  ":services:global-actions" -> ":core:base" [style=dotted]
+  ":services:global-actions" -> ":core:i18n" [style=dotted]
+  ":services:global-actions" -> ":core:permissions" [style=dotted]
   ":services:icons" -> ":data:customattrs"
   ":services:icons" -> ":services:icons"
   ":services:icons" -> ":core:database" [style=dotted]
@@ -301,4 +315,10 @@ digraph {
   ":services:tags" -> ":core:base" [style=dotted]
   ":services:tags" -> ":core:ktx" [style=dotted]
   ":services:tags" -> ":core:crashreporter" [style=dotted]
+  ":services:tags" -> ":data:customattrs" [style=dotted]
+  ":services:tags" -> ":data:favorites" [style=dotted]
+  ":services:widgets" -> ":services:widgets"
+  ":services:widgets" -> ":core:base" [style=dotted]
+  ":services:widgets" -> ":core:i18n" [style=dotted]
+  ":services:widgets" -> ":data:widgets" [style=dotted]
 }

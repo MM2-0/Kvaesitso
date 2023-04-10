@@ -4,13 +4,13 @@ sidebar_position: 3
 
 # Modules
 
-The project contains of multiple Gradle modules. The structure is kinde scuffed because I didn't know shit when I
-started this project so future refacorings are to be expected. This is the current structure:
+The project contains of multiple Gradle modules. The structure is kinda scuffed because I didn't know shit when I
+started this project so future refactorings are to be expected. This is the current structure:
 
 - `:app`:
-  - `:app`: The app module. Contains almost nothing except for the `Application` class (`de.mm20.launcher2.LauncherApplication`)
+  - `:app`: The app module. Contains almost nothing except the `Application` class (`de.mm20.launcher2.LauncherApplication`)
   - `:ui`: Contains almost the entire user interface (except for account sign-in UIs). The only module that uses Jetpack Compose.
-- `:services`: Higher level APIs for the app's business logic
+- `:services`: Higher level APIs for the app's business logic. Each module represents a specific functionality of the launcher
   - `:accounts`: Common APIs to manage different account types (Google, Microsoft, Nextcloud, …)
   - `:backup`: Backup and restore functionality
   - `:badges`: Provide different types of badges that are displayed on app icons
@@ -18,7 +18,8 @@ started this project so future refacorings are to be expected. This is the curre
   - `:music`: Manage media sessions and extract metadata
   - `:search`: The search.
   - `:tags`: Edit, copy and delete tags
-- `:data`: Lower level APIs for CRUD operations for different kinds of data. Most of these should be refactored.
+  - `:widgets`: High-level APIs to manage widgets
+- `:data`: Lower level APIs. Generally, these modules are more multi-purpose and provide the data that is consumed by the `:services` modules.
   - `:applications`: Installed apps and app search
   - `:appshortcuts`: Query apps shortcuts for apps and shortcut search
   - `:calendar`: query calendar events for the calendar widget and calendar search
@@ -32,7 +33,7 @@ started this project so future refacorings are to be expected. This is the curre
   - `:notifications`: APIs to read notifications. Contains the app's `NotificationListenerService`
   - `:websites`: Website search
   - `:weather`: APIs to fetch weather data
-  - `:widgets`: Manages configuration of widgets (which widgets and which order). Actual widget implementation (for built-in widgets) is in `:ui`.
+  - `:widgets`: CRUD operations to store and retrieve widgets in/from the database
   - `:wikipedia`: APIs to search Wikipedia
 - `:core`
   - `:base`: Commonly used data classes, helper functions and utilities. Also icon resources (if they do not need localization).
@@ -52,6 +53,6 @@ started this project so future refacorings are to be expected. This is the curre
   - `:owncloud`: Owncloud APIs and Owncloud sign-in; used by `:accounts` and `:files`
 
 
-Most of the modules have a `Module.kt` file in their root which contains Koin definitions to make the APIs accessable for other modules.
+Most of the modules have a `Module.kt` file in their root which contains Koin definitions to make the APIs accessible to other modules.
 
 [![](/img/dependency-graph.dot.png)](/img/dependency-graph.dot.png))
