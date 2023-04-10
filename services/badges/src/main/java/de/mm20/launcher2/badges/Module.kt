@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val badgesModule = module {
-    single<BadgeRepository> { BadgeRepositoryImpl(androidContext()) }
+    single<BadgeService> { BadgeServiceImpl(androidContext()) }
 }

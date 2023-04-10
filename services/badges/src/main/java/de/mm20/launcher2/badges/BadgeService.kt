@@ -9,11 +9,11 @@ import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-interface BadgeRepository {
+interface BadgeService {
     fun getBadge(searchable: Searchable): Flow<Badge?>
 }
 
-internal class BadgeRepositoryImpl(private val context: Context) : BadgeRepository, KoinComponent {
+internal class BadgeServiceImpl(private val context: Context) : BadgeService, KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
     private val scope = CoroutineScope(Job() + Dispatchers.Default)

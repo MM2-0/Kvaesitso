@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
-import de.mm20.launcher2.badges.BadgeRepository
+import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconRepository
@@ -22,7 +22,7 @@ abstract class SearchableItemVM(
 ) : KoinComponent {
     protected val favoritesService: FavoritesService by inject()
     protected val searchableRepository: SearchableRepository by inject()
-    protected val badgeRepository: BadgeRepository by inject()
+    protected val badgeService: BadgeService by inject()
     protected val iconRepository: IconRepository by inject()
     protected val customAttributesRepository: CustomAttributesRepository by inject()
 
@@ -44,7 +44,7 @@ abstract class SearchableItemVM(
         searchableRepository.update(searchable, hidden = false)
     }
 
-    val badge = badgeRepository.getBadge(searchable)
+    val badge = badgeService.getBadge(searchable)
 
     fun getIcon(size: Int): Flow<LauncherIcon> {
         return iconRepository.getIcon(searchable, size)

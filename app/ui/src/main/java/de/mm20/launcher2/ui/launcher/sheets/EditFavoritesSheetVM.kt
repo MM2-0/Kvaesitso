@@ -11,9 +11,8 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
-import de.mm20.launcher2.badges.BadgeRepository
+import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconRepository
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.normalize
@@ -38,7 +37,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val shortcutRepository: AppShortcutRepository by inject()
     private val iconRepository: IconRepository by inject()
-    private val badgeRepository: BadgeRepository by inject()
+    private val badgeService: BadgeService by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
@@ -186,7 +185,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     }
 
     fun getBadge(searchable: Searchable): Flow<Badge?> {
-        return badgeRepository.getBadge(searchable)
+        return badgeService.getBadge(searchable)
     }
 
     fun pickShortcut(section: FavoritesSheetSection) {
