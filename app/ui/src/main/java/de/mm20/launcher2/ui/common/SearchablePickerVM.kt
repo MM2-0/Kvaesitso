@@ -5,10 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.toList
@@ -17,10 +16,8 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.koin.androidx.compose.inject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -28,7 +25,7 @@ class SearchablePickerVM: ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
     private val searchService: SearchService by inject()
-    private val iconRepository: IconRepository by inject()
+    private val iconService: IconService by inject()
 
     var searchQuery by mutableStateOf("")
 
@@ -61,6 +58,6 @@ class SearchablePickerVM: ViewModel(), KoinComponent {
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
-        return iconRepository.getIcon(searchable, size)
+        return iconService.getIcon(searchable, size)
     }
 }

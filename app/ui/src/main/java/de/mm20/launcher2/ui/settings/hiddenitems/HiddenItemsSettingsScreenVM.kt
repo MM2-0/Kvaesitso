@@ -11,7 +11,7 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.liveData
 import de.mm20.launcher2.applications.AppRepository
 import de.mm20.launcher2.searchable.SearchableRepository
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.search.SavableSearchable
@@ -27,7 +27,7 @@ import org.koin.core.component.inject
 class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     private val appRepository: AppRepository by inject()
     private val searchableRepository: SearchableRepository by inject()
-    private val iconRepository: IconRepository by inject()
+    private val iconService: IconService by inject()
 
     val allApps = appRepository.getAllInstalledApps().map {
         withContext(Dispatchers.Default) { it.sorted() }
@@ -50,7 +50,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
-        return iconRepository.getIcon(searchable, size)
+        return iconService.getIcon(searchable, size)
     }
 
     fun launch(context: Context, searchable: SavableSearchable) {

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.searchable.SearchableRepository
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -25,7 +25,7 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val searchableRepository: SearchableRepository by inject()
-    private val iconRepository: IconRepository by inject()
+    private val iconService: IconService by inject()
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility).asLiveData()
 
@@ -190,6 +190,6 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun getIcon(searchable: SavableSearchable?, size: Int): Flow<LauncherIcon> {
         if (searchable == null) return emptyFlow()
-        return iconRepository.getIcon(searchable, size)
+        return iconService.getIcon(searchable, size)
     }
 }

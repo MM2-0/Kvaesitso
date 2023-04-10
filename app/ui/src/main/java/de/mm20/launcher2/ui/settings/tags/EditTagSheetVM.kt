@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
@@ -25,7 +25,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
 
     private val tagService: TagsService by inject()
     private val searchService: SearchService by inject()
-    private val iconRepository: IconRepository by inject()
+    private val iconService: IconService by inject()
     private val appRepository: AppRepository by inject()
 
     private var oldTagName by mutableStateOf<String?>(null)
@@ -82,7 +82,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
     }
 
     fun getIcon(item: SavableSearchable, size: Int): Flow<LauncherIcon> {
-        return iconRepository.getIcon(item, size)
+        return iconService.getIcon(item, size)
     }
 
     fun openItemPicker() {

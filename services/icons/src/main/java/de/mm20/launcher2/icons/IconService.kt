@@ -1,7 +1,6 @@
 package de.mm20.launcher2.icons
 
 import android.content.BroadcastReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
@@ -45,11 +44,10 @@ import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.internal.ChannelFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
-class IconRepository(
+class IconService(
     val context: Context,
     private val iconPackManager: IconPackManager,
     private val dataStore: LauncherDataStore,
@@ -133,9 +131,9 @@ class IconRepository(
                         ForceThemedIconTransformation()
                     )
 
-                    this@IconRepository.placeholderProvider = placeholderProvider
+                    this@IconService.placeholderProvider = placeholderProvider
                     iconProviders.value = providers
-                    this@IconRepository.transformations.value = transformations
+                    this@IconService.transformations.value = transformations
                 }
             }
         }

@@ -7,7 +7,7 @@ import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.searchable.SearchableRepository
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
@@ -23,7 +23,7 @@ abstract class SearchableItemVM(
     protected val favoritesService: FavoritesService by inject()
     protected val searchableRepository: SearchableRepository by inject()
     protected val badgeService: BadgeService by inject()
-    protected val iconRepository: IconRepository by inject()
+    protected val iconService: IconService by inject()
     protected val customAttributesRepository: CustomAttributesRepository by inject()
 
     val isPinned = searchableRepository.isPinned(searchable)
@@ -47,7 +47,7 @@ abstract class SearchableItemVM(
     val badge = badgeService.getBadge(searchable)
 
     fun getIcon(size: Int): Flow<LauncherIcon> {
-        return iconRepository.getIcon(searchable, size)
+        return iconService.getIcon(searchable, size)
     }
 
     fun getTags(): Flow<List<String>> {

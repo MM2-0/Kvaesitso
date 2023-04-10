@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.icons.IconPack
-import de.mm20.launcher2.icons.IconRepository
+import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
@@ -20,9 +20,7 @@ import de.mm20.launcher2.preferences.Settings.SearchBarSettings
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.Settings.SystemBarsSettings
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,7 +28,7 @@ import org.koin.core.component.inject
 class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
-    private val iconRepository: IconRepository by inject()
+    private val iconService: IconService by inject()
 
     val theme = dataStore.data.map { it.appearance.theme }.asLiveData()
     fun setTheme(theme: Theme) {
@@ -200,7 +198,7 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val installedIconPacks: Flow<List<IconPack>> = iconRepository.getInstalledIconPacks().map {
+    val installedIconPacks: Flow<List<IconPack>> = iconService.getInstalledIconPacks().map {
         listOf(
             IconPack(
                 name = "System",
