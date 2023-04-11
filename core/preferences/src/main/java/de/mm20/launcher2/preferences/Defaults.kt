@@ -158,7 +158,7 @@ fun createFactorySettings(context: Context): Settings {
         .setCards(
             Settings.CardSettings.newBuilder()
                 .setBorderWidth(0)
-                .setRadius(8)
+                .setRadius(12)
                 .setOpacity(1f)
         )
         .setWidgets(
