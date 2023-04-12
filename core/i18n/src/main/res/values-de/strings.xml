@@ -87,7 +87,7 @@
     <string name="file_meta_app_min_sdk">Min-SDK-Version: %1$s</string>
     <string name="file_meta_location">Ort: %1$s</string>
     <string name="file_meta_owner">Eigentümer: %1$s</string>
-    <string name="preference_screen_integrations">Dienste</string>
+    <string name="preference_screen_integrations">Integrationen</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_3_name">Google Play</string>
