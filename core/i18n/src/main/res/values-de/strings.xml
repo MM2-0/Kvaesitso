@@ -312,7 +312,7 @@
         <item quantity="other">%1$d Kalender ausgewählt</item>
     </plurals>
     <string name="preference_screen_search">Suche</string>
-    <string name="preference_screen_search_summary">Die Suche konfigurieren</string>
+    <string name="preference_screen_search_summary">Suche, Tags, ausgeblendete Elemente</string>
     <string name="preference_search_favorites">Favoriten</string>
     <string name="preference_search_favorites_summary">Angepinnte und häufig genutzte Elemente über dem App-Raster anzeigen</string>
     <string name="preference_search_files">Dateien</string>
@@ -585,4 +585,12 @@
     <string name="icon_picker_no_packs_installed">Keine Symbolpakete installiert</string>
     <string name="gesture_action_launch_app">App starten</string>
     <string name="icon_picker_filter_all_packs">Alle Symbolpakete</string>
+    <string name="preference_screen_clockwidget_summary">Uhrenstil und -Komponenten konfigurieren</string>
+    <string name="preference_screen_homescreen">Startbildschirm</string>
+    <string name="preference_screen_homescreen_summary">Uhr, Suchleiste, Hintergrundbild, Systemleisten</string>
+    <string name="preference_screen_icons">Raster &amp; Symbole</string>
+    <string name="preference_screen_icons_summary">Raster, Symbolgröße, Symbolpakete, Plaketten</string>
+    <string name="preference_category_accounts">Konten</string>
+    <string name="preference_weather_integration">Wetter</string>
+    <string name="preference_media_integration">Mediensteuerung</string>
 </resources>
