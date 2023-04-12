@@ -115,7 +115,6 @@
     <string name="file_meta_app_min_sdk">Version min du SDK : %1$s</string>
     <string name="file_meta_location">Position : %1$s</string>
     <string name="file_meta_owner">Propriétaire : %1$s</string>
-    <string name="preference_screen_integrations">Services</string>
     <string name="preference_theme_system">Suivre le système</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>

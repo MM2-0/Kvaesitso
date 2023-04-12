@@ -380,7 +380,6 @@
     <string name="preference_icon_shape_circle">Círculo</string>
     <string name="preference_icon_shape_teardrop">Lágrima</string>
     <string name="preference_category_searchbar">Barra de pesquisa</string>
-    <string name="preference_screen_integrations">Serviços</string>
     <string name="preference_themed_icons_summary">Colore os Ícones com o esquema de cores do aplicativo</string>
     <string name="preference_force_themed_icons">Forçar ícones temáticos</string>
     <string name="preference_blur_wallpaper_summary">Usa efeito de desfoque no papel de parede</string>

@@ -240,7 +240,6 @@
     <string name="preference_icon_shape_circle">Cerc</string>
     <string name="preference_icon_shape_hexagon">Hexagon</string>
     <string name="preference_category_searchbar">Bară de căutare</string>
-    <string name="preference_screen_integrations">Servicii</string>
     <string name="preference_theme_system">Urmează sistemul</string>
     <string name="preference_themed_icons">Pictograme tematice</string>
     <string name="preference_icon_pack">Pachet de pictograme</string>

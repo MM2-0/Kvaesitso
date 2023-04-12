@@ -162,7 +162,6 @@
     <string name="preference_cards_corner_radius">Radio de esquina</string>
     <string name="preference_cards_opacity">Opacidad</string>
     <string name="preference_category_searchbar">Barra de búsqueda</string>
-    <string name="preference_screen_integrations">Servicios</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d evento en ejecución de días anteriores</item>
         <item quantity="many">+%1$d eventos en ejecución de días anteriores</item>

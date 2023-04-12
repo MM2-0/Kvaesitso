@@ -320,7 +320,6 @@
     <string name="preference_icon_shape_teardrop">淚滴形</string>
     <string name="preference_icon_shape_pebble">鵝卵形</string>
     <string name="preference_icon_shape_hexagon">六邊形</string>
-    <string name="preference_screen_integrations">服務</string>
     <string name="preference_theme_system">跟隨系統</string>
     <string name="preference_themed_icons">主題圖示</string>
     <string name="preference_themed_icons_summary">帶有應用程式配色方案的彩色圖示</string>

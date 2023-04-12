@@ -195,7 +195,6 @@
     <string name="preference_icon_shape_triangle">Треугольник Рело</string>
     <string name="preference_icon_shape_circle">Круг</string>
     <string name="preference_icon_shape_hexagon">Шестиугольник</string>
-    <string name="preference_screen_integrations">Службы</string>
     <string name="preference_theme_system">Следовать системе</string>
     <string name="menu_share_store_link">%1$s ссылка</string>
     <string name="menu_app_info">Информация о приложении</string>

@@ -272,7 +272,6 @@
     <string name="preference_icon_shape_circle">圆形</string>
     <string name="preference_icon_shape_hexagon">六边形</string>
     <string name="preference_category_searchbar">搜索栏</string>
-    <string name="preference_screen_integrations">服务</string>
     <string name="preference_wallpaper_summary">选择一张壁纸</string>
     <string name="preference_category_badges">徽章</string>
     <string name="preference_suspended_badges">已暂停的应用</string>

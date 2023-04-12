@@ -177,7 +177,6 @@
     <string name="preference_icon_shape_square">Kwadrat</string>
     <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
     <string name="preference_icon_shape_hexagon">Heksagon</string>
-    <string name="preference_screen_integrations">Usługi</string>
     <string name="preference_icon_pack">Paczka ikon</string>
     <string name="preference_icon_pack_summary_empty">Brak zainstalowanych paczek ikon</string>
     <string name="preference_category_system_bars">Paski systemowe</string>

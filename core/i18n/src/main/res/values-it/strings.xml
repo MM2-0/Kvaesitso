@@ -253,7 +253,6 @@
     <string name="preference_icon_shape_circle">Cerchio</string>
     <string name="preference_icon_shape_hexagon">Esagono</string>
     <string name="preference_category_searchbar">Barra di ricerca</string>
-    <string name="preference_screen_integrations">Servizi</string>
     <string name="preference_theme_system">Segui sistema</string>
     <string name="preference_themed_icons">Icone a tema</string>
     <string name="preference_icon_pack_summary_empty">Nessun pacchetto icone installato</string>
