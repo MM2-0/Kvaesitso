@@ -18,7 +18,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    val favorites = dataStore.data.map { it.favorites.enabled }.asLiveData()
+    val favorites = dataStore.data.map { it.favorites.enabled }
     fun setFavorites(favorites: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -30,8 +30,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
 
-    val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts).asLiveData()
-    val contacts = dataStore.data.map { it.contactsSearch.enabled }.asLiveData()
+    val hasContactsPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
+    val contacts = dataStore.data.map { it.contactsSearch.enabled }
     fun setContacts(contacts: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -46,8 +46,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Contacts)
     }
 
-    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
-    val calendar = dataStore.data.map { it.calendarSearch.enabled }.asLiveData()
+    val hasCalendarPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+    val calendar = dataStore.data.map { it.calendarSearch.enabled }
     fun setCalendar(calendar: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -62,7 +62,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.Calendar)
     }
 
-    val calculator = dataStore.data.map { it.calculatorSearch.enabled }.asLiveData()
+    val calculator = dataStore.data.map { it.calculatorSearch.enabled }
     fun setCalculator(calculator: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -73,7 +73,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val unitConverter = dataStore.data.map { it.unitConverterSearch.enabled }.asLiveData()
+    val unitConverter = dataStore.data.map { it.unitConverterSearch.enabled }
     fun setUnitConverter(unitConverter: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -84,7 +84,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val wikipedia = dataStore.data.map { it.wikipediaSearch.enabled }.asLiveData()
+    val wikipedia = dataStore.data.map { it.wikipediaSearch.enabled }
     fun setWikipedia(wikipedia: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -95,7 +95,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val websites = dataStore.data.map { it.websiteSearch.enabled }.asLiveData()
+    val websites = dataStore.data.map { it.websiteSearch.enabled }
     fun setWebsites(websites: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -106,7 +106,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val webSearch = dataStore.data.map { it.webSearch.enabled }.asLiveData()
+    val webSearch = dataStore.data.map { it.webSearch.enabled }
     fun setWebSearch(webSearch: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -117,7 +117,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val autoFocus = dataStore.data.map { it.searchBar.autoFocus }.asLiveData()
+    val autoFocus = dataStore.data.map { it.searchBar.autoFocus }
     fun setAutoFocus(autoFocus: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -128,7 +128,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }.asLiveData()
+    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
     fun setLaunchOnEnter(launchOnEnter: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -139,8 +139,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts).asLiveData()
-    val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }.asLiveData()
+    val hasAppShortcutPermission = permissionsManager.hasPermission(PermissionGroup.AppShortcuts)
+    val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }
     fun setAppShortcuts(appShortcuts: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -151,13 +151,25 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val searchResultOrdering = dataStore.data.map { it.resultOrdering.ordering }.asLiveData()
+    val searchResultOrdering = dataStore.data.map { it.resultOrdering.ordering }
     fun setSearchResultOrdering(searchResultOrdering: Settings.SearchResultOrderingSettings.Ordering) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setResultOrdering(
                     it.resultOrdering.toBuilder().setOrdering(searchResultOrdering)
                 ).build()
+            }
+        }
+    }
+
+
+    val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }
+    fun setReverseSearchResults(reverseSearchResults: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLayout(it.layout.toBuilder().setReverseSearchResults(reverseSearchResults))
+                    .build()
             }
         }
     }

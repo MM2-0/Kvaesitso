@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import WidgetsService
+import android.app.Application
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.PackageManager
@@ -10,6 +11,7 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -32,10 +34,8 @@ import org.koin.core.component.get
 
 class WidgetPickerSheetVM(
     private val widgetsService: WidgetsService,
-    private val context: Context,
+    private val packageManager: PackageManager,
 ) : ViewModel() {
-
-    private val packageManager = context.packageManager
 
     val searchQuery = MutableStateFlow("")
 

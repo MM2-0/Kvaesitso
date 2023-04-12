@@ -10,6 +10,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.flow.Flow
@@ -27,15 +28,25 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     private val searchableRepository: SearchableRepository by inject()
     private val iconService: IconService by inject()
 
-    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility).asLiveData()
+    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
 
-    val layout = dataStore.data.map { it.layout.baseLayout }.asLiveData()
+    val baseLayout = dataStore.data.map { it.layout.baseLayout }
 
-    val swipeDown = dataStore.data.map { it.gestures.swipeDown }.asLiveData()
-    val swipeLeft = dataStore.data.map { it.gestures.swipeLeft }.asLiveData()
-    val swipeRight = dataStore.data.map { it.gestures.swipeRight }.asLiveData()
-    val doubleTap = dataStore.data.map { it.gestures.doubleTap }.asLiveData()
-    val longPress = dataStore.data.map { it.gestures.longPress }.asLiveData()
+    fun setBaseLayout(baseLayout: Settings.LayoutSettings.Layout) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLayout(it.layout.toBuilder().setBaseLayout(baseLayout))
+                    .build()
+            }
+        }
+    }
+
+    val swipeDown = dataStore.data.map { it.gestures.swipeDown }
+    val swipeLeft = dataStore.data.map { it.gestures.swipeLeft }
+    val swipeRight = dataStore.data.map { it.gestures.swipeRight }
+    val doubleTap = dataStore.data.map { it.gestures.doubleTap }
+    val longPress = dataStore.data.map { it.gestures.longPress }
 
     fun setSwipeDown(action: GestureAction) {
         viewModelScope.launch {

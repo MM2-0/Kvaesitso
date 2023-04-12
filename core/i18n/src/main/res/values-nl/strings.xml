@@ -289,7 +289,7 @@
     <string name="preference_icon_shape_rounded_square">Afgerond vierkant</string>
     <string name="preference_icon_shape_squircle">Squircle</string>
     <string name="preference_category_searchbar">Zoekbalk</string>
-    <string name="preference_screen_services">Diensten</string>
+    <string name="preference_screen_integrations">Diensten</string>
     <string name="edit_favorites_dialog_empty_section">Sleep items naar hier</string>
     <string name="preference_themed_icons">Iconen met thema</string>
     <string name="preference_themed_icons_summary">Kleur pictogrammen met het kleurenschema van de toepassing</string>
@@ -306,8 +306,8 @@
     <string name="preference_force_themed_icons_summary">Pas het kleurenschema toe op alle iconen, ook wanneer deze dat niet ondersteunen (niet aanbevolen)</string>
     <string name="preference_icon_pack_summary_empty">Geen pictogrammenpakketten geïnstalleerd</string>
     <string name="preference_hide_nav_bar">Navigatiebalk verbergen</string>
-    <string name="preference_screen_services_summary">Verbonden accounts en diensten beheren</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_screen_integrations_summary">Verbonden accounts en diensten beheren</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Ingelogd als %1$s</string>
     <string name="preference_signin_logout">Uitloggen</string>
     <string name="preference_dim_wallpaper">Achtergrond dimmen</string>
@@ -316,7 +316,7 @@
     <string name="preference_blur_wallpaper_summary">Vervaag de achtergrond</string>
     <string name="preference_blur_wallpaper_unsupported">Niet ondersteund op dit apparaat</string>
     <string name="preference_wallpaper_summary">Kies een achtergrond</string>
-    <string name="preference_screen_badges">Badges</string>
+    <string name="preference_category_badges">Badges</string>
     <string name="preference_screen_badges_summary">Configureer pictogrambadges</string>
     <string name="preference_notification_badges">Meldingsstipjes</string>
     <string name="preference_notification_badges_summary">Toon een badge voor applicaties met ongelezen meldingen</string>
@@ -326,13 +326,13 @@
     <string name="preference_cloud_badges_summary">Toon een badge voor bestanden in de cloud</string>
     <string name="preference_shortcut_badges">Snelkoppelingbadges</string>
     <string name="preference_shortcut_badges_summary">Toon een badge om te tonen tot welke applicatie een snelkoppeling behoort</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Inloggen met Microsoft</string>
     <string name="preference_ms_signin_summary">Log in om OneDrive te doorzoeken</string>
     <string name="preference_nextcloud_signin">Inloggen bij Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Log in om jouw Nextcloudserver te doorzoeken</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Inloggen bij Owncloud</string>
     <string name="preference_owncloud_signin_summary">Log in om jouw Owncloudserver te doorzoeken</string>
     <string name="preference_about_telegram">Telegramgroep</string>
@@ -362,7 +362,7 @@
     <string name="preference_grid_labels_summary">Applicatienaam onder pictrogram tonen</string>
     <string name="preference_screen_debug">Foutopsporing</string>
     <string name="preference_screen_debug_summary">Hulpmiddelen</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Widgets configureren</string>
     <string name="preference_screen_weatherwidget">Weer</string>
     <string name="preference_clock_widget_fill_height_summary">Extra witruimte toevoegen boven de klok om de volledige schermhoogte te vullen</string>

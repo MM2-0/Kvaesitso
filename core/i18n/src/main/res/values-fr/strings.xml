@@ -115,7 +115,7 @@
     <string name="file_meta_app_min_sdk">Version min du SDK : %1$s</string>
     <string name="file_meta_location">Position : %1$s</string>
     <string name="file_meta_owner">Propriétaire : %1$s</string>
-    <string name="preference_screen_services">Services</string>
+    <string name="preference_screen_integrations">Services</string>
     <string name="preference_theme_system">Suivre le système</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
@@ -150,8 +150,8 @@
     <string name="menu_favorites_unpin">Retirer des favoris</string>
     <string name="menu_back">Retour</string>
     <string name="menu_app_info">Infos sur l\'appli</string>
-    <string name="preference_screen_services_summary">Gérer les comptes et les services</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_screen_integrations_summary">Gérer les comptes et les services</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Connecté en tant que %1$s</string>
     <string name="preference_signin_logout">Se déconnecter</string>
     <string name="preference_summary_not_logged_in">Vous n\'êtes pas connecté</string>
@@ -189,7 +189,7 @@
     <string name="preference_dim_wallpaper">Assombrir le fond d\'écran</string>
     <string name="preference_dim_wallpaper_summary">Assombrir le fond d\'écran en thème sombre</string>
     <string name="preference_wallpaper_summary">Choisir un fond d\'écran</string>
-    <string name="preference_screen_badges">Badges</string>
+    <string name="preference_category_badges">Badges</string>
     <string name="preference_screen_badges_summary">Configurer les badges d\'icône</string>
     <string name="preference_notification_badges">Badges de notification</string>
     <string name="preference_notification_badges_summary">Afficher un badge pour les applications avec des notifications non-lues</string>
@@ -200,7 +200,7 @@
     <string name="preference_shortcut_badges">Badges de raccourcis</string>
     <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
     <string name="preference_icon_shape_platform">Suivre le système</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Se connecter avec Microsoft</string>
     <string name="preference_ms_signin_summary">Se connecter pour rechercher dans OneDrive</string>
     <string name="preference_nextcloud_signin">Se connecter avec Nextcloud</string>
@@ -214,10 +214,10 @@
     <string name="login_flow_continue">Suivant</string>
     <string name="nextcloud_server_url">URL du serveur Nextcloud</string>
     <string name="nextcloud_server_url_empty">L\'URL ne peut pas être vide</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
     <string name="nextcloud_server_invalid_url">Cette URL ne dirige pas vers une installation Nextcloud valide</string>
     <string name="owncloud_server_url">URL du serveur Owncloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="owncloud_server_invalid_url">Cette URL ne dirige pas vers une installation Owncloud valide</string>
     <string name="owncloud_password">Mot de passe</string>
     <string name="owncloud_username">Nom d\'utilisateur</string>
@@ -317,7 +317,7 @@
     <string name="weather_widget_set_location">Définir la position</string>
     <string name="preference_screen_debug">Débogage</string>
     <string name="preference_screen_debug_summary">Outils de débogage</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Configurer les widgets</string>
     <string name="preference_screen_weatherwidget">Météo</string>
     <string name="preference_screen_musicwidget">Musique</string>

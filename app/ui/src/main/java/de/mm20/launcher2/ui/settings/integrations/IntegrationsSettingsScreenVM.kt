@@ -1,6 +1,7 @@
-package de.mm20.launcher2.ui.settings.accounts
+package de.mm20.launcher2.ui.settings.integrations
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,18 +12,18 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class AccountsSettingsScreenVM : ViewModel(), KoinComponent {
+class IntegrationsSettingsScreenVM : ViewModel(), KoinComponent {
     private val accountsRepository: AccountsRepository by inject()
 
     val isGoogleAvailable = accountsRepository.isSupported(AccountType.Google)
     val isMicrosoftAvailable = accountsRepository.isSupported(AccountType.Microsoft)
 
-    val googleUser = MutableLiveData<Account?>(null)
-    val msUser= MutableLiveData<Account?>(null)
-    val nextcloudUser = MutableLiveData<Account?>(null)
-    val owncloudUser = MutableLiveData<Account?>(null)
+    val googleUser = mutableStateOf<Account?>(null)
+    val msUser= mutableStateOf<Account?>(null)
+    val nextcloudUser = mutableStateOf<Account?>(null)
+    val owncloudUser = mutableStateOf<Account?>(null)
 
-    val loading = MutableLiveData(true)
+    val loading = mutableStateOf(true)
 
     fun onResume() {
         viewModelScope.launch {

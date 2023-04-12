@@ -207,10 +207,10 @@
     <string name="preference_screen_appearance">Aparência</string>
     <string name="preference_dim_wallpaper">Escurecer papel de parede</string>
     <string name="preference_wallpaper_summary">Escolher o papel de parede</string>
-    <string name="preference_screen_badges">Selos</string>
+    <string name="preference_category_badges">Selos</string>
     <string name="preference_screen_badges_summary">Configurar os selos dos ícones</string>
     <string name="preference_notification_badges">Selos de notificação</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_category_wallpaper">Papel de parede</string>
     <string name="preference_about_telegram">Grupo do Telegram</string>
     <string name="battery_part_charging">Carregando</string>
@@ -277,8 +277,8 @@
     <string name="preference_category_system_bars">Barras do sistema</string>
     <string name="preference_hide_status_bar">Ocultar a barra de status</string>
     <string name="preference_hide_nav_bar">Ocultar a barra de navegação</string>
-    <string name="preference_screen_services_summary">Gerenciar as contas e serviços conectados</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_screen_integrations_summary">Gerenciar as contas e serviços conectados</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Autenticado como %1$s</string>
     <string name="preference_signin_logout">Desconectar</string>
     <string name="preference_summary_not_logged_in">Você não está logado</string>
@@ -287,8 +287,8 @@
     <string name="preference_ms_signin_summary">Entrar para pesquisar no OneDrive</string>
     <string name="preference_nextcloud_signin">Entrar com Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Entrar para pesquisar no seu servidor Nextcloud</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin_summary">Entrar para pesquisar no seu servidor Owncloud</string>
     <string name="preference_about_fdroid">Repositório F-Droid</string>
     <string name="preference_category_license">Licença</string>
@@ -298,7 +298,7 @@
     <string name="preference_grid_column_count">Número de colunas</string>
     <string name="preference_screen_debug">Depuração</string>
     <string name="preference_screen_debug_summary">Ferramentas de solução de problemas</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Configurar widgets</string>
     <string name="preference_screen_weatherwidget">Clima</string>
     <string name="preference_screen_musicwidget">Música</string>
@@ -380,7 +380,7 @@
     <string name="preference_icon_shape_circle">Círculo</string>
     <string name="preference_icon_shape_teardrop">Lágrima</string>
     <string name="preference_category_searchbar">Barra de pesquisa</string>
-    <string name="preference_screen_services">Serviços</string>
+    <string name="preference_screen_integrations">Serviços</string>
     <string name="preference_themed_icons_summary">Colore os Ícones com o esquema de cores do aplicativo</string>
     <string name="preference_force_themed_icons">Forçar ícones temáticos</string>
     <string name="preference_blur_wallpaper_summary">Usa efeito de desfoque no papel de parede</string>

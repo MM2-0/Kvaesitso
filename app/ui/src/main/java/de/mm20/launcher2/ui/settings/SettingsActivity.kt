@@ -23,10 +23,9 @@ import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.settings.about.AboutSettingsScreen
-import de.mm20.launcher2.ui.settings.accounts.AccountsSettingsScreen
+import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
-import de.mm20.launcher2.ui.settings.badges.BadgeSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
@@ -41,17 +40,17 @@ import de.mm20.launcher2.ui.settings.favorites.FavoritesSettingsScreen
 import de.mm20.launcher2.ui.settings.filesearch.FileSearchSettingsScreen
 import de.mm20.launcher2.ui.settings.gestures.GestureSettingsScreen
 import de.mm20.launcher2.ui.settings.hiddenitems.HiddenItemsSettingsScreen
-import de.mm20.launcher2.ui.settings.layout.LayoutSettingsScreen
+import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
+import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
-import de.mm20.launcher2.ui.settings.musicwidget.MusicWidgetSettingsScreen
+import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
 import de.mm20.launcher2.ui.settings.unitconverter.UnitConverterSettingsScreen
-import de.mm20.launcher2.ui.settings.weatherwidget.WeatherWidgetSettingsScreen
-import de.mm20.launcher2.ui.settings.widgets.WidgetsSettingsScreen
+import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
@@ -101,8 +100,11 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/appearance") {
                             AppearanceSettingsScreen()
                         }
-                        composable("settings/appearance/layout") {
-                            LayoutSettingsScreen()
+                        composable("settings/homescreen") {
+                            HomescreenSettingsScreen()
+                        }
+                        composable("settings/icons") {
+                            IconsSettingsScreen()
                         }
                         composable("settings/appearance/colorscheme") {
                             ColorSchemeSettingsScreen()
@@ -137,29 +139,23 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/search/tags") {
                             TagsSettingsScreen()
                         }
-                        composable("settings/widgets") {
-                            WidgetsSettingsScreen()
+                        composable("settings/integrations/weather") {
+                            WeatherIntegrationSettingsScreen()
                         }
-                        composable("settings/widgets/weather") {
-                            WeatherWidgetSettingsScreen()
-                        }
-                        composable("settings/widgets/music") {
-                            MusicWidgetSettingsScreen()
+                        composable("settings/integrations/media") {
+                            MediaIntegrationSettingsScreen()
                         }
                         composable("settings/widgets/calendar") {
                             CalendarWidgetSettingsScreen()
                         }
-                        composable("settings/widgets/clock") {
+                        composable("settings/homescreen/clock") {
                             ClockWidgetSettingsScreen()
                         }
                         composable("settings/favorites") {
                             FavoritesSettingsScreen()
                         }
-                        composable("settings/badges") {
-                            BadgeSettingsScreen()
-                        }
-                        composable("settings/accounts") {
-                            AccountsSettingsScreen()
+                        composable("settings/integrations") {
+                            IntegrationsSettingsScreen()
                         }
                         composable("settings/about") {
                             AboutSettingsScreen()

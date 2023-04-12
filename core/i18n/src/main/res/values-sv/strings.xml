@@ -80,7 +80,7 @@
     <string name="file_meta_size">Storlek: %1$s</string>
     <string name="websearch_dialog_import_error">Den angivna adressen kan inte importeras automatiskt. Du kan försöka med en annan URL eller manuellt ange den nödvändiga datan.</string>
     <string name="edit_favorites_dialog_pinned_sorted">Fästa – manuellt sorterade</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_google">Google</string>
     <string name="file_meta_dimensions">Dimensioner: %1$s</string>
     <string name="widget_name_music">Musik</string>
     <string name="websearch_dialog_name">Namn</string>
@@ -223,7 +223,7 @@
     <string name="preference_icon_shape_triangle">Reuleaux-triangel</string>
     <string name="preference_icon_shape_hexagon">Hexagon</string>
     <string name="preference_category_searchbar">Sökfält</string>
-    <string name="preference_screen_services">Tjänster</string>
+    <string name="preference_screen_integrations">Tjänster</string>
     <string name="preference_theme_system">Följ systemet</string>
     <string name="preference_themed_icons">Färglagda ikoner</string>
     <string name="preference_icon_pack">Ikonpaket</string>
@@ -231,7 +231,7 @@
     <string name="preference_category_system_bars">Systemfält</string>
     <string name="preference_hide_status_bar">Göm statusfält</string>
     <string name="preference_hide_nav_bar">Göm navigationsfält</string>
-    <string name="preference_screen_services_summary">Hantera anslutna konton och tjänster</string>
+    <string name="preference_screen_integrations_summary">Hantera anslutna konton och tjänster</string>
     <string name="preference_signin_user">Inloggad som %1$s</string>
     <string name="preference_signin_logout">Logga ut</string>
     <string name="preference_icon_shape_pentagon">Pentagon</string>
@@ -239,7 +239,7 @@
     <string name="preference_dim_wallpaper">Dämpa bakgrund</string>
     <string name="preference_dim_wallpaper_summary">Dämpa bakgrunden i mörka teman</string>
     <string name="preference_wallpaper_summary">Välj en bakgrund</string>
-    <string name="preference_screen_badges">Aviseringsprickar</string>
+    <string name="preference_category_badges">Aviseringsprickar</string>
     <string name="preference_notification_badges">Aviseringsprickar</string>
     <string name="preference_notification_badges_summary">Appar med olästa notifikationer märks med en prick</string>
     <string name="preference_suspended_badges_summary">Visa en prick på avslutade appar</string>
@@ -247,13 +247,13 @@
     <string name="preference_cloud_badges">Molnprickar</string>
     <string name="preference_shortcut_badges">Genvägsprickar</string>
     <string name="preference_shortcut_badges_summary">Prick som visar vilken app en genväg hör till</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Logga in med Microsoft</string>
     <string name="preference_ms_signin_summary">Logga in för att söka i OneDrive</string>
     <string name="preference_nextcloud_signin">Logga in på Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Logga in för att söka i din Nextcloud-server</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Logga in på Owncloud</string>
     <string name="preference_about_telegram">Telegram-grupp</string>
     <string name="preference_about_fdroid">F-Droid-kodförråd</string>
@@ -263,7 +263,7 @@
     <string name="preference_category_grid">Rutnät</string>
     <string name="preference_grid_column_count">Antal kolumner</string>
     <string name="preference_screen_debug">Felsök</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Konfigurera widgets</string>
     <string name="preference_screen_weatherwidget">Väder</string>
     <string name="preference_screen_musicwidget">Musik</string>

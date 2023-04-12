@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -35,7 +36,6 @@ import de.mm20.launcher2.ui.common.SearchablePicker
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.ListPreference
-import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -44,8 +44,8 @@ import de.mm20.launcher2.ui.ktx.toPixels
 fun GestureSettingsScreen() {
     val viewModel: GestureSettingsScreenVM = viewModel()
 
-    val layout by viewModel.layout.observeAsState()
-    val hasPermission by viewModel.hasPermission.observeAsState()
+    val layout by viewModel.baseLayout.collectAsStateWithLifecycle(null)
+    val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
 
     val options = buildList {
         add(stringResource(R.string.gesture_action_none) to GestureAction.None)
@@ -61,9 +61,25 @@ fun GestureSettingsScreen() {
     val context = LocalContext.current
     PreferenceScreen(title = stringResource(R.string.preference_screen_gestures)) {
         item {
+            PreferenceCategory {
+                val baseLayout by viewModel.baseLayout.collectAsStateWithLifecycle(null)
+                ListPreference(title = stringResource(R.string.preference_layout_open_search),
+                    items = listOf(
+                        stringResource(R.string.open_search_pull_down) to Layout.PullDown,
+                        stringResource(R.string.open_search_swipe_left) to Layout.Pager,
+                        stringResource(R.string.open_search_swipe_right) to Layout.PagerReversed,
+                    ),
+                    value = baseLayout,
+                    onValueChanged = {
+                        if (it != null) viewModel.setBaseLayout(it)
+                    },
+                )
+            }
+        }
+        item {
             val appIconSize = 32.dp.toPixels()
             PreferenceCategory {
-                val doubleTap by viewModel.doubleTap.observeAsState()
+                val doubleTap by viewModel.doubleTap.collectAsStateWithLifecycle(null)
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(doubleTap)) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
@@ -86,7 +102,7 @@ fun GestureSettingsScreen() {
                     onAppChanged = { viewModel.setDoubleTapApp(it) }
                 )
 
-                val longPress by viewModel.longPress.observeAsState()
+                val longPress by viewModel.longPress.collectAsStateWithLifecycle(null)
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(longPress)) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
@@ -109,7 +125,7 @@ fun GestureSettingsScreen() {
                     onAppChanged = { viewModel.setLongPressApp(it) }
                 )
 
-                val swipeDown by viewModel.swipeDown.observeAsState()
+                val swipeDown by viewModel.swipeDown.collectAsStateWithLifecycle(null)
                 val swipeDownIsSearch = layout == Layout.PullDown
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeDown) && !swipeDownIsSearch) {
                     MissingPermissionBanner(
@@ -133,7 +149,7 @@ fun GestureSettingsScreen() {
                     onAppChanged = { viewModel.setSwipeDownApp(it) }
                 )
 
-                val swipeLeft by viewModel.swipeLeft.observeAsState()
+                val swipeLeft by viewModel.swipeLeft.collectAsStateWithLifecycle(null)
                 val swipeLeftIsSearch = layout == Layout.Pager
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeLeft) && !swipeLeftIsSearch) {
                     MissingPermissionBanner(
@@ -157,7 +173,7 @@ fun GestureSettingsScreen() {
                     onAppChanged = { viewModel.setSwipeLeftApp(it) }
                 )
 
-                val swipeRight by viewModel.swipeRight.observeAsState()
+                val swipeRight by viewModel.swipeRight.collectAsStateWithLifecycle(null)
                 val swipeRightIsSearch = layout == Layout.PagerReversed
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeRight) && !swipeRightIsSearch) {
                     MissingPermissionBanner(

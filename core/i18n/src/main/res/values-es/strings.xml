@@ -162,7 +162,7 @@
     <string name="preference_cards_corner_radius">Radio de esquina</string>
     <string name="preference_cards_opacity">Opacidad</string>
     <string name="preference_category_searchbar">Barra de búsqueda</string>
-    <string name="preference_screen_services">Servicios</string>
+    <string name="preference_screen_integrations">Servicios</string>
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d evento en ejecución de días anteriores</item>
         <item quantity="many">+%1$d eventos en ejecución de días anteriores</item>
@@ -234,8 +234,8 @@
     <string name="preference_widgets_edit_button_summary">Mostar botón para añadir, eliminar y reordenar widgets</string>
     <string name="battery_part_charging">Cargando</string>
     <string name="preference_icon_pack">Paquete de iconos</string>
-    <string name="preference_screen_badges">Insignias</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_category_badges">Insignias</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud_signin">Registrarse a NextCloud</string>
     <string name="preference_ms_signin_summary">Registrate para buscar en OneDrive</string>
     <string name="preference_logs_summary">Visualizar y exportar registros de aplicación</string>
@@ -248,14 +248,14 @@
     <string name="create_search_action_type_web">Buscar en internet</string>
     <string name="search_action_app">Aplicación</string>
     <string name="icon_picker_title">Elija icono</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Registrarse a Owncloud</string>
     <string name="preference_owncloud_signin_summary">Registrate para buscar en tu server Owncloud</string>
     <string name="preference_about_fdroid">Repositorio de F-Droid</string>
     <string name="preference_enforce_icon_shape">Forzar forma</string>
     <string name="preference_themed_icons_summary">Iconos con esquema de color de la aplicación</string>
     <string name="preference_category_system_bars">Barras de sistema</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_google">Google</string>
     <string name="preference_icon_shape_pentagon">Pentágono</string>
     <string name="preference_clockwidget_layout_horizontal">Compacto</string>
     <string name="preference_clock_widget_style">Estilo</string>
@@ -299,7 +299,7 @@
     <string name="preference_system_bar_icons_auto">Auto</string>
     <string name="preference_system_bar_icons_light">Claro</string>
     <string name="preference_system_bar_icons_dark">Oscuro</string>
-    <string name="preference_screen_services_summary">Administrar cuentas y servicios conectados</string>
+    <string name="preference_screen_integrations_summary">Administrar cuentas y servicios conectados</string>
     <string name="preference_signin_logout">Cerrar sesión</string>
     <string name="preference_blur_wallpaper_unsupported">No soportado en este dispositivo</string>
     <string name="preference_suspended_badges_summary">Mostrar una insignia en aplicaciones suspendidas</string>
@@ -316,7 +316,7 @@
     <string name="preference_grid_labels">Mostrar etiquetas</string>
     <string name="preference_grid_labels_summary">Mostrar el nombre de la aplicación debajo del icono</string>
     <string name="preference_screen_debug">Depuración</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_weatherwidget">Tiempo</string>
     <string name="preference_screen_clockwidget">Reloj</string>
     <string name="preference_clock_widget_style_summary">Selecciona un reloj</string>
@@ -413,7 +413,7 @@
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la búsqueda</string>
     <string name="preference_ms_signin">Registrarse con Microsoft</string>
     <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda ocultos</string>
-    <string name="preference_category_services_nextcloud">NextCloud</string>
+    <string name="preference_nextcloud">NextCloud</string>
     <string name="preference_nextcloud_signin_summary">Registrate para buscar en tu servidor NextCloud</string>
     <string name="no_account_owncloud">Aun no te has conectado a una cuenta de Owncloud</string>
     <string name="preference_about_license">Esta aplicación es software libre.</string>

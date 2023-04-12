@@ -3,7 +3,7 @@
     <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
     <string name="preference_screen_badges_summary">配置图标角标</string>
     <string name="preference_ms_signin_summary">登陆以查找OneDrive</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud_signin">登陆到Owncloud</string>
     <string name="preference_about_license">此应用是自由软件。</string>
     <string name="preference_clock_widget_style_summary">选择一个时钟</string>
@@ -252,8 +252,8 @@
     <string name="preference_category_system_bars">系统栏</string>
     <string name="preference_hide_status_bar">隐藏状态栏</string>
     <string name="preference_hide_nav_bar">隐藏导航条</string>
-    <string name="preference_screen_services_summary">管理已连接的账户和服务</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_screen_integrations_summary">管理已连接的账户和服务</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">以 %1$s 身份登陆</string>
     <string name="preference_signin_logout">登出</string>
     <string name="preference_summary_not_logged_in">您当前未登录</string>
@@ -272,9 +272,9 @@
     <string name="preference_icon_shape_circle">圆形</string>
     <string name="preference_icon_shape_hexagon">六边形</string>
     <string name="preference_category_searchbar">搜索栏</string>
-    <string name="preference_screen_services">服务</string>
+    <string name="preference_screen_integrations">服务</string>
     <string name="preference_wallpaper_summary">选择一张壁纸</string>
-    <string name="preference_screen_badges">徽章</string>
+    <string name="preference_category_badges">徽章</string>
     <string name="preference_suspended_badges">已暂停的应用</string>
     <string name="preference_notification_badges">通知角标</string>
     <string name="preference_notification_badges_summary">为带有未读通知的应用程序显示角标</string>
@@ -283,11 +283,11 @@
     <string name="preference_cloud_badges_summary">为储存在云服务器上的文件显示角标</string>
     <string name="preference_shortcut_badges">快捷方式角标</string>
     <string name="preference_shortcut_badges_summary">显示指示快捷方式所属应用的角标</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">使用Microsoft登陆</string>
     <string name="preference_nextcloud_signin_summary">登陆以查找你的Nextcloud服务</string>
     <string name="preference_nextcloud_signin">登陆到Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin_summary">登陆以查找你的Owncloud服务</string>
     <string name="preference_about_telegram">Telegram群组</string>
     <string name="preference_about_fdroid">F-Droid 储存库</string>
@@ -297,7 +297,7 @@
     <string name="preference_grid_column_count">列数</string>
     <string name="preference_screen_debug">调试</string>
     <string name="preference_screen_debug_summary">故障排除工具</string>
-    <string name="preference_screen_widgets">组件</string>
+    <string name="preference_category_widgets">组件</string>
     <string name="preference_screen_widgets_summary">配置组件</string>
     <string name="preference_screen_weatherwidget">天气</string>
     <string name="preference_screen_musicwidget">音乐</string>

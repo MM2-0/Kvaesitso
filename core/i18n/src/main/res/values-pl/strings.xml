@@ -177,11 +177,11 @@
     <string name="preference_icon_shape_square">Kwadrat</string>
     <string name="preference_icon_shape_rounded_square">Zaokrąglony kwadrat</string>
     <string name="preference_icon_shape_hexagon">Heksagon</string>
-    <string name="preference_screen_services">Usługi</string>
+    <string name="preference_screen_integrations">Usługi</string>
     <string name="preference_icon_pack">Paczka ikon</string>
     <string name="preference_icon_pack_summary_empty">Brak zainstalowanych paczek ikon</string>
     <string name="preference_category_system_bars">Paski systemowe</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Zalogowany jako %1$s</string>
     <string name="preference_signin_logout">Wyloguj się</string>
     <string name="preference_summary_not_logged_in">Nie jesteś zalogowany</string>
@@ -192,7 +192,7 @@
     <string name="preference_wallpaper_summary">Wybierz tapetę</string>
     <string name="preference_ms_signin">Zaloguj się z Microsoft</string>
     <string name="preference_nextcloud_signin">Zaloguj się do Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Zaloguj się do Owncloud</string>
     <string name="preference_about_telegram">Grupa Telegram</string>
     <string name="preference_about_fdroid">Repozytorium F-Droid</string>
@@ -203,7 +203,7 @@
     <string name="preference_grid_column_count">Liczba kolumn</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Narzędzia do rozwiązywania problemów</string>
-    <string name="preference_screen_widgets">Widżety</string>
+    <string name="preference_category_widgets">Widżety</string>
     <string name="preference_screen_widgets_summary">Konfiguruj widżety</string>
     <string name="preference_screen_weatherwidget">Pogoda</string>
     <string name="preference_screen_musicwidget">Muzyka</string>
@@ -271,7 +271,7 @@
     <string name="error_activity_not_found">Nie można otworzyć %1$s</string>
     <string name="preference_search_gdrive_summary">Szukaj plików na Dysku Google użytkownika %1$s</string>
     <string name="default_websearch_2_name">YouTube</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_category_license">Licencja</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="preference_about_license_summary">Licencjonowana pod GNU General Public License 3.0</string>
@@ -303,7 +303,7 @@
     <string name="no_account_owncloud">Konto Owncloud nie zostało jeszcze połączone</string>
     <string name="weather_details_precipitation">Opad atmosferyczny: %1$s</string>
     <string name="shortcut_summary">Z %1$s</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="weather_no_data">Brak dostępnych informacji o pogodzie.</string>
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
@@ -325,7 +325,7 @@
     <string name="preference_icon_shape_circle">Okrąg</string>
     <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
     <string name="preference_category_searchbar">Pasek wyszukiwania</string>
-    <string name="preference_screen_services_summary">Zarządzaj połączonymi kontami i usługami</string>
+    <string name="preference_screen_integrations_summary">Zarządzaj połączonymi kontami i usługami</string>
     <string name="preference_ms_signin_summary">Zaloguj się, aby móc przeszukiwać OneDrive</string>
     <string name="preference_nextcloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Nextcloud</string>
     <string name="preference_search_currencyconverter_summary">Cyklicznie pobieraj kurs walut do konwersji walut</string>
@@ -381,7 +381,7 @@
     <string name="missing_permission_appshortcuts_search">Ustaw %1$s jako domyślną aplikację ekranu głownego do wyszukiwania skrótów aplikacji.</string>
     <string name="preference_layout_fixed_rotation">Ustalony obrót ekranu</string>
     <string name="preference_layout_fixed_rotation_summary">Wymuś tryb portretowy</string>
-    <string name="preference_screen_badges">Plakietki</string>
+    <string name="preference_category_badges">Plakietki</string>
     <string name="preference_enforce_icon_shape">Wymuś kształt</string>
     <string name="preference_enforce_icon_shape_summary">Zastosuj kształt do wszystkich ikon, również do tych, które normalnie by go nie obsługiwały</string>
     <string name="preference_grid_labels">Pokaż etykiety</string>

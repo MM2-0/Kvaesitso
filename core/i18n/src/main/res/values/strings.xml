@@ -480,7 +480,7 @@
     <string name="preference_icon_shape_pebble">Pebble</string>
     <string name="preference_icon_shape_hexagon">Hexagon</string>
     <string name="preference_category_searchbar">Search bar</string>
-    <string name="preference_screen_services">Services</string>
+    <string name="preference_screen_integrations">Integrations</string>
     <string name="preference_theme_system">Follow system</string>
     <string name="preference_themed_icons">Themed icons</string>
     <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
@@ -498,8 +498,8 @@
     <string name="preference_system_bar_icons_dark">Dark</string>
     <string name="preference_hide_status_bar">Hide status bar</string>
     <string name="preference_hide_nav_bar">Hide navigation bar</string>
-    <string name="preference_screen_services_summary">Manage connected accounts and services</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_screen_integrations_summary">Manage connected accounts and services</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Signed in as %1$s</string>
     <string name="preference_signin_logout">Log out</string>
     <string name="preference_summary_not_logged_in">You are currently not logged in</string>
@@ -511,7 +511,7 @@
     <string name="preference_blur_wallpaper_summary">Use a blur effect on the wallpaper</string>
     <string name="preference_blur_wallpaper_unsupported">Not supported on this device</string>
     <string name="preference_wallpaper_summary">Choose a wallpaper</string>
-    <string name="preference_screen_badges">Badges</string>
+    <string name="preference_category_badges">Badges</string>
     <string name="preference_screen_badges_summary">Configure icon badges</string>
     <string name="preference_notification_badges">Notification badges</string>
     <string name="preference_notification_badges_summary">Show a badge for applications with unread notifications</string>
@@ -521,13 +521,13 @@
     <string name="preference_cloud_badges_summary">Show a badge for files that are stored in a cloud</string>
     <string name="preference_shortcut_badges">Shortcut badges</string>
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Sign in with Microsoft</string>
     <string name="preference_ms_signin_summary">Sign in to search OneDrive</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Sign in to Owncloud</string>
     <string name="preference_owncloud_signin_summary">Sign in to search your Owncloud server</string>
     <string name="preference_about_telegram">Telegram group</string>
@@ -544,11 +544,12 @@
     <string name="preference_grid_labels_summary">Show the app name below the icon</string>
     <string name="preference_screen_debug">Debug</string>
     <string name="preference_screen_debug_summary">Troubleshooting tools</string>
-    <string name="preference_screen_widgets">Widgets</string>
+    <string name="preference_category_widgets">Widgets</string>
     <string name="preference_screen_widgets_summary">Configure widgets</string>
     <string name="preference_screen_weatherwidget">Weather</string>
     <string name="preference_screen_musicwidget">Music</string>
     <string name="preference_screen_clockwidget">Clock</string>
+    <string name="preference_screen_clockwidget_summary">Configure clock style and components</string>
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
@@ -579,7 +580,7 @@
     <string name="preference_logs_summary">View and export application logs</string>
     <string name="preference_export_log">Export log file</string>
     <string name="preference_screen_search">Search</string>
-    <string name="preference_screen_search_summary">Configure the search</string>
+    <string name="preference_screen_search_summary">Search, tags, hidden items</string>
     <string name="preference_search_favorites">Favorites</string>
     <string name="preference_search_favorites_summary">Show pinned and frequently used items above app grid</string>
     <string name="preference_search_files">Files</string>
@@ -644,6 +645,14 @@
     <string name="preference_edit_button">Edit button</string>
     <string name="preference_favorites_edit_button_summary">Show a button to rearrange the favorites</string>
     <string name="preference_widgets_edit_button_summary">Show a button to add, remove and rearrange widgets</string>
+    <string name="preference_screen_homescreen">Home screen</string>
+    <string name="preference_screen_homescreen_summary">Clock, search bar, wallpaper, system bars</string>
+    <string name="preference_screen_icons">Grid &amp; icons</string>
+    <string name="preference_screen_icons_summary">Grid, icon size, icon packs, badges</string>
+    <string name="preference_category_accounts">Accounts</string>
+    <string name="preference_weather_integration">Weather</string>
+    <string name="preference_media_integration">Media control</string>
+
     <!-- Used in an info banner if a specific feature requires a Nextcloud account -->
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->

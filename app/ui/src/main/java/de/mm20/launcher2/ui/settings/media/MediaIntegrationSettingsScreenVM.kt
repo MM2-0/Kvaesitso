@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.musicwidget
+package de.mm20.launcher2.ui.settings.media
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class MusicWidgetSettingsScreenVM : ViewModel(), KoinComponent {
+class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val musicService: MusicService by inject()
     private val dataStore: LauncherDataStore by inject()

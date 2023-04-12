@@ -240,7 +240,7 @@
     <string name="preference_icon_shape_circle">Cerc</string>
     <string name="preference_icon_shape_hexagon">Hexagon</string>
     <string name="preference_category_searchbar">Bară de căutare</string>
-    <string name="preference_screen_services">Servicii</string>
+    <string name="preference_screen_integrations">Servicii</string>
     <string name="preference_theme_system">Urmează sistemul</string>
     <string name="preference_themed_icons">Pictograme tematice</string>
     <string name="preference_icon_pack">Pachet de pictograme</string>
@@ -248,7 +248,7 @@
     <string name="preference_category_system_bars">Bare de sistem</string>
     <string name="preference_hide_status_bar">Ascunde bara de stare</string>
     <string name="preference_hide_nav_bar">Ascunde bara de navigare</string>
-    <string name="preference_category_services_google">Google</string>
+    <string name="preference_google">Google</string>
     <string name="preference_signin_user">Conectat ca %1$s</string>
     <string name="preference_signin_logout">Deconectare</string>
     <string name="preference_summary_not_logged_in">În prezent, nu sunteți conectat</string>
@@ -256,20 +256,20 @@
     <string name="preference_category_wallpaper">Tapet</string>
     <string name="preference_dim_wallpaper_summary">La teme întunecate, tapet întunecat</string>
     <string name="preference_wallpaper_summary">Alege un tapet</string>
-    <string name="preference_screen_badges">Insigne</string>
+    <string name="preference_category_badges">Insigne</string>
     <string name="preference_screen_badges_summary">Configurarea insignelor pictogramelor</string>
     <string name="preference_suspended_badges">Aplicații suspendate</string>
     <string name="preference_cloud_badges">Insigne cloud</string>
     <string name="preference_shortcut_badges">Insigne de scurtătură</string>
     <string name="preference_shortcut_badges_summary">Afișarea unei insigne care indică aplicația căreia îi aparține o scurtătură</string>
-    <string name="preference_category_services_microsoft">Microsoft</string>
+    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_dim_wallpaper">Întunecă tapetul</string>
     <string name="preference_notification_badges">Insigne de notificare</string>
     <string name="preference_suspended_badges_summary">Afișează o insignă pentru aplicațiile suspendate</string>
     <string name="preference_ms_signin">Conectează-te cu Microsoft</string>
     <string name="preference_nextcloud_signin">Conectează-te la Nextcloud</string>
-    <string name="preference_category_services_nextcloud">Nextcloud</string>
-    <string name="preference_category_services_owncloud">Owncloud</string>
+    <string name="preference_nextcloud">Nextcloud</string>
+    <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Conectează-te la Owncloud</string>
     <string name="preference_owncloud_signin_summary">Conectează-te pentru a căuta în serverul tău Owncloud</string>
     <string name="preference_about_telegram">Grup Telegram</string>
@@ -281,7 +281,7 @@
     <string name="preference_grid_column_count">Numărul de coloane</string>
     <string name="preference_screen_debug">Depanare</string>
     <string name="preference_screen_debug_summary">Instrumente de depanare</string>
-    <string name="preference_screen_widgets">Widget-uri</string>
+    <string name="preference_category_widgets">Widget-uri</string>
     <string name="preference_screen_widgets_summary">Configurarea widget-urilor</string>
     <string name="preference_screen_weatherwidget">Vreme</string>
     <string name="preference_screen_musicwidget">Muzică</string>
@@ -370,7 +370,7 @@
 \nUltima actualizare:  %1$s</string>
     <string name="missing_permission_calendar_widget_settings">Acest widget necesită permisiunea la calendar</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (doar Germania)</string>
-    <string name="preference_screen_services_summary">Gestionează conturile și serviciile conectate</string>
+    <string name="preference_screen_integrations_summary">Gestionează conturile și serviciile conectate</string>
     <string name="weather_condition_lightrainshowersandthunder">Averse ușoare de ploaie și tunete</string>
     <string name="preference_cards_summary">Particularizarea aspectului cardului</string>
     <string name="preference_cloud_badges_summary">Afișarea unei insigne pentru fișierele stocate într-un cloud</string>

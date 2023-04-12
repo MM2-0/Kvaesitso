@@ -1,21 +1,21 @@
 package de.mm20.launcher2.ui.settings.main
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBox
+import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Gesture
+import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material.icons.rounded.Power
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SettingsBackupRestore
-import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.icons.NotificationBadge
 import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
@@ -35,19 +35,27 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
+                    icon = Icons.Rounded.Home,
+                    title = stringResource(id = R.string.preference_screen_homescreen),
+                    summary = stringResource(id = R.string.preference_screen_homescreen_summary),
+                    onClick = {
+                        navController?.navigate("settings/homescreen")
+                    }
+                )
+                Preference(
+                    icon = Icons.Rounded.Apps,
+                    title = stringResource(id = R.string.preference_screen_icons),
+                    summary = stringResource(id = R.string.preference_screen_icons_summary),
+                    onClick = {
+                        navController?.navigate("settings/icons")
+                    }
+                )
+                Preference(
                     icon = Icons.Rounded.Search,
                     title = stringResource(id = R.string.preference_screen_search),
                     summary = stringResource(id = R.string.preference_screen_search_summary),
                     onClick = {
                         navController?.navigate("settings/search")
-                    }
-                )
-                Preference(
-                    icon = Icons.Rounded.Widgets,
-                    title = stringResource(id = R.string.preference_screen_widgets),
-                    summary = stringResource(id = R.string.preference_screen_widgets_summary),
-                    onClick = {
-                        navController?.navigate("settings/widgets")
                     }
                 )
                 Preference(
@@ -59,19 +67,11 @@ fun MainSettingsScreen() {
                     }
                 )
                 Preference(
-                    icon = Icons.Rounded.NotificationBadge,
-                    title = stringResource(id = R.string.preference_screen_badges),
-                    summary = stringResource(id = R.string.preference_screen_badges_summary),
+                    icon = Icons.Rounded.Power,
+                    title = stringResource(id = R.string.preference_screen_integrations),
+                    summary = stringResource(id = R.string.preference_screen_integrations_summary),
                     onClick = {
-                        navController?.navigate("settings/badges")
-                    }
-                )
-                Preference(
-                    icon = Icons.Rounded.AccountBox,
-                    title = stringResource(id = R.string.preference_screen_services),
-                    summary = stringResource(id = R.string.preference_screen_services_summary),
-                    onClick = {
-                        navController?.navigate("settings/accounts")
+                        navController?.navigate("settings/integrations")
                     }
                 )
                 Preference(

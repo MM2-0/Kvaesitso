@@ -3,7 +3,7 @@
     <application>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/preference_category_services_nextcloud"
+            android:label="@string/preference_nextcloud"
             android:taskAffinity="de.mm20.launcher2.nextcloud"
             android:parentActivityName="de.mm20.launcher2.ui.settings.SettingsActivity"
             android:theme="@style/OwncloudLoginTheme" >

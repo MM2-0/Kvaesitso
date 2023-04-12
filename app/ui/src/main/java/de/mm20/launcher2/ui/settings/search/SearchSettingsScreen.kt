@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
@@ -31,7 +32,7 @@ fun SearchSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
             PreferenceCategory {
-                val favorites by viewModel.favorites.observeAsState()
+                val favorites by viewModel.favorites.collectAsStateWithLifecycle(null)
                 PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_favorites),
                     summary = stringResource(R.string.preference_search_favorites_summary),
@@ -54,7 +55,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val hasContactsPermission by viewModel.hasContactsPermission.observeAsState()
+                val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(null)
                 AnimatedVisibility(hasContactsPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(R.string.missing_permission_contact_search_settings),
@@ -64,7 +65,7 @@ fun SearchSettingsScreen() {
                         modifier = Modifier.padding(16.dp)
                     )
                 }
-                val contacts by viewModel.contacts.observeAsState()
+                val contacts by viewModel.contacts.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_contacts),
                     summary = stringResource(R.string.preference_search_contacts_summary),
@@ -76,7 +77,7 @@ fun SearchSettingsScreen() {
                     enabled = hasContactsPermission == true
                 )
 
-                val hasCalendarPermission by viewModel.hasCalendarPermission.observeAsState()
+                val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(null)
                 AnimatedVisibility(hasCalendarPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(R.string.missing_permission_calendar_search_settings),
@@ -86,7 +87,7 @@ fun SearchSettingsScreen() {
                         modifier = Modifier.padding(16.dp)
                     )
                 }
-                val calendar by viewModel.calendar.observeAsState()
+                val calendar by viewModel.calendar.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calendar),
                     summary = stringResource(R.string.preference_search_calendar_summary),
@@ -98,7 +99,7 @@ fun SearchSettingsScreen() {
                     enabled = hasCalendarPermission == true
                 )
 
-                val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.observeAsState()
+                val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(null)
                 AnimatedVisibility(hasAppShortcutsPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(
@@ -111,7 +112,7 @@ fun SearchSettingsScreen() {
                         modifier = Modifier.padding(16.dp)
                     )
                 }
-                val appShortcuts by viewModel.appShortcuts.observeAsState()
+                val appShortcuts by viewModel.appShortcuts.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_appshortcuts),
                     summary = stringResource(R.string.preference_search_appshortcuts_summary),
@@ -123,7 +124,7 @@ fun SearchSettingsScreen() {
                     enabled = hasAppShortcutsPermission == true
                 )
 
-                val calculator by viewModel.calculator.observeAsState()
+                val calculator by viewModel.calculator.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calculator),
                     summary = stringResource(R.string.preference_search_calculator_summary),
@@ -134,7 +135,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val unitConverter by viewModel.unitConverter.observeAsState()
+                val unitConverter by viewModel.unitConverter.collectAsStateWithLifecycle(null)
                 PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_unitconverter),
                     summary = stringResource(R.string.preference_search_unitconverter_summary),
@@ -148,7 +149,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val wikipedia by viewModel.wikipedia.observeAsState()
+                val wikipedia by viewModel.wikipedia.collectAsStateWithLifecycle(null)
                 PreferenceWithSwitch(
                     title = stringResource(R.string.preference_search_wikipedia),
                     summary = stringResource(R.string.preference_search_wikipedia_summary),
@@ -162,7 +163,7 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val websites by viewModel.websites.observeAsState()
+                val websites by viewModel.websites.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_websites),
                     summary = stringResource(R.string.preference_search_websites_summary),
@@ -185,43 +186,6 @@ fun SearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val autoFocus by viewModel.autoFocus.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_auto_focus),
-                    summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
-                    icon = Icons.Rounded.Keyboard,
-                    value = autoFocus == true,
-                    onValueChanged = {
-                        viewModel.setAutoFocus(it)
-                    }
-                )
-                val launchOnEnter by viewModel.launchOnEnter.observeAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_launch_on_enter),
-                    summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
-                    icon = Icons.Rounded.ArrowRightAlt,
-                    value = launchOnEnter == true,
-                    onValueChanged = {
-                        viewModel.setLaunchOnEnter(it)
-                    }
-                )
-                val searchResultOrdering by viewModel.searchResultOrdering.observeAsState()
-                ListPreference(
-                    title = stringResource(R.string.preference_search_result_ordering),
-                    items = listOf(
-                        stringResource(R.string.preference_search_result_ordering_alphabetic) to Settings.SearchResultOrderingSettings.Ordering.Alphabetic,
-                        stringResource(R.string.preference_search_result_ordering_weighted) to Settings.SearchResultOrderingSettings.Ordering.Weighted
-                    ),
-                    value = searchResultOrdering,
-                    onValueChanged = {
-                        if (it != null) viewModel.setSearchResultOrdering(it)
-                    },
-                    icon = Icons.Rounded.Sort
-                )
-            }
-        }
-        item {
-            PreferenceCategory {
                 Preference(
                     title = stringResource(R.string.preference_hidden_items),
                     summary = stringResource(R.string.preference_hidden_items_summary),
@@ -237,6 +201,58 @@ fun SearchSettingsScreen() {
                     onClick = {
                         navController?.navigate("settings/search/tags")
                     }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
+                val autoFocus by viewModel.autoFocus.collectAsStateWithLifecycle(null)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_auto_focus),
+                    summary = stringResource(R.string.preference_search_bar_auto_focus_summary),
+                    icon = Icons.Rounded.Keyboard,
+                    value = autoFocus == true,
+                    onValueChanged = {
+                        viewModel.setAutoFocus(it)
+                    }
+                )
+                val launchOnEnter by viewModel.launchOnEnter.collectAsStateWithLifecycle(null)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_launch_on_enter),
+                    summary = stringResource(R.string.preference_search_bar_launch_on_enter_summary),
+                    value = launchOnEnter == true,
+                    onValueChanged = {
+                        viewModel.setLaunchOnEnter(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
+                val searchResultOrdering by viewModel.searchResultOrdering.collectAsStateWithLifecycle(null)
+                ListPreference(
+                    title = stringResource(R.string.preference_search_result_ordering),
+                    items = listOf(
+                        stringResource(R.string.preference_search_result_ordering_alphabetic) to Settings.SearchResultOrderingSettings.Ordering.Alphabetic,
+                        stringResource(R.string.preference_search_result_ordering_weighted) to Settings.SearchResultOrderingSettings.Ordering.Weighted
+                    ),
+                    value = searchResultOrdering,
+                    onValueChanged = {
+                        if (it != null) viewModel.setSearchResultOrdering(it)
+                    },
+                    icon = Icons.Rounded.Sort
+                )
+
+                val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
+                ListPreference(title = stringResource(R.string.preference_layout_search_results),
+                    items = listOf(
+                        stringResource(R.string.search_results_order_top_down) to false,
+                        stringResource(R.string.search_results_order_bottom_up) to true,
+                    ),
+                    value = reverseSearchResults,
+                    onValueChanged = {
+                        if (it != null) viewModel.setReverseSearchResults(it)
+                    },
                 )
             }
         }

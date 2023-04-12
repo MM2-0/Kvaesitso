@@ -1,17 +1,24 @@
-package de.mm20.launcher2.ui.settings.accounts
+package de.mm20.launcher2.ui.settings.integrations
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.LightMode
+import androidx.compose.material.icons.rounded.PlayCircleOutline
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,12 +38,14 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
-fun AccountsSettingsScreen() {
-    val viewModel: AccountsSettingsScreenVM = viewModel()
+fun IntegrationsSettingsScreen() {
+    val viewModel: IntegrationsSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+    val navController = LocalNavController.current
 
     LaunchedEffect(null) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -44,76 +53,91 @@ fun AccountsSettingsScreen() {
         }
     }
 
-    val loading by viewModel.loading.observeAsState(true)
+    val owncloudUser by viewModel.owncloudUser
+    val nextcloudUser by viewModel.nextcloudUser
+    val msUser by viewModel.msUser
+    val googleUser by viewModel.googleUser
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_services)) {
+    val loading by viewModel.loading
+
+    PreferenceScreen(title = stringResource(R.string.preference_screen_integrations)) {
         if (loading) {
             item {
                 LinearProgressIndicator(
                     modifier = Modifier.fillMaxWidth()
                 )
             }
-            return@PreferenceScreen
         }
         item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_services_nextcloud)) {
-                val account by viewModel.nextcloudUser.observeAsState()
+            Preference(
+                title = stringResource(R.string.preference_weather_integration),
+                icon = Icons.Rounded.LightMode,
+                onClick = {
+                    navController?.navigate("settings/integrations/weather")
+                }
+            )
+            Preference(
+                title = stringResource(R.string.preference_media_integration),
+                icon = Icons.Rounded.PlayCircleOutline,
+                onClick = {
+                    navController?.navigate("settings/integrations/media")
+                }
+            )
+        }
+        item {
+            PreferenceCategory(
+                title = stringResource(id = R.string.preference_category_accounts)
+            ) {
+
                 Preference(
-                    title = if (account != null) {
-                        stringResource(R.string.preference_signin_logout)
+                    title = if (nextcloudUser != null) {
+                        stringResource(R.string.preference_nextcloud)
                     } else {
                         stringResource(R.string.preference_nextcloud_signin)
                     },
-                    summary = account?.let {
+                    summary = nextcloudUser?.let {
                         stringResource(R.string.preference_signin_user, it.userName)
                     } ?: stringResource(R.string.preference_nextcloud_signin_summary),
                     onClick = {
-                        if (account != null) {
+                        if (nextcloudUser != null) {
                             viewModel.signOut(AccountType.Nextcloud)
                         } else {
                             viewModel.signIn(context as AppCompatActivity, AccountType.Nextcloud)
                         }
-                    }
+                    },
+                    enabled = !loading,
                 )
-            }
-        }
-        item {
-            PreferenceCategory(title = stringResource(R.string.preference_category_services_owncloud)) {
-                val account by viewModel.owncloudUser.observeAsState()
+
                 Preference(
-                    title = if (account != null) {
-                        stringResource(R.string.preference_signin_logout)
+                    title = if (owncloudUser != null) {
+                        stringResource(R.string.preference_owncloud)
                     } else {
                         stringResource(R.string.preference_owncloud_signin)
                     },
-                    summary = account?.let {
+                    summary = owncloudUser?.let {
                         stringResource(R.string.preference_signin_user, it.userName)
                     } ?: stringResource(R.string.preference_owncloud_signin_summary),
                     onClick = {
-                        if (account != null) {
+                        if (owncloudUser != null) {
                             viewModel.signOut(AccountType.Owncloud)
                         } else {
                             viewModel.signIn(context as AppCompatActivity, AccountType.Owncloud)
                         }
-                    }
+                    },
+                    enabled = !loading,
                 )
-            }
-        }
-        if (viewModel.isMicrosoftAvailable) {
-            item {
-                PreferenceCategory(title = stringResource(R.string.preference_category_services_microsoft)) {
-                    val account by viewModel.msUser.observeAsState()
+                if (viewModel.isMicrosoftAvailable) {
                     Preference(
-                        title = if (account != null) {
-                            stringResource(R.string.preference_signin_logout)
+                        title = if (msUser != null) {
+                            stringResource(R.string.preference_microsoft)
                         } else {
                             stringResource(R.string.preference_ms_signin)
                         },
-                        summary = account?.let {
+                        summary = msUser?.let {
                             stringResource(R.string.preference_signin_user, it.userName)
                         } ?: stringResource(R.string.preference_ms_signin_summary),
                         onClick = {
-                            if (account != null) {
+                            if (msUser != null) {
                                 viewModel.signOut(AccountType.Microsoft)
                             } else {
                                 viewModel.signIn(
@@ -121,39 +145,32 @@ fun AccountsSettingsScreen() {
                                     AccountType.Microsoft
                                 )
                             }
-                        }
+                        },
+                        enabled = !loading,
                     )
                 }
-            }
-        }
-        if (viewModel.isGoogleAvailable) {
-            item {
-                PreferenceCategory(title = stringResource(R.string.preference_category_services_google)) {
-                    val account by viewModel.googleUser.observeAsState()
-                    if (account == null) {
-                        Box(modifier = Modifier
-                            .padding(start = 56.dp)
-                            .padding(16.dp)) {
-                            GoogleSigninButton(
-                                onClick = {
-                                    viewModel.signIn(
-                                        context as AppCompatActivity,
-                                        AccountType.Google
-                                    )
-                                }
-                            )
-                        }
-                    } else {
-                        Preference(
-                            title = stringResource(R.string.preference_signin_logout),
-                            summary = account?.userName?.let {
-                                stringResource(R.string.preference_signin_user, it)
-                            },
-                            onClick = {
+                if (viewModel.isGoogleAvailable) {
+                    Preference(
+                        title = if (googleUser != null) {
+                            stringResource(R.string.preference_google)
+                        } else {
+                            stringResource(R.string.preference_google_signin)
+                        },
+                        summary = googleUser?.let {
+                            stringResource(R.string.preference_signin_user, it.userName)
+                        } ?: stringResource(R.string.preference_google_signin_summary),
+                        onClick = {
+                            if (googleUser != null) {
                                 viewModel.signOut(AccountType.Google)
+                            } else {
+                                viewModel.signIn(
+                                    context as AppCompatActivity,
+                                    AccountType.Google
+                                )
                             }
-                        )
-                    }
+                        },
+                        enabled = !loading,
+                    )
                 }
             }
         }

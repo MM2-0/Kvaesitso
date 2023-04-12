@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.settings.musicwidget
+package de.mm20.launcher2.ui.settings.media
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
@@ -20,9 +20,9 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 
 @Composable
-fun MusicWidgetSettingsScreen() {
+fun MediaIntegrationSettingsScreen() {
     val context = LocalContext.current
-    val viewModel: MusicWidgetSettingsScreenVM = viewModel()
+    val viewModel: MediaIntegrationSettingsScreenVM = viewModel()
     val hasPermission by viewModel.hasPermission.observeAsState()
     PreferenceScreen(
         stringResource(R.string.preference_screen_musicwidget),
