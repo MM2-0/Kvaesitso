@@ -371,7 +371,7 @@
     <string name="preference_crash_reporter">Hlášení pádů</string>
     <string name="preference_crash_reporter_summary">Hlášení chyb a pádů</string>
     <string name="preference_export_log">Exportovat protokol</string>
-    <string name="preference_screen_search_summary">Nastavit hledání</string>
+    <string name="preference_screen_search_summary">Vyhledávání, štítky, skryté položky</string>
     <string name="preference_screen_search">Hledání</string>
     <string name="preference_search_favorites">Oblíbené</string>
     <string name="preference_search_files">Soubory</string>
@@ -589,4 +589,13 @@
     <string name="preference_search_result_ordering">Pořadí výsledků vyhledávání</string>
     <string name="preference_search_result_ordering_weighted">Využití</string>
     <string name="preference_search_result_ordering_weight_factor">Flexibilita hodnocení</string>
+    <string name="preference_screen_integrations">Integrace</string>
+    <string name="preference_screen_clockwidget_summary">Nastavení stylu hodin a komponent</string>
+    <string name="preference_screen_homescreen">Domovská obrazovka</string>
+    <string name="preference_screen_homescreen_summary">Hodiny, vyhledávací lišta, pozadí, systémové lišty</string>
+    <string name="preference_screen_icons">Mřížka a ikony</string>
+    <string name="preference_screen_icons_summary">Mřížka, velikost ikon, balíčky ikon, odznaky</string>
+    <string name="preference_category_accounts">Účty</string>
+    <string name="preference_weather_integration">Počasí</string>
+    <string name="preference_media_integration">Ovládání médií</string>
 </resources>
