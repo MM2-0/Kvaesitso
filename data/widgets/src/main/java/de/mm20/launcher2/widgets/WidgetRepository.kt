@@ -95,7 +95,6 @@ internal class WidgetRepositoryImpl(
             val widgets = dao.exportWidgets(limit = 100, offset = page * 100)
             val jsonArray = JSONArray()
             for (widget in widgets) {
-                if (widget.type != WidgetType.INTERNAL.value) continue
                 jsonArray.put(
                     jsonObjectOf(
                         "config" to widget.config,
