@@ -39,6 +39,7 @@ import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
@@ -194,6 +195,7 @@ internal class SearchServiceImpl(
             }
             if (wikipedia.enabled) {
                 launch {
+                    delay(750)
                     wikipediaRepository.search(query, loadImages = wikipedia.images)
                         .map { it?.let { listOf(it) } ?: listOf() }
                         .withCustomLabels(customAttributesRepository)
