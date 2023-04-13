@@ -6,10 +6,10 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import de.mm20.launcher2.database.entities.WidgetEntity
 import de.mm20.launcher2.database.entities.PartialWidgetEntity
+import de.mm20.launcher2.database.entities.WidgetEntity
+import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.ktx.tryStartActivity
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.util.UUID
 
@@ -28,6 +28,7 @@ sealed class Widget {
             )
         }
     }
+
     abstract fun toDatabaseEntity(): PartialWidgetEntity
 
     open val isConfigurable: Boolean = false
@@ -37,17 +38,25 @@ sealed class Widget {
         fun fromDatabaseEntity(context: Context, entity: WidgetEntity): Widget? {
             return when (entity.type) {
                 WeatherWidget.Type -> {
-                    val config: WeatherWidgetConfig = Json.decodeFromString(entity.config ?: "{}")
+                    val config: WeatherWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: WeatherWidgetConfig()
                     WeatherWidget(entity.id, config)
                 }
+
                 MusicWidget.Type -> MusicWidget(entity.id)
                 CalendarWidget.Type -> {
-                    val config: CalendarWidgetConfig = Json.decodeFromString(entity.config ?: "{}")
+                    val config: CalendarWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: CalendarWidgetConfig()
                     CalendarWidget(entity.id, config)
                 }
+
                 FavoritesWidget.Type -> FavoritesWidget(entity.id)
                 AppWidget.Type -> {
-                    val config: AppWidgetConfig = Json.decodeFromString(entity.config ?: "{}")
+                    val config: AppWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: return null
                     AppWidget(
                         entity.id,
                         config,
@@ -97,8 +106,6 @@ data class MusicWidget(
         const val Type = "music"
     }
 }
-
-
 
 
 data class FavoritesWidget(

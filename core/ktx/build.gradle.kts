@@ -42,6 +42,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.bundles.androidx.lifecycle)
     implementation(libs.commons.text)
+    implementation(libs.kotlinx.serialization.json)
 
     testImplementation(libs.bundles.tests)
 
