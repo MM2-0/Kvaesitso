@@ -598,4 +598,13 @@
     <string name="preference_category_accounts">Účty</string>
     <string name="preference_weather_integration">Počasí</string>
     <string name="preference_media_integration">Ovládání médií</string>
+    <string name="widget_config_calendar_no_calendars">Nenalezeny žádné kalendáře</string>
+    <string name="widget_name_unknown">Neznámý widget aplikace</string>
+    <string name="widget_action_replace">Nahradit</string>
+    <string name="widget_config_music_integration_settings">Nastavení integrace ovládání médií</string>
+    <string name="widget_config_appwidget_height">Výška</string>
+    <string name="widget_config_appwidget_borderless">Bez okrajů</string>
+    <string name="widget_config_appwidget_configure">Nastavit widget</string>
+    <string name="widget_config_weather_integration_settings">Nastavení integrace počasí</string>
+    <string name="app_widget_loading_failed">Nepodařilo se načíst widget aplikace.</string>
 </resources>
