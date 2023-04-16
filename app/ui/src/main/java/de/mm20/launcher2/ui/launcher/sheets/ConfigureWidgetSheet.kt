@@ -530,7 +530,7 @@ fun ColumnScope.ConfigureCalendarWidget(
             modifier = Modifier.padding(top = 8.dp, bottom = 16.dp),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            text = "No calendars found"
+            text = stringResource(R.string.widget_config_calendar_no_calendars)
         )
     }
 }
