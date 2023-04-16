@@ -3,6 +3,7 @@ package de.mm20.launcher2.msservices
 import android.app.Activity
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.edit
 import com.azure.core.credential.AccessToken
 import com.azure.core.credential.TokenCredential
@@ -43,13 +44,18 @@ class MicrosoftGraphApiHelper(val context: Context) {
         if (resId == 0) return null
         if (clientApplication == null) {
             clientApplication = withContext(Dispatchers.IO) {
-                PublicClientApplication.createSingleAccountPublicClientApplication(
-                    context.applicationContext,
-                    resId
-                )
+                try {
+                    PublicClientApplication.createSingleAccountPublicClientApplication(
+                        context.applicationContext,
+                        resId
+                    )
+                } catch (e: MsalClientException) {
+                    CrashReporter.logException(e)
+                    null
+                }
             }
         }
-        return clientApplication!!
+        return clientApplication
     }
 
     private suspend fun acquireAccessToken(): Boolean {
@@ -72,7 +78,11 @@ class MicrosoftGraphApiHelper(val context: Context) {
     }
 
     suspend fun login(context: Activity) {
-        val clientApplication = getClientApplication() ?: return
+        val clientApplication = getClientApplication() ?: return run {
+            withContext(Dispatchers.Main) {
+                Toast.makeText(context, "Something went wrong, please check the logs", Toast.LENGTH_LONG).show()
+            }
+        }
         suspendCoroutine<IAuthenticationResult?> {
             clientApplication.signIn(context, "", SCOPES, object : AuthenticationCallback {
                 override fun onSuccess(authenticationResult: IAuthenticationResult?) {
