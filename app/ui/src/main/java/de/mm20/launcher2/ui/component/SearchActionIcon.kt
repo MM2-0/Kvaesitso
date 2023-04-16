@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.component
 
 import android.content.ComponentName
+import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -81,7 +82,11 @@ fun SearchActionIcon(
 
         LaunchedEffect(componentName) {
             drawable = withContext(Dispatchers.IO) {
-                context.packageManager.getActivityIcon(componentName)
+                try {
+                    context.packageManager.getActivityIcon(componentName)
+                } catch (e: PackageManager.NameNotFoundException) {
+                    null
+                }
             }
         }
 

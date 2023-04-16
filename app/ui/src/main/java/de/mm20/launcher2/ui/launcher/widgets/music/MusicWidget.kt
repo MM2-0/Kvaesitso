@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.music
 
+import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
@@ -416,7 +417,11 @@ fun CustomActionIcon(action: CustomAction, playerPackage: String?) {
     val context = LocalContext.current
     val resources = remember(playerPackage) {
         playerPackage?.let {
-            context.packageManager.getResourcesForApplication(it)
+            try {
+                context.packageManager.getResourcesForApplication(it)
+            } catch (e: PackageManager.NameNotFoundException) {
+                null
+            }
         }
     }
 
