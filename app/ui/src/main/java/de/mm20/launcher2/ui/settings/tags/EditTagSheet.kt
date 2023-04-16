@@ -55,6 +55,7 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 fun EditTagSheet(
     tag: String?,
     onDismiss: () -> Unit,
+    onTagSaved: (String) -> Unit = {},
 ) {
     val viewModel: EditTagSheetVM = viewModel()
 
@@ -79,6 +80,7 @@ fun EditTagSheet(
             if (viewModel.page == EditTagSheetPage.CustomizeTag) {
                 OutlinedButton(onClick = {
                     viewModel.save()
+                    onTagSaved(viewModel.tagName)
                     onDismiss()
                 }) {
                     Text(stringResource(R.string.close))

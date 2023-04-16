@@ -8,15 +8,12 @@ import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -29,13 +26,8 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.ArrowForward
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Create
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
@@ -45,13 +37,9 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilledTonalIconToggleButton
-import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Slider
@@ -72,12 +60,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -90,6 +76,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.TagChip
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -102,6 +89,7 @@ import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.settings.tags.EditTagSheet
 import kotlin.math.roundToInt
 
 @Composable
@@ -172,8 +160,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
     val items by viewModel.gridItems.observeAsState(emptyList())
     val columns = LocalGridSettings.current.columnCount
 
-    val availableTags by viewModel.availableTags.observeAsState(emptyList())
-    val pinnedTags by viewModel.pinnedTags.observeAsState(emptyList())
+    val availableTags by viewModel.availableTags
+    val pinnedTags by viewModel.pinnedTags
 
     var contextMenuItemKey by remember { mutableStateOf<String?>(null) }
 
@@ -181,6 +169,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
 
     var draggedItemKey by remember { mutableStateOf<String?>(null) }
     var hoveredTag by remember { mutableStateOf<String?>(null) }
+
+    var createTag by remember { mutableStateOf(false) }
 
     val gridState = rememberLazyGridState()
     val tagsListState = rememberLazyListState()
@@ -526,60 +516,19 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     if (availableTags.isNotEmpty()) {
                                         Divider()
                                     }
-                                    var newTag by remember { mutableStateOf("") }
                                     DropdownMenuItem(
                                         leadingIcon = {
-                                            Icon(Icons.Rounded.Create, null)
+                                            Icon(Icons.Rounded.Add, null)
                                         },
-                                        contentPadding = PaddingValues(
-                                            start = MenuDefaults.DropdownMenuItemContentPadding.calculateStartPadding(
-                                                LocalLayoutDirection.current
-                                            ),
-                                            end = MenuDefaults.DropdownMenuItemContentPadding.calculateEndPadding(
-                                                LocalLayoutDirection.current
-                                            ),
-                                            top = if (availableTags.isNotEmpty()) 8.dp else 0.dp,
-                                        ),
                                         text = {
-                                            Box {
-                                                if (newTag.isEmpty()) {
-                                                    Text(
-                                                        stringResource(R.string.edit_favorites_dialog_new_tag),
-                                                        color = LocalContentColor.current.copy(alpha = 0.5f)
-                                                    )
-                                                }
-                                                BasicTextField(
-                                                    value = newTag,
-                                                    onValueChange = {
-                                                        newTag = it.replace(",", "")
-                                                    },
-                                                    textStyle = LocalTextStyle.current.copy(
-                                                        color = LocalContentColor.current
-                                                    ),
-                                                    cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                                                    singleLine = true,
-                                                    keyboardActions = KeyboardActions(
-                                                        onDone = {
-                                                            if (newTag.isBlank()) return@KeyboardActions
-                                                            viewModel.createNewTag(newTag)
-                                                            showAddMenu = false
-                                                        }
-                                                    )
-                                                )
-                                            }
-                                        },
-                                        trailingIcon = {
-                                            Icon(
-                                                modifier = Modifier.clickable {
-                                                    if (newTag.isBlank()) return@clickable
-                                                    viewModel.createNewTag(newTag)
-                                                    showAddMenu = false
-                                                },
-                                                imageVector = Icons.Rounded.ArrowForward,
-                                                contentDescription = null
+                                            Text(
+                                                stringResource(R.string.edit_favorites_dialog_new_tag),
                                             )
                                         },
-                                        onClick = { }
+                                        onClick = {
+                                            createTag = true
+                                            showAddMenu = false
+                                        }
                                     )
                                 }
                             }
@@ -635,6 +584,17 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                 }
             }
         }
+    }
+    if (createTag) {
+        EditTagSheet(
+            tag = null,
+            onTagSaved = { tag ->
+                viewModel.pinTag(Tag(tag))
+            },
+            onDismiss = {
+                createTag = false
+            }
+        )
     }
 }
 

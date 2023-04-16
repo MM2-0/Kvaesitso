@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
@@ -52,8 +53,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private var automaticallySorted: MutableList<SavableSearchable> = mutableListOf()
     private var frequentlyUsed: MutableList<SavableSearchable> = mutableListOf()
 
-    val pinnedTags = MutableLiveData<List<Tag>>(emptyList())
-    val availableTags = MutableLiveData<List<Tag>>(emptyList())
+    val pinnedTags = mutableStateOf<List<Tag>>(emptyList())
+    val availableTags = mutableStateOf<List<Tag>>(emptyList())
 
     suspend fun reload(showLoadingIndicator: Boolean = true) {
         loading.value = showLoadingIndicator
@@ -275,24 +276,24 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     }
 
     fun pinTag(tag: Tag) {
-        val pinned = pinnedTags.value?.toMutableList() ?: mutableListOf()
+        val pinned = pinnedTags.value.toMutableList()
         pinned.add(tag)
-        val available = availableTags.value ?: emptyList()
+        val available = availableTags.value
         availableTags.value = available.filter { it.tag != tag.tag }
         pinnedTags.value = pinned.distinctBy { it.tag }
         save()
     }
 
     fun unpinTag(tag: Tag) {
-        val pinned = pinnedTags.value?.toMutableList() ?: mutableListOf()
-        val available = availableTags.value ?: emptyList()
+        val pinned = pinnedTags.value.toMutableList()
+        val available = availableTags.value
         availableTags.value = (available + tag).sorted()
         pinnedTags.value = pinned.filter { it.tag != tag.tag }
         save()
     }
 
     fun moveTag(from: LazyListItemInfo, to: LazyListItemInfo) {
-        val pinned = pinnedTags.value?.toMutableList() ?: return
+        val pinned = pinnedTags.value.toMutableList()
         val tag = pinned.removeAt(from.index)
         pinned.add(to.index, tag)
         pinnedTags.value = pinned
