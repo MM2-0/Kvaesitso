@@ -593,4 +593,13 @@
     <string name="preference_category_accounts">Konten</string>
     <string name="preference_weather_integration">Wetter</string>
     <string name="preference_media_integration">Mediensteuerung</string>
+    <string name="widget_config_calendar_no_calendars">Keine Kalender gefunden</string>
+    <string name="widget_name_unknown">Unbekanntes App-Widget</string>
+    <string name="widget_action_replace">Ersetzen</string>
+    <string name="widget_config_appwidget_height">Höhe</string>
+    <string name="widget_config_appwidget_borderless">Randlos</string>
+    <string name="widget_config_appwidget_configure">Widget einrichten</string>
+    <string name="widget_config_music_integration_settings">Einstellungen für die Mediensteuerungsintegration</string>
+    <string name="widget_config_weather_integration_settings">Einstellungen für die Wetter-Integration</string>
+    <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden.</string>
 </resources>
