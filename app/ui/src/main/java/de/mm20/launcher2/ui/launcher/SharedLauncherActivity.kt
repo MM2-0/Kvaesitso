@@ -143,10 +143,12 @@ abstract class SharedLauncherActivity(
                                     .currentTransition
                                     .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
                                     .collect {
-                                        enterTransitionProgress.value = 0f
-                                        enterTransition = it
-                                        enterTransitionProgress.animateTo(1f)
-                                        enterTransition = null
+                                        if (it != null) {
+                                            enterTransitionProgress.value = 0f
+                                            enterTransition = it
+                                            enterTransitionProgress.animateTo(1f)
+                                            enterTransition = null
+                                        }
                                     }
                             }
 
@@ -230,6 +232,7 @@ abstract class SharedLauncherActivity(
                                         .imePadding()
                                 )
                                 enterTransition?.let {
+                                    if (it.startBounds == null || it.targetBounds == null) return@let
                                     val dX = it.startBounds.center.x - it.targetBounds.center.x
                                     val dY = it.startBounds.center.y - it.targetBounds.center.y
                                     val s =

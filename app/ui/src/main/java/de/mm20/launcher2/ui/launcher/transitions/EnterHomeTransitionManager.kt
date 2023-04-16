@@ -30,7 +30,7 @@ class EnterHomeTransitionManager {
                 return
             }
         }
-        currentTransition.tryEmit(null)
+        currentTransition.tryEmit(EnterHomeTransition())
     }
 
     fun clear() {
