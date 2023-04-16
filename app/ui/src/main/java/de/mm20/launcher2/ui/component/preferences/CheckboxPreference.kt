@@ -30,3 +30,30 @@ fun CheckboxPreference(
         }
     )
 }
+
+@Composable
+fun CheckboxPreference(
+    title: String,
+    icon: @Composable () -> Unit,
+    iconPadding: Boolean = true,
+    summary: String? = null,
+    value: Boolean,
+    onValueChanged: (Boolean) -> Unit,
+    enabled: Boolean = true
+) {
+    Preference(
+        title = title,
+        icon = icon,
+        iconPadding = iconPadding,
+        summary = summary,
+        enabled = enabled,
+        onClick = {
+            onValueChanged(!value)
+        },
+        controls = {
+            Checkbox(
+                enabled = enabled, checked = value, onCheckedChange = onValueChanged,
+            )
+        }
+    )
+}

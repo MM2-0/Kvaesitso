@@ -34,7 +34,6 @@ fun createFactorySettings(context: Context): Settings {
         .setMusicWidget(
             Settings.MusicWidgetSettings
                 .newBuilder()
-                .setFilterSources(true)
                 .build()
         )
         .setCalendarWidget(

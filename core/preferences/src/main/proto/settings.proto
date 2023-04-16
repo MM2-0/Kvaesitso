@@ -97,7 +97,9 @@ message Settings {
   WeatherSettings weather = 5;
 
   message MusicWidgetSettings {
-    bool filter_sources = 1;
+    reserved 1;
+    repeated string allow_list = 2;
+    repeated string deny_list = 3;
   }
   MusicWidgetSettings music_widget = 6;
 

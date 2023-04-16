@@ -4,11 +4,11 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadata
-import android.media.Rating
 import android.media.session.MediaController
 import android.media.session.MediaSession
 import android.media.session.PlaybackState.CustomAction
@@ -17,13 +17,11 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.service.notification.StatusBarNotification
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
-import coil.request.ErrorResult
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -75,6 +73,8 @@ interface MusicService {
 
     fun openPlayerChooser(context: Context)
 
+    suspend fun getInstalledPlayerPackages(): Set<String>
+
     fun resetPlayer()
 }
 
@@ -107,13 +107,15 @@ internal class MusicServiceImpl(
     private val currentMediaController: SharedFlow<MediaController?> =
         combine(
             notificationRepository.notifications,
-            dataStore.data.map { it.musicWidget.filterSources }
-        ) { notifications, filter ->
+            dataStore.data.map { it.musicWidget }
+        ) { notifications, settings ->
             withContext(Dispatchers.Default) {
-                val musicApps = if (filter) getMusicApps() else null
+                val musicApps = getEnabledPlayerPackages(
+                    settings.allowListList.toSet(),
+                    settings.denyListList.toSet()
+                )
                 val sbn: StatusBarNotification? = notifications.filter {
-                    it.notification.extras.getParcelable(NotificationCompat.EXTRA_MEDIA_SESSION) as? MediaSession.Token != null &&
-                            (musicApps?.contains(it.packageName) != false)
+                    it.notification.extras.getParcelable(NotificationCompat.EXTRA_MEDIA_SESSION) as? MediaSession.Token != null && musicApps.contains(it.packageName)
                 }.maxByOrNull { it.postTime }
 
                 return@withContext (sbn?.notification?.extras?.get(NotificationCompat.EXTRA_MEDIA_SESSION) as? MediaSession.Token)
@@ -567,23 +569,25 @@ internal class MusicServiceImpl(
         }
     }
 
-    private fun getMusicApps(): Set<String> {
-        // List of known music apps that don't have the correct intent filter
-        val apps = mutableSetOf(
-            "com.aspiro.tidal", // Tidal
-            "com.bandcamp.android", // Bandcamp
-            "com.qobuz.music", // Qobuz
-            "tv.plex.labs.plexamp", // Plexamp
-            "de.ph1b.audiobook", // Voice
-            "de.eindm.boum", // Boum
-        )
-        var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
-        apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
-            .map { it.activityInfo.packageName })
-        intent = Intent("android.intent.action.MUSIC_PLAYER")
-        apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
-            .map { it.activityInfo.packageName })
+    override suspend fun getInstalledPlayerPackages(): Set<String> {
+        val apps = mutableSetOf<String>()
+        withContext(Dispatchers.IO) {
+            var intent = Intent(Intent.ACTION_MAIN).apply { addCategory(Intent.CATEGORY_APP_MUSIC) }
+            apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
+                .map { it.activityInfo.applicationInfo.packageName })
+            intent = Intent("android.intent.action.MUSIC_PLAYER")
+            apps.addAll(context.packageManager.queryIntentActivities(intent, 0)
+                .map { it.activityInfo.applicationInfo.packageName })
+        }
         return apps
+    }
+
+    private suspend fun getEnabledPlayerPackages(
+        allowList: Set<String>,
+        denyList: Set<String>
+    ): Set<String> {
+        val installed = getInstalledPlayerPackages()
+        return installed.union(allowList).subtract(denyList).toSet()
     }
 
     override fun resetPlayer() {
