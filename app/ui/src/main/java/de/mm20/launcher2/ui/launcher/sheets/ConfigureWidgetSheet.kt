@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -54,6 +55,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -160,7 +162,7 @@ fun ColumnScope.ConfigureWeatherWidget(
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
-                .size(ButtonDefaults.IconSize),
+                .requiredSize(ButtonDefaults.IconSize),
             imageVector = Icons.Rounded.OpenInNew, contentDescription = null
         )
     }
@@ -203,7 +205,7 @@ fun ColumnScope.ConfigureFavoritesWidget(
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
-                .size(ButtonDefaults.IconSize),
+                .requiredSize(ButtonDefaults.IconSize),
             imageVector = Icons.Rounded.OpenInNew, contentDescription = null
         )
     }
@@ -239,7 +241,7 @@ fun ColumnScope.ConfigureMusicWidget(
         Icon(
             modifier = Modifier
                 .padding(start = ButtonDefaults.IconSpacing)
-                .size(ButtonDefaults.IconSize),
+                .requiredSize(ButtonDefaults.IconSize),
             imageVector = Icons.Rounded.OpenInNew, contentDescription = null
         )
     }
@@ -282,7 +284,7 @@ fun ColumnScope.ConfigureAppWidget(
                 null,
                 modifier = Modifier
                     .padding(end = ButtonDefaults.IconSpacing)
-                    .size(ButtonDefaults.IconSize)
+                    .requiredSize(ButtonDefaults.IconSize)
             )
             Text(stringResource(R.string.widget_action_replace))
         }
@@ -438,11 +440,12 @@ fun ColumnScope.ConfigureAppWidget(
                         null
                     )
                 }) {
-                Text(stringResource(id = R.string.widget_config_appwidget_configure))
+                Text(
+                    stringResource(id = R.string.widget_config_appwidget_configure))
                 Icon(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
-                        .size(ButtonDefaults.IconSize),
+                        .requiredSize(ButtonDefaults.IconSize),
                     imageVector = Icons.Rounded.OpenInNew, contentDescription = null
                 )
             }
