@@ -311,7 +311,7 @@
     <string name="preference_clockwidget_alarm_part_summary">Mostra le sveglie che suoneranno nei prossimi 15 minuti</string>
     <string name="preference_export_log">Esporta file di log</string>
     <string name="preference_screen_search">Ricerca</string>
-    <string name="preference_screen_search_summary">Configura la ricerca</string>
+    <string name="preference_screen_search_summary">Cerca, tag, oggetti nascosti</string>
     <string name="preference_search_favorites">Preferiti</string>
     <string name="preference_search_files">File</string>
     <string name="preference_search_contacts">Contatti</string>
@@ -589,4 +589,13 @@
     <string name="preference_search_result_ordering">Ordinamento risultati ricerca</string>
     <string name="preference_search_result_ordering_launch_count">Conteggio avvii</string>
     <string name="preference_search_result_ordering_weighted">Utilizzo</string>
+    <string name="preference_screen_integrations">Integrazioni</string>
+    <string name="preference_screen_homescreen">Schermata home</string>
+    <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, Indicatori</string>
+    <string name="preference_screen_clockwidget_summary">Configura stile e componenti dell\'orologio</string>
+    <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
+    <string name="preference_screen_icons">Griglia e icone</string>
+    <string name="preference_category_accounts">Account</string>
+    <string name="preference_weather_integration">Meteo</string>
+    <string name="preference_media_integration">Controllo multimediale</string>
 </resources>
