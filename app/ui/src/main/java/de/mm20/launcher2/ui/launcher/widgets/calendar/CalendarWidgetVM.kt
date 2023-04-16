@@ -17,6 +17,9 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.services.favorites.FavoritesService
+import de.mm20.launcher2.widgets.CalendarWidget
+import de.mm20.launcher2.widgets.CalendarWidgetConfig
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
@@ -30,10 +33,11 @@ import kotlin.math.max
 
 class CalendarWidgetVM : ViewModel(), KoinComponent {
 
-    private val dataStore: LauncherDataStore by inject()
     private val calendarRepository: CalendarRepository by inject()
     private val favoritesService: FavoritesService by inject()
     private val searchableRepository: SearchableRepository by inject()
+
+    private val widgetConfig = MutableStateFlow(CalendarWidgetConfig())
 
     val calendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
@@ -52,6 +56,10 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     val hiddenPastEvents = MutableLiveData(0)
 
     val selectedDate = MutableLiveData(LocalDate.now())
+
+    fun updateWidget(widget: CalendarWidget) {
+        widgetConfig.value = widget.config
+    }
 
     private var upcomingEvents: List<CalendarEvent> = emptyList()
         set(value) {
@@ -155,10 +163,10 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     suspend fun onActive() {
         selectDate(LocalDate.now())
-        dataStore.data.map { it.calendarWidget }.collectLatest { settings ->
+        widgetConfig.collectLatest { config ->
             calendarRepository.getUpcomingEvents(
-                excludeAllDayEvents = settings.hideAlldayEvents,
-                excludeCalendars = settings.excludeCalendarsList
+                excludeAllDayEvents = !config.allDayEvents,
+                excludeCalendars = config.excludedCalendarIds,
             ).collectLatest { events ->
                 searchableRepository.getKeys(
                     includeTypes = listOf(CalendarEvent.Domain),

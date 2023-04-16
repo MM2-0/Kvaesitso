@@ -19,6 +19,11 @@ class WidgetsVM : ViewModel(), KoinComponent {
 
     val widgets = widgetRepository.get().asLiveData()
 
+    fun addWidget(widget: Widget) {
+        val widgets = widgets.value?.toMutableList() ?: return
+        widgets.add(widget)
+        widgetRepository.set(widgets)
+    }
 
     fun removeWidget(widget: Widget) {
         widgetRepository.delete(widget)

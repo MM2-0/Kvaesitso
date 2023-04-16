@@ -568,7 +568,7 @@
     <string name="preference_layout_fixed_search_bar">Vastgezette zoekbalk</string>
     <string name="preference_layout_fixed_rotation">Vastgezette schermroratie</string>
     <string name="preference_layout_fixed_rotation_summary">Zet scherm vast in portretmodus</string>
-    <string name="preference_compact_mode">Compacte modus</string>
+    <string name="widget_config_weather_compact">Compacte modus</string>
     <string name="preference_search_bar_launch_on_enter">Uitvoeren bij enter</string>
     <string name="preference_search_bar_launch_on_enter_summary">De gemarkeerde app of snelle actie uitvoeren bij tikken op enter</string>
     <string name="preference_compact_mode_summary">Voorspellingen per uur en per dag verbergen</string>

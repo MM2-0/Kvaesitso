@@ -15,7 +15,6 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
     val customizeSearchableSheetShown = mutableStateOf<SavableSearchable?>(null)
     val editFavoritesSheetShown = mutableStateOf(false)
     val hiddenItemsSheetShown = mutableStateOf(false)
-    val widgetPickerSheetShown = mutableStateOf(false)
 
     init {
         registryOwner.lifecycle.addObserver(LifecycleEventObserver { _, event ->
@@ -28,7 +27,6 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
                 editFavoritesSheetShown.value = state?.getBoolean(FAVORITES) ?: false
                 hiddenItemsSheetShown.value = state?.getBoolean(HIDDEN) ?: false
-                widgetPickerSheetShown.value = state?.getBoolean(WIDGETS) ?: false
             }
         })
     }
@@ -37,7 +35,6 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
         return bundleOf(
             FAVORITES to editFavoritesSheetShown.value,
             HIDDEN to hiddenItemsSheetShown.value,
-            WIDGETS to widgetPickerSheetShown.value,
         )
     }
 
@@ -63,14 +60,6 @@ class LauncherBottomSheetManager(registryOwner: SavedStateRegistryOwner) :
 
     fun dismissHiddenItemsSheet() {
         hiddenItemsSheetShown.value = false
-    }
-
-    fun showWidgetPickerSheet() {
-        widgetPickerSheetShown.value = true
-    }
-
-    fun dismissWidgetPickerSheet() {
-        widgetPickerSheetShown.value = false
     }
 
     companion object {

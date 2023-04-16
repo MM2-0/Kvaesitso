@@ -372,7 +372,7 @@
     <string name="preference_imperial_units_summary">Use graus Fahrenheit e milhas por hora</string>
     <string name="preference_cards">Cartões</string>
     <string name="preference_cards_summary">Personalizar aparência dos cartões</string>
-    <string name="preference_compact_mode">Modo compacto</string>
+    <string name="widget_config_weather_compact">Modo compacto</string>
     <string name="preference_compact_mode_summary">Ocultar previsões horárias e diárias</string>
     <string name="preference_cards_shape_cut">Cortado</string>
     <string name="preference_icon_shape_rounded_square">Quadrado arredondado</string>

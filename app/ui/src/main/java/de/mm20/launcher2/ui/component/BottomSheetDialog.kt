@@ -26,10 +26,13 @@ import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.SwipeableState
 import androidx.compose.material.swipeable
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocal
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -133,143 +136,147 @@ fun BottomSheetDialog(
         }
     }
 
-    Dialog(
-        properties = DialogProperties(
-            dismissOnBackPress = dismissOnBackPress(),
-            dismissOnClickOutside = swipeToDismiss(),
-            usePlatformDefaultWidth = false,
-        ),
-        onDismissRequest = onDismissRequest,
+    CompositionLocalProvider(
+        LocalAbsoluteTonalElevation provides 0.dp,
     ) {
-        BoxWithConstraints(
-            modifier = Modifier.fillMaxSize(),
-            propagateMinConstraints = true,
-            contentAlignment = Alignment.BottomCenter
+        Dialog(
+            properties = DialogProperties(
+                dismissOnBackPress = dismissOnBackPress(),
+                dismissOnClickOutside = swipeToDismiss(),
+                usePlatformDefaultWidth = false,
+            ),
+            onDismissRequest = onDismissRequest,
         ) {
-            val maxHeightPx = maxHeight.toPixels()
-            val scrimAlpha by animateFloatAsState(
-                if (swipeState.targetValue == SwipeState.Dismiss) 0f else 0.32f,
-                label = "Scrim alpha"
-            )
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxSize(),
+                propagateMinConstraints = true,
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                val maxHeightPx = maxHeight.toPixels()
+                val scrimAlpha by animateFloatAsState(
+                    if (swipeState.targetValue == SwipeState.Dismiss) 0f else 0.32f,
+                    label = "Scrim alpha"
+                )
 
-            Box(modifier = Modifier
-                .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrimAlpha))
-                .fillMaxSize()
-                .pointerInput(onDismissRequest, swipeToDismiss) {
-                    detectTapGestures {
-                        if (swipeToDismiss()) {
-                            scope.launch {
-                                swipeState.animateTo(SwipeState.Dismiss)
-                                onDismissRequest()
+                Box(modifier = Modifier
+                    .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrimAlpha))
+                    .fillMaxSize()
+                    .pointerInput(onDismissRequest, swipeToDismiss) {
+                        detectTapGestures {
+                            if (swipeToDismiss()) {
+                                scope.launch {
+                                    swipeState.animateTo(SwipeState.Dismiss)
+                                    onDismissRequest()
+                                }
                             }
                         }
                     }
-                }
-            )
+                )
 
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(Alignment.Bottom)
-                    .clipToBounds(),
-                verticalArrangement = Arrangement.Bottom
-            ) {
-                var height by remember {
-                    mutableStateOf(maxHeightPx)
-                }
-
-                LaunchedEffect(null) {
-                    swipeState.animateTo(SwipeState.Peek)
-                }
-
-                val heightDp = height.toDp()
-                val peekHeight = (height - maxHeightPx / 2).coerceAtLeast(0f)
-                val anchors = mutableMapOf(
-                    peekHeight to SwipeState.Peek,
-                    height to SwipeState.Dismiss,
-                ).also {
-                    if (peekHeight > 0f) {
-                        it[0f] = SwipeState.Full
-                    }
-                }
-                Surface(
+                Column(
                     modifier = Modifier
-                        .nestedScroll(nestedScrollConnection)
-                        .animateContentSize()
-                        .onSizeChanged {
-                            height = it.height.toFloat()
-                        }
-                        .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
-                        .swipeable(
-                            swipeState,
-                            anchors = anchors,
-                            orientation = Orientation.Vertical,
-                            thresholds = { _, to ->
-                                if (to == SwipeState.Dismiss) {
-                                    FixedThreshold(heightDp - 48.dp)
-                                } else {
-                                    FractionalThreshold(0.5f)
-                                }
-                            },
-                            resistance = null
-                        )
                         .fillMaxWidth()
-                        .weight(1f, false),
-                    shape = MaterialTheme.shapes.extraLarge.copy(
-                        bottomStart = CornerSize(0),
-                        bottomEnd = CornerSize(0),
-                    ),
-                    shadowElevation = 16.dp,
+                        .wrapContentHeight(Alignment.Bottom)
+                        .clipToBounds(),
+                    verticalArrangement = Arrangement.Bottom
                 ) {
-                    Column {
-                        CenterAlignedTopAppBar(
-                            title = title,
-                            actions = actions,
-                            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                                containerColor = Color.Transparent,
-                            ),
-                        )
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .wrapContentHeight(),
-                            propagateMinConstraints = true,
-                            contentAlignment = Alignment.Center
-                        ) {
-                            content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
-                        }
-
+                    var height by remember {
+                        mutableStateOf(maxHeightPx)
                     }
-                }
 
-                if (confirmButton != null || dismissButton != null) {
-                    val elevation by animateDpAsState(if (swipeState.offset.value == 0f) 0.dp else 1.dp)
-                    val alpha by animateFloatAsState(if (swipeState.targetValue == SwipeState.Dismiss) 0f else 1f)
+                    LaunchedEffect(null) {
+                        swipeState.animateTo(SwipeState.Peek)
+                    }
+
+                    val heightDp = height.toDp()
+                    val peekHeight = (height - maxHeightPx / 2).coerceAtLeast(0f)
+                    val anchors = mutableMapOf(
+                        peekHeight to SwipeState.Peek,
+                        height to SwipeState.Dismiss,
+                    ).also {
+                        if (peekHeight > 0f) {
+                            it[0f] = SwipeState.Full
+                        }
+                    }
                     Surface(
                         modifier = Modifier
-                            .wrapContentHeight()
-                            .fillMaxWidth(),
-                        tonalElevation = elevation,
+                            .nestedScroll(nestedScrollConnection)
+                            .animateContentSize()
+                            .onSizeChanged {
+                                height = it.height.toFloat()
+                            }
+                            .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
+                            .swipeable(
+                                swipeState,
+                                anchors = anchors,
+                                orientation = Orientation.Vertical,
+                                thresholds = { _, to ->
+                                    if (to == SwipeState.Dismiss) {
+                                        FixedThreshold(heightDp - 48.dp)
+                                    } else {
+                                        FractionalThreshold(0.5f)
+                                    }
+                                },
+                                resistance = null
+                            )
+                            .fillMaxWidth()
+                            .weight(1f, false),
+                        shape = MaterialTheme.shapes.extraLarge.copy(
+                            bottomStart = CornerSize(0),
+                            bottomEnd = CornerSize(0),
+                        ),
+                        shadowElevation = 16.dp,
                     ) {
-                        Row(
+                        Column {
+                            CenterAlignedTopAppBar(
+                                title = title,
+                                actions = actions,
+                                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                    containerColor = Color.Transparent,
+                                ),
+                            )
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentHeight(),
+                                propagateMinConstraints = true,
+                                contentAlignment = Alignment.Center
+                            ) {
+                                content(PaddingValues(horizontal = 24.dp, vertical = 8.dp))
+                            }
+
+                        }
+                    }
+
+                    if (confirmButton != null || dismissButton != null) {
+                        val elevation by animateDpAsState(if (swipeState.offset.value == 0f) 0.dp else 1.dp)
+                        val alpha by animateFloatAsState(if (swipeState.targetValue == SwipeState.Dismiss) 0f else 1f)
+                        Surface(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            horizontalArrangement = Arrangement.End
+                                .wrapContentHeight()
+                                .fillMaxWidth(),
+                            tonalElevation = elevation,
                         ) {
-                            if (dismissButton != null) {
-                                dismissButton()
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                horizontalArrangement = Arrangement.End
+                            ) {
+                                if (dismissButton != null) {
+                                    dismissButton()
+                                }
+                                if (confirmButton != null && dismissButton != null) {
+                                    Spacer(modifier = Modifier.width(16.dp))
+                                }
+                                if (confirmButton != null) {
+                                    confirmButton()
+                                }
                             }
-                            if (confirmButton != null && dismissButton != null) {
-                                Spacer(modifier = Modifier.width(16.dp))
-                            }
-                            if (confirmButton != null) {
-                                confirmButton()
-                            }
+
                         }
 
                     }
-
                 }
             }
         }

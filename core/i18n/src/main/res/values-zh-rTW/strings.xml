@@ -294,7 +294,7 @@
     <string name="preference_location">位置</string>
     <string name="preference_imperial_units_summary">使用華氏度和英里/小時</string>
     <string name="preference_imperial_units">英制單位</string>
-    <string name="preference_compact_mode">緊湊模式</string>
+    <string name="widget_config_weather_compact">緊湊模式</string>
     <string name="preference_compact_mode_summary">隱藏每小時和每日預測</string>
     <string name="preference_category_debug">除錯</string>
     <string name="preference_category_debug_tools">工具</string>

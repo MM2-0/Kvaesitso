@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets.external
 
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
+import android.appwidget.AppWidgetProviderInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -22,20 +23,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.view.doOnNextLayout
 import androidx.core.view.iterator
+import androidx.core.view.setPadding
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlin.math.roundToInt
 
 @Composable
 fun ExternalWidget(
     appWidgetHost: AppWidgetHost,
+    widgetInfo: AppWidgetProviderInfo,
     widgetId: Int,
     height: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    borderless: Boolean = false,
 ) {
-    val context = LocalContext.current
-    val widgetInfo = remember(widgetId) {
-        AppWidgetManager.getInstance(context).getAppWidgetInfo(widgetId)
-    }
+    val padding = if (borderless) 0 else 8.dp.toPixels().roundToInt()
     BoxWithConstraints {
         val maxWidth = maxWidth
         key(widgetId) {
@@ -56,6 +57,7 @@ fun ExternalWidget(
                         maxWidth.value.roundToInt(),
                         height,
                     )
+                    it.setPadding(padding)
                 }
             )
         }

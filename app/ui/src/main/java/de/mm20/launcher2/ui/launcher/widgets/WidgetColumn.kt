@@ -24,6 +24,8 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onPlaced
@@ -39,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.widgets.AppWidget
 import kotlinx.coroutines.awaitCancellation
 import kotlinx.coroutines.launch
@@ -55,6 +58,8 @@ fun WidgetColumn(
     val bottomSheetManager = LocalBottomSheetManager.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val widgetHost = remember { AppWidgetHost(context.applicationContext, 44203) }
+
+    var addNewWidget by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(null) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -166,10 +171,20 @@ fun WidgetColumn(
                     if (!editMode) {
                         onEditModeChange(true)
                     } else {
-                        bottomSheetManager.showWidgetPickerSheet()
+                        addNewWidget = true
                     }
                 })
 
         }
+    }
+
+    if (addNewWidget) {
+        WidgetPickerSheet(
+            onDismiss = { addNewWidget = false },
+            onWidgetSelected = {
+                viewModel.addWidget(it)
+                addNewWidget = false
+            }
+        )
     }
 }

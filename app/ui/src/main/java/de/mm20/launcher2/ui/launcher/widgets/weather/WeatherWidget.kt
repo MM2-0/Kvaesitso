@@ -33,6 +33,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +45,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.booleanResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,13 +64,14 @@ import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.widgets.WeatherWidget
 import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import kotlin.math.roundToInt
 
 @Composable
-fun WeatherWidget() {
+fun WeatherWidget(widget: WeatherWidget) {
     val viewModel: WeatherWidgetWM = viewModel()
 
     val context = LocalContext.current
@@ -82,9 +85,8 @@ fun WeatherWidget() {
 
     val selectedForecast by viewModel.currentForecast.observeAsState()
 
-    val imperialUnits by viewModel.imperialUnits.observeAsState(false)
-
-    val compactMode by viewModel.compactMode.observeAsState(false)
+    val imperialUnits by viewModel.imperialUnits.collectAsState(false)
+    val compactMode = !widget.config.showForecast
 
     var showLocationDialog by remember { mutableStateOf(false) }
 

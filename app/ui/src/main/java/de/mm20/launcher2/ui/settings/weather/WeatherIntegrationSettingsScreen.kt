@@ -46,24 +46,17 @@ fun WeatherIntegrationSettingsScreen() {
                     },
                     value = weatherProvider
                 )
-                val imperialUnits by viewModel.imperialUnits.observeAsState(false)
-                SwitchPreference(
-                    title = stringResource(R.string.preference_imperial_units),
-                    summary = stringResource(R.string.preference_imperial_units_summary),
-                    value = imperialUnits,
-                    onValueChanged = {
-                        viewModel.setImperialUnits(it)
-                    }
-                )
-                val compactMode by viewModel.compactMode.observeAsState(false)
-                SwitchPreference(
-                    title = stringResource(R.string.preference_compact_mode),
-                    summary = stringResource(R.string.preference_compact_mode_summary),
-                    value = compactMode,
-                    onValueChanged = {
-                        viewModel.setCompactMode(it)
-                    })
             }
+            val imperialUnits by viewModel.imperialUnits.collectAsState(false)
+            SwitchPreference(
+                title = stringResource(R.string.preference_imperial_units),
+                summary = stringResource(R.string.preference_imperial_units_summary),
+                value = imperialUnits,
+                onValueChanged = {
+                    viewModel.setImperialUnits(it)
+                }
+            )
+
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_location)) {

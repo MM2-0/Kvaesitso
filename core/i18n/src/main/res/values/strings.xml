@@ -219,6 +219,7 @@
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Music</string>
     <string name="widget_name_favorites">Favorites</string>
+    <string name="widget_name_unknown">Unknown app widget</string>
     <string name="widget_add_widget">Add widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="widget_add_external">More</string>
@@ -246,6 +247,7 @@
     <string name="widget_action_adjust_height">Adjust height</string>
     <string name="widget_action_remove">Remove</string>
     <string name="widget_action_settings">Settings</string>
+    <string name="widget_action_replace">Replace</string>
     <string name="menu_item_edit_favs">Edit favorites</string>
     <!-- Edit favorites, title for items that are frequently used but not pinned -->
     <string name="edit_favorites_dialog_unpinned">Not pinned – frequently used</string>
@@ -450,7 +452,7 @@
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
-    <string name="preference_compact_mode">Compact mode</string>
+    <string name="widget_config_weather_compact">Compact mode</string>
     <string name="preference_compact_mode_summary">Hide hourly and daily forecasts</string>
     <string name="preference_category_debug">Debug</string>
     <string name="preference_category_debug_tools">Tools</string>
@@ -778,4 +780,10 @@
     <string name="preference_search_result_ordering_weight_factor_low">Stable</string>
     <string name="preference_search_result_ordering_weight_factor_default">Balanced</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variable</string>
+    <string name="widget_config_appwidget_height">Height</string>
+    <string name="widget_config_appwidget_borderless">Borderless</string>
+    <string name="widget_config_appwidget_configure">Configure widget</string>
+    <string name="widget_config_weather_integration_settings">Weather integration settings</string>
+    <string name="app_widget_loading_failed">App widget failed to load.</string>
+    <string name="widget_config_music_integration_settings">Media control integration settings</string>
 </resources>

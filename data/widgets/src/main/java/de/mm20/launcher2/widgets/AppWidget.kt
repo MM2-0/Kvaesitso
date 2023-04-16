@@ -15,38 +15,19 @@ import java.util.UUID
 data class AppWidgetConfig(
     val widgetId: Int,
     val height: Int,
+    val borderless: Boolean = false,
 )
 
 data class AppWidget(
     override val id: UUID,
     val config: AppWidgetConfig,
-    val widgetProviderInfo: AppWidgetProviderInfo
 ) : Widget() {
-    override fun loadLabel(context: Context): String {
-        return widgetProviderInfo.loadLabel(context.packageManager)
-    }
 
     override fun toDatabaseEntity(): PartialWidgetEntity {
         return PartialWidgetEntity(
             id = id,
             type = Type,
             config = Json.encodeToString(config),
-        )
-    }
-
-    override val isConfigurable: Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        widgetProviderInfo.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_RECONFIGURABLE != 0
-    } else {
-        false
-    }
-
-    override fun configure(context: Activity, appWidgetHost: AppWidgetHost) {
-        appWidgetHost.startAppWidgetConfigureActivityForResult(
-            context,
-            config.widgetId,
-            0,
-            0,
-            null
         )
     }
 

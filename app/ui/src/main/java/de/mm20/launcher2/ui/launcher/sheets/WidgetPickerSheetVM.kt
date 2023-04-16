@@ -110,11 +110,6 @@ class WidgetPickerSheetVM(
 
     val expandedGroup = mutableStateOf<String?>(null)
 
-    fun pickWidget(widget: Widget) {
-        val position = enabledWidgets.value.size
-        widgetsService.addWidget(widget, position)
-    }
-
     fun toggleGroup(group: String) {
         expandedGroup.value = if (expandedGroup.value == group) null else group
     }

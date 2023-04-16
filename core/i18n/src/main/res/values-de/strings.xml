@@ -43,7 +43,7 @@
     <string name="preference_location">Standort</string>
     <string name="preference_imperial_units_summary">Grad Fahrenheit und Meilen pro Stunde verwenden</string>
     <string name="preference_imperial_units">Imperiale Einheiten</string>
-    <string name="preference_compact_mode">Kompakter Modus</string>
+    <string name="widget_config_weather_compact">Kompakter Modus</string>
     <string name="preference_compact_mode_summary">Stündliche und tägliche Vorhersagen ausblenden</string>
     <string name="preference_category_debug">Debug</string>
     <string name="wikipedia_url">https://de.wikipedia.org</string>

@@ -8,8 +8,10 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -104,9 +106,7 @@ class WeatherWidgetWM : ViewModel(), KoinComponent {
     }
     val autoLocation = weatherRepository.autoLocation.asLiveData()
 
-    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
-
-    val compactMode = dataStore.data.map { it.weather.compactMode }.asLiveData()
+    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)

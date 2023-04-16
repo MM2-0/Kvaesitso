@@ -20,12 +20,17 @@ import org.koin.core.component.inject
 
 class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val repository: WeatherRepository by inject()
-    private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val dataStore: LauncherDataStore by inject()
 
     val availableProviders = repository.getAvailableProviders()
 
-    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }.asLiveData()
+    val weatherProvider = repository.selectedProvider.asLiveData()
+    fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
+        repository.selectProvider(provider)
+    }
+
+    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }
     fun setImperialUnits(imperialUnits: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -34,22 +39,6 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
                     .build()
             }
         }
-    }
-
-    val compactMode = dataStore.data.map { it.weather.compactMode }.asLiveData()
-    fun setCompactMode(compactMode: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setWeather(it.weather.toBuilder().setCompactMode(compactMode))
-                    .build()
-            }
-        }
-    }
-
-    val weatherProvider = repository.selectedProvider.asLiveData()
-    fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
-        repository.selectProvider(provider)
     }
 
     val autoLocation = repository.autoLocation.asLiveData()

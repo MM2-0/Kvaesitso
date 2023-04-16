@@ -27,7 +27,6 @@ import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
-import de.mm20.launcher2.ui.settings.calendarwidget.CalendarWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
@@ -139,14 +138,11 @@ class SettingsActivity : BaseActivity() {
                         composable("settings/search/tags") {
                             TagsSettingsScreen()
                         }
-                        composable("settings/integrations/weather") {
+                        composable(ROUTE_WEATHER_INTEGRATION) {
                             WeatherIntegrationSettingsScreen()
                         }
-                        composable("settings/integrations/media") {
+                        composable(ROUTE_MEDIA_INTEGRATION) {
                             MediaIntegrationSettingsScreen()
-                        }
-                        composable("settings/widgets/calendar") {
-                            CalendarWidgetSettingsScreen()
                         }
                         composable("settings/homescreen/clock") {
                             ClockWidgetSettingsScreen()
@@ -214,5 +210,7 @@ class SettingsActivity : BaseActivity() {
 
     companion object {
         const val EXTRA_ROUTE = "de.mm20.launcher2.settings.ROUTE"
+        const val ROUTE_WEATHER_INTEGRATION = "settings/integrations/weather"
+        const val ROUTE_MEDIA_INTEGRATION = "settings/integrations/media"
     }
 }

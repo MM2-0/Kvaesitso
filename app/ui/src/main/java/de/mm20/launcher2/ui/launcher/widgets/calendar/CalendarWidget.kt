@@ -27,11 +27,14 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.launcher.search.common.list.SearchResultList
+import de.mm20.launcher2.widgets.CalendarWidget
 import java.time.LocalDate
 import java.time.ZoneId
 
 @Composable
-fun CalendarWidget() {
+fun CalendarWidget(
+    widget: CalendarWidget,
+) {
     val viewModel: CalendarWidgetVM = viewModel()
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -40,6 +43,10 @@ fun CalendarWidget() {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.onActive()
         }
+    }
+
+    LaunchedEffect(widget) {
+        viewModel.updateWidget(widget)
     }
 
     Column {

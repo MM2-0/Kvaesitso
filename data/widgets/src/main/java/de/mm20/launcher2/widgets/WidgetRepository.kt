@@ -1,6 +1,5 @@
 package de.mm20.launcher2.widgets
 
-import android.content.Context
 import androidx.room.withTransaction
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
@@ -28,7 +27,6 @@ interface WidgetRepository {
 }
 
 internal class WidgetRepositoryImpl(
-    private val context: Context,
     private val database: AppDatabase,
 ) : WidgetRepository {
 
@@ -40,7 +38,7 @@ internal class WidgetRepositoryImpl(
         } else {
             dao.queryByParent(parent, limit, offset)
         }.map {
-            it.mapNotNull { Widget.fromDatabaseEntity(context, it) }
+            it.mapNotNull { Widget.fromDatabaseEntity(it) }
         }
     }
 

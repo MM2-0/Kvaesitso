@@ -199,7 +199,6 @@ private class BindAndConfigureAppWidgetContract(
                         height = widgetProviderInfo.minHeight,
                         widgetId = widgetId,
                     ),
-                    widgetProviderInfo = widgetProviderInfo,
                 )
             }
         }
@@ -210,6 +209,7 @@ private class BindAndConfigureAppWidgetContract(
 
 @Composable
 fun WidgetPickerSheet(
+    onWidgetSelected: (Widget) -> Unit,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -219,7 +219,7 @@ fun WidgetPickerSheet(
     val bindAppWidgetStarter =
         rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract()) {
             if (it != null) {
-                viewModel.pickWidget(it)
+                onWidgetSelected(it)
                 onDismiss()
             }
         }
@@ -290,7 +290,7 @@ fun WidgetPickerSheet(
                             FavoritesWidget.Type -> FavoritesWidget(id)
                             else -> return@OutlinedCard
                         }
-                        viewModel.pickWidget(widget)
+                        onWidgetSelected(widget)
                         onDismiss()
                     }) {
                     Row(
