@@ -56,6 +56,12 @@ fun DebugSettingsScreen() {
                             ).show()
                         }
                     })
+                Preference(
+                    title = stringResource(R.string.preference_debug_reinstall_iconpacks),
+                    summary = stringResource(R.string.preference_debug_reinstall_iconpacks_summary),
+                    onClick = {
+                        viewModel.reinstallIconPacks()
+                    })
             }
         }
     }

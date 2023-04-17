@@ -458,6 +458,8 @@
     <string name="preference_category_debug_tools">Tools</string>
     <string name="preference_debug_cleanup_database">Clean up database</string>
     <string name="preference_debug_cleanup_database_summary">Remove broken and unused entries from the launcher database</string>
+    <string name="preference_debug_reinstall_iconpacks">Reinstall icon packs</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Clear and rebuild the icon pack cache</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d entry has been removed.</item>
         <item quantity="other">%1$d entries have been removed.</item>
