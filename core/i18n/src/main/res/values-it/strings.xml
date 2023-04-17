@@ -598,4 +598,14 @@
     <string name="preference_category_accounts">Account</string>
     <string name="preference_weather_integration">Meteo</string>
     <string name="preference_media_integration">Controllo multimediale</string>
+    <string name="widget_config_calendar_no_calendars">Nessun calendario trovato</string>
+    <string name="preference_category_media_apps">App multimediali</string>
+    <string name="widget_name_unknown">Widget app sconosciuta</string>
+    <string name="widget_action_replace">Sostituisci</string>
+    <string name="app_widget_loading_failed">Impossibile caricare il widget dell\'app.</string>
+    <string name="widget_config_music_integration_settings">Impostazioni integrazione controllo multimediale</string>
+    <string name="widget_config_appwidget_height">Altezza</string>
+    <string name="widget_config_appwidget_borderless">Senza bordo</string>
+    <string name="widget_config_appwidget_configure">Configura widget</string>
+    <string name="widget_config_weather_integration_settings">Impostazioni integrazione meteo</string>
 </resources>
