@@ -602,4 +602,7 @@
     <string name="widget_config_music_integration_settings">Einstellungen für die Mediensteuerungsintegration</string>
     <string name="widget_config_weather_integration_settings">Einstellungen für die Wetter-Integration</string>
     <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden.</string>
+    <string name="preference_category_media_apps">Medienapps</string>
+    <string name="preference_debug_reinstall_iconpacks">Symbolpakete neuinstallieren</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
 </resources>
