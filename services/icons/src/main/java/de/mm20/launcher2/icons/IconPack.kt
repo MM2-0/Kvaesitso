@@ -24,10 +24,13 @@ data class IconPack(
         context: Context,
         resolveInfo: ResolveInfo,
         themed: Boolean = false
-    ): this(
+    ) : this(
         name = resolveInfo.loadLabel(context.packageManager).toString(),
         packageName = resolveInfo.activityInfo.packageName,
-        version = context.packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0).versionName,
+        version = context.packageManager.getPackageInfo(resolveInfo.activityInfo.packageName, 0)
+            .let {
+                "${it.versionName} (${it.versionCode})"
+            },
         themed = themed,
     )
 
@@ -35,10 +38,12 @@ data class IconPack(
         context: Context,
         packageInfo: PackageInfo,
         themed: Boolean = false
-    ): this(
+    ) : this(
         name = packageInfo.applicationInfo.loadLabel(context.packageManager).toString(),
         packageName = packageInfo.packageName,
-        version = context.packageManager.getPackageInfo(packageInfo.packageName, 0).versionName,
+        version = context.packageManager.getPackageInfo(packageInfo.packageName, 0).let {
+            "${it.versionName} (${it.versionCode})"
+        },
         themed = themed,
     )
 
