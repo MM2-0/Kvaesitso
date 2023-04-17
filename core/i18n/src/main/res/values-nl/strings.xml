@@ -353,7 +353,7 @@
     <string name="preference_screen_backup_summary">Launcherdata exporteren en importeren</string>
     <string name="preference_backup">Backup</string>
     <string name="preference_backup_summary">Voorkeuren en launcherdata exporteren</string>
-    <string name="preference_screen_search_summary">Zoeken instellen</string>
+    <string name="preference_screen_search_summary">Zoeken, tags, verborgen items</string>
     <string name="preference_restore">Herstellen</string>
     <string name="preference_restore_summary">Vroeger gemaakte backup herstellen</string>
     <string name="preference_search_calendar_summary">Toekomstige afspraken en evenementen doorzoeken</string>
@@ -584,4 +584,23 @@
     <string name="preference_search_result_ordering">Volgorde van de zoekresultaten</string>
     <string name="preference_search_result_ordering_alphabetic">Alfabetisch</string>
     <string name="preference_search_result_ordering_launch_count">Aantal starts</string>
+    <string name="app_widget_loading_failed">Applicatiewidget kon niet geladen worden.</string>
+    <string name="widget_config_calendar_no_calendars">Geen kalenders gevonden</string>
+    <string name="preference_screen_icons">Raster &amp; pictogrammen</string>
+    <string name="widget_name_unknown">Onbekend applicatiewidget</string>
+    <string name="preference_category_media_apps">Media-applicaties</string>
+    <string name="preference_screen_clockwidget_summary">Klokstijl en -componenten instellen</string>
+    <string name="preference_screen_homescreen">Thuisscherm</string>
+    <string name="preference_screen_homescreen_summary">Klok, zoekbalk, achtergrond, systeembalken</string>
+    <string name="preference_screen_icons_summary">Raster, pictogramgrootte, pictogrampaketten, badges</string>
+    <string name="preference_category_accounts">Accounts</string>
+    <string name="preference_weather_integration">Weer</string>
+    <string name="preference_media_integration">Mediabeheer</string>
+    <string name="widget_config_appwidget_height">Hoogte</string>
+    <string name="widget_config_appwidget_borderless">Randloos</string>
+    <string name="widget_config_appwidget_configure">Widget instellen</string>
+    <string name="widget_config_weather_integration_settings">Weerintegratie-instellingen</string>
+    <string name="widget_config_music_integration_settings">Mediabeheerintegratie-instellingen</string>
+    <string name="widget_action_replace">Vervangen</string>
+    <string name="preference_screen_integrations">Integraties</string>
 </resources>
