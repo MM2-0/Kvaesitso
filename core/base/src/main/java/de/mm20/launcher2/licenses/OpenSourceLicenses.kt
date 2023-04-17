@@ -25,6 +25,13 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/Kotlin/kotlinx.collections.immutable"
     ),
     OpenSourceLibrary(
+        name = "KotlinX Serialization",
+        description = "Kotlin serialization consists of a compiler plugin, that generates visitor code for serializable classes, runtime library with core serialization API and support libraries with various serialization formats.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/Kotlin/kotlinx.serialization"
+    ),
+    OpenSourceLibrary(
         name = "Android Jetpack",
         description = "A collection of Android software components to make it easier to develop great Android apps.",
         licenseName = R.string.apache_license_name,
@@ -199,14 +206,6 @@ val OpenSourceLicenses = arrayOf(
         licenseName = R.string.apache_license_name,
         licenseText = R.raw.license_apache_2,
         url = "https://source.android.com/"
-    ),
-    OpenSourceLibrary(
-        name = "Lottie",
-        copyrightNote = "Copyright (c) 2017 Airbnb",
-        description = "Lottie is a library for Android, iOS, Web, and Windows that parses Adobe After Effects animations exported as json with Bodymovin and renders them natively on mobile and on the web",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        url = "https://airbnb.design/lottie/"
     ),
     OpenSourceLibrary(
         name = "Protobuf",

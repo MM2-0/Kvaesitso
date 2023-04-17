@@ -38,7 +38,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
     implementation(libs.androidx.appcompat)
     implementation(libs.materialcomponents.core)
-    implementation(libs.androidx.recyclerview)
 
 
     implementation(project(":core:base"))

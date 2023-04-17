@@ -9,7 +9,7 @@ dependencyResolutionManagement {
             version("targetSdk", "33")
         }
         create("libs") {
-            version("kotlin", "1.8.10")
+            version("kotlin", "1.8.20")
             version("kotlinx.coroutines", "1.6.4")
             library("kotlin.stdlib", "org.jetbrains.kotlin", "kotlin-stdlib")
                 .versionRef("kotlin")
@@ -34,7 +34,7 @@ dependencyResolutionManagement {
             library("kotlinx.serialization.json", "org.jetbrains.kotlinx", "kotlinx-serialization-json")
                 .versionRef("kotlinx.serialization")
 
-            version("androidx.compose.compiler", "1.4.4")
+            version("androidx.compose.compiler", "1.4.5")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
                 .version("1.5.0-alpha02")
             library("androidx.compose.livedata", "androidx.compose.runtime", "runtime-livedata")
@@ -58,7 +58,7 @@ dependencyResolutionManagement {
             library("androidx.compose.material3", "androidx.compose.material3", "material3")
                 .version("1.1.0-beta02")
 
-            version("androidx.lifecycle", "2.6.0-beta01")
+            version("androidx.lifecycle", "2.6.1")
             library("androidx.lifecycle.viewmodel", "androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.livedata", "androidx.lifecycle", "lifecycle-livedata-ktx")
@@ -123,12 +123,6 @@ dependencyResolutionManagement {
             library("androidx.constraintlayout", "androidx.constraintlayout", "constraintlayout")
                 .version("2.1.3")
 
-            library("androidx.cardview", "androidx.cardview", "cardview")
-                .version("1.0.0")
-
-            library("androidx.recyclerview", "androidx.recyclerview", "recyclerview")
-                .version("1.3.0-alpha01")
-
             library("androidx.transition", "androidx.transition", "transition")
                 .version("1.4.1")
 
@@ -164,7 +158,7 @@ dependencyResolutionManagement {
             )
 
             library("androidx.navigation.compose", "androidx.navigation", "navigation-compose")
-                .version("2.6.0-alpha01")
+                .version("2.6.0-alpha09")
 
             library("materialcomponents.core", "com.google.android.material", "material")
                 .version("1.8.0-alpha01")
@@ -184,7 +178,7 @@ dependencyResolutionManagement {
                 )
             )
 
-            version("coil", "2.2.1")
+            version("coil", "2.3.0")
             library("coil.core", "io.coil-kt", "coil")
                 .versionRef("coil")
             library("coil.svg", "io.coil-kt", "coil-svg")
@@ -193,19 +187,19 @@ dependencyResolutionManagement {
                 .versionRef("coil")
 
             library("composecolorpicker", "com.godaddy.android.colorpicker", "compose-color-picker")
-                .version("0.5.0")
+                .version("0.7.0")
 
             library("leakcanary", "com.squareup.leakcanary", "leakcanary-android")
-                .version("2.9.1")
+                .version("2.10")
 
             library("suncalc", "org.shredzone.commons", "commons-suncalc")
-                .version("3.5")
+                .version("3.7")
 
             library("jsoup", "org.jsoup", "jsoup")
-                .version("1.15.3")
+                .version("1.15.4")
 
             library("commons.text", "org.apache.commons", "commons-text")
-                .version("1.9")
+                .version("1.10.0")
 
             // 4.4.2 is the last GPL compatible version, don't update to 5.x
             library("mathparser", "org.mariuszgromada.math", "MathParser.org-mXparser")
@@ -227,9 +221,9 @@ dependencyResolutionManagement {
                 .version("31.1-android")
 
             library("microsoft.graph", "com.microsoft.graph", "microsoft-graph")
-                .version("5.42.0")
+                .version("5.53.0")
             library("microsoft.identity", "com.microsoft.identity.client", "msal")
-                .version("4.1.0")
+                .version("4.2.0")
 
             version("protobuf", "3.14.0")
             library("protobuf.protoc", "com.google.protobuf", "protoc")
@@ -245,9 +239,6 @@ dependencyResolutionManagement {
 
             library("tinypinyin", "com.github.promeg", "tinypinyin")
                 .version("2.0.2")
-
-            library("lottie", "com.airbnb.android", "lottie-compose")
-                .version("5.2.0")
 
             version("junit", "4.13")
             library("junit", "junit", "junit").versionRef("junit")
