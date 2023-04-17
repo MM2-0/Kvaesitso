@@ -314,7 +314,7 @@
     <string name="preference_clockwidget_alarm_part_summary">显示将在接下来的 15 分钟内响起的闹钟</string>
     <string name="preference_export_log">导出日志文件</string>
     <string name="preference_screen_search">搜索</string>
-    <string name="preference_screen_search_summary">配置搜索</string>
+    <string name="preference_screen_search_summary">搜索, 标签, 隐藏项目</string>
     <string name="preference_search_favorites">收藏夹</string>
     <string name="preference_search_favorites_summary">在应用抽屉上方显示固定和常用项目</string>
     <string name="preference_search_files">文件</string>
@@ -575,4 +575,25 @@
     <string name="preference_search_result_ordering_launch_count">按启动次数排列</string>
     <string name="preference_search_result_ordering_weighted">按使用情况排列</string>
     <string name="preference_search_result_ordering">搜索结果的顺序</string>
+    <string name="widget_action_replace">替换</string>
+    <string name="preference_debug_reinstall_iconpacks">重新安装图标包</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">清除与重建图标缓存</string>
+    <string name="preference_screen_icons_summary">网格, 图标尺寸, 图标包, 角标</string>
+    <string name="widget_config_appwidget_height">高度</string>
+    <string name="app_widget_loading_failed">应用组件加载失败.</string>
+    <string name="widget_config_calendar_no_calendars">未发现日程</string>
+    <string name="widget_config_music_integration_settings">媒体控制综合设置</string>
+    <string name="preference_screen_integrations">兼容方式</string>
+    <string name="preference_category_accounts">账户</string>
+    <string name="preference_weather_integration">天气</string>
+    <string name="preference_media_integration">媒体控制</string>
+    <string name="preference_category_media_apps">媒体应用</string>
+    <string name="widget_config_weather_integration_settings">天气综合设置</string>
+    <string name="preference_screen_homescreen">主屏幕</string>
+    <string name="preference_screen_homescreen_summary">时钟, 搜索栏, 壁纸, 系统栏</string>
+    <string name="preference_screen_icons">网格&amp;图标</string>
+    <string name="preference_screen_clockwidget_summary">配置时钟风格和组件</string>
+    <string name="widget_config_appwidget_borderless">无边框</string>
+    <string name="widget_config_appwidget_configure">配置组件</string>
+    <string name="widget_name_unknown">未知的应用组件</string>
 </resources>
