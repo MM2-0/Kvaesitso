@@ -212,7 +212,7 @@ dependencyResolutionManagement {
                 .version("v2-rev20200213-2.0.0")
 
             library("gson", "com.google.code.gson", "gson")
-                .version("2.9.1")
+                .version("2.10.1")
 
             library("guava", "com.google.guava", "guava")
                 .version("31.1-android")
