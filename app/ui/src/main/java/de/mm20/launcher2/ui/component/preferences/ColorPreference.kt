@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.godaddy.android.colorpicker.ClassicColorPicker
+import de.mm20.launcher2.ui.component.colorpicker.ColorPicker
 import de.mm20.launcher2.ui.ktx.toHexString
 
 @Composable
@@ -51,35 +51,9 @@ fun ColorPreference(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-
-                    ClassicColorPicker(
-                        color = value ?: Color.Black,
-                        onColorChanged = {
-                            color = it.toColor()
-                        },
-                        showAlphaBar = false,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(200.dp)
-                    )
-
-                    var hexValue by remember(color) {
-                        mutableStateOf(
-                            color?.toHexString() ?: "#000000"
-                        )
-                    }
-
-                    TextField(
-                        modifier = Modifier.padding(top = 16.dp),
-                        value = hexValue,
-                        onValueChange = {
-                            hexValue = it
-                            if (Regex("#[0-9a-fA-F]{6}").matches(it)) {
-                                val hex = it.substring(1).toIntOrNull(16) ?: return@TextField
-                                color = Color(hex).copy(alpha = 1f)
-                            }
-                        }
-                    )
+                    ColorPicker(value = color ?: Color.Black, onValueChanged = {
+                        color = it
+                    })
                 }
             },
             confirmButton = {

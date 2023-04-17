@@ -170,14 +170,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://coil-kt.github.io/coil/"
     ),
     OpenSourceLibrary(
-        name = "compose-color-picker",
-        description = "A component that provides an HSV color picker, written in Jetpack compose.",
-        copyrightNote = "Copyright (c) 2021GoDaddy Operating Company, LLC.",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        url = "https://github.com/godaddy/compose-color-picker"
-    ),
-    OpenSourceLibrary(
         name = "Apache Commons Text",
         description = "Apache Commons Text is a library focused on algorithms working on strings. ",
         licenseName = R.string.apache_license_name,

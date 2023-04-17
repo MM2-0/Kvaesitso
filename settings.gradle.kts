@@ -186,9 +186,6 @@ dependencyResolutionManagement {
             library("coil.compose", "io.coil-kt", "coil-compose")
                 .versionRef("coil")
 
-            library("composecolorpicker", "com.godaddy.android.colorpicker", "compose-color-picker")
-                .version("0.7.0")
-
             library("leakcanary", "com.squareup.leakcanary", "leakcanary-android")
                 .version("2.10")
 
