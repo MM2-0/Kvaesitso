@@ -80,7 +80,7 @@ internal class AccountsRepositoryImpl(
     override fun isSupported(accountType: AccountType): Boolean {
         return when (accountType) {
             AccountType.Google -> googleApiHelper.isAvailable()
-            AccountType.Microsoft -> msGraphApiHelper.isAvailable()
+            AccountType.Microsoft -> false
             AccountType.Nextcloud -> true
             AccountType.Owncloud -> true
         }
@@ -110,9 +110,10 @@ internal class AccountsRepositoryImpl(
     }
 
     private suspend fun getMicrosoftAccount(): Account? {
-        return msGraphApiHelper.getUser()?.let {
+        return null
+        /*return msGraphApiHelper.getUser()?.let {
             Account(it.name, AccountType.Microsoft)
-        }
+        }*/
     }
 
     private suspend fun getNextcloudAccount(): Account? {

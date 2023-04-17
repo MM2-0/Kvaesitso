@@ -65,7 +65,7 @@ internal class FileRepositoryImpl(
 
         if (local) providers.add(LocalFileProvider(context, permissionsManager))
         if (gdrive) providers.add(GDriveFileProvider(context))
-        if (onedrive) providers.add(OneDriveFileProvider(context))
+        //if (onedrive) providers.add(OneDriveFileProvider(context))
         if (nextcloud) providers.add(NextcloudFileProvider(nextcloudClient))
         if (owncloud) providers.add(OwncloudFileProvider(owncloudClient))
 
