@@ -30,6 +30,9 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     val microsoftAccount = MutableLiveData<Account?>(null)
     val googleAccount = MutableLiveData<Account?>(null)
 
+    val microsoftAvailable = accountsRepository.isSupported(AccountType.Microsoft)
+    val googleAvailable = accountsRepository.isSupported(AccountType.Google)
+
     fun onResume() {
         viewModelScope.launch {
             nextcloudAccount.value =

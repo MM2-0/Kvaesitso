@@ -140,71 +140,75 @@ fun FileSearchSettingsScreen() {
                     enabled = owncloudAccount != null
                 )
 
-                val onedrive by viewModel.onedrive.observeAsState()
-                val microsoftAccount by viewModel.microsoftAccount.observeAsState()
-                AnimatedVisibility(microsoftAccount == null) {
-                    Banner(
-                        text = stringResource(R.string.no_account_microsoft),
-                        icon = Icons.Rounded.AccountBox,
-                        primaryAction = {
-                            TextButton(onClick = {
-                                viewModel.login(
-                                    context as AppCompatActivity,
-                                    AccountType.Microsoft
-                                )
-                            }) {
-                                Text(
-                                    stringResource(R.string.connect_account),
-                                )
-                            }
+                if (viewModel.microsoftAvailable) {
+                    val onedrive by viewModel.onedrive.observeAsState()
+                    val microsoftAccount by viewModel.microsoftAccount.observeAsState()
+                    AnimatedVisibility(microsoftAccount == null) {
+                        Banner(
+                            text = stringResource(R.string.no_account_microsoft),
+                            icon = Icons.Rounded.AccountBox,
+                            primaryAction = {
+                                TextButton(onClick = {
+                                    viewModel.login(
+                                        context as AppCompatActivity,
+                                        AccountType.Microsoft
+                                    )
+                                }) {
+                                    Text(
+                                        stringResource(R.string.connect_account),
+                                    )
+                                }
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_onedrive),
+                        summary = microsoftAccount?.let {
+                            stringResource(R.string.preference_search_onedrive_summary, it.userName)
+                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                        value = onedrive == true && microsoftAccount != null,
+                        onValueChanged = {
+                            viewModel.setOneDrive(it)
                         },
-                        modifier = Modifier.padding(16.dp)
+                        enabled = microsoftAccount != null
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_onedrive),
-                    summary = microsoftAccount?.let {
-                        stringResource(R.string.preference_search_onedrive_summary, it.userName)
-                    } ?: stringResource(R.string.preference_summary_not_logged_in),
-                    value = onedrive == true && microsoftAccount != null,
-                    onValueChanged = {
-                        viewModel.setOneDrive(it)
-                    },
-                    enabled = microsoftAccount != null
-                )
 
-                val gdrive by viewModel.gdrive.observeAsState()
-                val googleAccount by viewModel.googleAccount.observeAsState()
-                AnimatedVisibility(googleAccount == null) {
-                    Banner(
-                        text = stringResource(R.string.no_account_google),
-                        icon = Icons.Rounded.AccountBox,
-                        primaryAction = {
-                            TextButton(onClick = {
-                                viewModel.login(
-                                    context as AppCompatActivity,
-                                    AccountType.Google
-                                )
-                            }) {
-                                Text(
-                                    stringResource(R.string.connect_account),
-                                )
-                            }
+                if (viewModel.googleAvailable) {
+                    val gdrive by viewModel.gdrive.observeAsState()
+                    val googleAccount by viewModel.googleAccount.observeAsState()
+                    AnimatedVisibility(googleAccount == null) {
+                        Banner(
+                            text = stringResource(R.string.no_account_google),
+                            icon = Icons.Rounded.AccountBox,
+                            primaryAction = {
+                                TextButton(onClick = {
+                                    viewModel.login(
+                                        context as AppCompatActivity,
+                                        AccountType.Google
+                                    )
+                                }) {
+                                    Text(
+                                        stringResource(R.string.connect_account),
+                                    )
+                                }
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_gdrive),
+                        summary = googleAccount?.let {
+                            stringResource(R.string.preference_search_gdrive_summary, it.userName)
+                        } ?: stringResource(R.string.preference_summary_not_logged_in),
+                        value = gdrive == true && googleAccount != null,
+                        onValueChanged = {
+                            viewModel.setGdrive(it)
                         },
-                        modifier = Modifier.padding(16.dp)
+                        enabled = googleAccount != null
                     )
                 }
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_gdrive),
-                    summary = googleAccount?.let {
-                        stringResource(R.string.preference_search_gdrive_summary, it.userName)
-                    } ?: stringResource(R.string.preference_summary_not_logged_in),
-                    value = gdrive == true && googleAccount != null,
-                    onValueChanged = {
-                        viewModel.setGdrive(it)
-                    },
-                    enabled = googleAccount != null
-                )
             }
         }
     }
