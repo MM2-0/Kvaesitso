@@ -40,7 +40,6 @@ abstract class IconPackInstaller(
     abstract fun getInstalledIconPacks(): List<IconPack>
 
     suspend fun isInstalledAndUpToDate(iconPack: IconPack): Boolean {
-        if (BuildConfig.DEBUG) return false
         val dao = database.iconDao()
         val installed = dao.getIconPack(iconPack.packageName)?.let { IconPack(it) } ?: return false
         return installed.version == iconPack.version
