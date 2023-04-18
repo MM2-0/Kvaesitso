@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.component.colorpicker.ColorPicker
+import de.mm20.launcher2.ui.component.colorpicker.rememberColorPickerState
 import de.mm20.launcher2.ui.ktx.toHexString
 
 @Composable
@@ -38,7 +39,7 @@ fun ColorPreference(
         }
     )
     if (showDialog) {
-        var color by remember(value) { mutableStateOf(value) }
+        var color by remember(value) { mutableStateOf(value ?: Color.Black) }
         AlertDialog(
             onDismissRequest = { showDialog = false },
             title = {
@@ -51,9 +52,10 @@ fun ColorPreference(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    ColorPicker(value = color ?: Color.Black, onValueChanged = {
+                    val state = rememberColorPickerState(value ?: Color.Black) {
                         color = it
-                    })
+                    }
+                    ColorPicker(state = state)
                 }
             },
             confirmButton = {

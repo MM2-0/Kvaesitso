@@ -19,12 +19,15 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -39,21 +42,74 @@ import de.mm20.launcher2.ui.ktx.toHexString
 import kotlin.math.atan2
 import android.graphics.Color as AndroidColor
 
+@Stable
+class ColorPickerState(
+    initialColor: Color,
+    val onColorChanged: (Color) -> Unit,
+) {
+    var hue by mutableStateOf(0f)
+    var sat by mutableStateOf(0f)
+    var value by mutableStateOf(0f)
+
+    val color by derivedStateOf {
+        Color.hsv(hue, sat, value)
+    }
+
+    internal fun setHue(hue: Float) {
+        this.hue = hue
+        onColorChanged(Color.hsv(hue, sat, value))
+    }
+
+    internal fun setSat(sat: Float) {
+        this.sat = sat
+        onColorChanged(Color.hsv(hue, sat, value))
+    }
+
+    internal fun setValue(value: Float) {
+        this.value = value
+        onColorChanged(Color.hsv(hue, sat, value))
+    }
+
+    internal fun setColor(color: Color) {
+        val hsv = FloatArray(3)
+        AndroidColor.RGBToHSV(
+            (color.red * 255f).toInt(),
+            (color.green * 255f).toInt(),
+            (color.blue * 255f).toInt(),
+            hsv
+        )
+        this.hue = hsv[0]
+        this.sat = hsv[1]
+        this.value = hsv[2]
+        onColorChanged(color)
+    }
+
+    init {
+        val hsv = FloatArray(3)
+        AndroidColor.RGBToHSV(
+            (initialColor.red * 255f).toInt(),
+            (initialColor.green * 255f).toInt(),
+            (initialColor.blue * 255f).toInt(),
+            hsv
+        )
+        hue = hsv[0]
+        sat = hsv[1]
+        value = hsv[2]
+    }
+}
+
+@Composable
+fun rememberColorPickerState(initialColor: Color, onColorChanged: (Color) -> Unit): ColorPickerState {
+    return remember(initialColor, onColorChanged) {
+        ColorPickerState(initialColor, onColorChanged)
+    }
+}
 
 @Composable
 fun ColorPicker(
-    value: Color,
-    onValueChanged: (Color) -> Unit,
+    state: ColorPickerState,
     modifier: Modifier = Modifier,
 ) {
-    val (hue, sat, vl) = remember(value) {
-        val hsv = FloatArray(3)
-        val r = value.red * 255f
-        val g = value.green * 255f
-        val b = value.blue * 255f
-        AndroidColor.RGBToHSV(r.toInt(), g.toInt(), b.toInt(), hsv)
-        hsv
-    }
     Column(modifier = modifier) {
         BoxWithConstraints(
             modifier = Modifier
@@ -75,7 +131,7 @@ fun ColorPicker(
                                     x.toDouble() - width.toPx() / 2,
                                 )
                                 val h = (Math.toDegrees(angle) + 360f) % 360f
-                                onValueChanged(Color.hsv(h.toFloat(), sat, vl))
+                                state.setHue(h.toFloat())
                             }
                         )
                     }
@@ -87,7 +143,7 @@ fun ColorPicker(
                                 x.toDouble() - width.toPx() / 2,
                             )
                             val h = (Math.toDegrees(angle) + 360f) % 360f
-                            onValueChanged(Color.hsv(h.toFloat(), sat, vl))
+                            state.setHue(h.toFloat())
 
                         }
                     }
@@ -96,19 +152,19 @@ fun ColorPicker(
                 drawCircle(
                     brush = Brush.sweepGradient(
                         colors = listOf(
-                            Color.Red,
-                            Color.Yellow,
-                            Color.Green,
-                            Color.Cyan,
-                            Color.Blue,
-                            Color.Magenta,
-                            Color.Red
+                            Color.hsv(0f, 1f, 1f),
+                            Color.hsv(60f, 1f, 1f),
+                            Color.hsv(120f, 1f, 1f),
+                            Color.hsv(180f, 1f, 1f),
+                            Color.hsv(240f, 1f, 1f),
+                            Color.hsv(300f, 1f, 1f),
+                            Color.hsv(360f, 1f, 1f),
                         )
                     ),
                     style = Stroke(20.dp.toPx())
                 )
                 drawCircle(
-                    color = value,
+                    color = state.color,
                     style = Fill,
                     center = center,
                     radius = size.minDimension / 2 - 18.dp.toPx()
@@ -117,23 +173,23 @@ fun ColorPicker(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .rotate(hue),
+                    .rotate(state.hue),
             ) {
                 Box(
                     modifier = Modifier
                         .size(16.dp)
                         .shadow(1.dp, CircleShape)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
+                        .background(Color.White)
                         .align(AbsoluteAlignment.CenterRight)
                 )
             }
         }
         Slider(
             modifier = Modifier.padding(top = 16.dp),
-            value = sat,
+            value = state.sat,
             onValueChange = {
-                onValueChanged(Color.hsv(hue, it, vl))
+                state.setSat(it)
             },
             track = {
                 Canvas(
@@ -144,8 +200,8 @@ fun ColorPicker(
                     drawRoundRect(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Color.hsv(hue, 0f, 1f),
-                                Color.hsv(hue, 1f, 1f)
+                                Color.hsv(state.hue, 0f, 1f),
+                                Color.hsv(state.hue, 1f, 1f)
                             )
                         ),
                         style = Fill,
@@ -160,15 +216,15 @@ fun ColorPicker(
                         .size(16.dp)
                         .shadow(1.dp, CircleShape)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
+                        .background(Color.White)
                 )
             }
         )
         Slider(
             modifier = Modifier,
-            value = vl,
+            value = state.value,
             onValueChange = {
-                onValueChanged(Color.hsv(hue, sat, it))
+                state.setValue(it)
             },
             track = {
                 Canvas(
@@ -179,8 +235,8 @@ fun ColorPicker(
                     drawRoundRect(
                         brush = Brush.horizontalGradient(
                             colors = listOf(
-                                Color.hsv(hue, sat, 0f),
-                                Color.hsv(hue, sat, 1f)
+                                Color.hsv(state.hue, state.sat, 0f),
+                                Color.hsv(state.hue, state.sat, 1f)
                             )
                         ),
                         style = Fill,
@@ -195,14 +251,14 @@ fun ColorPicker(
                         .size(16.dp)
                         .shadow(1.dp, CircleShape)
                         .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.surface)
+                        .background(Color.White)
                 )
             }
         )
 
-        var hexValue by remember(value) {
+        var hexValue by remember(state.color) {
             mutableStateOf(
-                value.toHexString().substring(1)
+                state.color.toHexString().substring(1)
             )
         }
 
@@ -215,7 +271,7 @@ fun ColorPicker(
                     if (it.length == 6) {
                         val hex = it.toIntOrNull(16) ?: return@OutlinedTextField
                         val color = Color(hex).copy(alpha = 1f)
-                        onValueChanged(color)
+                        state.setColor(color)
                     }
                 }
             },
