@@ -254,6 +254,7 @@ fun ColumnScope.ConfigureAppWidget(
     onWidgetUpdated: (Widget) -> Unit,
 ) {
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val widgetInfo = remember(widget.config.widgetId) {
         AppWidgetManager.getInstance(context).getAppWidgetInfo(widget.config.widgetId)
     }
@@ -433,7 +434,7 @@ fun ColumnScope.ConfigureAppWidget(
                 ),
                 onClick = {
                     appWidgetHost.startAppWidgetConfigureActivityForResult(
-                        context as Activity,
+                        lifecycleOwner as Activity,
                         widget.config.widgetId,
                         0,
                         0,
