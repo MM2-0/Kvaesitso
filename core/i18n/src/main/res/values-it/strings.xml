@@ -255,7 +255,7 @@
     <string name="preference_category_searchbar">Barra di ricerca</string>
     <string name="preference_theme_system">Segui sistema</string>
     <string name="preference_themed_icons">Icone a tema</string>
-    <string name="preference_icon_pack_summary_empty">Nessun pacchetto icone installato</string>
+    <string name="preference_icon_pack_summary_empty">Non ci sono pacchetti icone installati</string>
     <string name="preference_icon_pack">Pacchetto icone</string>
     <string name="preference_category_system_bars">Barre di sistema</string>
     <string name="preference_icon_shape_triangle">Triangolo di Reuleaux</string>
@@ -576,11 +576,11 @@
     <string name="icon_pack_dynamic_colors">Colori dinamici</string>
     <string name="widget_config_weather_compact">Modalità compatta</string>
     <string name="preference_compact_mode_summary">Nascondi previsioni orarie e giornaliere</string>
-    <string name="icon_picker_no_packs_installed">Nessun icon pack installato</string>
+    <string name="icon_picker_no_packs_installed">Non ci sono pacchetti icone installati</string>
     <string name="preference_search_bar_launch_on_enter">Avvia con invio</string>
     <string name="preference_search_bar_launch_on_enter_summary">Avvia la ricerca evidenziata o l\'azione rapida toccando vai</string>
     <string name="gesture_action_launch_app">Avvia app</string>
-    <string name="icon_picker_filter_all_packs">Tutti gli icon pack</string>
+    <string name="icon_picker_filter_all_packs">Tutti i pacchetti icone</string>
     <string name="preference_search_result_ordering_alphabetic">Alfabetico</string>
     <string name="preference_search_result_ordering_weight_factor">Flessibilità classificazione</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabile</string>
@@ -608,4 +608,6 @@
     <string name="widget_config_appwidget_borderless">Senza bordo</string>
     <string name="widget_config_appwidget_configure">Configura widget</string>
     <string name="widget_config_weather_integration_settings">Impostazioni integrazione meteo</string>
+    <string name="preference_debug_reinstall_iconpacks">Reinstalla pacchetti icone</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetti icone</string>
 </resources>
