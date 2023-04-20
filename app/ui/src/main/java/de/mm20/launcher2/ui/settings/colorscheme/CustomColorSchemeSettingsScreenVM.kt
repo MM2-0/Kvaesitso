@@ -1,13 +1,13 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.CustomColors
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -17,7 +17,8 @@ import scheme.Scheme
 class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
-    val advancedMode = dataStore.data.map { it.appearance.customColors.advancedMode }.asLiveData()
+    val advancedMode = dataStore.data.map { it.appearance.customColors.advancedMode }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setAdvancedMode(advancedMode: Boolean) {
         viewModelScope.launch {
             val lightScheme = dataStore.updateData {
@@ -63,7 +64,8 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val baseColors = dataStore.data.map { it.appearance.customColors.baseColors }.asLiveData()
+    val baseColors = dataStore.data.map { it.appearance.customColors.baseColors }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setBaseColors(baseColors: CustomColors.BaseColors) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -82,7 +84,8 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val darkScheme = dataStore.data.map { it.appearance.customColors.darkScheme }.asLiveData()
+    val darkScheme = dataStore.data.map { it.appearance.customColors.darkScheme }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setDarkScheme(darkScheme: CustomColors.Scheme) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -99,7 +102,8 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val lightScheme = dataStore.data.map { it.appearance.customColors.lightScheme }.asLiveData()
+    val lightScheme = dataStore.data.map { it.appearance.customColors.lightScheme }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLightScheme(lightScheme: CustomColors.Scheme) {
         viewModelScope.launch {
             dataStore.updateData {

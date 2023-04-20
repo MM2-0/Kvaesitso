@@ -9,8 +9,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -43,7 +43,7 @@ fun CardsSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val shape by viewModel.shape.observeAsState()
+                val shape by viewModel.shape.collectAsState()
                 ListPreference(
                     icon = Icons.Rounded.Rectangle,
                     title = stringResource(R.string.preference_cards_shape),
@@ -55,7 +55,7 @@ fun CardsSettingsScreen() {
                     onValueChanged = {
                         if (it != null) viewModel.setShape(it)
                     })
-                val radius by viewModel.radius.observeAsState(0)
+                val radius by viewModel.radius.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_corner_radius),
                     icon = Icons.Rounded.RoundedCorner,
@@ -67,7 +67,7 @@ fun CardsSettingsScreen() {
                         viewModel.setRadius(it)
                     }
                 )
-                val opacity by viewModel.opacity.observeAsState(0f)
+                val opacity by viewModel.opacity.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_opacity),
                     icon = Icons.Rounded.Opacity,
@@ -78,7 +78,7 @@ fun CardsSettingsScreen() {
                         viewModel.setOpacity(it)
                     }
                 )
-                val borderWidth by viewModel.borderWidth.observeAsState(0)
+                val borderWidth by viewModel.borderWidth.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_stroke_width),
                     icon = Icons.Rounded.LineWeight,

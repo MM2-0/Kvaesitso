@@ -12,7 +12,6 @@ import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,8 +28,8 @@ fun WeatherLocationSearchDialog(
 ) {
     val scope = rememberCoroutineScope()
     val viewModel: WeatherLocationSearchDialogVM = viewModel()
-    val isSearching by viewModel.isSearchingLocation.observeAsState(initial = false)
-    val locations by viewModel.locationResults.observeAsState(emptyList())
+    val isSearching by viewModel.isSearchingLocation
+    val locations by viewModel.locationResults
 
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,

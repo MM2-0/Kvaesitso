@@ -5,14 +5,14 @@ import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
 import de.mm20.launcher2.crashreporter.CrashReport
 import de.mm20.launcher2.crashreporter.CrashReporter
+import kotlinx.coroutines.flow.flow
 import java.io.File
 import java.net.URLEncoder
 
 class CrashReportScreenVM : ViewModel() {
-    fun getCrashReport(fileName: String) = liveData<CrashReport?> {
+    fun getCrashReport(fileName: String) = flow<CrashReport?> {
         emit(CrashReporter.getCrashReport(fileName))
     }
 

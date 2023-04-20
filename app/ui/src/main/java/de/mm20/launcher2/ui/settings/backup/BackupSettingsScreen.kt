@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.backup
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,11 +18,9 @@ import java.time.format.DateTimeFormatter
 fun BackupSettingsScreen() {
     val viewModel: BackupSettingsScreenVM = viewModel()
 
-    val restoreUri by viewModel.restoreUri.observeAsState()
+    val restoreUri by viewModel.restoreUri
 
-    val showBackupSheet by viewModel.showBackupSheet.observeAsState(false)
-
-    val context = LocalContext.current
+    val showBackupSheet by viewModel.showBackupSheet
 
     val restoreLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.OpenDocument(),

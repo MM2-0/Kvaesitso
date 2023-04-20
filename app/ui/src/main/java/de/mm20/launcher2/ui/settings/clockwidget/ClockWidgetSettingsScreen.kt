@@ -8,17 +8,14 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
@@ -35,7 +32,7 @@ fun ClockWidgetSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                val layout by viewModel.layout.observeAsState()
+                val layout by viewModel.layout.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_clockwidget_layout),
                     value = layout,
@@ -47,7 +44,7 @@ fun ClockWidgetSettingsScreen() {
                         if (it != null) viewModel.setLayout(it)
                     }
                 )
-                val clockStyle by viewModel.clockStyle.observeAsState()
+                val clockStyle by viewModel.clockStyle.collectAsState()
                 ClockStylePreference(
                     layout = layout ?: ClockWidgetLayout.Vertical,
                     value = clockStyle,
@@ -55,7 +52,7 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setClockStyle(it)
                     }
                 )
-                val color by viewModel.color.observeAsState()
+                val color by viewModel.color.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_clock_widget_color),
                     value = color,
@@ -68,7 +65,7 @@ fun ClockWidgetSettingsScreen() {
                         if (it != null) viewModel.setColor(it)
                     }
                 )
-                val fillHeight by viewModel.fillHeight.observeAsState()
+                val fillHeight by viewModel.fillHeight.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clock_widget_fill_height),
                     summary = stringResource(R.string.preference_clock_widget_fill_height_summary),
@@ -79,7 +76,7 @@ fun ClockWidgetSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val datePart by viewModel.datePart.observeAsState()
+                val datePart by viewModel.datePart.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_date_part),
                     summary = stringResource(R.string.preference_clockwidget_date_part_summary),
@@ -89,7 +86,7 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setDatePart(it)
                     },
                 )
-                val favoritesPart by viewModel.favoritesPart.observeAsState()
+                val favoritesPart by viewModel.favoritesPart.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_favorites_part),
                     summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
@@ -103,7 +100,7 @@ fun ClockWidgetSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val musicPart by viewModel.musicPart.observeAsState()
+                val musicPart by viewModel.musicPart.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_music_part),
                     summary = stringResource(R.string.preference_clockwidget_music_part_summary),
@@ -113,7 +110,7 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setMusicPart(it)
                     }
                 )
-                val alarmPart by viewModel.alarmPart.observeAsState()
+                val alarmPart by viewModel.alarmPart.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_alarm_part),
                     summary = stringResource(R.string.preference_clockwidget_alarm_part_summary),
@@ -123,7 +120,7 @@ fun ClockWidgetSettingsScreen() {
                         viewModel.setAlarmPart(it)
                     }
                 )
-                val batteryPart by viewModel.batteryPart.observeAsState()
+                val batteryPart by viewModel.batteryPart.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_clockwidget_battery_part),
                     summary = stringResource(R.string.preference_clockwidget_battery_part_summary),

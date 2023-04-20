@@ -19,7 +19,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -90,7 +89,7 @@ abstract class SharedLauncherActivity(
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
             val wallpaperColors by wallpaperColorsAsState()
-            val dimBackground by viewModel.dimBackground.observeAsState(false)
+            val dimBackground by viewModel.dimBackground.collectAsState()
             CompositionLocalProvider(
                 LocalEnterHomeTransitionManager provides enterHomeTransitionManager,
                 LocalWindowSize provides windowSize,
@@ -103,24 +102,24 @@ abstract class SharedLauncherActivity(
                 LauncherTheme {
                     ProvideCurrentTime {
                         ProvideSettings {
-                            val statusBarColor by viewModel.statusBarColor.observeAsState(
-                                SystemBarColors.Auto
-                            )
-                            val navBarColor by viewModel.navBarColor.observeAsState(SystemBarColors.Auto)
+                            val statusBarColor by viewModel.statusBarColor.collectAsState()
+                            val navBarColor by viewModel.navBarColor.collectAsState()
 
                             val lightStatus =
                                 !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
                             val lightNav =
                                 !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
 
-                            val hideStatus by viewModel.hideStatusBar.observeAsState(false)
-                            val hideNav by viewModel.hideNavBar.observeAsState(false)
+                            val hideStatus by viewModel.hideStatusBar.collectAsState()
+                            val hideNav by viewModel.hideNavBar.collectAsState()
                             val layout by viewModel.baseLayout.collectAsState(null)
-                            val bottomSearchBar by viewModel.bottomSearchBar.observeAsState(false)
-                            val reverseSearchResults by viewModel.reverseSearchResults.observeAsState(false)
-                            val fixedSearchBar by viewModel.fixedSearchBar.observeAsState(false)
+                            val bottomSearchBar by viewModel.bottomSearchBar.collectAsState()
+                            val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
+                            val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
 
-                            viewModel.fixedRotation.observe(this) { fixedRotation ->
+                            val fixedRotation by viewModel.fixedRotation.collectAsState()
+
+                            LaunchedEffect(fixedRotation) {
                                 requestedOrientation = if (fixedRotation) {
                                     ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
                                 } else {

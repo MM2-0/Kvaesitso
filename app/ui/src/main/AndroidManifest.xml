@@ -59,19 +59,6 @@
         </activity>
 
         <activity
-            android:name=".launcher.widgets.picker.PickAppWidgetActivity"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:parentActivityName=".launcher.SharedLauncherActivity"
-            android:screenOrientation="portrait"
-            android:taskAffinity="de.mm20.launcher2.settings"
-            android:theme="@style/SettingsTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
-        </activity>
-
-        <activity
             android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity"
              />
     </application>

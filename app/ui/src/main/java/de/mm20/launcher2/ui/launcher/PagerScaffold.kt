@@ -46,7 +46,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -101,8 +100,8 @@ fun PagerScaffold(
 
     val context = LocalContext.current
 
-    val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
-    val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
+    val isSearchOpen by viewModel.isSearchOpen
+    val isWidgetEditMode by viewModel.isWidgetEditMode
 
     val actions by searchVM.searchActionResults
 
@@ -147,7 +146,7 @@ fun PagerScaffold(
         }
     }
 
-    val fillClockHeight by viewModel.fillClockHeight.observeAsState(true)
+    val fillClockHeight by viewModel.fillClockHeight.collectAsState()
 
     val showNavBarScrim by remember {
         derivedStateOf {
@@ -199,7 +198,7 @@ fun PagerScaffold(
         }
     }
 
-    val blurEnabled by viewModel.wallpaperBlur.observeAsState(false)
+    val blurEnabled by viewModel.wallpaperBlur.collectAsState()
 
     val blurWallpaper by remember {
         derivedStateOf {
@@ -369,11 +368,17 @@ fun PagerScaffold(
                                     .fillMaxHeight()
                                     .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
-                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {{
-                                                if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(it)
-                                            }} else null,
+                                            onDoubleTap = if (gestureManager.shouldDetectDoubleTaps) {
+                                                {
+                                                    if (!isWidgetEditMode) gestureManager.dispatchDoubleTap(
+                                                        it
+                                                    )
+                                                }
+                                            } else null,
                                             onLongPress = {
-                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(it)
+                                                if (!isWidgetEditMode) gestureManager.dispatchLongPress(
+                                                    it
+                                                )
                                             },
                                             onTap = {
                                                 if (!isWidgetEditMode) gestureManager.dispatchTap(it)
@@ -491,7 +496,7 @@ fun PagerScaffold(
             }
         }
 
-        val focusSearchBar by viewModel.searchBarFocused.observeAsState(false)
+        val focusSearchBar by viewModel.searchBarFocused
 
         val widgetEditModeOffset by animateDpAsState(
             (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
@@ -499,8 +504,8 @@ fun PagerScaffold(
 
         val value by searchVM.searchQuery
 
-        val searchBarColor by viewModel.searchBarColor.observeAsState(SearchBarColors.Auto)
-        val searchBarStyle by viewModel.searchBarStyle.observeAsState(SearchBarStyle.Transparent)
+        val searchBarColor by viewModel.searchBarColor.collectAsState()
+        val searchBarStyle by viewModel.searchBarStyle.collectAsState()
 
         val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 

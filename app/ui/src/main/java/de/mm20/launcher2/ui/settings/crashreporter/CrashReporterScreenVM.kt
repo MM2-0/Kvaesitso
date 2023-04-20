@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.settings.crashreporter
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.crashreporter.BuildConfig
@@ -29,10 +29,10 @@ class CrashReporterScreenVM: ViewModel() {
         }
     }
 
-    val showExceptions = MutableLiveData(false)
-    val showCrashes = MutableLiveData(true)
+    val showExceptions = mutableStateOf(false)
+    val showCrashes = mutableStateOf(true)
 
-    val reports = MutableLiveData<List<CrashReport>?>(null)
+    val reports = mutableStateOf<List<CrashReport>?>(null)
     private var _reports: List<CrashReport>? = null
 
     init {

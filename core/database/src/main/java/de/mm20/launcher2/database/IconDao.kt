@@ -1,12 +1,9 @@
 package de.mm20.launcher2.database
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import de.mm20.launcher2.database.entities.IconEntity
 import de.mm20.launcher2.database.entities.IconPackEntity
 import kotlinx.coroutines.flow.Flow
-
-internal val AppTypes = listOf("app", "calendar", "clock")
 
 @Dao
 interface IconDao {

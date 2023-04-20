@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -55,10 +54,13 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val layout = dataStore.data.map { it.clockWidget.layout }.asLiveData()
-    val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }.asLiveData()
+    val layout = dataStore.data.map { it.clockWidget.layout }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val color = dataStore.data.map { it.clockWidget.color }.asLiveData()
+    val color = dataStore.data.map { it.clockWidget.color }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }

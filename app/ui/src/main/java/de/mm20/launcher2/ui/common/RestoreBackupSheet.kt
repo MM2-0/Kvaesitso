@@ -12,7 +12,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -38,9 +37,9 @@ fun RestoreBackupSheet(
         viewModel.setInputUri(uri)
     }
 
-    val state by viewModel.state.observeAsState(RestoreBackupState.Parsing)
-    val selectedComponents by viewModel.selectedComponents.observeAsState(emptySet())
-    val compatibility by viewModel.compatibility.observeAsState(null)
+    val state by viewModel.state
+    val selectedComponents by viewModel.selectedComponents
+    val compatibility by viewModel.compatibility
 
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,
@@ -103,7 +102,7 @@ fun RestoreBackupSheet(
                     )
                 }
                 RestoreBackupState.Ready -> {
-                    val metadata by viewModel.metadata.observeAsState(null)
+                    val metadata by viewModel.metadata
 
                     if (metadata != null) {
                         Column {
@@ -153,9 +152,7 @@ fun RestoreBackupSheet(
                                     style = MaterialTheme.typography.titleSmall,
                                     modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
                                 )
-                                val components by viewModel.availableComponents.observeAsState(
-                                    emptyList()
-                                )
+                                val components by viewModel.availableComponents
                                 for (component in components) {
                                     Row(
                                         modifier = Modifier

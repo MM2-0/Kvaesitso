@@ -37,8 +37,6 @@ dependencyResolutionManagement {
             version("androidx.compose.compiler", "1.4.5")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
                 .version("1.5.0-alpha03")
-            library("androidx.compose.livedata", "androidx.compose.runtime", "runtime-livedata")
-                .version("1.5.0-alpha03")
             library("androidx.compose.foundation", "androidx.compose.foundation", "foundation")
                 .version("1.5.0-alpha03")
             library("androidx.compose.foundationlayout", "androidx.compose.foundation", "foundation-layout")
@@ -61,8 +59,6 @@ dependencyResolutionManagement {
             version("androidx.lifecycle", "2.6.1")
             library("androidx.lifecycle.viewmodel", "androidx.lifecycle", "lifecycle-viewmodel-ktx")
                 .versionRef("androidx.lifecycle")
-            library("androidx.lifecycle.livedata", "androidx.lifecycle", "lifecycle-livedata-ktx")
-                .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.common", "androidx.lifecycle", "lifecycle-common-java8")
                 .versionRef("androidx.lifecycle")
             library("androidx.lifecycle.runtime", "androidx.lifecycle", "lifecycle-runtime-ktx")
@@ -75,7 +71,6 @@ dependencyResolutionManagement {
                 "androidx.lifecycle",
                 listOf(
                     "androidx.lifecycle.viewmodel",
-                    "androidx.lifecycle.livedata",
                     "androidx.lifecycle.common",
                     "androidx.lifecycle.runtime"
                 )

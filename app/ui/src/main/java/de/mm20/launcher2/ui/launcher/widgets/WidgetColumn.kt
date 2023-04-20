@@ -18,9 +18,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -77,7 +77,7 @@ fun WidgetColumn(
     ) {
         val scope = rememberCoroutineScope()
         Column {
-            val widgets by viewModel.widgets.observeAsState(emptyList())
+            val widgets by viewModel.widgets.collectAsState()
             val swapThresholds = remember(widgets) {
                 Array(widgets.size) { floatArrayOf(0f, 0f) }
             }
@@ -144,7 +144,7 @@ fun WidgetColumn(
             }
         }
 
-        val editButton by viewModel.editButton.observeAsState()
+        val editButton by viewModel.editButton.collectAsState()
         if (editButton == true) {
             val icon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)

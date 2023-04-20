@@ -7,8 +7,8 @@ import androidx.compose.material.icons.rounded.Sort
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material.icons.rounded.TableRows
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -45,7 +45,7 @@ fun FavoritesSettingsScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.preference_category_favorites_frequently_used)) {
-                val frequentlyUsed by viewModel.frequentlyUsed.observeAsState()
+                val frequentlyUsed by viewModel.frequentlyUsed.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.frequently_used_show_in_favorites),
                     summary = stringResource(R.string.preference_favorites_frequently_used_summary),
@@ -55,7 +55,7 @@ fun FavoritesSettingsScreen() {
                     },
                     icon = Icons.Rounded.Insights
                 )
-                val frequentlyUsedRows by viewModel.frequentlyUsedRows.observeAsState(1)
+                val frequentlyUsedRows by viewModel.frequentlyUsedRows.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.frequently_used_rows),
                     value = frequentlyUsedRows,
@@ -67,7 +67,7 @@ fun FavoritesSettingsScreen() {
                     },
                     icon = Icons.Rounded.TableRows
                 )
-                val searchResultWeightFactor by viewModel.searchResultWeightFactor.observeAsState(WeightFactor.Default)
+                val searchResultWeightFactor by viewModel.searchResultWeightFactor.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering_weight_factor),
                     icon = Icons.Rounded.SwapVert,
@@ -82,7 +82,7 @@ fun FavoritesSettingsScreen() {
             }
         }
         item {
-            val editButton by viewModel.editButton.observeAsState()
+            val editButton by viewModel.editButton.collectAsState()
             PreferenceCategory {
                 SwitchPreference(
                     title = stringResource(R.string.preference_edit_button),

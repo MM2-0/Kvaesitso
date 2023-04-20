@@ -1,13 +1,14 @@
 package de.mm20.launcher2.ui.settings.searchactions
 
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -18,11 +19,11 @@ class SearchActionsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val searchActions = searchActionService
         .getSearchActionBuilders()
-        .asLiveData()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     val disabledActions = searchActionService
         .getDisabledActionBuilders()
-        .asLiveData()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     fun addAction(searchAction: SearchActionBuilder) {
         val actions =
@@ -60,8 +61,8 @@ class SearchActionsSettingsScreenVM : ViewModel(), KoinComponent {
         searchActionService.saveSearchActionBuilders(actions)
     }
 
-    val showEditDialogFor = MutableLiveData<CustomizableSearchActionBuilder?>(null)
-    val showCreateDialog = MutableLiveData(false)
+    val showEditDialogFor = mutableStateOf<CustomizableSearchActionBuilder?>(null)
+    val showCreateDialog = mutableStateOf(false)
 
     fun editAction(action: CustomizableSearchActionBuilder) {
         showEditDialogFor.value = action

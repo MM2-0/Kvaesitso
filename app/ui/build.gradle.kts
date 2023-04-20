@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.bundles.kotlin)
 
     implementation(libs.androidx.compose.runtime)
-    implementation(libs.androidx.compose.livedata)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.compose.foundationlayout)
     implementation(libs.androidx.compose.ui)

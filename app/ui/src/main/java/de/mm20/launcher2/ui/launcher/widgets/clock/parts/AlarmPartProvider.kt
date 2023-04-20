@@ -15,12 +15,11 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
-import androidx.lifecycle.MutableLiveData
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import kotlinx.coroutines.channels.awaitClose
@@ -29,7 +28,7 @@ import kotlinx.coroutines.flow.*
 
 class AlarmPartProvider : PartProvider {
 
-    private val nextAlarmTime = MutableLiveData<Long?>(null)
+    private val nextAlarmTime = mutableStateOf<Long?>(null)
 
     private val time = MutableStateFlow(System.currentTimeMillis())
 
@@ -75,7 +74,7 @@ class AlarmPartProvider : PartProvider {
     override fun Component(layout: ClockWidgetLayout) {
         val context = LocalContext.current
 
-        val alarmTime by nextAlarmTime.observeAsState(null)
+        val alarmTime by nextAlarmTime
         val time by this.time.collectAsState(System.currentTimeMillis())
 
         alarmTime?.let {

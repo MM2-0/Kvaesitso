@@ -6,14 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +25,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 fun CrashReportScreen(fileName: String) {
     val viewModel: CrashReportScreenVM = viewModel()
     val context = LocalContext.current
-    val crashReport by remember(fileName) { viewModel.getCrashReport(fileName) }.observeAsState()
+    val crashReport by remember(fileName) { viewModel.getCrashReport(fileName) }.collectAsState(null)
     PreferenceScreen(
         title = when (crashReport?.type) {
             CrashReportType.Exception -> "Exception"

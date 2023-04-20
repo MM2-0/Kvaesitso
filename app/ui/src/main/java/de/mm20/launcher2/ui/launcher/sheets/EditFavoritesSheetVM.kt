@@ -6,9 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.lazy.LazyListItemInfo
 import androidx.compose.foundation.lazy.grid.LazyGridItemInfo
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.Badge
@@ -26,9 +24,11 @@ import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -43,11 +43,11 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    val gridItems = MutableLiveData<List<FavoritesSheetGridItem>>(emptyList())
+    val gridItems = mutableStateOf<List<FavoritesSheetGridItem>>(emptyList())
 
-    val loading = MutableLiveData(false)
+    val loading = mutableStateOf(false)
 
-    val createShortcutTarget = MutableLiveData<FavoritesSheetSection?>(null)
+    val createShortcutTarget = mutableStateOf<FavoritesSheetSection?>(null)
 
     private var manuallySorted: MutableList<SavableSearchable> = mutableListOf()
     private var automaticallySorted: MutableList<SavableSearchable> = mutableListOf()
@@ -245,7 +245,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val enableFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }.asLiveData()
+    val enableFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -260,7 +261,8 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }.asLiveData()
+    val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
         viewModelScope.launch {
             dataStore.updateData {

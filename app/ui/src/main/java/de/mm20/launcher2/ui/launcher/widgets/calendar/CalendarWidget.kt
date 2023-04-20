@@ -10,9 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -61,7 +59,7 @@ fun CalendarWidget(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                val selectedDate by viewModel.selectedDate.observeAsState(LocalDate.now())
+                val selectedDate by viewModel.selectedDate
                 var showDropdown by remember { mutableStateOf(false) }
                 TextButton(onClick = { showDropdown = true }) {
                     Text(
@@ -99,8 +97,8 @@ fun CalendarWidget(
                 Icon(imageVector = Icons.Rounded.OpenInNew, contentDescription = null)
             }
         }
-        val events by viewModel.calendarEvents.observeAsState(emptyList())
-        val hasPermission by viewModel.hasPermission.observeAsState()
+        val events by viewModel.calendarEvents
+        val hasPermission by viewModel.hasPermission.collectAsState()
         Column(
             modifier = Modifier
                 .animateContentSize()
@@ -124,7 +122,7 @@ fun CalendarWidget(
                 modifier = Modifier
                     .fillMaxWidth()
             )
-            val runningEvents by viewModel.hiddenPastEvents.observeAsState(0)
+            val runningEvents by viewModel.hiddenPastEvents
             if (runningEvents > 0) {
                 Info(
                     text = pluralStringResource(
@@ -137,7 +135,7 @@ fun CalendarWidget(
                     }
                 )
             }
-            val nextEvents by viewModel.nextEvents.observeAsState(emptyList())
+            val nextEvents by viewModel.nextEvents
             if (nextEvents.isNotEmpty()) {
                 Text(
                     stringResource(R.string.calendar_widget_next_events),
@@ -150,7 +148,7 @@ fun CalendarWidget(
                         .fillMaxWidth()
                 )
             }
-            val pinnedEvents by viewModel.pinnedCalendarEvents.observeAsState(emptyList())
+            val pinnedEvents by viewModel.pinnedCalendarEvents.collectAsState()
             if (pinnedEvents.isNotEmpty()) {
                 Text(
                     stringResource(R.string.calendar_widget_pinned_events),

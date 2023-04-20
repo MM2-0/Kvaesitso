@@ -51,7 +51,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -102,8 +101,8 @@ fun EditFavoritesSheet(
         viewModel.reload()
     }
 
-    val loading by viewModel.loading.observeAsState(true)
-    val createShortcutTarget by viewModel.createShortcutTarget.observeAsState(null)
+    val loading by viewModel.loading
+    val createShortcutTarget by viewModel.createShortcutTarget
 
     BottomSheetDialog(
         onDismissRequest = onDismiss,
@@ -157,7 +156,7 @@ fun EditFavoritesSheet(
 
 @Composable
 fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues) {
-    val items by viewModel.gridItems.observeAsState(emptyList())
+    val items by viewModel.gridItems
     val columns = LocalGridSettings.current.columnCount
 
     val availableTags by viewModel.availableTags
@@ -336,10 +335,8 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                 }
                             }
                         }
-                        val enableFrequentlyUsed by viewModel.enableFrequentlyUsed.observeAsState(
-                            null
-                        )
-                        val frequentlyUsedRows by viewModel.frequentlyUsedRows.observeAsState(1)
+                        val enableFrequentlyUsed by viewModel.enableFrequentlyUsed.collectAsState()
+                        val frequentlyUsedRows by viewModel.frequentlyUsedRows.collectAsState()
                         AnimatedVisibility(showSettings) {
                             Surface(
                                 modifier = Modifier

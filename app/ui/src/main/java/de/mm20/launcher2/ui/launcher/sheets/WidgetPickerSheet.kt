@@ -59,7 +59,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
-import de.mm20.launcher2.ui.launcher.widgets.picker.PickAppWidgetActivity
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
@@ -111,7 +110,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                         AppWidgetManager.EXTRA_APPWIDGET_PROVIDER_PROFILE,
                         appWidgetProviderInfo.profile
                     )
-                }, PickAppWidgetActivity.RequestCodeBind
+                }, RequestCodeBind
             )
         }
     }
@@ -122,7 +121,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                 this,
                 appWidgetId,
                 0,
-                PickAppWidgetActivity.RequestCodeConfigure,
+                RequestCodeConfigure,
                 null
             )
         } else {

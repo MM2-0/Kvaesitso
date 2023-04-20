@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.common
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.backup.BackupCompatibility
@@ -18,12 +18,12 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
 
     private var restoreUri: Uri? = null
 
-    val state = MutableLiveData(RestoreBackupState.Parsing)
-    val metadata = MutableLiveData<BackupMetadata?>(null)
-    val compatibility = MutableLiveData<BackupCompatibility?>(null)
-    val selectedComponents = MutableLiveData(setOf<BackupComponent>())
+    val state = mutableStateOf(RestoreBackupState.Parsing)
+    val metadata = mutableStateOf<BackupMetadata?>(null)
+    val compatibility = mutableStateOf<BackupCompatibility?>(null)
+    val selectedComponents = mutableStateOf(setOf<BackupComponent>())
 
-    val availableComponents = MutableLiveData(emptyList<BackupComponent>())
+    val availableComponents = mutableStateOf(emptyList<BackupComponent>())
 
     fun setInputUri(uri: Uri) {
         restoreUri = uri

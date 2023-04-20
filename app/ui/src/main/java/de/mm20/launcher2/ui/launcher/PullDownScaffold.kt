@@ -43,7 +43,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -100,8 +99,8 @@ fun PullDownScaffold(
 
     val actions by searchVM.searchActionResults
 
-    val isSearchOpen by viewModel.isSearchOpen.observeAsState(false)
-    val isWidgetEditMode by viewModel.isWidgetEditMode.observeAsState(false)
+    val isSearchOpen by viewModel.isSearchOpen
+    val isWidgetEditMode by viewModel.isWidgetEditMode
 
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
@@ -148,7 +147,7 @@ fun PullDownScaffold(
         }
     }
 
-    val fillClockHeight by viewModel.fillClockHeight.observeAsState(true)
+    val fillClockHeight by viewModel.fillClockHeight.collectAsState()
 
     val showStatusBarScrim by remember {
         derivedStateOf {
@@ -210,7 +209,7 @@ fun PullDownScaffold(
 
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
-    val blurEnabled by viewModel.wallpaperBlur.observeAsState(false)
+    val blurEnabled by viewModel.wallpaperBlur.collectAsState()
 
     val blurWallpaper by remember {
         derivedStateOf {
@@ -516,15 +515,15 @@ fun PullDownScaffold(
                 }
             }
         }
-        val searchBarFocused by viewModel.searchBarFocused.observeAsState(false)
+        val searchBarFocused by viewModel.searchBarFocused
         val editModeSearchBarOffset by animateDpAsState(
             (if (isWidgetEditMode) 128.dp else 0.dp) * (if (bottomSearchBar) 1 else -1)
         )
 
         val value by searchVM.searchQuery
 
-        val searchBarColor by viewModel.searchBarColor.observeAsState(Settings.SearchBarSettings.SearchBarColors.Auto)
-        val searchBarStyle by viewModel.searchBarStyle.observeAsState(Settings.SearchBarSettings.SearchBarStyle.Transparent)
+        val searchBarColor by viewModel.searchBarColor.collectAsState()
+        val searchBarStyle by viewModel.searchBarStyle.collectAsState()
 
         val context = LocalContext.current
 

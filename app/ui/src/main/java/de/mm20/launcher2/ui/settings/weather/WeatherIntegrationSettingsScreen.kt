@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -29,7 +28,7 @@ fun WeatherIntegrationSettingsScreen() {
     ) {
         item {
             PreferenceCategory {
-                val weatherProvider by viewModel.weatherProvider.observeAsState()
+                val weatherProvider by viewModel.weatherProvider.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_weather_provider),
                     items = viewModel.availableProviders.map {
@@ -60,7 +59,7 @@ fun WeatherIntegrationSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_location)) {
-                val hasPermission by viewModel.hasLocationPermission.observeAsState()
+                val hasPermission by viewModel.hasLocationPermission.collectAsState()
                 AnimatedVisibility(hasPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(R.string.missing_permission_auto_location),
@@ -70,7 +69,7 @@ fun WeatherIntegrationSettingsScreen() {
                         modifier = Modifier.padding(16.dp)
                     )
                 }
-                val autoLocation by viewModel.autoLocation.observeAsState(false)
+                val autoLocation by viewModel.autoLocation.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_automatic_location),
                     summary = stringResource(R.string.preference_automatic_location_summary),
@@ -79,7 +78,7 @@ fun WeatherIntegrationSettingsScreen() {
                         viewModel.setAutoLocation(it)
                     }
                 )
-                val location by viewModel.location.observeAsState()
+                val location by viewModel.location
                 LocationPreference(
                     title = stringResource(R.string.preference_location),
                     value = location,

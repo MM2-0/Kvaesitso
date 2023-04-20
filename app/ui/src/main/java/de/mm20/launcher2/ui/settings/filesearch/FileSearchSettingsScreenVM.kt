@@ -1,9 +1,8 @@
 package de.mm20.launcher2.ui.settings.filesearch
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.accounts.Account
 import de.mm20.launcher2.accounts.AccountType
@@ -11,7 +10,9 @@ import de.mm20.launcher2.accounts.AccountsRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -21,14 +22,14 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val accountsRepository: AccountsRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
 
-    val hasFilePermission =
-        permissionsManager.hasPermission(PermissionGroup.ExternalStorage).asLiveData()
+    val hasFilePermission = permissionsManager.hasPermission(PermissionGroup.ExternalStorage)
+            .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val loading = MutableLiveData(true)
-    val nextcloudAccount = MutableLiveData<Account?>(null)
-    val owncloudAccount = MutableLiveData<Account?>(null)
-    val microsoftAccount = MutableLiveData<Account?>(null)
-    val googleAccount = MutableLiveData<Account?>(null)
+    val loading = mutableStateOf(true)
+    val nextcloudAccount = mutableStateOf<Account?>(null)
+    val owncloudAccount = mutableStateOf<Account?>(null)
+    val microsoftAccount = mutableStateOf<Account?>(null)
+    val googleAccount = mutableStateOf<Account?>(null)
 
     val microsoftAvailable = accountsRepository.isSupported(AccountType.Microsoft)
     val googleAvailable = accountsRepository.isSupported(AccountType.Google)
@@ -46,7 +47,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val localFiles = dataStore.data.map { it.fileSearch.localFiles }.asLiveData()
+    val localFiles = dataStore.data.map { it.fileSearch.localFiles }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLocalFiles(localFiles: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -61,7 +63,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val nextcloud = dataStore.data.map { it.fileSearch.nextcloud }.asLiveData()
+    val nextcloud = dataStore.data.map { it.fileSearch.nextcloud }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setNextcloud(nextcloud: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -76,7 +79,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val gdrive = dataStore.data.map { it.fileSearch.gdrive }.asLiveData()
+    val gdrive = dataStore.data.map { it.fileSearch.gdrive }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setGdrive(gdrive: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -91,7 +95,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val onedrive = dataStore.data.map { it.fileSearch.onedrive }.asLiveData()
+    val onedrive = dataStore.data.map { it.fileSearch.onedrive }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setOneDrive(onedrive: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -106,7 +111,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val owncloud = dataStore.data.map { it.fileSearch.owncloud }.asLiveData()
+    val owncloud = dataStore.data.map { it.fileSearch.owncloud }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setOwncloud(owncloud: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {

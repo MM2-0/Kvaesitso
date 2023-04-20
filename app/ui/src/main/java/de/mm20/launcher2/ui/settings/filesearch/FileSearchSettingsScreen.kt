@@ -11,8 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -40,7 +40,7 @@ fun FileSearchSettingsScreen() {
             viewModel.onResume()
         }
     }
-    val loading by viewModel.loading.observeAsState()
+    val loading by viewModel.loading
     PreferenceScreen(title = stringResource(R.string.preference_search_files)) {
         if (loading == true) {
             item {
@@ -52,8 +52,8 @@ fun FileSearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val localFiles by viewModel.localFiles.observeAsState()
-                val hasFilePermission by viewModel.hasFilePermission.observeAsState()
+                val localFiles by viewModel.localFiles.collectAsState()
+                val hasFilePermission by viewModel.hasFilePermission.collectAsState()
                 AnimatedVisibility(hasFilePermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(
@@ -74,8 +74,8 @@ fun FileSearchSettingsScreen() {
                     enabled = hasFilePermission == true
                 )
 
-                val nextcloud by viewModel.nextcloud.observeAsState()
-                val nextcloudAccount by viewModel.nextcloudAccount.observeAsState()
+                val nextcloud by viewModel.nextcloud.collectAsState()
+                val nextcloudAccount by viewModel.nextcloudAccount
                 AnimatedVisibility(nextcloudAccount == null) {
                     Banner(
                         text = stringResource(R.string.no_account_nextcloud),
@@ -107,8 +107,8 @@ fun FileSearchSettingsScreen() {
                     enabled = nextcloudAccount != null
                 )
 
-                val owncloud by viewModel.owncloud.observeAsState()
-                val owncloudAccount by viewModel.owncloudAccount.observeAsState()
+                val owncloud by viewModel.owncloud.collectAsState()
+                val owncloudAccount by viewModel.owncloudAccount
                 AnimatedVisibility(owncloudAccount == null) {
                     Banner(
                         text = stringResource(R.string.no_account_owncloud),
@@ -141,8 +141,8 @@ fun FileSearchSettingsScreen() {
                 )
 
                 if (viewModel.microsoftAvailable) {
-                    val onedrive by viewModel.onedrive.observeAsState()
-                    val microsoftAccount by viewModel.microsoftAccount.observeAsState()
+                    val onedrive by viewModel.onedrive.collectAsState()
+                    val microsoftAccount by viewModel.microsoftAccount
                     AnimatedVisibility(microsoftAccount == null) {
                         Banner(
                             text = stringResource(R.string.no_account_microsoft),
@@ -176,8 +176,8 @@ fun FileSearchSettingsScreen() {
                 }
 
                 if (viewModel.googleAvailable) {
-                    val gdrive by viewModel.gdrive.observeAsState()
-                    val googleAccount by viewModel.googleAccount.observeAsState()
+                    val gdrive by viewModel.gdrive.collectAsState()
+                    val googleAccount by viewModel.googleAccount
                     AnimatedVisibility(googleAccount == null) {
                         Banner(
                             text = stringResource(R.string.no_account_google),

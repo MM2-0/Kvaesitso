@@ -1,9 +1,8 @@
 package de.mm20.launcher2.ui.settings.weather
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -12,9 +11,11 @@ import de.mm20.launcher2.preferences.Settings.WeatherSettings
 import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherRepository
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -25,7 +26,8 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
 
     val availableProviders = repository.getAvailableProviders()
 
-    val weatherProvider = repository.selectedProvider.asLiveData()
+    val weatherProvider = repository.selectedProvider
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
         repository.selectProvider(provider)
     }
@@ -41,14 +43,16 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val autoLocation = repository.autoLocation.asLiveData()
+    val autoLocation = repository.autoLocation
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setAutoLocation(autoLocation: Boolean) {
         repository.setAutoLocation(autoLocation)
     }
 
-    val location = MutableLiveData<WeatherLocation?>(null)
+    val location = mutableStateOf<WeatherLocation?>(null)
 
-    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location).asLiveData()
+    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun requestLocationPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Location)
@@ -64,7 +68,7 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
                 if (autoLoc) lastLoc
                 else loc
             }.collectLatest {
-                this@WeatherIntegrationSettingsScreenVM.location.postValue(it)
+                this@WeatherIntegrationSettingsScreenVM.location.value = it
             }
         }
     }

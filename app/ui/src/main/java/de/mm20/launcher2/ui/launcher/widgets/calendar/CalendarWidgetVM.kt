@@ -5,23 +5,22 @@ import android.content.Context
 import android.content.Intent
 import android.provider.CalendarContract
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.CalendarWidgetConfig
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.lang.Integer.min
@@ -39,23 +38,24 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     private val widgetConfig = MutableStateFlow(CalendarWidgetConfig())
 
-    val calendarEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
+    val calendarEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
             includeTypes = listOf(CalendarEvent.Domain),
             automaticallySorted = true,
             manuallySorted = true,
-        ).asLiveData(viewModelScope.coroutineContext)
-    val nextEvents = MutableLiveData<List<CalendarEvent>>(emptyList())
+        ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+    val nextEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     var availableDates = listOf(LocalDate.now())
 
     private val permissionsManager: PermissionsManager by inject()
-    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar).asLiveData()
+    val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     private var showRunningPastDayEvents = false
-    val hiddenPastEvents = MutableLiveData(0)
+    val hiddenPastEvents = mutableStateOf(0)
 
-    val selectedDate = MutableLiveData(LocalDate.now())
+    val selectedDate = mutableStateOf(LocalDate.now())
 
     fun updateWidget(widget: CalendarWidget) {
         widgetConfig.value = widget.config
@@ -147,17 +147,17 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
             }
 
             val hiddenCount = totalCount - events.size
-            hiddenPastEvents.postValue(hiddenCount)
+            hiddenPastEvents.value = hiddenCount
         } else {
-            hiddenPastEvents.postValue(0)
+            hiddenPastEvents.value = 0
         }
 
-        calendarEvents.postValue(events)
+        calendarEvents.value = events
         val e = this.upcomingEvents
         if (events.isEmpty() && e.isNotEmpty()) {
-            nextEvents.postValue(listOf(e[0]))
+            nextEvents.value = listOf(e[0])
         } else {
-            nextEvents.postValue(emptyList())
+            nextEvents.value = emptyList()
         }
     }
 

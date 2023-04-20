@@ -9,7 +9,6 @@ import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -31,8 +30,8 @@ fun HiddenItemsSettingsScreen() {
     val context = LocalContext.current
     val density = LocalDensity.current
 
-    val apps by viewModel.allApps.observeAsState(emptyList())
-    val other by viewModel.hiddenItems.observeAsState(emptyList())
+    val apps by viewModel.allApps.collectAsState()
+    val other by viewModel.hiddenItems.collectAsState()
     PreferenceScreen(title = stringResource(R.string.preference_hidden_items)) {
         items(apps, key = { it.key }) { searchable ->
             val icon by remember(searchable.key) {

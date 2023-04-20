@@ -25,8 +25,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
@@ -69,8 +69,8 @@ fun SearchActionsSettingsScreen() {
         onItemMove = { from, to -> viewModel.moveItem(from.index, to.index) }
     )
 
-    val searchActions by viewModel.searchActions.observeAsState(emptyList())
-    val disabledActions by viewModel.disabledActions.observeAsState(emptyList())
+    val searchActions by viewModel.searchActions.collectAsState()
+    val disabledActions by viewModel.disabledActions.collectAsState()
 
     Scaffold(
         floatingActionButton = {
@@ -187,8 +187,8 @@ fun SearchActionsSettingsScreen() {
         }
     }
 
-    val editAction by viewModel.showEditDialogFor.observeAsState(null)
-    val createAction by viewModel.showCreateDialog.observeAsState(false)
+    val editAction by viewModel.showEditDialogFor
+    val createAction by viewModel.showCreateDialog
 
     if (createAction) {
         EditSearchActionSheet(

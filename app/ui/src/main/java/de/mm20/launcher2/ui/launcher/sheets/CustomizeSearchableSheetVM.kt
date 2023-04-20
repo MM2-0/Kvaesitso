@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.liveData
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.icons.CustomIconWithPreview
@@ -14,6 +13,7 @@ import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
@@ -32,7 +32,7 @@ class CustomizeSearchableSheetVM(
         return iconService.getIcon(searchable, size)
     }
 
-    fun getIconSuggestions(size: Int) = liveData {
+    fun getIconSuggestions(size: Int) = flow {
         emit(iconService.getCustomIconSuggestions(searchable, size))
     }
 
@@ -49,7 +49,7 @@ class CustomizeSearchableSheetVM(
         closeIconPicker()
     }
 
-    fun getDefaultIcon(size: Int) = liveData {
+    fun getDefaultIcon(size: Int) = flow {
         emit(iconService.getUncustomizedDefaultIcon(searchable, size))
     }
 

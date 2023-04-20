@@ -34,7 +34,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -81,7 +80,7 @@ fun WeatherWidget(widget: WeatherWidget) {
         }
     }
 
-    val selectedForecast by viewModel.currentForecast.observeAsState()
+    val selectedForecast by viewModel.currentForecast
 
     val imperialUnits by viewModel.imperialUnits.collectAsState(false)
     val compactMode = !widget.config.showForecast
@@ -93,8 +92,8 @@ fun WeatherWidget(widget: WeatherWidget) {
     }
 
     val forecast = selectedForecast ?: run {
-        val hasPermission by viewModel.hasLocationPermission.observeAsState()
-        val autoLocation by viewModel.autoLocation.observeAsState()
+        val hasPermission by viewModel.hasLocationPermission.collectAsState()
+        val autoLocation by viewModel.autoLocation.collectAsState()
         Column {
             AnimatedVisibility(hasPermission == false && autoLocation == true) {
                 MissingPermissionBanner(
@@ -126,9 +125,9 @@ fun WeatherWidget(widget: WeatherWidget) {
 
         if (!compactMode) {
 
-            val dailyForecasts by viewModel.dailyForecasts.observeAsState(emptyList())
-            val selectedDayForecast by viewModel.currentDailyForecast.observeAsState()
-            val currentDayForecasts by viewModel.currentDayForecasts.observeAsState(emptyList())
+            val dailyForecasts by viewModel.dailyForecasts
+            val selectedDayForecast by viewModel.currentDailyForecast
+            val currentDayForecasts by viewModel.currentDayForecasts
 
             Surface(
                 color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = LocalCardStyle.current.opacity),

@@ -31,7 +31,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -180,11 +179,11 @@ fun CustomizeSearchableSheet(
             val scope = rememberCoroutineScope()
 
             val suggestions by remember { viewModel.getIconSuggestions(iconSizePx.toInt()) }
-                .observeAsState(emptyList())
+                .collectAsState(emptyList())
 
             val defaultIcon by remember {
                 viewModel.getDefaultIcon(iconSizePx.toInt())
-            }.observeAsState()
+            }.collectAsState(null)
 
             var query by remember { mutableStateOf("") }
             var filterIconPack by remember { mutableStateOf<IconPack?>(null) }

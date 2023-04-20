@@ -1,8 +1,8 @@
 package de.mm20.launcher2.ui.settings.wikipedia
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
@@ -15,7 +15,7 @@ fun WikipediaSettingsScreen() {
     val viewModel: WikipediaSettingsScreenVM = viewModel()
     PreferenceScreen(title = stringResource(R.string.preference_search_wikipedia)) {
         item {
-            val wikipedia by viewModel.wikipedia.observeAsState()
+            val wikipedia by viewModel.wikipedia.collectAsState()
             SwitchPreference(
                 title = stringResource(R.string.preference_search_wikipedia),
                 summary = stringResource(R.string.preference_search_wikipedia_summary),
@@ -24,7 +24,7 @@ fun WikipediaSettingsScreen() {
                     viewModel.setWikipedia(it)
                 }
             )
-            val images by viewModel.images.observeAsState()
+            val images by viewModel.images.collectAsState()
             SwitchPreference(
                 title = stringResource(R.string.preference_search_wikipedia_pictures),
                 summary = stringResource(R.string.preference_search_wikipedia_pictures_summary),
@@ -34,7 +34,7 @@ fun WikipediaSettingsScreen() {
                     viewModel.setImages(it)
                 }
             )
-            val customUrl by viewModel.customUrl.observeAsState("")
+            val customUrl by viewModel.customUrl.collectAsState()
             TextPreference(
                 title = stringResource(R.string.preference_wikipedia_customurl),
                 value = customUrl,

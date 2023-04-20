@@ -2,11 +2,13 @@ package de.mm20.launcher2.ui.launcher.widgets
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -15,12 +17,14 @@ class WidgetsVM : ViewModel(), KoinComponent {
 
     private val dataStore: LauncherDataStore by inject()
 
-    val editButton = dataStore.data.map { it.widgets.editButton }.asLiveData()
+    val editButton = dataStore.data.map { it.widgets.editButton }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val widgets = widgetRepository.get().asLiveData()
+    val widgets = widgetRepository.get()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
     fun addWidget(widget: Widget) {
-        val widgets = widgets.value?.toMutableList() ?: return
+        val widgets = widgets.value.toMutableList()
         widgets.add(widget)
         widgetRepository.set(widgets)
     }
@@ -34,14 +38,14 @@ class WidgetsVM : ViewModel(), KoinComponent {
     }
 
     fun moveUp(index: Int) {
-        val widgets = widgets.value?.toMutableList() ?: return
+        val widgets = widgets.value.toMutableList()
         val widget = widgets.removeAt(index)
         widgets.add(index - 1, widget)
         widgetRepository.set(widgets)
     }
 
     fun moveDown(index: Int) {
-        val widgets = widgets.value?.toMutableList() ?: return
+        val widgets = widgets.value.toMutableList()
         val widget = widgets.removeAt(index)
         widgets.add(index + 1, widget)
         widgetRepository.set(widgets)

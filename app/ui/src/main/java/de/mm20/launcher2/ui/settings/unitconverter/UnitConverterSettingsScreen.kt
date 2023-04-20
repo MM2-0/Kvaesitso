@@ -1,19 +1,14 @@
 package de.mm20.launcher2.ui.settings.unitconverter
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Loop
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.settings.search.SearchSettingsScreenVM
 
 @Composable
 fun UnitConverterSettingsScreen() {
@@ -21,7 +16,7 @@ fun UnitConverterSettingsScreen() {
     PreferenceScreen(title = stringResource(R.string.preference_search_unitconverter)) {
         item {
             PreferenceCategory {
-                val unitConverter by viewModel.unitConverter.observeAsState()
+                val unitConverter by viewModel.unitConverter.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_unitconverter),
                     summary = stringResource(R.string.preference_search_unitconverter_summary),
@@ -30,7 +25,7 @@ fun UnitConverterSettingsScreen() {
                         viewModel.setUnitConverter(it)
                     }
                 )
-                val currencyConverter by viewModel.currencyConverter.observeAsState()
+                val currencyConverter by viewModel.currencyConverter.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_currencyconverter),
                     summary = stringResource(R.string.preference_search_currencyconverter_summary),

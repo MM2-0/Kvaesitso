@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.settings.gestures
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.icons.IconService
@@ -29,8 +28,10 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     private val iconService: IconService by inject()
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val baseLayout = dataStore.data.map { it.layout.baseLayout }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setBaseLayout(baseLayout: Settings.LayoutSettings.Layout) {
         viewModelScope.launch {
@@ -43,10 +44,15 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val swipeDown = dataStore.data.map { it.gestures.swipeDown }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeLeft = dataStore.data.map { it.gestures.swipeLeft }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val swipeRight = dataStore.data.map { it.gestures.swipeRight }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val doubleTap = dataStore.data.map { it.gestures.doubleTap }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val longPress = dataStore.data.map { it.gestures.longPress }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setSwipeDown(action: GestureAction) {
         viewModelScope.launch {

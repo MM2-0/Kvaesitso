@@ -1,7 +1,7 @@
 package de.mm20.launcher2.ui.settings.backup
 
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.backup.BackupComponent
@@ -14,9 +14,9 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
 
     private val backupManager: BackupManager by inject()
 
-    val state = MutableLiveData(CreateBackupState.Ready)
+    val state = mutableStateOf(CreateBackupState.Ready)
 
-    val selectedComponents = MutableLiveData(BackupComponent.values().toSet())
+    val selectedComponents = mutableStateOf(BackupComponent.values().toSet())
 
     fun reset() {
         state.value = CreateBackupState.Ready

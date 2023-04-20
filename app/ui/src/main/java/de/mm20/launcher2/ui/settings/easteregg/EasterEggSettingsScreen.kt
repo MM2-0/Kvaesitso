@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +30,7 @@ fun EasterEggSettingsScreen() {
     val viewModel: EasterEggSettingsScreenVM = viewModel()
     PreferenceScreen(title = stringResource(R.string.preference_screen_about)) {
         item {
-            val easterEgg by viewModel.easterEgg.observeAsState(false)
+            val easterEgg by viewModel.easterEgg.collectAsState()
             val bgAlpha by animateFloatAsState(if (easterEgg) 1f else 0f)
             val textColor by animateColorAsState(if (easterEgg) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onBackground)
             Column(

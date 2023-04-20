@@ -4,7 +4,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
@@ -18,7 +17,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 fun CustomColorSchemeSettingsScreen() {
     val viewModel: CustomColorSchemeSettingsScreenVM = viewModel()
 
-    val advancedMode by viewModel.advancedMode.observeAsState()
+    val advancedMode by viewModel.advancedMode.collectAsState()
 
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_colors),
@@ -64,7 +63,7 @@ fun CustomColorSchemeSettingsScreen() {
         if (advancedMode == false) {
             item {
                 PreferenceCategory {
-                    val baseColors by viewModel.baseColors.observeAsState()
+                    val baseColors by viewModel.baseColors.collectAsState()
                     ColorPreference(
                         title = stringResource(R.string.preference_custom_colors_a1),
                         value = baseColors?.let { Color(it.accent1) },
@@ -149,7 +148,7 @@ fun CustomColorSchemeSettingsScreen() {
         if (advancedMode == true) {
             item {
                 PreferenceCategory(stringResource(R.string.preference_category_custom_colors_light)) {
-                    val lightScheme by viewModel.lightScheme.observeAsState()
+                    val lightScheme by viewModel.lightScheme.collectAsState()
                     ColorPreference(
                         title = "Primary",
                         value = lightScheme?.let { Color(it.primary) },
@@ -513,7 +512,7 @@ fun CustomColorSchemeSettingsScreen() {
                 }
 
                 PreferenceCategory(stringResource(R.string.preference_category_custom_colors_dark)) {
-                    val darkScheme by viewModel.darkScheme.observeAsState()
+                    val darkScheme by viewModel.darkScheme.collectAsState()
                     ColorPreference(
                         title = "Primary",
                         value = darkScheme?.let { Color(it.primary) },

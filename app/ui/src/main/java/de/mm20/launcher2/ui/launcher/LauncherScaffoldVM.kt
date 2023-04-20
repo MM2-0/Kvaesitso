@@ -6,9 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.globalactions.GlobalActionsService
@@ -48,13 +46,17 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     ) { dim, theme, systemDarkMode ->
         dim && (theme == Settings.AppearanceSettings.Theme.Dark || theme == Settings.AppearanceSettings.Theme.System && systemDarkMode)
     }
-    val dimBackground = dimBackgroundState.asLiveData()
+    val dimBackground = dimBackgroundState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-    val statusBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
-    val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }.asLiveData()
+    val statusBarColor = dataStore.data.map { it.systemBars.statusBarColor }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }.asLiveData()
-    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }.asLiveData()
+    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun setSystemInDarkMode(darkMode: Boolean) {
         isSystemInDarkMode.value = darkMode
@@ -62,15 +64,19 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val baseLayout = dataStore.data.map { it.layout.baseLayout }
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
-    val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }.asLiveData()
-    val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }.asLiveData()
-    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }.asLiveData()
-    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }.asLiveData()
+    val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-    val isSearchOpen = MutableLiveData(false)
-    val isWidgetEditMode = MutableLiveData(false)
+    val isSearchOpen = mutableStateOf(false)
+    val isWidgetEditMode = mutableStateOf(false)
 
-    val searchBarFocused = MutableLiveData(false)
+    val searchBarFocused = mutableStateOf(false)
 
 
     val autoFocusSearch = dataStore.data.map { it.searchBar.autoFocus }
@@ -103,10 +109,14 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         isWidgetEditMode.value = editMode
     }
 
-    val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }.asLiveData()
-    val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }.asLiveData()
-    val searchBarColor = dataStore.data.map { it.searchBar.color }.asLiveData()
-    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }.asLiveData()
+    val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val searchBarColor = dataStore.data.map { it.searchBar.color }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Settings.SearchBarSettings.SearchBarColors.Auto)
+    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Settings.SearchBarSettings.SearchBarStyle.Transparent)
 
     val gestureState: StateFlow<GestureState> = dataStore
         .data.map { it.gestures }

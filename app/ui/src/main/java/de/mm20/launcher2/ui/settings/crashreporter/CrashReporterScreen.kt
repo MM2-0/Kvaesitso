@@ -13,7 +13,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -32,9 +31,9 @@ import java.net.URLEncoder
 fun CrashReporterScreen() {
     val viewModel: CrashReporterScreenVM = viewModel()
     val navController = LocalNavController.current
-    val reports by viewModel.reports.observeAsState()
-    val showExceptions by viewModel.showExceptions.observeAsState(true)
-    val showCrashes by viewModel.showCrashes.observeAsState(true)
+    val reports by viewModel.reports
+    val showExceptions by viewModel.showExceptions
+    val showCrashes by viewModel.showCrashes
     PreferenceScreen(
         title = stringResource(R.string.preference_crash_reporter),
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/troubleshooting/crashreporter"
