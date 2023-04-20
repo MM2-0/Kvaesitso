@@ -483,7 +483,7 @@ fun PagerScaffold(
             derivedStateOf {
                 when {
                     pagerState.currentPageOffsetFraction != 0f -> SearchBarLevel.Raised
-                    !isSearchOpen && isWidgetsScrollZero && fillClockHeight -> SearchBarLevel.Resting
+                    !isSearchOpen && isWidgetsScrollZero && (fillClockHeight || !bottomSearchBar) -> SearchBarLevel.Resting
                     isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
                     isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
                     else -> SearchBarLevel.Raised

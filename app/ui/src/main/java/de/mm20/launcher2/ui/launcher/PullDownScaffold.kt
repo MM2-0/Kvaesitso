@@ -509,7 +509,7 @@ fun PullDownScaffold(
             derivedStateOf {
                 when {
                     offsetY.value != 0f -> SearchBarLevel.Raised
-                    !isSearchOpen && isWidgetsAtStart && fillClockHeight -> SearchBarLevel.Resting
+                    !isSearchOpen && isWidgetsAtStart && (fillClockHeight || !bottomSearchBar) -> SearchBarLevel.Resting
                     isSearchOpen && isSearchAtTop && !bottomSearchBar -> SearchBarLevel.Active
                     isSearchOpen && isSearchAtBottom && bottomSearchBar -> SearchBarLevel.Active
                     else -> SearchBarLevel.Raised
