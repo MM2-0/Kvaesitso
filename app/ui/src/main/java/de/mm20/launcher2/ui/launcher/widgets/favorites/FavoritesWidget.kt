@@ -22,7 +22,7 @@ import de.mm20.launcher2.widgets.FavoritesWidget
 
 @Composable
 fun FavoritesWidget(widget: FavoritesWidget) {
-    val viewModel: FavoritesWidgetVM = viewModel()
+    val viewModel: FavoritesWidgetVM = viewModel(key = "favorites-widget-${widget.id}")
     val favorites by remember { viewModel.favorites }.collectAsState(emptyList())
     val pinnedTags by viewModel.pinnedTags.collectAsState(emptyList())
     val selectedTag by viewModel.selectedTag.collectAsState(null)

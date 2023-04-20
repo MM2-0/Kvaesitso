@@ -13,6 +13,7 @@ import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -34,15 +35,7 @@ class WidgetsService(
     }
 
     fun getAvailableBuiltInWidgets(): Flow<List<BuiltInWidgetInfo>> {
-        return widgetRepository.get().map { widgets ->
-            getBuiltInWidgets().filter {
-                it.type == FavoritesWidget.Type && !widgets.any { it is FavoritesWidget } ||
-                        it.type == WeatherWidget.Type && !widgets.any { it is WeatherWidget } ||
-                        it.type == MusicWidget.Type && !widgets.any { it is MusicWidget } ||
-                        it.type == CalendarWidget.Type && !widgets.any { it is CalendarWidget }
-
-            }
-        }
+        return flowOf(getBuiltInWidgets())
     }
 
     fun getBuiltInWidgets(): List<BuiltInWidgetInfo> {

@@ -144,7 +144,7 @@ fun WidgetItem(
                     }
 
                     is MusicWidget -> {
-                        MusicWidget()
+                        MusicWidget(widget)
                     }
 
                     is CalendarWidget -> {

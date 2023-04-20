@@ -77,12 +77,13 @@ import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.widgets.MusicWidget
 import kotlin.math.min
 
 @Composable
-fun MusicWidget() {
+fun MusicWidget(widget: MusicWidget) {
 
-    val viewModel: MusicWidgetVM = viewModel()
+    val viewModel: MusicWidgetVM = viewModel(key = "music-widget-${widget.id}")
 
     val albumArt by viewModel.albumArt.collectAsStateWithLifecycle(null)
     val title by viewModel.title.collectAsStateWithLifecycle(null)

@@ -35,7 +35,7 @@ import java.time.ZoneId
 fun CalendarWidget(
     widget: CalendarWidget,
 ) {
-    val viewModel: CalendarWidgetVM = viewModel()
+    val viewModel: CalendarWidgetVM = viewModel(key = "calendar-widget-${widget.id}")
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
 
