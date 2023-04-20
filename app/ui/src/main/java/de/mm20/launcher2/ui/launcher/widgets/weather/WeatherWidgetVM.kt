@@ -8,17 +8,15 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.math.max
 import kotlin.math.min
 
-class WeatherWidgetWM : ViewModel(), KoinComponent {
+class WeatherWidgetVM : ViewModel(), KoinComponent {
     private val weatherRepository: WeatherRepository by inject()
 
     private val permissionsManager: PermissionsManager by inject()
