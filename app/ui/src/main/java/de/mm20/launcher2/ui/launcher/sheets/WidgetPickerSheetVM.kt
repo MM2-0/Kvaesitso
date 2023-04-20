@@ -1,25 +1,16 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
-import WidgetsService
-import android.app.Application
+import de.mm20.launcher2.services.widgets.WidgetsService
 import android.appwidget.AppWidgetProviderInfo
-import android.content.Context
 import android.content.pm.PackageManager
 import androidx.annotation.StringRes
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.widgets.FavoritesWidget
-import de.mm20.launcher2.widgets.Widget
-import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

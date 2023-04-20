@@ -1,6 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
-import WidgetsService
+import de.mm20.launcher2.services.widgets.WidgetsService
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.common.FavoritesVM

@@ -1,10 +1,10 @@
+package de.mm20.launcher2.services.widgets
+
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.pm.LauncherApps
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.services.widgets.BuiltInWidgetInfo
-import de.mm20.launcher2.services.widgets.R
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
