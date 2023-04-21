@@ -513,8 +513,7 @@ fun LazyListScope.SingleResult(
                 .padding(
                     horizontal = 8.dp,
                     vertical = 4.dp,
-                )
-                .animateItemPlacement(),
+                ),
             color = if (highlight) MaterialTheme.colorScheme.secondaryContainer
             else MaterialTheme.colorScheme.surface.copy(LocalCardStyle.current.opacity)
         ) {
@@ -536,7 +535,6 @@ fun LazyItemScope.PartialCardRow(
     Box(
         modifier = modifier
             .clipToBounds()
-            .animateItemPlacement()
     ) {
         PartialLauncherCard(
             modifier = Modifier.padding(
