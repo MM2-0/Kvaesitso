@@ -88,7 +88,7 @@ fun GridItem(
     var bounds by remember { mutableStateOf(Rect.Zero) }
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val badge by remember(item.key) { viewModel.badge }.collectAsStateWithLifecycle()
+        val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
 
         val launchOnPress = !item.preferDetailsOverLaunch

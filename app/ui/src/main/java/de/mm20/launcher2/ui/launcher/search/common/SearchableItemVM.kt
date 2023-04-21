@@ -78,11 +78,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     val badge = searchable.flatMapLatest {
         if (it == null) emptyFlow() else badgeService.getBadge(it)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val icon = searchable.combine(iconSize) { sh, sz -> sh to sz }.flatMapLatest { (s, size) ->
         if (s == null || size == 0) emptyFlow() else iconService.getIcon(s, size)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    }.stateIn(viewModelScope, SharingStarted.Lazily, null)
 
     val tags = searchable.flatMapLatest {
         if (it == null) emptyFlow() else tagsService.getTags(it)
