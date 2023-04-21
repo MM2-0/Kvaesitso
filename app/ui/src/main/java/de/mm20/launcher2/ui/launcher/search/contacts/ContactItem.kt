@@ -1,17 +1,47 @@
 package de.mm20.launcher2.ui.launcher.search.contacts
 
-import androidx.compose.animation.*
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -21,15 +51,23 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.Contact
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
-import de.mm20.launcher2.ui.component.*
+import de.mm20.launcher2.ui.component.Chip
+import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.icons.Telegram
 import de.mm20.launcher2.ui.icons.WhatsApp
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -45,7 +83,13 @@ fun ContactItem(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val viewModel = remember(contact) { ContactItemVM(contact) }
+
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${contact.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(contact, iconSize) {
+        viewModel.init(contact, iconSize.toInt())
+    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -58,8 +102,7 @@ fun ContactItem(
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
-            val iconSize = 48.dp.toPixels().toInt()
-            val icon by remember(contact) { viewModel.getIcon(iconSize) }.collectAsState(null)
+            val icon by viewModel.icon.collectAsStateWithLifecycle()
             val padding by transition.animateDp(label = "iconPadding") {
                 if (it) 16.dp else 8.dp
             }
@@ -92,7 +135,7 @@ fun ContactItem(
                     )
                 }
                 AnimatedVisibility(showDetails) {
-                    val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                    val tags by viewModel.tags.collectAsState(emptyList())
                     if (tags.isNotEmpty()) {
                         Text(
                             modifier = Modifier.padding(top = 1.dp),
@@ -125,7 +168,10 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context, it)
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
                                     }
                                 )
                             }
@@ -149,7 +195,10 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context, it)
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
                                     }
                                 )
                             }
@@ -173,7 +222,10 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context, it)
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
                                     }
                                 )
                             }
@@ -197,7 +249,10 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context, it)
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
                                     }
                                 )
                             }
@@ -221,7 +276,10 @@ fun ContactItem(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        viewModel.contact(context, it)
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
                                     }
                                 )
                             }
@@ -271,11 +329,14 @@ fun ContactItem(
                             onBack()
                             lifecycleOwner.lifecycleScope.launch {
                                 val result = snackbarHostState.showSnackbar(
-                                    message = context.getString(R.string.msg_item_hidden, contact.label),
+                                    message = context.getString(
+                                        R.string.msg_item_hidden,
+                                        contact.label
+                                    ),
                                     actionLabel = context.getString(R.string.action_undo),
                                     duration = SnackbarDuration.Short,
-                                    )
-                                if(result == SnackbarResult.ActionPerformed) {
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
                                     viewModel.unhide()
                                 }
                             }

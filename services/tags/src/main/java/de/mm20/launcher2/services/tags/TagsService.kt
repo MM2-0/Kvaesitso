@@ -12,4 +12,5 @@ interface TagsService {
     fun createTag(tag: String, items: List<SavableSearchable>)
 
     fun updateTag(tag: String, newName: String? = null, items: List<SavableSearchable>? = null)
+    fun getTags(it: SavableSearchable): Flow<List<String>>
 }

@@ -31,6 +31,10 @@ class FavoritesService(
         return searchableRepository.isPinned(searchable)
     }
 
+    fun isHidden(searchable: SavableSearchable): Flow<Boolean> {
+        return searchableRepository.isHidden(searchable)
+    }
+
     fun pinItem(searchable: SavableSearchable) {
         searchableRepository.upsert(
             searchable,
@@ -53,6 +57,21 @@ class FavoritesService(
         searchableRepository.upsert(
             searchable,
             pinned = false,
+        )
+    }
+
+    fun hideItem(searchable: SavableSearchable) {
+        searchableRepository.upsert(
+            searchable,
+            hidden = true,
+            pinned = false,
+        )
+    }
+
+    fun unhideItem(searchable: SavableSearchable) {
+        searchableRepository.upsert(
+            searchable,
+            hidden = false,
         )
     }
 

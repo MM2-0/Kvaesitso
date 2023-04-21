@@ -19,7 +19,9 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
@@ -29,6 +31,8 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -46,7 +50,13 @@ fun FileItem(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val viewModel = remember(file.key) { FileItemVM(file) }
+
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${file.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(file) {
+        viewModel.init(file, iconSize.toInt())
+    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -85,7 +95,7 @@ fun FileItem(
                 }
                 AnimatedVisibility(showDetails) {
                     Column {
-                        val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                        val tags by viewModel.tags.collectAsState(emptyList())
                         if (tags.isNotEmpty()) {
                             Text(
                                 modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
@@ -128,8 +138,7 @@ fun FileItem(
                 }
             }
 
-            val iconSize = 48.dp.toPixels().toInt()
-            val icon by remember(file) { viewModel.getIcon(iconSize) }.collectAsState(null)
+            val icon by viewModel.icon.collectAsStateWithLifecycle()
             val badge by viewModel.badge.collectAsState(null)
             val padding by transition.animateDp(label = "iconPadding") {
                 if (it) 16.dp else 8.dp
@@ -180,17 +189,17 @@ fun FileItem(
                     )
                 )
 
-                if (viewModel.canShare) {
+                if (file.canShare) {
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_share),
                         icon = Icons.Rounded.Share,
                         action = {
-                            viewModel.share(context)
+                            file.share(context)
                         }
                     ))
                 }
 
-                if (viewModel.canDelete) {
+                if (file.isDeletable) {
                     var showConfirmDialog by remember { mutableStateOf(false) }
                     toolbarActions.add(DefaultToolbarAction(
                         label = stringResource(R.string.menu_delete),

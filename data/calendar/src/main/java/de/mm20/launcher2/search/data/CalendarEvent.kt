@@ -3,6 +3,7 @@ package de.mm20.launcher2.search.data
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
 import de.mm20.launcher2.icons.ColorLayer
@@ -10,6 +11,7 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.SavableSearchable
+import java.net.URLEncoder
 import java.text.SimpleDateFormat
 
 data class CalendarEvent(
@@ -55,6 +57,23 @@ data class CalendarEvent(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(), options)
+    }
+
+    fun openLocation(context: Context) {
+        context.tryStartActivity(
+            Intent(Intent.ACTION_VIEW)
+                .setData(
+                    Uri.parse(
+                        "geo:0,0?q=${
+                            URLEncoder.encode(
+                                location,
+                                "utf8"
+                            )
+                        }"
+                    )
+                )
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
     }
 
     companion object {

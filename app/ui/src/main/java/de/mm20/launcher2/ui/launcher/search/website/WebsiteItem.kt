@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.search.data.Website
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -23,8 +24,12 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 @Composable
 fun WebsiteItem(
@@ -33,7 +38,13 @@ fun WebsiteItem(
     onBack: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
-    val viewModel = remember(website) { WebsiteItemVM(website) }
+
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${website.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(website, iconSize) {
+        viewModel.init(website, iconSize.toInt())
+    }
 
     Column(
         modifier = modifier.clickable {
@@ -57,7 +68,7 @@ fun WebsiteItem(
                 text = website.labelOverride ?: website.label,
                 style = MaterialTheme.typography.titleLarge
             )
-            val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+            val tags by viewModel.tags.collectAsState(emptyList())
             if (tags.isNotEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 2.dp, bottom = 2.dp),
@@ -102,7 +113,7 @@ fun WebsiteItem(
                 label = stringResource(R.string.menu_share),
                 icon= Icons.Rounded.Share,
                 action = {
-                    viewModel.share(context)
+                    website.share(context)
                 }
             )
         )

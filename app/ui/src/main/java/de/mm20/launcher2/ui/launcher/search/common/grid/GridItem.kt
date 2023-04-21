@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.AppShortcut
@@ -51,8 +53,10 @@ import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.apps.AppItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItemGridPopup
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
@@ -71,7 +75,12 @@ fun GridItem(
     showLabels: Boolean = true,
     highlight: Boolean = false
 ) {
-    val viewModel = remember(item.key) { GridItemVM(item) }
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(item, iconSize) {
+        viewModel.init(item, iconSize.toInt())
+    }
 
     val context = LocalContext.current
 
@@ -79,9 +88,8 @@ fun GridItem(
     var bounds by remember { mutableStateOf(Rect.Zero) }
 
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        val badge by remember(item.key) { viewModel.badge }.collectAsState(null)
-        val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
-        val icon by remember(item.key) { viewModel.getIcon(iconSize.toInt()) }.collectAsState(null)
+        val badge by remember(item.key) { viewModel.badge }.collectAsStateWithLifecycle()
+        val icon by viewModel.icon.collectAsStateWithLifecycle()
 
         val launchOnPress = !item.preferDetailsOverLaunch
 

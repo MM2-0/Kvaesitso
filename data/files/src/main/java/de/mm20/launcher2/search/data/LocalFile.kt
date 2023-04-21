@@ -335,4 +335,20 @@ data class LocalFile(
             return metaData
         }
     }
+
+    override val canShare: Boolean
+        get() = !isDirectory
+
+    override fun share(context: Context) {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val uri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".fileprovider",
+            java.io.File(path)
+        )
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        shareIntent.type = mimeType
+        context.startActivity(Intent.createChooser(shareIntent, null))
+    }
 }

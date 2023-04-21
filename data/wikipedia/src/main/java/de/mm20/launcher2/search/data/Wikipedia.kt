@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
@@ -51,6 +52,18 @@ data class Wikipedia(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(), options)
+    }
+
+    fun share(context: Context) {
+        val text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT, "${label}\n\n" +
+                    "${text.substring(0, 200)}…\n\n" +
+                    url
+        )
+        shareIntent.type = "text/plain"
+        context.startActivity(Intent.createChooser(shareIntent, null))
     }
 
     companion object {

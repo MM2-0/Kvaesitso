@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.launcher.search.shortcut
 
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
@@ -16,8 +19,13 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -26,6 +34,8 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -42,8 +52,14 @@ fun AppShortcutItem(
     showDetails: Boolean = false,
     onBack: () -> Unit
 ) {
-    val viewModel = remember { ShortcutItemVM(shortcut) }
     val context = LocalContext.current
+
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${shortcut.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(shortcut, iconSize) {
+        viewModel.init(shortcut, iconSize.toInt())
+    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -70,7 +86,7 @@ fun AppShortcutItem(
                 )
 
                 AnimatedVisibility(showDetails) {
-                    val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                    val tags by viewModel.tags.collectAsState(emptyList())
                     if (tags.isNotEmpty()) {
                         Text(
                             modifier = Modifier.padding(top = 1.dp, bottom = 2.dp),
@@ -95,8 +111,7 @@ fun AppShortcutItem(
             }
             val badge by viewModel.badge.collectAsState(null)
             val size by animateDpAsState(if (showDetails) 84.dp else 48.dp)
-            val iconSize = 84.dp.toPixels().toInt()
-            val icon by remember(shortcut.key) { viewModel.getIcon(iconSize) }.collectAsState(null)
+            val icon by viewModel.icon.collectAsStateWithLifecycle()
 
             val padding by transition.animateDp(label = "iconPadding") {
                 if (it) 16.dp else 8.dp
@@ -136,13 +151,21 @@ fun AppShortcutItem(
                 toolbarActions.add(favAction)
             }
 
-            toolbarActions.add(
-                DefaultToolbarAction(
-                    label = stringResource(R.string.menu_app_info),
-                    icon = Icons.Rounded.Info
-                ) {
-                    viewModel.openAppInfo(context)
-                })
+            val packageName = shortcut.packageName
+            if (packageName != null) {
+                toolbarActions.add(
+                    DefaultToolbarAction(
+                        label = stringResource(R.string.menu_app_info),
+                        icon = Icons.Rounded.Info
+                    ) {
+                        context.tryStartActivity(
+                            Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                                data = Uri.parse("package:$packageName")
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                        )
+                    })
+            }
 
 
             val sheetManager = LocalBottomSheetManager.current
@@ -152,7 +175,7 @@ fun AppShortcutItem(
                 action = { sheetManager.showCustomizeSearchableModal(shortcut) }
             ))
 
-            if (viewModel.canDelete) {
+            if (shortcut is LauncherShortcut && shortcut.launcherShortcut.isPinned) {
                 toolbarActions.add(DefaultToolbarAction(
                     label = stringResource(R.string.menu_delete),
                     icon = Icons.Rounded.Delete,
@@ -215,7 +238,7 @@ fun AppShortcutItem(
             text = { Text(stringResource(R.string.alert_delete_shortcut, shortcut.label)) },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.deleteShortcut()
+                    viewModel.delete()
                     requestDelete = false
                 }) {
                     Text(stringResource(android.R.string.ok))
@@ -279,3 +302,10 @@ fun ShortcutItemGridPopup(
         }
     }
 }
+
+val AppShortcut.packageName: String?
+    get() = when (this) {
+        is LegacyShortcut -> intent.`package`
+        is LauncherShortcut -> launcherShortcut.`package`
+        else -> null
+    }

@@ -129,6 +129,11 @@ interface File : SavableSearchable {
 
     val isDeletable: Boolean
         get() = false
+
+    val canShare: Boolean
+        get() = false
+
+    fun share(context: Context) {}
     suspend fun delete(context: Context) {}
 
 }

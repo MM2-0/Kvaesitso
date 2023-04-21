@@ -1,16 +1,46 @@
 package de.mm20.launcher2.ui.launcher.search.calendar
 
-import androidx.compose.animation.*
+import android.content.Context
+import android.text.format.DateUtils
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Notes
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.People
+import androidx.compose.material.icons.rounded.Place
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
@@ -29,9 +59,13 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import kotlinx.coroutines.launch
 import palettes.TonalPalette
@@ -44,7 +78,12 @@ fun CalendarItem(
     onBack: () -> Unit
 ) {
     val context = LocalContext.current
-    val viewModel = remember(calendar.key) { CalendarItemVM(calendar) }
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${calendar.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(calendar) {
+        viewModel.init(calendar, iconSize.toInt())
+    }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -54,9 +93,11 @@ fun CalendarItem(
     Row(
         modifier = modifier
             .drawBehind {
-                val color = TonalPalette.fromInt(calendar.color).tone(
-                    if (darkMode) 80 else 40
-                )
+                val color = TonalPalette
+                    .fromInt(calendar.color)
+                    .tone(
+                        if (darkMode) 80 else 40
+                    )
                 drawRect(Color(color), Offset.Zero, this.size.copy(width = 8.dp.toPx()))
             }
             .padding(start = 8.dp),
@@ -82,12 +123,12 @@ fun CalendarItem(
                     AnimatedVisibility(!showDetails) {
                         Text(
                             modifier = Modifier.padding(top = 2.dp),
-                            text = viewModel.getSummary(context),
+                            text = calendar.getSummary(context),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
                     AnimatedVisibility(showDetails) {
-                        val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                        val tags by viewModel.tags.collectAsState(emptyList())
                         if (tags.isNotEmpty()) {
                             Text(
                                 modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
@@ -112,7 +153,7 @@ fun CalendarItem(
                             contentDescription = null
                         )
                         Text(
-                            text = viewModel.formatTime(context),
+                            text = calendar.formatTime(context),
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
@@ -136,7 +177,7 @@ fun CalendarItem(
                     if (calendar.attendees.isNotEmpty()) {
                         Row(
                             Modifier
-                            .fillMaxWidth(),
+                                .fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Icon(
@@ -156,7 +197,7 @@ fun CalendarItem(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    viewModel.openLocation(context)
+                                    calendar.openLocation(context)
                                 }
                         ) {
                             Icon(
@@ -213,11 +254,14 @@ fun CalendarItem(
                                 onBack()
                                 lifecycleOwner.lifecycleScope.launch {
                                     val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(R.string.msg_item_hidden, calendar.label),
+                                        message = context.getString(
+                                            R.string.msg_item_hidden,
+                                            calendar.label
+                                        ),
                                         actionLabel = context.getString(R.string.action_undo),
                                         duration = SnackbarDuration.Short,
-                                        )
-                                    if(result == SnackbarResult.ActionPerformed) {
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
                                         viewModel.unhide()
                                     }
                                 }
@@ -293,6 +337,55 @@ fun CalendarItemGridPopup(
                 modifier = Modifier
                     .requiredWidth(origin.width.toDp())
                     .requiredHeight(origin.height.toDp())
+            )
+        }
+    }
+}
+
+private fun CalendarEvent.formatTime(context: Context): String {
+    if (allDay) return DateUtils.formatDateRange(
+        context,
+        startTime,
+        endTime,
+        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_WEEKDAY
+    )
+    return DateUtils.formatDateRange(
+        context,
+        startTime,
+        endTime,
+        DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_WEEKDAY
+    )
+
+}
+
+private fun CalendarEvent.getSummary(context: Context): String {
+    val isToday =
+        DateUtils.isToday(startTime) && DateUtils.isToday(endTime)
+    return if (isToday) {
+        if (allDay) {
+            context.getString(R.string.calendar_event_allday)
+        } else {
+            DateUtils.formatDateRange(
+                context,
+                startTime,
+                endTime,
+                DateUtils.FORMAT_SHOW_TIME
+            )
+        }
+    } else {
+        if (allDay) {
+            DateUtils.formatDateRange(
+                context,
+                startTime,
+                endTime,
+                DateUtils.FORMAT_SHOW_DATE
+            )
+        } else {
+            DateUtils.formatDateRange(
+                context,
+                startTime,
+                endTime,
+                DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE
             )
         }
     }

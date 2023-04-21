@@ -90,6 +90,16 @@ data class Website(
         return context.tryStartActivity(getLaunchIntent(), options)
     }
 
+    fun share(context: Context) {
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.putExtra(
+            Intent.EXTRA_TEXT,
+            "${label}\n\n${description}\n\n${url}"
+        )
+        shareIntent.type = "text/plain"
+        context.startActivity(Intent.createChooser(shareIntent, null))
+    }
+
     companion object {
         const val Domain = "web"
     }

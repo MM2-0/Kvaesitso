@@ -16,6 +16,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.ui.R
@@ -23,8 +24,12 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.utils.htmlToAnnotatedString
 
 @Composable
@@ -34,7 +39,13 @@ fun WikipediaItem(
     onBack: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
-    val viewModel = remember(wikipedia) { WikipediaItemVM(wikipedia) }
+
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${wikipedia.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(wikipedia, iconSize) {
+        viewModel.init(wikipedia, iconSize.toInt())
+    }
 
     Column(
         modifier = modifier.clickable {
@@ -59,7 +70,7 @@ fun WikipediaItem(
                 text = wikipedia.label,
                 style = MaterialTheme.typography.titleLarge
             )
-            val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+            val tags by viewModel.tags.collectAsState(emptyList())
             if (tags.isNotEmpty()) {
                 Text(
                     modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
@@ -110,7 +121,7 @@ fun WikipediaItem(
                 label = stringResource(R.string.menu_share),
                 icon = Icons.Rounded.Share,
                 action = {
-                    viewModel.share(context)
+                    wikipedia.share(context)
                 }
             )
         )

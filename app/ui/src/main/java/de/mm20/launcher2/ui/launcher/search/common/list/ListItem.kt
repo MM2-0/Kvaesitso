@@ -8,13 +8,19 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.InnerCard
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
 import de.mm20.launcher2.ui.launcher.search.files.FileItem
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
+import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 @Composable
 fun ListItem(
@@ -25,7 +31,12 @@ fun ListItem(
     var showDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    val viewModel = remember(item.key) { ListItemVM(item) }
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(item, iconSize) {
+        viewModel.init(item, iconSize.toInt())
+    }
 
     var bounds by remember { mutableStateOf(Rect.Zero) }
     InnerCard(

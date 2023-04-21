@@ -3,14 +3,18 @@ package de.mm20.launcher2.search.data
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.PackageManager
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.applications.R
 import de.mm20.launcher2.compat.PackageManagerCompat
@@ -43,6 +47,9 @@ data class LauncherApp(
     )
 
     val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
+
+    val canUninstall: Boolean
+        get() = flags and ApplicationInfo.FLAG_SYSTEM == 0 && isMainProfile
 
     override val domain: String = Domain
     override val preferDetailsOverLaunch: Boolean = false
@@ -148,7 +155,60 @@ data class LauncherApp(
         }
     }
 
+    fun uninstall(context: Context) {
+        val intent = Intent(Intent.ACTION_DELETE)
+        intent.data = Uri.parse("package:$`package`")
+        context.startActivity(intent)
+    }
 
+    fun openAppInfo(context: Context) {
+        val launcherApps = context.getSystemService<LauncherApps>()!!
+
+        launcherApps.startAppDetailsActivity(
+            ComponentName(`package`, activity),
+            getUser(),
+            null,
+            null
+        )
+    }
+
+    suspend fun shareApkFile(context: Context) {
+        val launcherApps = context.getSystemService<LauncherApps>()!!
+        val fileCopy = java.io.File(
+            context.cacheDir,
+            "${`package`}-${version}.apk"
+        )
+        withContext(Dispatchers.IO) {
+            try {
+                val user = getUser()
+                val info = if (user != null) {
+                    launcherApps.getApplicationInfo(`package`, 0, user)
+                } else {
+                    context.packageManager.getApplicationInfo(`package`, 0)
+                }
+                val file = java.io.File(info.publicSourceDir)
+
+                try {
+                    file.copyTo(fileCopy, false)
+                } catch (e: FileAlreadyExistsException) {
+                    // Do nothing. If the file is already there we don't have to copy it again.
+                }
+            } catch (e: PackageManager.NameNotFoundException) {
+            }
+        }
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        val uri = FileProvider.getUriForFile(
+            context,
+            context.applicationContext.packageName + ".fileprovider",
+            fileCopy
+        )
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        shareIntent.type = "application/vnd.android.package-archive"
+        withContext(Dispatchers.Main) {
+            context.startActivity(Intent.createChooser(shareIntent, null))
+        }
+    }
 
     companion object {
         private fun getStoreLinkForInstaller(

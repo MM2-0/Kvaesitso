@@ -64,4 +64,8 @@ internal class TagsServiceImpl(
             customAttributesRepository.setItemsForTag(tag, items)
         }
     }
+
+    override fun getTags(it: SavableSearchable): Flow<List<String>> {
+        return customAttributesRepository.getTags(it)
+    }
 }

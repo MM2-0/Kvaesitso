@@ -1,5 +1,10 @@
 package de.mm20.launcher2.ui.launcher.search.apps
 
+import android.app.PendingIntent
+import android.content.ComponentName
+import android.content.Context
+import android.content.Intent
+import android.content.pm.LauncherApps
 import androidx.compose.animation.*
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
@@ -20,7 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.flowlayout.FlowRow
 import de.mm20.launcher2.search.data.LauncherApp
@@ -28,6 +36,8 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.*
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
+import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
@@ -43,7 +53,13 @@ fun AppItem(
     app: LauncherApp,
     onBack: () -> Unit
 ) {
-    val viewModel = remember { AppItemVM(app) }
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
+    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
+
+    LaunchedEffect(app) {
+        viewModel.init(app, iconSize.toInt())
+    }
+
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val snackbarHostState = LocalSnackbarHostState.current
@@ -63,7 +79,7 @@ fun AppItem(
                     style = MaterialTheme.typography.titleMedium
                 )
 
-                val tags by remember(viewModel) { viewModel.getTags() }.collectAsState(emptyList())
+                val tags by viewModel.tags.collectAsState(emptyList())
                 if (tags.isNotEmpty()) {
                     Text(
                         modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
@@ -98,7 +114,7 @@ fun AppItem(
                     mainAxisSpacing = 12.dp,
                     crossAxisSpacing = 0.dp
                 ) {
-                    val notifications by viewModel.notifications.collectAsState(initial = emptyList())
+                    val notifications by viewModel.notifications.collectAsState(emptyList())
 
                     for (not in notifications) {
                         val title =
@@ -126,7 +142,9 @@ fun AppItem(
                                 viewModel.clearNotification(not)
                             },
                             onClick = {
-                                viewModel.openNotification(not)
+                                try {
+                                    not.notification.contentIntent?.send()
+                                } catch (e: PendingIntent.CanceledException) {}
                             }
                         )
                     }
@@ -173,9 +191,8 @@ fun AppItem(
                     }
                 }
             }
-            val badge by viewModel.badge.collectAsState(null)
-            val iconSize = 84.dp.toPixels().toInt()
-            val icon by remember(app) { viewModel.getIcon(iconSize) }.collectAsState(null)
+            val badge by viewModel.badge.collectAsStateWithLifecycle(null)
+            val icon by viewModel.icon.collectAsStateWithLifecycle()
             ShapedLauncherIcon(
                 size = 84.dp,
                 modifier = Modifier
@@ -213,7 +230,7 @@ fun AppItem(
                 label = stringResource(R.string.menu_app_info),
                 icon = Icons.Rounded.Info
             ) {
-                viewModel.openAppInfo(context)
+                app.openAppInfo(context)
             })
 
         toolbarActions.add(
@@ -240,7 +257,7 @@ fun AppItem(
                 icon = Icons.Rounded.Share
             ) {
                 scope.launch {
-                    viewModel.shareApkFile(context)
+                    app.shareApkFile(context)
                 }
             }
         } else {
@@ -252,7 +269,10 @@ fun AppItem(
                         label = stringResource(R.string.menu_share_store_link, storeDetails.label),
                         icon = Icons.Rounded.Link,
                         action = {
-                            viewModel.shareStoreLink(context, storeDetails.url)
+                            val shareIntent = Intent(Intent.ACTION_SEND)
+                            shareIntent.putExtra(Intent.EXTRA_TEXT, storeDetails.url)
+                            shareIntent.type = "text/plain"
+                            context.startActivity(Intent.createChooser(shareIntent, null))
                         }
                     ),
                     DefaultToolbarAction(
@@ -260,7 +280,7 @@ fun AppItem(
                         icon = Icons.Rounded.Android
                     ) {
                         scope.launch {
-                            viewModel.shareApkFile(context)
+                            app.shareApkFile(context)
                         }
                     }
                 )
@@ -268,13 +288,13 @@ fun AppItem(
         }
         toolbarActions.add(shareAction)
 
-        if (viewModel.canUninstall) {
+        if (app.canUninstall) {
             toolbarActions.add(
                 DefaultToolbarAction(
                     label = stringResource(R.string.menu_uninstall),
                     icon = Icons.Rounded.Delete,
                 ) {
-                    viewModel.uninstall(context)
+                    app.uninstall(context)
                     onBack()
                 }
             )
