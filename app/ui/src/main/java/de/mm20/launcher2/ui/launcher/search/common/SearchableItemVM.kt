@@ -153,11 +153,4 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable is LauncherShortcut) appShortcutRepository.removePinnedShortcut(searchable)
         favoritesService.reset(searchable)
     }
-
-    public override fun onCleared() {
-        super.onCleared()
-        Log.d("SearchableItemVM", "onCleared: ${searchable.value?.key}")
-    }
-
-
 }
