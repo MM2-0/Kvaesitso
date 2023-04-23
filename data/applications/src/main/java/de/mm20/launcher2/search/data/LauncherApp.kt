@@ -152,6 +152,8 @@ data class LauncherApp(
             getStoreLinkForInstaller(installSourceInfo.initiatingPackageName, `package`)
         } catch (e: PackageManager.NameNotFoundException) {
             null
+        } catch (e: IllegalArgumentException) {
+            null
         }
     }
 
