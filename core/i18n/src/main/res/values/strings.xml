@@ -219,6 +219,7 @@
     <string name="widget_name_calendar">Calendar</string>
     <string name="widget_name_music">Music</string>
     <string name="widget_name_favorites">Favorites</string>
+    <string name="widget_name_notes">Note</string>
     <string name="widget_name_unknown">Unknown app widget</string>
     <string name="widget_add_widget">Add widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->

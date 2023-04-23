@@ -54,6 +54,12 @@ sealed class Widget {
                         config,
                     )
                 }
+                NotesWidget.Type -> {
+                    val config: NotesWidgetConfig =
+                        Json.decodeFromStringOrNull(entity.config?.takeIf { it.isNotBlank() })
+                            ?: NotesWidgetConfig()
+                    NotesWidget(entity.id, config)
+                }
 
                 else -> null
             }

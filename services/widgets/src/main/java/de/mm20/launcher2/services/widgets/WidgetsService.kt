@@ -8,6 +8,7 @@ import androidx.core.content.getSystemService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
+import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
@@ -56,11 +57,19 @@ class WidgetsService(
                 type = FavoritesWidget.Type,
                 label = context.getString(R.string.widget_name_favorites),
             ),
+            BuiltInWidgetInfo(
+                type = NotesWidget.Type,
+                label = context.getString(R.string.widget_name_notes),
+            ),
         )
     }
 
     fun addWidget(widget: Widget, position: Int, parentId: UUID? = null) {
         widgetRepository.create(widget, position, parentId)
+    }
+
+    fun updateWidget(widget: Widget) {
+        widgetRepository.update(widget)
     }
 
     fun getWidgets() = widgetRepository.get()

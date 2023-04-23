@@ -74,6 +74,7 @@ import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
+import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import org.koin.androidx.compose.get
@@ -110,6 +111,7 @@ fun ConfigureWidgetSheet(
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
                 is MusicWidget -> ConfigureMusicWidget()
+                is NotesWidget -> ConfigureNotesWidget(widget, onWidgetUpdated)
             }
         }
 
@@ -304,6 +306,7 @@ fun ColumnScope.ConfigureAppWidget(
                         is MusicWidget -> it.copy(id = widget.id)
                         is CalendarWidget -> it.copy(id = widget.id)
                         is FavoritesWidget -> it.copy(id = widget.id)
+                        is NotesWidget -> it.copy(id = widget.id)
                     }
                     onWidgetUpdated(updatedWidget)
                     replaceWidget = false
@@ -537,4 +540,12 @@ fun ColumnScope.ConfigureCalendarWidget(
             text = stringResource(R.string.widget_config_calendar_no_calendars)
         )
     }
+}
+
+@Composable
+fun ConfigureNotesWidget(
+    widget: NotesWidget,
+    onWidgetUpdated: (NotesWidget) -> Unit
+) {
+
 }

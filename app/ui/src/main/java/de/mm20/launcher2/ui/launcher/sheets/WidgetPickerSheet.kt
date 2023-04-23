@@ -30,6 +30,7 @@ import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StickyNote2
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.material.icons.rounded.Work
@@ -64,6 +65,7 @@ import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.AppWidgetConfig
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
+import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import java.util.UUID
@@ -287,6 +289,7 @@ fun WidgetPickerSheet(
                             CalendarWidget.Type -> CalendarWidget(id)
                             MusicWidget.Type -> MusicWidget(id)
                             FavoritesWidget.Type -> FavoritesWidget(id)
+                            NotesWidget.Type -> NotesWidget(id)
                             else -> return@OutlinedCard
                         }
                         onWidgetSelected(widget)
@@ -302,6 +305,7 @@ fun WidgetPickerSheet(
                                 CalendarWidget.Type -> Icons.Rounded.Today
                                 MusicWidget.Type -> Icons.Rounded.MusicNote
                                 FavoritesWidget.Type -> Icons.Rounded.Star
+                                NotesWidget.Type -> Icons.Rounded.StickyNote2
                                 else -> Icons.Rounded.Widgets
                             },
                             contentDescription = null,

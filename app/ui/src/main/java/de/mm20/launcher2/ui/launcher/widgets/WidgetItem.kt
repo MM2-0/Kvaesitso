@@ -45,11 +45,13 @@ import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
 import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
 import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
+import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
 import de.mm20.launcher2.widgets.MusicWidget
+import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 
@@ -107,6 +109,7 @@ fun WidgetItem(
                             is MusicWidget -> stringResource(R.string.widget_name_music)
                             is CalendarWidget -> stringResource(R.string.widget_name_calendar)
                             is FavoritesWidget -> stringResource(R.string.widget_name_favorites)
+                            is NotesWidget -> stringResource(R.string.widget_name_notes)
                             is AppWidget -> remember(widget.config.widgetId) {
                                 appWidget?.loadLabel(
                                     context.packageManager
@@ -155,6 +158,10 @@ fun WidgetItem(
                         FavoritesWidget(widget)
                     }
 
+                    is NotesWidget -> {
+                        NotesWidget(widget)
+                    }
+
                     is AppWidget -> {
                         val widgetInfo = remember(widget.config.widgetId) {
                             AppWidgetManager.getInstance(context)
@@ -193,6 +200,7 @@ fun WidgetItem(
                                             is MusicWidget -> it.copy(id = widget.id)
                                             is CalendarWidget -> it.copy(id = widget.id)
                                             is FavoritesWidget -> it.copy(id = widget.id)
+                                            is NotesWidget -> it.copy(id = widget.id)
                                         }
                                         onWidgetUpdate(updatedWidget)
                                         replaceWidget = false
