@@ -299,7 +299,7 @@ fun PagerScaffold(
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
-                    keyboardController?.hide()
+                    viewModel.setSearchbarFocus(false)
                     searchVM.bestMatch.value = null
                 }
                 return super.onPreScroll(available, source)

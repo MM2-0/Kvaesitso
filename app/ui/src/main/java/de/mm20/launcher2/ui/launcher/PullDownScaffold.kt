@@ -277,7 +277,7 @@ fun PullDownScaffold(
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 if (isWidgetEditMode || source != NestedScrollSource.Drag) return Offset.Zero
                 if (available.y.absoluteValue > available.x.absoluteValue * 2) {
-                    keyboardController?.hide()
+                    viewModel.setSearchbarFocus(false)
                     searchVM.bestMatch.value = null
                 }
                 val canPullDown = if (isSearchOpen) {
