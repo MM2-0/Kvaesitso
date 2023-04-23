@@ -340,7 +340,9 @@ fun PagerScaffold(
                         lowVelocityAnimationSpec = spring(
                             stiffness = Spring.StiffnessMediumLow,
                         ),
-                    )
+                    ),
+                    // FIXME: Workaround https://issuetracker.google.com/issues/276738324
+                    pageNestedScrollConnection = remember { object: NestedScrollConnection {} }
                 ) {
                     when (it) {
                         0 -> {
