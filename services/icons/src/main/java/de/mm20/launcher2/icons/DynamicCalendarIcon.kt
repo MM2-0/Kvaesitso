@@ -38,7 +38,7 @@ internal class DynamicCalendarIcon(
                 when {
                     drawable is AdaptiveIconDrawable -> AdaptiveIconDrawableCompat.from(drawable).toLauncherIcon(themed = isThemed)
                     drawable != null -> StaticLauncherIcon(
-                        foregroundLayer = TintedIconLayer(
+                        foregroundLayer = StaticIconLayer(
                             icon = drawable,
                             scale = 1f,
                         ),
