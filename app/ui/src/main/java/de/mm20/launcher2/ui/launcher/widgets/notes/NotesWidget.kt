@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.component.markdown.MarkdownEditor
 import de.mm20.launcher2.widgets.NotesWidget
 
 @Composable
@@ -25,13 +26,9 @@ fun NotesWidget(widget: NotesWidget) {
 
     val text by viewModel.noteText
 
-    BasicTextField(
+    MarkdownEditor(
         value = text,
         onValueChange = { viewModel.setText(it) },
         modifier = Modifier.fillMaxWidth().padding(16.dp),
-        textStyle = MaterialTheme.typography.bodyMedium.copy(
-            color = LocalContentColor.current,
-        ),
-        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
     )
 }

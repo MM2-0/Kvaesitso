@@ -34,6 +34,9 @@ dependencyResolutionManagement {
             library("kotlinx.serialization.json", "org.jetbrains.kotlinx", "kotlinx-serialization-json")
                 .versionRef("kotlinx.serialization")
 
+            library("markdown", "org.jetbrains", "markdown")
+                .version("0.4.1")
+
             version("androidx.compose.compiler", "1.4.5")
             library("androidx.compose.runtime", "androidx.compose.runtime", "runtime")
                 .version("1.5.0-alpha03")

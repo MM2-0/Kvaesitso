@@ -25,6 +25,13 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/Kotlin/kotlinx.collections.immutable"
     ),
     OpenSourceLibrary(
+        name = "IntelliJ Markdown",
+        description = "Multiplatform Markdown processor written in Kotlin.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/JetBrains/markdown"
+    ),
+    OpenSourceLibrary(
         name = "KotlinX Serialization",
         description = "Kotlin serialization consists of a compiler plugin, that generates visitor code for serializable classes, runtime library with core serialization API and support libraries with various serialization formats.",
         licenseName = R.string.apache_license_name,

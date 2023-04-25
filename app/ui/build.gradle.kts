@@ -81,6 +81,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
 
     implementation(libs.jsoup)
+    implementation(libs.markdown)
 
     // Legacy dependencies
     implementation(libs.androidx.transition)
