@@ -509,6 +509,20 @@ fun CustomColorSchemeSettingsScreen() {
                             )
                         }
                     )
+
+                    ColorPreference(
+                        title = "Outline Variant",
+                        value = lightScheme?.let { Color(it.outlineVariant) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setOutlineVariant(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
                 }
 
                 PreferenceCategory(stringResource(R.string.preference_category_custom_colors_dark)) {
@@ -868,6 +882,20 @@ fun CustomColorSchemeSettingsScreen() {
                             viewModel.setDarkScheme(
                                 colors.toBuilder()
                                     .setOutline(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
+                    ColorPreference(
+                        title = "Outline Variant",
+                        value = darkScheme?.let { Color(it.outlineVariant) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setOutlineVariant(it.toArgb())
                                     .build()
                             )
                         }
