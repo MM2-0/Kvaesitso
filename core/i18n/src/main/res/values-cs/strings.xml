@@ -607,4 +607,6 @@
     <string name="widget_config_appwidget_configure">Nastavit widget</string>
     <string name="widget_config_weather_integration_settings">Nastavení integrace počasí</string>
     <string name="app_widget_loading_failed">Nepodařilo se načíst widget aplikace.</string>
+    <string name="preference_category_media_apps">Aplikace médií</string>
+    <string name="preference_debug_reinstall_iconpacks">Znovu nainstalovat balíčky ikon</string>
 </resources>
