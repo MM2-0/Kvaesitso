@@ -603,4 +603,5 @@
     <string name="widget_config_music_integration_settings">Mediabeheerintegratie-instellingen</string>
     <string name="widget_action_replace">Vervangen</string>
     <string name="preference_screen_integrations">Integraties</string>
+    <string name="preference_debug_reinstall_iconpacks">Pictogrampaketten opnieuw installeren</string>
 </resources>
