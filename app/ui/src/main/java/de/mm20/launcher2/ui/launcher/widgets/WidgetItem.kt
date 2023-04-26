@@ -54,6 +54,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import java.util.UUID
 
 @Composable
 fun WidgetItem(
@@ -61,6 +62,7 @@ fun WidgetItem(
     appWidgetHost: AppWidgetHost,
     modifier: Modifier = Modifier,
     editMode: Boolean = false,
+    onWidgetAdd: (widget: Widget) -> Unit = {},
     onWidgetUpdate: (widget: Widget) -> Unit = {},
     onWidgetRemove: () -> Unit = {},
     draggableState: DraggableState = rememberDraggableState {},
@@ -159,7 +161,16 @@ fun WidgetItem(
                     }
 
                     is NotesWidget -> {
-                        NotesWidget(widget)
+                        NotesWidget(
+                            widget,
+                            onNewNote = {
+                                val newWidget = NotesWidget(
+                                    id = UUID.randomUUID(),
+                                    widget.config.copy(storedText = "")
+                                )
+                                onWidgetAdd(newWidget)
+                            }
+                        )
                     }
 
                     is AppWidget -> {

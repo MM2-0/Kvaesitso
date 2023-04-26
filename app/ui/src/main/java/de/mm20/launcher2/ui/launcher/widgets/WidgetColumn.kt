@@ -1,10 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import android.app.Activity
 import android.appwidget.AppWidgetHost
-import android.appwidget.AppWidgetManager
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
@@ -95,6 +91,9 @@ fun WidgetColumn(
                         widget = widget,
                         appWidgetHost = widgetHost,
                         editMode = editMode,
+                        onWidgetAdd = {
+                            viewModel.addWidget(it, i + 1)
+                        },
                         onWidgetRemove = {
                             if (widget is AppWidget) {
                                 widgetHost.deleteAppWidgetId(widget.config.widgetId)

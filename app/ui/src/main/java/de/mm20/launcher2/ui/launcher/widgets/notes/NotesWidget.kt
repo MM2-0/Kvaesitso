@@ -36,7 +36,10 @@ import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun NotesWidget(widget: NotesWidget) {
+fun NotesWidget(
+    widget: NotesWidget,
+    onNewNote: () -> Unit,
+) {
     val context = LocalContext.current
     val viewModel: NotesWidgetVM =
         viewModel(key = "notes-widget-${widget.id}", factory = NotesWidgetVM.Factory)
@@ -74,11 +77,14 @@ fun NotesWidget(widget: NotesWidget) {
                     }
                     DropdownMenu(expanded = showMenu, onDismissRequest = { showMenu = false }) {
                         DropdownMenuItem(
-                            text = { Text("New note") },
+                            text = { Text(stringResource(R.string.notes_widget_action_new)) },
                             leadingIcon = {
                                 Icon(Icons.Rounded.Add, null)
                             },
-                            onClick = { /*TODO*/ },
+                            onClick = {
+                                onNewNote()
+                                showMenu = false
+                            },
                         )
                         DropdownMenuItem(
                             text = { Text(stringResource(R.string.notes_widget_action_save)) },

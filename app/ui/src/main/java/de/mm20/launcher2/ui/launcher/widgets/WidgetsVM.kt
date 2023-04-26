@@ -23,9 +23,13 @@ class WidgetsVM : ViewModel(), KoinComponent {
     val widgets = widgetRepository.get()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun addWidget(widget: Widget) {
+    fun addWidget(widget: Widget, index: Int? = null) {
         val widgets = widgets.value.toMutableList()
-        widgets.add(widget)
+        if (index == null) {
+            widgets.add(widget)
+        } else {
+            widgets.add(index.coerceAtMost(widgets.size), widget)
+        }
         widgetRepository.set(widgets)
     }
 
