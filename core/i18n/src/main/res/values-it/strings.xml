@@ -610,4 +610,5 @@
     <string name="widget_config_weather_integration_settings">Impostazioni integrazione meteo</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstalla pacchetti icone</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetti icone</string>
+    <string name="widget_name_notes">Nota</string>
 </resources>
