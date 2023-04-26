@@ -46,45 +46,6 @@ fun AnnotatedString.Builder.applyStyles(
         }
         MarkdownElementTypes.ATX_1 -> {
             addStyle(
-                typography.headlineLarge.toSpanStyle(),
-                node.startOffset - rootOffset,
-                node.endOffset - rootOffset,
-            )
-            addStyle(
-                typography.headlineLarge.toParagraphStyle(),
-                node.startOffset - rootOffset,
-                min(node.endOffset + 1 - rootOffset, length)
-            )
-        }
-
-        MarkdownElementTypes.ATX_2 -> {
-            addStyle(
-                typography.headlineMedium.toSpanStyle(),
-                node.startOffset - rootOffset,
-                node.endOffset - rootOffset,
-            )
-            addStyle(
-                typography.headlineMedium.toParagraphStyle(),
-                node.startOffset - rootOffset,
-                min(node.endOffset + 1 - rootOffset, length)
-            )
-        }
-
-        MarkdownElementTypes.ATX_3 -> {
-            addStyle(
-                typography.headlineSmall.toSpanStyle(),
-                node.startOffset - rootOffset,
-                node.endOffset - rootOffset,
-            )
-            addStyle(
-                typography.headlineSmall.toParagraphStyle(),
-                node.startOffset - rootOffset,
-                min(node.endOffset + 1 - rootOffset, length)
-            )
-        }
-
-        MarkdownElementTypes.ATX_4 -> {
-            addStyle(
                 typography.titleLarge.toSpanStyle(),
                 node.startOffset - rootOffset,
                 node.endOffset - rootOffset,
@@ -96,7 +57,7 @@ fun AnnotatedString.Builder.applyStyles(
             )
         }
 
-        MarkdownElementTypes.ATX_5 -> {
+        MarkdownElementTypes.ATX_2 -> {
             addStyle(
                 typography.titleMedium.toSpanStyle(),
                 node.startOffset - rootOffset,
@@ -109,7 +70,7 @@ fun AnnotatedString.Builder.applyStyles(
             )
         }
 
-        MarkdownElementTypes.ATX_6 -> {
+        MarkdownElementTypes.ATX_3 -> {
             addStyle(
                 typography.titleSmall.toSpanStyle(),
                 node.startOffset - rootOffset,
@@ -117,6 +78,45 @@ fun AnnotatedString.Builder.applyStyles(
             )
             addStyle(
                 typography.titleSmall.toParagraphStyle(),
+                node.startOffset - rootOffset,
+                min(node.endOffset + 1 - rootOffset, length)
+            )
+        }
+
+        MarkdownElementTypes.ATX_4 -> {
+            addStyle(
+                typography.labelLarge.toSpanStyle(),
+                node.startOffset - rootOffset,
+                node.endOffset - rootOffset,
+            )
+            addStyle(
+                typography.labelLarge.toParagraphStyle(),
+                node.startOffset - rootOffset,
+                min(node.endOffset + 1 - rootOffset, length)
+            )
+        }
+
+        MarkdownElementTypes.ATX_5 -> {
+            addStyle(
+                typography.labelMedium.toSpanStyle(),
+                node.startOffset - rootOffset,
+                node.endOffset - rootOffset,
+            )
+            addStyle(
+                typography.labelMedium.toParagraphStyle(),
+                node.startOffset - rootOffset,
+                min(node.endOffset + 1 - rootOffset, length)
+            )
+        }
+
+        MarkdownElementTypes.ATX_6 -> {
+            addStyle(
+                typography.labelSmall.toSpanStyle(),
+                node.startOffset - rootOffset,
+                node.endOffset - rootOffset,
+            )
+            addStyle(
+                typography.labelSmall.toParagraphStyle(),
                 node.startOffset - rootOffset,
                 min(node.endOffset + 1 - rootOffset, length)
             )

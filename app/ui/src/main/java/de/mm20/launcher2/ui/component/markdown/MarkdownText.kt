@@ -104,12 +104,12 @@ fun ChildNodes(node: ASTNode, text: String, onTextChange: (String) -> Unit) {
 fun AtxNode(node: ASTNode, text: String, level: Int, onTextChange: (String) -> Unit) {
     ProvideTextStyle(
         when (level) {
-            1 -> MaterialTheme.typography.headlineLarge
-            2 -> MaterialTheme.typography.headlineMedium
-            3 -> MaterialTheme.typography.headlineSmall
-            4 -> MaterialTheme.typography.titleLarge
-            5 -> MaterialTheme.typography.titleMedium
-            else -> MaterialTheme.typography.titleSmall
+            1 -> MaterialTheme.typography.titleLarge
+            2 -> MaterialTheme.typography.titleMedium
+            3 -> MaterialTheme.typography.titleSmall
+            4 -> MaterialTheme.typography.labelLarge
+            5 -> MaterialTheme.typography.labelMedium
+            else -> MaterialTheme.typography.labelSmall
         }
     ) {
         ChildNodes(node, text, onTextChange)
