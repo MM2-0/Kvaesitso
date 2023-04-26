@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.notes
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -8,14 +10,11 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.widgets.NotesWidget
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import org.intellij.markdown.ast.ASTNode
-import org.intellij.markdown.ast.getTextInNode
-import org.intellij.markdown.flavours.commonmark.CommonMarkFlavourDescriptor
-import org.intellij.markdown.parser.MarkdownParser
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
@@ -40,6 +39,17 @@ class NotesWidgetVM(
         updateJob = viewModelScope.launch {
             delay(1000)
             widgetsService.updateWidget(widget.copy(config = widget.config.copy(storedText = text)))
+        }
+    }
+
+    fun exportNote(context: Context, uri: Uri) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val text = noteText.value
+            Log.d("MM20", text)
+            val outputStream = context.contentResolver.openOutputStream(uri)
+            outputStream?.use {
+                it.write(text.toByteArray())
+            }
         }
     }
 

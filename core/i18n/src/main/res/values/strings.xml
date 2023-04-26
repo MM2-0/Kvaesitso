@@ -225,6 +225,13 @@
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="widget_add_external">More</string>
     <string name="notes_widget_placeholder">Write a note…</string>
+    <string name="notes_widget_action_new">New note</string>
+    <!-- Save / export the current note content as markdown file -->
+    <string name="notes_widget_action_save">Save</string>
+    <!-- Default filename for exported files. %1$s: the current date and time. File extension is appended automatically. -->
+    <string name="notes_widget_export_filename">Note_%1$s</string>
+    <string name="notes_widget_action_dismiss">Dismiss</string>
+    <string name="notes_widget_dismissed">Note dismissed.</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
     <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->
