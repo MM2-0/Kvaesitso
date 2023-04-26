@@ -142,22 +142,26 @@ fun ParagraphNode(node: ASTNode, text: String) {
 
 @Composable
 fun UnorderedListNode(node: ASTNode, text: String, onTextChange: (String) -> Unit) {
-    var counter = 1
-    for (child in node.children) {
-        if (child.type == MarkdownElementTypes.LIST_ITEM) {
-            ListItemNode(child, counter, text, onTextChange)
-            counter++
+    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+        var counter = 1
+        for (child in node.children) {
+            if (child.type == MarkdownElementTypes.LIST_ITEM) {
+                ListItemNode(child, counter, text, onTextChange)
+                counter++
+            }
         }
     }
 }
 
 @Composable
 fun OrderedListNode(node: ASTNode, text: String, onTextChange: (String) -> Unit) {
-    var counter = 1
-    for (child in node.children) {
-        if (child.type == MarkdownElementTypes.LIST_ITEM) {
-            ListItemNode(child, counter, text, onTextChange)
-            counter++
+    Column(modifier = Modifier.padding(vertical = 4.dp)) {
+        var counter = 1
+        for (child in node.children) {
+            if (child.type == MarkdownElementTypes.LIST_ITEM) {
+                ListItemNode(child, counter, text, onTextChange)
+                counter++
+            }
         }
     }
 }
