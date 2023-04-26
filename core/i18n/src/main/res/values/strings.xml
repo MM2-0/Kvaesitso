@@ -224,6 +224,7 @@
     <string name="widget_add_widget">Add widget</string>
     <!-- Add a third party widget (=a standard Android app widget) -->
     <string name="widget_add_external">More</string>
+    <string name="notes_widget_placeholder">Write a note…</string>
     <!-- Indicates to which app a shortcuts belongs. %1$s: the name of the app -->
     <string name="shortcut_summary">By %1$s</string>
     <!-- Progress of the installation of another app. %1$s: the formatted percentage of the installation progress -->

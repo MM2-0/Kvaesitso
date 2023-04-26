@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.markdown.MarkdownEditor
 import de.mm20.launcher2.widgets.NotesWidget
 
@@ -30,5 +33,8 @@ fun NotesWidget(widget: NotesWidget) {
         value = text,
         onValueChange = { viewModel.setText(it) },
         modifier = Modifier.fillMaxWidth().padding(16.dp),
+        placeholder = {
+            Text(stringResource(R.string.notes_widget_placeholder))
+        }
     )
 }

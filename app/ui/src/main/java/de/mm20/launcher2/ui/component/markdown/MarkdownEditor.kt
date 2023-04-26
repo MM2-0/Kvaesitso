@@ -3,11 +3,14 @@ package de.mm20.launcher2.ui.component.markdown
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +27,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import org.intellij.markdown.ast.ASTNode
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.parser.MarkdownParser
 
@@ -33,6 +35,7 @@ fun MarkdownEditor(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
+    placeholder: (@Composable () -> Unit)? = null
 ) {
     val typography = MaterialTheme.typography
     val delimiterColor = MaterialTheme.colorScheme.secondary
@@ -69,16 +72,35 @@ fun MarkdownEditor(
         )
 
     } else {
-        MarkdownText(
-            value,
-            modifier = modifier.clickable(
-                indication = null,
-                interactionSource = remember { MutableInteractionSource() },
+        if (placeholder != null && value.isBlank()) {
+            Box(
+                modifier = modifier.clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                ) {
+                    focused = true
+                },
             ) {
-                focused = true
-            },
-            onTextChange = onValueChange,
-        )
+                ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides MaterialTheme.colorScheme.secondary
+                    ) {
+                        placeholder()
+                    }
+                }
+            }
+        } else {
+            MarkdownText(
+                value,
+                modifier = modifier.clickable(
+                    indication = null,
+                    interactionSource = remember { MutableInteractionSource() },
+                ) {
+                    focused = true
+                },
+                onTextChange = onValueChange,
+            )
+        }
     }
 }
 
