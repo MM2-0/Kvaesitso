@@ -51,4 +51,7 @@ interface WidgetDao {
     @Query("SELECT EXISTS(SELECT 1 FROM Widget WHERE type = :type)")
     fun exists(type: String): Flow<Boolean>
 
+    @Query("SELECT COUNT(*) FROM Widget WHERE type = :type")
+    fun count(type: String): Flow<Int>
+
 }

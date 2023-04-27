@@ -80,6 +80,12 @@ class WidgetsService(
         }
     }
 
+    fun countWidgets(type: String) = widgetRepository.count(type)
+
+    fun removeWidget(widget: Widget) {
+        widgetRepository.delete(widget)
+    }
+
     companion object {
         const val AppWidgetHostId = 44203
     }

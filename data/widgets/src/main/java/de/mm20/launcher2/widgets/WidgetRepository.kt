@@ -21,6 +21,7 @@ interface WidgetRepository {
     fun set(widgets: List<Widget>, parentId: UUID? = null)
 
     fun exists(type: String): Flow<Boolean>
+    fun count(type: String): Flow<Int>
 
     suspend fun export(toDir: File)
     suspend fun import(fromDir: File)
@@ -83,6 +84,12 @@ internal class WidgetRepositoryImpl(
     override fun exists(type: String): Flow<Boolean> {
         val dao = database.widgetDao()
         return dao.exists(type = type)
+    }
+
+    override fun count(type: String): Flow<Int> {
+        val dao = database.widgetDao()
+        return dao.count(type = type)
+
     }
 
 

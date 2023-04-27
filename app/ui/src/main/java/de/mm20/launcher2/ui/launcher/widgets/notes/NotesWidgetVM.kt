@@ -14,6 +14,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -24,6 +27,10 @@ class NotesWidgetVM(
     private val widget = MutableStateFlow<NotesWidget?>(null)
 
     val noteText = mutableStateOf(widget.value?.config?.storedText ?: "")
+
+    val isLastNoteWidget = widgetsService.countWidgets(NotesWidget.Type).map {
+        it == 1
+    }.shareIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
 
     fun updateWidget(widget: NotesWidget) {
         val oldId = this.widget.value?.id
@@ -52,6 +59,11 @@ class NotesWidgetVM(
             }
         }
     }
+
+    fun dismissNote() {
+        widgetsService.removeWidget(widget.value ?: return)
+    }
+
 
     companion object: KoinComponent {
         val Factory = viewModelFactory {

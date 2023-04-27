@@ -91,8 +91,8 @@ fun WidgetColumn(
                         widget = widget,
                         appWidgetHost = widgetHost,
                         editMode = editMode,
-                        onWidgetAdd = {
-                            viewModel.addWidget(it, i + 1)
+                        onWidgetAdd = { widget, offset ->
+                            viewModel.addWidget(widget, i + offset)
                         },
                         onWidgetRemove = {
                             if (widget is AppWidget) {
