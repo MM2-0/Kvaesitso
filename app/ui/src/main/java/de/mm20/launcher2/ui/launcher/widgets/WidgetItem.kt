@@ -126,13 +126,15 @@ fun WidgetItem(
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1
                     )
-                    IconButton(onClick = {
-                        configure = true
-                    }) {
-                        Icon(
-                            imageVector = Icons.Rounded.Tune,
-                            contentDescription = stringResource(R.string.settings)
-                        )
+                    if (widget !is NotesWidget) {
+                        IconButton(onClick = {
+                            configure = true
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Tune,
+                                contentDescription = stringResource(R.string.settings)
+                            )
+                        }
                     }
                     IconButton(onClick = { onWidgetRemove() }) {
                         Icon(
