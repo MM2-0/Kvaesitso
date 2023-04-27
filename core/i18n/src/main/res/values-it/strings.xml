@@ -611,4 +611,10 @@
     <string name="preference_debug_reinstall_iconpacks">Reinstalla pacchetti icone</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetti icone</string>
     <string name="widget_name_notes">Nota</string>
+    <string name="notes_widget_action_save">Salva</string>
+    <string name="notes_widget_placeholder">Scrivi una nota…</string>
+    <string name="notes_widget_action_new">Nuova nota</string>
+    <string name="notes_widget_export_filename">Nota_%1$s</string>
+    <string name="notes_widget_dismissed">Note respinte.</string>
+    <string name="notes_widget_action_dismiss">Respingi</string>
 </resources>
