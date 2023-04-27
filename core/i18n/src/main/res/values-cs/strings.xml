@@ -609,4 +609,11 @@
     <string name="app_widget_loading_failed">Nepodařilo se načíst widget aplikace.</string>
     <string name="preference_category_media_apps">Aplikace médií</string>
     <string name="preference_debug_reinstall_iconpacks">Znovu nainstalovat balíčky ikon</string>
+    <string name="widget_name_notes">Poznámka</string>
+    <string name="notes_widget_placeholder">Napište poznámku…</string>
+    <string name="notes_widget_action_new">Nová poznámka</string>
+    <string name="notes_widget_action_save">Uložit</string>
+    <string name="notes_widget_export_filename">Poznamka_%1$s</string>
+    <string name="notes_widget_action_dismiss">Zavřít</string>
+    <string name="notes_widget_dismissed">Poznámka zavřena.</string>
 </resources>
