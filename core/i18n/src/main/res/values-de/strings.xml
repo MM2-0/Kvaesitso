@@ -605,4 +605,11 @@
     <string name="preference_category_media_apps">Medienapps</string>
     <string name="preference_debug_reinstall_iconpacks">Symbolpakete neuinstallieren</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
+    <string name="widget_name_notes">Notiz</string>
+    <string name="notes_widget_placeholder">Notiz schreiben…</string>
+    <string name="notes_widget_action_new">Neue Notiz</string>
+    <string name="notes_widget_action_save">Speichern</string>
+    <string name="notes_widget_export_filename">Notiz_%1$s</string>
+    <string name="notes_widget_action_dismiss">Verwerfen</string>
+    <string name="notes_widget_dismissed">Notiz verworfen.</string>
 </resources>
