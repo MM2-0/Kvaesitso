@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -93,7 +94,7 @@ fun NotesWidget(
 
                 }
             )
-            AnimatedVisibility(isLastWidget == false && text.isBlank()) {
+            AnimatedVisibility(isLastWidget == false && text.text.isBlank()) {
                 IconButton(
                     onClick = {
                         viewModel.dismissNote()
@@ -105,7 +106,7 @@ fun NotesWidget(
             }
         }
 
-        AnimatedVisibility(text.isNotBlank()) {
+        AnimatedVisibility(text.text.isNotBlank()) {
             var showMenu by remember { mutableStateOf(false) }
             Box(
                 modifier = Modifier
@@ -168,7 +169,7 @@ fun NotesWidget(
                                     }
                                 } else {
                                     val content = text
-                                    viewModel.setText("")
+                                    viewModel.setText(TextFieldValue(""))
                                     lifecycleOwner.lifecycleScope.launch {
                                         val result = snackbarHostState.showSnackbar(
                                             message = context.getString(R.string.notes_widget_dismissed),

@@ -23,8 +23,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
@@ -32,8 +34,8 @@ import org.intellij.markdown.parser.MarkdownParser
 
 @Composable
 fun MarkdownEditor(
-    value: String,
-    onValueChange: (String) -> Unit,
+    value: TextFieldValue,
+    onValueChange: (TextFieldValue) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: (@Composable () -> Unit)? = null
 ) {
@@ -58,7 +60,46 @@ fun MarkdownEditor(
 
         BasicTextField(
             value = value,
-            onValueChange = onValueChange,
+            onValueChange = {
+                val cursorPosition = if (it.selection.collapsed) it.selection.start else null
+                // If:
+                // - multiple chars are selected
+                // - the last action was not an insert
+                // - the cursor char before the selection is not a newline
+                // do nothing.
+                if (cursorPosition == null || it.text.length <= value.text.length || it.text.getOrNull(
+                        cursorPosition - 1
+                    ) != '\n'
+                ) {
+                    onValueChange(it)
+                } else {
+                    // else check if the previous line was a list, if yes, add a list item
+                    val prevLine = it.text.substring(0, cursorPosition - 1).substringAfterLast('\n')
+                    val leadingSpaces = prevLine.takeWhile { it == ' ' }
+                    val prevLineWithoutLeadingSpaces = prevLine.trimStart()
+                    val listMarker = leadingSpaces + when {
+                        prevLineWithoutLeadingSpaces.startsWith("- [ ] ") -> "- [ ] "
+                        prevLineWithoutLeadingSpaces.startsWith("- [x] ") -> "- [ ] "
+                        prevLineWithoutLeadingSpaces.startsWith("- ") -> "- "
+                        prevLineWithoutLeadingSpaces.startsWith("* ") -> "* "
+                        prevLineWithoutLeadingSpaces.startsWith("+ ") -> "+ "
+                        prevLineWithoutLeadingSpaces.startsWith("1. ") -> "1. "
+                        else -> {
+                            onValueChange(it)
+                            return@BasicTextField
+                        }
+                    }
+                    onValueChange(
+                        it.copy(
+                            text = it.text.substring(
+                                0,
+                                cursorPosition
+                            ) + listMarker + it.text.substring(cursorPosition),
+                            selection = TextRange(cursorPosition + listMarker.length)
+                        )
+                    )
+                }
+            },
             modifier = modifier.focusRequester(focusRequester),
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = LocalContentColor.current,
@@ -72,7 +113,7 @@ fun MarkdownEditor(
         )
 
     } else {
-        if (placeholder != null && value.isBlank()) {
+        if (placeholder != null && value.text.isBlank()) {
             Box(
                 modifier = modifier.clickable(
                     indication = null,
@@ -91,14 +132,14 @@ fun MarkdownEditor(
             }
         } else {
             MarkdownText(
-                value,
+                value.text,
                 modifier = modifier.clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                 ) {
                     focused = true
                 },
-                onTextChange = onValueChange,
+                onTextChange = { onValueChange(TextFieldValue(it)) },
             )
         }
     }

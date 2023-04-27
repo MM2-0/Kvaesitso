@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
@@ -26,7 +27,7 @@ class NotesWidgetVM(
 ) : ViewModel() {
     private val widget = MutableStateFlow<NotesWidget?>(null)
 
-    val noteText = mutableStateOf(widget.value?.config?.storedText ?: "")
+    val noteText = mutableStateOf(TextFieldValue(widget.value?.config?.storedText ?: ""))
 
     val isLastNoteWidget = widgetsService.countWidgets(NotesWidget.Type).map {
         it == 1
@@ -35,23 +36,23 @@ class NotesWidgetVM(
     fun updateWidget(widget: NotesWidget) {
         val oldId = this.widget.value?.id
         this.widget.value = widget
-        if (widget.id != oldId) noteText.value = widget.config.storedText
+        if (widget.id != oldId) noteText.value = TextFieldValue(widget.config.storedText)
     }
 
     private var updateJob: Job? = null
-    fun setText(text: String) {
+    fun setText(text: TextFieldValue) {
         noteText.value = text
         updateJob?.cancel()
         val widget = widget.value ?: return
         updateJob = viewModelScope.launch {
             delay(1000)
-            widgetsService.updateWidget(widget.copy(config = widget.config.copy(storedText = text)))
+            widgetsService.updateWidget(widget.copy(config = widget.config.copy(storedText = text.text)))
         }
     }
 
     fun exportNote(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
-            val text = noteText.value
+            val text = noteText.value.text
             Log.d("MM20", text)
             val outputStream = context.contentResolver.openOutputStream(uri)
             outputStream?.use {
