@@ -8,7 +8,7 @@ sidebar_position: 2
 
 There are two options: 
 
-1. Go to Settings > Widgets > Clock and enable "Favorites". This will display the first row of pinned items
+1. Go to Settings > Home screen > Clock and enable "Favorites". This will display the first row of pinned items
 as part of the clock widget.
 
 2. Scroll down to the end of the widgets list, select "Edit widgets" > "Add widget" > "Favorites" to add
@@ -18,10 +18,6 @@ the favorites widget to the home screen.
 
 Yes, you can customize the clock style by going to Settings > Widgets > Clock and selecting a different
 style. There is also an "empty style" that will remove the clock entirely.
-
-## How can I add work profile widgets?
-
-You can't. It is currently not supported.
 
 ## The toggle to grant notification access is disabled
 
