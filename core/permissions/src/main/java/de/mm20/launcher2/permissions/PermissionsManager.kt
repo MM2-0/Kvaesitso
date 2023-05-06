@@ -163,7 +163,7 @@ internal class PermissionsManagerImpl(
             }
 
             PermissionGroup.Location -> {
-                locationPermissions.all { context.checkPermission(it) }
+                locationPermissions.any { context.checkPermission(it) }
             }
 
             PermissionGroup.Contacts -> {
