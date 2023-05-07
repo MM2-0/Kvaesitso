@@ -253,6 +253,7 @@ include(":core:ktx")
 include(":core:i18n")
 include(":core:database")
 include(":core:permissions")
+include(":core:shared")
 
 include(":data:appshortcuts")
 include(":data:customattrs")
@@ -288,3 +289,5 @@ include(":libs:ms-services")
 include(":services:global-actions")
 include(":services:widgets")
 include(":services:favorites")
+
+include(":plugins:sdk")
