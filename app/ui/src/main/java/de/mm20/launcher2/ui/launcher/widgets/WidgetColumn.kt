@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -63,7 +64,11 @@ fun WidgetColumn(
             try {
                 awaitCancellation()
             } finally {
-                widgetHost.stopListening()
+                try {
+                    widgetHost.stopListening()
+                } catch (e: Exception) {
+                    CrashReporter.logException(e)
+                }
             }
         }
     }
