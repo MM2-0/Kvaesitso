@@ -25,6 +25,7 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -114,11 +115,11 @@ internal class MusicServiceImpl(
                     settings.allowListList.toSet(),
                     settings.denyListList.toSet()
                 )
-                val sbn: StatusBarNotification? = notifications.filter {
-                    it.notification.extras.getParcelable(NotificationCompat.EXTRA_MEDIA_SESSION) as? MediaSession.Token != null && musicApps.contains(it.packageName)
+                val sbn: Notification? = notifications.filter {
+                    it.mediaSessionToken != null && musicApps.contains(it.packageName)
                 }.maxByOrNull { it.postTime }
 
-                return@withContext (sbn?.notification?.extras?.get(NotificationCompat.EXTRA_MEDIA_SESSION) as? MediaSession.Token)
+                return@withContext sbn?.mediaSessionToken
             }
         }
             .distinctUntilChanged()

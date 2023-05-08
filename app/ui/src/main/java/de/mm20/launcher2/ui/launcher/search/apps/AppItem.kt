@@ -117,18 +117,12 @@ fun AppItem(
                     val notifications by viewModel.notifications.collectAsState(emptyList())
 
                     for (not in notifications) {
-                        val title =
-                            not.notification.extras.getString(NotificationCompat.EXTRA_TITLE, null)
-                                ?.takeIf { it.isNotBlank() }
-                                ?: not.notification.extras.getString(
-                                    NotificationCompat.EXTRA_TEXT,
-                                    null
-                                )
-                                    ?.takeIf { it.isNotBlank() }
+                        val title = not.title?.takeIf { it.isNotBlank() }
+                                ?: not.text?.takeIf { it.isNotBlank() }
                                 ?: continue
 
                         val icon =
-                            remember { not.notification.smallIcon?.loadDrawable(context) }?.let {
+                            remember { not.smallIcon?.loadDrawable(context) }?.let {
                                 rememberAsyncImagePainter(
                                     it
                                 )
@@ -143,7 +137,7 @@ fun AppItem(
                             },
                             onClick = {
                                 try {
-                                    not.notification.contentIntent?.send()
+                                    not.contentIntent?.send()
                                 } catch (e: PendingIntent.CanceledException) {}
                             }
                         )

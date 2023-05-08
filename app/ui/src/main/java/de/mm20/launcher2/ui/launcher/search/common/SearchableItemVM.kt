@@ -16,6 +16,7 @@ import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
@@ -122,7 +123,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         return false
     }
 
-    fun clearNotification(notification: StatusBarNotification) {
+    fun clearNotification(notification: Notification) {
         notificationRepository.cancelNotification(notification)
     }
 

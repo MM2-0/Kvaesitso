@@ -21,18 +21,17 @@ class NotificationBadgeProvider : BadgeProvider, KoinComponent {
             notificationRepository.notifications.map {
                 it.filter { it.packageName == packageName }
             }.collectLatest {
-                if (it.isEmpty()) {
+                if (it.isEmpty() || it.none { it.canShowBadge }) {
                     send(null)
                 } else {
                     val badge = Badge(
-                        number = it.distinctBy { it.notification.shortcutId }.sumOf {
-                            if(it.notification.shortcutId == null) 0
-                            else it.notification.number
+                        number = it.sumOf {
+                            if (it.canShowBadge && !it.isGroupSummary) it.number
+                            else 0
                         },
                         progress = it.mapNotNull {
-                            if (!it.notification.extras.containsKey(Notification.EXTRA_PROGRESS)) return@mapNotNull null
-                            val progress = it.notification.extras.getInt(Notification.EXTRA_PROGRESS)
-                            val progressMax = it.notification.extras.getInt(Notification.EXTRA_PROGRESS_MAX).takeIf { it > 0 } ?: return@mapNotNull null
+                            val progress = it.progress ?: return@mapNotNull null
+                            val progressMax = it.progressMax ?: return@mapNotNull null
                             return@mapNotNull progress.toFloat() / progressMax.toFloat()
                         }
                             .takeIf { it.isNotEmpty() }

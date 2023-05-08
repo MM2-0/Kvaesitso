@@ -6,10 +6,16 @@ import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
 import de.mm20.launcher2.permissions.PermissionsManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import java.lang.ref.WeakReference
 
 class NotificationService : NotificationListenerService() {
+
+    private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val notificationRepository: NotificationRepository by inject()
 
@@ -24,8 +30,34 @@ class NotificationService : NotificationListenerService() {
         Log.d("MM20", "Notification listener connected")
         permissionsManager.reportNotificationListenerState(true)
         instance = WeakReference(this)
-        val notifications = getNotifications().sortedBy { it.postTime }
-        notificationRepository.setNotifications(notifications)
+
+        scope.launch {
+            val statusBarNotifications = getNotifications().sortedBy { it.postTime }
+            val ranking = Ranking()
+            val rankingMap = currentRanking
+
+            val notifications = statusBarNotifications.map {
+                rankingMap.getRanking(it.key, ranking)
+                Notification(it, ranking)
+            }
+
+            notificationRepository.setNotifications(notifications)
+        }
+    }
+
+    override fun onNotificationRankingUpdate(rankingMap: RankingMap?) {
+        super.onNotificationRankingUpdate(rankingMap)
+        scope.launch {
+            val notifications = notificationRepository.getNotifications()
+
+            val ranking = Ranking()
+            val updatedNotifications = notifications.map {
+                rankingMap?.getRanking(it.key, ranking)
+                Notification(it, ranking)
+            }
+
+            notificationRepository.setNotifications(updatedNotifications)
+        }
     }
 
     private fun getNotifications(): Array<StatusBarNotification> {
@@ -36,14 +68,19 @@ class NotificationService : NotificationListenerService() {
         }
     }
 
-    override fun onNotificationPosted(sbn: StatusBarNotification) {
-        notificationRepository.postNotification(sbn)
-    }
-
     override fun onNotificationRemoved(sbn: StatusBarNotification) {
         super.onNotificationRemoved(sbn)
+        notificationRepository.onNotificationRemoved(sbn.key)
+    }
 
-        notificationRepository.removeNotification(sbn)
+    override fun onNotificationPosted(sbn: StatusBarNotification, rankingMap: RankingMap) {
+        super.onNotificationPosted(sbn, rankingMap)
+
+        val ranking = Ranking()
+        rankingMap.getRanking(sbn.key, ranking)
+        val notification = Notification(sbn, ranking)
+
+        notificationRepository.onNotificationPosted(notification)
     }
 
     override fun onListenerDisconnected() {
