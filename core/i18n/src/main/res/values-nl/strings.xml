@@ -604,4 +604,11 @@
     <string name="widget_action_replace">Vervangen</string>
     <string name="preference_screen_integrations">Integraties</string>
     <string name="preference_debug_reinstall_iconpacks">Pictogrampaketten opnieuw installeren</string>
+    <string name="notes_widget_export_filename">Notitie_%1$s</string>
+    <string name="widget_name_notes">Notitie</string>
+    <string name="notes_widget_placeholder">Notitie maken…</string>
+    <string name="notes_widget_action_new">Nieuwe notitie</string>
+    <string name="notes_widget_action_save">Opslaan</string>
+    <string name="notes_widget_action_dismiss">Weggooien</string>
+    <string name="notes_widget_dismissed">Notitie weggegooid.</string>
 </resources>
