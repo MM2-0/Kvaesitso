@@ -1,6 +1,5 @@
 package de.mm20.launcher2.badges.providers
 
-import android.app.Notification
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.search.Searchable

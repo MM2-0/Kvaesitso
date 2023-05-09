@@ -91,7 +91,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     val notifications = searchable.flatMapLatest { searchable ->
         if (searchable !is LauncherApp) emptyFlow()
-        else notificationRepository.notifications.map { it.filter { it.packageName == searchable.`package` } }
+        else notificationRepository.notifications.map { it.filter { it.packageName == searchable.`package` && !it.isGroupSummary } }
     }
 
     val shortcuts = searchable.map {
