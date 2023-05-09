@@ -225,6 +225,7 @@ message Settings {
     }
     SearchBarColors color = 3;
     bool launch_on_enter = 4;
+    bool hidden_items_button = 5;
   }
   SearchBarSettings search_bar = 20;
 

@@ -136,6 +136,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setAutoFocus(true)
                 .setLaunchOnEnter(true)
                 .setColor(SearchBarColors.Auto)
+                .setHiddenItemsButton(true)
                 .build()
         )
         .setIcons(

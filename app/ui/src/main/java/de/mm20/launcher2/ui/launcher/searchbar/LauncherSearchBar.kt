@@ -12,6 +12,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -47,6 +48,7 @@ fun LauncherSearchBar(
     val sheetManager = LocalBottomSheetManager.current
 
     val searchVM: SearchVM = viewModel()
+    val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
 
     val hiddenItems by searchVM.hiddenResults
 
@@ -64,7 +66,7 @@ fun LauncherSearchBar(
         darkColors = darkColors,
         menu = {
             AnimatedVisibility(
-                showHiddenItemsButton && hiddenItems.isNotEmpty(),
+                hiddenItemsButtonEnabled && showHiddenItemsButton && hiddenItems.isNotEmpty(),
                 enter = scaleIn(tween(100)),
                 exit = scaleOut(tween(100))
             ) {

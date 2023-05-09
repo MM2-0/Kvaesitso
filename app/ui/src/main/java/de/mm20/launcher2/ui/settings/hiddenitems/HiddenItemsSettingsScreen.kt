@@ -2,13 +2,26 @@ package de.mm20.launcher2.ui.settings.hiddenitems
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -21,7 +34,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 
 @Composable
 fun HiddenItemsSettingsScreen() {
@@ -32,7 +47,20 @@ fun HiddenItemsSettingsScreen() {
 
     val apps by viewModel.allApps.collectAsState()
     val other by viewModel.hiddenItems.collectAsState()
+
+    val showButton by viewModel.hiddenItemsButton.collectAsState()
+
     PreferenceScreen(title = stringResource(R.string.preference_hidden_items)) {
+        item {
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_hidden_items_reveal_button),
+                    summary = stringResource(R.string.preference_hidden_items_reveal_button_summary),
+                    value = showButton,
+                    onValueChanged = { viewModel.setHiddenItemsButton(it) }
+                )
+            }
+        }
         items(apps, key = { it.key }) { searchable ->
             val icon by remember(searchable.key) {
                 viewModel.getIcon(searchable, with(density) { 32.dp.roundToPx() })
@@ -178,13 +206,13 @@ fun HiddenItem(
 ) {
     Row(
         modifier = modifier
-            .padding(vertical = 12.dp, horizontal = 16.dp),
+            .padding(vertical = 12.dp, horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         ShapedLauncherIcon(
             size = 32.dp,
             icon = { icon },
-            modifier = Modifier.padding(end = 16.dp)
+            modifier = Modifier.padding(end = 20.dp)
         )
         Text(
             label,

@@ -67,6 +67,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResults = mutableStateOf<List<UnitConverter>>(emptyList())
     val searchActionResults = mutableStateOf<List<SearchAction>>(emptyList())
 
+    val hiddenResultsButton = dataStore.data.map { it.searchBar.hiddenItemsButton }
     val hiddenResults = mutableStateOf<List<SavableSearchable>>(emptyList())
 
     val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
