@@ -617,4 +617,6 @@
     <string name="notes_widget_export_filename">Nota_%1$s</string>
     <string name="notes_widget_dismissed">Note respinte.</string>
     <string name="notes_widget_action_dismiss">Respingi</string>
+    <string name="preference_hidden_items_reveal_button">Mostra pulsante rivelazione</string>
+    <string name="preference_hidden_items_reveal_button_summary">Mostra un pulsante per rivelare i risultati di ricerca nascosti</string>
 </resources>
