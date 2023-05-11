@@ -228,7 +228,7 @@ fun IconsSettingsScreen() {
                         ) {
                             PlainTooltipBox(tooltip = { Text(stringResource(R.string.icon_pack_dynamic_colors)) }) {
                                 FilledIconToggleButton(
-                                    modifier = Modifier.tooltipAnchor(),
+                                    modifier = Modifier.tooltipTrigger(),
                                     checked = iconPackThemed,
                                     onCheckedChange = {
                                         viewModel.setIconPackThemed(it)

@@ -108,7 +108,7 @@ fun PagerScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
 
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState { 2 }
 
     val isSearchAtBottom by remember {
         derivedStateOf {
@@ -330,7 +330,6 @@ fun PagerScaffold(
 
                 HorizontalPager(
                     modifier = Modifier.fillMaxSize(),
-                    pageCount = 2,
                     beyondBoundsPageCount = 1,
                     reverseLayout = reverse,
                     state = pagerState,

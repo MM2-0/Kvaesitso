@@ -105,7 +105,7 @@ fun PullDownScaffold(
     val widgetsScrollState = rememberScrollState()
     val searchState = rememberLazyListState()
 
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState { 2 }
 
     val isSearchAtTop by remember {
         derivedStateOf {
@@ -361,7 +361,6 @@ fun PullDownScaffold(
             ) {
                 VerticalPager(
                     modifier = Modifier.fillMaxSize(),
-                    pageCount = 2,
                     beyondBoundsPageCount = 1,
                     state = pagerState,
                     reverseLayout = true,

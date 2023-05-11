@@ -358,7 +358,7 @@ fun CustomActions(
         val action = actions.customActions[i]
         PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
             IconButton(
-                modifier = Modifier.tooltipAnchor(),
+                modifier = Modifier.tooltipTrigger(),
                 onClick = {
                     onActionSelected(action)
                 }
@@ -402,7 +402,7 @@ fun CustomActions(
         val action = actions.customActions.last()
         PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
             IconButton(
-                modifier = Modifier.tooltipAnchor(),
+                modifier = Modifier.tooltipTrigger(),
                 onClick = {
                     onActionSelected(action)
                 }
