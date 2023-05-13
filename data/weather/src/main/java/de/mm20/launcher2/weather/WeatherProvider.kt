@@ -3,6 +3,7 @@ package de.mm20.launcher2.weather
 import android.Manifest
 import android.content.Context
 import android.content.SharedPreferences
+import android.location.Location
 import android.location.LocationManager
 import androidx.core.content.edit
 import androidx.core.content.getSystemService
@@ -26,28 +27,33 @@ abstract class WeatherProvider<T : WeatherLocation> {
 
 
     suspend fun fetchNewWeatherData(): List<Forecast>? {
-        val result: WeatherUpdateResult<T>
-        if (autoLocation) {
-            if (context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                val lm = context.getSystemService<LocationManager>()!!
-                val location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-                if (location != null) {
-                    result = loadWeatherData(location.latitude, location.longitude) ?: return null
-                } else {
-                    val lastLocation = getLastLocation() ?: return null
-                    result = loadWeatherData(lastLocation) ?: return null
-                }
+        val result: WeatherUpdateResult<T> = if (autoLocation) {
+            val location = getCurrentLocation()
+            if (location != null) {
+                loadWeatherData(location.latitude, location.longitude) ?: return null
             } else {
                 val lastLocation = getLastLocation() ?: return null
-                result = loadWeatherData(lastLocation) ?: return null
+                loadWeatherData(lastLocation) ?: return null
             }
         } else {
             val setLocation = getLocation() ?: return null
-            result = loadWeatherData(setLocation) ?: return null
+            loadWeatherData(setLocation) ?: return null
         }
         saveLastLocation(result.location)
         setLastUpdate(System.currentTimeMillis())
         return result.forecasts
+    }
+
+    private fun getCurrentLocation(): Location? {
+        val lm = context.getSystemService<LocationManager>()!!
+        var location: Location? = null
+        if (context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        }
+        if (location == null && context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        }
+        return location
     }
 
     internal abstract suspend fun loadWeatherData(location: T): WeatherUpdateResult<T>?
