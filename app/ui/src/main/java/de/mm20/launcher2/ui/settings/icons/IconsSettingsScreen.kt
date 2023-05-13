@@ -109,7 +109,7 @@ fun IconsSettingsScreen() {
                     title = stringResource(R.string.preference_grid_column_count),
                     value = columnCount,
                     min = 3,
-                    max = 8,
+                    max = 12,
                     onValueChanged = {
                         viewModel.setColumnCount(it)
                     }
