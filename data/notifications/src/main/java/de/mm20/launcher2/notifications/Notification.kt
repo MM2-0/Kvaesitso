@@ -13,6 +13,7 @@ data class Notification(
     val key: String,
     val packageName: String,
     val postTime: Long,
+    val isClearable: Boolean,
     val canShowBadge: Boolean,
     val number: Int,
     val color: Int,
@@ -29,6 +30,7 @@ data class Notification(
         key = sbn.key,
         packageName = sbn.packageName,
         postTime = sbn.postTime,
+        isClearable = sbn.isClearable,
         canShowBadge = ranking.canShowBadge(),
         number = sbn.notification.number,
         color = sbn.notification.color,
@@ -49,6 +51,7 @@ data class Notification(
         canShowBadge = ranking.canShowBadge(),
         number = notification.number,
         color = notification.color,
+        isClearable = notification.isClearable,
         smallIcon = notification.smallIcon,
         extras = notification.extras,
         contentIntent = notification.contentIntent

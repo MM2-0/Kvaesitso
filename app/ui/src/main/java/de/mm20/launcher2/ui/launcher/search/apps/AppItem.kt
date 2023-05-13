@@ -1,39 +1,79 @@
 package de.mm20.launcher2.ui.launcher.search.apps
 
 import android.app.PendingIntent
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.pm.LauncherApps
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.with
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredSize
+import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.Android
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.Icon
+import androidx.compose.material3.InputChip
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.app.NotificationCompat
-import androidx.core.content.getSystemService
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.compose.rememberAsyncImagePainter
+import coil.compose.AsyncImage
 import com.google.accompanist.flowlayout.FlowRow
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.component.*
+import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
+import de.mm20.launcher2.ui.component.SubmenuToolbarAction
+import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -118,27 +158,53 @@ fun AppItem(
 
                     for (not in notifications) {
                         val title = not.title?.takeIf { it.isNotBlank() }
-                                ?: not.text?.takeIf { it.isNotBlank() }
-                                ?: continue
+                            ?: not.text?.takeIf { it.isNotBlank() }
+                            ?: continue
 
-                        val icon =
-                            remember { not.smallIcon?.loadDrawable(context) }?.let {
-                                rememberAsyncImagePainter(
-                                    it
+                        val icon = remember(not.smallIcon) { not.smallIcon?.loadDrawable(context) }
+
+                        InputChip(
+                            modifier = Modifier.width(IntrinsicSize.Max),
+                            selected = false,
+                            label = {
+                                Text(
+                                    title,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f)
                                 )
-                            }
-
-                        Chip(
-                            text = title,
-                            icon = icon,
-                            rightIcon = Icons.Rounded.Clear,
-                            rightAction = {
-                                viewModel.clearNotification(not)
                             },
+                            avatar = {
+                                Box(modifier = Modifier.background(Color(not.color))) {
+                                    AsyncImage(
+                                        modifier = Modifier
+                                            .padding(3.dp)
+                                            .requiredSize(18.dp),
+                                        model = icon,
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            trailingIcon = if (not.isClearable) {
+                                {
+                                    Icon(
+                                        Icons.Rounded.Clear,
+                                        null,
+                                        modifier = Modifier
+                                            .clip(CircleShape)
+                                            .size(18.dp)
+                                            .clickable {
+                                                viewModel.clearNotification(not)
+                                            },
+                                    )
+                                }
+                            } else null,
                             onClick = {
                                 try {
                                     not.contentIntent?.send()
-                                } catch (e: PendingIntent.CanceledException) {}
+                                } catch (e: PendingIntent.CanceledException) {
+                                    CrashReporter.logException(e)
+                                }
                             }
                         )
                     }
@@ -161,27 +227,51 @@ fun AppItem(
                                     shortcut.launcherShortcut
                                 )
                             }
-                                ?.let {
-                                    rememberAsyncImagePainter(it)
-                                }
 
-                        Chip(
-                            text = title.toString(),
-                            icon = icon,
-                            rightIcon = if (LocalFavoritesEnabled.current) {
-                                if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline
-                            } else null,
-                            rightAction = {
-                                if (isPinned) {
-                                    viewModel.unpinShortcut(shortcut)
-                                } else {
-                                    viewModel.pinShortcut(shortcut)
-                                }
-                            },
+                        InputChip(
+                            modifier = Modifier.width(IntrinsicSize.Max),
+                            selected = false,
                             onClick = {
                                 viewModel.launchShortcut(context, shortcut)
-                            }
+                            },
+                            label = {
+                                Text(
+                                    title.toString(),
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis,
+                                    modifier = Modifier.weight(1f)
+                                )
+                            },
+                            avatar = {
+                                AsyncImage(
+                                    model = icon,
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .size(24.dp),
+                                )
+                            },
+                            trailingIcon = if (LocalFavoritesEnabled.current) {
+                                {
+                                    Icon(
+                                        if (isPinned) Icons.Rounded.Star else Icons.Rounded.StarOutline,
+                                        null,
+                                        modifier = Modifier
+                                            .clip(CircleShape)
+                                            .requiredSize(18.dp)
+                                            .clickable {
+
+                                                if (isPinned) {
+                                                    viewModel.unpinShortcut(shortcut)
+                                                } else {
+                                                    viewModel.pinShortcut(shortcut)
+                                                }
+                                            },
+                                    )
+                                }
+                            } else null
                         )
+
                     }
                 }
             }
