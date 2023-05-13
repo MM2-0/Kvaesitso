@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="compose"
+        android:shortcutLongLabel="@string/search_bar_placeholder"
+        android:shortcutShortLabel="@string/search_bar_placeholder">
+        <intent
+            android:action="android.intent.action.ASSIST"
+            android:targetClass="de.mm20.launcher2.ui.assistant.AssistantActivity"
+            android:targetPackage="de.mm20.launcher2.nightly" />
+    </shortcut>
+
+</shortcuts>
