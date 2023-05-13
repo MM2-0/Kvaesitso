@@ -15,6 +15,7 @@ data class Notification(
     val postTime: Long,
     val canShowBadge: Boolean,
     val number: Int,
+    val color: Int,
     val smallIcon: Icon?,
     val extras: Bundle,
     val flags: Int = 0,
@@ -30,6 +31,7 @@ data class Notification(
         postTime = sbn.postTime,
         canShowBadge = ranking.canShowBadge(),
         number = sbn.notification.number,
+        color = sbn.notification.color,
         smallIcon = sbn.notification.smallIcon,
         extras = sbn.notification.extras,
         flags = sbn.notification.flags,
@@ -46,6 +48,7 @@ data class Notification(
         postTime = notification.postTime,
         canShowBadge = ranking.canShowBadge(),
         number = notification.number,
+        color = notification.color,
         smallIcon = notification.smallIcon,
         extras = notification.extras,
         contentIntent = notification.contentIntent
