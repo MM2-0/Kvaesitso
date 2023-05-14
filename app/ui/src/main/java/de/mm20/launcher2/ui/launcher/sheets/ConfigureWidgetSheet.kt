@@ -79,7 +79,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlinx.coroutines.launchg
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import kotlin.math.roundToInt
 
