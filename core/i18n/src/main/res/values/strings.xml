@@ -796,6 +796,7 @@
     <string name="widget_config_appwidget_height">Height</string>
     <string name="widget_config_appwidget_borderless">Borderless</string>
     <string name="widget_config_appwidget_configure">Configure widget</string>
+    <string name="widget_config_appwidget_resize_hint">Drag to resize</string>
     <string name="widget_config_weather_integration_settings">Weather integration settings</string>
     <string name="widget_config_calendar_no_calendars">No calendars found</string>
     <string name="app_widget_loading_failed">App widget failed to load.</string>

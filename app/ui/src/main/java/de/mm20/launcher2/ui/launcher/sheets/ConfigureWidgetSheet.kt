@@ -7,6 +7,7 @@ import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
@@ -19,7 +20,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
@@ -36,14 +36,17 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberPlainTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -55,7 +58,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -77,6 +79,7 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
+import kotlinx.coroutines.launchg
 import org.koin.androidx.compose.get
 import kotlin.math.roundToInt
 
@@ -348,34 +351,46 @@ fun ColumnScope.ConfigureAppWidget(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
-                modifier = Modifier
-                    .padding(end = 16.dp)
-                    .clip(MaterialTheme.shapes.small)
-                    .background(MaterialTheme.colorScheme.primaryContainer)
-                    .height(36.dp)
-                    .width(48.dp)
-                    .draggable(
-                        state = draggableState,
-                        orientation = Orientation.Vertical,
-                        startDragImmediately = true,
-                        onDragStopped = {
-                            onWidgetUpdated(
-                                widget.copy(
-                                    config = widget.config.copy(
-                                        height = widget.config.height + dragDelta
+            val scope = rememberCoroutineScope()
+            val tooltipState = rememberPlainTooltipState()
+            PlainTooltipBox(
+                tooltipState = tooltipState,
+                tooltip = { Text(stringResource(R.string.widget_config_appwidget_resize_hint)) }
+            ) {
+                Box(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .clip(MaterialTheme.shapes.small)
+                        .background(MaterialTheme.colorScheme.primaryContainer)
+                        .height(36.dp)
+                        .width(48.dp)
+                        .draggable(
+                            state = draggableState,
+                            orientation = Orientation.Vertical,
+                            onDragStopped = {
+                                onWidgetUpdated(
+                                    widget.copy(
+                                        config = widget.config.copy(
+                                            height = widget.config.height + dragDelta
+                                        )
                                     )
                                 )
-                            )
-                            dragDelta = 0
-                        }
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.UnfoldMore,
-                    contentDescription = null,
-                )
+                                dragDelta = 0
+                            }
+                        )
+                        .clickable {
+                            scope.launch {
+                                tooltipState.show()
+                            }
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.UnfoldMore,
+                        contentDescription = null,
+                    )
+                }
+
             }
             var textFieldValue by remember(widget.config.height) { mutableStateOf(widget.config.height.toString()) }
             OutlinedTextField(
@@ -445,7 +460,8 @@ fun ColumnScope.ConfigureAppWidget(
                     )
                 }) {
                 Text(
-                    stringResource(id = R.string.widget_config_appwidget_configure))
+                    stringResource(id = R.string.widget_config_appwidget_configure)
+                )
                 Icon(
                     modifier = Modifier
                         .padding(start = ButtonDefaults.IconSpacing)
