@@ -612,4 +612,7 @@
     <string name="notes_widget_export_filename">Notiz_%1$s</string>
     <string name="notes_widget_action_dismiss">Verwerfen</string>
     <string name="notes_widget_dismissed">Notiz verworfen.</string>
+    <string name="preference_hidden_items_reveal_button">Einblenden-Button anzeigen</string>
+    <string name="preference_hidden_items_reveal_button_summary">Eine Schaltfläche zum Einblenden ausgeblendeter Suchergebnisse anzeigen</string>
+    <string name="widget_config_appwidget_resize_hint">Zum Anpassen ziehen</string>
 </resources>
