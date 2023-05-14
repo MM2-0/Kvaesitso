@@ -5,7 +5,6 @@ import de.mm20.launcher2.files.providers.FileProvider
 import de.mm20.launcher2.files.providers.GDriveFileProvider
 import de.mm20.launcher2.files.providers.LocalFileProvider
 import de.mm20.launcher2.files.providers.NextcloudFileProvider
-import de.mm20.launcher2.files.providers.OneDriveFileProvider
 import de.mm20.launcher2.files.providers.OwncloudFileProvider
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
@@ -65,7 +64,6 @@ internal class FileRepositoryImpl(
 
         if (local) providers.add(LocalFileProvider(context, permissionsManager))
         if (gdrive) providers.add(GDriveFileProvider(context))
-        //if (onedrive) providers.add(OneDriveFileProvider(context))
         if (nextcloud) providers.add(NextcloudFileProvider(nextcloudClient))
         if (owncloud) providers.add(OwncloudFileProvider(owncloudClient))
 

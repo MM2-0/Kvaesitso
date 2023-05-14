@@ -15,7 +15,6 @@ class IntegrationsSettingsScreenVM : ViewModel(), KoinComponent {
     private val accountsRepository: AccountsRepository by inject()
 
     val isGoogleAvailable = accountsRepository.isSupported(AccountType.Google)
-    val isMicrosoftAvailable = accountsRepository.isSupported(AccountType.Microsoft)
 
     val googleUser = mutableStateOf<Account?>(null)
     val msUser= mutableStateOf<Account?>(null)
@@ -29,7 +28,6 @@ class IntegrationsSettingsScreenVM : ViewModel(), KoinComponent {
             loading.value = true
             googleUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Google)
             nextcloudUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Nextcloud)
-            msUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Microsoft)
             owncloudUser.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Owncloud)
             loading.value = false
         }
@@ -43,7 +41,6 @@ class IntegrationsSettingsScreenVM : ViewModel(), KoinComponent {
         accountsRepository.signout(accountType)
         when(accountType){
             AccountType.Google -> googleUser.value = null
-            AccountType.Microsoft -> msUser.value = null
             AccountType.Nextcloud -> nextcloudUser.value = null
             AccountType.Owncloud -> owncloudUser.value = null
         }

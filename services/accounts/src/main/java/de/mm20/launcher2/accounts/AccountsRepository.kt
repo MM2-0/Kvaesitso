@@ -3,7 +3,6 @@ package de.mm20.launcher2.accounts
 import android.app.Activity
 import android.content.Context
 import de.mm20.launcher2.gservices.GoogleApiHelper
-import de.mm20.launcher2.msservices.MicrosoftGraphApiHelper
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +28,6 @@ internal class AccountsRepositoryImpl(
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
     private val googleApiHelper = GoogleApiHelper.getInstance(context)
-    private val msGraphApiHelper = MicrosoftGraphApiHelper.getInstance(context)
     private val nextcloudApiHelper = NextcloudApiHelper(context)
     private val owncloudApiHelper = OwncloudClient(context)
 
@@ -38,11 +36,6 @@ internal class AccountsRepositoryImpl(
             AccountType.Google -> {
                 scope.launch {
                     googleApiHelper.login(context)
-                }
-            }
-            AccountType.Microsoft -> {
-                scope.launch {
-                    msGraphApiHelper.login(context)
                 }
             }
             AccountType.Nextcloud ->
@@ -61,11 +54,6 @@ internal class AccountsRepositoryImpl(
             AccountType.Google -> {
                 googleApiHelper.logout()
             }
-            AccountType.Microsoft -> {
-                scope.launch {
-                    msGraphApiHelper.logout()
-                }
-            }
             AccountType.Nextcloud -> {
                 scope.launch {
                     nextcloudApiHelper.logout()
@@ -80,7 +68,6 @@ internal class AccountsRepositoryImpl(
     override fun isSupported(accountType: AccountType): Boolean {
         return when (accountType) {
             AccountType.Google -> googleApiHelper.isAvailable()
-            AccountType.Microsoft -> false
             AccountType.Nextcloud -> true
             AccountType.Owncloud -> true
         }
@@ -90,9 +77,6 @@ internal class AccountsRepositoryImpl(
         return when (accountType) {
             AccountType.Google -> {
                 getGoogleAccount()
-            }
-            AccountType.Microsoft -> {
-                getMicrosoftAccount()
             }
             AccountType.Nextcloud -> {
                 getNextcloudAccount()

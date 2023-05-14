@@ -126,29 +126,7 @@ fun IntegrationsSettingsScreen() {
                     },
                     enabled = !loading,
                 )
-                if (viewModel.isMicrosoftAvailable) {
-                    Preference(
-                        title = if (msUser != null) {
-                            stringResource(R.string.preference_microsoft)
-                        } else {
-                            stringResource(R.string.preference_ms_signin)
-                        },
-                        summary = msUser?.let {
-                            stringResource(R.string.preference_signin_user, it.userName)
-                        } ?: stringResource(R.string.preference_ms_signin_summary),
-                        onClick = {
-                            if (msUser != null) {
-                                viewModel.signOut(AccountType.Microsoft)
-                            } else {
-                                viewModel.signIn(
-                                    context as AppCompatActivity,
-                                    AccountType.Microsoft
-                                )
-                            }
-                        },
-                        enabled = !loading,
-                    )
-                }
+
                 if (viewModel.isGoogleAvailable) {
                     Preference(
                         title = if (googleUser != null) {

@@ -28,10 +28,8 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     val loading = mutableStateOf(true)
     val nextcloudAccount = mutableStateOf<Account?>(null)
     val owncloudAccount = mutableStateOf<Account?>(null)
-    val microsoftAccount = mutableStateOf<Account?>(null)
     val googleAccount = mutableStateOf<Account?>(null)
 
-    val microsoftAvailable = accountsRepository.isSupported(AccountType.Microsoft)
     val googleAvailable = accountsRepository.isSupported(AccountType.Google)
 
     fun onResume() {
@@ -40,8 +38,6 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
                 accountsRepository.getCurrentlySignedInAccount(AccountType.Nextcloud)
             owncloudAccount.value =
                 accountsRepository.getCurrentlySignedInAccount(AccountType.Owncloud)
-            microsoftAccount.value =
-                accountsRepository.getCurrentlySignedInAccount(AccountType.Microsoft)
             googleAccount.value = accountsRepository.getCurrentlySignedInAccount(AccountType.Google)
             loading.value = false
         }

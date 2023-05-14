@@ -140,41 +140,6 @@ fun FileSearchSettingsScreen() {
                     enabled = owncloudAccount != null
                 )
 
-                if (viewModel.microsoftAvailable) {
-                    val onedrive by viewModel.onedrive.collectAsState()
-                    val microsoftAccount by viewModel.microsoftAccount
-                    AnimatedVisibility(microsoftAccount == null) {
-                        Banner(
-                            text = stringResource(R.string.no_account_microsoft),
-                            icon = Icons.Rounded.AccountBox,
-                            primaryAction = {
-                                TextButton(onClick = {
-                                    viewModel.login(
-                                        context as AppCompatActivity,
-                                        AccountType.Microsoft
-                                    )
-                                }) {
-                                    Text(
-                                        stringResource(R.string.connect_account),
-                                    )
-                                }
-                            },
-                            modifier = Modifier.padding(16.dp)
-                        )
-                    }
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_search_onedrive),
-                        summary = microsoftAccount?.let {
-                            stringResource(R.string.preference_search_onedrive_summary, it.userName)
-                        } ?: stringResource(R.string.preference_summary_not_logged_in),
-                        value = onedrive == true && microsoftAccount != null,
-                        onValueChanged = {
-                            viewModel.setOneDrive(it)
-                        },
-                        enabled = microsoftAccount != null
-                    )
-                }
-
                 if (viewModel.googleAvailable) {
                     val gdrive by viewModel.gdrive.collectAsState()
                     val googleAccount by viewModel.googleAccount

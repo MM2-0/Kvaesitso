@@ -16,7 +16,6 @@ class BuildInfoSettingsScreenVM : ViewModel(), KoinComponent {
 
     val buildFeatures = mapOf(
         "Accounts: Google" to accountsRepository.isSupported(AccountType.Google),
-        "Accounts: Microsoft" to accountsRepository.isSupported(AccountType.Microsoft),
         "Weather providers: HERE" to availableWeatherProviders.contains(WeatherProvider.Here),
         "Weather providers: Met No" to availableWeatherProviders.contains(WeatherProvider.MetNo),
         "Weather providers: OpenWeatherMap" to availableWeatherProviders.contains(WeatherProvider.OpenWeatherMap),
