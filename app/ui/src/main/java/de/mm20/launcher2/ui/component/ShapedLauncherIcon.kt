@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.component
 
+import android.graphics.Bitmap
+import android.graphics.BitmapShader
 import android.graphics.Matrix
 import android.graphics.Path
 import android.graphics.PorterDuff
@@ -37,11 +39,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.toRect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shader
+import androidx.compose.ui.graphics.ShaderBrush
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.asComposePath
+import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
@@ -52,6 +59,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -63,6 +71,7 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.DynamicLauncherIcon
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.LauncherIconLayer
+import de.mm20.launcher2.icons.LauncherIconRenderSettings
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
@@ -72,7 +81,10 @@ import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import palettes.TonalPalette
 import java.time.Instant
@@ -80,6 +92,7 @@ import java.time.ZoneId
 import kotlin.math.abs
 import kotlin.math.pow
 import kotlin.math.roundToInt
+import android.graphics.Shader as PlatformShader
 
 @Composable
 fun ShapedLauncherIcon(
@@ -104,6 +117,24 @@ fun ShapedLauncherIcon(
         )
     }
 
+    val defaultIconSize = LocalGridSettings.current.iconSize.dp
+
+    val renderSettings = LauncherIconRenderSettings(
+        size = defaultIconSize.toPixels().toInt(),
+        fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
+        bgThemeColor = MaterialTheme.colorScheme.primaryContainer.toArgb(),
+        fgTone = if (LocalDarkTheme.current) 90 else 10,
+        bgTone = if (LocalDarkTheme.current) 30 else 90,
+    )
+
+    var currentBitmap by remember {
+        mutableStateOf(currentIcon?.getCachedBitmap(renderSettings))
+    }
+
+    LaunchedEffect(currentIcon, renderSettings) {
+        currentBitmap = currentIcon?.render(renderSettings)
+    }
+
     if (_icon is DynamicLauncherIcon) {
         val time = LocalTime.current
         LaunchedEffect(time) {
@@ -118,10 +149,6 @@ fun ShapedLauncherIcon(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .graphicsLayer {
-                    clip = currentIcon?.backgroundLayer !is TransparentLayer
-                    this.shape = shape
-                }
                 .then(
                     if (onClick != null || onLongClick != null) {
                         Modifier.pointerInput(onClick, onLongClick) {
@@ -134,19 +161,64 @@ fun ShapedLauncherIcon(
                 ),
             contentAlignment = Alignment.Center
         ) {
-            currentIcon?.let {
-                IconLayer(
-                    it.backgroundLayer,
-                    size,
-                    colorTone = if (LocalDarkTheme.current) 30 else 90,
-                    MaterialTheme.colorScheme.primaryContainer
-                )
-                IconLayer(
-                    it.foregroundLayer,
-                    size,
-                    colorTone = if (LocalDarkTheme.current) 90 else 10,
-                    MaterialTheme.colorScheme.onPrimaryContainer
-                )
+            val bmp = currentBitmap
+            val ic = currentIcon
+            if (bmp != null && ic != null) {
+                Canvas(modifier = Modifier
+                    .size(defaultIconSize)
+                    .scale(size / defaultIconSize, TransformOrigin.Center)
+                ) {
+                    val brush = BitmapShaderBrush(bmp)
+                    if (ic.backgroundLayer is TransparentLayer) {
+                        drawRect(brush)
+                    } else {
+                        val outline =
+                            shape.createOutline(this.size, layoutDirection, Density(density, fontScale))
+                        drawOutline(outline, brush)
+                    }
+                }
+                // Background layer is always static layer, color layer, or transparent layer
+                val fg = ic.foregroundLayer
+                when(fg) {
+                    is ClockLayer -> {
+                        ClockLayer(
+                            sublayers = fg.sublayers,
+                            defaultMinute = fg.defaultMinute,
+                            defaultHour = fg.defaultHour,
+                            defaultSecond = fg.defaultSecond,
+                            scale = fg.scale,
+                            tintColor = null,
+                        )
+                    }
+                    is TintedClockLayer -> {
+                        ClockLayer(
+                            sublayers = fg.sublayers,
+                            defaultMinute = fg.defaultMinute,
+                            defaultHour = fg.defaultHour,
+                            defaultSecond = fg.defaultSecond,
+                            scale = fg.scale,
+                            tintColor = if (fg.color == 0) {
+                                Color(renderSettings.fgThemeColor)
+                            } else {
+                                Color(getTone(fg.color, renderSettings.fgTone))
+                            },
+                        )
+                    }
+                    is TextLayer -> {
+                        Text(
+                            text = fg.text,
+                            style = MaterialTheme.typography.headlineSmall.copy(
+                                fontSize = 20.sp * (size / 48.dp)
+                            ),
+                            color = if (fg.color == 0) {
+                                Color(renderSettings.fgThemeColor)
+                            } else {
+                                Color(getTone(fg.color, renderSettings.fgTone))
+                            },
+                        )
+                    }
+                    else -> {}
+                }
             }
         }
         val _badge = badge()
@@ -306,16 +378,12 @@ private fun IconLayer(
                 if (layer.color == 0) defaultTintColor.toArgb()
                 else getTone(layer.color, colorTone)
             Canvas(modifier = Modifier.fillMaxSize()) {
-                withTransform({
-                    this.scale(layer.scale)
-                }) {
-                    drawIntoCanvas {
-                        layer.icon.bounds = this.size.toRect().toAndroidRect()
-                        layer.icon.drawWithColorFilter(
-                            it.nativeCanvas,
-                            PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
-                        )
-                    }
+                drawIntoCanvas {
+                    layer.icon.bounds = this.size.toRect().toAndroidRect()
+                    layer.icon.drawWithColorFilter(
+                        it.nativeCanvas,
+                        PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+                    )
                 }
             }
         }
@@ -407,6 +475,15 @@ private fun ClockLayer(
             }
         }
     }
+}
+
+class BitmapShaderBrush(
+    val bitmap: Bitmap,
+) : ShaderBrush() {
+    override fun createShader(size: Size): Shader {
+        return BitmapShader(bitmap, PlatformShader.TileMode.CLAMP, PlatformShader.TileMode.CLAMP)
+    }
+
 }
 
 val LocalIconShape = compositionLocalOf<Shape> { CircleShape }
