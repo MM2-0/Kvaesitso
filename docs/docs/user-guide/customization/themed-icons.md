@@ -5,20 +5,52 @@ Themed Icons is a feature that adapt app icons to the launcher's color scheme:
 ![Themed icons off](/img/themed-icons-off.png)
 ![Themed icons on](/img/themed-icons-on.png)
 
-Themed icons can be enabled in Settings > Appearance > Themed Icons.
+Themed icons can be enabled for supported apps in Settings > Grid & icons > Themed Icons.
 
-## Themed icons on pre Android 13
+:::note
 
-It was first introduced by Google on Android 12. Unfortunately, Google did not provide an official API for third party app developers to support themed icons in their apps until Android 13. Instead they hardcoded all the themed icons into the Pixel Launcher. This is the reason why only Google icons could be themed on Android 12 Pixel devices.
+If you are an app developer, you can support themed icons by adding a `<monochrome>` drawable to
+your app icon. For more information refer to
+[the official documentation](https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#add_your_adaptive_icon_to_your_app).
 
-In order to not violate any trademarks, Kvaesitso does not ship any third party icons. However, it can extract these themed icons from the Pixel launcher if it is installed on the device. The issue remains, that only Google icons are supported. Fortunately, the Lawnchair developers started a community effort to bring themed icon support to all apps for their launcher: [Lawnicons](https://github.com/LawnchairLauncher/lawnicons).
+:::
 
-Kvaesitso supports themed icons through Lawnicons natively. All you need to do is to install the latest Lawnicons APK and enable Themed icons in the launcher settings (Settings > Appearance > Themed Icons). Kvaesitso will detect that Lawnicons is installed and extract the icons automatically.
+While themed icons were originally introduced in Android 13, support has been backported to Android
+8.0-12.
+Note however, that some apps (especially preinstalled system apps) may not support themed icons on
+older Android versions.
 
-## Themed icons on Android 13+
+## Themed icon packs
 
-In Android 13, a [new API](https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#add_your_adaptive_icon_to_your_app) has been added for app developers to support themed icons in their app. It remains to be seen, how well developers adopt this API so you might still want to install Lawnicons (as described [here](#themed-icons-on-pre-android-13)).
+Some icon packs, notably [Lawnicons](https://github.com/LawnchairLauncher/lawnicons)
+and [Arcticons](https://github.com/Donnnno/Arcticons), have support
+for themed icons. This is indicated by a "Dynamic colors" badge in the icon pack selection dialog.
+After you have selected an icon pack with support for themed icons, you can enable themed icons for
+that pack using the toggle button that appears in the icon pack preference:
+
+![Themed icon pack](/img/themed-icon-pack.png)
+
+:::note
+
+If you are an icon pack developer, you can indicate that your icon pack supports themed icons by
+adding
+the following intent filter:
+
+```xml
+
+<intent-filter>
+    <action android:name="app.lawnchair.icons.THEMED_ICON" />
+    <category android:name="android.intent.category.DEFAULT" />
+</intent-filter>
+```
+
+:::
 
 ## Auto generated themed icons
 
-There is also an option to force themed icons to all icons (Settings > Appearance > Force themed icons). This scales the foreground layer of an icon down, adds a monochrome color filter and replaces the background with a solid color. Using this option is generally not recommended because icons may become illegible, but it might work well in combination with certain monochrome icon packs. You can also apply auto generated themed icons on a per-app basis by using the [customize menu](per-item-customization).
+There is also an option to force themed icons to all icons (Settings > Grid & icons > Force themed
+icons). This scales the foreground layer of an icon down, adds a monochrome color filter and
+replaces the background with a solid color. Using this option is generally not recommended because
+icons may become illegible, but it might work well in combination with certain monochrome icon
+packs. You can also apply auto generated themed icons on a per-app basis by using
+the [customize menu](per-item-customization).
