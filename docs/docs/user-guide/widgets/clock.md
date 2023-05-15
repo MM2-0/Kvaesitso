@@ -1,6 +1,6 @@
 # Clock Widget
 
-The clock widget is always the top-most widget in the widget list. It can be customized in several ways at Settings > Widgets > Clock.
+The clock widget is always the top-most widget in the widget list. It can be customized in several ways at Settings > Home screen > Clock.
 
 ## Layout
 

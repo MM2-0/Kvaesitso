@@ -16,7 +16,7 @@ the favorites widget to the home screen.
 
 ## Can I remove / customize the clock?
 
-Yes, you can customize the clock style by going to Settings > Widgets > Clock and selecting a different
+Yes, you can customize the clock style by going to Settings > Home screen > Clock and selecting a different
 style. There is also an "empty style" that will remove the clock entirely.
 
 ## The toggle to grant notification access is disabled
