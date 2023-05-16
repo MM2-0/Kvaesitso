@@ -65,7 +65,6 @@ class IconService(
     private val cache = LruCache<String, LauncherIcon>(200)
 
     private var iconProviders: MutableStateFlow<List<IconProvider>> = MutableStateFlow(listOf())
-    private var placeholderProvider: IconProvider? = null
 
     /**
      * Signal that installed icon packs have been updated. Force a reload of all icons.
@@ -93,7 +92,7 @@ class IconService(
         scope.launch {
             dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest { settings ->
                 iconPacksUpdated.collectLatest {
-                    val placeholderProvider = if (settings.themedIcons) {
+                    val fallbackProvider = if (settings.themedIcons) {
                         ThemedPlaceholderIconProvider(context)
                     } else {
                         PlaceholderIconProvider(context)
@@ -121,7 +120,7 @@ class IconService(
                         providers.add(CompatIconProvider(context, settings.themedIcons))
                     }
                     providers.add(SystemIconProvider(context, settings.themedIcons))
-                    providers.add(placeholderProvider)
+                    providers.add(fallbackProvider)
                     cache.evictAll()
 
                     val transformations = mutableListOf<LauncherIconTransformation>()
@@ -131,7 +130,6 @@ class IconService(
                         ForceThemedIconTransformation()
                     )
 
-                    this@IconService.placeholderProvider = placeholderProvider
                     iconProviders.value = providers
                     this@IconService.transformations.value = transformations
                 }
@@ -153,9 +151,6 @@ class IconService(
                         send(icon)
                         return@collectLatest
                     }
-
-                    val placeholder = placeholderProvider?.getIcon(searchable, size)
-                    placeholder?.let { send(it) }
 
                     icon = provs.getFirstIcon(searchable, size)
 
@@ -193,7 +188,7 @@ class IconService(
             )
         }
         if (customIcon is DefaultPlaceholderIcon) {
-            return placeholderProvider?.let { listOf(it) } ?: emptyList()
+            return iconProviders.value.lastOrNull()?.let { listOf(it) } ?: emptyList()
         }
         return emptyList()
     }
