@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.gestures.DraggableState
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
@@ -47,6 +48,7 @@ import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
 import de.mm20.launcher2.ui.launcher.widgets.weather.WeatherWidget
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.FavoritesWidget
@@ -54,7 +56,6 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import java.util.UUID
 
 @Composable
 fun WidgetItem(
@@ -62,7 +63,7 @@ fun WidgetItem(
     appWidgetHost: AppWidgetHost,
     modifier: Modifier = Modifier,
     editMode: Boolean = false,
-    onWidgetAdd: (widget: Widget, offset: Int) -> Unit = {_, _ ->},
+    onWidgetAdd: (widget: Widget, offset: Int) -> Unit = { _, _ -> },
     onWidgetUpdate: (widget: Widget) -> Unit = {},
     onWidgetRemove: () -> Unit = {},
     draggableState: DraggableState = rememberDraggableState {},
@@ -79,9 +80,15 @@ fun WidgetItem(
         AppWidgetManager.getInstance(context).getAppWidgetInfo(widget.config.widgetId)
     } else null
 
+    val backgroundOpacity by animateFloatAsState(
+        if (widget is AppWidget && !widget.config.background && !editMode) 0f else LocalCardStyle.current.opacity,
+        label = "widgetCardBackgroundOpacity",
+    )
+
     LauncherCard(
         modifier = modifier.zIndex(if (isDragged) 1f else 0f),
-        elevation = elevation
+        elevation = elevation,
+        backgroundOpacity = backgroundOpacity,
     ) {
         Column {
             AnimatedVisibility(editMode) {
@@ -203,6 +210,7 @@ fun WidgetItem(
                                                     widgetId = it.config.widgetId
                                                 )
                                             )
+
                                             is WeatherWidget -> it.copy(id = widget.id)
                                             is MusicWidget -> it.copy(id = widget.id)
                                             is CalendarWidget -> it.copy(id = widget.id)

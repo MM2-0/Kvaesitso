@@ -437,6 +437,15 @@ fun ColumnScope.ConfigureAppWidget(
                         onWidgetUpdated(widget.copy(config = widget.config.copy(borderless = it)))
                     }
                 )
+                Divider()
+                SwitchPreference(
+                    title = stringResource(R.string.widget_config_appwidget_background),
+                    iconPadding = false,
+                    value = widget.config.background,
+                    onValueChanged = {
+                        onWidgetUpdated(widget.copy(config = widget.config.copy(background = it)))
+                    }
+                )
             }
         }
         if (isAtLeastApiLevel(28) && widgetInfo.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_RECONFIGURABLE != 0) {

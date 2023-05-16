@@ -795,6 +795,7 @@
     <string name="preference_search_result_ordering_weight_factor_high">Variable</string>
     <string name="widget_config_appwidget_height">Height</string>
     <string name="widget_config_appwidget_borderless">Borderless</string>
+    <string name="widget_config_appwidget_background">Background card</string>
     <string name="widget_config_appwidget_configure">Configure widget</string>
     <string name="widget_config_appwidget_resize_hint">Drag to resize</string>
     <string name="widget_config_weather_integration_settings">Weather integration settings</string>

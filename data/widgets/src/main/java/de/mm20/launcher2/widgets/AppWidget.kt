@@ -16,6 +16,7 @@ data class AppWidgetConfig(
     val widgetId: Int,
     val height: Int,
     val borderless: Boolean = false,
+    val background: Boolean = true,
 )
 
 data class AppWidget(
