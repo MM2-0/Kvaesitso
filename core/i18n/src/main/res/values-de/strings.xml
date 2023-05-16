@@ -603,7 +603,7 @@
     <string name="widget_config_weather_integration_settings">Einstellungen für die Wetter-Integration</string>
     <string name="app_widget_loading_failed">App-Widget konnte nicht geladen werden.</string>
     <string name="preference_category_media_apps">Medienapps</string>
-    <string name="preference_debug_reinstall_iconpacks">Symbolpakete neuinstallieren</string>
+    <string name="preference_debug_reinstall_iconpacks">Symbolpakete neu installieren</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Symbolpaketecache leeren und neu erstellen</string>
     <string name="widget_name_notes">Notiz</string>
     <string name="notes_widget_placeholder">Notiz schreiben…</string>
@@ -615,4 +615,5 @@
     <string name="preference_hidden_items_reveal_button">Einblenden-Button anzeigen</string>
     <string name="preference_hidden_items_reveal_button_summary">Eine Schaltfläche zum Einblenden ausgeblendeter Suchergebnisse anzeigen</string>
     <string name="widget_config_appwidget_resize_hint">Zum Anpassen ziehen</string>
+    <string name="widget_config_appwidget_background">Hintergrundkarte</string>
 </resources>
