@@ -14,6 +14,7 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import palettes.TonalPalette
+import java.lang.ref.WeakReference
 
 sealed interface LauncherIcon
 
@@ -29,19 +30,19 @@ data class StaticLauncherIcon(
     val foregroundLayer: LauncherIconLayer,
     val backgroundLayer: LauncherIconLayer,
 ) : LauncherIcon {
-    private var cachedBitmap: Bitmap? = null
+    private var cachedBitmap: WeakReference<Bitmap>? = null
     private var cachedRenderSettings: LauncherIconRenderSettings? = null
     private var renderSemaphore = Semaphore(1)
 
     fun getCachedBitmap(settings: LauncherIconRenderSettings): Bitmap? {
-        return if (cachedRenderSettings == settings) cachedBitmap else null
+        return if (cachedRenderSettings == settings) cachedBitmap?.get() else null
     }
 
     /**
      * Render this icon to a bitmap.
      */
     suspend fun render(settings: LauncherIconRenderSettings): Bitmap {
-        val cachedBmp = cachedBitmap
+        val cachedBmp = cachedBitmap?.get()
         if (cachedRenderSettings == settings && cachedBmp != null) return cachedBmp
         val bmp = withContext(Dispatchers.Default) {
             renderSemaphore.withPermit {
@@ -56,7 +57,7 @@ data class StaticLauncherIcon(
                     })
                 renderLayer(canvas, backgroundLayer, settings.bgThemeColor, settings.bgTone)
                 renderLayer(canvas, foregroundLayer, settings.fgThemeColor, settings.fgTone)
-                cachedBitmap = bmp
+                cachedBitmap = WeakReference(bmp)
                 cachedRenderSettings = settings
                 bmp
             }
