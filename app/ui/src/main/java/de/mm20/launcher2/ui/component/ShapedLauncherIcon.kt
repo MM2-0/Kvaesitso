@@ -52,7 +52,6 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
@@ -164,22 +163,27 @@ fun ShapedLauncherIcon(
             val bmp = currentBitmap
             val ic = currentIcon
             if (bmp != null && ic != null) {
-                Canvas(modifier = Modifier
-                    .size(defaultIconSize)
-                    .scale(size / defaultIconSize, TransformOrigin.Center)
+                Canvas(
+                    modifier = Modifier
+                        .size(defaultIconSize)
+                        .scale(size / defaultIconSize, TransformOrigin.Center)
                 ) {
                     val brush = BitmapShaderBrush(bmp)
                     if (ic.backgroundLayer is TransparentLayer) {
                         drawRect(brush)
                     } else {
                         val outline =
-                            shape.createOutline(this.size, layoutDirection, Density(density, fontScale))
+                            shape.createOutline(
+                                this.size,
+                                layoutDirection,
+                                Density(density, fontScale)
+                            )
                         drawOutline(outline, brush)
                     }
                 }
                 // Background layer is always static layer, color layer, or transparent layer
                 val fg = ic.foregroundLayer
-                when(fg) {
+                when (fg) {
                     is ClockLayer -> {
                         ClockLayer(
                             sublayers = fg.sublayers,
@@ -190,6 +194,7 @@ fun ShapedLauncherIcon(
                             tintColor = null,
                         )
                     }
+
                     is TintedClockLayer -> {
                         ClockLayer(
                             sublayers = fg.sublayers,
@@ -204,6 +209,7 @@ fun ShapedLauncherIcon(
                             },
                         )
                     }
+
                     is TextLayer -> {
                         Text(
                             text = fg.text,
@@ -217,7 +223,19 @@ fun ShapedLauncherIcon(
                             },
                         )
                     }
+
                     else -> {}
+                }
+            } else {
+                val color = MaterialTheme.colorScheme.secondaryContainer
+                Canvas(
+                    modifier = Modifier
+                        .size(defaultIconSize)
+                        .scale(size / defaultIconSize, TransformOrigin.Center)
+                ) {
+                    val outline =
+                        shape.createOutline(this.size, layoutDirection, Density(density, fontScale))
+                    drawOutline(outline, color)
                 }
             }
         }
