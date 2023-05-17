@@ -619,4 +619,6 @@
     <string name="preference_hidden_items_reveal_button">Zobrazit tlačítko odhalení</string>
     <string name="preference_hidden_items_reveal_button_summary">Zobrazit tlačítko pro odhalení skrytých výsledků vyhledávání</string>
     <string name="widget_config_appwidget_resize_hint">Táhněte pro změnu velikosti</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Vymazat a znovu sestavit mezipaměť balíčků ikon</string>
+    <string name="widget_config_appwidget_background">Karta pozadí</string>
 </resources>
