@@ -1,6 +1,9 @@
 package de.mm20.launcher2.ui.settings.clockwidget
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -181,12 +184,17 @@ fun ClockStylePreference(
                 ) {
                     HorizontalPager(
                         state = pagerState,
-                        modifier = Modifier.height(300.dp)
+                        modifier = Modifier.height(300.dp).fillMaxWidth()
                     ) {
-                        Clock(
-                            style = styles[it],
-                            layout = layout
-                        )
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Clock(
+                                style = styles[it],
+                                layout = layout
+                            )
+                        }
                     }
                     HorizontalPagerIndicator(pagerState = pagerState, pageCount = styles.size)
                 }
