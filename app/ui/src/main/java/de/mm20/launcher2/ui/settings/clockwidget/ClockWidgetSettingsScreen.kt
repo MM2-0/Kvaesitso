@@ -2,6 +2,8 @@ package de.mm20.launcher2.ui.settings.clockwidget
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.AlertDialog
@@ -13,9 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.rememberPagerState
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
@@ -153,7 +153,7 @@ fun ClockStylePreference(
         val styles = remember {
             ClockStyle.values().filter { it != ClockStyle.UNRECOGNIZED }
         }
-        val pagerState = rememberPagerState(styles.indexOf(value))
+        val pagerState = rememberPagerState(styles.indexOf(value)) { styles.size }
 
         AlertDialog(
             onDismissRequest = { showDialog = false },
@@ -180,7 +180,6 @@ fun ClockStylePreference(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     HorizontalPager(
-                        count = styles.size,
                         state = pagerState,
                         modifier = Modifier.height(300.dp)
                     ) {
@@ -189,7 +188,7 @@ fun ClockStylePreference(
                             layout = layout
                         )
                     }
-                    HorizontalPagerIndicator(pagerState = pagerState)
+                    HorizontalPagerIndicator(pagerState = pagerState, pageCount = styles.size)
                 }
             }
         )

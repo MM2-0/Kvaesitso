@@ -233,7 +233,7 @@ fun SearchBarStylePreference(
             Settings.SearchBarSettings.SearchBarStyle.values()
                 .filter { it != Settings.SearchBarSettings.SearchBarStyle.UNRECOGNIZED }
         }
-        val pagerState = rememberPagerState(styles.indexOf(value))
+        val pagerState = rememberPagerState(initialPage = styles.indexOf(value)) { styles.size }
 
         var level by remember { mutableStateOf(SearchBarLevel.Resting) }
         var previewSearchValue by remember { mutableStateOf("") }
@@ -280,7 +280,6 @@ fun SearchBarStylePreference(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     HorizontalPager(
-                        pageCount = styles.size,
                         state = pagerState,
                         modifier = Modifier
                             .height(150.dp)
