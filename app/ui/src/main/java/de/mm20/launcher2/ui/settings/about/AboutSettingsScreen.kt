@@ -101,11 +101,11 @@ fun AboutSettingsScreen() {
                 Preference(
                     icon = Icons.Rounded.Fdroid,
                     title = stringResource(id = R.string.preference_about_fdroid),
-                    summary = "github.com/MM2-0/fdroid",
+                    summary = "fdroid.mm20.de",
                     onClick = {
                         context.startActivity(Intent(Intent.ACTION_VIEW).apply {
                             data =
-                                Uri.parse("https://raw.githubusercontent.com/MM2-0/fdroid/master/fdroid/repo")
+                                Uri.parse("https://fdroid.mm20.de")
                         })
                     }
                 )
