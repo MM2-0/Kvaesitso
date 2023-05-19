@@ -1,0 +1,21 @@
+name: Trigger F-Droid repository rebuild
+on:
+  workflow_dispatch:
+  release:
+    types:
+      - published
+      - unpublished
+      - edited
+  workflow_run:
+    workflows:
+      - Build Nightly APK
+    types:
+      - completed
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger F-Droid repository rebuild
+        run: |
+          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/MM2-0/fdroid2/dispatches --data '{"event_type": "rebuild-repository"}'
