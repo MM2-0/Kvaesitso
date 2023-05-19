@@ -32,6 +32,8 @@ jobs:
           TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
           mkdir "${TMP_KEYSTORE_FILE_PATH}"
           echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/keystore.jks
+      - name: Override version code based on date
+        run: "echo "VERSION_CODE_OVERRIDE=$(date +%Y%m%d00)" >> "$GITHUB_ENV""
       - name: Build and sign APK
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
