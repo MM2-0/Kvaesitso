@@ -21,4 +21,4 @@ jobs:
     steps:
       - name: Trigger F-Droid repository rebuild
         run: |
-          curl -X POST -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/repos/MM2-0/fdroid2/dispatches --data '{"event_type": "rebuild-repository"}'
+          curl -X POST -H "Authorization: Bearer ${{ secrets.FDROID_REPO_GH_PAT }}" https://api.github.com/repos/MM2-0/fdroid2/dispatches --data '{"event_type": "rebuild-repository"}'
