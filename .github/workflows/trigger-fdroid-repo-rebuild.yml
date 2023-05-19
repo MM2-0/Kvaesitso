@@ -12,6 +12,10 @@ on:
     types:
       - completed
 
+permissions:
+  contents: write
+  metadata: read
+
 jobs:
   trigger:
     runs-on: ubuntu-latest
