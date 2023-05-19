@@ -13,14 +13,12 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 The preferred way of installation is using the [F-Droid](https://f-droid.org) application. That way
 you will always be notified about updates. Kvaesitso is available in the official F-Droid
 repository, but all features depending on non-foss external APIs were removed.
-For feature-complete builds you can add [MM20's repository](https://github.com/MM2-0/fdroid). Just scan the code below or open
+For feature-complete builds you can add [MM20's repository](https://fdroid.mm20.de). Just scan the code below or open
 the link on your phone:
 
-![qr code](https://raw.githubusercontent.com/MM2-0/fdroid/main/qrcode.png)
+![qr code](https://fdroid.mm20.de/repo/index.png)
 
-https://raw.githubusercontent.com/MM2-0/fdroid/main/fdroid/repo/?fingerprint=156FBAB952F6996415F198F3F29628D24B30E725B0F07A2B49C3A9B5161EEE1A
-
-Note: the link should open in the F-Droid app but if it doesn't, you'll see a 400 error. That's fine, just copy the URL and paste it into your F-Droid client, it knows how to deal with that URL.
+https://fdroid.mm20.de/repo/
 
 The same version is also available in IzzyOnDroid's repository.
 
@@ -60,7 +58,7 @@ If you want to help translating, see [how to translate the project.](https://kva
 
 - User guide: https://kvaesitso.mm20.de/docs/user-guide
 - Telegram group: https://t.me/Kvaesitso
-- F-Droid-Repository: https://raw.githubusercontent.com/MM2-0/fdroid/master/fdroid/repo
+- F-Droid-Repository: https://fdroid.mm20.de
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
 
 ## License
