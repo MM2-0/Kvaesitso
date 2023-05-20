@@ -16,11 +16,11 @@ repository, but all features depending on non-foss external APIs were removed.
 For feature-complete builds you can add [MM20's repository](https://fdroid.mm20.de). Just scan the code below or open
 the link on your phone:
 
-![qr code](https://fdroid.mm20.de/repo/index.png)
+<img src="https://fdroid.mm20.de/repo/index.png" width="150" alt="QR code">
 
 https://fdroid.mm20.de/repo/
 
-The same version is also available in IzzyOnDroid's repository.
+The same version is also available in [IzzyOnDroid's repository](https://apt.izzysoft.de/fdroid/index/apk/de.mm20.launcher2.release).
 
 ### Manual installation
 
