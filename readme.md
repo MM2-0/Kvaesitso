@@ -61,6 +61,10 @@ If you want to help translating, see [how to translate the project.](https://kva
 - F-Droid-Repository: https://fdroid.mm20.de
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=MM2-0/Kvaesitso&type=Date)](https://star-history.com/#MM2-0/Kvaesitso&Date)
+
 ## License
 
 This software is free software licensed under the GNU General Public License 3.0.
