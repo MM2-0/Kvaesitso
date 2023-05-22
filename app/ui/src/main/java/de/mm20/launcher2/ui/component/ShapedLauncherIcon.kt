@@ -19,6 +19,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
@@ -165,7 +166,7 @@ fun ShapedLauncherIcon(
             if (bmp != null && ic != null) {
                 Canvas(
                     modifier = Modifier
-                        .size(defaultIconSize)
+                        .requiredSize(defaultIconSize)
                         .scale(size / defaultIconSize, TransformOrigin.Center)
                 ) {
                     val brush = BitmapShaderBrush(bmp)
@@ -230,8 +231,7 @@ fun ShapedLauncherIcon(
                 val color = MaterialTheme.colorScheme.secondaryContainer
                 Canvas(
                     modifier = Modifier
-                        .size(defaultIconSize)
-                        .scale(size / defaultIconSize, TransformOrigin.Center)
+                        .fillMaxSize()
                 ) {
                     val outline =
                         shape.createOutline(this.size, layoutDirection, Density(density, fontScale))
