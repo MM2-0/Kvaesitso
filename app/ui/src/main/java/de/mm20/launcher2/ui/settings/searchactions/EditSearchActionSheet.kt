@@ -113,10 +113,7 @@ fun EditSearchActionSheet(
             viewModel.onDismiss()
             onDismiss()
         },
-        dismissOnBackPress = {
-            page != EditSearchActionPage.PickIcon
-        },
-        swipeToDismiss = {
+        dismissible = {
             page != EditSearchActionPage.PickIcon
         },
         confirmButton = when (page) {

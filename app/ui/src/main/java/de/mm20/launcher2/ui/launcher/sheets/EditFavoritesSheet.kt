@@ -115,10 +115,7 @@ fun EditFavoritesSheet(
                 }
             )
         },
-        swipeToDismiss = {
-            createShortcutTarget == null
-        },
-        dismissOnBackPress = {
+        dismissible = {
             createShortcutTarget == null
         },
         confirmButton = {

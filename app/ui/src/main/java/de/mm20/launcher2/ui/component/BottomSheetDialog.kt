@@ -14,11 +14,15 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material.FixedThreshold
@@ -31,7 +35,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocal
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -41,7 +44,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -55,8 +57,6 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.launch
@@ -69,8 +69,7 @@ fun BottomSheetDialog(
     actions: @Composable RowScope.() -> Unit = {},
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
-    swipeToDismiss: () -> Boolean = { true },
-    dismissOnBackPress: () -> Boolean = { true },
+    dismissible: () -> Boolean = { true },
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -79,13 +78,13 @@ fun BottomSheetDialog(
             initialValue = SwipeState.Dismiss,
             confirmStateChange = {
                 if (it == SwipeState.Dismiss) {
-                    if (swipeToDismiss()) {
+                    if (dismissible()) {
                         onDismissRequest()
                     }
                     else return@SwipeableState false
                 }
                 return@SwipeableState true
-            }
+            },
         )
     }
 
@@ -141,9 +140,10 @@ fun BottomSheetDialog(
     ) {
         Dialog(
             properties = DialogProperties(
-                dismissOnBackPress = dismissOnBackPress(),
-                dismissOnClickOutside = swipeToDismiss(),
+                dismissOnBackPress = dismissible(),
+                dismissOnClickOutside = dismissible(),
                 usePlatformDefaultWidth = false,
+                decorFitsSystemWindows = false,
             ),
             onDismissRequest = onDismissRequest,
         ) {
@@ -161,9 +161,9 @@ fun BottomSheetDialog(
                 Box(modifier = Modifier
                     .background(MaterialTheme.colorScheme.scrim.copy(alpha = scrimAlpha))
                     .fillMaxSize()
-                    .pointerInput(onDismissRequest, swipeToDismiss) {
+                    .pointerInput(onDismissRequest, dismissible) {
                         detectTapGestures {
-                            if (swipeToDismiss()) {
+                            if (dismissible()) {
                                 scope.launch {
                                     swipeState.animateTo(SwipeState.Dismiss)
                                     onDismissRequest()
@@ -201,7 +201,6 @@ fun BottomSheetDialog(
                     Surface(
                         modifier = Modifier
                             .nestedScroll(nestedScrollConnection)
-                            .animateContentSize()
                             .onSizeChanged {
                                 height = it.height.toFloat()
                             }
@@ -217,7 +216,7 @@ fun BottomSheetDialog(
                                         FractionalThreshold(0.5f)
                                     }
                                 },
-                                resistance = null
+                                resistance = null,
                             )
                             .fillMaxWidth()
                             .weight(1f, false),
@@ -238,7 +237,8 @@ fun BottomSheetDialog(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .wrapContentHeight(),
+                                    .wrapContentHeight()
+                                    .animateContentSize(),
                                 propagateMinConstraints = true,
                                 contentAlignment = Alignment.Center
                             ) {
@@ -250,7 +250,6 @@ fun BottomSheetDialog(
 
                     if (confirmButton != null || dismissButton != null) {
                         val elevation by animateDpAsState(if (swipeState.offset.value == 0f) 0.dp else 1.dp)
-                        val alpha by animateFloatAsState(if (swipeState.targetValue == SwipeState.Dismiss) 0f else 1f)
                         Surface(
                             modifier = Modifier
                                 .wrapContentHeight()
@@ -277,6 +276,13 @@ fun BottomSheetDialog(
                         }
 
                     }
+
+                    Box(
+                        modifier = Modifier
+                            .windowInsetsBottomHeight(WindowInsets.systemBars)
+                            .fillMaxWidth()
+                            .background(MaterialTheme.colorScheme.surface)
+                    )
                 }
             }
         }

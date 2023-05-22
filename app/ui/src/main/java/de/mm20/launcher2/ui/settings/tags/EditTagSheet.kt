@@ -103,12 +103,9 @@ fun EditTagSheet(
             if (viewModel.page == EditTagSheetPage.CustomizeTag) viewModel.save()
             onDismiss()
         },
-        swipeToDismiss = {
+        dismissible = {
             !(!isCreatingNewTag && viewModel.page == EditTagSheetPage.PickItems)
         },
-        dismissOnBackPress = {
-            !(!isCreatingNewTag && viewModel.page == EditTagSheetPage.PickItems)
-        }
     ) {
         when (viewModel.page) {
             EditTagSheetPage.CreateTag -> CreateNewTagPage(viewModel, it)

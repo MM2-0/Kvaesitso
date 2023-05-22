@@ -79,8 +79,7 @@ fun CustomizeSearchableSheet(
         title = {
             Text(stringResource(if (pickIcon) R.string.icon_picker_title else R.string.menu_customize))
         },
-        swipeToDismiss = { !pickIcon },
-        dismissOnBackPress = { !pickIcon },
+        dismissible = { !pickIcon },
         confirmButton = {
             if (pickIcon) {
                 OutlinedButton(onClick = { viewModel.closeIconPicker() }) {
