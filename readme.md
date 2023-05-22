@@ -57,7 +57,6 @@ If you want to help translating, see [how to translate the project.](https://kva
 ## Links
 
 - User guide: https://kvaesitso.mm20.de/docs/user-guide
-- Telegram group: https://t.me/Kvaesitso
 - F-Droid-Repository: https://fdroid.mm20.de
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
 
