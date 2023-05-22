@@ -38,6 +38,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
@@ -187,6 +188,7 @@ fun ShapedLauncherIcon(
                 when (fg) {
                     is ClockLayer -> {
                         ClockLayer(
+                            modifier = Modifier.fillMaxSize().clip(shape),
                             sublayers = fg.sublayers,
                             defaultMinute = fg.defaultMinute,
                             defaultHour = fg.defaultHour,
@@ -198,6 +200,7 @@ fun ShapedLauncherIcon(
 
                     is TintedClockLayer -> {
                         ClockLayer(
+                            modifier = Modifier.fillMaxSize().clip(shape),
                             sublayers = fg.sublayers,
                             defaultMinute = fg.defaultMinute,
                             defaultHour = fg.defaultHour,
@@ -424,6 +427,7 @@ private fun ClockLayer(
     defaultSecond: Int,
     scale: Float,
     tintColor: Color?,
+    modifier: Modifier = Modifier,
 ) {
     val time = remember(LocalTime.current) {
         Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
@@ -460,7 +464,7 @@ private fun ClockLayer(
         }
     }
 
-    Canvas(modifier = Modifier.fillMaxSize()) {
+    Canvas(modifier = modifier) {
         val colorFilter = tintColor?.let {
             PorterDuffColorFilter(tintColor.toArgb(), PorterDuff.Mode.SRC_IN)
         }
