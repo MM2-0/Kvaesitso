@@ -1,5 +1,6 @@
 package de.mm20.launcher2.data.customattrs
 
+import android.database.sqlite.SQLiteDatabase
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
@@ -11,6 +12,7 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.json.JSONArray
@@ -69,11 +71,22 @@ internal class CustomAttributesRepositoryImpl(
     }
 
     override fun getCustomLabels(items: List<SavableSearchable>): Flow<List<CustomLabel>> {
-        val dao = appDatabase.customAttrsDao()
-        return dao.getCustomAttributes(items.map { it.key }, CustomAttributeType.Label.value)
-            .map { list ->
-                list.mapNotNull { CustomAttribute.fromDatabaseEntity(it) as? CustomLabel }
+        if (items.size <= 999) {
+            val dao = appDatabase.customAttrsDao()
+            return dao.getCustomAttributes(items.map { it.key }, CustomAttributeType.Label.value)
+                .map { list ->
+                    list.mapNotNull { CustomAttribute.fromDatabaseEntity(it) as? CustomLabel }
+                }
+        } else {
+            val dao = appDatabase.customAttrsDao()
+            return combine(items.chunked(999).map { chunk ->
+                dao.getCustomAttributes(chunk.map { it.key }, CustomAttributeType.Label.value)
+            }) { results ->
+                results.flatMap { list ->
+                    list.mapNotNull { CustomAttribute.fromDatabaseEntity(it) as? CustomLabel }
+                }
             }
+        }
     }
 
     override fun setCustomLabel(searchable: SavableSearchable, label: String) {

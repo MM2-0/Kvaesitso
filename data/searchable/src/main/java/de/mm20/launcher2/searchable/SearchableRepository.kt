@@ -17,6 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -338,10 +339,12 @@ internal class SearchableRepositoryImpl(
     }
 
     override fun sortByRelevance(keys: List<String>): Flow<List<String>> {
+        if (keys.size > 999) return flowOf(emptyList())
         return database.searchableDao().sortByRelevance(keys)
     }
 
     override fun sortByWeight(keys: List<String>): Flow<List<String>> {
+        if (keys.size > 999) return flowOf(emptyList())
         return database.searchableDao().sortByWeight(keys)
     }
 
@@ -368,6 +371,12 @@ internal class SearchableRepositoryImpl(
 
     override suspend fun getByKeys(keys: List<String>): List<SavableSearchable> {
         val dao = database.searchableDao()
+        if (keys.size > 999) {
+            return keys.chunked(999).flatMap {
+                dao.getByKeys(it)
+                    .mapNotNull { fromDatabaseEntity(it).searchable }
+            }
+        }
         return dao.getByKeys(keys)
             .mapNotNull { fromDatabaseEntity(it).searchable }
     }
