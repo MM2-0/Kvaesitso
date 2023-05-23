@@ -53,7 +53,6 @@ class NotesWidgetVM(
     fun exportNote(context: Context, uri: Uri) {
         viewModelScope.launch(Dispatchers.IO) {
             val text = noteText.value.text
-            Log.d("MM20", text)
             val outputStream = context.contentResolver.openOutputStream(uri)
             outputStream?.use {
                 it.write(text.toByteArray())

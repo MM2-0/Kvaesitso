@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.widgets.notes
 
+import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
@@ -15,6 +16,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.SaveAlt
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -146,6 +148,20 @@ fun NotesWidget(
                                     )
                                 )
                                 exportLauncher.launch("$fileName.md")
+                                showMenu = false
+                            },
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.menu_share)) },
+                            leadingIcon = {
+                                Icon(Icons.Rounded.Share, null)
+                            },
+                            onClick = {
+                                Intent(Intent.ACTION_SEND).apply {
+                                    type = "text/plain"
+                                    putExtra(Intent.EXTRA_TEXT, text.text)
+                                    context.startActivity(Intent.createChooser(this, null))
+                                }
                                 showMenu = false
                             },
                         )
