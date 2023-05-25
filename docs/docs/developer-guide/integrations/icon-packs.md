@@ -12,7 +12,7 @@ the following intent filters in your `AndroidManifest.xml`:
 
 ```xml
 
-<activity android:name="[...]">
+<activity android:name="[...]" android:exported="true">
     <intent-filter>
         <action android:name="org.adw.ActivityStarter.THEMES" />
     </intent-filter>
@@ -49,6 +49,7 @@ The file has the following structure:
 Icons are added to the `appfilter.xml` file using the `<item>` tag:
 
 ```xml
+
 <item component="ComponentInfo{com.android.deskclock/com.android.deskclock.DeskClockTabActivity}"
     drawable="clock" />
 ```
@@ -65,6 +66,7 @@ The launcher can generate fallback icons for apps that don't have an icon in the
 Fallback icons consist of four parts:
 
 ```xml
+
 <resources>
     <scale factor="1.0" />
     <iconback img="iconback" />
@@ -81,14 +83,13 @@ Fallback icons consist of four parts:
 You can provide multiple variants of each part by adding a number to the `img` attribute:
 
 ```xml
+
 <iconback img1="iconback" img2="iconback2" />
 ```
 
 The launcher will then randomly pick one of the variants for each icon.
 
-
 ### Dynamic icons
-
 
 #### Calendar icons
 
@@ -98,6 +99,7 @@ launcher's [dynamic calendar icon standard](https://github.com/teslacoil/Example
 To your `appfilter.xml` file, add the following:
 
 ```xml
+
 <calendar component="ComponentInfo{com.google.android.calendar/com.android.calendar.LaunchActivity}"
     prefix="calendar_" />
 ```
@@ -112,7 +114,111 @@ Make sure that all 31 drawables are present, or the launcher will reject the ico
 
 #### Clock icons
 
-Dynamic clock icons are not supported yet.
+Dynamic clock icons are supported as well but they work a bit differently than calendar icons.
+A dynamic clock icon needs at least two entries in your `appfilter.xml` file:
+
+```xml
+
+<resources>
+    <item
+        component="ComponentInfo{com.google.android.deskclock/com.android.deskclock.DeskClockTabActivity}"
+        drawable="clock" />
+    <dynamic-clock defaultHour="10" defaultMinute="10" defaultSecond="30" drawable="clock"
+        hourLayerIndex="0" minuteLayerIndex="1" secondLayerIndex="2" />
+</resources>
+```
+
+- The first entry is a normal icon entry.
+- The second entry tells the launcher that that specific drawable is a dynamic clock icon. That way
+  you can reuse the same clock icon config for multiple apps.
+
+The icon itself must be either a `LayerDrawable`, or an `AdaptiveIconDrawable` with a `LayerDrawable`
+as its foreground layer.
+
+:::note
+Some launchers only support `AdaptiveIconDrawable`s, so you should use that if possible.
+:::
+
+The entry in the `appfilter.xml` file tells the launcher which layer
+corresponds to which clock hand. If your icon does not have all three clock hands, you can omit the
+corresponding layer index attribute or set it to `-1`.
+
+Here is an example of a clock icon:
+
+```xml
+
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@drawable/clock_background" />
+    <foreground>
+        <layer-list>
+            <item>
+                <rotate android:drawable="@drawable/clock_hour" android:fromDegrees="300.0"
+                    android:pivotX="50.0%" android:pivotY="50.0%" android:toDegrees="5300.0" />
+            </item>
+            <item>
+                <rotate android:drawable="@drawable/clock_minute" android:fromDegrees="60.0"
+                    android:pivotX="50.0%" android:pivotY="50.0%" android:toDegrees="60060.0" />
+            </item>
+            <item>
+                <rotate android:drawable="@mipmap/clock_second" android:fromDegrees="180.0"
+                    android:level="300" android:pivotX="50.0%" android:pivotY="50.0%"
+                    android:toDegrees="6180.0" />
+            </item>
+            <item android:drawable="@mipmap/clock_top" />
+        </layer-list>
+    </foreground>
+</adaptive-icon>
+```
+
+Notice how each of the three clock hand layers is wrapped in a `RotateDrawable`. While this is not
+strictly
+necessary for Kvaesitso,
+other launchers might expect this structure so it is recommended to always wrap the clock hands in
+a `RotateDrawable` and set the `android:fromDegrees` and `android:toDegrees` like this:
+
+- For the clock hour hand, the difference between `android:fromDegrees` and `android:toDegrees`
+  must be `5000`.
+- For the clock minute hand, the difference between `android:fromDegrees` and `android:toDegrees`
+  must be `60000`.
+- For the clock second hand, the difference between `android:fromDegrees` and `android:toDegrees`
+  must be `6000`.
+- Each hand can have an offset from 0° to set the clock to a specific time (this is useful so that
+  launchers that don't support dynamic clock icons don't display the icon as noon). For example, if
+  you want
+  the clock to show 10:10:30, you would set `android:fromDegrees` to 300° for the hour hand, 60° for
+  the minute hand and 180° for the second hand and add the same offset to `android:toDegrees`.
+- To let the launcher know which time the clock shows in its default state, you can use
+  the `defaultHour`,  `defaultMinute` and `defaultSecond` attributes in the `appfilter.xml` entry.
+
+:::note
+
+`defaultHour`, `defaultMinute` and `defaultSecond` are independent from each other. If you
+set `defaultHour` to 10, then it is expected that the hour hand drawable is rotated by exactly 300°,
+regardless of the positions of the minute and second hands even if that means that the clock shows
+an impossible time.
+:::
+
+:::info
+
+**Why these numbers?**
+
+Launcher3 (and its descendants) use the `android:level` attribute to
+animate the clock hands. A drawable's level is a number
+between 0 and 10000. For `RotateDrawable`s, each level corresponds to 1/10000 of the angle between
+`android:fromDegrees` and `android:toDegrees`.
+
+For the second hand, it is expected
+that [10 levels are equal to 1 second](https://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/libs/systemui/iconloaderlib/src/com/android/launcher3/icons/ClockDrawableWrapper.java;drc=7346c436e5a11ce08f6a80dcfeb8ef941ca30176;l=84).
+which means that 600 levels correspond to a full rotation. But since a drawable has 10000 levels,
+the total angle must be `360/600 * 10000 = 6000` degrees.
+
+For the minute layer, one level is equal to one minute so 60 levels are equal to a full rotation.
+This means that the total angle must be `360/60 * 10000 = 60000` degrees.
+
+For the hour layer, one level is also equal to one minute, so there are `12 * 60 = 720` levels in a
+full rotation. `360/720 * 10000 = 5000` degrees.
+
+:::
 
 ### Themed icons
 
@@ -122,6 +228,7 @@ To declare that your icon pack supports themed icons, add the following intent f
 `AndroidManifest.xml`:
 
 ```xml
+
 <intent-filter>
     <action android:name="app.lawnchair.icons.THEMED_ICON" />
 </intent-filter>
