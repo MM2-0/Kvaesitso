@@ -188,7 +188,9 @@ fun ShapedLauncherIcon(
                 when (fg) {
                     is ClockLayer -> {
                         ClockLayer(
-                            modifier = Modifier.fillMaxSize().clip(shape),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(shape),
                             sublayers = fg.sublayers,
                             defaultMinute = fg.defaultMinute,
                             defaultHour = fg.defaultHour,
@@ -200,7 +202,9 @@ fun ShapedLauncherIcon(
 
                     is TintedClockLayer -> {
                         ClockLayer(
-                            modifier = Modifier.fillMaxSize().clip(shape),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .clip(shape),
                             sublayers = fg.sublayers,
                             defaultMinute = fg.defaultMinute,
                             defaultHour = fg.defaultHour,
@@ -438,11 +442,11 @@ private fun ClockLayer(
     }
 
     val minute = remember {
-        Animatable((time.minute - defaultMinute).toFloat() + (time.second - defaultSecond).toFloat() / 60f)
+        Animatable((time.minute - defaultMinute).toFloat() + time.second.toFloat() / 60f)
     }
 
     val hour = remember {
-        Animatable((time.hour - defaultHour).toFloat() + (time.minute + defaultMinute).toFloat() / 60f)
+        Animatable((time.hour - defaultHour).toFloat() + time.minute.toFloat() / 60f)
     }
 
     LaunchedEffect(time) {
