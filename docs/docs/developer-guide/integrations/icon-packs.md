@@ -114,6 +114,11 @@ Make sure that all 31 drawables are present, or the launcher will reject the ico
 
 #### Clock icons
 
+:::caution
+**Preview feature:** This feature is currently (May 26, 2023) only available in nightly builds.
+
+:::
+
 Dynamic clock icons are supported as well but they work a bit differently than calendar icons.
 A dynamic clock icon needs at least two entries in your `appfilter.xml` file:
 
@@ -132,7 +137,8 @@ A dynamic clock icon needs at least two entries in your `appfilter.xml` file:
 - The second entry tells the launcher that that specific drawable is a dynamic clock icon. That way
   you can reuse the same clock icon config for multiple apps.
 
-The icon itself must be either a `LayerDrawable`, or an `AdaptiveIconDrawable` with a `LayerDrawable`
+The icon itself must be either a `LayerDrawable`, or an `AdaptiveIconDrawable` with
+a `LayerDrawable`
 as its foreground layer.
 
 :::note
