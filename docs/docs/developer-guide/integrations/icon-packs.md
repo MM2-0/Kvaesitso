@@ -142,7 +142,7 @@ a `LayerDrawable`
 as its foreground layer.
 
 :::note
-Some launchers only support `AdaptiveIconDrawable`s, so you should use that if possible.
+Some launchers only support `AdaptiveIconDrawable`s, so you should prefer that if possible.
 :::
 
 The entry in the `appfilter.xml` file tells the launcher which layer
@@ -167,8 +167,7 @@ Here is an example of a clock icon:
             </item>
             <item>
                 <rotate android:drawable="@mipmap/clock_second" android:fromDegrees="180.0"
-                    android:level="300" android:pivotX="50.0%" android:pivotY="50.0%"
-                    android:toDegrees="6180.0" />
+                    android:pivotX="50.0%" android:pivotY="50.0%" android:toDegrees="6180.0" />
             </item>
             <item android:drawable="@mipmap/clock_top" />
         </layer-list>
