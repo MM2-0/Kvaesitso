@@ -10,10 +10,12 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.icons.AppIcon
 import de.mm20.launcher2.icons.CalendarIcon
+import de.mm20.launcher2.icons.ClockIcon
 import de.mm20.launcher2.icons.IconBack
 import de.mm20.launcher2.icons.IconMask
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconUpon
+import de.mm20.launcher2.icons.compat.ClockIconConfig
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.xmlpull.v1.XmlPullParser
@@ -31,40 +33,8 @@ class AppFilterIconPackInstaller(
             val pkgName = iconPack.packageName
 
             try {
-                val res = context.packageManager.getResourcesForApplication(pkgName)
-                val parser: XmlPullParser
-                var inStream: Reader? = null
-                val xmlId = res.getIdentifier("appfilter", "xml", pkgName)
-                val rawId = res.getIdentifier("appfilter", "raw", pkgName)
-                parser = when {
-                    xmlId != 0 -> res.getXml(xmlId)
-                    rawId != 0 -> {
-                        inStream = res.openRawResource(rawId).reader()
-                        XmlPullParserFactory.newInstance().newPullParser().apply {
-                            setInput(inStream)
-                        }
-                    }
-
-                    else -> {
-                        val iconPackContext = context.createPackageContext(
-                            pkgName,
-                            Context.CONTEXT_IGNORE_SECURITY
-                        )
-                        inStream = try {
-                            iconPackContext.assets.open("appfilter.xml").reader()
-                        } catch (e: IOException) {
-                            CrashReporter.logException(e)
-                            Log.e(
-                                "MM20",
-                                "appfilter.xml not found in $pkgName. Searched locations: res/xml/appfilter.xml, res/raw/appfilter.xml, assets/appfilter.xml"
-                            )
-                            return@withContext
-                        }
-                        XmlPullParserFactory.newInstance().newPullParser().apply {
-                            setInput(inStream)
-                        }
-                    }
-                }
+                val dynamicClocks = getDynamicClockIcons(pkgName)
+                val parser = getAppfilterParser(pkgName) ?: return@withContext
 
                 loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
                     if (parser.eventType != XmlPullParser.START_TAG) continue
@@ -85,14 +55,27 @@ class AppFilterIconPackInstaller(
 
                             val name = parser.getAttributeValue(null, "name")
 
-                            val icon = AppIcon(
-                                packageName = componentName.packageName,
-                                activityName = componentName.shortClassName,
-                                drawable = drawable,
-                                iconPack = pkgName,
-                                name = name,
-                                themed = iconPack.themed,
-                            )
+
+                            val icon = if (dynamicClocks.containsKey(drawable)) {
+                                ClockIcon(
+                                    packageName = componentName.packageName,
+                                    activityName = componentName.shortClassName,
+                                    iconPack = pkgName,
+                                    themed = iconPack.themed,
+                                    name = name,
+                                    drawable = drawable,
+                                    config = dynamicClocks[drawable]!!,
+                                )
+                            } else {
+                                AppIcon(
+                                    packageName = componentName.packageName,
+                                    activityName = componentName.shortClassName,
+                                    drawable = drawable,
+                                    iconPack = pkgName,
+                                    name = name,
+                                    themed = iconPack.themed,
+                                )
+                            }
                             addIcon(icon)
                         }
 
@@ -168,14 +151,81 @@ class AppFilterIconPackInstaller(
                         }
                     }
                 }
-                (parser as? XmlResourceParser)?.close()
-                inStream?.close()
+                parser.close()
 
                 Log.d("MM20", "Icon pack $pkgName has been installed successfully")
             } catch (e: PackageManager.NameNotFoundException) {
                 Log.e("MM20", "Could not install icon pack $pkgName: package not found.")
             } catch (e: XmlPullParserException) {
                 CrashReporter.logException(e)
+            }
+        }
+    }
+
+    private fun getDynamicClockIcons(packageName: String): Map<String, ClockIconConfig> {
+        val parser = getAppfilterParser(packageName) ?: return emptyMap()
+        val map = mutableMapOf<String, ClockIconConfig>()
+        loop@ while (parser.next() != XmlPullParser.END_DOCUMENT) {
+            if (parser.eventType != XmlPullParser.START_TAG) continue
+            if (parser.name == "dynamic-clock") {
+                val drawable = parser.getAttributeValue(null, "drawable") ?: continue@loop
+                val defaultHour = parser.getAttributeValue(null, "defaultHour")?.toIntOrNull() ?: 0
+                val defaultMinute =
+                    parser.getAttributeValue(null, "defaultMinute")?.toIntOrNull() ?: 0
+                val defaultSecond =
+                    parser.getAttributeValue(null, "defaultSecond")?.toIntOrNull() ?: 0
+                val hourLayerIndex =
+                    parser.getAttributeValue(null, "hourLayerIndex")?.toIntOrNull() ?: -1
+                val minuteLayerIndex =
+                    parser.getAttributeValue(null, "minuteLayerIndex")?.toIntOrNull() ?: -1
+                val secondLayerIndex =
+                    parser.getAttributeValue(null, "secondLayerIndex")?.toIntOrNull() ?: -1
+                map[drawable] = ClockIconConfig(
+                    defaultHour = defaultHour,
+                    defaultMinute = defaultMinute,
+                    defaultSecond = defaultSecond,
+                    hourLayer = hourLayerIndex,
+                    minuteLayer = minuteLayerIndex,
+                    secondLayer = secondLayerIndex,
+                )
+            }
+        }
+        return map
+    }
+
+    private fun getAppfilterParser(packageName: String): ClosableXmlParser? {
+        val res = context.packageManager.getResourcesForApplication(packageName)
+        val xmlId = res.getIdentifier("appfilter", "xml", packageName)
+        val rawId = res.getIdentifier("appfilter", "raw", packageName)
+        return when {
+            xmlId != 0 -> ClosableXmlResourceParser(res.getXml(xmlId))
+            rawId != 0 -> {
+                val inStream = res.openRawResource(rawId).reader()
+                val parser = XmlPullParserFactory.newInstance().newPullParser().apply {
+                    setInput(inStream)
+                }
+                ClosableXmlPullParser(parser, inStream)
+            }
+
+            else -> {
+                val iconPackContext = context.createPackageContext(
+                    packageName,
+                    Context.CONTEXT_IGNORE_SECURITY
+                )
+                val inStream = try {
+                    iconPackContext.assets.open("appfilter.xml").reader()
+                } catch (e: IOException) {
+                    CrashReporter.logException(e)
+                    Log.e(
+                        "MM20",
+                        "appfilter.xml not found in $packageName. Searched locations: res/xml/appfilter.xml, res/raw/appfilter.xml, assets/appfilter.xml"
+                    )
+                    return null
+                }
+                val parser = XmlPullParserFactory.newInstance().newPullParser().apply {
+                    setInput(inStream)
+                }
+                ClosableXmlPullParser(parser, inStream)
             }
         }
     }
@@ -193,5 +243,26 @@ class AppFilterIconPackInstaller(
         val novaPacks = pm.queryIntentActivities(intent, 0)
         packs.addAll(novaPacks.map { IconPack(context, it, false) })
         return packs.distinctBy { it.packageName }
+    }
+}
+
+internal interface ClosableXmlParser : XmlPullParser {
+    fun close()
+}
+
+internal class ClosableXmlResourceParser(private val parser: XmlResourceParser) : ClosableXmlParser,
+    XmlPullParser by parser {
+    override fun close() {
+        parser.close()
+    }
+}
+
+internal class ClosableXmlPullParser(
+    private val parser: XmlPullParser,
+    private val reader: Reader
+) : ClosableXmlParser,
+    XmlPullParser by parser {
+    override fun close() {
+        reader.close()
     }
 }
