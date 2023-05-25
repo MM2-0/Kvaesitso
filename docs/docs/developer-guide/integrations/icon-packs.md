@@ -107,7 +107,7 @@ month (`calendar_1`, `calendar_2`, etc. up to `calendar_31`).
 
 :::note
 Single digit days must not be zero-padded (e.g. `calendar_1` is correct but `calendar_01` is not).
-Make sure all 31 drawables are present, or the launcher will reject the icon.
+Make sure that all 31 drawables are present, or the launcher will reject the icon.
 :::
 
 #### Clock icons
