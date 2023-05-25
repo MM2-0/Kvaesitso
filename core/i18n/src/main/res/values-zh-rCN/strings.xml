@@ -596,4 +596,14 @@
     <string name="widget_config_appwidget_borderless">无边框</string>
     <string name="widget_config_appwidget_configure">配置组件</string>
     <string name="widget_name_unknown">未知的应用组件</string>
+    <string name="widget_config_appwidget_resize_hint">拖动以调整大小</string>
+    <string name="notes_widget_dismissed">笔记已删除.</string>
+    <string name="preference_hidden_items_reveal_button_summary">显示一个按钮展示隐藏搜索结果</string>
+    <string name="widget_config_appwidget_background">背景卡片</string>
+    <string name="widget_name_notes">笔记</string>
+    <string name="notes_widget_placeholder">写个笔记…</string>
+    <string name="notes_widget_action_new">新建笔记</string>
+    <string name="notes_widget_action_save">保存</string>
+    <string name="notes_widget_export_filename">Note_%1$s</string>
+    <string name="notes_widget_action_dismiss">删除</string>
 </resources>
