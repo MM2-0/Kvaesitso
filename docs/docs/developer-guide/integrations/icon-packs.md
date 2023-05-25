@@ -166,10 +166,10 @@ Here is an example of a clock icon:
                     android:pivotX="50.0%" android:pivotY="50.0%" android:toDegrees="60060.0" />
             </item>
             <item>
-                <rotate android:drawable="@mipmap/clock_second" android:fromDegrees="180.0"
+                <rotate android:drawable="@drawable/clock_second" android:fromDegrees="180.0"
                     android:pivotX="50.0%" android:pivotY="50.0%" android:toDegrees="6180.0" />
             </item>
-            <item android:drawable="@mipmap/clock_top" />
+            <item android:drawable="@drawable/clock_top" />
         </layer-list>
     </foreground>
 </adaptive-icon>
