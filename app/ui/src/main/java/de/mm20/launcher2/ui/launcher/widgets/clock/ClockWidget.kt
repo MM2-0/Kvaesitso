@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -108,7 +109,7 @@ fun ClockWidget(
                 ) {
                     if (partProviders.size > 1) {
                         HorizontalPager(
-                            pageCount = 2,
+                            state =  rememberPagerState { 2 },
                             beyondBoundsPageCount = 1,
                             modifier = Modifier.weight(1f)
                         ) {
