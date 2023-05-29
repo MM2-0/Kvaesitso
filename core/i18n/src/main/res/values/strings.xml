@@ -394,6 +394,7 @@
     <string name="missing_permission_calendar_search_settings">Calendar permission is required to search calendar</string>
     <!-- Missing calendar permission in calendar widget settings screen -->
     <string name="missing_permission_calendar_widget_settings">This widget requires calendar permission</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Can\'t find your calendars?</string>
     <!-- Missing permission app shortcuts permission in search settings screen. %1$s: app name -->
     <string name="missing_permission_appshortcuts_search_settings">%1$s must be set as default home app to search app shortcuts</string>
     <!-- Missing file permission in search settings screen -->

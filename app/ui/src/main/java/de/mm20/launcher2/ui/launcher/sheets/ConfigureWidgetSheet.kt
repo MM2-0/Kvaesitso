@@ -5,7 +5,10 @@ import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.browser.customtabs.CustomTabColorSchemeParams
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -27,6 +30,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Error
+import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.ButtonDefaults
@@ -52,6 +56,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -564,6 +569,35 @@ fun ColumnScope.ConfigureCalendarWidget(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             text = stringResource(R.string.widget_config_calendar_no_calendars)
         )
+    }
+    if (hasPermission) {
+        val colorScheme = MaterialTheme.colorScheme
+        TextButton(
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .align(Alignment.CenterHorizontally),
+            contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
+            onClick = {
+                CustomTabsIntent.Builder()
+                    .setDefaultColorSchemeParams(
+                        CustomTabColorSchemeParams.Builder()
+                            .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                            .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                            .build()
+                    )
+                    .build().launchUrl(
+                        context,
+                        Uri.parse("https://kvaesitso.mm20.de/docs/user-guide/widgets/calendar-widget#my-calendars-dont-show-up")
+                    )
+            }) {
+            Icon(
+                modifier = Modifier
+                    .padding(end = ButtonDefaults.IconSpacing)
+                    .requiredSize(ButtonDefaults.IconSize),
+                imageVector = Icons.Rounded.HelpOutline, contentDescription = null
+            )
+            Text(stringResource(R.string.widget_config_calendar_missing_calendars_hint))
+        }
     }
 }
 
