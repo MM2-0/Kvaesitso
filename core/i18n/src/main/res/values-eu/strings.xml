@@ -1,2 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_share">Partekatu</string>
+    <string name="menu_uninstall">Desinstalatu</string>
+    <string name="menu_share_apk_file">APK fitxategia</string>
+    <string name="menu_favorites_pin">Gogokoetara ainguratu</string>
+    <string name="menu_favorites_unpin">Aingura kendu</string>
+    <string name="menu_back">Atzera</string>
+    <string name="menu_launch">Abiarazi</string>
+    <string name="menu_customize">Pertsonalizatu</string>
+    <string name="menu_open_file">Ireki</string>
+    <string name="menu_hide">Ezkutatu</string>
+    <string name="menu_unhide">Ez ezkutatu</string>
+    <string name="msg_item_hidden">%1$s ezkutatu da.</string>
+    <string name="action_undo">Desegin</string>
+    <string name="menu_delete">Ezabatu</string>
+    <string name="menu_remove">Kendu</string>
+    <string name="menu_contacts_open_externally">Kontaktuen aplikazioan ireki</string>
+    <string name="menu_calendar_open_externally">Egutegiaren aplikazioan ireki</string>
+    <string name="search_bar_placeholder">Bilatu</string>
+    <string name="app_info_version">%1$s bertsioa</string>
+    <string name="settings">Ezarpenak</string>
+    <string name="help">Laguntza</string>
+    <string name="wallpaper">Horma-papera</string>
+    <string name="file_meta_title">Izenburua: %1$s</string>
+    <string name="file_meta_artist">Artista: %1$s</string>
+    <string name="file_meta_album">Albuma: %1$s</string>
+    <string name="file_meta_duration">Iraupena: %1$s</string>
+    <string name="file_meta_year">Urtea: %1$s</string>
+    <string name="file_meta_size">Tamaina: %1$s</string>
+    <string name="file_meta_path">Kokalekua: %1$s</string>
+    <string name="file_meta_type">Mota: %1$s</string>
+    <string name="file_meta_dimensions">Neurriak: %1$s</string>
+    <string name="file_meta_app_name">Aplikazioaren izena: %1$s</string>
+    <string name="file_meta_app_version">Bertsioa: %1$s</string>
+    <string name="file_meta_app_pkgname">Paketearen izena: %1$s</string>
+    <string name="file_meta_app_min_sdk">SDK gutxieneko bertsioa: %1$s</string>
+    <string name="file_meta_owner">Jabea: %1$s</string>
+    <string name="file_meta_location">Kokapena: %1$s</string>
+    <string name="file_type_directory">Karpeta</string>
+    <string name="file_type_archive">Fitxategia</string>
+    <string name="file_type_android">Android pakete fitxategia</string>
+    <string name="file_type_source_code">Iturburu-kode fitxategia</string>
+    <string name="file_type_document">Dokumentua</string>
+    <string name="file_type_spreadsheet">Kalkulu orria</string>
+    <string name="file_type_music">Musika fitxategia</string>
+    <string name="file_type_video">Bideoa</string>
+    <string name="file_type_image">Irudia</string>
+    <string name="file_type_none">Fitxategia</string>
+    <string name="file_type_presentation">Aurkezpena</string>
+    <string name="file_type_compressed">Fitxategi konprimatua</string>
+    <string name="file_type_text">Testu fitxategia</string>
+    <string name="file_type_ebook">E-book</string>
+    <string name="file_type_drawing">Marrazkia</string>
+    <string name="file_type_form">Inprimakia</string>
+    <string name="file_type_generic">%1$s fitxategia</string>
+    <string name="alert_delete_file">%1$s fitxategia betirako ezabatuko da. Jarraitu nahi duzu\?</string>
+    <string name="alert_delete_shortcut">%1$s esteka betirako ezabatuko da. Jarraitu nahi duzu\?</string>
+    <string name="error_activity_not_found">Ezin izan da %1$s ireki</string>
+    <string name="default_websearch_1_name">Google</string>
+    <string name="default_websearch_1_url">https://google.es/search\?q=${1}</string>
+    <string name="default_websearch_2_name">YouTube</string>
+    <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
+    <string name="wikipedia_url">https://eu.wikipedia.org</string>
+    <string name="default_websearch_3_name">Google Play</string>
+    <string name="alert_delete_directory">%1$s karpeta eta barruan duen guztia betirako ezabatuko dira. Jarraitu nahi duzu\?</string>
+</resources>
