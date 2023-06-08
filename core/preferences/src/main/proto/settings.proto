@@ -111,12 +111,12 @@ message Settings {
     ClockWidgetLayout layout = 1;
     enum ClockStyle {
       DigitalClock1 = 0;
-      OneClock = 1;
-      DigitalClock2 = 2;
-      OrbitClock = 3;
-      BinaryClock = 4;
-      AnalogClock = 5;
-      EmptyClock = 6;
+      OneClock = 6;
+      DigitalClock2 = 1;
+      OrbitClock = 5;
+      BinaryClock = 2;
+      AnalogClock = 3;
+      EmptyClock = 4;
     }
     ClockStyle clock_style = 2;
     bool date_part = 3;
