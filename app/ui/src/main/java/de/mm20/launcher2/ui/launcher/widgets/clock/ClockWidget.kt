@@ -35,6 +35,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OneClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -160,8 +161,9 @@ fun Clock(
     val time = LocalTime.current
     when (style) {
         ClockStyle.DigitalClock1 -> DigitalClock1(time, layout)
+        ClockStyle.OneClock -> OneClock(time, layout)
         ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)
-        ClockStyle.BinaryClock -> BinaryClock(time, layout)
+        ClockStyle.BinaryClock -> BinaryClock(time,  layout)
         ClockStyle.AnalogClock -> AnalogClock(time, layout)
         ClockStyle.OrbitClock -> OrbitClock(time, layout)
         ClockStyle.EmptyClock -> {}
