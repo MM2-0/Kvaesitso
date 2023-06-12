@@ -132,11 +132,12 @@ fun ParagraphNode(node: ASTNode, text: String) {
     val start = node.startOffset
     val end = node.endOffset
     val substring = text.substring(start, end)
+    val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
     Text(
         text = buildAnnotatedString {
             append(substring)
-            applyStyles(node, typography, SpanStyle(fontSize = 0.sp), node.startOffset)
+            applyStyles(node, colorScheme, typography, SpanStyle(fontSize = 0.sp), node.startOffset)
         },
     )
 }

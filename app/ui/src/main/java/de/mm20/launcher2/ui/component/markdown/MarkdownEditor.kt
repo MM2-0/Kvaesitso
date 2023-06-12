@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
@@ -43,6 +44,7 @@ fun MarkdownEditor(
     placeholder: (@Composable () -> Unit)? = null
 ) {
     val typography = MaterialTheme.typography
+    val colorScheme = MaterialTheme.colorScheme
     val delimiterColor = MaterialTheme.colorScheme.secondary
     val interactionSource = remember { MutableInteractionSource() }
 
@@ -116,8 +118,9 @@ fun MarkdownEditor(
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
             visualTransformation = remember(
                 typography,
+                colorScheme,
                 delimiterColor
-            ) { MarkdownTransformation(typography, delimiterColor) },
+            ) { MarkdownTransformation(colorScheme, typography, delimiterColor) },
             interactionSource = interactionSource,
         )
 
@@ -156,6 +159,7 @@ fun MarkdownEditor(
 
 
 class MarkdownTransformation(
+    private val colorScheme: ColorScheme,
     private val typography: Typography,
     delimiterColor: Color,
 ) : VisualTransformation {
@@ -170,7 +174,7 @@ class MarkdownTransformation(
         return TransformedText(
             buildAnnotatedString {
                 append(text)
-                applyStyles(tree, typography, delimiterStyle)
+                applyStyles(tree, colorScheme, typography, delimiterStyle)
             },
             OffsetMapping.Identity,
         )

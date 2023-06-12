@@ -1,11 +1,14 @@
 package de.mm20.launcher2.ui.component.markdown
 
+import androidx.compose.material3.ColorScheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import org.intellij.markdown.MarkdownElementTypes
 import org.intellij.markdown.MarkdownTokenTypes
 import org.intellij.markdown.ast.ASTNode
@@ -13,6 +16,7 @@ import kotlin.math.min
 
 fun AnnotatedString.Builder.applyStyles(
     node: ASTNode,
+    colorScheme: ColorScheme,
     typography: Typography,
     delimiterStyle: SpanStyle,
     rootOffset: Int = 0,
@@ -121,9 +125,29 @@ fun AnnotatedString.Builder.applyStyles(
                 min(node.endOffset + 1 - rootOffset, length)
             )
         }
+        MarkdownElementTypes.INLINE_LINK -> {
+            val text = node.children.firstOrNull { it.type == MarkdownElementTypes.LINK_TEXT }
+            val destination = node.children.firstOrNull { it.type == MarkdownElementTypes.LINK_DESTINATION }
+
+            if (text != null && destination != null) {
+                addStyle(
+                    SpanStyle(
+                        color = colorScheme.primary,
+                        textDecoration = TextDecoration.Underline
+                    ),
+                    text.startOffset - rootOffset,
+                    text.endOffset - rootOffset,
+                )
+                addStyle(
+                    delimiterStyle,
+                    destination.startOffset - rootOffset,
+                    destination.endOffset - rootOffset,
+                )
+            }
+        }
     }
     for (child in node.children) {
-        applyStyles(child, typography, delimiterStyle, rootOffset)
+        applyStyles(child, colorScheme, typography, delimiterStyle, rootOffset)
     }
 
     if (node.children.isEmpty() &&
