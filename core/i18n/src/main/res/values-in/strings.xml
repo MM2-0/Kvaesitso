@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_share">Bagikan</string>
+    <string name="menu_share_store_link">Tautan %1$s</string>
+    <string name="menu_share_apk_file">Berkas paket</string>
+    <string name="menu_uninstall">Copot pemasangan</string>
+    <string name="menu_favorites_pin">Sematkan ke favorit</string>
+    <string name="menu_favorites_unpin">Lepas sematan</string>
+    <string name="menu_back">Kembali</string>
+    <string name="menu_app_info">Informasi Aplikasi</string>
+    <string name="menu_launch">Luncurkan</string>
+</resources>

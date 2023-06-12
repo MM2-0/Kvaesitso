@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="unit_meter_symbol">m</string>
+    <plurals name="unit_meter">
+        <item quantity="one">meter</item>
+        <item quantity="other">meter</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">km</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">kilometer</item>
+        <item quantity="other">kilometer</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centimeter</item>
+        <item quantity="other">centimeter</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">millimeter</item>
+        <item quantity="other">millimeter</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">tomme</item>
+        <item quantity="other">tommer</item>
+    </plurals>
+    <string name="unit_foot_symbol">fod</string>
+    <plurals name="unit_foot">
+        <item quantity="one">fod</item>
+        <item quantity="other">fod</item>
+    </plurals>
+    <string name="unit_yard_symbol">yd</string>
+    <plurals name="unit_yard">
+        <item quantity="one">yard</item>
+        <item quantity="other">yard</item>
+    </plurals>
+    <string name="unit_mile_symbol">mi</string>
+    <plurals name="unit_mile">
+        <item quantity="one">mil</item>
+        <item quantity="other">mil</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">sømil</item>
+        <item quantity="other">sømil</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">kvadratmeter</item>
+        <item quantity="other">kvadratmeter</item>
+    </plurals>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">kvadratkilometer</item>
+        <item quantity="other">kvadratkilometer</item>
+    </plurals>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">kvadratcentimeter</item>
+        <item quantity="other">kvadratcentimeter</item>
+    </plurals>
+</resources>
