@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.AnnotatedString
@@ -55,9 +56,11 @@ fun MarkdownEditor(
     }
 
     if (focus) {
+        var hadFocus by remember { mutableStateOf(false) }
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
+
 
         BasicTextField(
             value = value,
@@ -101,7 +104,12 @@ fun MarkdownEditor(
                     )
                 }
             },
-            modifier = modifier.focusRequester(focusRequester),
+            modifier = modifier
+                .focusRequester(focusRequester)
+                .onFocusChanged {
+                    if (it.isFocused) hadFocus = true
+                    if (!it.isFocused && hadFocus) onFocusChange(false)
+                },
             textStyle = MaterialTheme.typography.bodyMedium.copy(
                 color = LocalContentColor.current,
             ),
