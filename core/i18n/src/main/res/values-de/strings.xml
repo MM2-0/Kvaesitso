@@ -617,4 +617,19 @@
     <string name="widget_config_appwidget_resize_hint">Zum Anpassen ziehen</string>
     <string name="widget_config_appwidget_background">Hintergrundkarte</string>
     <string name="widget_config_calendar_missing_calendars_hint">Ihre kalender nicht sehen\?</string>
+    <string name="note_widget_linked_file_summary">Mit %1$s verknüpft</string>
+    <string name="note_widget_action_unlink_file">Verknüpfung lösen</string>
+    <string name="note_widget_action_relink_file">Neu verknüpfen</string>
+    <string name="note_widget_conflict">Konflikt</string>
+    <string name="note_widget_conflict_action_resolve">Beheben</string>
+    <string name="note_widget_conflict_local_version">Zuletzt gespeicherte Version:</string>
+    <string name="note_widget_conflict_file_version">Aktueller Dateiinhalt:</string>
+    <string name="note_widget_file_read_error">Fehler beim Lesen der Notiz</string>
+    <string name="note_widget_file_write_error">Fehler beim Speichern der Notiz</string>
+    <string name="note_widget_link_file">Mit Datei verknüpfen</string>
+    <string name="note_widget_link_file_summary">Die Inhalte dieses Widgets mit einer externen Datei synchronisieren</string>
+    <string name="note_widget_conflict_keep_selected">Auswahl behalten</string>
+    <string name="note_widget_conflict_description">Die verknüpfte Datei ist nicht leer und ihr Inhalt stimmt nicht mit der zuletzt gespeicherten Version dieser Notiz überein. Welche Version möchten Sie behalten\?</string>
+    <string name="note_widget_file_read_error_description">Die verknüpfte Datei konnte nicht gelesen werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde aus dem internen Speicher des Launchers wiederhergestellt. Wenn Sie die Notiz bearbeiten, wird die verknüpfte Datei möglicherweise überschrieben.</string>
+    <string name="note_widget_file_write_error_description">Die Notiz konnte nicht in die verknüpfte Datei geschrieben werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde in den internen Speicher des Launchers gespeichert.</string>
 </resources>
