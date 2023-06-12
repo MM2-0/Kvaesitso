@@ -36,24 +36,25 @@ import org.intellij.markdown.parser.MarkdownParser
 fun MarkdownEditor(
     value: TextFieldValue,
     onValueChange: (TextFieldValue) -> Unit,
+    focus: Boolean,
+    onFocusChange: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     placeholder: (@Composable () -> Unit)? = null
 ) {
     val typography = MaterialTheme.typography
     val delimiterColor = MaterialTheme.colorScheme.secondary
     val interactionSource = remember { MutableInteractionSource() }
-    var focused by remember { mutableStateOf(false) }
 
     val focusRequester = remember { FocusRequester() }
 
 
     BackHandler(
-        enabled = focused
+        enabled = focus
     ) {
-        focused = false
+        onFocusChange(false)
     }
 
-    if (focused) {
+    if (focus) {
         LaunchedEffect(Unit) {
             focusRequester.requestFocus()
         }
@@ -119,7 +120,7 @@ fun MarkdownEditor(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                 ) {
-                    focused = true
+                    onFocusChange(true)
                 },
             ) {
                 ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
@@ -137,7 +138,7 @@ fun MarkdownEditor(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() },
                 ) {
-                    focused = true
+                    onFocusChange(true)
                 },
                 onTextChange = { onValueChange(TextFieldValue(it)) },
             )

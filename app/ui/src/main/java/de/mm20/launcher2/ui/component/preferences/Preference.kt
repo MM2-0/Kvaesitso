@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -14,10 +15,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Preference(
-    title: String,
-    icon: @Composable (() -> Unit),
-    iconPadding: Boolean = true,
-    summary: String? = null,
+    title: @Composable (() -> Unit),
+    summary: @Composable (() -> Unit)? = null,
+    icon: @Composable (() -> Unit)? = null,
     onClick: () -> Unit = {},
     controls: @Composable (() -> Unit)? = null,
     enabled: Boolean = true
@@ -30,7 +30,7 @@ fun Preference(
             .padding(horizontal = 16.dp)
             .alpha(if (enabled) 1f else 0.38f),
     ) {
-        if (iconPadding) {
+        if (icon != null) {
             Box(
                 modifier = Modifier
                     .width(56.dp)
@@ -43,15 +43,18 @@ fun Preference(
             Box(modifier = Modifier.size(0.dp))
         }
         Column(
-            modifier = Modifier.weight(1f).padding(vertical = 16.dp)
+            modifier = Modifier
+                .weight(1f)
+                .padding(vertical = 16.dp)
         ) {
-            Text(text = title, style = MaterialTheme.typography.titleMedium)
+            ProvideTextStyle(value = MaterialTheme.typography.titleMedium) {
+                title()
+            }
             if (summary != null) {
-                Text(
-                    text = summary,
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 2.dp)
-                )
+                Spacer(modifier = Modifier.height(2.dp))
+                ProvideTextStyle(value = MaterialTheme.typography.bodyMedium) {
+                    summary()
+                }
             }
         }
         if (controls != null) {
@@ -62,6 +65,33 @@ fun Preference(
             }
         }
     }
+}
+
+@Composable
+fun Preference(
+    title: String,
+    icon: @Composable (() -> Unit),
+    iconPadding: Boolean = true,
+    summary: String? = null,
+    onClick: () -> Unit = {},
+    controls: @Composable (() -> Unit)? = null,
+    enabled: Boolean = true
+) {
+    Preference(
+        title = {
+            Text(text = title)
+        },
+        summary = if (summary != null) {
+            {
+                Text(text = summary)
+            }
+        } else null,
+        icon = if (iconPadding) icon else null,
+        onClick = onClick,
+        controls = controls,
+        enabled = enabled
+    )
+
 }
 
 @Composable

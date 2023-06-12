@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
@@ -31,6 +33,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.HelpOutline
+import androidx.compose.material.icons.rounded.Link
+import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.ButtonDefaults
@@ -64,7 +68,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import de.mm20.launcher2.calendar.CalendarRepository
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -74,6 +80,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
 import de.mm20.launcher2.ui.settings.SettingsActivity
@@ -86,6 +93,8 @@ import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 
 @Composable
@@ -606,5 +615,87 @@ fun ConfigureNotesWidget(
     widget: NotesWidget,
     onWidgetUpdated: (NotesWidget) -> Unit
 ) {
+    val context = LocalContext.current
+    val linkFileLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("text/markdown")
+    ) {
+        it ?: return@rememberLauncherForActivityResult
+        try {
+            context.contentResolver.takePersistableUriPermission(
+                it,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+            )
+            if (widget.config.linkedFile != null) {
+                try {
+                    context.contentResolver.releasePersistableUriPermission(
+                        Uri.parse(widget.config.linkedFile),
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                    )
+                } catch (e: SecurityException) {
+                    CrashReporter.logException(e)
+                }
+            }
+            onWidgetUpdated(
+                widget.copy(
+                    config = widget.config.copy(
+                        linkedFile = it.toString(),
+                        lastSyncSuccessful = false
+                    )
+                )
+            )
+        } catch (e: SecurityException) {
+            CrashReporter.logException(e)
+        }
+    }
+    OutlinedCard {
+        if (widget.config.linkedFile != null) {
+            Preference(
+                icon = { Icon(Icons.Rounded.LinkOff, null) },
+                title = { Text(stringResource(R.string.note_widget_action_unlink_file)) },
+                summary = {
+                    Text(
+                        stringResource(
+                            R.string.note_widget_linked_file_summary,
+                            formatLinkedFileUri(widget.config.linkedFile?.toUri())
+                        )
+                    )
+                },
+                onClick = {
+                    try {
+                        context.contentResolver.releasePersistableUriPermission(
+                            Uri.parse(widget.config.linkedFile),
+                            Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                        )
+                    } catch (e: SecurityException) {
+                        CrashReporter.logException(e)
+                    }
+                    onWidgetUpdated(widget.copy(config = widget.config.copy(linkedFile = null)))
+                }
+            )
+        } else {
+            Preference(
+                title = stringResource(R.string.note_widget_link_file),
+                summary = stringResource(R.string.note_widget_link_file_summary),
+                icon = Icons.Rounded.Link,
+                onClick = {
+                    linkFileLauncher.launch(
+                        context.getString(
+                            R.string.notes_widget_export_filename,
+                            ZonedDateTime.now().format(
+                                DateTimeFormatter.ISO_INSTANT
+                            )
+                        )
+                    )
+                }
+            )
+        }
+    }
+}
 
+fun formatLinkedFileUri(uri: Uri?): String {
+    if (uri == null) return ""
+    if (uri.scheme == "content" && uri.authority == "com.android.externalstorage.documents") {
+        return uri.lastPathSegment ?: ""
+    }
+    return uri.toString()
 }

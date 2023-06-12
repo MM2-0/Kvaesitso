@@ -8,8 +8,16 @@ import java.util.UUID
 
 @Serializable
 data class NotesWidgetConfig(
+    /**
+     * Text content of the widget. If the widget is linked to a file, this is the last saved content.
+     */
     val storedText: String = "",
-    val quickActions: Boolean = true,
+    val linkedFile: String? = null,
+    /**
+     * Indicates whether the last read/write operation on the linked file was successful.
+     * If false, a conflict resolver will be shown if the note content differs from the file content.
+     */
+    val lastSyncSuccessful: Boolean = false,
 )
 
 data class NotesWidget(

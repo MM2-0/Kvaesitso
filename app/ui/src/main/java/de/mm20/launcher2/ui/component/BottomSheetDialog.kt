@@ -29,6 +29,7 @@ import androidx.compose.material.FixedThreshold
 import androidx.compose.material.FractionalThreshold
 import androidx.compose.material.SwipeableState
 import androidx.compose.material.swipeable
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.LocalAbsoluteTonalElevation
 import androidx.compose.material3.MaterialTheme
@@ -65,8 +66,8 @@ import kotlin.math.roundToInt
 @Composable
 fun BottomSheetDialog(
     onDismissRequest: () -> Unit,
-    title: @Composable () -> Unit,
-    actions: @Composable RowScope.() -> Unit = {},
+    title: (@Composable () -> Unit)? = null,
+    actions: (@Composable RowScope.() -> Unit)? = null,
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
     dismissible: () -> Boolean = { true },
@@ -227,13 +228,21 @@ fun BottomSheetDialog(
                         shadowElevation = 16.dp,
                     ) {
                         Column {
-                            CenterAlignedTopAppBar(
-                                title = title,
-                                actions = actions,
-                                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
-                                    containerColor = Color.Transparent,
-                                ),
-                            )
+                            if (title != null || actions != null) {
+                                CenterAlignedTopAppBar(
+                                    title = title ?: { BottomSheetDefaults.DragHandle() },
+                                    actions = actions ?: {},
+                                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                                        containerColor = Color.Transparent,
+                                    ),
+                                )
+                            } else {
+                                Box(
+                                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                                ) {
+                                    BottomSheetDefaults.DragHandle()
+                                }
+                            }
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
