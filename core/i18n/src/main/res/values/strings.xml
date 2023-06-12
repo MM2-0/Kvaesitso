@@ -804,14 +804,14 @@
     <string name="app_widget_loading_failed">App widget failed to load.</string>
     <string name="widget_config_music_integration_settings">Media control integration settings</string>
     <string name="note_widget_link_file">Link to file</string>
-    <string name="note_widget_link_file_summary">Sync this content of this widget with an external file</string>
+    <string name="note_widget_link_file_summary">Sync the contents of this widget with an external file</string>
     <string name="note_widget_linked_file_summary">Linked to %1$s</string>
     <string name="note_widget_action_unlink_file">Unlink</string>
     <string name="note_widget_action_relink_file">Relink</string>
     <string name="note_widget_conflict">Conflict</string>
     <string name="note_widget_conflict_action_resolve">Resolve</string>
     <string name="note_widget_conflict_keep_selected">Keep selected</string>
-    <string name="note_widget_conflict_description">The linked file is not empty and its content does not match the last saved version of this note. Which version do you want to keep?</string>
+    <string name="note_widget_conflict_description">The linked file is not empty and its content does not match the last saved version of this note. Which version do you want to keep\?</string>
     <string name="note_widget_conflict_local_version">Last saved version:</string>
     <string name="note_widget_conflict_file_version">Current file content:</string>
     <string name="note_widget_file_read_error">Error reading note</string>
