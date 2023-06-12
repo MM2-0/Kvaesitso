@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component.markdown
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -283,4 +284,11 @@ fun CheckboxNode(node: ASTNode, text: String, onTextChange: (String) -> Unit = {
             .padding(top = 4.dp, bottom = 4.dp, end = 8.dp)
             .requiredSize(18.dp)
     )
+}
+
+private fun ASTNode.print(indent: Int = 0) {
+    Log.d("MM20", "${" ".repeat(indent)}${this.type}")
+    for (child in this.children) {
+        child.print(indent + 2)
+    }
 }

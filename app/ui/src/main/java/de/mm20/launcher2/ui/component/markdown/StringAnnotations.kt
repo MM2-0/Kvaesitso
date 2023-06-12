@@ -130,7 +130,8 @@ fun AnnotatedString.Builder.applyStyles(
         node.type != MarkdownTokenTypes.TEXT &&
         node.type != MarkdownTokenTypes.WHITE_SPACE &&
         node.type != MarkdownTokenTypes.CODE_FENCE_CONTENT &&
-        node.type != MarkdownTokenTypes.CODE_LINE
+        node.type != MarkdownTokenTypes.CODE_LINE &&
+        node.parent?.type != MarkdownElementTypes.PARAGRAPH
     ) {
         addStyle(
             delimiterStyle,
