@@ -221,7 +221,7 @@ fun NotesWidget(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 8.dp, end = 8.dp, bottom = 8.dp),
+                    .padding(start = 4.dp, end = 4.dp, bottom = 4.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 if (viewModel.linkedFileSavingState.value == LinkedFileSavingState.Error) {
