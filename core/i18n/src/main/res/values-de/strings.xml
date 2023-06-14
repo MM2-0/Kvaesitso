@@ -616,7 +616,7 @@
     <string name="preference_hidden_items_reveal_button_summary">Eine Schaltfläche zum Einblenden ausgeblendeter Suchergebnisse anzeigen</string>
     <string name="widget_config_appwidget_resize_hint">Zum Anpassen ziehen</string>
     <string name="widget_config_appwidget_background">Hintergrundkarte</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Ihre kalender nicht sehen\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Sie können Ihre Kalender nicht finden\?</string>
     <string name="note_widget_linked_file_summary">Mit %1$s verknüpft</string>
     <string name="note_widget_action_unlink_file">Verknüpfung lösen</string>
     <string name="note_widget_action_relink_file">Neu verknüpfen</string>

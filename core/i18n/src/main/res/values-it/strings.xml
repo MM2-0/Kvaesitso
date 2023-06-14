@@ -622,4 +622,19 @@
     <string name="widget_config_appwidget_resize_hint">Trascina per ridimensionare</string>
     <string name="widget_config_appwidget_background">Sfondo scheda</string>
     <string name="widget_config_calendar_missing_calendars_hint">Non trovi i tuoi calendari\?</string>
+    <string name="note_widget_link_file">Collegamento al file</string>
+    <string name="note_widget_linked_file_summary">Collegato a %1$s</string>
+    <string name="note_widget_action_unlink_file">Scollega</string>
+    <string name="note_widget_conflict">Conflitto</string>
+    <string name="note_widget_conflict_file_version">Contenuto attuale del file:</string>
+    <string name="note_widget_file_read_error">Errore durante la lettura della nota</string>
+    <string name="note_widget_file_write_error">Errore durante il salvataggio della nota</string>
+    <string name="note_widget_file_write_error_description">Non è stato possibile scrivere la nota nel file collegato. Forse è stato spostato o cancellato. Una copia è stata salvata nella memoria interna del launcher.</string>
+    <string name="note_widget_link_file_summary">Sincronizza il contenuto di questo widget con un file esterno</string>
+    <string name="note_widget_action_relink_file">Ricollega</string>
+    <string name="note_widget_conflict_action_resolve">Risolvi</string>
+    <string name="note_widget_conflict_keep_selected">Mantieni selezionato</string>
+    <string name="note_widget_conflict_description">Il file collegato non è vuoto e il suo contenuto non corrisponde all\'ultima versione salvata di questa nota. Quale versione vuoi mantenere\?</string>
+    <string name="note_widget_conflict_local_version">Ultima versione salvata:</string>
+    <string name="note_widget_file_read_error_description">Impossibile leggere il file collegato. Forse è stato spostato o cancellato. È stata ripristinata una copia dalla memoria interna del programma di avvio. Se modifichi la nota, il file collegato potrebbe essere sovrascritto.</string>
 </resources>

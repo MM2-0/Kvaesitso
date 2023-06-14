@@ -58,4 +58,10 @@
         <item quantity="one">kvadratcentimeter</item>
         <item quantity="other">kvadratcentimeter</item>
     </plurals>
+    <string name="unit_inch_symbol">tommer</string>
+    <string name="unit_sqmillimeter_symbol">mm²</string>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="one">kvadratmillimeter</item>
+        <item quantity="other">kvadratmillimeter</item>
+    </plurals>
 </resources>

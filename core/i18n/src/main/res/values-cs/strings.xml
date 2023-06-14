@@ -622,4 +622,19 @@
     <string name="preference_debug_reinstall_iconpacks_summary">Vymazat a znovu sestavit mezipaměť balíčků ikon</string>
     <string name="widget_config_appwidget_background">Karta pozadí</string>
     <string name="widget_config_calendar_missing_calendars_hint">Nevidíte své kalendáře\?</string>
+    <string name="note_widget_link_file">Propojit se souborem</string>
+    <string name="note_widget_link_file_summary">Synchronizovat obsah tohoto widgetu s externím souborem</string>
+    <string name="note_widget_linked_file_summary">Propojeno s %1$s</string>
+    <string name="note_widget_action_relink_file">Znovu propojit</string>
+    <string name="note_widget_conflict">Konflikt</string>
+    <string name="note_widget_conflict_action_resolve">Vyřešit</string>
+    <string name="note_widget_conflict_keep_selected">Ponechat vybranou</string>
+    <string name="note_widget_conflict_local_version">Naposledy uložená verze:</string>
+    <string name="note_widget_conflict_file_version">Aktuální obsah souboru:</string>
+    <string name="note_widget_file_read_error">Chyba při čtení poznámky</string>
+    <string name="note_widget_file_write_error">Chyba při ukládání poznámky</string>
+    <string name="note_widget_action_unlink_file">Odpojit</string>
+    <string name="note_widget_conflict_description">Propojený soubor není prázdný a jeho obsah se neshoduje s naposledy uloženou verzí této poznámky. Kterou z nich chcete ponechat\?</string>
+    <string name="note_widget_file_read_error_description">Nepodařilo se přečíst propojený soubor. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie. Pokud poznámku upravíte, propojený soubor nejspíš bude přepsán.</string>
+    <string name="note_widget_file_write_error_description">Nepodařilo se zapsat poznámku do propojeného souboru. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie.</string>
 </resources>
