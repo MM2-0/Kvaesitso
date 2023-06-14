@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.widgets.notes
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
@@ -51,51 +52,64 @@ class NotesWidgetVM(
             linkedFileReadError.value = false
             linkedFileSavingState.value = LinkedFileSavingState.Saved
             if (file != null) {
-                val uri = Uri.parse(file)
-                viewModelScope.launch(Dispatchers.IO) {
-                    try {
-                        context.contentResolver.openInputStream(uri).use {
-                            val text = it?.bufferedReader()?.readText()
-                            if (text != widget.config.storedText) {
-                                when {
-                                    widget.config.lastSyncSuccessful -> {
-                                        setText(context, TextFieldValue(text ?: ""))
-                                    }
-                                    text?.isNotBlank() == true && widget.config.storedText.isNotBlank() -> {
-                                        if (!widget.config.lastSyncSuccessful) {
-                                            linkedFileConflict.value = true
-                                            noteText.value = TextFieldValue(text)
-                                        } else {
-                                            setText(context, TextFieldValue(text))
-                                        }
-                                    }
-                                    text.isNullOrBlank() -> {
-                                        setText(context, TextFieldValue(widget.config.storedText))
-                                    }
-                                    else -> {
-                                        setText(context, TextFieldValue(text))
-                                    }
-                                }
-                            } else {
-                                noteText.value = TextFieldValue(widget.config.storedText)
-                            }
-                        }
-                    } catch (e: Exception) {
-                        // Catch-all because for some reason the content resolver can throw all sorts of exceptions
-                        CrashReporter.logException(e)
-                        noteText.value = TextFieldValue(widget.config.storedText)
-                        linkedFileReadError.value = true
-                        widgetsService.updateWidget(
-                            widget.copy(
-                                config = widget.config.copy(
-                                    lastSyncSuccessful = false
-                                )
-                            )
-                        )
-                    }
-                }
+                reloadLinkedFile(context)
             } else {
                 noteText.value = TextFieldValue(widget.config.storedText)
+            }
+        }
+    }
+
+    fun onResume(context: Context) {
+        val widget = widget.value ?: return
+        if (widget.config.linkedFile != null) {
+            reloadLinkedFile(context)
+        }
+    }
+
+    private fun reloadLinkedFile(context: Context) {
+        val widget = widget.value ?: return
+        val file = widget.config.linkedFile ?: return
+        val uri = Uri.parse(file)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                context.contentResolver.openInputStream(uri).use {
+                    val text = it?.bufferedReader()?.readText()
+                    if (text != widget.config.storedText) {
+                        when {
+                            widget.config.lastSyncSuccessful -> {
+                                setText(context, TextFieldValue(text ?: ""))
+                            }
+                            text?.isNotBlank() == true && widget.config.storedText.isNotBlank() -> {
+                                if (!widget.config.lastSyncSuccessful) {
+                                    linkedFileConflict.value = true
+                                    noteText.value = TextFieldValue(text)
+                                } else {
+                                    setText(context, TextFieldValue(text))
+                                }
+                            }
+                            text.isNullOrBlank() -> {
+                                setText(context, TextFieldValue(widget.config.storedText))
+                            }
+                            else -> {
+                                setText(context, TextFieldValue(text))
+                            }
+                        }
+                    } else {
+                        noteText.value = TextFieldValue(widget.config.storedText)
+                    }
+                }
+            } catch (e: Exception) {
+                // Catch-all because for some reason the content resolver can throw all sorts of exceptions
+                CrashReporter.logException(e)
+                noteText.value = TextFieldValue(widget.config.storedText)
+                linkedFileReadError.value = true
+                widgetsService.updateWidget(
+                    widget.copy(
+                        config = widget.config.copy(
+                            lastSyncSuccessful = false
+                        )
+                    )
+                )
             }
         }
     }

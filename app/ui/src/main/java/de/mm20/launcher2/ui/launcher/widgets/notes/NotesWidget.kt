@@ -100,8 +100,11 @@ fun NotesWidget(
     val isLastWidget by viewModel.isLastNoteWidget.collectAsState(null)
 
     LaunchedEffect(widget) {
+        viewModel.updateWidget(context, widget)
+    }
+    LaunchedEffect(Unit) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            viewModel.updateWidget(context, widget)
+            viewModel.onResume(context)
         }
     }
 
@@ -489,7 +492,9 @@ fun SelectableNoteContent(
                     onClick = onSelect,
                     onLongClick = { expanded = !expanded },
                 )
-                .animateContentSize() then if (expanded) Modifier.heightIn(min = 100.dp) else Modifier.height(100.dp),
+                .animateContentSize() then if (expanded) Modifier.heightIn(min = 100.dp) else Modifier.height(
+                100.dp
+            ),
         ) {
             MarkdownText(
                 modifier = Modifier
