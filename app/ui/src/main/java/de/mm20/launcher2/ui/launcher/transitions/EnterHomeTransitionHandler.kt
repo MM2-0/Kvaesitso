@@ -11,7 +11,7 @@ fun interface EnterHomeTransitionHandler {
 @Composable
 fun HandleEnterHomeTransition(handler: EnterHomeTransitionHandler) {
     val transitionManager = LocalEnterHomeTransitionManager.current
-    DisposableEffect(null) {
+    DisposableEffect(handler) {
         transitionManager?.registerHandler(handler)
 
         onDispose {
