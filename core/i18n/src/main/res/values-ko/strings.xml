@@ -146,4 +146,13 @@
     <string name="missing_permission_contact_search">연락처 항목을 검색하려면 권한을 허용해 주세요.</string>
     <string name="missing_permission_calendar_search">캘린더에서 항목을 검색하려면 권한을 허용해 주세요.</string>
     <string name="grant_permission">허용</string>
+    <string name="widget_name_notes">메모</string>
+    <string name="websearch_dialog_custom_icon">사용자 지정 아이콘</string>
+    <string name="widget_name_unknown">알 수 없는 앱 위젯</string>
+    <string name="notes_widget_placeholder">메모 쓰기…</string>
+    <string name="notes_widget_action_new">새 메모</string>
+    <string name="notes_widget_action_save">저장</string>
+    <string name="notes_widget_export_filename">메모_%1$s</string>
+    <string name="notes_widget_action_dismiss">취소</string>
+    <string name="notes_widget_dismissed">메모를 취소했습니다.</string>
 </resources>
