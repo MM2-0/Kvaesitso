@@ -120,4 +120,18 @@
     <string name="easter_egg_2">Ej, lad være, du spilder tid</string>
     <string name="easter_egg_3">Jeg siger det ikke igen: der er absolut ingen påskeæg gemt her</string>
     <string name="installation_in_progress">Installeres...(%1$s)</string>
+    <string name="preference_screen_colors">Favreskema</string>
+    <string name="preference_grid_icon_size">Ikon størrelse</string>
+    <string name="preference_grid_labels">Vis labeler</string>
+    <string name="preference_grid_labels_summary">Vis appens navn under ikonen</string>
+    <string name="preference_screen_widgets_summary">Indstil widgets</string>
+    <string name="preference_screen_weatherwidget">Vejr</string>
+    <string name="preference_screen_musicwidget">Musik</string>
+    <string name="preference_screen_clockwidget_summary">Indstil urets udseende og komponenter</string>
+    <string name="preference_clockwidget_layout_horizontal">Kompakt</string>
+    <string name="preference_clock_widget_style_summary">Vælg et ur</string>
+    <string name="preference_clockwidget_date_part">Dato</string>
+    <string name="preference_clockwidget_favorites_part">Favoritter</string>
+    <string name="preference_clockwidget_battery_part">Batteri</string>
+    <string name="preference_clockwidget_battery_part_summary">Vis nuværende batteri niveau når batteriet oplades og når batteriet-niveauet er lavt</string>
 </resources>
