@@ -113,7 +113,7 @@ fun AtxNode(node: ASTNode, text: String, level: Int, onTextChange: (String) -> U
             else -> MaterialTheme.typography.labelSmall
         }
     ) {
-        ChildNodes(node, text, onTextChange)
+        ParagraphNode(node, text)
     }
 }
 
@@ -236,7 +236,6 @@ fun BlockQuoteNode(node: ASTNode, text: String, onTextChange: (String) -> Unit) 
                 LocalContentColor provides MaterialTheme.colorScheme.onSurfaceVariant
             ) {
                 ChildNodes(node, text, onTextChange)
-
             }
         }
     }
@@ -272,14 +271,14 @@ fun CodeBlockNode(node: ASTNode, text: String, onTextChange: (String) -> Unit) {
 
 @Composable
 fun CheckboxNode(node: ASTNode, text: String, onTextChange: (String) -> Unit = {}) {
-    val checkbox = text.substring(node.startOffset, node.endOffset - 1)
-    val checked = checkbox == "[x]"
+    val checkbox = text.substring(node.startOffset, node.endOffset)
+    val checked = checkbox.startsWith("[x]")
 
 
     Checkbox(
         checked = checked, onCheckedChange = {
-            val newCheckbox = if (it) "[x]" else "[ ]"
-            val newText = text.replaceRange(node.startOffset, node.endOffset - 1, newCheckbox)
+            val newCheckbox = if (it) "[x] " else "[ ] "
+            val newText = text.replaceRange(node.startOffset, node.endOffset, newCheckbox)
             onTextChange(newText)
         }, modifier = Modifier
             .padding(top = 4.dp, bottom = 4.dp, end = 8.dp)
