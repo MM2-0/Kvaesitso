@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.UrlAnnotation
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -19,6 +20,7 @@ fun AnnotatedString.Builder.applyStyles(
     colorScheme: ColorScheme,
     typography: Typography,
     delimiterStyle: SpanStyle,
+    fullText: String? = null,
     rootOffset: Int = 0,
 ) {
     require(node.startOffset >= rootOffset) {
@@ -143,11 +145,19 @@ fun AnnotatedString.Builder.applyStyles(
                     destination.startOffset - rootOffset,
                     destination.endOffset - rootOffset,
                 )
+                if (fullText != null) {
+                    val url = fullText.substring(destination.startOffset, destination.endOffset)
+                    addUrlAnnotation(
+                        UrlAnnotation(url),
+                        text.startOffset - rootOffset,
+                        text.endOffset - rootOffset,
+                    )
+                }
             }
         }
     }
     for (child in node.children) {
-        applyStyles(child, colorScheme, typography, delimiterStyle, rootOffset)
+        applyStyles(child, colorScheme, typography, delimiterStyle, fullText, rootOffset)
     }
 
     if (node.children.isEmpty() &&

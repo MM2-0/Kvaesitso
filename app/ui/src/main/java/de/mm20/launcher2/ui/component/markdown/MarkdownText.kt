@@ -1,7 +1,13 @@
 package de.mm20.launcher2.ui.component.markdown
 
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.waitForUpOrCancellation
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -21,10 +27,14 @@ import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -134,11 +144,38 @@ fun ParagraphNode(node: ASTNode, text: String) {
     val substring = text.substring(start, end)
     val colorScheme = MaterialTheme.colorScheme
     val typography = MaterialTheme.typography
+
+    val layoutResult = remember { mutableStateOf<TextLayoutResult?>(null) }
+
+    val text = buildAnnotatedString {
+        append(substring)
+        applyStyles(node, colorScheme, typography, SpanStyle(fontSize = 0.sp), text, node.startOffset)
+    }
+
+    val context = LocalContext.current
+
     Text(
-        text = buildAnnotatedString {
-            append(substring)
-            applyStyles(node, colorScheme, typography, SpanStyle(fontSize = 0.sp), node.startOffset)
+        text = text,
+        onTextLayout = {
+            layoutResult.value = it
         },
+        modifier = Modifier.pointerInput(Unit) {
+            awaitEachGesture {
+                val down = awaitFirstDown(true)
+                val offset = down.position
+                val position = layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
+                val downUrlAnnotation = text.getUrlAnnotations(position, position).firstOrNull()
+                val downUrl = downUrlAnnotation?.item?.url ?: return@awaitEachGesture
+                val up = waitForUpOrCancellation()?.takeIf { !it.isConsumed } ?: return@awaitEachGesture
+                val upPosition = layoutResult.value?.getOffsetForPosition(offset) ?: return@awaitEachGesture
+                val upAnnotation = text.getUrlAnnotations(upPosition, upPosition).firstOrNull()
+                val url = upAnnotation?.item?.url ?: return@awaitEachGesture
+                if (url == downUrl) {
+                    context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    up.consume()
+                }
+            }
+        }
     )
 }
 
