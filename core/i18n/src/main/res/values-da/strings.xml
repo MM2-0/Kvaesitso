@@ -134,4 +134,11 @@
     <string name="preference_clockwidget_favorites_part">Favoritter</string>
     <string name="preference_clockwidget_battery_part">Batteri</string>
     <string name="preference_clockwidget_battery_part_summary">Vis nuværende batteri niveau når batteriet oplades og når batteriet-niveauet er lavt</string>
+    <string name="preference_screen_search">Søg</string>
+    <string name="preference_search_files">Filer</string>
+    <string name="preference_search_calendar">Kalender</string>
+    <string name="preference_search_favorites">Favoritter</string>
+    <string name="preference_search_contacts_summary">Søg kontakter på denne enhed</string>
+    <string name="preference_search_calculator">Lommeregner</string>
+    <string name="preference_restore">Gendan</string>
 </resources>
