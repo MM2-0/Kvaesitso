@@ -101,8 +101,6 @@ fun ShapedLauncherIcon(
     size: Dp,
     icon: () -> LauncherIcon? = { null },
     badge: () -> Badge? = { null },
-    onClick: (() -> Unit)? = null,
-    onLongClick: (() -> Unit)? = null,
     shape: Shape = LocalIconShape.current
 ) {
 
@@ -149,17 +147,7 @@ fun ShapedLauncherIcon(
     ) {
         Box(
             modifier = Modifier
-                .fillMaxSize()
-                .then(
-                    if (onClick != null || onLongClick != null) {
-                        Modifier.pointerInput(onClick, onLongClick) {
-                            detectTapGestures(
-                                onLongPress = { onLongClick?.invoke() },
-                                onTap = { onClick?.invoke() },
-                            )
-                        }
-                    } else Modifier
-                ),
+                .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
             val bmp = currentBitmap
@@ -253,17 +241,7 @@ fun ShapedLauncherIcon(
                 tonalElevation = 1.dp,
                 modifier = Modifier
                     .size(size * 0.33f)
-                    .align(Alignment.BottomEnd)
-                    .then(
-                        if (onClick != null || onLongClick != null) {
-                            Modifier.pointerInput(onClick, onLongClick) {
-                                detectTapGestures(
-                                    onLongPress = { onLongClick?.invoke() },
-                                    onTap = { onClick?.invoke() },
-                                )
-                            }
-                        } else Modifier
-                    ),
+                    .align(Alignment.BottomEnd),
                 color = MaterialTheme.colorScheme.secondary,
                 shape = CircleShape
             ) {

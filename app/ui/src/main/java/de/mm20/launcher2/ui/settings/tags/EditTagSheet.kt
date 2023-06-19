@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.tags
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -203,10 +204,9 @@ fun ListItem(
             ShapedLauncherIcon(
                 icon = { icon },
                 size = 48.dp,
-                modifier = Modifier.padding(4.dp),
-                onClick = {
+                modifier = Modifier.padding(4.dp).clickable {
                     onTagChanged(!item.isTagged)
-                }
+                },
             )
             if (item.isTagged) {
                 Surface(

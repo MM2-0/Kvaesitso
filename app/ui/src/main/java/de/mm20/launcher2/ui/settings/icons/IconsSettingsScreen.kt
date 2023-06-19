@@ -4,6 +4,7 @@ import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -364,7 +365,7 @@ fun IconShapePreference(
                                             )
                                         )
                                     },
-                                    onClick = {
+                                    modifier = Modifier.clickable {
                                         onValueChanged(it)
                                         showDialog = false
                                     },

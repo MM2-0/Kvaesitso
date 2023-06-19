@@ -4,6 +4,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.InsetDrawable
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -121,7 +122,7 @@ fun CustomizeSearchableSheet(
                             icon = badgeDrawable
                         )
                     },
-                    onClick = {
+                    modifier = Modifier.clickable {
                         viewModel.openIconPicker()
                     }
                 )
@@ -350,7 +351,7 @@ fun IconPreview(
         ShapedLauncherIcon(
             size = iconSize,
             icon = { item?.preview },
-            onClick = onClick
+            modifier = Modifier.clickable(onClick = onClick),
         )
     }
 }

@@ -5,6 +5,8 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.absoluteOffset
@@ -87,11 +89,27 @@ fun GridItem(
     var showPopup by remember(item.key) { mutableStateOf(false) }
     var bounds by remember { mutableStateOf(Rect.Zero) }
 
-    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
+    val launchOnPress = !item.preferDetailsOverLaunch
+    val hapticFeedback = LocalHapticFeedback.current
+
+    Column(
+        modifier = modifier
+            .combinedClickable(
+                onClick = {
+                    if (!launchOnPress || !viewModel.launch(context, bounds)) {
+                        showPopup = true
+                    }},
+                onLongClick = {
+                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+                    showPopup = true
+                },
+                indication = null,
+                interactionSource = remember { MutableInteractionSource() },
+            ),
+        horizontalAlignment = Alignment.CenterHorizontally) {
         val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
 
-        val launchOnPress = !item.preferDetailsOverLaunch
 
         val windowSize = LocalWindowSize.current
 
@@ -115,7 +133,6 @@ fun GridItem(
             }
         }
 
-        val hapticFeedback = LocalHapticFeedback.current
         val iconShape = LocalIconShape.current
 
         Box(
@@ -141,15 +158,6 @@ fun GridItem(
                 size = LocalGridSettings.current.iconSize.dp,
                 badge = { badge },
                 icon = { icon },
-                onClick = {
-                    if (!launchOnPress || !viewModel.launch(context, bounds)) {
-                        showPopup = true
-                    }
-                },
-                onLongClick = {
-                    hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                    showPopup = true
-                }
             )
         }
         if (showLabels) {
