@@ -261,12 +261,13 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Icon(
                     imageVector = Icons.Rounded.HumidityPercentage,
                     modifier = Modifier.size(20.dp),
+                    tint = MaterialTheme.colorScheme.secondary,
                     contentDescription = null
                 )
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
                     text = "${forecast.humidity!!.roundToInt()} %",
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
@@ -282,13 +283,15 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                         modifier = Modifier
                             .rotate(angle)
                             .size(20.dp),
-                        contentDescription = null
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                 } else {
                     Icon(
                         imageVector = Icons.Rounded.Air,
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(20.dp),
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
                 Spacer(modifier = Modifier.padding(3.dp))
@@ -298,7 +301,7 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                     } else {
                         windDirectionAsWord(forecast.windDirection!!)
                     },
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
@@ -309,12 +312,13 @@ fun CurrentWeather(forecast: Forecast, imperialUnits: Boolean) {
                 Icon(
                     imageVector = Icons.Rounded.Rain,
                     modifier = Modifier.size(20.dp),
-                    contentDescription = null
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.secondary,
                 )
                 Spacer(modifier = Modifier.padding(3.dp))
                 Text(
                     text = formatPrecipitation(imperialUnits, forecast),
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
         }
