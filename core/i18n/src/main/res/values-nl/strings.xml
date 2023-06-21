@@ -617,4 +617,19 @@
     <string name="widget_config_appwidget_background">Achtergrondkaart</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Pictogrampakettencache ledigen en opnieuw bouwen</string>
     <string name="widget_config_calendar_missing_calendars_hint">Kan je jouw kalenders niet vinden\?</string>
+    <string name="note_widget_link_file">Inhoud van een bestand linken aan het widget. Als dit aan staat zal de inhoud van het widget gesynchroniseerd worden met de bestandsinhoud</string>
+    <string name="note_widget_link_file_summary">Inhoud van dit widget synchroniseren met extern bestand</string>
+    <string name="note_widget_linked_file_summary">Gelinkt met %1$s</string>
+    <string name="note_widget_conflict">Conflict</string>
+    <string name="note_widget_conflict_action_resolve">Oplossen</string>
+    <string name="note_widget_conflict_keep_selected">Behouden</string>
+    <string name="note_widget_conflict_local_version">Laatst opgeslagen versie:</string>
+    <string name="note_widget_conflict_file_version">Huidige bestandsinhoud:</string>
+    <string name="note_widget_file_write_error">Fout bij het opslaan van de notitie</string>
+    <string name="note_widget_file_write_error_description">De notitie kon niet naar het gelinkte bestand geschreven worden. Mogelijk is het bestand verplaatst of verwijderd. Een kopie is opgeslagen in de interne opslag van de launcher.</string>
+    <string name="note_widget_action_unlink_file">Link verwijderen</string>
+    <string name="note_widget_action_relink_file">Opnieuw linken</string>
+    <string name="note_widget_conflict_description">Het gelinkt bestand is niet leeg en de inhoud komt niet overeen met de laatste versie van deze notitie. Welke versie wil je behouden\?</string>
+    <string name="note_widget_file_read_error">Fout bij het lezen van notitie</string>
+    <string name="note_widget_file_read_error_description">Het gelinkte bestand kon niet gelezen worden. Misschien is het verwijderd of verplaatst. Een kopie uit de interne opslag van de launcher is teruggezet. Als je de notitie bewerkt, wordt het gelinkte bestand mogelijk overschreven.</string>
 </resources>
