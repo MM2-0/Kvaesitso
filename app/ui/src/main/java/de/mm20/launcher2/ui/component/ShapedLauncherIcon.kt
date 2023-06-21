@@ -416,22 +416,21 @@ private fun ClockLayer(
     }
 
     val second = remember {
-        Animatable((time.second - defaultSecond).toFloat())
+        Animatable((time.second).toFloat() + (time.nano / 1000000f) / 1000f)
     }
 
     val minute = remember {
-        Animatable((time.minute - defaultMinute).toFloat() + time.second.toFloat() / 60f)
+        Animatable((time.minute).toFloat() + time.second.toFloat() / 60f)
     }
 
     val hour = remember {
-        Animatable((time.hour - defaultHour).toFloat() + time.minute.toFloat() / 60f)
+        Animatable((time.hour).toFloat() + time.minute.toFloat() / 60f)
     }
 
     LaunchedEffect(time) {
-        val h = (time.hour - defaultHour).toFloat() + (time.minute - defaultSecond).toFloat() / 60f
-        val m =
-            (time.minute - defaultMinute).toFloat() + (time.second - defaultSecond).toFloat() / 60f
-        val s = (time.second - defaultSecond).toFloat() + (time.nano / 1000000f) / 1000f
+        val h = (time.hour).toFloat() + (time.minute).toFloat() / 60f
+        val m = (time.minute.toFloat() + (time.second).toFloat() / 60f)
+        val s = (time.second).toFloat() + (time.nano / 1000000f) / 1000f
         second.snapTo(s)
         hour.snapTo(h)
         minute.snapTo(m)
@@ -454,27 +453,18 @@ private fun ClockLayer(
             this.scale(scale)
         }) {
             for (sublayer in sublayers) {
-                withTransform({
-                    when (sublayer.role) {
-                        ClockSublayerRole.Hour -> {
-                            rotate(hour.value / 12f * 360f)
-                        }
-
-                        ClockSublayerRole.Minute -> {
-                            rotate(minute.value / 60f * 360f)
-                        }
-
-                        ClockSublayerRole.Second -> {
-                            rotate(second.value / 60f * 360f)
-                        }
-
-                        ClockSublayerRole.Static -> {}
+                when (sublayer.role) {
+                    ClockSublayerRole.Hour -> {
+                        sublayer.drawable.level = (((hour.value.toInt() - defaultHour + 12) % 12) * 60
+                                + ((minute.value.toInt() - defaultMinute + 60) % 60))
                     }
-                }) {
-                    drawIntoCanvas {
-                        sublayer.drawable.bounds = this.size.toRect().toAndroidRect()
-                        sublayer.drawable.drawWithColorFilter(it.nativeCanvas, colorFilter)
-                    }
+                    ClockSublayerRole.Minute -> sublayer.drawable.level = ((minute.value.toInt() - defaultMinute + 60) % 60)
+                    ClockSublayerRole.Second -> sublayer.drawable.level = (((second.value.toInt() - defaultSecond + 60) % 60) * 10)
+                    else -> {}
+                }
+                drawIntoCanvas {
+                    sublayer.drawable.bounds = this.size.toRect().toAndroidRect()
+                    sublayer.drawable.drawWithColorFilter(it.nativeCanvas, colorFilter)
                 }
             }
         }
