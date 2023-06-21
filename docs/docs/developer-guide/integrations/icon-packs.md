@@ -170,7 +170,7 @@ Here is an example of a clock icon:
 </adaptive-icon>
 ```
 
-Notice how each of the three clock hand layers is wrapped in a `RotateDrawable` and how there are
+Pay attention to how each of the three clock hand layers is wrapped in a `RotateDrawable` and how there are
 very
 specific values set for `android:fromDegrees` and `android:toDegrees`. This is required for
 launchers
