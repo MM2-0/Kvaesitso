@@ -456,7 +456,7 @@ private fun ClockLayer(
                 when (sublayer.role) {
                     ClockSublayerRole.Hour -> {
                         sublayer.drawable.level = (((hour.value.toInt() - defaultHour + 12) % 12) * 60
-                                + ((minute.value.toInt() - defaultMinute + 60) % 60))
+                                + ((minute.value.toInt()) % 60))
                     }
                     ClockSublayerRole.Minute -> sublayer.drawable.level = ((minute.value.toInt() - defaultMinute + 60) % 60)
                     ClockSublayerRole.Second -> sublayer.drawable.level = (((second.value.toInt() - defaultSecond + 60) % 60) * 10)
