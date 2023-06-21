@@ -114,11 +114,6 @@ Make sure that all 31 drawables are present, or the launcher will reject the ico
 
 #### Clock icons
 
-:::caution
-**Preview feature:** This feature is currently (May 26, 2023) only available in nightly builds.
-
-:::
-
 Dynamic clock icons are supported as well but they work a bit differently than calendar icons.
 A dynamic clock icon needs at least two entries in your `appfilter.xml` file:
 
@@ -175,11 +170,12 @@ Here is an example of a clock icon:
 </adaptive-icon>
 ```
 
-Notice how each of the three clock hand layers is wrapped in a `RotateDrawable`. While this is not
-strictly
-necessary for Kvaesitso,
-other launchers might expect this structure so it is recommended to always wrap the clock hands in
-a `RotateDrawable` and set the `android:fromDegrees` and `android:toDegrees` like this:
+Notice how each of the three clock hand layers is wrapped in a `RotateDrawable` and how there are
+very
+specific values set for `android:fromDegrees` and `android:toDegrees`. This is required for
+launchers
+to be able to animate the clock hands. The values for `android:fromDegrees` and `android:toDegrees`
+must follow these rules:
 
 - For the clock hour hand, the difference between `android:fromDegrees` and `android:toDegrees`
   must be `5000`.
@@ -188,10 +184,9 @@ a `RotateDrawable` and set the `android:fromDegrees` and `android:toDegrees` lik
 - For the clock second hand, the difference between `android:fromDegrees` and `android:toDegrees`
   must be `6000`.
 - Each hand can have an offset from 0° to set the clock to a specific time (this is useful so that
-  launchers that don't support dynamic clock icons don't display the icon as noon). For example, if
-  you want
-  the clock to show 10:10:30, you would set `android:fromDegrees` to 300° for the hour hand, 60° for
-  the minute hand and 180° for the second hand and add the same offset to `android:toDegrees`.
+  launchers that don't support dynamic clock icons don't display the icon as noon). In the example
+  above, the hour hand is offset by 300°, the minute hand by 60° and the second hand by 180°. This
+  means that the clock shows 10:10:30 in its default state.
 - To let the launcher know which time the clock shows in its default state, you can use
   the `defaultHour`,  `defaultMinute` and `defaultSecond` attributes in the `appfilter.xml` entry.
 
@@ -207,10 +202,11 @@ an impossible time.
 
 **Why these numbers?**
 
-Launcher3 (and its descendants) use the `android:level` attribute to
+Launchers use the `android:level` attribute to
 animate the clock hands. A drawable's level is a number
-between 0 and 10000. For `RotateDrawable`s, each level corresponds to 1/10000 of the angle between
-`android:fromDegrees` and `android:toDegrees`.
+between 0 and 10000 that influences how the drawable is drawn. For `RotateDrawable`s, the level
+attribute is used to set the rotation angle. Each level corresponds
+to 1/10000 of the angle between `android:fromDegrees` and `android:toDegrees`.
 
 For the second hand, it is expected
 that [10 levels are equal to 1 second](https://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/libs/systemui/iconloaderlib/src/com/android/launcher3/icons/ClockDrawableWrapper.java;drc=7346c436e5a11ce08f6a80dcfeb8ef941ca30176;l=84).
@@ -222,6 +218,9 @@ This means that the total angle must be `360/60 * 10000 = 60000` degrees.
 
 For the hour layer, one level is also equal to one minute, so there are `12 * 60 = 720` levels in a
 full rotation. `360/720 * 10000 = 5000` degrees.
+
+Technically, you could also use other kinds of drawables that support the `android:level`
+attribute (such as a `LevelListDrawable`), as long as you follow the rules above.
 
 :::
 
