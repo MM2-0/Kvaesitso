@@ -345,7 +345,7 @@ fun PullDownScaffold(
                     }
                 )
             }
-            .nestedScroll(nestedScrollConnection)
+            //.nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
@@ -365,6 +365,7 @@ fun PullDownScaffold(
                     state = pagerState,
                     reverseLayout = true,
                     userScrollEnabled = false,
+                    pageNestedScrollConnection = nestedScrollConnection,
                 ) {
                     when (it) {
 
