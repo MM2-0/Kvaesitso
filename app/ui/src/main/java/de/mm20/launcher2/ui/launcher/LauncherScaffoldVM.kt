@@ -94,7 +94,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     }
 
     fun closeSearch() {
-        if (isSearchOpen.value == false) return
+        if (!isSearchOpen.value) return
         isSearchOpen.value = false
         setSearchbarFocus(false)
     }
@@ -130,6 +130,8 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 settings?.swipeDown?.takeIf { layout != Layout.PullDown } ?: GestureAction.None
             val longPressAction = settings?.longPress ?: GestureAction.None
             val doubleTapAction = settings?.doubleTap ?: GestureAction.None
+            val homeButtonAction = settings?.homeButton ?: GestureAction.None
+
             val swipeLeftAppKey =
                 if (swipeLeftAction == GestureAction.LaunchApp) settings.swipeLeftApp else null
             val swipeRightAppKey =
@@ -140,12 +142,15 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 if (longPressAction == GestureAction.LaunchApp) settings.longPressApp else null
             val doubleTapAppKey =
                 if (doubleTapAction == GestureAction.LaunchApp) settings.doubleTapApp else null
+            val homeButtonAppKey =
+                if (homeButtonAction == GestureAction.LaunchApp) settings.homeButtonApp else null
             val apps = listOfNotNull(
                 swipeLeftAppKey,
                 swipeRightAppKey,
                 swipeDownAppKey,
                 longPressAppKey,
-                doubleTapAppKey
+                doubleTapAppKey,
+                homeButtonAppKey,
             ).let { searchableRepository.getByKeys(it) }
 
             GestureState(
@@ -154,11 +159,13 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                 swipeDownAction = swipeDownAction,
                 longPressAction = longPressAction,
                 doubleTapAction = doubleTapAction,
+                homeButtonAction = homeButtonAction,
                 swipeLeftApp = apps.firstOrNull { it.key == swipeLeftAppKey },
                 swipeRightApp = apps.firstOrNull { it.key == swipeRightAppKey },
                 swipeDownApp = apps.firstOrNull { it.key == swipeDownAppKey },
                 longPressApp = apps.firstOrNull { it.key == longPressAppKey },
-                doubleTapApp = apps.firstOrNull { it.key == doubleTapAppKey }
+                doubleTapApp = apps.firstOrNull { it.key == doubleTapAppKey },
+                homeButtonApp = apps.firstOrNull { it.key == homeButtonAppKey },
             )
         }.stateIn(viewModelScope, SharingStarted.Eagerly, GestureState())
 
@@ -167,9 +174,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         val action = when (gesture) {
             Gesture.DoubleTap -> gestureState.value.doubleTapAction
             Gesture.LongPress -> gestureState.value.longPressAction
-            Gesture.SwipeDown -> gestureState.value.swipeDownAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PullDown }
-            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.Pager }
-            Gesture.SwipeRight -> gestureState.value.swipeRightAction.takeIf { baseLayout.value != Settings.LayoutSettings.Layout.PagerReversed }
+            Gesture.SwipeDown -> gestureState.value.swipeDownAction.takeIf { baseLayout.value != Layout.PullDown }
+            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction.takeIf { baseLayout.value != Layout.Pager }
+            Gesture.SwipeRight -> gestureState.value.swipeRightAction.takeIf { baseLayout.value != Layout.PagerReversed }
+            Gesture.HomeButton -> gestureState.value.homeButtonAction
         }
         val requiresAccessibilityService =
             action == GestureAction.OpenRecents
@@ -233,6 +241,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
                     Gesture.SwipeDown -> gestureState.value.swipeDownApp
                     Gesture.LongPress -> gestureState.value.longPressApp
                     Gesture.DoubleTap -> gestureState.value.doubleTapApp
+                    Gesture.HomeButton -> gestureState.value.homeButtonApp
                 }?.launch(context, options.toBundle())
                 true
             }
@@ -252,11 +261,13 @@ data class GestureState(
     val swipeDownAction: GestureAction = GestureAction.None,
     val longPressAction: GestureAction = GestureAction.None,
     val doubleTapAction: GestureAction = GestureAction.None,
+    val homeButtonAction: GestureAction = GestureAction.None,
     val swipeLeftApp: SavableSearchable? = null,
     val swipeRightApp: SavableSearchable? = null,
     val swipeDownApp: SavableSearchable? = null,
     val longPressApp: SavableSearchable? = null,
     val doubleTapApp: SavableSearchable? = null,
+    val homeButtonApp: SavableSearchable? = null,
 )
 
 data class FailedGesture(val gesture: Gesture, val action: GestureAction)

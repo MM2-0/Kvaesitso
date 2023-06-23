@@ -69,12 +69,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -227,15 +227,18 @@ fun PagerScaffold(
     val searchBarOffset = remember { mutableStateOf(0f) }
 
     val scope = rememberCoroutineScope()
-    BackHandler {
+
+    val `handleBackOrHomeEvent` = {
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
                 searchVM.search("")
+                true
             }
 
             isWidgetEditMode -> {
                 viewModel.setWidgetEditMode(false)
+                true
             }
 
             widgetsScrollState.value != 0 -> {
@@ -245,8 +248,14 @@ fun PagerScaffold(
                 scope.launch {
                     searchBarOffset.animateTo(0f)
                 }
+                true
             }
+            else -> false
         }
+    }
+
+    BackHandler {
+        `handleBackOrHomeEvent`()
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -542,6 +551,9 @@ fun PagerScaffold(
             } else null
         )
     }
+    LauncherGestureHandler(
+        onHomeButtonPress = handleBackOrHomeEvent,
+    )
 }
 
 private enum class Page {

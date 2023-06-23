@@ -72,6 +72,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -247,15 +248,17 @@ fun PullDownScaffold(
         if (!isWidgetEditMode) searchBarOffset.value = 0f
     }
 
-    BackHandler {
+    val handleBackOrHomeEvent = {
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
                 searchVM.search("")
+                true
             }
 
             isWidgetEditMode -> {
                 viewModel.setWidgetEditMode(false)
+                true
             }
 
             widgetsScrollState.value != 0 -> {
@@ -265,8 +268,14 @@ fun PullDownScaffold(
                 scope.launch {
                     searchBarOffset.animateTo(0f)
                 }
+                true
             }
+            else -> false
         }
+    }
+
+    BackHandler {
+        handleBackOrHomeEvent()
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -571,4 +580,7 @@ fun PullDownScaffold(
         )
 
     }
+    LauncherGestureHandler(
+        onHomeButtonPress = handleBackOrHomeEvent,
+    )
 }

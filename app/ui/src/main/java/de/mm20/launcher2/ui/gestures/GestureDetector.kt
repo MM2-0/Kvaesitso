@@ -41,6 +41,9 @@ class GestureDetector {
         gestureListener?.onDragEnd()
     }
 
+    fun dispatchHomeButtonPress() {
+        gestureListener?.onHomeButtonPress()
+    }
 
     interface OnGestureListener {
         fun onTap(position: Offset) {}
@@ -54,6 +57,8 @@ class GestureDetector {
         fun onDrag(offset: Offset): Boolean = false
 
         fun onDragEnd() {}
+
+        fun onHomeButtonPress() {}
     }
 }
 

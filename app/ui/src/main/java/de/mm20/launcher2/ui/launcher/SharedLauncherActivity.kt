@@ -44,10 +44,9 @@ import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
-import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.search.SearchVM
-import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheetManager
+import de.mm20.launcher2.ui.launcher.sheets.LauncherBottomSheets
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionManager
@@ -70,6 +69,8 @@ abstract class SharedLauncherActivity(
 
     internal val enterHomeTransitionManager = EnterHomeTransitionManager()
 
+    internal val gestureDetector = GestureDetector()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -84,7 +85,6 @@ abstract class SharedLauncherActivity(
         viewModel.setSystemInDarkMode(resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES)
 
         val bottomSheetManager = LauncherBottomSheetManager(this)
-        val gestureDetector = GestureDetector()
 
         setContent {
             val snackbarHostState = remember { SnackbarHostState() }
@@ -258,7 +258,6 @@ abstract class SharedLauncherActivity(
                                 }
                                 LauncherBottomSheets()
                             }
-                            LauncherGestureHandler()
                         }
                     }
                 }

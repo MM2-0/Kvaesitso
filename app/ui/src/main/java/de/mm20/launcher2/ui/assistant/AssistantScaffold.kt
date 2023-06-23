@@ -23,6 +23,7 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.LauncherScaffoldVM
+import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
 import de.mm20.launcher2.ui.launcher.search.SearchVM
@@ -215,4 +216,5 @@ fun AssistantScaffold(
             } else null
         )
     }
+    LauncherGestureHandler()
 }

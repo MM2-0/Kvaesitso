@@ -34,8 +34,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
+/**
+ * Handles gestures on the launcher according to the user's settings.
+ * @param onHomeButtonPress Called when the home button is pressed. Allows the caller to intercept the event.
+ * If the function returns true, the event is considered handled and the default action is not performed.
+ */
 @Composable
-fun LauncherGestureHandler() {
+fun LauncherGestureHandler(
+    onHomeButtonPress: () -> Boolean = { false }
+) {
     val context = LocalContext.current
     val wallpaperManager = remember { WallpaperManager.getInstance(context) }
     val gestureDetector = LocalGestureDetector.current
@@ -68,6 +75,12 @@ fun LauncherGestureHandler() {
         },
         onLongPress = {
             viewModel.handleGesture(context, Gesture.LongPress)
+        },
+        onHomeButtonPress = {
+            if (onHomeButtonPress()) {
+                return@GestureHandler
+            }
+            viewModel.handleGesture(context, Gesture.HomeButton)
         },
         onDrag = {
             when {

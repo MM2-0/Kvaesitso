@@ -43,6 +43,7 @@ fun FailedGestureSheet(
         Gesture.SwipeDown -> R.string.preference_gesture_swipe_down
         Gesture.SwipeLeft -> R.string.preference_gesture_swipe_left
         Gesture.SwipeRight -> R.string.preference_gesture_swipe_right
+        Gesture.HomeButton -> R.string.preference_gesture_home_button
     })
 
     BottomSheetDialog(

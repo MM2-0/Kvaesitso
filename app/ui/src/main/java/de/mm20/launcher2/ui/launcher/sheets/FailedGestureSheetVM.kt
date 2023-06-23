@@ -31,6 +31,7 @@ class FailedGestureSheetVM : ViewModel(), KoinComponent {
                             Gesture.SwipeRight -> swipeRight = GestureAction.None
                             Gesture.DoubleTap -> doubleTap = GestureAction.None
                             Gesture.LongPress -> longPress = GestureAction.None
+                            Gesture.HomeButton -> homeButton = GestureAction.None
                         }
                     }.build()
                 ).build()
