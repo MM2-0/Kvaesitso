@@ -41,7 +41,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":libs:g-services"))
-    implementation(project(":libs:ms-services"))
     implementation(project(":libs:owncloud"))
     implementation(project(":libs:nextcloud"))
 
