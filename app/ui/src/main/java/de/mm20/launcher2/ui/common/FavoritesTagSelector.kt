@@ -29,7 +29,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.R
@@ -67,6 +72,7 @@ fun FavoritesTagSelector(
             Row(
                 modifier = Modifier
                     .weight(1f)
+                    .nestedScroll(NestedScrollConnection)
                     .horizontalScroll(scrollState)
                     .padding(end = 12.dp),
             ) {
@@ -149,5 +155,21 @@ fun FavoritesTagSelector(
                 }
             }
         }
+    }
+}
+
+private object NestedScrollConnection:
+    NestedScrollConnection {
+
+    override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
+        return available
+    }
+
+    override fun onPostScroll(
+        consumed: Offset,
+        available: Offset,
+        source: NestedScrollSource
+    ): Offset {
+        return available
     }
 }
