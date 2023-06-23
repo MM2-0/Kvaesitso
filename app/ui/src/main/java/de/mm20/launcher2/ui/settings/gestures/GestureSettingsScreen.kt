@@ -195,6 +195,29 @@ fun GestureSettingsScreen() {
                     appIcon = swipeRightAppIcon,
                     onAppChanged = { viewModel.setSwipeRightApp(it) }
                 )
+
+                val homeButton by viewModel.homeButton.collectAsStateWithLifecycle(null)
+                AnimatedVisibility(hasPermission == false && requiresAccessibilityService(homeButton)) {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(16.dp),
+                        text = stringResource(R.string.missing_permission_accessibility_gesture_settings),
+                        onClick = { viewModel.requestPermission(context as AppCompatActivity) }
+                    )
+                }
+                val homeButtonApp by viewModel.homeButtonApp.collectAsState(null)
+                val homeButtonAppIcon by remember(homeButtonApp?.key) {
+                    viewModel.getIcon(homeButtonApp, appIconSize.toInt())
+                }.collectAsState(null)
+                GesturePreference(
+                    title = stringResource(R.string.preference_gesture_home_button),
+                    value = homeButton,
+                    onValueChanged = { viewModel.setHomeButton(it) },
+                    isOpenSearch = false,
+                    options = options,
+                    app = homeButtonApp,
+                    appIcon = homeButtonAppIcon,
+                    onAppChanged = { viewModel.setHomeButtonApp(it) }
+                )
             }
         }
     }

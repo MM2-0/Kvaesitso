@@ -53,6 +53,8 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val longPress = dataStore.data.map { it.gestures.longPress }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    val homeButton = dataStore.data.map { it.gestures.homeButton }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setSwipeDown(action: GestureAction) {
         viewModelScope.launch {
@@ -94,6 +96,15 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setGestures(it.gestures.toBuilder().setLongPress(action).build())
+                    .build()
+            }
+        }
+    }
+
+    fun setHomeButton(action: GestureAction) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder().setGestures(it.gestures.toBuilder().setHomeButton(action).build())
                     .build()
             }
         }
@@ -192,6 +203,26 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
                 it.toBuilder()
                     .setGestures(it.gestures.toBuilder()
                         .setDoubleTapApp(searchable?.key ?: "")
+                        .build()
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val homeButtonApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.homeButtonApp }
+        .map {
+            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
+
+    fun setHomeButtonApp(searchable: SavableSearchable?) {
+        viewModelScope.launch {
+            searchable?.let { searchableRepository.insert(it) }
+            dataStore.updateData {
+                it.toBuilder()
+                    .setGestures(it.gestures.toBuilder()
+                        .setHomeButtonApp(searchable?.key ?: "")
                         .build()
                     )
                     .build()

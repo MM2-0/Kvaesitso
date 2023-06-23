@@ -329,6 +329,8 @@ message Settings {
     string swipe_right_app = 8;
     string double_tap_app = 9;
     string long_press_app = 10;
+    GestureAction home_button = 11;
+    string home_button_app = 12;
   }
   GestureSettings gestures = 28;
 
