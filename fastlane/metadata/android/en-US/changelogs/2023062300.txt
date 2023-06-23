@@ -1,0 +1,4 @@
+- Note linking: you can now link note widgets to files to keep their content in sync
+- Added home button as gesture trigger
+- Added support for dynamic clock icons in icon packs
+- Bug fixes
