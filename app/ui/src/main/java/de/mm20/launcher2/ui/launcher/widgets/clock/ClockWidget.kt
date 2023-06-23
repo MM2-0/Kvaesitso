@@ -113,11 +113,13 @@ fun ClockWidget(
                             beyondBoundsPageCount = 1,
                             modifier = Modifier.weight(1f)
                         ) {
-                            DynamicZone(
-                                modifier = Modifier.fillMaxWidth(),
-                                layout = ClockWidgetLayout.Horizontal,
-                                provider = partProviders[it],
-                            )
+                            partProviders.getOrNull(it)?.let {
+                                DynamicZone(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    layout = ClockWidgetLayout.Horizontal,
+                                    provider = it,
+                                )
+                            }
                         }
                     } else if (partProviders.isNotEmpty()) {
                         DynamicZone(
