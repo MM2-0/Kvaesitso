@@ -207,8 +207,10 @@ abstract class SharedLauncherActivity(
                                                     modifier = Modifier
                                                         .fillMaxSize()
                                                         .graphicsLayer {
-                                                            scaleX = enterTransitionProgress.value
-                                                            scaleY = enterTransitionProgress.value
+                                                            scaleX =
+                                                                0.5f + enterTransitionProgress.value * 0.5f
+                                                            scaleY =
+                                                                0.5f + enterTransitionProgress.value * 0.5f
                                                             alpha = enterTransitionProgress.value
                                                         },
                                                     darkStatusBarIcons = lightStatus,

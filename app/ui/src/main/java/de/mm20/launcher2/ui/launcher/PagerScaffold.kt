@@ -20,13 +20,13 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
@@ -84,6 +84,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlin.math.roundToInt
 
 @Composable
 fun PagerScaffold(
@@ -228,7 +229,7 @@ fun PagerScaffold(
 
     val scope = rememberCoroutineScope()
 
-    val `handleBackOrHomeEvent` = {
+    val handleBackOrHomeEvent = {
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
@@ -250,12 +251,13 @@ fun PagerScaffold(
                 }
                 true
             }
+
             else -> false
         }
     }
 
     BackHandler {
-        `handleBackOrHomeEvent`()
+        handleBackOrHomeEvent()
     }
 
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -275,12 +277,15 @@ fun PagerScaffold(
                 }
                 return super.onPreScroll(available, source)
             }
+
             override fun onPostScroll(
                 consumed: Offset,
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag && !isWidgetEditMode) gestureManager.dispatchDrag(available)
+                if (source == NestedScrollSource.Drag && !isWidgetEditMode) gestureManager.dispatchDrag(
+                    available
+                )
                 val deltaSearchBarOffset =
                     consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
                 searchBarOffset.value =
@@ -320,7 +325,6 @@ fun PagerScaffold(
 
     Box(
         modifier = modifier
-            .nestedScroll(nestedScrollConnection)
     ) {
 
         BoxWithConstraints(
@@ -350,7 +354,7 @@ fun PagerScaffold(
                         ),
                     ),
                     // FIXME: Workaround https://issuetracker.google.com/issues/276738324
-                    pageNestedScrollConnection = remember { object: NestedScrollConnection {} }
+                    pageNestedScrollConnection = nestedScrollConnection
                 ) {
                     when (it) {
                         0 -> {
@@ -522,16 +526,25 @@ fun PagerScaffold(
         LauncherSearchBar(
             modifier = Modifier
                 .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .padding(8.dp)
+                .fillMaxWidth()
+                .wrapContentHeight()
                 .windowInsetsPadding(WindowInsets.safeDrawing)
-                .imePadding()
+                .padding(8.dp)
                 .offset {
                     IntOffset(
                         0,
                         if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1
                     )
                 }
-                .offset(y = widgetEditModeOffset),
+                .offset {
+                    IntOffset(
+                        0,
+                        with(density) {
+                            widgetEditModeOffset
+                                .toPx()
+                                .roundToInt()
+                        })
+                },
             level = { searchBarLevel },
             focused = focusSearchBar,
             onFocusChange = {
