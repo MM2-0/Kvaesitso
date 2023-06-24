@@ -59,7 +59,6 @@ import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.Dp
@@ -82,7 +81,6 @@ import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
-import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -122,8 +120,8 @@ fun ShapedLauncherIcon(
 
     val renderSettings = LauncherIconRenderSettings(
         size = defaultIconSize.toPixels().toInt(),
-        fgThemeColor = colorResource(R.color.m3_ref_palette_dynamic_primary90).toArgb(),
-        bgThemeColor = colorResource(R.color.m3_ref_palette_dynamic_neutral_variant20).toArgb(),
+        fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
+        bgThemeColor = MaterialTheme.colorScheme.primaryContainer.toArgb(),
         fgTone = if (LocalDarkTheme.current) 90 else 10,
         bgTone = if (LocalDarkTheme.current) 30 else 90,
     )
