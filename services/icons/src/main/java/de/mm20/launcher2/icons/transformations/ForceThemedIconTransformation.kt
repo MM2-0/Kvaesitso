@@ -23,7 +23,7 @@ internal class ForceThemedIconTransformation : LauncherIconTransformation {
             is StaticIconLayer -> TintedIconLayer(
                 color = 0,
                 icon = layer.icon,
-                scale = layer.scale / 1.5f,
+                scale = layer.scale / 1.2f,
             )
             is TextLayer -> layer.copy(
                 color = 0

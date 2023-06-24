@@ -86,8 +86,8 @@ data class StaticLauncherIcon(
             is TintedIconLayer -> {
                 val color = if (layer.color == 0) themeColor else getTone(layer.color, tone)
                 canvas.withScale(
-                    layer.scale + 0.5f,
-                    layer.scale + 0.5f,
+                    layer.scale,
+                    layer.scale,
                     canvas.width / 2f,
                     canvas.height / 2f,
                 ) {

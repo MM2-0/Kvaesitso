@@ -185,7 +185,7 @@ fun AdaptiveIconDrawableCompat.toLauncherIcon(
     if (themed && this.monochrome != null) {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                scale = 1f,
+                scale = 1.5f,
                 icon = this.monochrome,
             ),
             backgroundLayer = ColorLayer()

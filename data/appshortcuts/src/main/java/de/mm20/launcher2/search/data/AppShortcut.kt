@@ -21,7 +21,7 @@ interface AppShortcut: SavableSearchable {
             foregroundLayer = TintedIconLayer(
                 color = 0xFF3DDA84.toInt(),
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-                scale = 0.5f,
+                scale = 0.65f,
             ),
             backgroundLayer = ColorLayer(0xFF3DDA84.toInt()),
         )
