@@ -278,7 +278,7 @@ class IconPackManager(
                 return StaticLauncherIcon(
                     foregroundLayer = TintedIconLayer(
                         icon = drawable,
-                        scale = 0.5f,
+                        scale = 0.65f,
                     ),
                     backgroundLayer = ColorLayer(),
                 )
