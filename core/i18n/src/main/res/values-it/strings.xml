@@ -637,4 +637,5 @@
     <string name="note_widget_conflict_description">Il file collegato non è vuoto e il suo contenuto non corrisponde all\'ultima versione salvata di questa nota. Quale versione vuoi mantenere\?</string>
     <string name="note_widget_conflict_local_version">Ultima versione salvata:</string>
     <string name="note_widget_file_read_error_description">Impossibile leggere il file collegato. Forse è stato spostato o cancellato. È stata ripristinata una copia dalla memoria interna del programma di avvio. Se modifichi la nota, il file collegato potrebbe essere sovrascritto.</string>
+    <string name="preference_gesture_home_button">Pulsante home/gesto</string>
 </resources>
