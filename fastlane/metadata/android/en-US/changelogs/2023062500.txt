@@ -1,0 +1,1 @@
+- Fix swipe gestures not working
