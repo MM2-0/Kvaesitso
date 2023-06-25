@@ -267,7 +267,7 @@ fun PagerScaffold(
     val density = LocalDensity.current
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
-    val nestedScrollConnection = remember {
+    val pagerNestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val drag = gestureManager.currentDrag
@@ -303,6 +303,10 @@ fun PagerScaffold(
                 return super.onPreFling(available)
             }
         }
+    }
+
+    val innerNestedScrollConnection = remember {
+        object: NestedScrollConnection {}
     }
 
     LaunchedEffect(pagerState.currentPage) {
@@ -342,7 +346,9 @@ fun PagerScaffold(
             ) {
 
                 HorizontalPager(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .nestedScroll(pagerNestedScrollConnection),
                     beyondBoundsPageCount = 1,
                     reverseLayout = reverse,
                     state = pagerState,
@@ -353,8 +359,7 @@ fun PagerScaffold(
                             stiffness = Spring.StiffnessMediumLow,
                         ),
                     ),
-                    // FIXME: Workaround https://issuetracker.google.com/issues/276738324
-                    pageNestedScrollConnection = nestedScrollConnection
+                    pageNestedScrollConnection = innerNestedScrollConnection,
                 ) {
                     when (it) {
                         0 -> {
@@ -567,9 +572,4 @@ fun PagerScaffold(
     LauncherGestureHandler(
         onHomeButtonPress = handleBackOrHomeEvent,
     )
-}
-
-private enum class Page {
-    Widgets,
-    Search
 }
