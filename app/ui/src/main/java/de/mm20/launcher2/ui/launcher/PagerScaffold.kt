@@ -435,6 +435,7 @@ fun PagerScaffold(
                                 }
 
                                 WidgetColumn(
+                                    modifier = Modifier.fillMaxWidth(),
                                     editMode = isWidgetEditMode,
                                     onEditModeChange = {
                                         viewModel.setWidgetEditMode(it)

@@ -448,6 +448,7 @@ fun PullDownScaffold(
                                     }
                                 }
                                 WidgetColumn(
+                                    modifier = Modifier.fillMaxWidth(),
                                     editMode = isWidgetEditMode,
                                     onEditModeChange = {
                                         viewModel.setWidgetEditMode(it)
