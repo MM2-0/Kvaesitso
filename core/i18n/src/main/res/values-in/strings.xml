@@ -88,4 +88,58 @@
     <string name="alert_delete_directory">Direktori %1$s dan seluruh kontennya akan dihapus secara permanen. Teruskan\?</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
+    <string name="menu_customize">Kustomisasi</string>
+    <string name="action_undo">Mundur</string>
+    <string name="menu_remove">Hapus</string>
+    <string name="menu_calendar_open_externally">Buka di aplikasi kalender</string>
+    <string name="menu_contacts_open_externally">Buka di aplikasi kontak</string>
+    <string name="search_bar_placeholder">Cari</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="login_flow_login">Masuk</string>
+    <string name="unit_converter_show_all">Tampilkan semua</string>
+    <string name="calendar_widget_pinned_events">Akan datang</string>
+    <string name="calendar_widget_next_events">Acara selanjutnya</string>
+    <string name="calendar_widget_no_events">Tidak ada acara hari ini</string>
+    <string name="calendar_widget_new_event">Acara baru</string>
+    <string name="music_widget_no_data">Belum ada media yang diputar</string>
+    <string name="weather_condition_sleetshowers">Hujan salju</string>
+    <string name="weather_condition_heavysleet">Hujan salju lebat</string>
+    <string name="weather_condition_lightrain">Hujan ringan</string>
+    <string name="weather_condition_heavyrain">Hujan lebat</string>
+    <string name="weather_condition_lightrainshowers">Hujan ringan singkat</string>
+    <string name="weather_condition_lightrainshowersandthunder">Hujan ringan singkat disertai petir</string>
+    <string name="weather_condition_lightsnowandthunder">Salju ringan disertai petir</string>
+    <string name="weather_condition_lightsnow">Salju ringan</string>
+    <string name="weather_condition_lightrainandthunder">Hujan ringan disertai petir</string>
+    <string name="weather_condition_heavysleetshowersandthunder">Hujan salju lebat singkat disertai petir</string>
+    <string name="weather_condition_lightsnowshowers">Salju ringan singkat</string>
+    <string name="weather_condition_lightssleetshowersandthunder">Salju ringan singkat disertai petir</string>
+    <string name="weather_condition_snowandthunder">Salju disertai petir</string>
+    <string name="weather_condition_heavysleetshowers">Hujan salju lebat singkat</string>
+    <string name="weather_condition_heavysnow">Salju lebat</string>
+    <string name="weather_condition_cloudy">Berawan</string>
+    <string name="weather_condition_snow">Salju</string>
+    <string name="weather_condition_hail">Hujan es</string>
+    <string name="weather_condition_thunder">Badai petir</string>
+    <string name="weather_condition_heavysnowshowers">Salju lebat singkat</string>
+    <string name="weather_condition_heavyrainshowers">Hujan lebat singkat</string>
+    <string name="weather_condition_sleetandthunder">Hujan salju disertai petir</string>
+    <string name="weather_condition_rainshowersandthunder">Hujan singkat disertai petir</string>
+    <string name="weather_condition_clearsky">Langit cerah</string>
+    <string name="weather_condition_sleet">Hujan salju</string>
+    <string name="weather_condition_rain">Hujan</string>
+    <string name="weather_condition_fair">Cerah</string>
+    <string name="weather_condition_fog">Berkabut</string>
+    <string name="weather_condition_sleetshowersandthunder">Hujan salju singkat disertai petir</string>
+    <string name="weather_condition_rainandthunder">Hujan disertai petir</string>
+    <string name="weather_condition_lightsleet">Hujan salju ringan</string>
+    <string name="weather_condition_heavysleetandthunder">Hujan salju lebat disertai petir</string>
+    <string name="disclaimer_currency_converter">Kurs dipublikasikan sekali sehari oleh Bank Sentral Eropa. Seluruh informasi disediakan sebagaimana adanya tanpa ada jenis jaminan apapun. Tidak ada tanggung jawab yang diambil atas informasi tersebut.
+\n
+\nPembaruan terakhir: %1$s</string>
+    <string name="calendar_widget_open_app">Buka aplikasi kalender</string>
+    <string name="music_widget_default_title">%1$s sedang memutar media</string>
+    <string name="weather_condition_heavyrainandthunder">Hujan lebat disertai petir</string>
+    <string name="weather_condition_heavyrainshowersandthunder">Hujan lebat singkat disertai petir</string>
+    <string name="weather_condition_lightssnowshowersandthunder">Salju ringan singkat disertai petir</string>
 </resources>
