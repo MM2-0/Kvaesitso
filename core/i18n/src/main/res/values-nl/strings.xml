@@ -632,4 +632,5 @@
     <string name="note_widget_conflict_description">Het gelinkt bestand is niet leeg en de inhoud komt niet overeen met de laatste versie van deze notitie. Welke versie wil je behouden\?</string>
     <string name="note_widget_file_read_error">Fout bij het lezen van notitie</string>
     <string name="note_widget_file_read_error_description">Het gelinkte bestand kon niet gelezen worden. Misschien is het verwijderd of verplaatst. Een kopie uit de interne opslag van de launcher is teruggezet. Als je de notitie bewerkt, wordt het gelinkte bestand mogelijk overschreven.</string>
+    <string name="preference_gesture_home_button">Startknop of -gebaar</string>
 </resources>
