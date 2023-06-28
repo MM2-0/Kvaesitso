@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.CustomColors
+import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -143,47 +144,5 @@ class CustomColorSchemeSettingsScreenVM : ViewModel(), KoinComponent {
 
         val scheme = Scheme.lightFromCorePalette(CorePalette(a1, a2, a3, n1, n2, error))
         return scheme.toSettingsColorsScheme()
-    }
-
-    private fun Scheme.toSettingsColorsScheme(): CustomColors.Scheme {
-        val scheme = this
-        return CustomColors.Scheme.newBuilder()
-            .setPrimary(scheme.primary)
-            .setSurfaceTint(scheme.primary)
-            .setOnPrimary(scheme.onPrimary)
-            .setPrimaryContainer(scheme.primaryContainer)
-            .setOnPrimaryContainer(scheme.onPrimaryContainer)
-            .setSecondary(scheme.secondary)
-            .setOnSecondary(scheme.onSecondary)
-            .setSecondaryContainer(scheme.secondaryContainer)
-            .setOnSecondaryContainer(scheme.onSecondaryContainer)
-            .setTertiary(scheme.tertiary)
-            .setOnTertiary(scheme.onTertiary)
-            .setTertiaryContainer(scheme.tertiaryContainer)
-            .setOnTertiaryContainer(scheme.onTertiaryContainer)
-            .setError(scheme.error)
-            .setOnError(scheme.onError)
-            .setErrorContainer(scheme.errorContainer)
-            .setOnErrorContainer(scheme.onErrorContainer)
-            .setBackground(scheme.background)
-            .setOnBackground(scheme.onBackground)
-            .setSurface(scheme.surface)
-            .setOnSurface(scheme.onSurface)
-            .setSurfaceVariant(scheme.surfaceVariant)
-            .setOnSurfaceVariant(scheme.onSurfaceVariant)
-            .setOutline(scheme.outline)
-            .setOutlineVariant(scheme.outlineVariant)
-            .setInverseSurface(scheme.inverseSurface)
-            .setInverseOnSurface(scheme.inverseOnSurface)
-            .setInversePrimary(scheme.inversePrimary)
-            .setScrim(scheme.scrim)
-            .setSurfaceDim(scheme.surfaceDim)
-            .setSurfaceBright(scheme.surfaceBright)
-            .setSurfaceContainerLowest(scheme.surfaceContainerLowest)
-            .setSurfaceContainerLow(scheme.surfaceContainerLow)
-            .setSurfaceContainer(scheme.surfaceContainer)
-            .setSurfaceContainerHigh(scheme.surfaceContainerHigh)
-            .setSurfaceContainerHighest(scheme.surfaceContainerHighest)
-            .build()
     }
 }

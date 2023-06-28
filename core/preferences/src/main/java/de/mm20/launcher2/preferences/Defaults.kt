@@ -3,6 +3,7 @@ package de.mm20.launcher2.preferences
 import android.content.Context
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme
 import scheme.Scheme
 
 fun createFactorySettings(context: Context): Settings {
@@ -209,71 +210,11 @@ internal val DefaultCustomColorsBase: Settings.AppearanceSettings.CustomColors.B
 internal val DefaultLightCustomColorScheme: Settings.AppearanceSettings.CustomColors.Scheme
     get() {
         val scheme = Scheme.light(0xFFACE330.toInt())
-        return Settings.AppearanceSettings.CustomColors.Scheme.newBuilder()
-            .setPrimary(scheme.primary)
-            .setOnPrimary(scheme.onPrimary)
-            .setPrimaryContainer(scheme.primaryContainer)
-            .setOnPrimaryContainer(scheme.onPrimaryContainer)
-            .setSecondary(scheme.secondary)
-            .setOnSecondary(scheme.onSecondary)
-            .setSecondaryContainer(scheme.secondaryContainer)
-            .setOnSecondaryContainer(scheme.onSecondaryContainer)
-            .setTertiary(scheme.tertiary)
-            .setOnTertiary(scheme.onTertiary)
-            .setTertiaryContainer(scheme.tertiaryContainer)
-            .setOnTertiaryContainer(scheme.onTertiaryContainer)
-            .setBackground(scheme.background)
-            .setOnBackground(scheme.onBackground)
-            .setSurface(scheme.surface)
-            .setOnSurface(scheme.onSurface)
-            .setSurfaceVariant(scheme.surfaceVariant)
-            .setOnSurfaceVariant(scheme.onSurfaceVariant)
-            .setError(scheme.error)
-            .setOnError(scheme.onError)
-            .setErrorContainer(scheme.errorContainer)
-            .setOnErrorContainer(scheme.onErrorContainer)
-            .setInverseSurface(scheme.inverseSurface)
-            .setInverseOnSurface(scheme.inverseOnSurface)
-            .setInversePrimary(scheme.inversePrimary)
-            .setOutline(scheme.outline)
-            .setScrim(scheme.scrim)
-            .setOutlineVariant(scheme.outlineVariant)
-            .setSurfaceTint(scheme.primary)
-            .build()
+        return scheme.toSettingsColorsScheme()
     }
 
 internal val DefaultDarkCustomColorScheme: Settings.AppearanceSettings.CustomColors.Scheme
     get() {
         val scheme = Scheme.dark(0xFFACE330.toInt())
-        return Settings.AppearanceSettings.CustomColors.Scheme.newBuilder()
-            .setPrimary(scheme.primary)
-            .setOnPrimary(scheme.onPrimary)
-            .setPrimaryContainer(scheme.primaryContainer)
-            .setOnPrimaryContainer(scheme.onPrimaryContainer)
-            .setSecondary(scheme.secondary)
-            .setOnSecondary(scheme.onSecondary)
-            .setSecondaryContainer(scheme.secondaryContainer)
-            .setOnSecondaryContainer(scheme.onSecondaryContainer)
-            .setTertiary(scheme.tertiary)
-            .setOnTertiary(scheme.onTertiary)
-            .setTertiaryContainer(scheme.tertiaryContainer)
-            .setOnTertiaryContainer(scheme.onTertiaryContainer)
-            .setBackground(scheme.background)
-            .setOnBackground(scheme.onBackground)
-            .setSurface(scheme.surface)
-            .setOnSurface(scheme.onSurface)
-            .setSurfaceVariant(scheme.surfaceVariant)
-            .setOnSurfaceVariant(scheme.onSurfaceVariant)
-            .setError(scheme.error)
-            .setOnError(scheme.onError)
-            .setErrorContainer(scheme.errorContainer)
-            .setOnErrorContainer(scheme.onErrorContainer)
-            .setInverseSurface(scheme.inverseSurface)
-            .setInverseOnSurface(scheme.inverseOnSurface)
-            .setInversePrimary(scheme.inversePrimary)
-            .setOutline(scheme.outline)
-            .setScrim(scheme.scrim)
-            .setOutlineVariant(scheme.outlineVariant)
-            .setSurfaceTint(scheme.primary)
-            .build()
+        return scheme.toSettingsColorsScheme()
     }
