@@ -140,7 +140,6 @@ dependencies {
     implementation(project(":data:unitconverter"))
     implementation(project(":libs:nextcloud"))
     implementation(project(":libs:g-services"))
-    implementation(project(":libs:ms-services"))
     implementation(project(":libs:owncloud"))
     implementation(project(":services:accounts"))
     implementation(project(":services:backup"))

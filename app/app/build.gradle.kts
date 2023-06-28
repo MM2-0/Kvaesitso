@@ -135,7 +135,6 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":services:icons"))
     implementation(project(":core:ktx"))
-    implementation(project(":libs:ms-services"))
     implementation(project(":services:music"))
     implementation(project(":libs:nextcloud"))
     implementation(project(":data:notifications"))

@@ -123,22 +123,6 @@ val OpenSourceLicenses = arrayOf(
         url = "https://github.com/googleapis/google-api-java-client"
     ),
     OpenSourceLibrary(
-        name = "Microsoft Graph SDK for Java",
-        description = "Get started with the Microsoft Graph SDK for Java by integrating the Microsoft Graph API into your Java application!",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        copyrightNote = "Copyright (c) 2018 Microsoft Graph",
-        url = "https://github.com/microsoftgraph/msgraph-sdk-java"
-    ),
-    OpenSourceLibrary(
-        name = "Microsoft Authentication Library (MSAL) for Android",
-        description = "The MSAL library for Android gives your app the ability to use the Microsoft Cloud by supporting Microsoft Azure Active Directory and Microsoft accounts in a converged experience using industry standard OAuth2 and OpenID Connect. The library also supports Azure AD B2C.",
-        licenseName = R.string.mit_license_name,
-        licenseText = R.raw.license_mit,
-        copyrightNote = "Copyright (c) Microsoft Corporation",
-        url = "https://github.com/AzureAD/microsoft-authentication-library-for-android"
-    ),
-    OpenSourceLibrary(
         name = "CrashReporter",
         description = "CrashReporter is a handy tool to capture app crashes and save them in a file.",
         licenseName = R.string.apache_license_name,
