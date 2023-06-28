@@ -45,5 +45,12 @@ fun MaterialYouCompatScheme(wallpaperColors: WallpaperColors, darkTheme: Boolean
         onErrorContainer = Color(scheme.onErrorContainer),
         scrim = Color(scheme.scrim),
         outlineVariant = Color(scheme.outlineVariant),
+        surfaceBright = Color(scheme.surfaceBright),
+        surfaceContainer = Color(scheme.surfaceContainer),
+        surfaceContainerHigh = Color(scheme.surfaceContainerHigh),
+        surfaceContainerHighest = Color(scheme.surfaceContainerHighest),
+        surfaceContainerLow = Color(scheme.surfaceContainerLow),
+        surfaceContainerLowest = Color(scheme.surfaceContainerLowest),
+        surfaceDim = Color(scheme.surfaceDim),
     )
 }

@@ -138,13 +138,9 @@ fun colorSchemeAsState(
                 return remember(darkTheme) {
                     mutableStateOf(
                         if (darkTheme) {
-                            dynamicDarkColorScheme(context).copy(
-                                outlineVariant = Color(context.getColor(android.R.color.system_neutral2_700))
-                            )
+                            dynamicDarkColorScheme(context)
                         } else {
-                            dynamicLightColorScheme(context).copy(
-                                outlineVariant = Color(context.getColor(android.R.color.system_neutral2_200))
-                            )
+                            dynamicLightColorScheme(context)
                         }
                     )
                 }

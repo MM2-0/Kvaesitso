@@ -51,6 +51,15 @@ public final class CorePalette {
     return new CorePalette(argb, true);
   }
 
+  public CorePalette(TonalPalette a1, TonalPalette a2, TonalPalette a3, TonalPalette n1, TonalPalette n2, TonalPalette error) {
+    this.a1 = a1;
+    this.a2 = a2;
+    this.a3 = a3;
+    this.n1 = n1;
+    this.n2 = n2;
+    this.error = error;
+  }
+
   private CorePalette(int argb, boolean isContent) {
     Hct hct = Hct.fromInt(argb);
     double hue = hct.getHue();

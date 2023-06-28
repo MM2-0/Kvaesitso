@@ -363,6 +363,99 @@ fun CustomColorSchemeSettingsScreen() {
                     )
 
                     ColorPreference(
+                        title = "Surface Dim",
+                        value = lightScheme?.let { Color(it.surfaceDim) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceDim(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Bright",
+                        value = lightScheme?.let { Color(it.surfaceBright) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceBright(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
+                    ColorPreference(
+                        title = "Surface Container Lowest",
+                        value = lightScheme?.let { Color(it.surfaceContainerLowest) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerLowest(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container Low",
+                        value = lightScheme?.let { Color(it.surfaceContainerLow) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerLow(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container",
+                        value = lightScheme?.let { Color(it.surfaceContainer) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainer(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container High",
+                        value = lightScheme?.let { Color(it.surfaceContainerHigh) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerHigh(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container Highest",
+                        value = lightScheme?.let { Color(it.surfaceContainerHighest) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = lightScheme ?: return@ColorPreference
+                            viewModel.setLightScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerHighest(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
+                    ColorPreference(
                         title = "Surface Tint",
                         value = lightScheme?.let { Color(it.surfaceTint) },
                         onValueChanged = {
@@ -739,6 +832,101 @@ fun CustomColorSchemeSettingsScreen() {
                             )
                         }
                     )
+
+
+                    ColorPreference(
+                        title = "Surface Dim",
+                        value = darkScheme?.let { Color(it.surfaceDim) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceDim(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Bright",
+                        value = darkScheme?.let { Color(it.surfaceBright) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceBright(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
+                    ColorPreference(
+                        title = "Surface Container Lowest",
+                        value = darkScheme?.let { Color(it.surfaceContainerLowest) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerLowest(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container Low",
+                        value = darkScheme?.let { Color(it.surfaceContainerLow) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerLow(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container",
+                        value = darkScheme?.let { Color(it.surfaceContainer) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainer(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container High",
+                        value = darkScheme?.let { Color(it.surfaceContainerHigh) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerHigh(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+                    ColorPreference(
+                        title = "Surface Container Highest",
+                        value = darkScheme?.let { Color(it.surfaceContainerHighest) },
+                        onValueChanged = {
+                            if (it == null) return@ColorPreference
+                            val colors = darkScheme ?: return@ColorPreference
+                            viewModel.setDarkScheme(
+                                colors.toBuilder()
+                                    .setSurfaceContainerHighest(it.toArgb())
+                                    .build()
+                            )
+                        }
+                    )
+
                     ColorPreference(
                         title = "Surface Tint",
                         value = darkScheme?.let { Color(it.surfaceTint) },

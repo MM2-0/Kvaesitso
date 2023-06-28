@@ -157,7 +157,7 @@ public class Scheme {
         return darkFromCorePalette(CorePalette.contentOf(argb));
     }
 
-    private static Scheme lightFromCorePalette(CorePalette core) {
+    public static Scheme lightFromCorePalette(CorePalette core) {
         return new Scheme()
                 .withPrimary(core.a1.tone(40))
                 .withOnPrimary(core.a1.tone(100))
@@ -197,7 +197,7 @@ public class Scheme {
                 .withSurfaceContainerHighest(core.n1.tone(90));
     }
 
-    private static Scheme darkFromCorePalette(CorePalette core) {
+    public static Scheme darkFromCorePalette(CorePalette core) {
         return new Scheme()
                 .withPrimary(core.a1.tone(80))
                 .withOnPrimary(core.a1.tone(20))

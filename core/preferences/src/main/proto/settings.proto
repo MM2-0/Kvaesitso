@@ -61,6 +61,13 @@ message Settings {
         uint32 outline_variant = 27;
         uint32 scrim = 28;
         uint32 surface_tint = 29;
+        uint32 surface_dim = 30;
+        uint32 surface_bright = 31;
+        uint32 surface_container_lowest = 32;
+        uint32 surface_container_low = 33;
+        uint32 surface_container = 34;
+        uint32 surface_container_high = 35;
+        uint32 surface_container_highest = 36;
       }
       Scheme light_scheme = 3;
       Scheme dark_scheme = 4;

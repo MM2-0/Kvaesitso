@@ -35,5 +35,12 @@ fun CustomColorScheme(colors: Settings.AppearanceSettings.CustomColors.Scheme) :
         onErrorContainer = Color(colors.onErrorContainer),
         outlineVariant = Color(colors.outlineVariant),
         scrim = Color(colors.scrim),
+        surfaceBright = Color(colors.surfaceBright),
+        surfaceDim = Color(colors.surfaceDim),
+        surfaceContainer = Color(colors.surfaceContainer),
+        surfaceContainerHigh = Color(colors.surfaceContainerHigh),
+        surfaceContainerHighest = Color(colors.surfaceContainerHighest),
+        surfaceContainerLow = Color(colors.surfaceContainerLow),
+        surfaceContainerLowest = Color(colors.surfaceContainerLowest),
     )
 }
