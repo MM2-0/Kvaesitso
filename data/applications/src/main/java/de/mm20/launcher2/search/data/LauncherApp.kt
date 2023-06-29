@@ -69,7 +69,7 @@ data class LauncherApp(
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-                scale = 0.5f,
+                scale = 0.65f,
                 color = 0xff3dda84.toInt(),
             ),
             backgroundLayer = ColorLayer(0xff3dda84.toInt())
@@ -91,7 +91,7 @@ data class LauncherApp(
                 if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
                     return StaticLauncherIcon(
                         foregroundLayer = TintedIconLayer(
-                            scale = 1f,
+                            scale = 1.5f,
                             icon = icon.monochrome!!,
                         ),
                         backgroundLayer = ColorLayer()
