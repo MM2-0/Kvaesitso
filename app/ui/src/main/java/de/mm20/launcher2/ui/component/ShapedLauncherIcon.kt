@@ -121,7 +121,11 @@ fun ShapedLauncherIcon(
     val renderSettings = LauncherIconRenderSettings(
         size = defaultIconSize.toPixels().toInt(),
         fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
-        bgThemeColor = MaterialTheme.colorScheme.primaryContainer.toArgb(),
+        bgThemeColor = if (LocalDarkTheme.current) {
+            MaterialTheme.colorScheme.outlineVariant.toArgb()
+        } else {
+            MaterialTheme.colorScheme.primaryContainer.toArgb()
+        },
         fgTone = if (LocalDarkTheme.current) 90 else 10,
         bgTone = if (LocalDarkTheme.current) 30 else 90,
     )
