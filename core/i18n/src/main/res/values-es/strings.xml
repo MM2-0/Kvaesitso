@@ -573,4 +573,21 @@
     <string name="help">Ayuda</string>
     <string name="preference_layout_fixed_rotation">Rotación de la pantalla fija</string>
     <string name="preference_layout_fixed_rotation_summary">Fijar la rotación de la pantalla al modo vertifcal</string>
+    <string name="preference_compact_mode_summary">Esconde pronósticos de cada hora y diarios</string>
+    <string name="preference_screen_integrations">Integraciones</string>
+    <string name="preference_category_media_apps">Aplicaciones multimedia</string>
+    <string name="widget_name_notes">Nota</string>
+    <string name="widget_action_replace">Reemplazar</string>
+    <string name="notes_widget_placeholder">Escribir una nota…</string>
+    <string name="notes_widget_action_new">Nueva nota</string>
+    <string name="notes_widget_action_save">Guardar</string>
+    <string name="notes_widget_export_filename">Nota_%1$s</string>
+    <string name="notes_widget_action_dismiss">Eliminar</string>
+    <string name="notes_widget_dismissed">Nota eliminada.</string>
+    <string name="icon_pack_dynamic_colors">Colores dinámicos</string>
+    <string name="widget_name_unknown">App de widget desconocida</string>
+    <string name="widget_config_calendar_missing_calendars_hint">¿No se pueden encontrar tus calendarios\?</string>
+    <string name="widget_config_weather_compact">Modo compacto</string>
+    <string name="preference_debug_reinstall_iconpacks">Reinstalar paquete de iconos</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Limpiar y reiniciar la caché del pequete de iconos</string>
 </resources>
