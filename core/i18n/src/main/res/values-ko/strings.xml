@@ -126,7 +126,7 @@
     <string name="websearch_dialog_import_error">입력한 URL을 자동으로 가져올 수 없습니다. 다른 URL을 입력하거나 필요한 데이터를 직접 입력할 수 있습니다.</string>
     <string name="menu_item_edit_favs">즐겨찾기 편집</string>
     <string name="edit_favorites_dialog_tags">태그</string>
-    <string name="edit_favorites_dialog_tag_section_empty">고정한 태그가 여기에 나타납니다</string>
+    <string name="edit_favorites_dialog_tag_section_empty">고정한 태그가 여기에 나타납니다.</string>
     <string name="owncloud_server_url">Owncloud 서버 URL</string>
     <string name="login_flow_continue">계속</string>
     <string name="date_today">오늘</string>
@@ -451,4 +451,6 @@
     <string name="preference_layout_open_search">검색 / 앱 서랍</string>
     <string name="preference_themed_icons_summary">애플리케이션의 색 구성에 따라 아이콘 색상 바꾸기</string>
     <string name="gesture_action_none">없음</string>
+    <string name="owncloud_login_2fa_hint">2단계 인증을 사용하고 있는 경우 앱 비밀번호를 사용해야 합니다.</string>
+    <string name="music_widget_default_title">%1$s 앱에서 미디어 재생 중</string>
 </resources>
