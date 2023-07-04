@@ -18,9 +18,9 @@
     <string name="unit_sqkilometer_symbol">km²</string>
     <string name="unit_sqcentimeter_symbol">cm²</string>
     <string name="unit_sqmillimeter_symbol">mm²</string>
-    <string name="unit_sqinch_symbol">sqin</string>
-    <string name="unit_sqfoot_symbol">sqft</string>
-    <string name="unit_sqyard_symbol">sqyd</string>
+    <string name="unit_sqinch_symbol">in²</string>
+    <string name="unit_sqfoot_symbol">ft²</string>
+    <string name="unit_sqyard_symbol">yd²</string>
     <string name="unit_hectare_symbol">ha</string>
     <string name="unit_acre_symbol">ac</string>
     <string name="unit_millisecond_symbol">ms</string>
@@ -34,11 +34,11 @@
     <string name="unit_gigabyte_symbol">GB</string>
     <plurals name="unit_gigabyte">
         <item quantity="one">gigabyte</item>
-        <item quantity="many">gigabyte</item>
-        <item quantity="other">gigabyte</item>
+        <item quantity="many">gigabytes</item>
+        <item quantity="other">gigabytes</item>
     </plurals>
     <plurals name="unit_megabyte">
-        <item quantity="one">megabytes</item>
+        <item quantity="one">megabyte</item>
         <item quantity="many">megabytes</item>
         <item quantity="other">megabytes</item>
     </plurals>
@@ -184,13 +184,138 @@
         <item quantity="other">mebibytes</item>
     </plurals>
     <plurals name="unit_gibibyte">
-        <item quantity="one">gibibiyte</item>
-        <item quantity="many">gibibiytes</item>
+        <item quantity="one">gibiyte</item>
+        <item quantity="many">gibibytes</item>
         <item quantity="other">gibibytes</item>
     </plurals>
     <plurals name="unit_acre">
         <item quantity="one">acre</item>
         <item quantity="many">acres</item>
         <item quantity="other">acres</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">kb</string>
+    <string name="unit_bit_symbol">bit</string>
+    <string name="unit_megabit_symbol">MB</string>
+    <string name="unit_gigabit_symbol">GB</string>
+    <string name="unit_terabit_symbol">TB</string>
+    <string name="unit_meter_per_second_symbol">m/s</string>
+    <string name="unit_kilometer_per_hour_symbol">km/h</string>
+    <string name="unit_mile_per_hour_symbol">mph</string>
+    <string name="unit_knot_symbol">kn</string>
+    <string name="unit_kilogram_symbol">kg</string>
+    <string name="unit_gram_symbol">gr</string>
+    <string name="unit_metric_ton_symbol">t</string>
+    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_short_ton_symbol">tn. sh.</string>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grado Celcius</item>
+        <item quantity="many">grados Celcius</item>
+        <item quantity="other">grados Celcius</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grado Fahrenheit</item>
+        <item quantity="many">grados Fahrenheit</item>
+        <item quantity="other">grados Fahrenheit</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">°K</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">grado Kelvin</item>
+        <item quantity="many">grados Kelvin</item>
+        <item quantity="other">grados Kelvin</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebiyte</item>
+        <item quantity="many">tebiytes</item>
+        <item quantity="other">tebiytes</item>
+    </plurals>
+    <plurals name="unit_bit">
+        <item quantity="one">bit</item>
+        <item quantity="many">bits</item>
+        <item quantity="other">bits</item>
+    </plurals>
+    <plurals name="unit_kilobit">
+        <item quantity="one">kilobit</item>
+        <item quantity="many">kilobits</item>
+        <item quantity="other">kilobits</item>
+    </plurals>
+    <plurals name="unit_gigabit">
+        <item quantity="one">gigabit</item>
+        <item quantity="many">gigabits</item>
+        <item quantity="other">gigabits</item>
+    </plurals>
+    <plurals name="unit_terabit">
+        <item quantity="one">terabit</item>
+        <item quantity="many">terabits</item>
+        <item quantity="other">terabits</item>
+    </plurals>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilómetro por hora</item>
+        <item quantity="many">kilómetros por hora</item>
+        <item quantity="other">kilómetros por hora</item>
+    </plurals>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">milla por hora</item>
+        <item quantity="many">millas por hora</item>
+        <item quantity="other">millas por hora</item>
+    </plurals>
+    <plurals name="unit_knot">
+        <item quantity="one">nudo</item>
+        <item quantity="many">nudos</item>
+        <item quantity="other">nudos</item>
+    </plurals>
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogramo</item>
+        <item quantity="many">kilogramos</item>
+        <item quantity="other">kilogramos</item>
+    </plurals>
+    <plurals name="unit_gram">
+        <item quantity="one">gramo</item>
+        <item quantity="many">gramos</item>
+        <item quantity="other">gramos</item>
+    </plurals>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">tonelada métrica</item>
+        <item quantity="many">toneladas métricas</item>
+        <item quantity="other">toneladas métricas</item>
+    </plurals>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tonelada larga</item>
+        <item quantity="many">toneladas largas</item>
+        <item quantity="other">toneladas largas</item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">piedra (unidad de masa)</item>
+        <item quantity="many">piedras (unidades de masa)</item>
+        <item quantity="other">piedras (unidades de masa)</item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">libra</item>
+        <item quantity="many">libras</item>
+        <item quantity="other">libras</item>
+    </plurals>
+    <plurals name="unit_megabit">
+        <item quantity="one">megabit</item>
+        <item quantity="many">megabits</item>
+        <item quantity="other">megabits</item>
+    </plurals>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonelada corta</item>
+        <item quantity="many">toneladas cortas</item>
+        <item quantity="other">toneladas cortas</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">onza</item>
+        <item quantity="many">onzas</item>
+        <item quantity="other">onzas</item>
+    </plurals>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">metro por segundo</item>
+        <item quantity="many">metros por segundo</item>
+        <item quantity="other">metros por segundo</item>
     </plurals>
 </resources>
