@@ -578,4 +578,20 @@
     <string name="widget_config_calendar_no_calendars">Ez da egutegirik aurkitu</string>
     <string name="app_widget_loading_failed">Ezin izan da aplikazioaren widgeta kargatu.</string>
     <string name="widget_config_music_integration_settings">Multimedia kontrolatzeko integrazio-ezarpenak</string>
+    <string name="note_widget_link_file">Fintxategi batera estekatu</string>
+    <string name="note_widget_linked_file_summary">%1$s-(r)a estekatua</string>
+    <string name="note_widget_action_unlink_file">Esteka kendu</string>
+    <string name="note_widget_link_file_summary">Sinkronizatu widget honen edukia kanpoko fitxategi batekin</string>
+    <string name="note_widget_conflict_keep_selected">Hautatuta mantendu</string>
+    <string name="note_widget_conflict_description">Estekatutako fitxategia ez dago hutsik eta bere edukia ez dator bat ohar honen azken bertsioarekin. Zein bertsio mantendu nahi duzu\?</string>
+    <string name="note_widget_file_read_error_description">Ezin izan da estekatutako fitxategia irakurri. Baliteke, mugitu edo ezabatu izana. Kopia bat leheneratu da abiarazlearen barne biltegitik. Oharra editatzen baduzu, estekatutako fitxategia gainidatziko da.</string>
+    <string name="note_widget_file_write_error_description">Oharra estekatutako fitxategian ezin izan da idatzi. Baliteke, mugitu edo ezabatu izana. Kopia bat gorde da abiarazlearen barne biltegian.</string>
+    <string name="preference_gesture_home_button">Hasiera botoia/keinuak</string>
+    <string name="note_widget_action_relink_file">Berriro estekatu</string>
+    <string name="note_widget_conflict">Gatazka</string>
+    <string name="note_widget_conflict_action_resolve">Ebatzi</string>
+    <string name="note_widget_conflict_local_version">Gordetako azken bertsioa:</string>
+    <string name="note_widget_conflict_file_version">Uneko fitxategiaren edukia:</string>
+    <string name="note_widget_file_read_error">Errorea oharra irakurtzean</string>
+    <string name="note_widget_file_write_error">Errorea oharra gordetzean</string>
 </resources>
