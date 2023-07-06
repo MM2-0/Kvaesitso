@@ -667,4 +667,5 @@
     <string name="note_widget_conflict_local_version">Dernière version enregistrée :</string>
     <string name="note_widget_conflict_file_version">Contenu actuel du fichier :</string>
     <string name="note_widget_file_read_error">Erreur lors de la lecture de la note</string>
+    <string name="preference_search_bar_launch_on_enter">Lancer avec entrer</string>
 </resources>
