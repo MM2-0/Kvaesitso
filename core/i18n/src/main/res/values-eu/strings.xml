@@ -578,7 +578,7 @@
     <string name="widget_config_calendar_no_calendars">Ez da egutegirik aurkitu</string>
     <string name="app_widget_loading_failed">Ezin izan da aplikazioaren widgeta kargatu.</string>
     <string name="widget_config_music_integration_settings">Multimedia kontrolatzeko integrazio-ezarpenak</string>
-    <string name="note_widget_link_file">Fintxategi batera estekatu</string>
+    <string name="note_widget_link_file">Fitxategi batera estekatu</string>
     <string name="note_widget_linked_file_summary">%1$s-(r)a estekatua</string>
     <string name="note_widget_action_unlink_file">Esteka kendu</string>
     <string name="note_widget_link_file_summary">Sinkronizatu widget honen edukia kanpoko fitxategi batekin</string>
