@@ -637,4 +637,5 @@
     <string name="note_widget_conflict_description">Propojený soubor není prázdný a jeho obsah se neshoduje s naposledy uloženou verzí této poznámky. Kterou z nich chcete ponechat\?</string>
     <string name="note_widget_file_read_error_description">Nepodařilo se přečíst propojený soubor. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie. Pokud poznámku upravíte, propojený soubor nejspíš bude přepsán.</string>
     <string name="note_widget_file_write_error_description">Nepodařilo se zapsat poznámku do propojeného souboru. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie.</string>
+    <string name="preference_gesture_home_button">Domovské tlačítko/gesto</string>
 </resources>
