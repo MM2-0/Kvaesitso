@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 
 @Composable
 fun FavoritesTagSelector(
@@ -72,7 +73,7 @@ fun FavoritesTagSelector(
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .nestedScroll(NestedScrollConnection)
+                    .consumeAllScrolling()
                     .horizontalScroll(scrollState)
                     .padding(end = 12.dp),
             ) {
@@ -155,21 +156,5 @@ fun FavoritesTagSelector(
                 }
             }
         }
-    }
-}
-
-private object NestedScrollConnection:
-    NestedScrollConnection {
-
-    override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-        return available
-    }
-
-    override fun onPostScroll(
-        consumed: Offset,
-        available: Offset,
-        source: NestedScrollSource
-    ): Offset {
-        return available
     }
 }
