@@ -586,7 +586,7 @@
     <string name="notes_widget_dismissed">Nota eliminada.</string>
     <string name="icon_pack_dynamic_colors">Colores dinámicos</string>
     <string name="widget_name_unknown">App de widget desconocida</string>
-    <string name="widget_config_calendar_missing_calendars_hint">¿No se pueden encontrar tus calendarios\?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">¿No encuentras tus calendarios\?</string>
     <string name="widget_config_weather_compact">Modo compacto</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstalar paquete de iconos</string>
     <string name="preference_debug_reinstall_iconpacks_summary">Limpiar y reiniciar la caché del pequete de iconos</string>
