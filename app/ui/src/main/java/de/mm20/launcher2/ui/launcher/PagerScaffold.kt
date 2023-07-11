@@ -8,7 +8,13 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
+import androidx.compose.foundation.gestures.ScrollableDefaults
+import androidx.compose.foundation.gestures.ScrollableState
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.drag
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
@@ -30,6 +36,8 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
+import androidx.compose.foundation.pager.PagerSnapDistance
+import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -51,17 +59,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollDispatcher
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
+import androidx.compose.ui.input.pointer.util.VelocityTracker
+import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
@@ -74,6 +89,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
 import de.mm20.launcher2.ui.ktx.animateTo
+import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.gestures.LauncherGestureHandler
 import de.mm20.launcher2.ui.launcher.helper.WallpaperBlur
 import de.mm20.launcher2.ui.launcher.search.SearchColumn
@@ -84,6 +100,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable
@@ -271,9 +288,17 @@ fun PagerScaffold(
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val drag = gestureManager.currentDrag
-                if (drag != null && (drag.y > 0 || (reverse && drag.x < 0 || !reverse && drag.x > 0))) {
+                if (drag != null && drag.y > 0 && (reverse && drag.x < 0 || !reverse && drag.x > 0)) {
                     gestureManager.dispatchDrag(available)
                     return available
+                }
+                if (drag != null && drag.y > 0) {
+                    gestureManager.dispatchDrag(available.copy(x = 0f))
+                    return available.copy(x = 0f)
+                }
+                if (drag != null && (reverse && drag.x < 0 || !reverse && drag.x > 0)) {
+                    gestureManager.dispatchDrag(available.copy(y = 0f))
+                    return available.copy(y = 0f)
                 }
                 return super.onPreScroll(available, source)
             }
@@ -283,9 +308,9 @@ fun PagerScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag && !isWidgetEditMode) gestureManager.dispatchDrag(
-                    available
-                )
+                if (source == NestedScrollSource.Drag && !isWidgetEditMode && available != Offset.Zero) {
+                    gestureManager.dispatchDrag(available)
+                }
                 val deltaSearchBarOffset =
                     consumed.y * if (isSearchOpen && reverseSearchResults) 1 else -1
                 searchBarOffset.value =
@@ -295,9 +320,17 @@ fun PagerScaffold(
 
             override suspend fun onPreFling(available: Velocity): Velocity {
                 val drag = gestureManager.currentDrag
-                if (drag != null && (drag.y > 0 || (reverse && drag.x < 0 || !reverse && drag.x > 0))) {
+                if (drag != null && drag.y > 0 && (reverse && drag.x < 0 || !reverse && drag.x > 0)) {
                     gestureManager.dispatchDragEnd()
                     return available
+                }
+                if (drag != null && drag.y > 0) {
+                    gestureManager.dispatchDragEnd()
+                    return available.copy(x = 0f)
+                }
+                if (drag != null && (reverse && drag.x < 0 || !reverse && drag.x > 0)) {
+                    gestureManager.dispatchDragEnd()
+                    return available.copy(y = 0f)
                 }
                 gestureManager.dispatchDragEnd()
                 return super.onPreFling(available)
@@ -306,7 +339,7 @@ fun PagerScaffold(
     }
 
     val innerNestedScrollConnection = remember {
-        object: NestedScrollConnection {}
+        object : NestedScrollConnection {}
     }
 
     LaunchedEffect(pagerState.currentPage) {
@@ -345,6 +378,8 @@ fun PagerScaffold(
                 LocalOverscrollConfiguration provides null,
             ) {
 
+                val minFlingVelocity = 1000.dp.toPixels()
+
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
@@ -352,12 +387,29 @@ fun PagerScaffold(
                     beyondBoundsPageCount = 1,
                     reverseLayout = reverse,
                     state = pagerState,
-                    userScrollEnabled = !isWidgetEditMode,
+                    userScrollEnabled = false,//!isWidgetEditMode,
                     flingBehavior = PagerDefaults.flingBehavior(
                         state = pagerState,
                         lowVelocityAnimationSpec = spring(
                             stiffness = Spring.StiffnessMediumLow,
                         ),
+                        snapVelocityThreshold = 1000.dp,
+                        pagerSnapDistance = remember {
+                            object : PagerSnapDistance {
+                                override fun calculateTargetPage(
+                                    startPage: Int,
+                                    suggestedTargetPage: Int,
+                                    velocity: Float,
+                                    pageSize: Int,
+                                    pageSpacing: Int
+                                ): Int {
+                                    if (velocity.absoluteValue < minFlingVelocity) {
+                                        return startPage
+                                    }
+                                    return suggestedTargetPage
+                                }
+                            }
+                        }
                     ),
                     pageNestedScrollConnection = innerNestedScrollConnection,
                 ) {
@@ -404,7 +456,12 @@ fun PagerScaffold(
                                             },
                                         )
                                     }
-                                    .verticalScroll(widgetsScrollState)
+                                    .pagerScaffoldScrollHandler(
+                                        pagerState,
+                                        widgetsScrollState,
+                                        reversePager = reverse,
+                                    )
+                                    .verticalScroll(widgetsScrollState, enabled = false)
                                     .windowInsetsPadding(WindowInsets.safeDrawing)
                                     .graphicsLayer {
                                         val pagerProgress =
@@ -470,6 +527,12 @@ fun PagerScaffold(
                                         alpha = pagerProgress
                                     }
                                     .nestedScroll(searchNestedScrollConnection)
+                                    .pagerScaffoldScrollHandler(
+                                        pagerState,
+                                        searchState,
+                                        reversePager = reverse,
+                                        reverseScroll = reverseSearchResults
+                                    )
                                     .padding(
                                         start = windowInsets.calculateStartPadding(
                                             LocalLayoutDirection.current
@@ -481,6 +544,7 @@ fun PagerScaffold(
                                 reverse = reverseSearchResults,
                                 state = searchState,
                                 paddingValues = paddingValues,
+                                userScrollEnabled = false,
                             )
                         }
                     }
@@ -574,3 +638,130 @@ fun PagerScaffold(
         onHomeButtonPress = handleBackOrHomeEvent,
     )
 }
+
+fun Modifier.pagerScaffoldScrollHandler(
+    pagerState: PagerState,
+    scrollableState: ScrollableState,
+    reversePager: Boolean = false,
+    reverseScroll: Boolean = false,
+) = composed {
+    val scope = rememberCoroutineScope()
+    val flingBehavior = ScrollableDefaults.flingBehavior()
+    val nestedScrollDispatcher = remember { NestedScrollDispatcher() }
+    val touchSlopSq = LocalViewConfiguration.current.touchSlop.pow(2)
+    this
+        .nestedScroll(DefaultNestedScrollConnection, nestedScrollDispatcher)
+        .pointerInput(scrollableState, pagerState, reversePager, reverseScroll) {
+            val velocityTracker = VelocityTracker()
+            val lockScrollThreshold = 200.dp.toPx()
+            val pagerMultiplier = if (reversePager) 1f else -1f
+            val scrollMultiplier = if (reverseScroll) 1f else -1f
+
+
+            awaitEachGesture {
+                var overSlop = false
+                var lockedInScroll = false
+                val initialDown = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                val down = if (scrollableState.isScrollInProgress || pagerState.isScrollInProgress) {
+                    overSlop = true
+                    scope.launch {
+                        scrollableState.scrollBy(0f)
+                        pagerState.scrollBy(0f)
+                    }
+                    initialDown
+                } else {
+                    awaitFirstDown(requireUnconsumed = false)
+                }
+                velocityTracker.resetTracking()
+                velocityTracker.addPointerInputChange(down)
+                val notCanceled = drag(down.id) {
+                    if (it.isConsumed) return@drag
+                    val totalDrag = down.position - it.position
+                    if (!lockedInScroll && totalDrag.y.absoluteValue > lockScrollThreshold) {
+                        lockedInScroll = true
+                        scope.launch {
+                            pagerState.animateScrollToPage(pagerState.settledPage)
+                        }
+                    }
+                    if (!lockedInScroll && !overSlop && totalDrag.getDistanceSquared() > touchSlopSq) {
+                        overSlop = true
+                    }
+                    if (!overSlop) return@drag
+                    val dragAmount = it
+                        .positionChange()
+                        .let {
+                            if (!overSlop || lockedInScroll) it.copy(x = 0f) else it
+                        }
+                    it.consume()
+                    velocityTracker.addPointerInputChange(it)
+                    scope.launch {
+                        val preConsumed = nestedScrollDispatcher.dispatchPreScroll(
+                            dragAmount,
+                            NestedScrollSource.Drag
+                        )
+                        val available = dragAmount - preConsumed
+                        val consumedY = scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
+                        val consumedX = if (!lockedInScroll) {
+                            pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
+                        } else available.x
+                        val totalConsumed = Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
+                        nestedScrollDispatcher.dispatchPostScroll(
+                            totalConsumed,
+                            dragAmount - totalConsumed,
+                            NestedScrollSource.Drag
+                        )
+                    }
+                }
+                if (notCanceled) {
+                    val velocity = velocityTracker
+                        .calculateVelocity()
+
+                    if (velocity.x.absoluteValue > velocity.y.absoluteValue && !lockedInScroll) {
+                        scope.launch {
+                            val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
+                            val flingVelocity = (velocity - preConsumed).x
+
+                            if (flingVelocity.absoluteValue > 400.dp.toPx()) {
+                                if (flingVelocity * pagerMultiplier < 0) {
+                                    pagerState.animateScrollToPage(pagerState.settledPage - 1)
+                                } else {
+                                    pagerState.animateScrollToPage(pagerState.settledPage + 1)
+                                }
+                            } else {
+                                pagerState.animateScrollToPage(pagerState.settledPage)
+                            }
+
+                            nestedScrollDispatcher.dispatchPostFling(
+                                velocity,
+                                Velocity.Zero,
+                            )
+                        }
+                    } else {
+                        scope.launch {
+                            val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
+                            val flingVelocity = (velocity - preConsumed).y
+                            var consumed = 0f
+                            launch {
+                                with(flingBehavior) {
+                                    scrollableState.scroll {
+                                        consumed = performFling(flingVelocity * scrollMultiplier) * scrollMultiplier
+                                    }
+                                }
+                                val totalConsumed =
+                                    Velocity(preConsumed.x, preConsumed.y + consumed)
+                                nestedScrollDispatcher.dispatchPostFling(
+                                    totalConsumed,
+                                    velocity - totalConsumed
+                                )
+                            }
+                            launch {
+                                pagerState.animateScrollToPage(pagerState.settledPage)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+}
+
+internal object DefaultNestedScrollConnection : NestedScrollConnection {}

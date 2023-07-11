@@ -74,6 +74,7 @@ fun SearchColumn(
     paddingValues: PaddingValues = PaddingValues(0.dp),
     state: LazyListState = rememberLazyListState(),
     reverse: Boolean = false,
+    userScrollEnabled: Boolean = true,
 ) {
 
     val columns = LocalGridSettings.current.columnCount
@@ -118,6 +119,7 @@ fun SearchColumn(
     LazyColumn(
         state = state,
         modifier = modifier,
+        userScrollEnabled = userScrollEnabled,
         contentPadding = paddingValues,
         reverseLayout = reverse,
     ) {
