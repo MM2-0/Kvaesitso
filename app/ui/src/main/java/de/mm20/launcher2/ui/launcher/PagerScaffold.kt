@@ -465,6 +465,7 @@ fun PagerScaffold(
                                         pagerState,
                                         widgetsScrollState,
                                         reversePager = reverse,
+                                        disablePager = isWidgetEditMode,
                                     )
                                     .verticalScroll(widgetsScrollState, enabled = false)
                                     .windowInsetsPadding(WindowInsets.safeDrawing)
@@ -649,6 +650,7 @@ fun Modifier.pagerScaffoldScrollHandler(
     scrollableState: ScrollableState,
     reversePager: Boolean = false,
     reverseScroll: Boolean = false,
+    disablePager: Boolean = false,
 ) = composed {
     val scope = rememberCoroutineScope()
     val flingBehavior = ScrollableDefaults.flingBehavior()
@@ -656,7 +658,7 @@ fun Modifier.pagerScaffoldScrollHandler(
     val touchSlopSq = LocalViewConfiguration.current.touchSlop.pow(2)
     this
         .nestedScroll(DefaultNestedScrollConnection, nestedScrollDispatcher)
-        .pointerInput(scrollableState, pagerState, reversePager, reverseScroll) {
+        .pointerInput(scrollableState, pagerState, reversePager, reverseScroll, disablePager) {
             val velocityTracker = VelocityTracker()
             val lockScrollThreshold = 200.dp.toPx()
             val pagerMultiplier = if (reversePager) 1f else -1f
@@ -665,7 +667,7 @@ fun Modifier.pagerScaffoldScrollHandler(
 
             awaitEachGesture {
                 var overSlop = false
-                var lockedInScroll = false
+                var lockedInScroll = disablePager
                 val initialDown = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
                 val down = if (scrollableState.isScrollInProgress || pagerState.isScrollInProgress) {
                     overSlop = true
