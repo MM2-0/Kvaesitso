@@ -276,7 +276,7 @@ abstract class SharedLauncherActivity(
     override fun onResume() {
         super.onResume()
         if (System.currentTimeMillis() - pauseTime > 60000) {
-            viewModel.closeSearch()
+            viewModel.closeSearchWithoutAnimation()
             searchVM.search("")
         }
     }

@@ -237,7 +237,12 @@ fun PagerScaffold(
     LaunchedEffect(isSearchOpen) {
         if (isSearchOpen) pagerState.animateScrollToPage(1)
         else {
-            pagerState.animateScrollToPage(0)
+            if (viewModel.skipNextSearchAnimation) {
+                pagerState.scrollToPage(0)
+                viewModel.skipNextSearchAnimation = false
+            } else {
+                pagerState.animateScrollToPage(0)
+            }
             searchVM.search("")
         }
     }

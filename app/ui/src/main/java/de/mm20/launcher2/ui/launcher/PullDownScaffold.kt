@@ -237,10 +237,15 @@ fun PullDownScaffold(
             )
         } else {
             searchVM.search("")
-            pagerState.animateScrollToPage(
-                0,
-                animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
-            )
+            if (viewModel.skipNextSearchAnimation) {
+                pagerState.scrollToPage(0)
+                viewModel.skipNextSearchAnimation = false
+            } else {
+                pagerState.animateScrollToPage(
+                    0,
+                    animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
+                )
+            }
         }
     }
 

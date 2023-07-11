@@ -99,6 +99,14 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         setSearchbarFocus(false)
     }
 
+    var skipNextSearchAnimation = false
+    fun closeSearchWithoutAnimation() {
+        if (!isSearchOpen.value) return
+        skipNextSearchAnimation = true
+        isSearchOpen.value = false
+        setSearchbarFocus(false)
+    }
+
     fun toggleSearch() {
         if (isSearchOpen.value == true) closeSearch()
         else openSearch()
