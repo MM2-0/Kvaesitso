@@ -1,0 +1,3 @@
+- Improve bidirectional scroll handling in pager layout
+- Change themed icons scaling to match platform style
+- Bug fixes
