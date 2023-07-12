@@ -289,7 +289,7 @@ fun PagerScaffold(
     val density = LocalDensity.current
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
-    val pagerNestedScrollConnection = remember {
+    val pagerNestedScrollConnection = remember(reverse) {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val drag = gestureManager.currentDrag
@@ -706,7 +706,7 @@ fun Modifier.pagerScaffoldScrollHandler(
                         val available = dragAmount - preConsumed
                         val consumedY =
                             scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
-                        val consumedX = pagerState.scrollBy(available.x * pagerMultiplier) * -1f
+                        val consumedX = pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
                         val totalConsumed =
                             Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
                         nestedScrollDispatcher.dispatchPostScroll(
