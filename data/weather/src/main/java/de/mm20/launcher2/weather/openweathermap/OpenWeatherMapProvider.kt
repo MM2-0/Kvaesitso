@@ -2,6 +2,7 @@ package de.mm20.launcher2.weather.openweathermap
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.weather.*
@@ -29,7 +30,7 @@ class OpenWeatherMapProvider(override val context: Context) :
     }
 
     override suspend fun lookupLocation(query: String): List<OpenWeatherMapLocation> {
-        val lang = Locale.getDefault().language
+        val lang = getLanguageCode()
 
         val response = try {
             openWeatherMapService.currentWeather(
@@ -69,7 +70,7 @@ class OpenWeatherMapProvider(override val context: Context) :
         lon: Double? = null,
         location: OpenWeatherMapLocation? = null
     ): WeatherUpdateResult<OpenWeatherMapLocation>? {
-        val lang = Locale.getDefault().language
+        val lang = getLanguageCode()
 
         val currentWeather = try {
             openWeatherMapService.currentWeather(
@@ -162,6 +163,14 @@ class OpenWeatherMapProvider(override val context: Context) :
                 id = cityId
             )
         )
+    }
+
+    private fun getLanguageCode(): String {
+        val lang = Locale.getDefault().language
+        // OWM incorrectly expects Czech to be "cz" instead of "cs"
+        // see https://openweathermap.org/current#multi
+        if (lang == "cs") return "cz"
+        return lang
     }
 
     private fun getApiKey(): String? {
