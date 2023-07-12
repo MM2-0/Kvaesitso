@@ -122,7 +122,7 @@ fun ShapedLauncherIcon(
         size = defaultIconSize.toPixels().toInt(),
         fgThemeColor = MaterialTheme.colorScheme.onPrimaryContainer.toArgb(),
         bgThemeColor = if (LocalDarkTheme.current) {
-            MaterialTheme.colorScheme.outlineVariant.toArgb()
+            MaterialTheme.colorScheme.surfaceContainerLow.toArgb()
         } else {
             MaterialTheme.colorScheme.primaryContainer.toArgb()
         },
