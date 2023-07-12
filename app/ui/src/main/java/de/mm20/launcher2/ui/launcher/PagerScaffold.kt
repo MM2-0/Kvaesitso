@@ -667,37 +667,34 @@ fun Modifier.pagerScaffoldScrollHandler(
 
             awaitEachGesture {
                 var overSlop = false
-                var lockedInScroll = disablePager
-                val initialDown = awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
-                val down = if (scrollableState.isScrollInProgress || pagerState.isScrollInProgress) {
-                    overSlop = true
-                    scope.launch {
-                        scrollableState.scrollBy(0f)
-                        pagerState.scrollBy(0f)
+                val initialDown =
+                    awaitFirstDown(requireUnconsumed = false, pass = PointerEventPass.Initial)
+                val down =
+                    if (scrollableState.isScrollInProgress || pagerState.isScrollInProgress) {
+                        overSlop = true
+                        scope.launch {
+                            scrollableState.scrollBy(0f)
+                            pagerState.scrollBy(0f)
+                        }
+                        initialDown
+                    } else {
+                        awaitFirstDown(requireUnconsumed = false)
                     }
-                    initialDown
-                } else {
-                    awaitFirstDown(requireUnconsumed = false)
-                }
                 velocityTracker.resetTracking()
                 velocityTracker.addPointerInputChange(down)
-                val notCanceled = drag(down.id) {
+                val canceled = !drag(down.id) {
                     if (it.isConsumed) return@drag
                     val totalDrag = down.position - it.position
-                    if (!lockedInScroll && totalDrag.y.absoluteValue > lockScrollThreshold) {
-                        lockedInScroll = true
-                        scope.launch {
-                            pagerState.animateScrollToPage(pagerState.settledPage)
-                        }
-                    }
-                    if (!lockedInScroll && !overSlop && totalDrag.getDistanceSquared() > touchSlopSq) {
+                    if (!overSlop && totalDrag.getDistanceSquared() > touchSlopSq) {
                         overSlop = true
                     }
                     if (!overSlop) return@drag
                     val dragAmount = it
                         .positionChange()
                         .let {
-                            if (!overSlop || lockedInScroll) it.copy(x = 0f) else it
+                            if (it.x.absoluteValue > it.y.absoluteValue) it.copy(y = 0f) else it.copy(
+                                x = 0f
+                            )
                         }
                     it.consume()
                     velocityTracker.addPointerInputChange(it)
@@ -707,11 +704,11 @@ fun Modifier.pagerScaffoldScrollHandler(
                             NestedScrollSource.Drag
                         )
                         val available = dragAmount - preConsumed
-                        val consumedY = scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
-                        val consumedX = if (!lockedInScroll) {
-                            pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
-                        } else available.x
-                        val totalConsumed = Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
+                        val consumedY =
+                            scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
+                        val consumedX = pagerState.scrollBy(available.x * pagerMultiplier) * -1f
+                        val totalConsumed =
+                            Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
                         nestedScrollDispatcher.dispatchPostScroll(
                             totalConsumed,
                             dragAmount - totalConsumed,
@@ -719,51 +716,50 @@ fun Modifier.pagerScaffoldScrollHandler(
                         )
                     }
                 }
-                if (notCanceled) {
-                    val velocity = velocityTracker
-                        .calculateVelocity()
+                val velocity = velocityTracker
+                    .calculateVelocity()
 
-                    if (velocity.x.absoluteValue > velocity.y.absoluteValue && !lockedInScroll) {
-                        scope.launch {
-                            val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
-                            val flingVelocity = (velocity - preConsumed).x
+                if (canceled || velocity.x.absoluteValue > velocity.y.absoluteValue) {
+                    scope.launch {
+                        val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
+                        val flingVelocity = (velocity - preConsumed).x
 
-                            if (flingVelocity.absoluteValue > 400.dp.toPx()) {
-                                if (flingVelocity * pagerMultiplier < 0) {
-                                    pagerState.animateScrollToPage(pagerState.settledPage - 1)
-                                } else {
-                                    pagerState.animateScrollToPage(pagerState.settledPage + 1)
-                                }
+                        if (flingVelocity.absoluteValue > 400.dp.toPx()) {
+                            if (flingVelocity * pagerMultiplier < 0) {
+                                pagerState.animateScrollToPage(pagerState.settledPage - 1)
                             } else {
-                                pagerState.animateScrollToPage(pagerState.settledPage)
+                                pagerState.animateScrollToPage(pagerState.settledPage + 1)
                             }
+                        } else {
+                            pagerState.animateScrollToPage(pagerState.settledPage)
+                        }
 
+                        nestedScrollDispatcher.dispatchPostFling(
+                            velocity,
+                            Velocity.Zero,
+                        )
+                    }
+                } else {
+                    scope.launch {
+                        val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
+                        val flingVelocity = (velocity - preConsumed).y
+                        var consumed = 0f
+                        launch {
+                            with(flingBehavior) {
+                                scrollableState.scroll {
+                                    consumed =
+                                        performFling(flingVelocity * scrollMultiplier) * scrollMultiplier
+                                }
+                            }
+                            val totalConsumed =
+                                Velocity(preConsumed.x, preConsumed.y + consumed)
                             nestedScrollDispatcher.dispatchPostFling(
-                                velocity,
-                                Velocity.Zero,
+                                totalConsumed,
+                                velocity - totalConsumed
                             )
                         }
-                    } else {
-                        scope.launch {
-                            val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
-                            val flingVelocity = (velocity - preConsumed).y
-                            var consumed = 0f
-                            launch {
-                                with(flingBehavior) {
-                                    scrollableState.scroll {
-                                        consumed = performFling(flingVelocity * scrollMultiplier) * scrollMultiplier
-                                    }
-                                }
-                                val totalConsumed =
-                                    Velocity(preConsumed.x, preConsumed.y + consumed)
-                                nestedScrollDispatcher.dispatchPostFling(
-                                    totalConsumed,
-                                    velocity - totalConsumed
-                                )
-                            }
-                            launch {
-                                pagerState.animateScrollToPage(pagerState.settledPage)
-                            }
+                        launch {
+                            pagerState.animateScrollToPage(pagerState.settledPage)
                         }
                     }
                 }
