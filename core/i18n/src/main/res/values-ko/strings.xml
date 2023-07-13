@@ -453,4 +453,13 @@
     <string name="gesture_action_none">없음</string>
     <string name="owncloud_login_2fa_hint">2단계 인증을 사용하고 있는 경우 앱 비밀번호를 사용해야 합니다.</string>
     <string name="music_widget_default_title">%1$s 앱에서 미디어 재생 중</string>
+    <string name="preference_layout_fixed_search_bar">검색 표시줄 고정</string>
+    <string name="search_bar_position_top">위쪽</string>
+    <string name="preference_layout_search_bar_position">검색 표시줄 위치</string>
+    <string name="preference_layout_fixed_search_bar_summary">스크롤할 때 검색 표시줄 항상 표시</string>
+    <string name="preference_cards_shape_rounded">둥근 모서리</string>
+    <string name="preference_theme_system">시스템 설정에 따름</string>
+    <string name="preference_search_bar_launch_on_enter">엔터로 실행</string>
+    <string name="search_bar_position_bottom">아래쪽</string>
+    <string name="preference_cards_shape_cut">각진 모서리</string>
 </resources>
