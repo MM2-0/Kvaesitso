@@ -304,7 +304,7 @@
     <string name="preference_colors_auto_generate">Сгенерировать из основного цвета</string>
     <string name="calendar_widget_next_events">Следующее событие</string>
     <string name="missing_permission_appshortcuts_search_settings">Для поиска ярлыков приложений %1$s должно быть установлено главным экраном по умолчанию</string>
-    <string name="missing_permission_appshortcuts_search">Для поиска ярлыков приложений установите %1$s главным экраном по умолчанию</string>
+    <string name="missing_permission_appshortcuts_search">Для поиска ярлыков приложений установите %1$s главным экраном по умолчанию.</string>
     <string name="preference_layout_summary">Расположение строки поиска, виджетов и результатов поиска</string>
     <string name="preference_colors_custom">Пользовательская</string>
     <string name="preference_custom_colors_a1">Основной</string>
@@ -339,7 +339,7 @@
     <string name="edit_favorites_dialog_tag_section_empty">Закреплённые теги появятся здесь</string>
     <string name="search_action_websearch_url_hint">Образец URL, который используется для создания поискового запроса. Используйте ‘${1}’ для обозначения самого запроса, например: https://google.com/search\?q=${1}.</string>
     <string name="edit_favorites_dialog_tags">Теги</string>
-    <string name="websearch_dialog_query_encoding_url">Процентная кодировка</string>
+    <string name="websearch_dialog_query_encoding_url">Процентное кодирование</string>
     <string name="preference_category_debug_tools">Инструменты</string>
     <string name="preference_debug_cleanup_database">Очистить базу данных</string>
     <string name="preference_debug_cleanup_database_summary">Удалить неиспользуемые записи из базы данных</string>
@@ -405,7 +405,7 @@
     <string name="create_search_action_website_invalid_url">Данный веб-сайт не может быть автоматически импортирован для поиска. Вы можете попробовать другой веб-сайт или ввести необходимые данные вручную на следующем шаге.</string>
     <string name="preference_clockwidget_alarm_part">Будильники</string>
     <string name="preference_clockwidget_alarm_part_summary">Показывать будильники, которые сработают в течении следующих 15 минут</string>
-    <string name="preference_screen_search_summary">Настроить поиск</string>
+    <string name="preference_screen_search_summary">Поиск, теги, спрятанные элементы</string>
     <string name="preference_search_currencyconverter">Конвертер валют</string>
     <string name="preference_search_currencyconverter_summary">Периодически скачивать курсы обмена валют для конвертирования</string>
     <string name="preference_search_unitconverter">Конвертер величин</string>
@@ -631,4 +631,16 @@
     <string name="note_widget_conflict_file_version">Текущее содержимое файла:</string>
     <string name="widget_name_unknown">Неизвестный виджет</string>
     <string name="widget_action_replace">Заменить</string>
+    <string name="preference_search_result_ordering_launch_count">По количеству запусков</string>
+    <string name="note_widget_link_file">Привязать к файлу</string>
+    <string name="note_widget_link_file_summary">Синхронизировать содержимое виджета с внешним файлом</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Не нашли свои напоминания\?</string>
+    <string name="note_widget_file_read_error_description">Привязанный файл не может быть прочитан. Возможно, он был перемещён или удалён. Копия была восстановлена из внутреннего хранилища лаунчера. Если вы изменили заметку, привязанный файл, возможно, будет перезаписан.</string>
+    <string name="preference_screen_tags_summary">Настройка тэгов и связанных с ними приложений</string>
+    <string name="preference_gesture_home_button">Кнопка/жест \"Домой\"</string>
+    <string name="note_widget_conflict">Конфликт</string>
+    <string name="note_widget_conflict_action_resolve">Исправить</string>
+    <string name="note_widget_conflict_description">Привязанный файл не пустой и его содержимое не совпадает с последней сохранённой версией этой заметки. Какую версию вы хотите оставить\?</string>
+    <string name="note_widget_conflict_keep_selected">Оставить выбранную</string>
+    <string name="note_widget_file_write_error_description">Заметка не может быть записана в привязанный файл. Возможно, он был перемещён или удалён. Копия была сохранена во внутреннем хранилище лаунчера.</string>
 </resources>
