@@ -2,14 +2,14 @@
 <resources>
     <plurals name="unit_centimeter">
         <item quantity="one">сантиметр</item>
-        <item quantity="few">сантиметров</item>
+        <item quantity="few">сантиметра</item>
         <item quantity="many">сантиметра</item>
         <item quantity="other">сантиметра</item>
     </plurals>
     <string name="unit_millimeter_symbol">мм</string>
     <plurals name="unit_millimeter">
         <item quantity="one">миллиметр</item>
-        <item quantity="few">миллиметров</item>
+        <item quantity="few">миллиметра</item>
         <item quantity="many">миллиметра</item>
         <item quantity="other">миллиметра</item>
     </plurals>
@@ -38,14 +38,14 @@
     <string name="unit_meter_symbol">м</string>
     <plurals name="unit_meter">
         <item quantity="one">метр</item>
-        <item quantity="few">метров</item>
+        <item quantity="few">метра</item>
         <item quantity="many">метра</item>
         <item quantity="other">метра</item>
     </plurals>
     <string name="unit_kilometer_symbol">км</string>
     <plurals name="unit_kilometer">
         <item quantity="one">километр</item>
-        <item quantity="few">километров</item>
+        <item quantity="few">километра</item>
         <item quantity="many">километра</item>
         <item quantity="other">километра</item>
     </plurals>
@@ -261,7 +261,7 @@
     <string name="unit_kilogram_symbol">кг</string>
     <string name="unit_gram_symbol">г</string>
     <string name="unit_metric_ton_symbol">т</string>
-    <string name="unit_long_ton_symbol">длин. т</string>
+    <string name="unit_long_ton_symbol">длин. т.</string>
     <string name="unit_stone_symbol">ст.</string>
     <plurals name="unit_stone">
         <item quantity="one">стоун</item>
@@ -284,7 +284,7 @@
         <item quantity="other">унций</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
-    <string name="unit_short_ton_symbol">кор. т</string>
+    <string name="unit_short_ton_symbol">кор. т.</string>
     <plurals name="unit_short_ton">
         <item quantity="one">короткая тонна</item>
         <item quantity="few">коротких тонны</item>
