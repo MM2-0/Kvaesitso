@@ -243,10 +243,9 @@ icons.
 
 Themed icons can be provided in any of the following ways:
 
-- If the icon is an adaptive icon, the device runs at least Android 13 and the drawable has
+- If the icon is an adaptive icon, and the drawable has
   a `<monochrome>` layer, this icon will be used as the themed icon.
-- If the icon is an adaptive icon, and it does not have a `<monochrome>` layer or the device runs on
-  Android 12 or lower, the foreground layer will be used.
+- If the icon is an adaptive icon, and it does not have a `<monochrome>` layer, the foreground layer will be used.
 - If the icon is not an adaptive icon, the entire icon will be used.
 
 In any case, the icon will be tinted using the theme color and the background will be set to a solid

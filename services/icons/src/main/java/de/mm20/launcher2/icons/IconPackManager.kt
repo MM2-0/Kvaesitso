@@ -19,6 +19,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.room.withTransaction
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
+import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.icons.loaders.AppFilterIconPackInstaller
 import de.mm20.launcher2.icons.loaders.GrayscaleMapIconPackInstaller
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -247,6 +249,11 @@ class IconPackManager(
         val resId =
             resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
                 ?: return null
+
+        val adaptiveIconCompat = AdaptiveIconDrawableCompat.from(resources, resId)
+        if (adaptiveIconCompat != null) {
+            return adaptiveIconCompat.toLauncherIcon(themed = allowThemed && icon.themed)
+        }
         val drawable = try {
             ResourcesCompat.getDrawable(resources, resId, context.theme) ?: return null
         } catch (e: Resources.NotFoundException) {
@@ -342,9 +349,18 @@ class IconPackManager(
         resources: Resources,
         allowThemed: Boolean,
     ): LauncherIcon? {
-        var drawable = try {
+        val drawableId = try {
             resources.getIdentifier(icon.drawable, "drawable", icon.iconPack).takeIf { it != 0 }
-                ?.let { ResourcesCompat.getDrawable(resources, it, null) }
+                ?: return null
+        } catch (e: Resources.NotFoundException) {
+            return null
+        }
+        val adaptiveIconCompat = AdaptiveIconDrawableCompat.from(resources, drawableId)
+        if (adaptiveIconCompat != null) {
+            return adaptiveIconCompat.toLauncherIcon(icon.themed && allowThemed, icon.config)
+        }
+        val drawable = try {
+            ResourcesCompat.getDrawable(resources, drawableId, null)
         } catch (e: Resources.NotFoundException) {
             null
         } ?: return null
