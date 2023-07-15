@@ -3,7 +3,10 @@ package de.mm20.launcher2.icons
 import android.content.res.Resources
 import android.graphics.drawable.AdaptiveIconDrawable
 import androidx.core.content.res.ResourcesCompat
+import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
+import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
+import de.mm20.launcher2.icons.transformations.transform
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.Instant
@@ -17,6 +20,16 @@ internal class ThemedDynamicCalendarIcon(
     override suspend fun getIcon(time: Long): StaticLauncherIcon = withContext(Dispatchers.IO) {
         val day = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).dayOfMonth
         val resId = resourceIds[day - 1]
+
+        val adaptiveIconCompat = AdaptiveIconDrawableCompat.from(resources, resId)
+
+        if (adaptiveIconCompat != null) {
+            var icon = adaptiveIconCompat.toLauncherIcon(themed = true)
+            for (transformation in transformations) {
+                icon = transformation.transform(icon)
+            }
+            return@withContext icon
+        }
 
         val drawable = try {
             ResourcesCompat.getDrawable(resources, resId, null)
@@ -39,7 +52,7 @@ internal class ThemedDynamicCalendarIcon(
             else -> StaticLauncherIcon(
                 foregroundLayer = TintedIconLayer(
                     icon = drawable,
-                    scale = 0.5f,
+                    scale = 0.65f,
                 ),
                 backgroundLayer = ColorLayer()
             )
