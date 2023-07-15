@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.icons
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +24,7 @@ import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.PlainTooltipBox
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -60,6 +63,7 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.label
 import de.mm20.launcher2.ui.component.preferences.value
+import de.mm20.launcher2.ui.ktx.toPixels
 
 @Composable
 fun IconsSettingsScreen() {
@@ -67,6 +71,7 @@ fun IconsSettingsScreen() {
     val context = LocalContext.current
 
     val iconSize by viewModel.iconSize.collectAsStateWithLifecycle(48)
+    val density = LocalDensity.current
     val showLabels by viewModel.showLabels.collectAsStateWithLifecycle(null)
     val columnCount by viewModel.columnCount.collectAsStateWithLifecycle(5)
     val iconShape by viewModel.iconShape.collectAsStateWithLifecycle(Settings.IconSettings.IconShape.PlatformDefault)
@@ -84,6 +89,12 @@ fun IconsSettingsScreen() {
     val cloudFileBadges by viewModel.cloudFileBadges.collectAsStateWithLifecycle(null)
     val suspendedAppBadges by viewModel.suspendedAppBadges.collectAsStateWithLifecycle(null)
     val shortcutBadges by viewModel.shortcutBadges.collectAsStateWithLifecycle(null)
+
+    val previewIcons by remember(iconSize) {
+        viewModel.getPreviewIcons(with(density) { iconSize.dp.toPx() }.toInt())
+    }.collectAsState(
+        emptyList()
+    )
     
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_icons)) {
         item {
@@ -119,6 +130,29 @@ fun IconsSettingsScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
+                if (previewIcons.isNotEmpty()) {
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        shape = MaterialTheme.shapes.medium,
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                    ) {
+                        Row(
+                            modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
+                        ) {
+                            for (icon in previewIcons) {
+                                Box(
+                                    modifier = Modifier.weight(1f),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    ShapedLauncherIcon(size = iconSize.dp, icon = { icon })
+                                }
+                            }
+                        }
+                    }
+                }
                 IconShapePreference(
                     title = stringResource(R.string.preference_icon_shape),
                     summary = getShapeName(iconShape),

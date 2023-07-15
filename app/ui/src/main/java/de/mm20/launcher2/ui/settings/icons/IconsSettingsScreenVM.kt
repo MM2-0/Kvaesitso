@@ -7,11 +7,16 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -20,6 +25,7 @@ import org.koin.core.component.get
 class IconsSettingsScreenVM(
     private val dataStore: LauncherDataStore,
     private val iconService: IconService,
+    private val favoritesService: FavoritesService,
     private val permissionsManager: PermissionsManager,
 ) : ViewModel() {
 
@@ -215,6 +221,24 @@ class IconsSettingsScreenVM(
         }
     }
 
+    fun getPreviewIcons(size: Int): Flow<List<LauncherIcon>> {
+        return columnCount.flatMapLatest { cols ->
+            favoritesService.getFavorites(
+                includeTypes = listOf(LauncherApp.Domain),
+                limit = cols,
+                manuallySorted = true,
+                automaticallySorted = true,
+                frequentlyUsed = true,
+            )
+        }.flatMapLatest { apps ->
+            combine(apps.map {
+                iconService.getIcon(it, size)
+            }) {
+                it.toList()
+            }
+        }
+    }
+
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
@@ -222,6 +246,7 @@ class IconsSettingsScreenVM(
                     dataStore = get(),
                     iconService = get(),
                     permissionsManager = get(),
+                    favoritesService = get(),
                 )
             }
         }
