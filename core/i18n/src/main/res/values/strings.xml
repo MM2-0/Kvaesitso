@@ -466,6 +466,9 @@
     <string name="preference_compact_mode_summary">Hide hourly and daily forecasts</string>
     <string name="preference_category_debug">Debug</string>
     <string name="preference_category_debug_tools">Tools</string>
+    <string name="preference_debug_dump_heap">Memory snapshot</string>
+    <string name="preference_debug_dump_heap_summary">Capture a snapshot to analyze memory usageg. The app will freeze while the memory snapshot is captured.</string>
+    <string name="preference_debug_dump_heap_in_progress">Dumping heap…</string>
     <string name="preference_debug_cleanup_database">Clean up database</string>
     <string name="preference_debug_cleanup_database_summary">Remove broken and unused entries from the launcher database</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstall icon packs</string>

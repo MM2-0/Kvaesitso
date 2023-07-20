@@ -1,27 +1,52 @@
 package de.mm20.launcher2.ui.settings.debug
 
+import android.content.Intent
+import android.os.Debug
 import android.widget.Toast
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalNavController
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
 
 @Composable
 fun DebugSettingsScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
+    var dumpingHeap by remember { mutableStateOf(false) }
     val viewModel: DebugSettingsScreenVM = viewModel()
     val navController = LocalNavController.current
     PreferenceScreen(
         stringResource(R.string.preference_screen_debug)
     ) {
+        if (dumpingHeap) {
+            item {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
         item {
             PreferenceCategory {
                 Preference(
@@ -37,6 +62,42 @@ fun DebugSettingsScreen() {
                     onClick = {
                         navController?.navigate("settings/debug/logs")
                     })
+                Preference(
+                    title = stringResource(R.string.preference_debug_dump_heap),
+                    summary = if (dumpingHeap) stringResource(R.string.preference_debug_dump_heap_in_progress)
+                    else stringResource(R.string.preference_debug_dump_heap_summary),
+                    enabled = !dumpingHeap,
+                    onClick = {
+                        scope.launch {
+                            dumpingHeap = true
+                            val df = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
+                            val path = File(
+                                context.getExternalFilesDir(null),
+                                "kvaesitso-dump-${df.format(Date(System.currentTimeMillis()))}.hprof"
+                            ).absolutePath
+                            delay(100)
+                            withContext(Dispatchers.Default) {
+                                Debug.dumpHprofData(path)
+                            }
+                            dumpingHeap = false
+                            context.tryStartActivity(
+                                Intent.createChooser(
+                                    Intent(Intent.ACTION_SEND).apply {
+                                        type = "application/octet-stream"
+                                        putExtra(
+                                            Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                                                context,
+                                                context.applicationContext.packageName + ".fileprovider",
+                                                File(path)
+                                            )
+                                        )
+                                    }, null
+                                )
+                            )
+                        }
+
+                    }
+                )
             }
             PreferenceCategory(stringResource(R.string.preference_category_debug_tools)) {
                 Preference(
