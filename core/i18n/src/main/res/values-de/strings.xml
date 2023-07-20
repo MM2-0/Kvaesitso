@@ -633,4 +633,7 @@
     <string name="note_widget_file_read_error_description">Die verknüpfte Datei konnte nicht gelesen werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde aus dem internen Speicher des Launchers wiederhergestellt. Wenn Sie die Notiz bearbeiten, wird die verknüpfte Datei möglicherweise überschrieben.</string>
     <string name="note_widget_file_write_error_description">Die Notiz konnte nicht in die verknüpfte Datei geschrieben werden. Möglicherweise wurde sie verschoben oder gelöscht. Eine Kopie wurde in den internen Speicher des Launchers gespeichert.</string>
     <string name="preference_gesture_home_button">Start-Button/-Geste</string>
+    <string name="preference_debug_dump_heap_summary">Ein Speicherabbild zur Analyse der Nutzung des Arbeitsspeichers erstellen. Die App wird bis zum Abschluss dieses Prozesses einfrieren.</string>
+    <string name="preference_debug_dump_heap_in_progress">Abbild wird erstellt…</string>
+    <string name="preference_debug_dump_heap">Speicherabbild</string>
 </resources>
