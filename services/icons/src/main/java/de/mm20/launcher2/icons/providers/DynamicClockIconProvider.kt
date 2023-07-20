@@ -8,10 +8,12 @@ import de.mm20.launcher2.icons.compat.ClockIconConfig
 import de.mm20.launcher2.icons.compat.toLauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.LauncherApp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class DynamicClockIconProvider(val context: Context, private val themed: Boolean) : IconProvider {
-    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
-        if (searchable !is LauncherApp) return null
+    override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(Dispatchers.IO) {
+        if (searchable !is LauncherApp) return@withContext null
         val pm = context.packageManager
         val appInfo = try {
             pm.getApplicationInfo(
@@ -19,22 +21,22 @@ class DynamicClockIconProvider(val context: Context, private val themed: Boolean
                 PackageManager.GET_META_DATA
             )
         } catch (e: PackageManager.NameNotFoundException) {
-            return null
+            return@withContext null
         }
 
-        if (appInfo.metaData == null) return null
+        if (appInfo.metaData == null) return@withContext null
 
         val drawableId =
             appInfo.metaData.getInt("com.android.launcher3.LEVEL_PER_TICK_ICON_ROUND")
 
-        if (drawableId == 0) return null
+        if (drawableId == 0) return@withContext null
         val resources = try {
             pm.getResourcesForApplication(appInfo)
         } catch (e: PackageManager.NameNotFoundException) {
-            return null
+            return@withContext null
         }
 
-        val icon = AdaptiveIconDrawableCompat.from(resources, drawableId) ?: return null
+        val icon = AdaptiveIconDrawableCompat.from(resources, drawableId) ?: return@withContext null
 
         val defaultHour =
             appInfo.metaData.getInt("com.android.launcher3.DEFAULT_HOUR")
@@ -71,7 +73,7 @@ class DynamicClockIconProvider(val context: Context, private val themed: Boolean
             )
         }
 
-        return icon.toLauncherIcon(
+        return@withContext icon.toLauncherIcon(
             themed = themed,
             clock = clockConfig
         )

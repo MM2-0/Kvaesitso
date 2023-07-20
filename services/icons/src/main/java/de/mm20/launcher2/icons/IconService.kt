@@ -42,6 +42,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -138,30 +139,25 @@ class IconService(
     }
 
 
-    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> = channelFlow {
-        iconProviders.collectLatest { providers ->
-            transformations.collectLatest { transformations ->
-                customAttributesRepository.getCustomIcon(searchable).collectLatest { customIcon ->
-
-                    val provs = getProviders(customIcon) + providers
-                    val transforms = getTransformations(customIcon) ?: transformations
-
-                    var icon = cache.get(searchable.key + customIcon.hashCode())
-                    if (icon != null) {
-                        send(icon)
-                        return@collectLatest
-                    }
-
-                    icon = provs.getFirstIcon(searchable, size)
-
-                    if (icon != null) {
-                        icon = icon.transform(transforms)
-
-                        cache.put(searchable.key + customIcon.hashCode(), icon)
-                        send(icon)
-                    }
-                }
+    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
+        val customIcon = customAttributesRepository.getCustomIcon(searchable)
+        return combine(iconProviders, transformations, customIcon) { providers, transformations, ci ->
+            var icon = cache.get(searchable.key + customIcon.hashCode())
+            if (icon != null) {
+                return@combine icon
             }
+
+            val provs = if (ci != null) getProviders(ci) + providers else providers
+            val transforms = getTransformations(ci) ?: transformations
+
+            icon = provs.getFirstIcon(searchable, size)
+
+            if (icon != null) {
+                icon = icon.transform(transforms)
+
+                cache.put(searchable.key + customIcon.hashCode(), icon)
+            }
+            return@combine icon
         }
     }
 

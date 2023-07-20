@@ -35,13 +35,13 @@ internal class LegacyToAdaptiveTransformation(
 
         if (layer is StaticIconLayer) {
             val drawable = layer.icon
-            val bitmap = if (drawable is BitmapDrawable) {
-                drawable.bitmap
-            } else {
-                drawable.toBitmap(48, 48)
-            }
 
             val palette = withContext(Dispatchers.Default) {
+                val bitmap = if (drawable is BitmapDrawable) {
+                    drawable.bitmap
+                } else {
+                    drawable.toBitmap(48, 48)
+                }
                 Palette.from(bitmap).generate()
             }
             return palette.getDominantColor(0)

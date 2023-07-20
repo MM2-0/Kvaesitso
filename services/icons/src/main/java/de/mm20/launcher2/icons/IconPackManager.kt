@@ -90,26 +90,26 @@ class IconPackManager(
         packageName: String,
         activityName: String?,
         allowThemed: Boolean = true
-    ): LauncherIcon? {
+    ): LauncherIcon? = withContext(Dispatchers.IO) {
         val res = try {
             context.packageManager.getResourcesForApplication(iconPack)
         } catch (e: PackageManager.NameNotFoundException) {
             Log.e("MM20", "Icon pack package $iconPack not found!")
-            return null
+            return@withContext null
         }
         val activity = activityName?.let { ComponentName(packageName, it) }?.shortClassName
         val iconDao = appDatabase.iconDao()
         val icon = iconDao.getIcon(packageName, activity, iconPack)?.let { IconPackAppIcon(it) }
-            ?: return null
+            ?: return@withContext null
 
         if (icon is CalendarIcon) {
-            return getIconPackCalendarIcon(icon, res, allowThemed)
+            return@withContext getIconPackCalendarIcon(icon, res, allowThemed)
         } else if (icon is AppIcon) {
-            return getIconPackStaticIcon(icon, res, allowThemed)
+            return@withContext getIconPackStaticIcon(icon, res, allowThemed)
         } else if (icon is ClockIcon) {
-            return getIconPackClockIcon(icon, res, allowThemed)
+            return@withContext getIconPackClockIcon(icon, res, allowThemed)
         }
-        return null
+        return@withContext null
     }
 
     suspend fun generateIcon(
@@ -117,14 +117,14 @@ class IconPackManager(
         iconPack: String,
         baseIcon: Drawable,
         size: Int
-    ): LauncherIcon? {
+    ): LauncherIcon? = withContext(Dispatchers.IO) {
         val back = getIconBack(iconPack)
         val upon = getIconUpon(iconPack)
         val mask = getIconMask(iconPack)
         val scale = getPackScale(iconPack)
 
         if (back == null && upon == null && mask == null) {
-            return null
+            return@withContext null
         }
 
         val bitmap = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888)
@@ -155,18 +155,18 @@ class IconPackManager(
         val res = try {
             pm.getResourcesForApplication(pack)
         } catch (e: Resources.NotFoundException) {
-            return null
+            return@withContext null
         } catch (e: PackageManager.NameNotFoundException) {
-            return null
+            return@withContext null
         }
 
         if (mask != null) {
             res.getIdentifier(mask, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
                 val maskDrawable = try {
-                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                    ResourcesCompat.getDrawable(res, it, null) ?: return@withContext null
                 } catch (e: Resources.NotFoundException) {
-                    return null
+                    return@withContext null
                 }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
@@ -178,9 +178,9 @@ class IconPackManager(
             res.getIdentifier(upon, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
                 val maskDrawable = try {
-                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                    ResourcesCompat.getDrawable(res, it, null) ?: return@withContext null
                 } catch (e: Resources.NotFoundException) {
-                    return null
+                    return@withContext null
                 }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
@@ -192,9 +192,9 @@ class IconPackManager(
             res.getIdentifier(back, "drawable", pack).takeIf { it != 0 }?.let {
                 paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OVER)
                 val maskDrawable = try {
-                    ResourcesCompat.getDrawable(res, it, null) ?: return null
+                    ResourcesCompat.getDrawable(res, it, null) ?: return@withContext null
                 } catch (e: Resources.NotFoundException) {
-                    return null
+                    return@withContext null
                 }
                 val maskBmp = maskDrawable.toBitmap(size, size)
                 inBounds = Rect(0, 0, maskBmp.width, maskBmp.height)
@@ -203,7 +203,7 @@ class IconPackManager(
             }
         }
 
-        return StaticLauncherIcon(
+        return@withContext StaticLauncherIcon(
             foregroundLayer = StaticIconLayer(
                 icon = BitmapDrawable(context.resources, bitmap),
                 scale = 1f,
