@@ -88,8 +88,8 @@
     <string name="widget_action_remove">Remover</string>
     <string name="widget_action_settings">Configurações</string>
     <string name="menu_item_edit_favs">Editar favoritos</string>
-    <string name="edit_favorites_dialog_pinned_unsorted">Fixado - escolhido automaticamente</string>
-    <string name="edit_favorites_dialog_pinned_sorted">Fixado - escolhido manualmente</string>
+    <string name="edit_favorites_dialog_pinned_unsorted">Fixado - organizado automaticamente</string>
+    <string name="edit_favorites_dialog_pinned_sorted">Fixado - organizado manualmente</string>
     <string name="nextcloud_server_url_empty">A URL do servidor não pode esta vazia</string>
     <string name="owncloud_server_url">URL do servidor Owncloud</string>
     <string name="owncloud_password">Senha</string>
@@ -118,7 +118,7 @@
     <string name="nextcloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Nextcloud</string>
     <string name="owncloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Owncloud</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="unit_converter_show_all">Mostrar todoa</string>
+    <string name="unit_converter_show_all">Mostrar todos</string>
     <string name="weather_condition_unknown">Desconhecido</string>
     <string name="weather_widget_show_details">Mostrar detalhes</string>
     <string name="weather_widget_hide_details">Ocultar detalhes</string>
@@ -635,4 +635,8 @@
     <string name="notes_widget_action_dismiss">Recusar</string>
     <string name="notes_widget_dismissed">Anotação recusada.</string>
     <string name="widget_name_unknown">Aplicativo de widget desconhecido</string>
+    <string name="preference_debug_dump_heap_summary">Captura um resumo para analizar o uso da memória. O app vai congelar até que complete este processo.</string>
+    <string name="preference_gesture_home_button">Botão Home/Gesto</string>
+    <string name="preference_debug_dump_heap_in_progress">Capturando tela…</string>
+    <string name="preference_debug_dump_heap">Snapshot da memória</string>
 </resources>
