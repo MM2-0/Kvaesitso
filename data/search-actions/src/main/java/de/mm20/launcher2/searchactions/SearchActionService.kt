@@ -15,7 +15,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
-import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -43,7 +43,7 @@ interface SearchActionService {
 
     fun saveSearchActionBuilders(builders: List<SearchActionBuilder>)
 
-    suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder?
+    suspend fun importWebsearch(url: String, iconSize: Int): CustomWebsearchActionBuilder?
 
     suspend fun getSearchActivities(): List<ComponentName>
 
@@ -88,7 +88,7 @@ internal class SearchActionServiceImpl(
         repository.saveSearchActionBuilders(builders)
     }
 
-    override suspend fun importWebsearch(url: String, iconSize: Int): WebsearchActionBuilder? =
+    override suspend fun importWebsearch(url: String, iconSize: Int): CustomWebsearchActionBuilder? =
         withContext(Dispatchers.IO) {
             try {
                 val u = if (url.startsWith("http://") || url.startsWith("https://")) {
@@ -98,7 +98,7 @@ internal class SearchActionServiceImpl(
                 }
 
                 if (u.contains("${1}")) {
-                    return@withContext WebsearchActionBuilder(
+                    return@withContext CustomWebsearchActionBuilder(
                         urlTemplate = u,
                         label = "",
                         iconColor = 0,
@@ -136,7 +136,7 @@ internal class SearchActionServiceImpl(
     private suspend fun importOpenSearch(
         openSearchHref: String,
         iconSize: Int
-    ): WebsearchActionBuilder? {
+    ): CustomWebsearchActionBuilder? {
         try {
             val httpClient = OkHttpClient()
             val request = Request.Builder()
@@ -207,7 +207,7 @@ internal class SearchActionServiceImpl(
                     createIcon(uri, iconSize)
                 }
 
-                return WebsearchActionBuilder(
+                return CustomWebsearchActionBuilder(
                     label = label ?: "",
                     icon = if (localIconUrl == null) SearchActionIcon.Search else SearchActionIcon.Custom,
                     customIcon = localIconUrl,

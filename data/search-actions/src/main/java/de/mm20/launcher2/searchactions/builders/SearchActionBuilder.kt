@@ -1,9 +1,7 @@
 package de.mm20.launcher2.searchactions.builders
 
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
-import android.media.metrics.Event
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.searchactions.TextClassificationResult
@@ -34,13 +32,13 @@ interface SearchActionBuilder {
             }
             when (entity.type) {
                 "url" -> {
-                    return WebsearchActionBuilder(
+                    return CustomWebsearchActionBuilder(
                         label = entity.label ?: "",
                         urlTemplate = entity.data ?: return null,
                         iconColor = entity.color ?: 0,
                         icon = SearchActionIcon.fromInt(entity.icon),
                         customIcon = entity.customIcon,
-                        encoding = WebsearchActionBuilder.QueryEncoding.fromInt(options?.optInt("encoding"))
+                        encoding = CustomWebsearchActionBuilder.QueryEncoding.fromInt(options?.optInt("encoding"))
                     )
                 }
                 "app" -> {
@@ -70,13 +68,14 @@ interface SearchActionBuilder {
                 "timer" -> return TimerActionBuilder(context)
                 "calendar" -> return ScheduleEventActionBuilder(context)
                 "website" -> return OpenUrlActionBuilder(context)
+                "websearch" -> return WebsearchActionBuilder(context)
                 else -> return null
             }
         }
 
         internal fun toDatabaseEntity(builder: SearchActionBuilder, position: Int): SearchActionEntity {
             return when(builder) {
-                is WebsearchActionBuilder -> SearchActionEntity(
+                is CustomWebsearchActionBuilder -> SearchActionEntity(
                     position = position,
                     type = "url",
                     label = builder.label,

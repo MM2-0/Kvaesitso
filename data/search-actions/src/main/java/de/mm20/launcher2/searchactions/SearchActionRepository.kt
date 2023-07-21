@@ -14,6 +14,7 @@ import de.mm20.launcher2.searchactions.builders.ScheduleEventActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.SetAlarmActionBuilder
 import de.mm20.launcher2.searchactions.builders.TimerActionBuilder
+import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -57,6 +58,7 @@ internal class SearchActionRepositoryImpl(
             SetAlarmActionBuilder(context),
             TimerActionBuilder(context),
             OpenUrlActionBuilder(context),
+            WebsearchActionBuilder(context),
         )
 
         return allActions

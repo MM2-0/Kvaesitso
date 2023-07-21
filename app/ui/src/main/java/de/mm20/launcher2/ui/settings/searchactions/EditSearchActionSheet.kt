@@ -85,7 +85,7 @@ import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
-import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.ExperimentalBadge
@@ -406,7 +406,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
             .padding(paddingValues)
     ) {
 
-        if (searchAction != null && searchAction is WebsearchActionBuilder) {
+        if (searchAction != null && searchAction is CustomWebsearchActionBuilder) {
             Row(
                 modifier = Modifier.padding(bottom = 16.dp),
                 verticalAlignment = Alignment.Bottom
@@ -436,7 +436,7 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
                 modifier = Modifier
                     .fillMaxWidth(),
                 singleLine = true,
-                value = (searchAction as WebsearchActionBuilder).urlTemplate,
+                value = (searchAction as CustomWebsearchActionBuilder).urlTemplate,
                 onValueChange = { viewModel.setUrlTemplate(it) },
                 label = { Text(stringResource(R.string.search_action_websearch_url)) },
                 supportingText = {
@@ -507,11 +507,11 @@ fun CustomizeWebSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
                 ListPreference(
                     title = stringResource(R.string.websearch_dialog_query_encoding),
                     items = listOf(
-                        stringResource(id = R.string.websearch_dialog_query_encoding_url) to WebsearchActionBuilder.QueryEncoding.UrlEncode,
-                        stringResource(id = R.string.websearch_dialog_query_encoding_form) to WebsearchActionBuilder.QueryEncoding.FormData,
-                        stringResource(id = R.string.websearch_dialog_query_encoding_none) to WebsearchActionBuilder.QueryEncoding.None,
+                        stringResource(id = R.string.websearch_dialog_query_encoding_url) to CustomWebsearchActionBuilder.QueryEncoding.UrlEncode,
+                        stringResource(id = R.string.websearch_dialog_query_encoding_form) to CustomWebsearchActionBuilder.QueryEncoding.FormData,
+                        stringResource(id = R.string.websearch_dialog_query_encoding_none) to CustomWebsearchActionBuilder.QueryEncoding.None,
                     ),
-                    value = (searchAction as WebsearchActionBuilder).encoding,
+                    value = (searchAction as CustomWebsearchActionBuilder).encoding,
                     onValueChanged = {
                         viewModel.setQueryEncoding(it)
                     },

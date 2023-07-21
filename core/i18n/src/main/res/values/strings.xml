@@ -727,6 +727,7 @@
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Set alarm</string>
     <string name="search_action_timer">Start timer</string>
+    <string name="search_action_websearch">Web search</string>
     <string name="search_action_contact">Add to contacts</string>
     <string name="search_action_open_url">View website</string>
     <string name="search_action_event">Schedule event</string>

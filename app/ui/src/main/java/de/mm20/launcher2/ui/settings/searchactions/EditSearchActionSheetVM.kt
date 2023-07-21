@@ -17,7 +17,7 @@ import de.mm20.launcher2.searchactions.actions.SearchActionIcon
 import de.mm20.launcher2.searchactions.builders.AppSearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomIntentActionBuilder
 import de.mm20.launcher2.searchactions.builders.CustomizableSearchActionBuilder
-import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
+import de.mm20.launcher2.searchactions.builders.CustomWebsearchActionBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -41,7 +41,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         initialCustomIcon = searchAction?.customIcon
         currentPage.value = when (searchAction) {
             is AppSearchActionBuilder -> EditSearchActionPage.CustomizeAppSearch
-            is WebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
+            is CustomWebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
             is CustomIntentActionBuilder -> EditSearchActionPage.CustomizeCustomIntent
             else -> EditSearchActionPage.SelectType
         }
@@ -100,7 +100,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         val newAction = when (action) {
             is CustomIntentActionBuilder -> action.copy(label = label)
             is AppSearchActionBuilder -> action.copy(label = label)
-            is WebsearchActionBuilder -> action.copy(label = label)
+            is CustomWebsearchActionBuilder -> action.copy(label = label)
         }
 
         searchAction.value = newAction
@@ -120,7 +120,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
                 it.baseIntent.setComponent(componentName)
             }
 
-            is WebsearchActionBuilder -> action
+            is CustomWebsearchActionBuilder -> action
         }
 
         searchAction.value = newAction
@@ -160,7 +160,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     }
 
     fun skipWebsearchImport() {
-        searchAction.value = WebsearchActionBuilder(
+        searchAction.value = CustomWebsearchActionBuilder(
             urlTemplate = "",
             iconColor = 0,
             icon = SearchActionIcon.Search,
@@ -171,7 +171,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     fun setUrlTemplate(template: String) {
         val action = searchAction.value ?: return
-        if (action is WebsearchActionBuilder) {
+        if (action is CustomWebsearchActionBuilder) {
             searchAction.value = action.copy(
                 urlTemplate = template
             )
@@ -181,12 +181,12 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
 
     private val invalidWebsearchUrl = mutableStateOf<String?>(null)
     val websearchInvalidUrlError =
-        derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? WebsearchActionBuilder)?.urlTemplate }
+        derivedStateOf { invalidWebsearchUrl.value == (searchAction.value as? CustomWebsearchActionBuilder)?.urlTemplate }
     val customIntentKeyError = mutableStateOf(false)
     fun validate(): Boolean {
         val action = searchAction.value ?: return false
 
-        if (action is WebsearchActionBuilder) {
+        if (action is CustomWebsearchActionBuilder) {
             val valid = action.urlTemplate.contains("\${1}")
             invalidWebsearchUrl.value = if (valid) null else action.urlTemplate
             return valid
@@ -218,7 +218,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             deleteCustomIcon(action.customIcon)
         }
         searchAction.value = when (action) {
-            is WebsearchActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
+            is CustomWebsearchActionBuilder -> action.copy(icon = icon, customIcon = null, iconColor = 0)
             is CustomIntentActionBuilder -> action.copy(
                 icon = icon,
                 customIcon = null,
@@ -235,7 +235,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
             deleteCustomIcon(action.customIcon)
         }
         searchAction.value = when (action) {
-            is WebsearchActionBuilder -> action.copy(
+            is CustomWebsearchActionBuilder -> action.copy(
                 customIcon = iconPath,
                 iconColor = 1,
                 icon = SearchActionIcon.Custom
@@ -269,7 +269,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     fun applyIcon() {
         currentPage.value = when (searchAction.value) {
             is AppSearchActionBuilder -> EditSearchActionPage.CustomizeAppSearch
-            is WebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
+            is CustomWebsearchActionBuilder -> EditSearchActionPage.CustomizeWebSearch
             is CustomIntentActionBuilder -> EditSearchActionPage.CustomizeCustomIntent
             null -> EditSearchActionPage.SelectType
         }
@@ -278,7 +278,7 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
     fun setIconColor(color: Int) {
         val action = searchAction.value ?: return
         searchAction.value = when (action) {
-            is WebsearchActionBuilder -> action.copy(iconColor = color)
+            is CustomWebsearchActionBuilder -> action.copy(iconColor = color)
             is CustomIntentActionBuilder -> action.copy(iconColor = color)
             is AppSearchActionBuilder -> action.copy(iconColor = color)
         }
@@ -495,10 +495,10 @@ class EditSearchActionSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun setQueryEncoding(encoding: WebsearchActionBuilder.QueryEncoding) {
+    fun setQueryEncoding(encoding: CustomWebsearchActionBuilder.QueryEncoding) {
         val action = searchAction.value ?: return
         searchAction.value = when (action) {
-            is WebsearchActionBuilder -> action.copy(
+            is CustomWebsearchActionBuilder -> action.copy(
                 encoding = encoding
             )
 
