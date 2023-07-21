@@ -73,13 +73,13 @@ abstract class AppDatabase : RoomDatabase() {
                                     "(4, 'alarm')," +
                                     "(5, 'timer')," +
                                     "(6, 'calendar')," +
-                                    "(7, 'website')"
+                                    "(7, 'website')," +
+                                    "(8, 'websearch')"
                             )
 
                             db.execSQL("INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
+                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
                                 arrayOf(
-                                    8, "url", context.getString(R.string.default_websearch_1_url), context.getString(R.string.default_websearch_1_name), 0, 0, null, null,
                                     9, "url", context.getString(R.string.default_websearch_2_url), context.getString(R.string.default_websearch_2_name), 0, 0, null, null,
                                     10, "url", context.getString(R.string.default_websearch_3_url), context.getString(R.string.default_websearch_3_name), 0, 0, null, null,
                                 )
