@@ -64,9 +64,9 @@ fun OrbitClock(
     val formattedHour = (
             if (DateFormat.is24HourFormat(LocalContext.current))
                 hour
-            else
-                hour % 12
-            ).toString()
+            else {
+                ((hour + 11) % 12) + 1
+            }).toString()
 
     val secsAngleStart = second / 60f * Float.TWO_PI
     val minsAngleStart = minute / 60f * Float.TWO_PI + secsAngleStart / 60f
