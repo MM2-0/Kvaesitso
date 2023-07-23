@@ -638,4 +638,8 @@
     <string name="note_widget_file_read_error_description">Nepodařilo se přečíst propojený soubor. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie. Pokud poznámku upravíte, propojený soubor nejspíš bude přepsán.</string>
     <string name="note_widget_file_write_error_description">Nepodařilo se zapsat poznámku do propojeného souboru. Možná byl přesunut nebo odstraněn. Z interního úložiště spouštěče byla obnovena kopie.</string>
     <string name="preference_gesture_home_button">Domovské tlačítko/gesto</string>
+    <string name="search_action_websearch">Vyhledávání na webu</string>
+    <string name="preference_debug_dump_heap">Snímek paměti</string>
+    <string name="preference_debug_dump_heap_summary">Zachytit snímek paměti pro analyzování využití paměti. Aplikace bude nefunkční, dokud tento proces nebude dokončen.</string>
+    <string name="preference_debug_dump_heap_in_progress">Zachytávání snímku…</string>
 </resources>
