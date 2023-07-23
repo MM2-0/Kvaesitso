@@ -639,4 +639,5 @@
     <string name="preference_gesture_home_button">Botão Home/Gesto</string>
     <string name="preference_debug_dump_heap_in_progress">Capturando tela…</string>
     <string name="preference_debug_dump_heap">Snapshot da memória</string>
+    <string name="search_action_websearch">Pesquisa na web</string>
 </resources>
