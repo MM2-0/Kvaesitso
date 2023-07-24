@@ -633,4 +633,8 @@
     <string name="note_widget_file_read_error">Fout bij het lezen van notitie</string>
     <string name="note_widget_file_read_error_description">Het gelinkte bestand kon niet gelezen worden. Misschien is het verwijderd of verplaatst. Een kopie uit de interne opslag van de launcher is teruggezet. Als je de notitie bewerkt, wordt het gelinkte bestand mogelijk overschreven.</string>
     <string name="preference_gesture_home_button">Startknop of -gebaar</string>
+    <string name="preference_debug_dump_heap_summary">Neem een momentopname om het geheugen te kunnen analyseren. De applicatie blijft bevroren tot het proces is afgelopen.</string>
+    <string name="search_action_websearch">Zoeken op het web</string>
+    <string name="preference_debug_dump_heap">Momentopname geheugen</string>
+    <string name="preference_debug_dump_heap_in_progress">Bezig met nemen van momentopname…</string>
 </resources>
