@@ -2,6 +2,7 @@
 plugins {
     kotlin("plugin.serialization") version libs.versions.kotlin apply false
     id("org.jetbrains.kotlin.android") version libs.versions.kotlin apply false
+    id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
 }
 
 buildscript {
