@@ -27,6 +27,7 @@ class LauncherActivity: SharedLauncherActivity(LauncherActivityMode.Launcher) {
         pausedAt = System.currentTimeMillis()
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (onBackPressedDispatcher.hasEnabledCallbacks()) {
             onBackPressedDispatcher.onBackPressed()
