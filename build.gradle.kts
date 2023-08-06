@@ -3,6 +3,7 @@ plugins {
     kotlin("plugin.serialization") version libs.versions.kotlin apply false
     id("org.jetbrains.kotlin.android") version libs.versions.kotlin apply false
     id("com.google.devtools.ksp") version "1.9.0-1.0.13" apply false
+    id("com.google.protobuf") version "0.9.4" apply false
 }
 
 buildscript {
@@ -11,7 +12,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:7.3.1")
+        classpath("com.android.tools.build:gradle:8.1.0")
         classpath(libs.kotlin.gradle)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files

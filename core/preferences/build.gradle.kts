@@ -3,7 +3,7 @@ import com.google.protobuf.gradle.*
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("com.google.protobuf").version("0.8.14")
+    id("com.google.protobuf")
 }
 
 android {

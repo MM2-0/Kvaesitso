@@ -1,6 +1,3 @@
-enableFeaturePreview("VERSION_CATALOGS")
-
-
 dependencyResolutionManagement {
     versionCatalogs {
         create("sdk") {
