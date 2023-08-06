@@ -136,7 +136,7 @@ fun ShapedLauncherIcon(
 
     if (_icon is DynamicLauncherIcon) {
         val time = LocalTime.current
-        LaunchedEffect(time) {
+        LaunchedEffect(time, _icon) {
             currentIcon = _icon.getIcon(time)
         }
     }
