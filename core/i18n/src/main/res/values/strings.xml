@@ -780,7 +780,7 @@
     <string name="preference_gesture_double_tap">Double tap</string>
     <string name="preference_gesture_long_press">Long press</string>
     <string name="preference_gesture_home_button">Home button/gesture</string>
-    <string name="gesture_action_none">None</string>
+    <string name="gesture_action_none">Do nothing</string>
     <string name="gesture_action_open_search">Open search</string>
     <string name="gesture_action_launch_app">Launch app</string>
     <string name="gesture_action_notifications">Open notification drawer</string>
