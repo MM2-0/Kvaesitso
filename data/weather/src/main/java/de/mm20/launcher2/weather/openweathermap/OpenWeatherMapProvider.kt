@@ -5,10 +5,16 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.weather.*
+import de.mm20.launcher2.ktx.getDouble
+import de.mm20.launcher2.ktx.putDouble
+import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.weather.WeatherLocation
+import de.mm20.launcher2.weather.WeatherProvider
+import de.mm20.launcher2.weather.WeatherUpdateResult
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
+import java.util.Locale
 
 
 class OpenWeatherMapProvider(override val context: Context) :
@@ -16,7 +22,7 @@ class OpenWeatherMapProvider(override val context: Context) :
 
     private val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/")
+            .baseUrl("https://api.openweathermap.org/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
@@ -30,28 +36,28 @@ class OpenWeatherMapProvider(override val context: Context) :
     }
 
     override suspend fun lookupLocation(query: String): List<OpenWeatherMapLocation> {
-        val lang = getLanguageCode()
 
         val response = try {
-            openWeatherMapService.currentWeather(
+            openWeatherMapService.geocode(
                 appid = getApiKey() ?: return emptyList(),
                 q = query,
-                lang = lang
             )
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return emptyList()
         }
 
-        val city = response.name ?: return emptyList()
-        val country = response.sys?.country ?: ""
-        val cityId = response.id ?: return emptyList()
-        val loc = "$city, $country"
-        return listOf(
-            OpenWeatherMapLocation(
-                name = loc, id = cityId
+        // Here, OWM uses the correct language codes, so we don't need to map anything
+        val lang = Locale.getDefault().language
+
+        return response.mapNotNull {
+            val name = it.local_names?.get(lang) ?: it.name ?: return@mapNotNull null
+            OpenWeatherMapLatLonLocation(
+                name = "$name, ${it.country}",
+                lat = it.lat ?: return@mapNotNull null,
+                lon = it.lon ?: return@mapNotNull null,
             )
-        )
+        }
     }
 
     override suspend fun loadWeatherData(location: OpenWeatherMapLocation): WeatherUpdateResult<OpenWeatherMapLocation>? {
@@ -73,13 +79,29 @@ class OpenWeatherMapProvider(override val context: Context) :
         val lang = getLanguageCode()
 
         val currentWeather = try {
-            openWeatherMapService.currentWeather(
-                appid = getApiKey() ?: return null,
-                id = location?.id?.takeIf { lat == null || lon == null },
-                lat = lat,
-                lon = lon,
-                lang = lang,
-            )
+            when {
+                location is OpenWeatherMapLatLonLocation -> openWeatherMapService.currentWeather(
+                    appid = getApiKey() ?: return null,
+                    lat = location.lat,
+                    lon = location.lon,
+                    lang = lang,
+                )
+                location is OpenWeatherMapLegacyLocation -> openWeatherMapService.currentWeather(
+                    appid = getApiKey() ?: return null,
+                    id = location.id,
+                    lang = lang,
+                )
+                lat != null && lon != null -> openWeatherMapService.currentWeather(
+                    appid = getApiKey() ?: return null,
+                    lat = lat,
+                    lon = lon,
+                    lang = lang,
+                )
+                else -> {
+                    Log.w("MM20", "OpenWeatherMapProvider returned no data because no location was provided")
+                    return null
+                }
+            }
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return null
@@ -90,11 +112,14 @@ class OpenWeatherMapProvider(override val context: Context) :
         val city = currentWeather.name
         val country = currentWeather.sys?.country ?: return null
         val cityId = currentWeather.id ?: return null
-        val loc = "$city, $country"
+        val coords = currentWeather.coord ?: return null
+        if (coords.lat == null || coords.lon == null) return null
+        val loc = location?.name ?: "$city, $country"
 
         val forecasts = try {
             openWeatherMapService.forecast5Day3Hour(
-                id = cityId,
+                lat = coords.lat,
+                lon = coords.lon,
                 appid = getApiKey() ?: return null,
                 lang = lang
             )
@@ -158,19 +183,25 @@ class OpenWeatherMapProvider(override val context: Context) :
         )
         return WeatherUpdateResult(
             forecasts = forecastList,
-            location = OpenWeatherMapLocation(
+            location = OpenWeatherMapLatLonLocation(
                 name = loc,
-                id = cityId
+                lat = coords.lat,
+                lon = coords.lon,
             )
         )
     }
 
     private fun getLanguageCode(): String {
         val lang = Locale.getDefault().language
-        // OWM incorrectly expects Czech to be "cz" instead of "cs"
+        // OWM incorrectly expects country codes instead of language codes for some languages
         // see https://openweathermap.org/current#multi
-        if (lang == "cs") return "cz"
-        return lang
+        when (lang) {
+            "cs" -> return "cz"
+            "al" -> return "sq"
+            "kr" -> return "ko"
+            "lv" -> return "la"
+            else -> return lang
+        }
     }
 
     private fun getApiKey(): String? {
@@ -225,50 +256,107 @@ class OpenWeatherMapProvider(override val context: Context) :
         preferences.edit {
             if (location == null) {
                 remove(CITY_ID)
+                remove(LAT)
+                remove(LON)
                 remove(LOCATION)
             } else {
-                putInt(CITY_ID, location.id)
-                putString(LOCATION, location.name)
+                if (location is OpenWeatherMapLatLonLocation) {
+                    putDouble(LAT, location.lat)
+                    putDouble(LON, location.lon)
+                    putString(LOCATION, location.name)
+                } else if (location is OpenWeatherMapLegacyLocation) {
+                    putInt(CITY_ID, location.id)
+                    putString(LOCATION, location.name)
+                }
             }
         }
     }
 
     override fun getLocation(): OpenWeatherMapLocation? {
-        val id = preferences.getInt(CITY_ID, -1).takeIf { it != -1 } ?: return null
+        val lat = preferences.getDouble(LAT, Double.NaN).takeIf { !it.isNaN() }
+        val lon = preferences.getDouble(LON, Double.NaN).takeIf { !it.isNaN() }
         val name = preferences.getString(LOCATION, null) ?: return null
-        return OpenWeatherMapLocation(
-            name = name,
-            id = id,
-        )
+        if (lat != null && lon != null) {
+            return OpenWeatherMapLatLonLocation(
+                name = name,
+                lat = lat,
+                lon = lon,
+            )
+        }
+        val id = preferences.getInt(CITY_ID, -1).takeIf { it != -1 }
+        if (id != null) {
+            return OpenWeatherMapLegacyLocation(
+                name = name,
+                id = id,
+            )
+        }
+        return null
     }
 
     override fun getLastLocation(): OpenWeatherMapLocation? {
-        val id = preferences.getInt(LAST_CITY_ID, -1).takeIf { it != -1 } ?: return null
+        val lat = preferences.getDouble(LAST_LAT, Double.NaN).takeIf { !it.isNaN() }
+        val lon = preferences.getDouble(LAST_LON, Double.NaN).takeIf { !it.isNaN() }
         val name = preferences.getString(LAST_LOCATION, null) ?: return null
-        return OpenWeatherMapLocation(
-            name = name,
-            id = id,
-        )
+        if (lat != null && lon != null) {
+            return OpenWeatherMapLatLonLocation(
+                name = name,
+                lat = lat,
+                lon = lon,
+            )
+        }
+        val id = preferences.getInt(LAST_CITY_ID, -1).takeIf { it != -1 }
+        if (id != null) {
+            return OpenWeatherMapLegacyLocation(
+                name = name,
+                id = id,
+            )
+        }
+        return null
     }
 
     override fun saveLastLocation(location: OpenWeatherMapLocation) {
         preferences.edit {
-            putString(LAST_LOCATION, location.name)
-            putInt(LAST_CITY_ID, location.id)
+            if (location is OpenWeatherMapLatLonLocation) {
+                putDouble(LAST_LAT, location.lat)
+                putDouble(LAST_LON, location.lon)
+                remove(LAST_CITY_ID)
+                putString(LAST_LOCATION, location.name)
+            } else if (location is OpenWeatherMapLegacyLocation) {
+                putInt(LAST_CITY_ID, location.id)
+                remove(LAST_LAT)
+                remove(LAST_LON)
+                putString(LAST_LOCATION, location.name)
+            }
         }
     }
 
     companion object {
         private const val PREFERENCES = "openweathermap"
+
+        @Deprecated("Use LAT and LON instead")
         private const val CITY_ID = "city_id"
+
+        @Deprecated("Use LAST_LAT and LAST_LON instead")
         private const val LAST_CITY_ID = "last_city_id"
         private const val LAST_UPDATE = "last_update"
         private const val LOCATION = "location"
+        private const val LAT = "lat"
+        private const val LON = "lon"
         private const val LAST_LOCATION = "last_location"
+        private const val LAST_LAT = "last_lat"
+        private const val LAST_LON = "last_lon"
     }
 }
 
-data class OpenWeatherMapLocation(
+sealed interface OpenWeatherMapLocation : WeatherLocation
+
+data class OpenWeatherMapLatLonLocation(
     override val name: String,
-    val id: Int
-) : WeatherLocation
+    val lat: Double,
+    val lon: Double,
+) : OpenWeatherMapLocation
+
+data class OpenWeatherMapLegacyLocation(
+    override val name: String,
+    val id: Int,
+) : OpenWeatherMapLocation

@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 data class CurrentWeatherResult(
-    val coords: WeatherResultCoords?,
+    val coord: WeatherResultCoords?,
     val weather: Array<WeatherResultWeather>?,
     val main: WeatherResultMain?,
     val wind: WeatherResultWind?,
@@ -106,9 +106,17 @@ data class ForecastResultCity(
     val timezone: Long?,
 )
 
+data class GeocodeResult(
+    val name: String?,
+    val local_names: Map<String, String>?,
+    val lat: Double?,
+    val lon: Double?,
+    val country: String?,
+    val state: String?,
+)
 interface OpenWeatherMapApi {
 
-    @GET("weather")
+    @GET("data/2.5/weather")
     suspend fun currentWeather(
         @Query("q") q: String? = null,
         @Query("id") id: Int? = null,
@@ -118,7 +126,7 @@ interface OpenWeatherMapApi {
         @Query("lang") lang: String,
     ): CurrentWeatherResult
 
-    @GET("forecast")
+    @GET("data/2.5/forecast")
     suspend fun forecast5Day3Hour(
         @Query("q") q: String? = null,
         @Query("id") id: Int? = null,
@@ -127,4 +135,11 @@ interface OpenWeatherMapApi {
         @Query("appid") appid: String,
         @Query("lang") lang: String,
     ): ForecastResult
+
+    @GET("geo/1.0/direct")
+    suspend fun geocode(
+        @Query("q") q: String,
+        @Query("appid") appid: String,
+        @Query("limit") limit: Int = 5,
+    ): Array<GeocodeResult>
 }
