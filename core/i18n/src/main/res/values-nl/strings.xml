@@ -450,7 +450,7 @@
     <string name="preference_search_onedrive_summary">Bestanden van %1$s op OneDrive doorzoeken</string>
     <string name="preference_search_cloud_summary">Bestanden van %1$s doorzoeken</string>
     <string name="preference_search_owncloud">Owncloud</string>
-    <string name="preference_search_bar_auto_focus_summary">Altijd het toetsenbord tonen wanneer zoeken geopend wordt</string>
+    <string name="preference_search_bar_auto_focus_summary">Altijd het toetsenbord tonen wanneer applicatielijst geopend wordt</string>
     <string name="apps_profile_main">Persoonlijk</string>
     <string name="preference_google_signin">Inloggen met Google</string>
     <string name="preference_google_signin_summary">Inloggen bij Google Drive</string>
@@ -551,7 +551,7 @@
     <string name="preference_gesture_swipe_right">Naar rechts vegen</string>
     <string name="preference_gesture_double_tap">Dubbeltikken</string>
     <string name="preference_gesture_long_press">Vasthouden</string>
-    <string name="gesture_action_none">Geen</string>
+    <string name="gesture_action_none">Niets doen</string>
     <string name="gesture_action_open_search">Zoeken openen</string>
     <string name="gesture_action_notifications">Meldingen openen</string>
     <string name="gesture_action_lock_screen">Scherm uitzetten</string>
