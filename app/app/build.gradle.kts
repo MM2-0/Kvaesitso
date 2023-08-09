@@ -8,7 +8,11 @@ plugins {
 }
 
 android {
-    packagingOptions {
+    androidResources {
+        generateLocaleConfig = true
+    }
+
+    packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
