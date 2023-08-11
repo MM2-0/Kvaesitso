@@ -28,7 +28,7 @@
     <string name="preference_cards_stroke_width">Larghezza bordo</string>
     <string name="preference_screen_buildinfo_summary">Maggiori informazioni sulla build di questa app</string>
     <string name="preference_themed_icons_summary">Icone colorate con la combinazione di colori dell\'applicazione</string>
-    <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura della ricerca</string>
+    <string name="preference_search_bar_auto_focus_summary">Mostra automaticamente la tastiera all\'apertura del cassetto</string>
     <string name="connect_account">Connetti account</string>
     <string name="preference_hide_status_bar">Nascondi barra di stato</string>
     <string name="preference_summary_not_logged_in">Non hai eseguito l\'accesso</string>
@@ -556,7 +556,7 @@
     <string name="preference_gesture_swipe_down">Scorri in basso</string>
     <string name="preference_gesture_swipe_left">Scorri a sinistra</string>
     <string name="preference_gesture_swipe_right">Scorri a destra</string>
-    <string name="gesture_action_none">Nessuno</string>
+    <string name="gesture_action_none">Non fare nulla</string>
     <string name="gesture_action_open_search">Apri ricerca</string>
     <string name="gesture_action_notifications">Apri cassetto notifiche</string>
     <string name="gesture_action_lock_screen">Spegni schermo</string>
@@ -638,4 +638,8 @@
     <string name="note_widget_conflict_local_version">Ultima versione salvata:</string>
     <string name="note_widget_file_read_error_description">Impossibile leggere il file collegato. Forse è stato spostato o cancellato. È stata ripristinata una copia dalla memoria interna del programma di avvio. Se modifichi la nota, il file collegato potrebbe essere sovrascritto.</string>
     <string name="preference_gesture_home_button">Pulsante home/gesto</string>
+    <string name="search_action_websearch">Ricerca web</string>
+    <string name="preference_debug_dump_heap_summary">Cattura uno snapshot per analizzare l\'uso della memoria. L\'applicazione si bloccherà fino al completamento di questo processo.</string>
+    <string name="preference_debug_dump_heap">Snapshot memoria</string>
+    <string name="preference_debug_dump_heap_in_progress">Catturando uno snapshot…</string>
 </resources>

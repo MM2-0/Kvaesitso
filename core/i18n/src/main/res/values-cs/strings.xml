@@ -417,7 +417,7 @@
     <string name="preference_search_bar_style">Styl</string>
     <string name="preference_search_bar_style_summary">Přizpůsobit vzhled vyhledávací lišty</string>
     <string name="preference_search_bar_auto_focus">Otevřít klávesnici</string>
-    <string name="preference_search_bar_auto_focus_summary">Automaticky zobrazit klávesnici při otevření vyhledávání</string>
+    <string name="preference_search_bar_auto_focus_summary">Automaticky zobrazit klávesnici při otevření seznamu aplikací</string>
     <string name="preference_hidden_items">Skrýt výsledky vyhledávání</string>
     <string name="preference_hidden_items_summary">Spravovat skryté aplikace a výsledky vyhledávání</string>
     <string name="preference_wikipedia_customurl">URL Wikipedie</string>
@@ -554,7 +554,7 @@
     <string name="preference_gesture_swipe_right">Posunutí vpravo</string>
     <string name="preference_gesture_double_tap">Dvojité klepnutí</string>
     <string name="preference_gesture_long_press">Dlouhé držení</string>
-    <string name="gesture_action_none">Žádné</string>
+    <string name="gesture_action_none">Nic nedělat</string>
     <string name="gesture_action_open_search">Otevřít vyhledávání</string>
     <string name="gesture_action_notifications">Otevřít nabídku oznámení</string>
     <string name="gesture_action_lock_screen">Vypnout obrazovku</string>
