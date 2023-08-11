@@ -2,24 +2,17 @@ package de.mm20.launcher2.ui.launcher.search.calendar
 
 import android.content.Context
 import android.text.format.DateUtils
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.with
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Edit
@@ -51,6 +44,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.data.CalendarEvent
 import de.mm20.launcher2.ui.R
@@ -58,7 +52,6 @@ import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -313,32 +306,25 @@ fun CalendarItemGridPopup(
     origin: Rect,
     onDismiss: () -> Unit
 ) {
-    AnimatedContent(
-        targetState = show,
-        transitionSpec = {
-            fadeIn(snap()) with
-                    fadeOut(snap(400)) using
-                    SizeTransform { _, _ ->
-                        tween(300)
-                    }
-        }
-    ) { targetState ->
-        if (targetState) {
-            CalendarItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(Color(calendar.color).copy(alpha = 1f - animationProgress)),
-                calendar = calendar,
-                showDetails = true,
-                onBack = onDismiss
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .requiredWidth(origin.width.toDp())
-                    .requiredHeight(origin.height.toDp())
-            )
-        }
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.Center,
+        ) { origin.roundToIntRect().size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.Center,
+        ) { origin.roundToIntRect().size },
+    ) {
+        CalendarItem(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(calendar.color).copy(alpha = 1f - animationProgress)),
+            calendar = calendar,
+            showDetails = true,
+            onBack = onDismiss
+        )
     }
 }
 

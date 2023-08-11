@@ -2,24 +2,17 @@ package de.mm20.launcher2.ui.launcher.search.contacts
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.SizeTransform
 import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.with
-import androidx.compose.foundation.layout.Box
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -51,6 +44,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -64,7 +58,6 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.icons.Telegram
 import de.mm20.launcher2.ui.icons.WhatsApp
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -386,38 +379,31 @@ fun ContactItemGridPopup(
     origin: Rect,
     onDismiss: () -> Unit
 ) {
-    AnimatedContent(
-        targetState = show,
-        transitionSpec = {
-            fadeIn(snap()) with
-                    fadeOut(snap(400)) using
-                    SizeTransform { _, _ ->
-                        tween(300)
-                    }
-        }
-    ) { targetState ->
-        if (targetState) {
-            ContactItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .scale(
-                        1 - (1 - LocalGridSettings.current.iconSize / 48f) * (1 - animationProgress),
-                        transformOrigin = TransformOrigin(0f, 0f)
-                    )
-                    .offset(
-                        x = -16.dp * (1 - animationProgress),
-                        y = -16.dp * (1 - animationProgress)
-                    ),
-                contact = contact,
-                showDetails = true,
-                onBack = onDismiss
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .requiredWidth(origin.width.toDp())
-                    .requiredHeight(origin.height.toDp())
-            )
-        }
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.TopStart,
+        ) { origin.roundToIntRect().size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.TopStart,
+        ) { origin.roundToIntRect().size },
+    ) {
+        ContactItem(
+            modifier = Modifier
+                .fillMaxWidth()
+                .scale(
+                    1 - (1 - LocalGridSettings.current.iconSize / 48f) * (1 - animationProgress),
+                    transformOrigin = TransformOrigin(0f, 0f)
+                )
+                .offset(
+                    x = -16.dp * (1 - animationProgress),
+                    y = -16.dp * (1 - animationProgress)
+                ),
+            contact = contact,
+            showDetails = true,
+            onBack = onDismiss
+        )
     }
 }

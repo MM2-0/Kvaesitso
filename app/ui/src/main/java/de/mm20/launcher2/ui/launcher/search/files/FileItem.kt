@@ -1,15 +1,39 @@
 package de.mm20.launcher2.ui.launcher.search.files
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -19,9 +43,9 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.search.data.File
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
@@ -29,7 +53,6 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -40,7 +63,6 @@ import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
-import kotlin.math.roundToInt
 
 @Composable
 fun FileItem(
@@ -265,11 +287,14 @@ fun FileItem(
                             onBack()
                             lifecycleOwner.lifecycleScope.launch {
                                 val result = snackbarHostState.showSnackbar(
-                                    message = context.getString(R.string.msg_item_hidden, file.label),
+                                    message = context.getString(
+                                        R.string.msg_item_hidden,
+                                        file.label
+                                    ),
                                     actionLabel = context.getString(R.string.action_undo),
                                     duration = SnackbarDuration.Short,
-                                    )
-                                if(result == SnackbarResult.ActionPerformed) {
+                                )
+                                if (result == SnackbarResult.ActionPerformed) {
                                     viewModel.unhide()
                                 }
                             }
@@ -302,43 +327,32 @@ fun FileItemGridPopup(
     origin: Rect,
     onDismiss: () -> Unit
 ) {
-    AnimatedContent(
-        targetState = show,
-        transitionSpec = {
-            slideInHorizontally(
-                tween(300),
-                initialOffsetX = { -it + origin.width.roundToInt() }) with
-                    slideOutHorizontally(
-                        tween(300),
-                        targetOffsetX = { -it + origin.width.roundToInt() }) + fadeOut(snap(400)) using
-                    SizeTransform { _, _ ->
-                        tween(300)
-                    }
-        }
-    ) { targetState ->
-        if (targetState) {
-            FileItem(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .scale(
-                        1 - (1 - LocalGridSettings.current.iconSize / 48f) * (1 - animationProgress),
-                        transformOrigin = TransformOrigin(1f, 0f)
-                    )
-                    .offset(
-                        x = 16.dp * (1 - animationProgress),
-                        y = -16.dp * (1 - animationProgress)
-                    ),
-                file = file,
-                showDetails = true,
-                onBack = onDismiss
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .requiredWidth(origin.width.toDp())
-                    .requiredHeight(origin.height.toDp())
-            )
-        }
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.TopEnd,
+        ) { origin.roundToIntRect().size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.TopEnd,
+        ) { origin.roundToIntRect().size },
+    ) {
+        FileItem(
+            modifier = Modifier
+                .fillMaxWidth()
+                .scale(
+                    1 - (1 - LocalGridSettings.current.iconSize / 48f) * (1 - animationProgress),
+                    transformOrigin = TransformOrigin(1f, 0f)
+                )
+                .offset(
+                    x = 16.dp * (1 - animationProgress),
+                    y = -16.dp * (1 - animationProgress)
+                ),
+            file = file,
+            showDetails = true,
+            onBack = onDismiss
+        )
     }
 }
 

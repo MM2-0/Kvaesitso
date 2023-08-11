@@ -1,29 +1,41 @@
 package de.mm20.launcher2.ui.launcher.search.website
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Share
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
 import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -59,7 +71,8 @@ fun WebsiteItem(
                     .background(MaterialTheme.colorScheme.secondaryContainer),
                 model = website.image,
                 contentScale = ContentScale.Crop,
-                contentDescription = null)
+                contentDescription = null
+            )
         }
         Column(
             modifier = Modifier.padding(16.dp),
@@ -111,7 +124,7 @@ fun WebsiteItem(
         toolbarActions.add(
             DefaultToolbarAction(
                 label = stringResource(R.string.menu_share),
-                icon= Icons.Rounded.Share,
+                icon = Icons.Rounded.Share,
                 action = {
                     website.share(context)
                 }
@@ -146,29 +159,22 @@ fun WebsiteItemGridPopup(
     origin: Rect,
     onDismiss: () -> Unit
 ) {
-    AnimatedContent(
-        targetState = show,
-        transitionSpec = {
-            fadeIn(tween(200)) with
-                    fadeOut(tween(200, 200)) using
-                    SizeTransform { _, _ ->
-                        tween(300)
-                    }
-        }
-    ) { targetState ->
-        if (targetState) {
-            WebsiteItem(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                website = website,
-                onBack = onDismiss
-            )
-        } else {
-            Box(
-                modifier = Modifier
-                    .requiredWidth(origin.width.toDp())
-                    .requiredHeight(origin.height.toDp())
-            )
-        }
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.Center,
+        ) { origin.roundToIntRect().size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.Center,
+        ) { origin.roundToIntRect().size },
+    ) {
+        WebsiteItem(
+            modifier = Modifier
+                .fillMaxWidth(),
+            website = website,
+            onBack = onDismiss
+        )
     }
 }
