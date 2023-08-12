@@ -4,20 +4,26 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.InsetDrawable
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -219,62 +225,6 @@ fun CustomizeSearchableSheet(
                                 )
                             )
                         },
-                        trailingIcon = {
-                            if (query.isNotEmpty() && !installedIconPacks.isNullOrEmpty()) {
-                                IconButton(onClick = {
-                                    showIconPackFilter = !showIconPackFilter
-                                }) {
-                                    if (filterIconPack == null) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.FilterAlt,
-                                            contentDescription = null
-                                        )
-                                    } else {
-                                        val icon = remember(filterIconPack?.packageName) {
-                                            try {
-                                                filterIconPack?.packageName?.let { pkg ->
-                                                    context.packageManager.getApplicationIcon(pkg)
-                                                }
-                                            } catch (e: PackageManager.NameNotFoundException) {
-                                                null
-                                            }
-                                        }
-                                        AsyncImage(
-                                            modifier = Modifier.size(24.dp),
-                                            model = icon,
-                                            contentDescription = null
-                                        )
-                                    }
-                                }
-                                DropdownMenu(
-                                    expanded = showIconPackFilter,
-                                    onDismissRequest = { showIconPackFilter = false }) {
-                                    DropdownMenuItem(
-                                        text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
-                                        onClick = {
-                                            showIconPackFilter = false
-                                            filterIconPack = null
-                                            scope.launch {
-                                                viewModel.searchIcon(query, filterIconPack)
-                                            }
-                                        }
-                                    )
-                                    installedIconPacks?.forEach { iconPack ->
-                                        DropdownMenuItem(
-                                            onClick = {
-                                                showIconPackFilter = false
-                                                filterIconPack = iconPack
-                                                scope.launch {
-                                                    viewModel.searchIcon(query, filterIconPack)
-                                                }
-                                            },
-                                            text = {
-                                                Text(iconPack.name)
-                                            })
-                                    }
-                                }
-                            }
-                        },
                         value = query,
                         onValueChange = {
                             query = it
@@ -309,6 +259,87 @@ fun CustomizeSearchableSheet(
                         )
                     }
                 } else {
+
+                    if (!installedIconPacks.isNullOrEmpty()) {
+                        item(
+                            span = { GridItemSpan(columns) },
+                        ) {
+                            Button(
+                                onClick = { showIconPackFilter = !showIconPackFilter },
+                                modifier = Modifier
+                                    .wrapContentWidth(align = Alignment.CenterHorizontally)
+                                    .padding(bottom = 16.dp),
+                                contentPadding = PaddingValues(
+                                    horizontal = 16.dp,
+                                    vertical = 8.dp
+                                )
+                            ) {
+                                if (filterIconPack == null) {
+                                    Icon(
+                                        modifier = Modifier
+                                            .padding(end = ButtonDefaults.IconSpacing)
+                                            .size(ButtonDefaults.IconSize),
+                                        imageVector = Icons.Rounded.FilterAlt,
+                                        contentDescription = null
+                                    )
+                                } else {
+                                    val icon = remember(filterIconPack?.packageName) {
+                                        try {
+                                            filterIconPack?.packageName?.let { pkg ->
+                                                context.packageManager.getApplicationIcon(pkg)
+                                            }
+                                        } catch (e: PackageManager.NameNotFoundException) {
+                                            null
+                                        }
+                                    }
+                                    AsyncImage(
+                                        modifier = Modifier
+                                            .padding(end = ButtonDefaults.IconSpacing)
+                                            .size(ButtonDefaults.IconSize),
+                                        model = icon,
+                                        contentDescription = null
+                                    )
+                                }
+                                DropdownMenu(
+                                    expanded = showIconPackFilter,
+                                    onDismissRequest = { showIconPackFilter = false }) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(id = R.string.icon_picker_filter_all_packs)) },
+                                        onClick = {
+                                            showIconPackFilter = false
+                                            filterIconPack = null
+                                            scope.launch {
+                                                viewModel.searchIcon(query, filterIconPack)
+                                            }
+                                        }
+                                    )
+                                    installedIconPacks?.forEach { iconPack ->
+                                        DropdownMenuItem(
+                                            onClick = {
+                                                showIconPackFilter = false
+                                                filterIconPack = iconPack
+                                                scope.launch {
+                                                    viewModel.searchIcon(query, filterIconPack)
+                                                }
+                                            },
+                                            text = {
+                                                Text(iconPack.name)
+                                            })
+                                    }
+                                }
+                                Text(
+                                    text = filterIconPack?.name ?: stringResource(id = R.string.icon_picker_filter_all_packs),
+                                    modifier = Modifier.animateContentSize()
+                                )
+                                Icon(Icons.Rounded.ArrowDropDown,
+                                    modifier = Modifier
+                                        .padding(start = ButtonDefaults.IconSpacing)
+                                        .size(ButtonDefaults.IconSize),
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                    }
 
                     items(iconResults) {
                         IconPreview(
