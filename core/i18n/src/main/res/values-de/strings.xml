@@ -446,7 +446,7 @@
     <string name="icon_picker_title">Icon wählen</string>
     <string name="icon_picker_default_icon">Vorgabe</string>
     <string name="icon_picker_suggestions">Vorschläge</string>
-    <string name="icon_picker_search_icon">Symbol suchen</string>
+    <string name="icon_picker_search_icon">In Symbolpaketen suchen</string>
     <string name="menu_customize">Anpassen</string>
     <string name="alert_delete_shortcut">Der Shortcut %1$s wird unwiderruflich gelöscht. Fortfahren\?</string>
     <string name="preference_grid_labels">Beschriftungen anzeigen</string>
