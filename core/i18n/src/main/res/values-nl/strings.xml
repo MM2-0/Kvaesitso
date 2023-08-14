@@ -475,7 +475,7 @@
     <string name="backup_complete">De back-up is afgerond.</string>
     <string name="restore_invalid_file">Het geselecteerde bestand wordt niet herkend als een back-up. Ben je zeker dat je het juiste bestand heb gekozen\?</string>
     <string name="icon_picker_title">Pictogram kiezen</string>
-    <string name="icon_picker_search_icon">Pictogram zoeken</string>
+    <string name="icon_picker_search_icon">Pictogrammenpaketten doorzoeken</string>
     <string name="apps_profile_work">Werk</string>
     <string name="favorites">Favorieten</string>
     <string name="favorites_empty">Vastgezette en vaak gebruikte items zullen hier verschijnen</string>
