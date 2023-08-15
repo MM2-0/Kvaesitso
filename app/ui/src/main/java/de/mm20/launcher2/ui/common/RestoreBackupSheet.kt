@@ -64,15 +64,6 @@ fun RestoreBackupSheet(
                 }
             }
         },
-        dismissButton = if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
-            {
-                OutlinedButton(
-                    onClick = onDismissRequest
-                ) {
-                    Text(stringResource(android.R.string.cancel))
-                }
-            }
-        } else null
     ) {
         Box(
             modifier = Modifier

@@ -28,7 +28,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
@@ -87,17 +86,13 @@ fun CustomizeSearchableSheet(
             Text(stringResource(if (pickIcon) R.string.icon_picker_title else R.string.menu_customize))
         },
         dismissible = { !pickIcon },
-        confirmButton = {
-            if (pickIcon) {
+        confirmButton = if (pickIcon) {
+            {
                 OutlinedButton(onClick = { viewModel.closeIconPicker() }) {
                     Text(stringResource(id = android.R.string.cancel))
                 }
-            } else {
-                OutlinedButton(onClick = onDismiss) {
-                    Text(stringResource(id = R.string.close))
-                }
             }
-        }
+        } else null
     ) {
         if (!pickIcon) {
             Column(
@@ -328,10 +323,12 @@ fun CustomizeSearchableSheet(
                                     }
                                 }
                                 Text(
-                                    text = filterIconPack?.name ?: stringResource(id = R.string.icon_picker_filter_all_packs),
+                                    text = filterIconPack?.name
+                                        ?: stringResource(id = R.string.icon_picker_filter_all_packs),
                                     modifier = Modifier.animateContentSize()
                                 )
-                                Icon(Icons.Rounded.ArrowDropDown,
+                                Icon(
+                                    Icons.Rounded.ArrowDropDown,
                                     modifier = Modifier
                                         .padding(start = ButtonDefaults.IconSpacing)
                                         .size(ButtonDefaults.IconSize),

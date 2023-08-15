@@ -118,17 +118,13 @@ fun EditFavoritesSheet(
         dismissible = {
             createShortcutTarget == null
         },
-        confirmButton = {
-            if (createShortcutTarget != null) {
+        confirmButton = if (createShortcutTarget != null) {
+            {
                 OutlinedButton(onClick = { viewModel.cancelPickShortcut() }) {
                     Text(stringResource(id = android.R.string.cancel))
                 }
-            } else {
-                OutlinedButton(onClick = onDismiss) {
-                    Text(stringResource(id = R.string.close))
-                }
             }
-        }
+        } else null
     ) {
         if (loading) {
             Box(

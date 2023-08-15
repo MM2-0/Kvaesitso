@@ -45,11 +45,6 @@ fun HiddenItemsSheet(
                 Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
             }
         },
-        confirmButton = {
-            OutlinedButton(onClick = onDismiss) {
-                Text(stringResource(id = R.string.close))
-            }
-        }
     ) {
 
         SearchResultGrid(

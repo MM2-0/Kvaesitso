@@ -24,7 +24,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -77,31 +76,29 @@ fun EditTagSheet(
                 )
             )
         },
-        confirmButton = {
-            if (viewModel.page == EditTagSheetPage.CustomizeTag) {
-                OutlinedButton(onClick = {
-                    viewModel.save()
-                    onTagSaved(viewModel.tagName)
-                    onDismiss()
-                }) {
-                    Text(stringResource(R.string.close))
-                }
-            } else if (isCreatingNewTag) {
+        confirmButton = if (viewModel.page == EditTagSheetPage.CustomizeTag) {
+            null
+        } else if (isCreatingNewTag) {
+            {
                 Button(
                     enabled = (viewModel.tagName.isNotBlank() && viewModel.page == EditTagSheetPage.CreateTag && !viewModel.tagNameExists)
                             || (viewModel.page == EditTagSheetPage.PickItems && viewModel.taggedItems.isNotEmpty()),
                     onClick = { viewModel.onClickContinue() }) {
                     Text(stringResource(R.string.action_next))
                 }
-            } else {
+            }
+        } else {
+            {
                 OutlinedButton(onClick = { viewModel.closeItemPicker() }) {
                     Text(stringResource(id = R.string.ok))
                 }
             }
-
         },
         onDismissRequest = {
-            if (viewModel.page == EditTagSheetPage.CustomizeTag) viewModel.save()
+            if (viewModel.page == EditTagSheetPage.CustomizeTag) {
+                viewModel.save()
+                onTagSaved(viewModel.tagName)
+            }
             onDismiss()
         },
         dismissible = {
@@ -204,9 +201,11 @@ fun ListItem(
             ShapedLauncherIcon(
                 icon = { icon },
                 size = 48.dp,
-                modifier = Modifier.padding(4.dp).clickable {
-                    onTagChanged(!item.isTagged)
-                },
+                modifier = Modifier
+                    .padding(4.dp)
+                    .clickable {
+                        onTagChanged(!item.isTagged)
+                    },
             )
             if (item.isTagged) {
                 Surface(

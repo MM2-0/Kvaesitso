@@ -77,15 +77,6 @@ fun CreateBackupSheet(
                 }
             }
         },
-        dismissButton = if (state == CreateBackupState.Ready) {
-            {
-                OutlinedButton(
-                    onClick = onDismissRequest
-                ) {
-                    Text(stringResource(android.R.string.cancel))
-                }
-            }
-        } else null
     ) {
         Box(
             modifier = Modifier
