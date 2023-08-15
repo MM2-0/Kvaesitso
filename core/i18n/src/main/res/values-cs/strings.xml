@@ -456,7 +456,7 @@
     <string name="icon_picker_suggestions">Návrhy</string>
     <string name="apps_profile_main">Osobní</string>
     <string name="icon_picker_default_icon">Výchozí</string>
-    <string name="icon_picker_search_icon">Ikona vyhledávání</string>
+    <string name="icon_picker_search_icon">Hledat v balíčcích ikon</string>
     <string name="preference_search_search_actions_summary">Nastavit rychlé akce a zkratky vyhledávání</string>
     <string name="search_action_call">Volání</string>
     <string name="search_action_message">Zpráva</string>
