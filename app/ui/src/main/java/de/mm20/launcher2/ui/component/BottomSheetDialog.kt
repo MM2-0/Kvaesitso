@@ -3,8 +3,13 @@ package de.mm20.launcher2.ui.component
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.AnchoredDraggableState
+import androidx.compose.foundation.gestures.DraggableAnchors
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.anchoredDraggable
+import androidx.compose.foundation.gestures.animateTo
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,11 +20,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
@@ -56,11 +65,12 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.launch
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Composable
@@ -74,19 +84,27 @@ fun BottomSheetDialog(
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
-    val swipeState = remember {
-        SwipeableState(
+
+    var isOpenAnimationFinished by remember { mutableStateOf(false) }
+
+    val draggableState = remember {
+        AnchoredDraggableState(
             initialValue = SwipeState.Dismiss,
-            confirmStateChange = {
-                if (it == SwipeState.Dismiss) {
-                    if (dismissible()) {
-                        onDismissRequest()
-                    }
-                    else return@SwipeableState false
-                }
-                return@SwipeableState true
-            },
+            positionalThreshold = { it * 0.5f },
+            velocityThreshold = { 200f },
+            animationSpec = spring(),
+            confirmValueChange = {
+                it != SwipeState.Dismiss || dismissible()
+            }
         )
+    }
+
+    LaunchedEffect(draggableState.currentValue) {
+        if (isOpenAnimationFinished && draggableState.currentValue == SwipeState.Dismiss) {
+            onDismissRequest()
+        } else {
+            isOpenAnimationFinished = true
+        }
     }
 
 
@@ -96,7 +114,7 @@ fun BottomSheetDialog(
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
                 val delta = available.toFloat()
                 return if (delta < 0 && source == NestedScrollSource.Drag) {
-                    swipeState.performDrag(delta).toOffset()
+                    draggableState.dispatchRawDelta(delta).toOffset()
                 } else {
                     Offset.Zero
                 }
@@ -108,7 +126,7 @@ fun BottomSheetDialog(
                 source: NestedScrollSource
             ): Offset {
                 return if (source == NestedScrollSource.Drag) {
-                    swipeState.performDrag(available.toFloat()).toOffset()
+                    draggableState.dispatchRawDelta(available.toFloat()).toOffset()
                 } else {
                     Offset.Zero
                 }
@@ -116,8 +134,8 @@ fun BottomSheetDialog(
 
             override suspend fun onPreFling(available: Velocity): Velocity {
                 val toFling = Offset(available.x, available.y).toFloat()
-                return if (toFling < 0 && swipeState.offset.value > 0) {
-                    swipeState.performFling(velocity = toFling)
+                return if (toFling < 0 && draggableState.offset > draggableState.anchors.minAnchor()) {
+                    draggableState.settle(velocity = toFling)
                     // since we go to the anchor with tween settling, consume all for the best UX
                     available
                 } else {
@@ -126,7 +144,7 @@ fun BottomSheetDialog(
             }
 
             override suspend fun onPostFling(consumed: Velocity, available: Velocity): Velocity {
-                swipeState.performFling(velocity = Offset(available.x, available.y).toFloat())
+                draggableState.settle(velocity = Offset(available.x, available.y).toFloat())
                 return available
             }
 
@@ -139,23 +157,25 @@ fun BottomSheetDialog(
     CompositionLocalProvider(
         LocalAbsoluteTonalElevation provides 0.dp,
     ) {
-        Dialog(
-            properties = DialogProperties(
+        Popup(
+            properties = PopupProperties(
                 dismissOnBackPress = dismissible(),
                 dismissOnClickOutside = dismissible(),
                 usePlatformDefaultWidth = false,
-                decorFitsSystemWindows = false,
+                focusable = true,
             ),
             onDismissRequest = onDismissRequest,
         ) {
             BoxWithConstraints(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .consumeWindowInsets(WindowInsets.systemBars),
                 propagateMinConstraints = true,
                 contentAlignment = Alignment.BottomCenter
             ) {
-                val maxHeightPx = maxHeight.toPixels()
+                val maxHeight = maxHeight
                 val scrimAlpha by animateFloatAsState(
-                    if (swipeState.targetValue == SwipeState.Dismiss) 0f else 0.32f,
+                    if (draggableState.targetValue == SwipeState.Dismiss) 0f else 0.32f,
                     label = "Scrim alpha"
                 )
 
@@ -166,7 +186,7 @@ fun BottomSheetDialog(
                         detectTapGestures {
                             if (dismissible()) {
                                 scope.launch {
-                                    swipeState.animateTo(SwipeState.Dismiss)
+                                    draggableState.animateTo(SwipeState.Dismiss)
                                     onDismissRequest()
                                 }
                             }
@@ -174,53 +194,60 @@ fun BottomSheetDialog(
                     }
                 )
 
-                Column(
+                Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .wrapContentHeight(Alignment.Bottom)
+                        .fillMaxHeight()
                         .clipToBounds(),
-                    verticalArrangement = Arrangement.Bottom
+                    contentAlignment = Alignment.TopCenter,
                 ) {
-                    var height by remember {
-                        mutableStateOf(maxHeightPx)
+                    var sheetHeight by remember {
+                        mutableStateOf(0f)
                     }
 
-                    LaunchedEffect(null) {
-                        swipeState.animateTo(SwipeState.Peek)
-                    }
-
-                    val heightDp = height.toDp()
-                    val peekHeight = (height - maxHeightPx / 2).coerceAtLeast(0f)
-                    val anchors = mutableMapOf(
-                        peekHeight to SwipeState.Peek,
-                        height to SwipeState.Dismiss,
-                    ).also {
-                        if (peekHeight > 0f) {
-                            it[0f] = SwipeState.Full
+                    val maxHeightPx = maxHeight.toPixels()
+                    LaunchedEffect(maxHeightPx, sheetHeight) {
+                        val oldValue = draggableState.currentValue
+                        val hasPeekAnchor = sheetHeight > 0f
+                        val hasFullAnchor = sheetHeight > maxHeightPx * 0.5f
+                        // If the sheet was hidden, move it to peek. Otherwise, try to keep the previous state, if possible.
+                        val newValue = when {
+                            oldValue == SwipeState.Dismiss && hasPeekAnchor -> SwipeState.Peek
+                            oldValue == SwipeState.Peek && hasPeekAnchor -> SwipeState.Peek
+                            oldValue == SwipeState.Full && hasFullAnchor -> SwipeState.Full
+                            oldValue == SwipeState.Full && hasPeekAnchor -> SwipeState.Peek
+                            else -> SwipeState.Dismiss
+                        }
+                        draggableState.updateAnchors(
+                            DraggableAnchors {
+                                SwipeState.Dismiss at 0f
+                                if (hasPeekAnchor) SwipeState.Peek at -min(maxHeightPx * 0.5f, sheetHeight)
+                                if (hasFullAnchor) SwipeState.Full at -min(maxHeightPx, sheetHeight)
+                            },
+                        )
+                        if (newValue != oldValue) {
+                            draggableState.animateTo(newValue)
                         }
                     }
                     Surface(
                         modifier = Modifier
                             .nestedScroll(nestedScrollConnection)
                             .onSizeChanged {
-                                height = it.height.toFloat()
+                                sheetHeight = it.height.toFloat()
                             }
-                            .offset { IntOffset(0, swipeState.offset.value.roundToInt()) }
-                            .swipeable(
-                                swipeState,
-                                anchors = anchors,
+                            .offset {
+                                IntOffset(0,
+                                    maxHeightPx.toInt() +
+                                            (draggableState.offset
+                                                .takeIf { !it.isNaN() }
+                                                ?.roundToInt() ?: 0)
+                                )
+                            }
+                            .anchoredDraggable(
+                                state = draggableState,
                                 orientation = Orientation.Vertical,
-                                thresholds = { _, to ->
-                                    if (to == SwipeState.Dismiss) {
-                                        FixedThreshold(heightDp - 48.dp)
-                                    } else {
-                                        FractionalThreshold(0.5f)
-                                    }
-                                },
-                                resistance = null,
                             )
-                            .fillMaxWidth()
-                            .weight(1f, false),
+                            .fillMaxWidth(),
                         shape = MaterialTheme.shapes.extraLarge.copy(
                             bottomStart = CornerSize(0),
                             bottomEnd = CornerSize(0),
@@ -246,8 +273,12 @@ fun BottomSheetDialog(
                             Box(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .wrapContentHeight()
-                                    .animateContentSize(),
+                                    .then(
+                                        if (confirmButton != null || dismissButton != null) Modifier.padding(
+                                            bottom = 64.dp
+                                        ) else Modifier
+                                    )
+                                    .wrapContentHeight(),
                                 propagateMinConstraints = true,
                                 contentAlignment = Alignment.Center
                             ) {
@@ -258,10 +289,20 @@ fun BottomSheetDialog(
                     }
 
                     if (confirmButton != null || dismissButton != null) {
-                        val elevation by animateDpAsState(if (swipeState.offset.value == 0f) 0.dp else 1.dp)
+                        val elevation = 1.dp
+                        val heightPx = -64.dp.toPixels()
                         Surface(
                             modifier = Modifier
-                                .wrapContentHeight()
+                                .height(64.dp)
+                                .offset {
+                                    IntOffset(
+                                        0,
+                                        maxHeightPx.toInt() +
+                                                (draggableState.offset
+                                                    .takeIf { !it.isNaN() }
+                                                    ?.roundToInt() ?: 0).coerceAtLeast(heightPx.toInt())
+                                    )
+                                }
                                 .fillMaxWidth(),
                             tonalElevation = elevation,
                         ) {
