@@ -28,7 +28,7 @@ class CustomizeSearchableSheetVM(
 
     val isIconPickerOpen = mutableStateOf(false)
 
-    fun getIcon(size: Int): Flow<LauncherIcon> {
+    fun getIcon(size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
     }
 

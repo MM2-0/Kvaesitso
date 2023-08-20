@@ -221,7 +221,7 @@ class IconsSettingsScreenVM(
         }
     }
 
-    fun getPreviewIcons(size: Int): Flow<List<LauncherIcon>> {
+    fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
         return columnCount.flatMapLatest { cols ->
             favoritesService.getFavorites(
                 includeTypes = listOf(LauncherApp.Domain),

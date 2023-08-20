@@ -55,7 +55,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
+    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(searchable, size)
     }
 

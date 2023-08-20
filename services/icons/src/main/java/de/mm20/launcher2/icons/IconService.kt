@@ -139,7 +139,7 @@ class IconService(
     }
 
 
-    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon> {
+    fun getIcon(searchable: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         val customIcon = customAttributesRepository.getCustomIcon(searchable)
         return combine(iconProviders, transformations, customIcon) { providers, transformations, ci ->
             var icon = cache.get(searchable.key + ci.hashCode())

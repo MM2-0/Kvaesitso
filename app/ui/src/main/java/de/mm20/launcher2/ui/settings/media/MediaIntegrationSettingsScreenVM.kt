@@ -113,5 +113,5 @@ data class AppListItem(
     val packageName: String,
     val isMusicApp: Boolean,
     val isChecked: Boolean,
-    val icon: Flow<LauncherIcon>,
+    val icon: Flow<LauncherIcon?>,
 )

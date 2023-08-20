@@ -81,7 +81,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
         oldTagName = tagName
     }
 
-    fun getIcon(item: SavableSearchable, size: Int): Flow<LauncherIcon> {
+    fun getIcon(item: SavableSearchable, size: Int): Flow<LauncherIcon?> {
         return iconService.getIcon(item, size)
     }
 

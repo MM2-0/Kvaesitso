@@ -236,7 +236,7 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
         permissionsManager.requestPermission(context, PermissionGroup.Accessibility)
     }
 
-    fun getIcon(searchable: SavableSearchable?, size: Int): Flow<LauncherIcon> {
+    fun getIcon(searchable: SavableSearchable?, size: Int): Flow<LauncherIcon?> {
         if (searchable == null) return emptyFlow()
         return iconService.getIcon(searchable, size)
     }
