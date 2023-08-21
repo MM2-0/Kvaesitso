@@ -436,6 +436,7 @@
     <string name="preference_custom_colors_n1">Neutral</string>
     <string name="preference_custom_colors_n2">Neutral Variant</string>
     <string name="preference_custom_colors_error">Error</string>
+    <string name="preference_custom_colors_corepalette">Color palette</string>
     <string name="preference_custom_colors_advanced_mode">Advanced mode</string>
     <string name="preference_custom_colors_simple_mode">Simple mode</string>
     <string name="preference_colors_auto_generate">Generate from primary color</string>

@@ -55,6 +55,18 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/colorscheme")
                     }
                 )
+                Preference(
+                    title = stringResource(id = R.string.preference_screen_colors),
+                    summary = when (colorScheme) {
+                        ColorScheme.Default -> stringResource(R.string.preference_colors_default)
+                        ColorScheme.BlackAndWhite -> stringResource(R.string.preference_colors_bw)
+                        ColorScheme.Custom -> stringResource(R.string.preference_colors_custom)
+                        else -> null
+                    },
+                    onClick = {
+                        navController?.navigate("settings/appearance/themes")
+                    }
+                )
                 val font by viewModel.font.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_font),

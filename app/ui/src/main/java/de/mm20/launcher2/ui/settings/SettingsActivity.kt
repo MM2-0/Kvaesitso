@@ -28,6 +28,8 @@ import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.CustomColorSchemeSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
+import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReporterScreen
 import de.mm20.launcher2.ui.settings.debug.DebugSettingsScreen
@@ -53,6 +55,7 @@ import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import org.koin.android.ext.android.inject
 import java.net.URLDecoder
+import java.util.UUID
 
 class SettingsActivity : BaseActivity() {
 
@@ -100,6 +103,19 @@ class SettingsActivity : BaseActivity() {
                             }
                             composable("settings/appearance/colorscheme/custom") {
                                 CustomColorSchemeSettingsScreen()
+                            }
+                            composable("settings/appearance/themes") {
+                                ThemesSettingsScreen()
+                            }
+                            composable(
+                                "settings/appearance/themes/{id}",
+                                    arguments = listOf(navArgument("id") {
+                                nullable = false
+                            })) {
+                                val id = it.arguments?.getString("id")?.let {
+                                    UUID.fromString(it)
+                                } ?: return@composable
+                                ThemeSettingsScreen(id)
                             }
                             composable("settings/appearance/cards") {
                                 CardsSettingsScreen()

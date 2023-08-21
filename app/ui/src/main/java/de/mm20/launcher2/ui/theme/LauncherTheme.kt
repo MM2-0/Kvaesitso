@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.theme
 
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.CutCornerShape
@@ -15,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.themes.DefaultThemeId
+import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
@@ -43,10 +44,10 @@ fun LauncherTheme(
     )
 
     val themePreference by remember { dataStore.data.map { it.appearance.theme } }.collectAsState(
-        Theme.System
+        AppearanceSettings.Theme.System
     )
     val darkTheme =
-        themePreference == Theme.Dark || themePreference == Theme.System && isSystemInDarkTheme()
+        themePreference == AppearanceSettings.Theme.Dark || themePreference == AppearanceSettings.Theme.System && isSystemInDarkTheme()
 
     val cornerRadius by remember {
         dataStore.data.map { it.cards.radius.dp }
@@ -94,7 +95,6 @@ fun colorSchemeAsState(
     colorScheme: AppearanceSettings.ColorScheme,
     darkTheme: Boolean
 ): MutableState<ColorScheme> {
-    val context = LocalContext.current
     val dataStore: LauncherDataStore by inject()
 
     when (colorScheme) {
@@ -125,29 +125,14 @@ fun colorSchemeAsState(
             return state
         }
         else -> {
-            if (Build.VERSION.SDK_INT >= 27 && (Build.VERSION.SDK_INT < 31 || colorScheme == AppearanceSettings.ColorScheme.DebugMaterialYouCompat)) {
-                val wallpaperColors = LocalWallpaperColors.current
-                val state = remember(wallpaperColors, darkTheme) {
-                    mutableStateOf(
-                        MaterialYouCompatScheme(wallpaperColors, darkTheme)
-                    )
-                }
-                return state
+            val scheme = if (darkTheme) {
+                darkColorSchemeOf(Theme(DefaultThemeId, name = ""))
+            } else {
+                lightColorSchemeOf(Theme(DefaultThemeId, name = ""))
             }
-            if (Build.VERSION.SDK_INT >= 31) {
-                return remember(darkTheme) {
-                    mutableStateOf(
-                        if (darkTheme) {
-                            dynamicDarkColorScheme(context)
-                        } else {
-                            dynamicLightColorScheme(context)
-                        }
-                    )
-                }
+            return remember(scheme, darkTheme) {
+                mutableStateOf(scheme)
             }
-
-            return remember { mutableStateOf(if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme) }
-
         }
     }
 

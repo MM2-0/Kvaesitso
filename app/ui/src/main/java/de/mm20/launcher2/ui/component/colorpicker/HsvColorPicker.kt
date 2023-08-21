@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -27,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.AbsoluteAlignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
@@ -43,7 +41,7 @@ import kotlin.math.atan2
 import android.graphics.Color as AndroidColor
 
 @Stable
-class ColorPickerState(
+class HsvColorPickerState(
     initialColor: Color,
     val onColorChanged: (Color) -> Unit,
 ) {
@@ -99,15 +97,15 @@ class ColorPickerState(
 }
 
 @Composable
-fun rememberColorPickerState(initialColor: Color, onColorChanged: (Color) -> Unit): ColorPickerState {
+fun rememberHsvColorPickerState(initialColor: Color, onColorChanged: (Color) -> Unit): HsvColorPickerState {
     return remember(initialColor, onColorChanged) {
-        ColorPickerState(initialColor, onColorChanged)
+        HsvColorPickerState(initialColor, onColorChanged)
     }
 }
 
 @Composable
-fun ColorPicker(
-    state: ColorPickerState,
+fun HsvColorPicker(
+    state: HsvColorPickerState,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {

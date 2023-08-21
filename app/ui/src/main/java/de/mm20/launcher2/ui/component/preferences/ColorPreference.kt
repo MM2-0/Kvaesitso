@@ -8,9 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.ui.component.colorpicker.ColorPicker
-import de.mm20.launcher2.ui.component.colorpicker.rememberColorPickerState
-import de.mm20.launcher2.ui.ktx.toHexString
+import de.mm20.launcher2.ui.component.colorpicker.HsvColorPicker
+import de.mm20.launcher2.ui.component.colorpicker.rememberHsvColorPickerState
 
 @Composable
 fun ColorPreference(
@@ -52,10 +51,10 @@ fun ColorPreference(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    val state = rememberColorPickerState(value ?: Color.Black) {
+                    val state = rememberHsvColorPickerState(value ?: Color.Black) {
                         color = it
                     }
-                    ColorPicker(state = state)
+                    HsvColorPicker(state = state)
                 }
             },
             confirmButton = {

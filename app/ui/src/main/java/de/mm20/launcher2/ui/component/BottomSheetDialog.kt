@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateDpAsState
+import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -20,24 +19,18 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.FixedThreshold
-import androidx.compose.material.FractionalThreshold
-import androidx.compose.material.SwipeableState
-import androidx.compose.material.swipeable
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.LocalAbsoluteTonalElevation
@@ -67,7 +60,6 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.launch
 import kotlin.math.min
@@ -158,6 +150,7 @@ fun BottomSheetDialog(
         LocalAbsoluteTonalElevation provides 0.dp,
     ) {
         Popup(
+            alignment = Alignment.BottomCenter,
             properties = PopupProperties(
                 dismissOnBackPress = dismissible(),
                 dismissOnClickOutside = dismissible(),
@@ -168,8 +161,7 @@ fun BottomSheetDialog(
         ) {
             BoxWithConstraints(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .consumeWindowInsets(WindowInsets.systemBars),
+                    .fillMaxSize(),
                 propagateMinConstraints = true,
                 contentAlignment = Alignment.BottomCenter
             ) {
@@ -221,7 +213,10 @@ fun BottomSheetDialog(
                         draggableState.updateAnchors(
                             DraggableAnchors {
                                 SwipeState.Dismiss at 0f
-                                if (hasPeekAnchor) SwipeState.Peek at -min(maxHeightPx * 0.5f, sheetHeight)
+                                if (hasPeekAnchor) SwipeState.Peek at -min(
+                                    maxHeightPx * 0.5f,
+                                    sheetHeight
+                                )
                                 if (hasFullAnchor) SwipeState.Full at -min(maxHeightPx, sheetHeight)
                             },
                         )
@@ -300,7 +295,8 @@ fun BottomSheetDialog(
                                         maxHeightPx.toInt() +
                                                 (draggableState.offset
                                                     .takeIf { !it.isNaN() }
-                                                    ?.roundToInt() ?: 0).coerceAtLeast(heightPx.toInt())
+                                                    ?.roundToInt()
+                                                    ?: 0).coerceAtLeast(heightPx.toInt())
                                     )
                                 }
                                 .fillMaxWidth(),
