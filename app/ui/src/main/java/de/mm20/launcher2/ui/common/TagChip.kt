@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.common
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Tag
@@ -31,6 +32,7 @@ fun TagChip(
         onClick = onClick,
         leadingIcon = {
             Icon(
+                modifier = Modifier.size(FilterChipDefaults.IconSize),
                 imageVector = Icons.Rounded.Tag,
                 contentDescription = null
             )
@@ -47,9 +49,9 @@ fun TagChip(
                 Icon(
                     modifier = Modifier.clickable {
                         onClear?.invoke()
-                    },
+                    }.size(FilterChipDefaults.IconSize),
                     imageVector = Icons.Rounded.Close,
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         } else null

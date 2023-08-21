@@ -12,12 +12,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ExpandLess
 import androidx.compose.material.icons.rounded.ExpandMore
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -84,7 +86,8 @@ fun FavoritesTagSelector(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Rounded.Star,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize),
                         )
                     },
                     label = { Text(stringResource(R.string.favorites)) }
@@ -117,7 +120,8 @@ fun FavoritesTagSelector(
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Rounded.Star,
-                            contentDescription = null
+                            contentDescription = null,
+                            modifier = Modifier.size(FilterChipDefaults.IconSize),
                         )
                     },
                     label = { Text(stringResource(R.string.favorites)) }

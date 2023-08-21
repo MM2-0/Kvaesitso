@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Work
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -181,7 +183,11 @@ fun SearchColumn(
                             selected = !showWorkProfileApps,
                             onClick = { showWorkProfileApps = false },
                             leadingIcon = {
-                                Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Rounded.Person,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                )
                             },
                             label = {
                                 Text(
@@ -195,7 +201,11 @@ fun SearchColumn(
                             selected = showWorkProfileApps,
                             onClick = { showWorkProfileApps = true },
                             leadingIcon = {
-                                Icon(imageVector = Icons.Rounded.Work, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Rounded.Work,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                )
                             },
                             label = {
                                 Text(
