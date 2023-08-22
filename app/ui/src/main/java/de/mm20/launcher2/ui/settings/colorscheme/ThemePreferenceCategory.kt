@@ -5,9 +5,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.FlowRowScope
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DarkMode
@@ -34,7 +37,7 @@ fun ThemePreferenceCategory(
     darkMode: Boolean,
     onDarkModeChanged: (Boolean) -> Unit,
     colorPreferences: @Composable () -> Unit = {},
-    preview: @Composable FlowRowScope.() -> Unit
+    preview: @Composable RowScope.() -> Unit
 ) {
     Column(
         modifier = Modifier.padding(top = 16.dp)
@@ -80,11 +83,12 @@ fun ThemePreferenceCategory(
                 )
             ) {
 
-                FlowRow(
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState())
                         .padding(16.dp),
-                    verticalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     preview()
                 }

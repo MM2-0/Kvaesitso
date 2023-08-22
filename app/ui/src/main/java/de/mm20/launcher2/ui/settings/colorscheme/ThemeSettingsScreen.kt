@@ -3,20 +3,28 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.StarBorder
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilterChip
@@ -24,11 +32,13 @@ import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -54,6 +64,7 @@ import de.mm20.launcher2.themes.DefaultDarkColorScheme
 import de.mm20.launcher2.themes.DefaultLightColorScheme
 import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -723,31 +734,6 @@ fun ThemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.surfaceTint,
                         modifier = Modifier.padding(end = 12.dp),
                     )
-
-                    ThemeColorPreference(
-                        title = "On Surface",
-                        value = selectedColorScheme.onSurface,
-                        corePalette = mergedCorePalette,
-                        onValueChange = {
-                            viewModel.updateTheme(
-                                if (previewDarkTheme) {
-                                    theme!!.copy(
-                                        darkColorScheme = theme!!.darkColorScheme.copy(
-                                            onSurface = it
-                                        )
-                                    )
-                                } else {
-                                    theme!!.copy(
-                                        lightColorScheme = theme!!.lightColorScheme.copy(
-                                            onSurface = it
-                                        )
-                                    )
-                                }
-                            )
-                        },
-                        defaultValue = selectedDefaultScheme.onSurface,
-                        modifier = Modifier.padding(end = 12.dp),
-                    )
                 },
             ) {
                 ElevatedCard(
@@ -933,6 +919,79 @@ fun ThemeSettingsScreen(themeId: UUID) {
                         modifier = Modifier.padding(end = 12.dp),
                     )
                     ThemeColorPreference(
+                        title = "Surface Variant",
+                        value = selectedColorScheme.surfaceVariant,
+                        corePalette = mergedCorePalette,
+                        onValueChange = {
+                            viewModel.updateTheme(
+                                if (previewDarkTheme) {
+                                    theme!!.copy(
+                                        darkColorScheme = theme!!.darkColorScheme.copy(
+                                            surfaceVariant = it
+                                        )
+                                    )
+                                } else {
+                                    theme!!.copy(
+                                        lightColorScheme = theme!!.lightColorScheme.copy(
+                                            surfaceVariant = it
+                                        )
+                                    )
+                                }
+                            )
+                        },
+                        defaultValue = selectedDefaultScheme.surfaceVariant,
+                        modifier = Modifier.padding(end = 12.dp),
+                    )
+                },
+            ) {
+                Banner(
+                    modifier = Modifier.padding(end = 16.dp).align(Alignment.CenterVertically).width(240.dp),
+                    text = "Banner",
+                    icon = Icons.Rounded.Lock
+                )
+                Switch(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterVertically),
+                    checked = false,
+                    onCheckedChange = {}
+                )
+            }
+        }
+        item {
+            ThemePreferenceCategory(
+                title = "Content colors",
+                previewColorScheme = previewColorScheme,
+                darkMode = previewDarkTheme,
+                onDarkModeChanged = { previewDarkTheme = it },
+                colorPreferences = {
+                    ThemeColorPreference(
+                        title = "On Surface",
+                        value = selectedColorScheme.onSurface,
+                        corePalette = mergedCorePalette,
+                        onValueChange = {
+                            viewModel.updateTheme(
+                                if (previewDarkTheme) {
+                                    theme!!.copy(
+                                        darkColorScheme = theme!!.darkColorScheme.copy(
+                                            onSurface = it
+                                        )
+                                    )
+                                } else {
+                                    theme!!.copy(
+                                        lightColorScheme = theme!!.lightColorScheme.copy(
+                                            onSurface = it
+                                        )
+                                    )
+                                }
+                            )
+                        },
+                        defaultValue = selectedDefaultScheme.onSurface,
+                        modifier = Modifier.padding(end = 12.dp),
+                    )
+
+
+                    ThemeColorPreference(
                         title = "On Surface Variant",
                         value = selectedColorScheme.onSurfaceVariant,
                         corePalette = mergedCorePalette,
@@ -958,7 +1017,74 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     )
                 },
             ) {
+                ElevatedCard(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .size(64.dp),
+                    elevation = CardDefaults.elevatedCardElevation(
+                        defaultElevation = 0.dp
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            "Text",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
+                ElevatedCard(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .size(64.dp),
+                    elevation = CardDefaults.elevatedCardElevation(
+                        defaultElevation = 1.dp
+                    )
+                ) {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            "Text",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+                }
 
+                IconButton(
+                    onClick = { /*TODO*/ },
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterVertically),
+                ) {
+                    Icon(Icons.Rounded.StarBorder, null)
+                }
+
+                Surface(
+                    color = MaterialTheme.colorScheme.surface,
+                    shape = MaterialTheme.shapes.extraSmall,
+                    tonalElevation = 3.dp,
+                    shadowElevation = 3.dp,
+                    modifier = Modifier.wrapContentWidth()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .width(IntrinsicSize.Max),
+                    ) {
+                        DropdownMenuItem(
+                            leadingIcon = {
+                                Icon(Icons.Rounded.OpenInNew, null)
+                            },
+                            text = { Text("Menu") },
+                            onClick = { })
+                    }
+                }
             }
         }
         item {
@@ -1034,7 +1160,8 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     onClick = {},
                 )
                 OutlinedButton(
-                    modifier = Modifier.padding(end = 16.dp)
+                    modifier = Modifier
+                        .padding(end = 16.dp)
                         .align(Alignment.CenterVertically),
                     onClick = { }) {
                     Text("Button")
@@ -1046,7 +1173,9 @@ fun ThemeSettingsScreen(themeId: UUID) {
                         .align(Alignment.CenterVertically)
                 ) {}
                 VerticalDivider(
-                    modifier = Modifier.height(64.dp).padding(end = 16.dp),
+                    modifier = Modifier
+                        .height(64.dp)
+                        .padding(end = 16.dp),
                 )
             }
         }
@@ -1160,7 +1289,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     onValueChange = {},
                     isError = true,
                     readOnly = true,
-                    label = {Text("Error")}
+                    label = { Text("Error") }
                 )
             }
         }
@@ -1245,18 +1374,20 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     )
                 },
             ) {
-                Snackbar(
-                    action = {
-                        TextButton(
-                            colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.inversePrimary),
-                            onClick = { },
-                            content = { Text("Action") }
-                        )
-                    },
-                    content = {
-                        Text("Snackbar")
-                    }
-                )
+                Box(modifier = Modifier.width(240.dp)) {
+                    Snackbar(
+                        action = {
+                            TextButton(
+                                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.inversePrimary),
+                                onClick = { },
+                                content = { Text("Action") }
+                            )
+                        },
+                        content = {
+                            Text("Snackbar")
+                        }
+                    )
+                }
             }
         }
     }
