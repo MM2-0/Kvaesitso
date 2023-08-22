@@ -248,6 +248,8 @@ fun BottomSheetDialog(
                             bottomEnd = CornerSize(0),
                         ),
                         shadowElevation = 16.dp,
+                        tonalElevation = 1.dp,
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
                     ) {
                         Column {
                             if (title != null || actions != null) {
