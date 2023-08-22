@@ -8,7 +8,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
-import de.mm20.launcher2.database.entities.*
+import de.mm20.launcher2.database.entities.CurrencyEntity
+import de.mm20.launcher2.database.entities.CustomAttributeEntity
+import de.mm20.launcher2.database.entities.ForecastEntity
+import de.mm20.launcher2.database.entities.IconEntity
+import de.mm20.launcher2.database.entities.IconPackEntity
+import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SearchActionEntity
+import de.mm20.launcher2.database.entities.ThemeEntity
+import de.mm20.launcher2.database.entities.WidgetEntity
 import de.mm20.launcher2.database.migrations.Migration_10_11
 import de.mm20.launcher2.database.migrations.Migration_11_12
 import de.mm20.launcher2.database.migrations.Migration_12_13
@@ -23,6 +31,7 @@ import de.mm20.launcher2.database.migrations.Migration_20_21
 import de.mm20.launcher2.database.migrations.Migration_21_22
 import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
+import de.mm20.launcher2.database.migrations.Migration_24_25
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -39,8 +48,9 @@ import java.util.UUID
         IconPackEntity::class,
         WidgetEntity::class,
         CustomAttributeEntity::class,
-        SearchActionEntity::class
-    ], version = 24, exportSchema = true
+        SearchActionEntity::class,
+        ThemeEntity::class,
+    ], version = 25, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -65,23 +75,39 @@ abstract class AppDatabase : RoomDatabase() {
                     .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            db.execSQL("INSERT INTO `SearchAction` (`position`, `type`) VALUES" +
-                                    "(0, 'call')," +
-                                    "(1, 'message')," +
-                                    "(2, 'email')," +
-                                    "(3, 'contact')," +
-                                    "(4, 'alarm')," +
-                                    "(5, 'timer')," +
-                                    "(6, 'calendar')," +
-                                    "(7, 'website')," +
-                                    "(8, 'websearch')"
+                            db.execSQL(
+                                "INSERT INTO `SearchAction` (`position`, `type`) VALUES" +
+                                        "(0, 'call')," +
+                                        "(1, 'message')," +
+                                        "(2, 'email')," +
+                                        "(3, 'contact')," +
+                                        "(4, 'alarm')," +
+                                        "(5, 'timer')," +
+                                        "(6, 'calendar')," +
+                                        "(7, 'website')," +
+                                        "(8, 'websearch')"
                             )
 
-                            db.execSQL("INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
-                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
+                            db.execSQL(
+                                "INSERT INTO `SearchAction` (`position`, `type`, `data`, `label`, `color`, `icon`, `customIcon`, `options`) " +
+                                        "VALUES (?, ?, ?, ?, ?, ?, ?, ?), (?, ?, ?, ?, ?, ?, ?, ?)",
                                 arrayOf(
-                                    9, "url", context.getString(R.string.default_websearch_2_url), context.getString(R.string.default_websearch_2_name), 0, 0, null, null,
-                                    10, "url", context.getString(R.string.default_websearch_3_url), context.getString(R.string.default_websearch_3_name), 0, 0, null, null,
+                                    9,
+                                    "url",
+                                    context.getString(R.string.default_websearch_2_url),
+                                    context.getString(R.string.default_websearch_2_name),
+                                    0,
+                                    0,
+                                    null,
+                                    null,
+                                    10,
+                                    "url",
+                                    context.getString(R.string.default_websearch_3_url),
+                                    context.getString(R.string.default_websearch_3_name),
+                                    0,
+                                    0,
+                                    null,
+                                    null,
                                 )
                             )
 
@@ -117,6 +143,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_21_22(),
                         Migration_22_23(),
                         Migration_23_24(),
+                        Migration_24_25(context),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

@@ -53,5 +53,6 @@ dependencies {
 
     implementation(project(":core:i18n"))
     implementation(project(":core:ktx"))
+    implementation(project(":core:preferences"))
 
 }
