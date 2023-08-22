@@ -294,7 +294,7 @@ fun ThemeColorPreference(
                                     .padding(top = 16.dp)
                             ) {
                                 Text(
-                                    text = "C",
+                                    text = "T",
                                     modifier = Modifier.width(32.dp),
                                     style = MaterialTheme.typography.labelMedium,
                                     textAlign = TextAlign.Center
