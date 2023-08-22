@@ -8,6 +8,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import de.mm20.launcher2.database.daos.ThemeDao
 import de.mm20.launcher2.database.entities.CurrencyEntity
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.database.entities.ForecastEntity
@@ -65,6 +66,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun customAttrsDao(): CustomAttrsDao
 
     abstract fun searchActionDao(): SearchActionDao
+
+    abstract fun themeDao(): ThemeDao
 
     companion object {
         private var _instance: AppDatabase? = null

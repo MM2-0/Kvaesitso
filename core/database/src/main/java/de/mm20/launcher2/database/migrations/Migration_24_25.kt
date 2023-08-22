@@ -3,6 +3,7 @@ package de.mm20.launcher2.database.migrations
 import android.content.Context
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import de.mm20.launcher2.database.R
 import de.mm20.launcher2.ktx.toBytes
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.first
@@ -22,6 +23,8 @@ class Migration_24_25(
             """
             CREATE TABLE IF NOT EXISTS `Theme` (
                 `id` BLOB NOT NULL,
+                `name` TEXT NOT NULL,
+                
                 `corePaletteA1` INTEGER,
                 `corePaletteA2` INTEGER,
                 `corePaletteA3` INTEGER,
@@ -119,11 +122,12 @@ class Migration_24_25(
             ?,?,?,?,?,?,?,?,?,?,
             ?,?,?,?,?,?,?,?,?,?,
             ?,?,?,?,?,?,?,?,?,?,
-            ?,?,?,?,?,?,?,?,?
+            ?,?,?,?,?,?,?,?,?,?
         )
         """.trimIndent(),
             arrayOf(
                 uuid.toBytes(),
+                context.getString(R.string.preference_colors_custom),
                 customColors.baseColors.accent1.toHexColor(),
                 customColors.baseColors.accent2.toHexColor(),
                 customColors.baseColors.accent3.toHexColor(),

@@ -7,6 +7,8 @@ import java.util.UUID
 @Entity(tableName = "Theme")
 data class ThemeEntity(
     @PrimaryKey val id: UUID,
+    val name: String,
+
     val corePaletteA1: Int?,
     val corePaletteA2: Int?,
     val corePaletteA3: Int?,
