@@ -64,16 +64,18 @@ fun ThemesSettingsScreen() {
                                 expanded = showMenu,
                                 onDismissRequest = { showMenu = false }
                             ) {
-                                DropdownMenuItem(
-                                    leadingIcon = {
-                                        Icon(Icons.Rounded.Edit, null)
-                                    },
-                                    text = { Text("Edit") },
-                                    onClick = {
-                                        navController?.navigate("settings/appearance/themes/${theme.id}")
-                                        showMenu = false
-                                    }
-                                )
+                                if (!theme.builtIn) {
+                                    DropdownMenuItem(
+                                        leadingIcon = {
+                                            Icon(Icons.Rounded.Edit, null)
+                                        },
+                                        text = { Text("Edit") },
+                                        onClick = {
+                                            navController?.navigate("settings/appearance/themes/${theme.id}")
+                                            showMenu = false
+                                        }
+                                    )
+                                }
                             }
                         }
                     )
