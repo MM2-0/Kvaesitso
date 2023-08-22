@@ -2,16 +2,24 @@ package de.mm20.launcher2.themes
 
 import android.content.Context
 import android.util.Log
+import de.mm20.launcher2.database.AppDatabase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 class ThemeRepository(
     private val context: Context,
+    private val database: AppDatabase,
 ) {
+    private val scope = CoroutineScope(Dispatchers.IO + Job())
+
     private val customTheme = MutableStateFlow(Theme(
         id = UUID.randomUUID(),
         builtIn = false,
@@ -22,23 +30,26 @@ class ThemeRepository(
     ))
 
     fun getThemes(): Flow<List<Theme>> {
-        return flowOf(getBuiltInThemes()).combine(customTheme) {
-            builtIn, custom ->
-            builtIn + custom
+        return database.themeDao().getAll().map {
+            getBuiltInThemes() + it.map { Theme(it) }
         }
     }
 
     fun getTheme(id: UUID): Flow<Theme?> {
         if (id == DefaultThemeId) return flowOf(getDefaultTheme())
-        return customTheme
+        return database.themeDao().get(id).map { it?.let { Theme(it) } }
     }
 
     fun createTheme(theme: Theme) {
+        scope.launch {
+            database.themeDao().insert(theme.toEntity())
+        }
     }
 
     fun updateTheme(theme: Theme) {
-        Log.d("MM20", "updateTheme: $theme")
-        customTheme.value = theme
+        scope.launch {
+            database.themeDao().update(theme.toEntity())
+        }
     }
 
     fun getThemeOrDefault(id: UUID): Flow<Theme> {
