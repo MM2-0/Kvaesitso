@@ -20,15 +20,6 @@ class ThemeRepository(
 ) {
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
-    private val customTheme = MutableStateFlow(Theme(
-        id = UUID.randomUUID(),
-        builtIn = false,
-        name = "Custom",
-        corePalette = EmptyCorePalette,
-        lightColorScheme = DefaultLightColorScheme,
-        darkColorScheme = DefaultDarkColorScheme,
-    ))
-
     fun getThemes(): Flow<List<Theme>> {
         return database.themeDao().getAll().map {
             getBuiltInThemes() + it.map { Theme(it) }
@@ -37,6 +28,7 @@ class ThemeRepository(
 
     fun getTheme(id: UUID): Flow<Theme?> {
         if (id == DefaultThemeId) return flowOf(getDefaultTheme())
+        if (id == BlackAndWhiteThemeId) return flowOf(getBlackAndWhiteTheme())
         return database.themeDao().get(id).map { it?.let { Theme(it) } }
     }
 
@@ -59,6 +51,7 @@ class ThemeRepository(
     private fun getBuiltInThemes(): List<Theme> {
         return listOf(
             getDefaultTheme(),
+            getBlackAndWhiteTheme(),
         )
     }
 
@@ -70,6 +63,17 @@ class ThemeRepository(
             corePalette = EmptyCorePalette,
             lightColorScheme = DefaultLightColorScheme,
             darkColorScheme = DefaultDarkColorScheme,
+        )
+    }
+
+    private fun getBlackAndWhiteTheme(): Theme {
+        return Theme(
+            id = BlackAndWhiteThemeId,
+            builtIn = true,
+            name = context.getString(R.string.preference_colors_bw),
+            corePalette = EmptyCorePalette,
+            lightColorScheme = BlackAndWhiteLightColorScheme,
+            darkColorScheme = BlackAndWhiteDarkColorScheme,
         )
     }
 
