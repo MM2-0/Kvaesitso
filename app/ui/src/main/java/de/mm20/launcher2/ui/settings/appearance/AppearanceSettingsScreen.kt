@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
@@ -25,6 +26,7 @@ fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val navController = LocalNavController.current
+    val themeName by viewModel.colorSchemeName.collectAsStateWithLifecycle(null)
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -42,27 +44,9 @@ fun AppearanceSettingsScreen() {
                         viewModel.setTheme(newValue)
                     }
                 )
-                val colorScheme by viewModel.colorScheme.collectAsState()
                 Preference(
                     title = stringResource(id = R.string.preference_screen_colors),
-                    summary = when (colorScheme) {
-                        ColorScheme.Default -> stringResource(R.string.preference_colors_default)
-                        ColorScheme.BlackAndWhite -> stringResource(R.string.preference_colors_bw)
-                        ColorScheme.Custom -> stringResource(R.string.preference_colors_custom)
-                        else -> null
-                    },
-                    onClick = {
-                        navController?.navigate("settings/appearance/colorscheme")
-                    }
-                )
-                Preference(
-                    title = stringResource(id = R.string.preference_screen_colors),
-                    summary = when (colorScheme) {
-                        ColorScheme.Default -> stringResource(R.string.preference_colors_default)
-                        ColorScheme.BlackAndWhite -> stringResource(R.string.preference_colors_bw)
-                        ColorScheme.Custom -> stringResource(R.string.preference_colors_custom)
-                        else -> null
-                    },
+                    summary = themeName,
                     onClick = {
                         navController?.navigate("settings/appearance/themes")
                     }

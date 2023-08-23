@@ -18,12 +18,15 @@ import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.Theme
+import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.theme.colorscheme.*
 import de.mm20.launcher2.ui.theme.typography.DefaultTypography
 import de.mm20.launcher2.ui.theme.typography.getDeviceDefaultTypography
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import org.koin.androidx.compose.inject
+import java.util.UUID
 
 
 @Composable
@@ -33,15 +36,17 @@ fun LauncherTheme(
 
     val context = LocalContext.current
     val dataStore: LauncherDataStore by inject()
+    val themeRepository: ThemeRepository by inject()
 
-    val colorSchemePreference by remember {
+    val theme by remember {
         dataStore.data.map {
-            if (it.easterEgg) Settings.AppearanceSettings.ColorScheme.EasterEgg
-            else it.appearance.colorScheme
+            it.appearance.themeId.takeIf { it.isNotEmpty() }?.let {
+                UUID.fromString(it)
+            }
+        }.flatMapLatest {
+            themeRepository.getThemeOrDefault(it)
         }
-    }.collectAsState(
-        AppearanceSettings.ColorScheme.Default
-    )
+    }.collectAsState(themeRepository.getDefaultTheme())
 
     val themePreference by remember { dataStore.data.map { it.appearance.theme } }.collectAsState(
         AppearanceSettings.Theme.System
@@ -62,7 +67,11 @@ fun LauncherTheme(
         }
     }.collectAsState(RoundedCornerShape(0f))
 
-    val colorScheme by colorSchemeAsState(colorSchemePreference, darkTheme)
+    val colorScheme = if (darkTheme) {
+        darkColorSchemeOf(theme)
+    } else {
+        lightColorSchemeOf(theme)
+    }
 
     val font by remember { dataStore.data.map { it.appearance.font } }.collectAsState(
         AppearanceSettings.Font.Outfit
@@ -88,54 +97,6 @@ fun LauncherTheme(
             content = content
         )
     }
-}
-
-@Composable
-fun colorSchemeAsState(
-    colorScheme: AppearanceSettings.ColorScheme,
-    darkTheme: Boolean
-): MutableState<ColorScheme> {
-    val dataStore: LauncherDataStore by inject()
-
-    when (colorScheme) {
-        AppearanceSettings.ColorScheme.BlackAndWhite -> {
-            return remember(darkTheme) {
-                mutableStateOf(
-                    if (darkTheme) DarkBlackAndWhiteColorScheme else LightBlackAndWhiteColorScheme
-                )
-            }
-        }
-        AppearanceSettings.ColorScheme.EasterEgg -> {
-            return remember(darkTheme) {
-                mutableStateOf(
-                    if (darkTheme) DarkEasterEggColorScheme else LightEasterEggColorScheme
-                )
-            }
-        }
-        AppearanceSettings.ColorScheme.Custom -> {
-            val colors by remember(darkTheme) {
-                dataStore.data.map { if (darkTheme) it.appearance.customColors.darkScheme else it.appearance.customColors.lightScheme }
-            }.collectAsState(null)
-            val state = remember(colors, darkTheme) {
-                mutableStateOf(
-                    colors?.let { CustomColorScheme(it) }
-                        ?: if (darkTheme) DarkDefaultColorScheme else LightDefaultColorScheme
-                )
-            }
-            return state
-        }
-        else -> {
-            val scheme = if (darkTheme) {
-                darkColorSchemeOf(Theme(DefaultThemeId, name = ""))
-            } else {
-                lightColorSchemeOf(Theme(DefaultThemeId, name = ""))
-            }
-            return remember(scheme, darkTheme) {
-                mutableStateOf(scheme)
-            }
-        }
-    }
-
 }
 
 fun getTypography(context: Context, font: AppearanceSettings.Font?): Typography {

@@ -26,8 +26,6 @@ import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.ColorSchemeSettingsScreen
-import de.mm20.launcher2.ui.settings.colorscheme.CustomColorSchemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
@@ -97,12 +95,6 @@ class SettingsActivity : BaseActivity() {
                             }
                             composable("settings/icons") {
                                 IconsSettingsScreen()
-                            }
-                            composable("settings/appearance/colorscheme") {
-                                ColorSchemeSettingsScreen()
-                            }
-                            composable("settings/appearance/colorscheme/custom") {
-                                CustomColorSchemeSettingsScreen()
                             }
                             composable("settings/appearance/themes") {
                                 ThemesSettingsScreen()

@@ -19,7 +19,7 @@ message Settings {
       Custom = 3;
       EasterEgg = 4;
     }
-    ColorScheme color_scheme = 6;
+    ColorScheme color_scheme = 6 [deprecated = true];
     message CustomColors {
       bool advanced_mode = 1;
       message BaseColors {
@@ -72,7 +72,7 @@ message Settings {
       Scheme light_scheme = 3;
       Scheme dark_scheme = 4;
     }
-    CustomColors custom_colors = 8;
+    CustomColors custom_colors = 8 [deprecated = true];
     bool dim_wallpaper = 7;
 
     /**
@@ -87,6 +87,8 @@ message Settings {
     Font font = 10;
 
     bool blur_wallpaper = 11;
+    // UUID of the selected theme
+    string theme_id = 12;
   }
   AppearanceSettings appearance = 2;
 

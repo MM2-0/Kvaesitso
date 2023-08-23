@@ -44,7 +44,8 @@ class ThemeRepository(
         }
     }
 
-    fun getThemeOrDefault(id: UUID): Flow<Theme> {
+    fun getThemeOrDefault(id: UUID?): Flow<Theme> {
+        if (id == null) return flowOf(getDefaultTheme())
         return getTheme(id).map { it ?: getDefaultTheme() }
     }
 

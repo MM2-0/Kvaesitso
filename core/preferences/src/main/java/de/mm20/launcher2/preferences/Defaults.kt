@@ -5,6 +5,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme
 import scheme.Scheme
+import java.util.UUID
 
 fun createFactorySettings(context: Context): Settings {
     return Settings.newBuilder()
@@ -12,16 +13,9 @@ fun createFactorySettings(context: Context): Settings {
             Settings.AppearanceSettings
                 .newBuilder()
                 .setTheme(Settings.AppearanceSettings.Theme.System)
-                .setColorScheme(Settings.AppearanceSettings.ColorScheme.Default)
                 .setDimWallpaper(false)
                 .setBlurWallpaper(true)
-                .setCustomColors(
-                    Settings.AppearanceSettings.CustomColors.newBuilder()
-                        .setAdvancedMode(false)
-                        .setBaseColors(DefaultCustomColorsBase)
-                        .setLightScheme(DefaultLightCustomColorScheme)
-                        .setDarkScheme(DefaultDarkCustomColorScheme)
-                )
+                .setThemeId(UUID(0L, 0L).toString())
                 .setFont(Settings.AppearanceSettings.Font.Outfit)
                 .build()
         )

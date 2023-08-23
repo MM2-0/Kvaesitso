@@ -77,6 +77,9 @@ fun ThemesSettingsScreen() {
                                     )
                                 }
                             }
+                        },
+                        onClick = {
+                            viewModel.selectTheme(theme)
                         }
                     )
                     Row(
