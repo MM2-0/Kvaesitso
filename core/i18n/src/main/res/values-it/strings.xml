@@ -393,7 +393,7 @@
     <string name="icon_picker_title">Scegli icona</string>
     <string name="icon_picker_default_icon">Predefinito</string>
     <string name="icon_picker_suggestions">Suggerimenti</string>
-    <string name="icon_picker_search_icon">Icona di ricerca</string>
+    <string name="icon_picker_search_icon">Cerca nei pacchetti icone</string>
     <string name="weather_condition_sleetshowersandthunder">Rovesci di nevischio e tuoni</string>
     <string name="preference_crash_reporter">Riporta crash</string>
     <string name="preference_blur_wallpaper">Sfoca lo sfondo</string>
@@ -591,7 +591,7 @@
     <string name="preference_search_result_ordering_weighted">Utilizzo</string>
     <string name="preference_screen_integrations">Integrazioni</string>
     <string name="preference_screen_homescreen">Schermata home</string>
-    <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, Indicatori</string>
+    <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, indicatori</string>
     <string name="preference_screen_clockwidget_summary">Configura stile e componenti dell\'orologio</string>
     <string name="preference_screen_homescreen_summary">Orologio, barra di ricerca, sfondo, barre di sistema</string>
     <string name="preference_screen_icons">Griglia e icone</string>
@@ -609,7 +609,7 @@
     <string name="widget_config_appwidget_configure">Configura widget</string>
     <string name="widget_config_weather_integration_settings">Impostazioni integrazione meteo</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstalla pacchetti icone</string>
-    <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetti icone</string>
+    <string name="preference_debug_reinstall_iconpacks_summary">Svuota e ricostruisci la cache del pacchetto icone</string>
     <string name="widget_name_notes">Nota</string>
     <string name="notes_widget_action_save">Salva</string>
     <string name="notes_widget_placeholder">Scrivi una nota…</string>
@@ -642,4 +642,5 @@
     <string name="preference_debug_dump_heap_summary">Cattura uno snapshot per analizzare l\'uso della memoria. L\'applicazione si bloccherà fino al completamento di questo processo.</string>
     <string name="preference_debug_dump_heap">Snapshot memoria</string>
     <string name="preference_debug_dump_heap_in_progress">Catturando uno snapshot…</string>
+    <string name="preference_custom_colors_corepalette">Tavolozza colori</string>
 </resources>
