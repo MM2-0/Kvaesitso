@@ -59,14 +59,14 @@ data class ColorRef(
     val tone: Int,
 ) : Color {
     override fun toString(): String {
-        return "\$${color.toString()}.$tone"
+        return "\$$color.$tone"
     }
 }
 
 @JvmInline
 value class StaticColor(val color: Int) : Color {
     override fun toString(): String {
-        return "#${color.toString(16).padStart(6, '0')}"
+        return "#${color.toUInt().toString(16).padStart(8, '0')}"
     }
 }
 
