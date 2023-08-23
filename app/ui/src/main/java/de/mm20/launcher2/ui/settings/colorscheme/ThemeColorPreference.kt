@@ -45,7 +45,6 @@ import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.themes.Color as ThemeColor
 import de.mm20.launcher2.themes.ColorRef
 import de.mm20.launcher2.themes.CorePaletteColor
 import de.mm20.launcher2.themes.FullCorePalette
@@ -58,6 +57,7 @@ import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
 import hct.Hct
 import kotlin.math.roundToInt
+import de.mm20.launcher2.themes.Color as ThemeColor
 
 @Composable
 fun ThemeColorPreference(
@@ -70,11 +70,9 @@ fun ThemeColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    val actualValue = value ?: defaultValue
-
     PlainTooltipBox(tooltip = { Text(title) }) {
         ColorSwatch(
-            color = Color(actualValue.get(corePalette)),
+            color = Color((value ?: defaultValue).get(corePalette)),
             modifier = modifier
                 .size(48.dp)
                 .tooltipTrigger()
@@ -83,7 +81,13 @@ fun ThemeColorPreference(
     }
 
     if (showDialog) {
-        BottomSheetDialog(onDismissRequest = { showDialog = false }) {
+        var currentValue by remember { mutableStateOf(value) }
+
+        val actualValue = currentValue ?: defaultValue
+        BottomSheetDialog(onDismissRequest = {
+            onValueChange(currentValue)
+            showDialog = false
+        }) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -96,7 +100,7 @@ fun ThemeColorPreference(
                         selected = actualValue is ColorRef,
                         onClick = {
                             if (actualValue is ColorRef) return@SegmentedButton
-                            onValueChange(defaultValue)
+                            currentValue = defaultValue
                         },
                         icon = {
                             SegmentedButtonDefaults.SegmentedButtonIcon(
@@ -117,7 +121,7 @@ fun ThemeColorPreference(
                     SegmentedButton(
                         selected = actualValue is StaticColor,
                         onClick = {
-                            onValueChange(StaticColor(actualValue.get(corePalette)))
+                            currentValue = StaticColor(actualValue.get(corePalette))
                         },
                         icon = {
                             SegmentedButtonDefaults.SegmentedButtonIcon(
@@ -146,7 +150,7 @@ fun ThemeColorPreference(
                             val colorPickerState = rememberHctColorPickerState(
                                 initialColor = Color(themeColor.color),
                                 onColorChanged = {
-                                    onValueChange(StaticColor(it.toArgb()))
+                                    currentValue = StaticColor(it.toArgb())
                                 }
                             )
                             HctColorPicker(
@@ -174,11 +178,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.Primary,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Primary,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.Primary,
@@ -194,11 +196,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.Secondary,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Secondary,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.Secondary,
@@ -214,11 +214,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.Tertiary,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Tertiary,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.Tertiary,
@@ -237,11 +235,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.Neutral,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Neutral,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.Neutral,
@@ -257,11 +253,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.NeutralVariant,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.NeutralVariant,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.NeutralVariant,
@@ -277,11 +271,9 @@ fun ThemeColorPreference(
                                         .padding(8.dp)
                                         .size(64.dp)
                                         .clickable {
-                                            onValueChange(
-                                                ColorRef(
-                                                    CorePaletteColor.Error,
-                                                    tone.roundToInt()
-                                                )
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Error,
+                                                tone.roundToInt()
                                             )
                                         },
                                     selected = themeColor.color == CorePaletteColor.Error,
@@ -305,7 +297,7 @@ fun ThemeColorPreference(
                                     valueRange = 0f..100f,
                                     onValueChange = {
                                         tone = it
-                                        onValueChange(themeColor.copy(tone = it.roundToInt()))
+                                        currentValue = themeColor.copy(tone = it.roundToInt())
                                     },
                                     track = {
                                         Canvas(
@@ -409,7 +401,7 @@ fun ThemeColorPreference(
                                 .padding(top = 8.dp)
                                 .align(Alignment.End),
                             contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
-                            onClick = { onValueChange(null) }
+                            onClick = { currentValue = null }
                         ) {
                             Icon(
                                 Icons.Rounded.RestartAlt, null,

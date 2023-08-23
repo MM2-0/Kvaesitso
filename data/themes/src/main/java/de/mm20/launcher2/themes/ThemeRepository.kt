@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.UUID
@@ -29,7 +30,7 @@ class ThemeRepository(
     fun getTheme(id: UUID): Flow<Theme?> {
         if (id == DefaultThemeId) return flowOf(getDefaultTheme())
         if (id == BlackAndWhiteThemeId) return flowOf(getBlackAndWhiteTheme())
-        return database.themeDao().get(id).map { it?.let { Theme(it) } }
+        return database.themeDao().get(id).map { it?.let { Theme(it) } }.flowOn(Dispatchers.Default)
     }
 
     fun createTheme(theme: Theme) {
