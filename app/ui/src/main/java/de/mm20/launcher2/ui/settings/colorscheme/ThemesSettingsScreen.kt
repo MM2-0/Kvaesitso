@@ -11,16 +11,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ContentCopy
+import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.RadioButtonChecked
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +54,8 @@ fun ThemesSettingsScreen() {
 
     val selectedTheme by viewModel.selectedTheme.collectAsStateWithLifecycle(null)
     val themes by viewModel.themes.collectAsStateWithLifecycle(emptyList())
+
+    var deleteTheme by remember { mutableStateOf<Theme?>(null) }
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_colors)) {
         item {
@@ -85,6 +91,28 @@ fun ThemesSettingsScreen() {
                                             }
                                         )
                                     }
+                                    DropdownMenuItem(
+                                        leadingIcon = {
+                                            Icon(Icons.Rounded.ContentCopy, null)
+                                        },
+                                        text = { Text(stringResource(R.string.duplicate)) },
+                                        onClick = {
+                                            viewModel.duplicate(theme)
+                                            showMenu = false
+                                        }
+                                    )
+                                    if (!theme.builtIn) {
+                                        DropdownMenuItem(
+                                            leadingIcon = {
+                                                Icon(Icons.Rounded.Delete, null)
+                                            },
+                                            text = { Text(stringResource(R.string.menu_delete)) },
+                                            onClick = {
+                                                deleteTheme = theme
+                                                showMenu = false
+                                            }
+                                        )
+                                    }
                                 }
                             }
                         },
@@ -95,6 +123,29 @@ fun ThemesSettingsScreen() {
                 }
             }
         }
+    }
+    if (deleteTheme != null) {
+        AlertDialog(
+            onDismissRequest = { deleteTheme = null },
+            text = { Text(stringResource(R.string.confirmation_delete_color_scheme, deleteTheme!!.name)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.delete(deleteTheme!!)
+                        deleteTheme = null
+                    }
+                ) {
+                    Text(stringResource(android.R.string.ok))
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = { deleteTheme = null }
+                ) {
+                    Text(stringResource(android.R.string.cancel))
+                }
+            }
+        )
     }
 }
 

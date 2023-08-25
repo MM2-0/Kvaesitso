@@ -824,4 +824,5 @@
     <string name="note_widget_file_read_error_description">The linked file could not be read. Possibly, it has been moved or deleted. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten.</string>
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
+    <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s?</string>
 </resources>

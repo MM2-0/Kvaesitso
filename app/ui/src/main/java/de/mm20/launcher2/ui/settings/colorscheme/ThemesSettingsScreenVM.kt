@@ -49,4 +49,12 @@ class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    fun duplicate(theme: Theme) {
+        themeRepository.createTheme(theme.copy(id = UUID.randomUUID()))
+    }
+
+    fun delete(theme: Theme) {
+        themeRepository.deleteTheme(theme)
+    }
 }

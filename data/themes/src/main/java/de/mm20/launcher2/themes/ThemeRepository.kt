@@ -79,4 +79,10 @@ class ThemeRepository(
         )
     }
 
+    fun deleteTheme(theme: Theme) {
+        scope.launch {
+            database.themeDao().delete(theme.id)
+        }
+    }
+
 }
