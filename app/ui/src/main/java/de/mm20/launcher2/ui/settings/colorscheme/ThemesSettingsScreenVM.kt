@@ -16,6 +16,7 @@ import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.fromJson
 import de.mm20.launcher2.themes.toJson
+import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
@@ -95,5 +96,14 @@ class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
                 themeRepository.createTheme(theme.copy(id = UUID.randomUUID()))
             }
         }
+    }
+
+    fun createNew(context: Context) {
+        themeRepository.createTheme(
+            Theme(
+                id = UUID.randomUUID(),
+                name = context.getString(R.string.new_color_scheme_name)
+            )
+        )
     }
 }

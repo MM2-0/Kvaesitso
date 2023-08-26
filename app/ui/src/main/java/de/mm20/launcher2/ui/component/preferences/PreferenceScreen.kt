@@ -4,6 +4,9 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -19,10 +22,20 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalViewConfiguration
+import androidx.compose.ui.platform.ViewConfiguration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -70,9 +83,33 @@ fun PreferenceScreen(
 
     val colorScheme = MaterialTheme.colorScheme
 
+    val touchSlop = LocalViewConfiguration.current.touchSlop
+    var fabVisible by remember { mutableStateOf(true) }
+    val nestedScrollConnection = remember {
+        object: NestedScrollConnection {
+            override fun onPostScroll(
+                consumed: Offset,
+                available: Offset,
+                source: NestedScrollSource
+            ): Offset {
+                if (consumed.y < -touchSlop) fabVisible = false
+                else if (consumed.y > touchSlop) fabVisible = true
+                return super.onPostScroll(consumed, available, source)
+            }
+        }
+    }
+
     val activity = LocalContext.current as? AppCompatActivity
     Scaffold(
-        floatingActionButton = floatingActionButton,
+        floatingActionButton = {
+            AnimatedVisibility(
+                fabVisible,
+                enter = scaleIn(),
+                exit = scaleOut(),
+            ) {
+                floatingActionButton()
+            }
+        },
         topBar = {
             CenterAlignedTopAppBar(
                 title = title,
@@ -110,6 +147,7 @@ fun PreferenceScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
                 .padding(it),
             content = content,
         )

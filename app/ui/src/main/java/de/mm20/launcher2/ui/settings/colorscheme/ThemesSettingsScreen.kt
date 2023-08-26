@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Download
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -72,6 +74,11 @@ fun ThemesSettingsScreen() {
         topBarActions = {
             IconButton(onClick = { importIntentLauncher.launch(arrayOf("*/*")) }) {
                 Icon(Icons.Rounded.Download, null)
+            }
+        },
+        floatingActionButton = {
+            FloatingActionButton(onClick = { viewModel.createNew(context) }) {
+                Icon(Icons.Rounded.Add, null)
             }
         }
     ) {

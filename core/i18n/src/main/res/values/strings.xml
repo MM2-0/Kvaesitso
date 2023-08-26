@@ -825,4 +825,5 @@
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
     <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s?</string>
+    <string name="new_color_scheme_name">New color scheme</string>
 </resources>
