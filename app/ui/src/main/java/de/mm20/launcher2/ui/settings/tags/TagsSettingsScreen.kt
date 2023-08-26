@@ -13,7 +13,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,6 +24,7 @@ import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 
 @Composable
 fun TagsSettingsScreen() {
@@ -45,9 +45,20 @@ fun TagsSettingsScreen() {
             PreferenceCategory {
                 for (tag in tags) {
                     var showMenu by remember { mutableStateOf(false) }
+
+                    val (emoji, tagName) = remember(tag) {
+                        tag.splitLeadingEmoji()
+                    }
+
                     Preference(
-                        icon = Icons.Rounded.Tag,
-                        title = tag,
+                        icon = {
+                            if (emoji != null) {
+                                Text(emoji)
+                            } else {
+                                Icon(Icons.Rounded.Tag, null)
+                            }
+                        },
+                        title = { Text(tagName ?: "") },
                         onClick = {
                             viewModel.editTag.value = tag
                         },
@@ -89,7 +100,7 @@ fun TagsSettingsScreen() {
                 viewModel.createTag.value = false
             }
         )
-    } else if(viewModel.createTag.value) {
+    } else if (viewModel.createTag.value) {
         EditTagSheet(
             tag = null,
             onDismiss = {

@@ -38,6 +38,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.FilledTonalIconToggleButton
 import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -86,6 +87,7 @@ import de.mm20.launcher2.ui.component.dragndrop.LazyDragAndDropRow
 import de.mm20.launcher2.ui.component.dragndrop.LazyVerticalDragAndDropGrid
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropGridState
 import de.mm20.launcher2.ui.component.dragndrop.rememberLazyDragAndDropListState
+import de.mm20.launcher2.ui.ktx.splitLeadingEmoji
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.settings.tags.EditTagSheet
@@ -493,18 +495,29 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                                     expanded = showAddMenu,
                                     onDismissRequest = { showAddMenu = false }) {
                                     for (tag in availableTags) {
+                                        val (emoji, tagName) = remember(tag.tag) {
+                                            tag.tag.splitLeadingEmoji()
+                                        }
                                         DropdownMenuItem(
                                             leadingIcon = {
-                                                Icon(Icons.Rounded.Tag, null)
+                                                if (emoji != null) {
+                                                    Text(
+                                                        emoji,
+                                                        modifier = Modifier.width(FilterChipDefaults.IconSize),
+                                                        textAlign = TextAlign.Center,
+                                                    )
+                                                } else {
+                                                    Icon(Icons.Rounded.Tag, null)
+                                                }
                                             },
-                                            text = { Text(tag.label) },
+                                            text = { Text(tagName ?: "") },
                                             onClick = {
                                                 viewModel.pinTag(tag)
                                                 showAddMenu = false
                                             })
                                     }
                                     if (availableTags.isNotEmpty()) {
-                                        Divider()
+                                        HorizontalDivider()
                                     }
                                     DropdownMenuItem(
                                         leadingIcon = {
