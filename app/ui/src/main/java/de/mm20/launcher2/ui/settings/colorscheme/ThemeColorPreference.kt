@@ -75,8 +75,8 @@ fun ThemeColorPreference(
             color = Color((value ?: defaultValue).get(corePalette)),
             modifier = modifier
                 .size(48.dp)
-                .tooltipTrigger()
-                .clickable { showDialog = true },
+                .tooltipTrigger(),
+            onClick = { showDialog = true },
         )
     }
 
@@ -176,14 +176,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Primary,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.Primary,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Primary,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -194,14 +194,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Secondary,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.Secondary,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Secondary,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -212,14 +212,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Tertiary,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.Tertiary,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Tertiary,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                             }
                             Row(
@@ -233,14 +233,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Neutral,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.Neutral,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Neutral,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -251,14 +251,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.NeutralVariant,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.NeutralVariant,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.NeutralVariant,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -269,14 +269,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp)
-                                        .clickable {
-                                            currentValue = ColorRef(
-                                                CorePaletteColor.Error,
-                                                tone.roundToInt()
-                                            )
-                                        },
+                                        .size(64.dp),
                                     selected = themeColor.color == CorePaletteColor.Error,
+                                    onClick = {
+                                        currentValue = ColorRef(
+                                            CorePaletteColor.Error,
+                                            tone.roundToInt()
+                                        )
+                                    },
                                 )
                             }
                             Row(

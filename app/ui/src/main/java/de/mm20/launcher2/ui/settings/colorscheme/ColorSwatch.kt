@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.settings.colorscheme
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -22,7 +23,8 @@ import hct.Hct
 fun ColorSwatch(
     color: Color,
     modifier: Modifier = Modifier,
-    selected: Boolean = false
+    selected: Boolean = false,
+    onClick: (() -> Unit)? = null
 ) {
     val darkTheme = LocalDarkTheme.current
     val iconColor = Color(Hct.fromInt(color.toArgb()).let {
@@ -46,6 +48,7 @@ fun ColorSwatch(
     Box(
         modifier = modifier
             .clip(CircleShape)
+            .clickable(enabled = onClick != null, onClick = onClick ?: {})
             .border(
                 if (selected) 4.dp else 1.dp,
                 borderColor,

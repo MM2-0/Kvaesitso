@@ -48,8 +48,8 @@ fun CorePaletteColorPreference(
             color = Color(value ?: defaultValue),
             modifier = modifier
                 .size(48.dp)
-                .tooltipTrigger()
-                .clickable { showDialog = true },
+                .tooltipTrigger(),
+            onClick = { showDialog = true },
         )
     }
 
