@@ -205,4 +205,11 @@ val OpenSourceLicenses = arrayOf(
         licenseText = R.raw.license_apache_2,
         url = "https://bigbadaboom.github.io/androidsvg/"
     ),
+    OpenSourceLibrary(
+        name = "emoji4j",
+        description = "Emoji4j is a high-performance, standards-compliant emoji processor supporting Unicode 15 for Java 8 or later.",
+        licenseName = R.string.apache_license_name,
+        licenseText = R.raw.license_apache_2,
+        url = "https://github.com/sigpwned/emoji4j"
+    ),
 )

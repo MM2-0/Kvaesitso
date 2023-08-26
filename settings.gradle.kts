@@ -232,6 +232,9 @@ dependencyResolutionManagement {
             library("tinypinyin", "com.github.promeg", "tinypinyin")
                 .version("2.0.2")
 
+            library("emoji4j", "com.sigpwned", "emoji4j-core")
+                .version("15.0.1")
+
             version("junit", "4.13")
             library("junit", "junit", "junit").versionRef("junit")
             bundle("tests", listOf("junit"))

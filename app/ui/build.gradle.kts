@@ -111,6 +111,8 @@ dependencies {
     implementation(libs.coil.core)
     implementation(libs.coil.compose)
 
+    implementation(libs.emoji4j)
+
     implementation(project(":libs:material-color-utilities"))
 
     implementation(project(":core:base"))
