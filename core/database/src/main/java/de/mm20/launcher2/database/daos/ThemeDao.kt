@@ -24,4 +24,10 @@ interface ThemeDao {
 
     @Query("DELETE FROM Theme WHERE id = :id")
     suspend fun delete(id: UUID)
+
+    @Query("DELETE FROM Theme")
+    suspend fun deleteAll()
+
+    @Insert
+    fun insertAll(themes: List<ThemeEntity>)
 }

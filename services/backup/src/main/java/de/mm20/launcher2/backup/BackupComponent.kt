@@ -5,11 +5,12 @@ enum class BackupComponent(val value: String) {
     Favorites("favorites"),
     Widgets("widgets2"),
     Customizations("customizations"),
-    SearchActions("searchactions");
+    SearchActions("searchactions"),
+    Themes("themes");
 
     companion object {
         fun fromValue(value: String): BackupComponent? {
-            return values().firstOrNull { it.value == value }
+            return entries.firstOrNull { it.value == value }
         }
     }
 }

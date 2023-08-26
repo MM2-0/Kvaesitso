@@ -162,6 +162,7 @@ fun RestoreBackupSheet(
                                                 BackupComponent.SearchActions -> Icons.Rounded.ArrowOutward
                                                 BackupComponent.Widgets -> Icons.Rounded.Widgets
                                                 BackupComponent.Customizations -> Icons.Rounded.Edit
+                                                BackupComponent.Themes -> Icons.Rounded.Palette
                                             },
                                             contentDescription = null
                                         )
@@ -173,6 +174,7 @@ fun RestoreBackupSheet(
                                                     BackupComponent.SearchActions -> R.string.backup_component_searchactions
                                                     BackupComponent.Widgets -> R.string.backup_component_widgets
                                                     BackupComponent.Customizations -> R.string.backup_component_customizations
+                                                    BackupComponent.Themes -> R.string.backup_component_themes
                                                 }
                                             ),
                                             style = MaterialTheme.typography.titleMedium,

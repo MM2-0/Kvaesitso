@@ -9,6 +9,7 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.export
 import de.mm20.launcher2.preferences.import
 import de.mm20.launcher2.searchactions.SearchActionRepository
+import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.*
 import java.io.File
@@ -25,6 +26,7 @@ class BackupManager(
     private val widgetRepository: WidgetRepository,
     private val searchActionRepository: SearchActionRepository,
     private val customAttrsRepository: CustomAttributesRepository,
+    private val themesRepository: ThemeRepository,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -34,7 +36,7 @@ class BackupManager(
      */
     suspend fun backup(
         uri: Uri,
-        include: Set<BackupComponent> = BackupComponent.values().toSet()
+        include: Set<BackupComponent> = BackupComponent.entries.toSet()
     ) {
 
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
@@ -78,6 +80,10 @@ class BackupManager(
                 customAttrsRepository.export(backupDir)
             }
 
+            if (include.contains(BackupComponent.Themes)) {
+                themesRepository.export(backupDir)
+            }
+
             createArchive(backupDir, outputStream)
             outputStream.close()
 
@@ -117,6 +123,10 @@ class BackupManager(
 
                 if (include.contains(BackupComponent.Customizations)) {
                     customAttrsRepository.import(restoreDir)
+                }
+
+                if (include.contains(BackupComponent.Themes)) {
+                    themesRepository.import(restoreDir)
                 }
             }
         }
@@ -188,7 +198,7 @@ class BackupManager(
          */
 
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 6
+        private const val BackupFormatMinor = 7
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }

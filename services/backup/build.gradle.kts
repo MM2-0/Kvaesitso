@@ -46,5 +46,6 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:ktx"))
     implementation(project(":data:customattrs"))
+    implementation(project(":data:themes"))
 
 }

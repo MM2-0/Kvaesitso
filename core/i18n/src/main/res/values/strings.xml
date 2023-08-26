@@ -694,6 +694,7 @@
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>
     <string name="backup_component_searchactions">Quick actions</string>
+    <string name="backup_component_themes">Color schemes</string>
     <string name="backup_component_widgets">Built-in widgets</string>
     <string name="backup_component_customizations">Customizations</string>
     <string name="backup_complete">The backup has been completed.</string>

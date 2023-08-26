@@ -133,6 +133,14 @@ fun CreateBackupSheet(
                                 viewModel.toggleComponent(BackupComponent.SearchActions)
                             }
                         )
+                        BackupableComponent(
+                            title = stringResource(R.string.backup_component_themes),
+                            icon = Icons.Rounded.Palette,
+                            checked = components.contains(BackupComponent.Themes),
+                            onCheckedChange = {
+                                viewModel.toggleComponent(BackupComponent.Themes)
+                            }
+                        )
                         SmallMessage(
                             modifier = Modifier
                                 .padding(top = 8.dp)

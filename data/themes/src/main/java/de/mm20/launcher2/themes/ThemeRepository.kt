@@ -1,18 +1,22 @@
 package de.mm20.launcher2.themes
 
 import android.content.Context
-import android.util.Log
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.SerializationException
+import kotlinx.serialization.encodeToString
+import java.io.File
+import java.lang.IllegalArgumentException
 import java.util.UUID
 
 class ThemeRepository(
@@ -82,6 +86,40 @@ class ThemeRepository(
     fun deleteTheme(theme: Theme) {
         scope.launch {
             database.themeDao().delete(theme.id)
+        }
+    }
+
+    suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.themeDao()
+        val themes = dao.getAll().first().map { Theme(it) }
+        val data = ThemeJson.encodeToString(themes)
+
+        val file = File(toDir, "themes.0000")
+        file.bufferedWriter().use {
+            it.write(data)
+        }
+    }
+
+    suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+        val dao = database.themeDao()
+        dao.deleteAll()
+
+        val files =
+            fromDir.listFiles { _, name -> name.startsWith("themes.") }
+                ?: return@withContext
+
+        for (file in files) {
+            val data = file.inputStream().reader().readText()
+            val themes: List<Theme> = try {
+                ThemeJson.decodeFromString(data)
+            } catch (e: SerializationException) {
+                CrashReporter.logException(e)
+                continue
+            } catch (e: IllegalArgumentException) {
+                CrashReporter.logException(e)
+                continue
+            }
+            dao.insertAll(themes.map { it.toEntity() })
         }
     }
 
