@@ -510,7 +510,7 @@
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="icon_pack_dynamic_colors">Dynamic colors</string>
     <string name="preference_category_animations">Animations</string>
-    <string name="preference_charging_animation">Charging</string>
+    <string name="preference_charging_animation">Charging animation</string>
     <string name="preference_charging_animation_summary">Play a bubble animation while the device is charging</string>
     <string name="preference_category_system_bars">System bars</string>
     <string name="preference_status_bar_icons">Status bar icons</string>
@@ -829,7 +829,7 @@
     <string name="note_widget_file_read_error_description">The linked file could not be read. Possibly, it has been moved or deleted. A copy has been restored from the launcher\'s internal storage. If you edit the note, the linked file will possibly be overwritten.</string>
     <string name="note_widget_file_write_error">Error saving note</string>
     <string name="note_widget_file_write_error_description">The note could not be written to the linked file. Possibly, it has been moved or deleted. A copy has been saved to the launcher\'s internal storage.</string>
-    <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s?</string>
+    <string name="confirmation_delete_color_scheme">Do you really want to delete the color scheme %1$s\?</string>
     <string name="new_color_scheme_name">New color scheme</string>
     <string name="theme_color_scheme_system_default">Use system default</string>
     <string name="theme_color_scheme_autogenerate">From primary color</string>
