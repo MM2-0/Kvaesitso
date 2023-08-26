@@ -36,8 +36,12 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
         val intent = Intent().also {
             it.component = ComponentName(pkg, json.getString("activity"))
         }
-        val launcherActivityInfo = launcherApps.resolveActivity(intent, user) ?: return null
-        return LauncherApp(context, launcherActivityInfo)
+        try {
+            val launcherActivityInfo = launcherApps.resolveActivity(intent, user) ?: return null
+            return LauncherApp(context, launcherActivityInfo)
+        } catch (e: SecurityException) {
+            return null
+        }
     }
 
 }

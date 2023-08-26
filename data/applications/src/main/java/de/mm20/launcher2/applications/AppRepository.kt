@@ -113,7 +113,11 @@ internal class AppRepositoryImpl(
 
         }, Handler(Looper.getMainLooper()))
         val apps = profiles.map { p ->
-            launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
+            try {
+                launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
+            } catch (e: SecurityException) {
+                emptyList()
+            }
         }.flatten()
         installedApps.value = apps
     }
@@ -127,7 +131,11 @@ internal class AppRepositoryImpl(
         if (packageName == context.packageName) return emptyList()
 
         return profiles.map { p ->
-            launcherApps.getActivityList(packageName, p).mapNotNull { getApplication(it, p) }
+            try {
+                launcherApps.getActivityList(packageName, p).mapNotNull { getApplication(it, p) }
+            } catch (e: SecurityException) {
+                emptyList()
+            }
         }.flatten()
     }
 
