@@ -2,6 +2,8 @@ package de.mm20.launcher2.themes
 
 import de.mm20.launcher2.database.entities.ThemeEntity
 import hct.Hct
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import java.util.UUID
 
 enum class CorePaletteColor {
@@ -70,6 +72,7 @@ value class StaticColor(val color: Int) : Color {
     }
 }
 
+@Serializable
 data class CorePalette<out T : Int?>(
     val primary: T,
     val secondary: T,
@@ -84,6 +87,7 @@ val EmptyCorePalette = CorePalette<Int?>(null, null, null, null, null, null)
 typealias FullCorePalette = CorePalette<Int>
 typealias PartialCorePalette = CorePalette<Int?>
 
+@Serializable
 data class ColorScheme<out T : Color?>(
     val primary: T,
     val onPrimary: T,
@@ -127,8 +131,9 @@ data class ColorScheme<out T : Color?>(
 typealias FullColorScheme = ColorScheme<Color>
 typealias PartialColorScheme = ColorScheme<Color?>
 
+@Serializable
 data class Theme(
-    val id: UUID,
+    @Transient val id: UUID = UUID.randomUUID(),
     val builtIn: Boolean = false,
     val name: String,
     val corePalette: PartialCorePalette = EmptyCorePalette,

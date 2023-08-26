@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -13,10 +15,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ContentCopy
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Download
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.RadioButtonChecked
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -33,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,13 +56,25 @@ import de.mm20.launcher2.ui.theme.colorscheme.lightColorSchemeOf
 fun ThemesSettingsScreen() {
     val viewModel: ThemesSettingsScreenVM = viewModel()
     val navController = LocalNavController.current
+    val context = LocalContext.current
 
     val selectedTheme by viewModel.selectedTheme.collectAsStateWithLifecycle(null)
     val themes by viewModel.themes.collectAsStateWithLifecycle(emptyList())
 
     var deleteTheme by remember { mutableStateOf<Theme?>(null) }
 
-    PreferenceScreen(title = stringResource(R.string.preference_screen_colors)) {
+    val importIntentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
+        viewModel.importTheme(context, it)
+    }
+
+    PreferenceScreen(
+        title = stringResource(R.string.preference_screen_colors),
+        topBarActions = {
+            IconButton(onClick = { importIntentLauncher.launch(arrayOf("*/*")) }) {
+                Icon(Icons.Rounded.Download, null)
+            }
+        }
+    ) {
         item {
             PreferenceCategory {
                 for (theme in themes) {
@@ -104,6 +121,16 @@ fun ThemesSettingsScreen() {
                                     if (!theme.builtIn) {
                                         DropdownMenuItem(
                                             leadingIcon = {
+                                                Icon(Icons.Rounded.Share, null)
+                                            },
+                                            text = { Text(stringResource(R.string.menu_share)) },
+                                            onClick = {
+                                                viewModel.exportTheme(context, theme)
+                                                showMenu = false
+                                            }
+                                        )
+                                        DropdownMenuItem(
+                                            leadingIcon = {
                                                 Icon(Icons.Rounded.Delete, null)
                                             },
                                             text = { Text(stringResource(R.string.menu_delete)) },
@@ -127,7 +154,14 @@ fun ThemesSettingsScreen() {
     if (deleteTheme != null) {
         AlertDialog(
             onDismissRequest = { deleteTheme = null },
-            text = { Text(stringResource(R.string.confirmation_delete_color_scheme, deleteTheme!!.name)) },
+            text = {
+                Text(
+                    stringResource(
+                        R.string.confirmation_delete_color_scheme,
+                        deleteTheme!!.name
+                    )
+                )
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
