@@ -231,7 +231,7 @@ fun ThemeSettingsScreen(themeId: UUID) {
                         },
                     )
                     CorePaletteColorPreference(
-                        title = "NeutralVariant",
+                        title = "Neutral Variant",
                         value = theme?.corePalette?.neutralVariant,
                         onValueChange = {
                             viewModel.updateTheme(

@@ -28,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
@@ -68,7 +70,7 @@ fun CorePaletteColorPreference(
             ) {
                 SwitchPreference(
                     icon = Icons.Rounded.SettingsSuggest,
-                    title = "Use system default",
+                    title = stringResource(R.string.custom_color_scheme_system_default),
                     value = currentValue == null,
                     onValueChanged = {
                         currentValue = if (it) null else defaultValue
@@ -124,7 +126,7 @@ fun CorePaletteColorPreference(
                                         .padding(ButtonDefaults.IconSpacing)
                                         .size(ButtonDefaults.IconSize)
                                 )
-                                Text("From primary color")
+                                Text(stringResource(R.string.custom_color_scheme_autogenerate))
                             }
                         }
                     }

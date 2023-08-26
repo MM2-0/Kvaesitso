@@ -108,7 +108,7 @@ fun ThemesSettingsScreen() {
                                             leadingIcon = {
                                                 Icon(Icons.Rounded.Edit, null)
                                             },
-                                            text = { Text("Edit") },
+                                            text = { Text(stringResource(R.string.edit)) },
                                             onClick = {
                                                 navController?.navigate("settings/appearance/themes/${theme.id}")
                                                 showMenu = false

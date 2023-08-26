@@ -45,6 +45,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.themes.ColorRef
@@ -53,6 +54,7 @@ import de.mm20.launcher2.themes.FullCorePalette
 import de.mm20.launcher2.themes.StaticColor
 import de.mm20.launcher2.themes.atTone
 import de.mm20.launcher2.themes.get
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
@@ -119,7 +121,7 @@ fun ThemeColorPreference(
                         },
                         shape = SegmentedButtonDefaults.shape(position = 0, count = 2)
                     ) {
-                        Text("From palette")
+                        Text(stringResource(R.string.custom_color_scheme_palette_color))
                     }
                     SegmentedButton(
                         selected = actualValue is StaticColor,
@@ -140,7 +142,7 @@ fun ThemeColorPreference(
                         },
                         shape = SegmentedButtonDefaults.shape(position = 1, count = 2)
                     ) {
-                        Text("Custom")
+                        Text(stringResource(R.string.custom_color_scheme_custom_color))
                     }
                 }
                 AnimatedContent(
@@ -412,7 +414,7 @@ fun ThemeColorPreference(
                                     .padding(ButtonDefaults.IconSpacing)
                                     .size(ButtonDefaults.IconSize)
                             )
-                            Text("Restore default")
+                            Text(stringResource(R.string.preference_restore_default))
                         }
                     }
                 }
