@@ -642,4 +642,5 @@
     <string name="preference_debug_dump_heap">Snímek paměti</string>
     <string name="preference_debug_dump_heap_summary">Zachytit snímek paměti pro analyzování využití paměti. Aplikace bude nefunkční, dokud tento proces nebude dokončen.</string>
     <string name="preference_debug_dump_heap_in_progress">Zachytávání snímku…</string>
+    <string name="preference_custom_colors_corepalette">Barevná paleta</string>
 </resources>
