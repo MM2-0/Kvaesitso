@@ -37,6 +37,30 @@ fun PreferenceScreen(
     helpUrl: String? = null,
     content: LazyListScope.() -> Unit,
 ) {
+    PreferenceScreen(
+        title = {
+            Text(
+                title,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(horizontal = 16.dp),
+                maxLines = 1
+            )
+        },
+        floatingActionButton = floatingActionButton,
+        topBarActions = topBarActions,
+        helpUrl = helpUrl,
+        content = content
+    )
+}
+
+@Composable
+fun PreferenceScreen(
+    title: @Composable () -> Unit = {},
+    floatingActionButton: @Composable () -> Unit = {},
+    topBarActions: @Composable RowScope.() -> Unit = {},
+    helpUrl: String? = null,
+    content: LazyListScope.() -> Unit,
+) {
     val navController = LocalNavController.current
     val systemUiController = rememberSystemUiController()
     systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
@@ -51,14 +75,7 @@ fun PreferenceScreen(
         floatingActionButton = floatingActionButton,
         topBar = {
             CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        title,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        maxLines = 1
-                    )
-                },
+                title = title,
                 navigationIcon = {
                     IconButton(onClick = {
                         if (navController?.navigateUp() != true) {
@@ -72,10 +89,11 @@ fun PreferenceScreen(
                     if (helpUrl != null) {
                         IconButton(onClick = {
                             CustomTabsIntent.Builder()
-                                .setDefaultColorSchemeParams(CustomTabColorSchemeParams.Builder()
-                                    .setToolbarColor(colorScheme.primaryContainer.toArgb())
-                                    .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
-                                    .build()
+                                .setDefaultColorSchemeParams(
+                                    CustomTabColorSchemeParams.Builder()
+                                        .setToolbarColor(colorScheme.primaryContainer.toArgb())
+                                        .setSecondaryToolbarColor(colorScheme.secondaryContainer.toArgb())
+                                        .build()
                                 )
                                 .build().launchUrl(context, Uri.parse(helpUrl))
                         }) {

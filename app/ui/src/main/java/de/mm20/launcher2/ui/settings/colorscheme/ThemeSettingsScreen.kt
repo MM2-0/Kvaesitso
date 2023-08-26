@@ -1,12 +1,12 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.OpenInNew
@@ -21,6 +22,7 @@ import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.StarBorder
 import androidx.compose.material.icons.rounded.Tag
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CardDefaults
@@ -53,6 +55,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -98,8 +101,35 @@ fun ThemeSettingsScreen(themeId: UUID) {
         }
     }
 
+    var editName by remember { mutableStateOf(false) }
+
+    if (editName) {
+        var name by remember(theme) { mutableStateOf(theme?.name ?: "") }
+        AlertDialog(
+            onDismissRequest = { editName = false },
+            text = { OutlinedTextField(value = name, onValueChange = { name = it }, singleLine = true) },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        viewModel.updateTheme(theme!!.copy(name = name))
+                        editName = false
+                    }
+                ) {
+                    Text(stringResource(R.string.save))
+                }
+            }
+        )
+    }
+
     PreferenceScreen(
-        title = theme?.name ?: "",
+        title = {
+            Text(
+                theme?.name ?: "",
+                modifier = Modifier.clickable {
+                    editName = true
+                }
+            )
+        },
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/customization/color-schemes",
     ) {
         if (theme == null || previewColorScheme == null) return@PreferenceScreen
@@ -116,7 +146,9 @@ fun ThemeSettingsScreen(themeId: UUID) {
                     stringResource(R.string.preference_custom_colors_corepalette),
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.secondary,
-                    modifier = Modifier.padding(horizontal = 16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
                 )
                 Row(
                     modifier = Modifier
@@ -945,7 +977,10 @@ fun ThemeSettingsScreen(themeId: UUID) {
                 },
             ) {
                 Banner(
-                    modifier = Modifier.padding(end = 16.dp).align(Alignment.CenterVertically).width(240.dp),
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .align(Alignment.CenterVertically)
+                        .width(240.dp),
                     text = "Banner",
                     icon = Icons.Rounded.Lock
                 )
