@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -70,7 +69,7 @@ fun CorePaletteColorPreference(
             ) {
                 SwitchPreference(
                     icon = Icons.Rounded.SettingsSuggest,
-                    title = stringResource(R.string.custom_color_scheme_system_default),
+                    title = stringResource(R.string.theme_color_scheme_system_default),
                     value = currentValue == null,
                     onValueChanged = {
                         currentValue = if (it) null else defaultValue
@@ -126,7 +125,7 @@ fun CorePaletteColorPreference(
                                         .padding(ButtonDefaults.IconSpacing)
                                         .size(ButtonDefaults.IconSize)
                                 )
-                                Text(stringResource(R.string.custom_color_scheme_autogenerate))
+                                Text(stringResource(R.string.theme_color_scheme_autogenerate))
                             }
                         }
                     }

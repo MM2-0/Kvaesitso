@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -121,7 +120,7 @@ fun ThemeColorPreference(
                         },
                         shape = SegmentedButtonDefaults.shape(position = 0, count = 2)
                     ) {
-                        Text(stringResource(R.string.custom_color_scheme_palette_color))
+                        Text(stringResource(R.string.theme_color_scheme_palette_color))
                     }
                     SegmentedButton(
                         selected = actualValue is StaticColor,
@@ -142,7 +141,7 @@ fun ThemeColorPreference(
                         },
                         shape = SegmentedButtonDefaults.shape(position = 1, count = 2)
                     ) {
-                        Text(stringResource(R.string.custom_color_scheme_custom_color))
+                        Text(stringResource(R.string.theme_color_scheme_custom_color))
                     }
                 }
                 AnimatedContent(
