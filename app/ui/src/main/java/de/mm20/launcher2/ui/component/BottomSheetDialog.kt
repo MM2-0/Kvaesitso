@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.component
 
-import android.util.Log
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -19,11 +18,11 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
@@ -173,7 +172,8 @@ fun BottomSheetDialog(
         ) {
             BoxWithConstraints(
                 modifier = Modifier
-                    .fillMaxSize(),
+                    .fillMaxSize()
+                    .imePadding(),
                 propagateMinConstraints = true,
                 contentAlignment = Alignment.BottomCenter
             ) {
@@ -346,14 +346,17 @@ private enum class SwipeState {
     Full, Peek, Dismiss
 }
 
-private class BottomSheetPositionProvider(val insets: WindowInsets, val density: Density): PopupPositionProvider {
+private class BottomSheetPositionProvider(val insets: WindowInsets, val density: Density) :
+    PopupPositionProvider {
     override fun calculatePosition(
         anchorBounds: IntRect,
         windowSize: IntSize,
         layoutDirection: LayoutDirection,
         popupContentSize: IntSize
     ): IntOffset {
-        Log.d("MM20", "calculatePosition: anchorBounds=$anchorBounds, windowSize=$windowSize, layoutDirection=$layoutDirection, popupContentSize=$popupContentSize")
-        return IntOffset.Zero + IntOffset(insets.getLeft(density, layoutDirection), insets.getTop(density))
+        return IntOffset.Zero + IntOffset(
+            insets.getLeft(density, layoutDirection),
+            insets.getTop(density)
+        )
     }
 }

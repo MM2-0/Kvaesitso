@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoFixHigh
 import androidx.compose.material.icons.rounded.SettingsSuggest
@@ -60,7 +62,9 @@ fun CorePaletteColorPreference(
             showDialog = false
         }) {
             Column(
-                modifier = Modifier.padding(it)
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(it)
             ) {
                 SwitchPreference(
                     icon = Icons.Rounded.SettingsSuggest,
