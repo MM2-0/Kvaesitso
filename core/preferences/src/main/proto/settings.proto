@@ -367,4 +367,9 @@ message Settings {
     bool widget_tags_multiline = 2;
   }
   UiState ui = 30;
+
+  message AnimationSettings {
+    bool charging = 1;
+  }
+  AnimationSettings animations = 31;
 }

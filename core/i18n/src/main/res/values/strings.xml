@@ -508,6 +508,9 @@
     <string name="preference_icon_pack_summary_empty">No icon packs installed</string>
     <!-- Indicates that an icon pack supports dynamic colors (icon colors adapt to the launchers color scheme) -->
     <string name="icon_pack_dynamic_colors">Dynamic colors</string>
+    <string name="preference_category_animations">Animations</string>
+    <string name="preference_charging_animation">Charging</string>
+    <string name="preference_charging_animation_summary">Play a bubble animation while the device is charging</string>
     <string name="preference_category_system_bars">System bars</string>
     <string name="preference_status_bar_icons">Status bar icons</string>
     <string name="preference_nav_bar_icons">Navigation bar icons</string>

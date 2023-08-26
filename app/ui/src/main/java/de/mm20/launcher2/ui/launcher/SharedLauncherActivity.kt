@@ -105,6 +105,8 @@ abstract class SharedLauncherActivity(
                             val statusBarColor by viewModel.statusBarColor.collectAsState()
                             val navBarColor by viewModel.navBarColor.collectAsState()
 
+                            val chargingAnimation by viewModel.chargingAnimation.collectAsState()
+
                             val lightStatus =
                                 !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
                             val lightNav =
@@ -164,7 +166,9 @@ abstract class SharedLauncherActivity(
                                     .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
                                 contentAlignment = Alignment.BottomCenter
                             ) {
-                                NavBarEffects(modifier = Modifier.fillMaxSize())
+                                if (chargingAnimation == true) {
+                                    NavBarEffects(modifier = Modifier.fillMaxSize())
+                                }
                                 if (mode == LauncherActivityMode.Assistant) {
                                     key(bottomSearchBar, reverseSearchResults) {
                                         AssistantScaffold(

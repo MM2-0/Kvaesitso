@@ -15,5 +15,9 @@ class Migration_16_17: VersionedMigration(16, 17) {
                     }.toString()
                 )
         )
+            .setAnimations(
+                builder.animations.toBuilder()
+                    .setCharging(true)
+            )
     }
 }

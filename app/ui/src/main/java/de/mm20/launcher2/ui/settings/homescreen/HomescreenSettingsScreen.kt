@@ -60,6 +60,7 @@ fun HomescreenSettingsScreen() {
     val lightNavBar by viewModel.navBarIcons.collectAsStateWithLifecycle(null)
     val hideStatusBar by viewModel.hideStatusBar.collectAsStateWithLifecycle(null)
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
+    val chargingAnimation by viewModel.chargingAnimation.collectAsStateWithLifecycle(null)
 
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_homescreen)) {
         item {
@@ -170,6 +171,18 @@ fun HomescreenSettingsScreen() {
                         viewModel.setBlurWallpaper(it)
                     },
                     enabled = isBlurSupported
+                )
+            }
+        }
+        item {
+            PreferenceCategory(stringResource(R.string.preference_category_animations)) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_charging_animation),
+                    summary = stringResource(R.string.preference_charging_animation_summary),
+                    value = chargingAnimation == true,
+                    onValueChanged = {
+                        viewModel.setChargingAnimation(it)
+                    }
                 )
             }
         }

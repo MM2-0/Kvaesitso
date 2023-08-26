@@ -202,6 +202,21 @@ class HomescreenSettingsScreenVM(
         }
     }
 
+    val chargingAnimation = dataStore.data.map { it.animations.charging }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setChargingAnimation(chargingAnimation: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAnimations(
+                        it.animations.toBuilder()
+                            .setCharging(chargingAnimation)
+                    )
+                    .build()
+            }
+        }
+    }
 
     companion object : KoinComponent {
         val Factory = viewModelFactory {

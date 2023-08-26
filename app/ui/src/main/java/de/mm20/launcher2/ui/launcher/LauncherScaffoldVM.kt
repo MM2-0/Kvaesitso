@@ -53,6 +53,9 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val chargingAnimation = dataStore.data.map { it.animations.charging }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }

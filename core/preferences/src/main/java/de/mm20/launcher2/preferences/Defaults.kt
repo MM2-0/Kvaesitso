@@ -185,6 +185,10 @@ fun createFactorySettings(context: Context): Settings {
                 .setOrdering(Settings.SearchResultOrderingSettings.Ordering.Weighted)
                 .setWeightFactor(Settings.SearchResultOrderingSettings.WeightFactor.Default)
         )
+        .setAnimations(
+            Settings.AnimationSettings.newBuilder()
+                .setCharging(true)
+        )
         .build()
 }
 
