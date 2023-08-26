@@ -36,6 +36,7 @@ import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.InputChip
+import androidx.compose.material3.InputChipDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
@@ -172,8 +173,8 @@ fun AppItem(
                                 Box(modifier = Modifier.background(Color(not.color))) {
                                     AsyncImage(
                                         modifier = Modifier
-                                            .padding(3.dp)
-                                            .requiredSize(18.dp),
+                                            .requiredSize(InputChipDefaults.AvatarSize)
+                                            .padding(3.dp),
                                         model = icon,
                                         contentDescription = null
                                     )
@@ -186,7 +187,7 @@ fun AppItem(
                                         null,
                                         modifier = Modifier
                                             .clip(CircleShape)
-                                            .size(18.dp)
+                                            .size(InputChipDefaults.IconSize)
                                             .clickable {
                                                 viewModel.clearNotification(not)
                                             },
@@ -242,7 +243,7 @@ fun AppItem(
                                     contentDescription = null,
                                     modifier = Modifier
                                         .clip(CircleShape)
-                                        .size(24.dp),
+                                        .size(InputChipDefaults.AvatarSize),
                                 )
                             },
                             trailingIcon = if (LocalFavoritesEnabled.current) {
@@ -252,7 +253,7 @@ fun AppItem(
                                         null,
                                         modifier = Modifier
                                             .clip(CircleShape)
-                                            .requiredSize(18.dp)
+                                            .requiredSize(InputChipDefaults.IconSize)
                                             .clickable {
 
                                                 if (isPinned) {

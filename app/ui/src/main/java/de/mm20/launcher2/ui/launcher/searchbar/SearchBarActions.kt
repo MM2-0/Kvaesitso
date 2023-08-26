@@ -61,7 +61,8 @@ fun ColumnScope.SearchBarActions(
                     label = { Text(it.label) },
                     leadingIcon = {
                         SearchActionIcon(
-                            action = it
+                            action = it,
+                            size = AssistChipDefaults.IconSize,
                         )
                     }
                 )
