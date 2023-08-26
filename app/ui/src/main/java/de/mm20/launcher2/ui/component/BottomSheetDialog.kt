@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.BottomSheetDefaults
@@ -55,10 +54,16 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntRect
+import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toPixels
 import kotlinx.coroutines.launch
@@ -149,13 +154,20 @@ fun BottomSheetDialog(
     CompositionLocalProvider(
         LocalAbsoluteTonalElevation provides 0.dp,
     ) {
+        val density = LocalDensity.current
+        val insets = WindowInsets.systemBars
+        WindowInsets
+        val positionProvider = remember(insets, density) {
+            BottomSheetPositionProvider(insets, density)
+        }
         Popup(
-            alignment = Alignment.BottomCenter,
+            popupPositionProvider = positionProvider,
             properties = PopupProperties(
                 dismissOnBackPress = dismissible(),
                 dismissOnClickOutside = dismissible(),
                 usePlatformDefaultWidth = false,
                 focusable = true,
+                clippingEnabled = false,
             ),
             onDismissRequest = onDismissRequest,
         ) {
@@ -324,13 +336,6 @@ fun BottomSheetDialog(
                         }
 
                     }
-
-                    Box(
-                        modifier = Modifier
-                            .windowInsetsBottomHeight(WindowInsets.systemBars)
-                            .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.surface)
-                    )
                 }
             }
         }
@@ -339,4 +344,16 @@ fun BottomSheetDialog(
 
 private enum class SwipeState {
     Full, Peek, Dismiss
+}
+
+private class BottomSheetPositionProvider(val insets: WindowInsets, val density: Density): PopupPositionProvider {
+    override fun calculatePosition(
+        anchorBounds: IntRect,
+        windowSize: IntSize,
+        layoutDirection: LayoutDirection,
+        popupContentSize: IntSize
+    ): IntOffset {
+        Log.d("MM20", "calculatePosition: anchorBounds=$anchorBounds, windowSize=$windowSize, layoutDirection=$layoutDirection, popupContentSize=$popupContentSize")
+        return IntOffset.Zero + IntOffset(insets.getLeft(density, layoutDirection), insets.getTop(density))
+    }
 }
