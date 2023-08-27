@@ -65,6 +65,12 @@ android {
             applicationIdSuffix = ".nightly"
             versionNameSuffix = "-${LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"))}-nightly"
             signingConfig = signingConfigs.findByName("gh-actions")
+
+            postprocessing {
+                isRemoveUnusedCode = true
+                isObfuscate = false
+                isOptimizeCode = true
+            }
         }
 
         flavorDimensions += "variant"
