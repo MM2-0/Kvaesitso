@@ -56,6 +56,7 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
+import de.mm20.launcher2.ui.icons.Signal
 import de.mm20.launcher2.ui.icons.Telegram
 import de.mm20.launcher2.ui.icons.WhatsApp
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -184,6 +185,33 @@ fun ContactItem(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             items(contact.emails.toList()) {
+                                Chip(
+                                    modifier = Modifier.padding(end = 16.dp),
+                                    text = it.label,
+                                    onClick = {
+                                        context.tryStartActivity(
+                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                                .setData(Uri.parse(it.data))
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+                if (contact.signal.isNotEmpty()) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(Icons.Rounded.Signal, contentDescription = null)
+                        LazyRow(
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(start = 16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            items(contact.signal.toList()) {
                                 Chip(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,

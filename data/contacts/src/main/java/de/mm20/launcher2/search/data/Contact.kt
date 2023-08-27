@@ -27,6 +27,7 @@ data class Contact(
     val emails: Set<ContactInfo>,
     val telegram: Set<ContactInfo>,
     val whatsapp: Set<ContactInfo>,
+    val signal: Set<ContactInfo>,
     val postals: Set<ContactInfo>,
     override val labelOverride: String? = null
 ) : Searchable, SavableSearchable {
@@ -101,6 +102,7 @@ data class Contact(
                     " OR ${ContactsContract.Data.MIMETYPE} = \"${ContactsContract.CommonDataKinds.StructuredName.CONTENT_ITEM_TYPE}\"" +
                     " OR ${ContactsContract.Data.MIMETYPE} = \"vnd.android.cursor.item/vnd.org.telegram.messenger.android.profile\"" +
                     " OR ${ContactsContract.Data.MIMETYPE} = \"vnd.android.cursor.item/vnd.com.whatsapp.profile\"" +
+                    " OR ${ContactsContract.Data.MIMETYPE} = \"vnd.android.cursor.item/vnd.org.thoughtcrime.securesms.contact\"" +
                     ")"
             val dataCursor = context.contentResolver.query(
                 ContactsContract.Data.CONTENT_URI,
@@ -110,6 +112,7 @@ data class Contact(
             val emails = mutableSetOf<ContactInfo>()
             val telegram = mutableSetOf<ContactInfo>()
             val whatsapp = mutableSetOf<ContactInfo>()
+            val signal = mutableSetOf<ContactInfo>()
             val postals = mutableSetOf<ContactInfo>()
             var firstName = ""
             var lastName = ""
@@ -186,6 +189,20 @@ data class Contact(
                             )
                         )
                     }
+                    "vnd.android.cursor.item/vnd.org.thoughtcrime.securesms.contact" -> {
+                        val data1 = dataCursor.getStringOrNull(data1Column)
+                            ?: continue@loop
+                        val dataId = dataCursor.getLong(idColumn)
+                        signal.add(
+                            ContactInfo(
+                                data1,
+                                Uri.withAppendedPath(
+                                    ContactsContract.Data.CONTENT_URI,
+                                    dataId.toString()
+                                ).toString(),
+                            )
+                        )
+                    }
                 }
             }
             dataCursor.close()
@@ -213,6 +230,7 @@ data class Contact(
                 postals = postals,
                 telegram = telegram,
                 whatsapp = whatsapp,
+                signal = signal,
                 lookupKey = lookUpKey
             )
         }
