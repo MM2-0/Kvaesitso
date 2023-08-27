@@ -12,6 +12,7 @@ import android.os.Process
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.R
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -93,10 +94,15 @@ data class LauncherShortcut(
     ): LauncherIcon? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         val icon = withContext(Dispatchers.IO) {
-            launcherApps.getShortcutIconDrawable(
-                launcherShortcut,
-                context.resources.displayMetrics.densityDpi
-            )
+            try {
+                launcherApps.getShortcutIconDrawable(
+                    launcherShortcut,
+                    context.resources.displayMetrics.densityDpi
+                )
+            } catch (e: SecurityException) {
+                CrashReporter.logException(e)
+                null
+            }
         } ?: return null
         if (icon is AdaptiveIconDrawable) {
             if (themed && isAtLeastApiLevel(33) && icon.monochrome != null) {
