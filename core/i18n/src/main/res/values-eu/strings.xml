@@ -429,7 +429,7 @@
     <string name="preference_search_bar_style_summary">Bilaketa-barraren itxura pertsonalizatu</string>
     <string name="preference_search_bar_color">Kolorea</string>
     <string name="preference_search_bar_auto_focus">Teklatua ireki</string>
-    <string name="preference_search_bar_auto_focus_summary">Bilaketa irekitzean teklatua automatikoki erakutsi</string>
+    <string name="preference_search_bar_auto_focus_summary">Aplikazioen tiradera irekitzean teklatua automatikoki erakutsi</string>
     <string name="preference_search_bar_launch_on_enter">Enter sakatzean abiarazi</string>
     <string name="preference_hidden_items">Bilaketa-emaitza ezkutuak</string>
     <string name="preference_hidden_items_summary">Ezkutuko aplikazioak eta bilaketa-emaitzak kudeatu</string>
@@ -516,7 +516,7 @@
     <string name="preference_gesture_swipe_right">Hatza eskuinera irristatu</string>
     <string name="preference_gesture_double_tap">Birritan sakatu</string>
     <string name="preference_gesture_long_press">Luze sakatu</string>
-    <string name="gesture_action_none">Bat ere ez</string>
+    <string name="gesture_action_none">Ez egin ezer</string>
     <string name="gesture_action_open_search">Bilaketa ireki</string>
     <string name="gesture_action_launch_app">Aplikazioa abiarazi</string>
     <string name="gesture_action_lock_screen">Pantaila itzali</string>
@@ -594,4 +594,16 @@
     <string name="note_widget_conflict_file_version">Uneko fitxategiaren edukia:</string>
     <string name="note_widget_file_read_error">Errorea oharra irakurtzean</string>
     <string name="note_widget_file_write_error">Errorea oharra gordetzean</string>
+    <string name="theme_color_scheme_palette_color">Paleta</string>
+    <string name="theme_color_scheme_custom_color">Pertsonalizatua</string>
+    <string name="theme_color_scheme_system_default">Sistemaren lehenetsia erabili</string>
+    <string name="confirmation_delete_color_scheme">Benetan %1$s kolore-eskema ezabatu nahi duzu\?</string>
+    <string name="edit">Editatu</string>
+    <string name="backup_component_themes">Kolore eskemak</string>
+    <string name="new_color_scheme_name">Kolore eskema berria</string>
+    <string name="preference_restore_default">Lehenetsia berrezarri</string>
+    <string name="preference_category_animations">Animazioak</string>
+    <string name="preference_charging_animation">Kargatze-animazioa</string>
+    <string name="preference_charging_animation_summary">Erreproduzitu burbuilen animazio bat gailua kargatzen ari den bitartean</string>
+    <string name="preference_custom_colors_corepalette">Kolore paleta</string>
 </resources>
