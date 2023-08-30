@@ -390,7 +390,7 @@
     <string name="menu_launch">Lancer</string>
     <string name="menu_open_file">Ouvrir</string>
     <string name="preference_search_bar_auto_focus">Ouvrir le clavier</string>
-    <string name="preference_search_bar_auto_focus_summary">Lancer automatiquement le clavier lors de l\'ouverture de la recherche</string>
+    <string name="preference_search_bar_auto_focus_summary">Lancer automatiquement le clavier lors de l\'ouverture du tiroir d\'applications</string>
     <string name="websearch_dialog_import_url">Importer depuis une URL</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Pleine dans %1$s minute</item>
@@ -476,7 +476,7 @@
     <string name="preference_force_themed_icons_summary">Appliquer le schéma de couleur de l\'application sur toutes les icônes, même celles non supportées (non recommandé)</string>
     <string name="alert_delete_shortcut">Le raccourci %1$s va être supprimé. Continuer \?</string>
     <string name="menu_customize">Personnaliser</string>
-    <string name="icon_picker_search_icon">Rechercher une icône</string>
+    <string name="icon_picker_search_icon">Rechercher dans les packs d\'icônes</string>
     <string name="apps_profile_main">Personnel</string>
     <string name="apps_profile_work">Professionnel</string>
     <string name="preference_grid_labels_summary">Afficher le nom de l\'application sous l\'icône</string>
@@ -668,4 +668,10 @@
     <string name="note_widget_conflict_file_version">Contenu actuel du fichier :</string>
     <string name="note_widget_file_read_error">Erreur lors de la lecture de la note</string>
     <string name="preference_search_bar_launch_on_enter">Lancer avec entrer</string>
+    <string name="preference_custom_colors_corepalette">Palette de couleur</string>
+    <string name="preference_debug_dump_heap_summary">Capture l\'instant pour analyser l\'utilisation de la mémoire. L’application se figera jusqu’à ce que ce processus soit terminé.</string>
+    <string name="edit">Modifier</string>
+    <string name="preference_debug_dump_heap_in_progress">Capture de l\'instant…</string>
+    <string name="preference_category_animations">Animations</string>
+    <string name="preference_charging_animation_summary">Animer des bulles pendant que lappareil est en charge</string>
 </resources>
