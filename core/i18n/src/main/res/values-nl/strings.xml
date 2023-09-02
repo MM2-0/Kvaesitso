@@ -637,4 +637,17 @@
     <string name="search_action_websearch">Zoeken op het web</string>
     <string name="preference_debug_dump_heap">Momentopname geheugen</string>
     <string name="preference_debug_dump_heap_in_progress">Bezig met nemen van momentopname…</string>
+    <string name="theme_color_scheme_palette_color">Palet</string>
+    <string name="theme_color_scheme_custom_color">Aangepast</string>
+    <string name="theme_color_scheme_system_default">Systeemstandaard gebruiken</string>
+    <string name="theme_color_scheme_autogenerate">Van primaire kleur</string>
+    <string name="backup_component_themes">Kleurenschema\'s</string>
+    <string name="confirmation_delete_color_scheme">Ben je zeker dat je kleurenschema %1$s wil verwijderen\?</string>
+    <string name="new_color_scheme_name">Nieuw kleurenschema</string>
+    <string name="preference_category_animations">Animaties</string>
+    <string name="preference_charging_animation">Laadanimatie</string>
+    <string name="preference_charging_animation_summary">Toon een bubbelanimatie wanneer het apparaat oplaadt</string>
+    <string name="edit">Bewerken</string>
+    <string name="preference_restore_default">Standaard terugzetten</string>
+    <string name="preference_custom_colors_corepalette">Kleurenpalet</string>
 </resources>
