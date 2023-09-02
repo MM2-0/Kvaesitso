@@ -222,14 +222,22 @@ fun BottomSheetDialog(
                             oldValue == SwipeState.Full && hasPeekAnchor -> SwipeState.Peek
                             else -> SwipeState.Dismiss
                         }
+                        val newAnchors = DraggableAnchors {
+                            SwipeState.Dismiss at 0f
+                            if (hasPeekAnchor) SwipeState.Peek at -min(
+                                maxHeightPx * 0.5f,
+                                sheetHeight
+                            )
+                            if (hasFullAnchor) SwipeState.Full at -min(maxHeightPx, sheetHeight)
+                        }
                         draggableState.updateAnchors(
-                            DraggableAnchors {
-                                SwipeState.Dismiss at 0f
-                                if (hasPeekAnchor) SwipeState.Peek at -min(
-                                    maxHeightPx * 0.5f,
-                                    sheetHeight
-                                )
-                                if (hasFullAnchor) SwipeState.Full at -min(maxHeightPx, sheetHeight)
+                            newAnchors,
+                            with(draggableState) {
+                                (if (!offset.isNaN()) {
+                                    newAnchors.closestAnchor(offset) ?: targetValue
+                                } else targetValue).let {
+                                    if (it == SwipeState.Dismiss && targetValue != SwipeState.Dismiss && hasPeekAnchor) SwipeState.Peek else it
+                                }
                             },
                         )
                         if (newValue != oldValue) {
