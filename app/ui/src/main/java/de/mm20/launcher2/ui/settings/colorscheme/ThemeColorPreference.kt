@@ -312,57 +312,57 @@ fun ThemeColorPreference(
                                             drawRoundRect(
                                                 brush = Brush.horizontalGradient(
                                                     colors = listOf(
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             0f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             10f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             20f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             30f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             40f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             50f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             60f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             70f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             80f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             90f
                                                         ),
-                                                        androidx.compose.ui.graphics.Color.hct(
+                                                        Color.hct(
                                                             hue,
                                                             chroma,
                                                             100f
@@ -384,7 +384,7 @@ fun ThemeColorPreference(
                                                 .size(16.dp)
                                                 .shadow(1.dp, CircleShape)
                                                 .clip(CircleShape)
-                                                .background(androidx.compose.ui.graphics.Color.White)
+                                                .background(Color.White)
                                         )
                                     }
                                 )
