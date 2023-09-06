@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CornerSize
@@ -65,6 +66,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.overlays.Overlay
 import kotlinx.coroutines.launch
 import kotlin.math.min
 import kotlin.math.roundToInt
@@ -159,20 +161,11 @@ fun BottomSheetDialog(
         val positionProvider = remember(insets, density) {
             BottomSheetPositionProvider(insets, density)
         }
-        Popup(
-            popupPositionProvider = positionProvider,
-            properties = PopupProperties(
-                dismissOnBackPress = dismissible(),
-                dismissOnClickOutside = dismissible(),
-                usePlatformDefaultWidth = false,
-                focusable = true,
-                clippingEnabled = false,
-            ),
-            onDismissRequest = onDismissRequest,
-        ) {
+        Overlay(zIndex = 9999f) {
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize()
+                    .systemBarsPadding()
                     .imePadding(),
                 propagateMinConstraints = true,
                 contentAlignment = Alignment.BottomCenter

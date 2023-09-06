@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
@@ -58,6 +59,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.lerp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -428,7 +430,7 @@ fun AppItem(
 @Composable
 fun AppItemGridPopup(
     app: LauncherApp,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit
@@ -452,8 +454,8 @@ fun AppItemGridPopup(
                     transformOrigin = TransformOrigin(1f, 0f)
                 )
                 .offset(
-                    x = 16.dp * (1 - animationProgress).pow(10),
-                    y = -16.dp * (1 - animationProgress),
+                    x = lerp(16.dp, 0.dp,  animationProgress),
+                    y = lerp(-16.dp, 0.dp, animationProgress)
                 ),
             app = app,
             onBack = onDismiss

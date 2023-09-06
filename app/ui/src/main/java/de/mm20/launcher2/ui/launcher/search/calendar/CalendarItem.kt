@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.search.calendar
 import android.content.Context
 import android.text.format.DateUtils
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
@@ -301,7 +302,7 @@ fun CalendarItem(
 @Composable
 fun CalendarItemGridPopup(
     calendar: CalendarEvent,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit

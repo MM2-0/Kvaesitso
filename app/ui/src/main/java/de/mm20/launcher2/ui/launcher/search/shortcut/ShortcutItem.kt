@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -284,7 +285,7 @@ fun AppShortcutItem(
 @Composable
 fun ShortcutItemGridPopup(
     shortcut: AppShortcut,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit

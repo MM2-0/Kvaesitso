@@ -55,6 +55,7 @@ import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.locals.LocalWindowSize
+import de.mm20.launcher2.ui.overlays.OverlayHost
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
 import kotlin.math.pow
@@ -160,7 +161,7 @@ abstract class SharedLauncherActivity(
                                 systemUiController.isNavigationBarVisible = !hideNav
                             }
 
-                            Box(
+                            OverlayHost(
                                 modifier = Modifier
                                     .fillMaxSize()
                                     .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),

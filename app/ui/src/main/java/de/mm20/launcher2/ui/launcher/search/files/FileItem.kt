@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.files
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
@@ -322,7 +323,7 @@ fun FileItem(
 @Composable
 fun FileItemGridPopup(
     file: File,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit

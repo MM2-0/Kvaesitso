@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.website
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
@@ -154,7 +155,7 @@ fun WebsiteItem(
 @Composable
 fun WebsiteItemGridPopup(
     website: Website,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit

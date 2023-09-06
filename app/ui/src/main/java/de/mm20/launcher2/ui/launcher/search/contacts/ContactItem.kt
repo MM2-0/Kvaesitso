@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.search.contacts
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
@@ -402,7 +403,7 @@ fun ContactItem(
 @Composable
 fun ContactItemGridPopup(
     contact: Contact,
-    show: Boolean,
+    show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
     onDismiss: () -> Unit
