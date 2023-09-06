@@ -142,7 +142,7 @@
     <string name="weather_condition_heavyrainandthunder">Hujan lebat disertai petir</string>
     <string name="weather_condition_heavyrainshowersandthunder">Hujan lebat disertai petir</string>
     <string name="weather_condition_lightssnowshowersandthunder">Salju ringan singkat disertai petir</string>
-    <string name="precipitation_none">Tidak ada presipitasi</string>
+    <string name="precipitation_none">Tidak ada hujan atau salju</string>
     <string name="file_meta_path">Jalur: %1$s</string>
     <string name="file_meta_app_pkgname">Nama paket: %1$s</string>
     <string name="file_meta_app_min_sdk">Versi SDK minimal: %1$s</string>
