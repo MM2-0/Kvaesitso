@@ -215,11 +215,17 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 .systemBarsPadding()
                 .imePadding()
                 .padding(horizontal = 16.dp)
-                .pointerInput(Unit) {
-                    detectTapGestures(onPress = {
-                        show.targetState = false
-                    })
-                },
+                .then(
+                    if (show.targetState ) {
+                        Modifier.pointerInput(Unit) {
+                            detectTapGestures(onPress = {
+                                show.targetState = false
+                            })
+                        }
+                    } else {
+                        Modifier
+                    }
+                )
         ) {
             LauncherCard(
                 elevation = 8.dp * animationProgress.value,
@@ -330,10 +336,6 @@ private fun Modifier.placeOverlay(
 ): Modifier {
     return layout { measurable, constraints ->
         val placeable = measurable.measure(constraints)
-        Log.d(
-            "MM20",
-            "Layout: maxWidth: ${constraints.maxWidth}, origin: $origin, placeable: ${placeable.width}"
-        )
         layout(constraints.maxWidth, constraints.maxHeight) {
             placeable.placeRelative(
                 (
