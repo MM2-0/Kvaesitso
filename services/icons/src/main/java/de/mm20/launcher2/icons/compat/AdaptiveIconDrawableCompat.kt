@@ -93,14 +93,11 @@ data class AdaptiveIconDrawableCompat(
                     )
                 }
             } catch (e: Resources.NotFoundException) {
-                CrashReporter.logException(e)
                 return null
             } catch (e: IOException) {
-                CrashReporter.logException(e)
                 return null
             } catch (e: XmlPullParserException) {
-                CrashReporter.logException(e)
-                return null
+                return nullg
             } finally {
                 xmlParser?.close()
             }
