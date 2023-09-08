@@ -97,7 +97,7 @@ data class AdaptiveIconDrawableCompat(
             } catch (e: IOException) {
                 return null
             } catch (e: XmlPullParserException) {
-                return nullg
+                return null
             } finally {
                 xmlParser?.close()
             }
