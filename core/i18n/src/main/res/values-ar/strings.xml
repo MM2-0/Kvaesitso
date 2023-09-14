@@ -119,4 +119,16 @@
     <string name="notes_widget_dismissed">ملاحظة تم ‏رفضه</string>
     <string name="shortcut_summary">بواسطة %1$s</string>
     <string name="installation_in_progress">التثبيت قيد التقدم... (%1$s)</string>
+    <string name="easter_egg_1">لا يوجد بيض عيد الفصح هنا ، إلا إذا أحضرته معك.</string>
+    <string name="easter_egg_text">حسنا ، لقد وجدتني. مبروك. هل كان يستحق كل هذا العناء؟</string>
+    <string name="edit">تعديل</string>
+    <string name="easter_egg_2">من فضلك ، توقف عن ذلك ، أنت تضيع وقتك</string>
+    <string name="easter_egg_3">لن أقولها مرة أخرى: لا يوجد على الإطلاق بيض عيد الفصح مخبأة هنا</string>
+    <string name="close">إغلاق</string>
+    <string name="save">حفظ</string>
+    <string name="duplicate">مكرره</string>
+    <string name="skip">تخطي</string>
+    <string name="action_next">التالي</string>
+    <string name="turn_off">إيقاف التشغيل</string>
+    <string name="action_continue">متابعة</string>
 </resources>
