@@ -131,4 +131,7 @@
     <string name="action_next">التالي</string>
     <string name="turn_off">إيقاف التشغيل</string>
     <string name="action_continue">متابعة</string>
+    <string name="widget_action_remove">إزالة</string>
+    <string name="widget_action_settings">إعدادات</string>
+    <string name="widget_action_adjust_height">ضبط الارتفاع</string>
 </resources>
