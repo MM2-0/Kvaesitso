@@ -60,6 +60,11 @@ If you want to help translating, see [how to translate the project.](https://kva
 - F-Droid-Repository: https://fdroid.mm20.de
 - Archive (non-free pre-1.0 releases): https://github.com/MM2-0/Quaesitio-Archive
 
+## Thanks to
+
+- [@EliotAku](https://github.com/EliotAku) for the app icon
+- All [translators and code contributors](https://github.com/MM2-0/Kvaesitso/graphs/contributors)
+
 ## License
 
 This software is free software licensed under the GNU General Public License 3.0.

@@ -619,7 +619,7 @@
     <string name="preference_layout_fixed_rotation_summary">Verrouiller la rotation de l\'écran en mode portrait</string>
     <string name="preference_gesture_swipe_down">Glisser vers le bas</string>
     <string name="preference_gesture_long_press">Appuyer longuement</string>
-    <string name="gesture_action_none">Aucun</string>
+    <string name="gesture_action_none">Ne rien faire</string>
     <string name="gesture_action_open_search">Ouvrir la recherche</string>
     <string name="gesture_action_notifications">Ouvrir le tiroir des notifications</string>
     <string name="gesture_action_quick_settings">Ouvrir les paramètres rapides</string>
@@ -674,4 +674,14 @@
     <string name="preference_debug_dump_heap_in_progress">Capture de l\'instant…</string>
     <string name="preference_category_animations">Animations</string>
     <string name="preference_charging_animation_summary">Animer des bulles pendant que lappareil est en charge</string>
+    <string name="theme_color_scheme_system_default">Utiliser la valeur par défaut du système</string>
+    <string name="theme_color_scheme_autogenerate">Depuis la couleurs primaire</string>
+    <string name="theme_color_scheme_custom_color">Personnalisée</string>
+    <string name="preference_charging_animation">Animation de chargement</string>
+    <string name="preference_restore_default">Restaurer la valeur par défaut</string>
+    <string name="new_color_scheme_name">Nouveau thème</string>
+    <string name="theme_color_scheme_palette_color">Palette</string>
+    <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
+    <string name="search_action_websearch">Recherche internet</string>
+    <string name="confirmation_delete_color_scheme">Voulez-vous supprimer le thème %1$s \?</string>
 </resources>
