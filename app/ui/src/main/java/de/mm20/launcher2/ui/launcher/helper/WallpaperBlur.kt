@@ -10,15 +10,15 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 
 @Composable
-fun WallpaperBlur(blur: () -> Boolean) {
+fun WallpaperBlur(blurRadius: () -> Int) {
     val context = LocalContext.current
     val density = LocalDensity.current
-    val blurWallpaper = blur()
-    LaunchedEffect(blurWallpaper) {
+    val radius = blurRadius()
+    LaunchedEffect(radius) {
         if (!isAtLeastApiLevel(31)) return@LaunchedEffect
         (context as Activity).window.attributes = context.window.attributes.also {
-            if (blurWallpaper) {
-                it.blurBehindRadius = with(density) { 32.dp.toPx().toInt() }
+            if (radius > 0) {
+                it.blurBehindRadius = with(density) { radius.dp.toPx().toInt() }
                 it.flags = it.flags or WindowManager.LayoutParams.FLAG_BLUR_BEHIND
             } else {
                 it.blurBehindRadius = 0

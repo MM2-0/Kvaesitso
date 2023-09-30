@@ -34,6 +34,7 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.delay
@@ -57,6 +58,7 @@ fun HomescreenSettingsScreen() {
     val lightStatusBar by viewModel.statusBarIcons.collectAsStateWithLifecycle(null)
     val dimWallpaper by viewModel.dimWallpaper.collectAsStateWithLifecycle()
     val blurWallpaper by viewModel.blurWallpaper.collectAsStateWithLifecycle()
+    val blurWallpaperRadius by viewModel.blurWallpaperRadius.collectAsStateWithLifecycle()
     val lightNavBar by viewModel.navBarIcons.collectAsStateWithLifecycle(null)
     val hideStatusBar by viewModel.hideStatusBar.collectAsStateWithLifecycle(null)
     val hideNavBar by viewModel.hideNavBar.collectAsStateWithLifecycle(null)
@@ -172,6 +174,18 @@ fun HomescreenSettingsScreen() {
                     },
                     enabled = isBlurSupported
                 )
+                AnimatedVisibility(blurWallpaper && isBlurSupported) {
+                    SliderPreference(
+                        title = stringResource(R.string.preference_blur_wallpaper_radius),
+                        value = blurWallpaperRadius,
+                        onValueChanged = {
+                            viewModel.setBlurWallpaperRadius(it)
+                        },
+                        min = 4,
+                        max = 64,
+                        step = 4,
+                    )
+                }
             }
         }
         item {

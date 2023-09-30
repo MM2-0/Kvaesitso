@@ -121,10 +121,6 @@ fun AssistantScaffold(
         }
     }
 
-    WallpaperBlur {
-        true
-    }
-
     LaunchedEffect(darkNavBarIcons, showNavBarScrim) {
         if (showNavBarScrim) {
             systemUiController.setNavigationBarColor(

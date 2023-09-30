@@ -122,6 +122,10 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val wallpaperBlurRadius = dataStore.data.map { it.appearance.blurWallpaperRadius }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+
+
     val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
     val searchBarColor = dataStore.data.map { it.searchBar.color }

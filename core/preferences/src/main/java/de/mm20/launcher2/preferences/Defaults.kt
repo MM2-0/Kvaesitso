@@ -15,6 +15,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setTheme(Settings.AppearanceSettings.Theme.System)
                 .setDimWallpaper(false)
                 .setBlurWallpaper(true)
+                .setBlurWallpaperRadius(32)
                 .setThemeId(UUID(0L, 0L).toString())
                 .setFont(Settings.AppearanceSettings.Font.Outfit)
                 .build()

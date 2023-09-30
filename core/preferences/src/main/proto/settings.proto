@@ -89,6 +89,7 @@ message Settings {
     bool blur_wallpaper = 11;
     // UUID of the selected theme
     string theme_id = 12;
+    uint32 blur_wallpaper_radius = 13;
   }
   AppearanceSettings appearance = 2;
 

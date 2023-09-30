@@ -211,6 +211,7 @@ fun PullDownScaffold(
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
 
     val blurEnabled by viewModel.wallpaperBlur.collectAsState()
+    val blurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
     val blurWallpaper by remember {
         derivedStateOf {
@@ -219,7 +220,7 @@ fun PullDownScaffold(
     }
 
     WallpaperBlur {
-        blurWallpaper
+        if (blurWallpaper) blurRadius else 0
     }
 
 

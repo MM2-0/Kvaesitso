@@ -217,6 +217,7 @@ fun PagerScaffold(
     }
 
     val blurEnabled by viewModel.wallpaperBlur.collectAsState()
+    val blurRadius by viewModel.wallpaperBlurRadius.collectAsState()
 
     val blurWallpaper by remember {
         derivedStateOf {
@@ -225,7 +226,7 @@ fun PagerScaffold(
     }
 
     WallpaperBlur {
-        blurWallpaper
+        if (blurWallpaper) blurRadius else 0
     }
 
     val currentPage = pagerState.currentPage

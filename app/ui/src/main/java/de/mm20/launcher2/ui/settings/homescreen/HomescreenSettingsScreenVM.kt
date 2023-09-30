@@ -52,6 +52,20 @@ class HomescreenSettingsScreenVM(
         }
     }
 
+    val blurWallpaperRadius = dataStore.data.map { it.appearance.blurWallpaperRadius }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+    fun setBlurWallpaperRadius(blurWallpaperRadius: Int) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppearance(
+                        it.appearance.toBuilder()
+                            .setBlurWallpaperRadius(blurWallpaperRadius)
+                    ).build()
+            }
+        }
+    }
+
     fun openWallpaperChooser(context: AppCompatActivity) {
         context.startActivity(Intent.createChooser(Intent(Intent.ACTION_SET_WALLPAPER), null))
     }
