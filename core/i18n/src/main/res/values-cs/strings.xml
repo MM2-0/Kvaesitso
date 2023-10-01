@@ -655,4 +655,5 @@
     <string name="preference_charging_animation">Animace nabíjení</string>
     <string name="preference_charging_animation_summary">Přehrát animaci bublin při nabíjení zařízení</string>
     <string name="confirmation_delete_color_scheme">Opravdu chcete odstranit barevné schéma %1$s\?</string>
+    <string name="preference_blur_wallpaper_radius">Poloměr rozmazání</string>
 </resources>
