@@ -66,6 +66,7 @@ import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
 import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toPixels
+import de.mm20.launcher2.ui.overlays.LocalZIndex
 import de.mm20.launcher2.ui.overlays.Overlay
 import kotlinx.coroutines.launch
 import kotlin.math.min
@@ -79,6 +80,7 @@ fun BottomSheetDialog(
     confirmButton: @Composable (() -> Unit)? = null,
     dismissButton: @Composable (() -> Unit)? = null,
     dismissible: () -> Boolean = { true },
+    zIndex: Float = LocalZIndex.current + 1f,
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -155,13 +157,7 @@ fun BottomSheetDialog(
     CompositionLocalProvider(
         LocalAbsoluteTonalElevation provides 0.dp,
     ) {
-        val density = LocalDensity.current
-        val insets = WindowInsets.systemBars
-        WindowInsets
-        val positionProvider = remember(insets, density) {
-            BottomSheetPositionProvider(insets, density)
-        }
-        Overlay(zIndex = 9999f) {
+        Overlay(zIndex = zIndex) {
             BoxWithConstraints(
                 modifier = Modifier
                     .fillMaxSize()

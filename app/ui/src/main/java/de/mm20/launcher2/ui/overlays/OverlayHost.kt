@@ -26,8 +26,12 @@ fun OverlayHost(
                 content()
             }
             for (overlay in overlayManager.overlays) {
-                Box(modifier = Modifier.zIndex(overlay.zIndex + 1f)) {
-                    overlay()
+                Box(modifier = Modifier.zIndex(overlay.zIndex)) {
+                    CompositionLocalProvider(
+                        LocalZIndex provides overlay.zIndex
+                    ) {
+                        overlay()
+                    }
                 }
             }
         }
@@ -36,4 +40,8 @@ fun OverlayHost(
 
 val LocalOverlayManager = compositionLocalOf<OverlayManager> {
     OverlayManager()
+}
+
+val LocalZIndex = compositionLocalOf<Float> {
+    0f
 }

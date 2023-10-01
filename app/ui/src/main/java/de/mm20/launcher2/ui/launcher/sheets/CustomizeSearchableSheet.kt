@@ -92,7 +92,8 @@ fun CustomizeSearchableSheet(
                     Text(stringResource(id = android.R.string.cancel))
                 }
             }
-        } else null
+        } else null,
+        zIndex = 100f,
     ) {
         if (!pickIcon) {
             Column(

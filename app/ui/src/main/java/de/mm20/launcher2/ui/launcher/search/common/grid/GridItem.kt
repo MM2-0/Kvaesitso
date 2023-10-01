@@ -207,7 +207,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
         show.targetState = false
     }
 
-    Overlay(zIndex = 1f) {
+    Overlay {
         Box(
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.scrim.copy(alpha = 0.32f * animationProgress.value))

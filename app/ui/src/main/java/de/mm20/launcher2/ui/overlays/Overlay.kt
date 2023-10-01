@@ -5,7 +5,7 @@ import androidx.compose.runtime.DisposableEffect
 
 @Composable
 fun Overlay(
-    zIndex: Float = 0f,
+    zIndex: Float = LocalZIndex.current + 1f,
     overlay: @Composable () -> Unit
 ) {
     val overlayManager = LocalOverlayManager.current
