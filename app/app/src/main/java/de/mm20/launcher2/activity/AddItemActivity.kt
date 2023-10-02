@@ -2,6 +2,7 @@ package de.mm20.launcher2.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import de.mm20.launcher2.searchable.SearchableRepository
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.services.favorites.FavoritesService
@@ -16,6 +17,8 @@ class AddItemActivity : Activity() {
         val shortcut = AppShortcut.fromPinRequestIntent(this, intent)
         if (shortcut != null) {
             favoritesService.pinItem(shortcut)
+        } else {
+            Log.w("MM20", "Shortcut could not be added")
         }
         finish()
     }

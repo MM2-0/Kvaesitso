@@ -9,6 +9,7 @@ import android.content.pm.ShortcutInfo
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
 import android.os.Process
+import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.R
@@ -143,8 +144,19 @@ data class LauncherShortcut(
             val launcherApps =
                 context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
             val pinRequest = launcherApps.getPinItemRequest(data)
-            val shortcutInfo = pinRequest?.shortcutInfo ?: return null
-            if (!pinRequest.accept()) return null
+            if (pinRequest == null) {
+                Log.w("MM20", "Pin request could not be retrieved from intent")
+                return null
+            }
+            val shortcutInfo = pinRequest.shortcutInfo
+            if (shortcutInfo == null) {
+                Log.w("MM20", "Pin request is missing shortcut info")
+                return null
+            }
+            if (!pinRequest.accept()) {
+                Log.w("MM20", "Pin request could not be accepted")
+                return null
+            }
             return LauncherShortcut(
                 context,
                 shortcutInfo,

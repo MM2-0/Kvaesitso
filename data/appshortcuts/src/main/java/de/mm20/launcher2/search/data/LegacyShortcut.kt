@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.Intent.ShortcutIconResource
 import android.graphics.drawable.AdaptiveIconDrawable
 import android.os.Bundle
+import android.util.Log
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
@@ -85,6 +86,7 @@ data class LegacyShortcut(
                 data.extras?.getParcelable(Intent.EXTRA_SHORTCUT_ICON_RESOURCE)
 
             if (intent == null || name == null) {
+                Log.w("MM20", "Pin request intent is missing required extras: intent=$intent, name=$name")
                 return null
             }
 
