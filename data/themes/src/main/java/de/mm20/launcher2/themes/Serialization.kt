@@ -1,6 +1,7 @@
 package de.mm20.launcher2.themes
 
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
 import kotlinx.serialization.descriptors.SerialDescriptor
@@ -53,5 +54,9 @@ fun Theme.toJson(): String {
 }
 
 fun Theme.Companion.fromJson(json: String): Theme {
-    return ThemeJson.decodeFromString(json)
+    return try {
+        ThemeJson.decodeFromString(json)
+    } catch (e: SerializationException) {
+        throw IllegalArgumentException(e)
+    }
 }

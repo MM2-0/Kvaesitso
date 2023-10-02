@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
-            <meta-data android:name="android.app.shortcuts"
+            <meta-data
+                android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
 
         </activity>
@@ -62,9 +63,27 @@
                 android:value="de.mm20.launcher2.ui.launcher.SharedLauncherActivity" />
         </activity>
 
+        <activity android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity" />
+
         <activity
-            android:name=".launcher.sheets.BindAndConfigureAppWidgetActivity"
-             />
+            android:name=".launcher.ImportThemeActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:theme="@style/DialogTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/vnd.de.mm20.launcher2.theme" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="*"
+                    android:mimeType="*/*"
+                    android:pathSuffix="kvtheme" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

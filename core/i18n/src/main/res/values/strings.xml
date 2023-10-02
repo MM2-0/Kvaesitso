@@ -24,6 +24,7 @@
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="msg_item_hidden">%1$s has been hidden.</string>
     <string name="action_undo">Undo</string>
+    <string name="action_import">Import</string>
     <!-- Delete something (a file or a web search shortcut) -->
     <string name="menu_delete">Delete</string>
     <string name="menu_remove">Remove</string>
@@ -839,4 +840,5 @@
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="theme_color_scheme_custom_color">Custom</string>
     <string name="preference_restore_default">Restore default</string>
+    <string name="import_theme_apply">Apply theme</string>
 </resources>
