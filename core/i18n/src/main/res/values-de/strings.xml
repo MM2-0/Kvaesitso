@@ -652,4 +652,6 @@
     <string name="preference_custom_colors_corepalette">Farbpalette</string>
     <string name="action_import">Importieren</string>
     <string name="file_type_launchertheme">%1$s-Design</string>
+    <string name="import_theme_apply">Design anwenden</string>
+    <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
 </resources>
