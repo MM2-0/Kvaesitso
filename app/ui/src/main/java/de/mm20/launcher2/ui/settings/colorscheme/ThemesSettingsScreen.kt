@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.colorscheme
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -46,6 +47,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.common.ImportThemeSheet
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -65,8 +67,10 @@ fun ThemesSettingsScreen() {
 
     var deleteTheme by remember { mutableStateOf<Theme?>(null) }
 
+    var importThemeUri by remember { mutableStateOf<Uri?>(null) }
+
     val importIntentLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) {
-        viewModel.importTheme(context, it)
+        importThemeUri = it
     }
 
     PreferenceScreen(
@@ -187,6 +191,10 @@ fun ThemesSettingsScreen() {
                 }
             }
         )
+    }
+
+    if (importThemeUri != null) {
+        ImportThemeSheet(uri = importThemeUri!!, onDismiss = { importThemeUri = null })
     }
 }
 

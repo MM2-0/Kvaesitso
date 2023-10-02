@@ -88,16 +88,6 @@ class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    fun importTheme(context: Context, uri: Uri?) {
-        uri ?: return
-        viewModelScope.launch(Dispatchers.IO) {
-            context.contentResolver.openInputStream(uri)?.use {
-                val theme = Theme.fromJson(it.readBytes().toString(Charsets.UTF_8))
-                themeRepository.createTheme(theme.copy(id = UUID.randomUUID()))
-            }
-        }
-    }
-
     fun createNew(context: Context) {
         themeRepository.createTheme(
             Theme(

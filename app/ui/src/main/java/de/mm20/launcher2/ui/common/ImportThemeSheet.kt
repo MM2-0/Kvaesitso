@@ -99,10 +99,12 @@ fun ImportThemeSheet(
                 modifier = Modifier
                     .padding(it)
                     .fillMaxWidth()
+                    .aspectRatio(1f),
+                contentAlignment = Alignment.Center
             ) {
                 LargeMessage(
                     icon = Icons.Rounded.ErrorOutline,
-                    text = "Theme could not be read. Is the file corrupted?"
+                    text = stringResource(R.string.import_theme_error),
                 )
             }
         } else {
