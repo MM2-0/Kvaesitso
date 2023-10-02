@@ -1,13 +1,18 @@
 package de.mm20.launcher2.ui.settings.log
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowDownward
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Info
@@ -16,6 +21,8 @@ import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,12 +52,15 @@ import java.util.regex.Pattern
 @Composable
 fun LogScreen() {
     var lines by remember { mutableStateOf(emptyList<LogcatLine>()) }
+    val listState = rememberLazyListState()
+
     LaunchedEffect(null) {
         val process = Runtime.getRuntime().exec("/system/bin/logcat -v time")
 
         val pattern = Pattern.compile(
             "^(\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3})\\s+" +  /* timestamp [1] */
-                    "(\\w)/(.+?)\\(\\s*(\\d+)\\): (.*)$")  /* level, tag, pid, msg [2-5] */
+                    "(\\w)/(.+?)\\(\\s*(\\d+)\\): (.*)$"
+        )  /* level, tag, pid, msg [2-5] */
 
         launch(Dispatchers.IO) {
             val inputStream = process.inputStream.bufferedReader()
@@ -108,31 +118,56 @@ fun LogScreen() {
             }) {
                 Icon(Icons.Rounded.Share, contentDescription = null)
             }
-        }
+        },
+        floatingActionButton = {
+            AnimatedVisibility(
+                listState.canScrollForward,
+                enter = scaleIn(),
+                exit = scaleOut(),
+            ) {
+                SmallFloatingActionButton(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                    onClick = {
+                    scope.launch {
+                        listState.animateScrollToItem(lines.lastIndex)
+                    }
+                }) {
+                    Icon(Icons.Rounded.ArrowDownward, null)
+                }
+            }
+        },
+        lazyColumnState = listState,
     ) {
         items(lines) {
             if (it is RawLogcatLine) {
-                Text(modifier = Modifier.padding(16.dp), text = it.line ?: "", style = MaterialTheme.typography.bodySmall)
+                Text(
+                    modifier = Modifier.padding(16.dp),
+                    text = it.line ?: "",
+                    style = MaterialTheme.typography.bodySmall
+                )
             } else if (it is FormattedLogcatLine) {
-                val contentColor = when(it.level) {
+                val contentColor = when (it.level) {
                     "E" -> MaterialTheme.colorScheme.onErrorContainer
                     "W" -> MaterialTheme.colorScheme.onPrimaryContainer
                     "D" -> MaterialTheme.colorScheme.onSurfaceVariant
                     else -> MaterialTheme.colorScheme.onSurface
                 }
-                val bgColor = when(it.level) {
+                val bgColor = when (it.level) {
                     "E" -> MaterialTheme.colorScheme.errorContainer
                     "W" -> MaterialTheme.colorScheme.primaryContainer
                     "D" -> MaterialTheme.colorScheme.surfaceVariant
                     else -> MaterialTheme.colorScheme.surface
                 }
-                Column(modifier = Modifier
-                    .fillMaxWidth()
-                    .background(bgColor)
-                    .padding(16.dp)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(bgColor)
+                        .padding(16.dp)
+                ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            when(it.level) {
+                            when (it.level) {
                                 "E" -> Icons.Rounded.Error
                                 "W" -> Icons.Rounded.Warning
                                 "D" -> Icons.Rounded.BugReport
@@ -169,4 +204,4 @@ data class FormattedLogcatLine(
     val message: String,
 ) : LogcatLine
 
-data class RawLogcatLine(val line: String): LogcatLine
+data class RawLogcatLine(val line: String) : LogcatLine

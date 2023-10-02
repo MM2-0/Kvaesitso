@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.HelpOutline
@@ -48,6 +50,7 @@ fun PreferenceScreen(
     floatingActionButton: @Composable () -> Unit = {},
     topBarActions: @Composable RowScope.() -> Unit = {},
     helpUrl: String? = null,
+    lazyColumnState: LazyListState = rememberLazyListState(),
     content: LazyListScope.() -> Unit,
 ) {
     PreferenceScreen(
@@ -62,6 +65,7 @@ fun PreferenceScreen(
         floatingActionButton = floatingActionButton,
         topBarActions = topBarActions,
         helpUrl = helpUrl,
+        lazyColumnState = lazyColumnState,
         content = content
     )
 }
@@ -72,6 +76,7 @@ fun PreferenceScreen(
     floatingActionButton: @Composable () -> Unit = {},
     topBarActions: @Composable RowScope.() -> Unit = {},
     helpUrl: String? = null,
+    lazyColumnState: LazyListState = rememberLazyListState(),
     content: LazyListScope.() -> Unit,
 ) {
     val navController = LocalNavController.current
@@ -149,6 +154,7 @@ fun PreferenceScreen(
                 .fillMaxSize()
                 .nestedScroll(nestedScrollConnection)
                 .padding(it),
+            state = lazyColumnState,
             content = content,
         )
     }
