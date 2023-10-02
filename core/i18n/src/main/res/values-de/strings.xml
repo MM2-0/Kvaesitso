@@ -654,4 +654,5 @@
     <string name="file_type_launchertheme">%1$s-Design</string>
     <string name="import_theme_apply">Design anwenden</string>
     <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
+    <string name="import_theme_error">Die ausgewählte Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass sie eine gültige Design-Datei (*.kvtheme) ausgewählt haben, und dass die Datei nicht beschädigt ist.</string>
 </resources>
