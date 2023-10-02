@@ -650,4 +650,5 @@
     <string name="edit">Bewerken</string>
     <string name="preference_restore_default">Standaard terugzetten</string>
     <string name="preference_custom_colors_corepalette">Kleurenpalet</string>
+    <string name="preference_blur_wallpaper_radius">Vervagingsstraal</string>
 </resources>
