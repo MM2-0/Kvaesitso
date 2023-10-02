@@ -49,6 +49,8 @@ interface File : SavableSearchable {
                 "application/vnd.android.package-archive" -> R.drawable.ic_file_android to R.color.lightgreen
                 "application/vnd.google-apps.form" -> R.drawable.ic_file_form to R.color.deeppurple
                 "application/vnd.google-apps.drawing" -> R.drawable.ic_file_picture to R.color.teal
+                "application/vnd.de.mm20.launcher2.backup" -> R.drawable.ic_file_backup to R.color.brown
+                "application/vnd.de.mm20.launcher2.theme" -> R.drawable.ic_file_theme to R.color.amber
                 else -> R.drawable.ic_file_generic to R.color.bluegrey
             }
         }
@@ -64,9 +66,15 @@ interface File : SavableSearchable {
 
     fun getFileType(context: Context): String {
         if (isDirectory) return context.getString(R.string.file_type_directory)
-        if (mimeType == "application/vendor.de.mm20.launcher2.backup") {
+        if (mimeType == "application/vnd.de.mm20.launcher2.backup") {
             return context.getString(
                 R.string.file_type_launcherbackup,
+                context.getString(R.string.app_name)
+            )
+        }
+        if (mimeType == "application/vnd.de.mm20.launcher2.theme") {
+            return context.getString(
+                R.string.file_type_launchertheme,
                 context.getString(R.string.app_name)
             )
         }
@@ -118,10 +126,6 @@ interface File : SavableSearchable {
         }
         if (resource == R.string.file_type_none && label.matches(Regex(".+\\..+"))) {
             val extension = label.substringAfterLast(".").uppercase(Locale.getDefault())
-            if (extension == "kvaesitso") return context.getString(
-                R.string.file_type_launcherbackup,
-                context.getString(R.string.app_name)
-            )
             return context.getString(R.string.file_type_generic, extension)
         }
         return context.getString(resource)

@@ -42,7 +42,7 @@ fun CreateBackupSheet(
 
 
     val backupLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument("application/vendor.de.mm20.launcher2.backup"),
+        contract = ActivityResultContracts.CreateDocument("application/vnd.de.mm20.launcher2.backup"),
         onResult = {
             if (it != null) viewModel.createBackup(it)
         }

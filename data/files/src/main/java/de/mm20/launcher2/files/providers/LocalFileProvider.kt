@@ -44,7 +44,7 @@ internal class LocalFileProvider(
             val path = cursor.getString(3)
             if (!java.io.File(path).exists()) continue
             val directory = java.io.File(path).isDirectory
-            val mimeType = (cursor.getStringOrNull(4)
+            val mimeType = (cursor.getStringOrNull(4).takeIf { it != "application/octet-stream" }
                 ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
                     path.substringAfterLast(
                         '.'

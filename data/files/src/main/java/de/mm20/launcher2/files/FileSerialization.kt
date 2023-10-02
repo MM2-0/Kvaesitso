@@ -51,7 +51,7 @@ class LocalFileDeserializer(
             if (!java.io.File(path).exists()) return null
             val directory = java.io.File(path).isDirectory
             val id = cursor.getLong(0)
-            val mimeType = cursor.getStringOrNull(3)
+            val mimeType = cursor.getStringOrNull(3).takeIf { it != "application/octet-stream" }
                 ?: if (directory) "resource/folder" else LocalFile.getMimetypeByFileExtension(
                     path.substringAfterLast(
                         '.'

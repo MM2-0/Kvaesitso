@@ -145,6 +145,8 @@
     <string name="file_type_form">Form</string>
     <!-- Launcher backup, %1$s: app name -->
     <string name="file_type_launcherbackup">%1$s backup</string>
+    <!-- Launcher backup, %1$s: app name -->
+    <string name="file_type_launchertheme">%1$s theme</string>
     <!-- Generic file , %1$s is the file extension -->
     <string name="file_type_generic">%1$s file</string>
     <!-- Warning message that is shown when a user attempts to delete a directory -->
