@@ -650,4 +650,6 @@
     <string name="preference_charging_animation">Ladeanimation</string>
     <string name="preference_charging_animation_summary">Eine Blasen-Animation abspielen während das Gerät lädt</string>
     <string name="preference_custom_colors_corepalette">Farbpalette</string>
+    <string name="action_import">Importieren</string>
+    <string name="file_type_launchertheme">%1$s-Design</string>
 </resources>
