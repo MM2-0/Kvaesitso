@@ -75,14 +75,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="application/vnd.de.mm20.launcher2.theme" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data
-                    android:host="*"
-                    android:mimeType="*/*"
-                    android:pathSuffix="kvtheme" />
-            </intent-filter>
         </activity>
     </application>
 
