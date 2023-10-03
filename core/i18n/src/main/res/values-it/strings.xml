@@ -656,4 +656,8 @@
     <string name="confirmation_delete_color_scheme">Vuoi davvero eliminare la combinazione di colori %1$s\?</string>
     <string name="preference_restore_default">Ripristino predefinito</string>
     <string name="preference_blur_wallpaper_radius">Raggio sfocatura</string>
+    <string name="file_type_launchertheme">Tema %1$s</string>
+    <string name="import_theme_error">Impossibile leggere il file selezionato. Assicurati di aver selezionato un file del tema valido (*.kvtheme) e che il file non sia danneggiato.</string>
+    <string name="action_import">Importa</string>
+    <string name="import_theme_apply">Applica tema</string>
 </resources>
