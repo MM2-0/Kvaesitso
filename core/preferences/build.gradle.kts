@@ -1,18 +1,17 @@
 import com.google.protobuf.gradle.*
 
 plugins {
-    id("com.android.library")
-    id("kotlin-android")
-    id("com.google.protobuf")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.protobuf)
 }
 
 android {
-    compileSdk = sdk.versions.compileSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        minSdk = sdk.versions.minSdk.get().toInt()
-        targetSdk = sdk.versions.targetSdk.get().toInt()
-
+        minSdk = libs.versions.minSdk.get().toInt()
+        
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -39,7 +38,7 @@ android {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:${libs.versions.protobuf.get()}"
+        artifact = libs.protobuf.protoc.get().toString()
     }
 
     // Generates the java Protobuf-lite code for the Protobufs in this project. See

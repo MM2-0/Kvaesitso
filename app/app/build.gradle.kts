@@ -3,8 +3,8 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 plugins {
-    id("com.android.application")
-    id("kotlin-android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -25,11 +25,11 @@ android {
         resources.excludes.add("META-INF/NOTICE.md")
     }
 
-    compileSdk = sdk.versions.compileSdk.get().toInt()
+    compileSdk = libs.versions.compileSdk.get().toInt()
     defaultConfig {
         applicationId = "de.mm20.launcher2"
-        minSdk = sdk.versions.minSdk.get().toInt()
-        targetSdk = sdk.versions.targetSdk.get().toInt()
+        minSdk = libs.versions.minSdk.get().toInt()
+        targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
         versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2023090800
         versionName = "1.27.1"

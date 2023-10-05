@@ -58,6 +58,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -286,6 +287,7 @@ fun PullDownScaffold(
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val gestureManager = LocalGestureDetector.current
+    val hapticFeedback = LocalHapticFeedback.current
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
