@@ -137,6 +137,8 @@ internal class WeatherRepositoryImpl(
                     providerSetting = it
                 }
             }
+        }
+        scope.launch {
             hasLocationPermission.collectLatest {
                 if (it) requestUpdate()
             }
