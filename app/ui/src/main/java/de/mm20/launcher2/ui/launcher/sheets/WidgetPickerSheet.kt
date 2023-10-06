@@ -1,11 +1,13 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Process
 import android.util.Log
@@ -126,11 +128,25 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                 appWidgetId,
                 0,
                 RequestCodeConfigure,
-                null
+                getConfigurationOptions(),
             )
         } else {
             finishWithResult(appWidgetId)
         }
+    }
+
+    private fun getConfigurationOptions(): Bundle? {
+        if (Build.VERSION.SDK_INT < 34) {
+            return null
+        }
+        return ActivityOptions.makeBasic()
+            .setPendingIntentBackgroundActivityStartMode(
+                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+            )
+            .setPendingIntentCreatorBackgroundActivityStartMode(
+                ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+            )
+            .toBundle()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -138,7 +154,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
         when (requestCode) {
             RequestCodeBind -> {
                 val appWidgetId =
-                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return
+                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return cancel()
                 if (resultCode == RESULT_OK) {
                     val widget = appWidgetManager.getAppWidgetInfo(appWidgetId)
                     configureAppWidget(widget, appWidgetId)
@@ -159,6 +175,10 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                     Log.w("MM20", "Widget configuration was canceled, widget will not be added")
                     cancel()
                 }
+            }
+            else -> {
+                Log.w("MM20", "Unknown request code $requestCode")
+                cancel()
             }
         }
     }
