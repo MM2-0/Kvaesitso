@@ -436,4 +436,12 @@
     <string name="preference_blur_wallpaper_summary">Gunakan efek buram pada wallpaper</string>
     <string name="preference_search_favorites_summary">Tampilkan item tersemat dan yang paling sering digunakan di atas daftar aplikasi</string>
     <string name="preference_search_files_summary">Cari berkas-berkas lokal dan cloud</string>
+    <string name="file_type_launchertheme">%1$s tema</string>
+    <string name="file_type_source_code">Dokumen kode sumber</string>
+    <string name="file_type_spreadsheet">Lembar kerja</string>
+    <string name="file_type_ebook">Buku elektronik</string>
+    <string name="file_type_launcherbackup">%1$s cadangan</string>
+    <string name="file_type_drawing">Gambar</string>
+    <string name="websearch_dialog_url_description">\'${1}\' akan diganti dengan kata kunci pencarian.</string>
+    <string name="action_import">Impor</string>
 </resources>
