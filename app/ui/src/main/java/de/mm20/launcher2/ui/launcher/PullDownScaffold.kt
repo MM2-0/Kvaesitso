@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Spring
@@ -52,6 +53,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
@@ -109,6 +111,10 @@ fun PullDownScaffold(
 
     val pagerState = rememberPagerState { 2 }
 
+    val offsetY = remember { mutableStateOf(0f) }
+    val maxOffset = with(density) { 64.dp.toPx() }
+    val toggleSearchThreshold = with(density) { 48.dp.toPx() }
+
     val isSearchAtTop by remember {
         derivedStateOf {
             if (reverseSearchResults) {
@@ -132,6 +138,12 @@ fun PullDownScaffold(
                         ?: return@derivedStateOf true
                 lastItem.offset + lastItem.size <= searchState.layoutInfo.viewportEndOffset - searchState.layoutInfo.afterContentPadding
             }
+        }
+    }
+
+    val isOverThreshold by remember {
+        derivedStateOf {
+            offsetY.value.absoluteValue > toggleSearchThreshold
         }
     }
 
@@ -202,11 +214,6 @@ fun PullDownScaffold(
         }
     }
 
-    val offsetY = remember { mutableStateOf(0f) }
-
-    val maxOffset = with(density) { 64.dp.toPx() }
-    val toggleSearchThreshold = with(density) { 48.dp.toPx() }
-
     val searchBarOffset = remember { mutableStateOf(0f) }
 
     val maxSearchBarOffset = with(density) { 128.dp.toPx() }
@@ -216,7 +223,7 @@ fun PullDownScaffold(
 
     val blurWallpaper by remember {
         derivedStateOf {
-            blurEnabled && (isSearchOpen || offsetY.value > toggleSearchThreshold || widgetsScrollState.value > 0)
+            blurEnabled && (isSearchOpen || isOverThreshold || widgetsScrollState.value > 0)
         }
     }
 
@@ -288,6 +295,14 @@ fun PullDownScaffold(
     val keyboardController = LocalSoftwareKeyboardController.current
     val gestureManager = LocalGestureDetector.current
     val hapticFeedback = LocalHapticFeedback.current
+
+    LaunchedEffect(isOverThreshold) {
+        if (isOverThreshold) {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
+        } else {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+        }
+    }
 
     val nestedScrollConnection = remember {
         object : NestedScrollConnection {
