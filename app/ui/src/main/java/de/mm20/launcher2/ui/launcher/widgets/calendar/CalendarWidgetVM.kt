@@ -171,6 +171,7 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
                 searchableRepository.getKeys(
                     includeTypes = listOf(CalendarEvent.Domain),
                     hidden = true,
+                    limit = 9999,
                 ).collectLatest { hidden ->
                     upcomingEvents = events.filter { !hidden.contains(it.key) }
                 }

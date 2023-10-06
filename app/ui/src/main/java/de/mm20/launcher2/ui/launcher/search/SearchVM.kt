@@ -76,6 +76,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val hiddenItemKeys = searchableRepository
         .getKeys(
             hidden = true,
+            limit = 9999,
         )
         .shareIn(viewModelScope, SharingStarted.Eagerly, replay = 1)
 
