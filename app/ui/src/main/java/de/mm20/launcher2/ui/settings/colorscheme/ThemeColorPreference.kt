@@ -107,7 +107,7 @@ fun ThemeColorPreference(
                             currentValue = defaultValue
                         },
                         icon = {
-                            SegmentedButtonDefaults.SegmentedButtonIcon(
+                            SegmentedButtonDefaults.Icon(
                                 active = actualValue is ColorRef,
                             ) {
                                 Icon(
@@ -118,7 +118,7 @@ fun ThemeColorPreference(
                                 )
                             }
                         },
-                        shape = SegmentedButtonDefaults.shape(position = 0, count = 2)
+                        shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2)
                     ) {
                         Text(stringResource(R.string.theme_color_scheme_palette_color))
                     }
@@ -128,7 +128,7 @@ fun ThemeColorPreference(
                             currentValue = StaticColor(actualValue.get(corePalette))
                         },
                         icon = {
-                            SegmentedButtonDefaults.SegmentedButtonIcon(
+                            SegmentedButtonDefaults.Icon(
                                 active = actualValue is StaticColor,
                             ) {
                                 Icon(
@@ -139,7 +139,7 @@ fun ThemeColorPreference(
                                 )
                             }
                         },
-                        shape = SegmentedButtonDefaults.shape(position = 1, count = 2)
+                        shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2)
                     ) {
                         Text(stringResource(R.string.theme_color_scheme_custom_color))
                     }

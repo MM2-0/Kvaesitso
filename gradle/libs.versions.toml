@@ -15,20 +15,20 @@ kotlinx-serialization = "1.5.1"
 
 jetbrains-markdown = "0.4.1"
 
-androidx-compose = "1.6.0-alpha04"
-androidx-compose-material3 = "1.2.0-alpha06"
+androidx-compose = "1.6.0-alpha07"
+androidx-compose-material3 = "1.2.0-alpha09"
 androidx-compose-compiler = "1.5.2"
-androidx-lifecycle = "2.6.1"
-androidx-core = "1.9.0"
+androidx-lifecycle = "2.6.2"
+androidx-core = "1.12.0"
 androidx-appcompat = "1.7.0-alpha03"
-androidx-activity = "1.8.0-alpha06"
-androidx-work = "2.8.0-alpha04"
-androidx-browser = "1.4.0"
+androidx-activity = "1.8.0"
+androidx-work = "2.8.1"
+androidx-browser = "1.6.0"
 androidx-palette = "1.0.0"
 androidx-media2 = "1.2.1"
-androidx-room = "2.5.0"
+androidx-room = "2.5.2"
 
-accompanist = "0.31.2-alpha"
+accompanist = "0.33.2-alpha"
 coil = "2.3.0"
 koin = "3.2.0"
 protobuf = "3.14.0"
@@ -79,7 +79,6 @@ androidx-browser = { group = "androidx.browser", name = "browser", version.ref =
 androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "androidx-palette" }
 androidx-media2 = { group = "androidx.media2", name = "media2-session", version.ref = "androidx-media2" }
 
-accompanist-insets = { group = "com.google.accompanist", name = "accompanist-insets", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
 accompanist-pagerindicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }

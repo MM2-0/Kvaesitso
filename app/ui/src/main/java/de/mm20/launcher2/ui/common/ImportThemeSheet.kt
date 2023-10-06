@@ -160,14 +160,14 @@ fun ThemePreview(
             )
             SingleChoiceSegmentedButtonRow {
                 SegmentedButton(
-                    shape = SegmentedButtonDefaults.shape(position = 0, count = 2),
+                    shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
                     selected = !darkTheme,
                     onClick = { darkTheme = false }
                 ) {
                     Icon(Icons.Rounded.LightMode, null)
                 }
                 SegmentedButton(
-                    shape = SegmentedButtonDefaults.shape(position = 1, count = 2),
+                    shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                     selected = darkTheme,
                     onClick = { darkTheme = true }
                 ) {

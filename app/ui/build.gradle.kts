@@ -85,7 +85,6 @@ dependencies {
     // Legacy dependencies
     implementation(libs.androidx.transition)
 
-    implementation(libs.accompanist.insets)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.accompanist.pager)
     implementation(libs.accompanist.pagerindicators)
