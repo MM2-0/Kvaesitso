@@ -8,6 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Process
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.compose.animation.animateColorAsState
@@ -84,6 +85,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
             ExtraAppWidgetProviderInfo
         )
         if (appWidgetProviderInfo == null) {
+            Log.e("MM20", "No app widget provider info provided, canceling")
             finish()
             return
         }
@@ -141,6 +143,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                     val widget = appWidgetManager.getAppWidgetInfo(appWidgetId)
                     configureAppWidget(widget, appWidgetId)
                 } else {
+                    Log.w("MM20", "Widget binding was canceled, widget will not be added")
                     appWidgetHost.deleteAppWidgetId(appWidgetId)
                     cancel()
                 }
@@ -153,6 +156,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
                     finishWithResult(appWidgetId)
                 } else {
                     appWidgetHost.deleteAppWidgetId(appWidgetId)
+                    Log.w("MM20", "Widget configuration was canceled, widget will not be added")
                     cancel()
                 }
             }
