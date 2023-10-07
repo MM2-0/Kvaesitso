@@ -63,6 +63,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.Velocity
@@ -295,12 +296,13 @@ fun PullDownScaffold(
     val keyboardController = LocalSoftwareKeyboardController.current
     val gestureManager = LocalGestureDetector.current
     val hapticFeedback = LocalHapticFeedback.current
+    val view = LocalView.current
 
     LaunchedEffect(isOverThreshold) {
         if (isOverThreshold) {
-            hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-        } else {
-            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY)
+        } else if (offsetY.value != 0f) {
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY_RELEASE)
         }
     }
 
