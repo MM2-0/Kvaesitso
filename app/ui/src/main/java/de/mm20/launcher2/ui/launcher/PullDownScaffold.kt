@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.app.WallpaperManager
 import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -49,6 +50,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -86,6 +88,7 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
+import kotlin.math.min
 import kotlin.math.roundToInt
 
 @Composable
@@ -101,6 +104,7 @@ fun PullDownScaffold(
     val searchVM: SearchVM = viewModel()
 
     val density = LocalDensity.current
+    val context = LocalContext.current
 
     val actions by searchVM.searchActionResults
 
@@ -145,6 +149,12 @@ fun PullDownScaffold(
     val isOverThreshold by remember {
         derivedStateOf {
             offsetY.value.absoluteValue > toggleSearchThreshold
+        }
+    }
+
+    val dragProgress by remember {
+        derivedStateOf {
+            (offsetY.value.absoluteValue / toggleSearchThreshold).coerceAtMost(1f)
         }
     }
 
@@ -379,7 +389,6 @@ fun PullDownScaffold(
                     }
                 )
             }
-            //.nestedScroll(nestedScrollConnection)
             .offset { IntOffset(0, offsetY.value.toInt()) },
         contentAlignment = Alignment.TopCenter
     ) {
@@ -428,6 +437,8 @@ fun PullDownScaffold(
                                             pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         transformOrigin = TransformOrigin.Center
                                         alpha = 1 - progress
+                                        scaleX = 1f - (dragProgress * 0.05f)
+                                        scaleY = 1f - (dragProgress * 0.05f)
                                     }
                                     .pointerInput(gestureManager.shouldDetectDoubleTaps) {
                                         detectTapGestures(
@@ -493,7 +504,9 @@ fun PullDownScaffold(
                                         val progress =
                                             pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         transformOrigin = TransformOrigin.Center
-                                        alpha = progress
+                                        alpha = min(progress, 1f - dragProgress * 0.1f)
+                                        scaleX = min(1f - (dragProgress * 0.05f), 1f - (1f - progress) * 0.1f)
+                                        scaleY = min(1f - (dragProgress * 0.05f),1f - (1f - progress) * 0.1f)
                                     }
                                     .fillMaxSize()
                                     .padding(
@@ -559,8 +572,6 @@ fun PullDownScaffold(
 
         val searchBarColor by viewModel.searchBarColor.collectAsState()
         val searchBarStyle by viewModel.searchBarStyle.collectAsState()
-
-        val context = LocalContext.current
 
         val launchOnEnter by searchVM.launchOnEnter.collectAsState(false)
 
