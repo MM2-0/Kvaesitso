@@ -75,6 +75,9 @@ fun WatchFaceSelector(
             val styles = remember {
                 sortedMapOf(
                     ClockStyle.DigitalClock1 to 0,
+                    ClockStyle.DigitalClock1_Outlined to 0,
+                    ClockStyle.DigitalClock1_MDY to 0,
+                    ClockStyle.DigitalClock1_OnePlus to 0,
                     ClockStyle.DigitalClock2 to 1,
                     ClockStyle.AnalogClock to 2,
                     ClockStyle.OrbitClock to 3,
@@ -252,7 +255,10 @@ fun WatchFaceSelector(
 
 fun getClockstyleName(context: Context, style: ClockStyle): String {
     return when (style) {
-        ClockStyle.DigitalClock1 -> "Bold"
+        ClockStyle.DigitalClock1,
+        ClockStyle.DigitalClock1_Outlined,
+        ClockStyle.DigitalClock1_MDY,
+        ClockStyle.DigitalClock1_OnePlus -> "Bold"
         ClockStyle.DigitalClock2 -> "Simple"
         ClockStyle.OrbitClock -> "Orbit"
         ClockStyle.BinaryClock -> "Binary"
@@ -270,6 +276,9 @@ fun getVariantName(context: Context, style: ClockStyle): String {
         ClockStyle.BinaryClock,
         ClockStyle.AnalogClock,
         ClockStyle.EmptyClock -> "Standard"
+        ClockStyle.DigitalClock1_Outlined -> "Outlined"
+        ClockStyle.DigitalClock1_MDY -> "Material You"
+        ClockStyle.DigitalClock1_OnePlus -> "OnePlus"
 
         ClockStyle.UNRECOGNIZED -> ""
     }

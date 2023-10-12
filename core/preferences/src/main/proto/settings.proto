@@ -126,6 +126,9 @@ message Settings {
       BinaryClock = 2;
       AnalogClock = 3;
       EmptyClock = 4;
+      DigitalClock1_MDY = 6;
+      DigitalClock1_Outlined = 7;
+      DigitalClock1_OnePlus = 8;
     }
     ClockStyle clock_style = 2;
     bool date_part = 3;
