@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
@@ -97,6 +98,15 @@ fun BottomSheetDialog(
                 it != SwipeState.Dismiss || dismissible()
             }
         )
+    }
+
+    BackHandler {
+        if (dismissible()) {
+            scope.launch {
+                draggableState.animateTo(SwipeState.Dismiss)
+                onDismissRequest()
+            }
+        }
     }
 
     LaunchedEffect(draggableState.currentValue) {
