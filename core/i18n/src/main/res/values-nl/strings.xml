@@ -651,4 +651,8 @@
     <string name="preference_restore_default">Standaard terugzetten</string>
     <string name="preference_custom_colors_corepalette">Kleurenpalet</string>
     <string name="preference_blur_wallpaper_radius">Vervagingsstraal</string>
+    <string name="file_type_launchertheme">%1$s thema</string>
+    <string name="import_theme_error">Kon het geselecteerde bestand niet lezen. Controleer of je een geldig themabestand (*.kvtheme) hebt geselecteerd en dat het bestand niet beschadigd is.</string>
+    <string name="action_import">Importeren</string>
+    <string name="import_theme_apply">Thema toepassen</string>
 </resources>

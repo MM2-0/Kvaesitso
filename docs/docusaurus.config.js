@@ -125,10 +125,6 @@ const config = {
                 label: 'Telegram',
                 href: 'https://t.me/Kvaesitso',
               },
-              {
-                label: 'LOS Legacy',
-                href: 'https://forum.los-legacy.de/forum/thread/12-app-launcher-kv%C3%A6sitso/',
-              },
             ],
           },
         ],

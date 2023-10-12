@@ -645,4 +645,9 @@
     <string name="note_widget_conflict">มีความขัดแย้งของข้อมูล</string>
     <string name="note_widget_conflict_description">ไฟล์ที่ถูกลิงก์มีข้อมูลอยู่แต่เนื้อหาของไฟล์ไม่ตรงกับเวอร์ชั่นล่าสุดที่ถูกบันทึกในโน้ตนี้ คุณต้องการเก็บเวอร์ชั่นใดไว้\?</string>
     <string name="confirmation_delete_color_scheme">คุณต้องการลบโทนสี %1$s จริงๆหรือไม่\?</string>
+    <string name="file_type_launchertheme">ธีม %1$s</string>
+    <string name="import_theme_error">ไม่สามารถอ่านไฟล์ที่เลือกไว้ได้ กรุณาตรวจสอบว่าคุณได้เลือกไฟล์ธีมที่ถูกต้อง (*.kvtheme) และข้อมูลไฟล์ไม่เสียหาย</string>
+    <string name="preference_blur_wallpaper_radius">ความมัว</string>
+    <string name="action_import">นำเข้า</string>
+    <string name="import_theme_apply">นำธีมไปใช้</string>
 </resources>
