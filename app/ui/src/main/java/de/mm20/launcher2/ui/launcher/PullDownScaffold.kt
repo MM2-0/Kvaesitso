@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher
 
-import android.app.WallpaperManager
 import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -50,15 +49,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -295,6 +291,7 @@ fun PullDownScaffold(
                 }
                 true
             }
+
             else -> false
         }
     }
@@ -469,20 +466,14 @@ fun PullDownScaffold(
                                     )
                                     .padding(top = editModePadding)
                             ) {
-                                AnimatedVisibility(!isWidgetEditMode) {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .then(clockHeight?.let { Modifier.height(it) }
-                                                ?: Modifier)
-                                            .padding(bottom = clockPadding),
-                                        contentAlignment = Alignment.BottomCenter
-                                    ) {
-                                        ClockWidget(
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
-                                    }
-                                }
+                                ClockWidget(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
+                                        .padding(bottom = clockPadding),
+                                    editMode = isWidgetEditMode,
+                                )
+
                                 WidgetColumn(
                                     modifier = Modifier.fillMaxWidth(),
                                     editMode = isWidgetEditMode,
@@ -505,8 +496,14 @@ fun PullDownScaffold(
                                             pagerState.currentPage + pagerState.currentPageOffsetFraction
                                         transformOrigin = TransformOrigin.Center
                                         alpha = min(progress, 1f - dragProgress * 0.1f)
-                                        scaleX = min(1f - (dragProgress * 0.05f), 1f - (1f - progress) * 0.1f)
-                                        scaleY = min(1f - (dragProgress * 0.05f),1f - (1f - progress) * 0.1f)
+                                        scaleX = min(
+                                            1f - (dragProgress * 0.05f),
+                                            1f - (1f - progress) * 0.1f
+                                        )
+                                        scaleY = min(
+                                            1f - (dragProgress * 0.05f),
+                                            1f - (1f - progress) * 0.1f
+                                        )
                                     }
                                     .fillMaxSize()
                                     .padding(

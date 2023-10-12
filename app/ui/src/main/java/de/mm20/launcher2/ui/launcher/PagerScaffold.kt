@@ -482,21 +482,13 @@ fun PagerScaffold(
                                     )
                                     .padding(top = editModePadding)
                             ) {
-
-                                AnimatedVisibility(!isWidgetEditMode) {
-                                    Box(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .then(clockHeight?.let { Modifier.height(it) }
-                                                ?: Modifier)
-                                            .padding(bottom = clockPadding),
-                                        contentAlignment = Alignment.BottomCenter
-                                    ) {
-                                        ClockWidget(
-                                            modifier = Modifier.fillMaxWidth()
-                                        )
-                                    }
-                                }
+                                ClockWidget(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
+                                        .padding(bottom = clockPadding),
+                                    editMode = isWidgetEditMode,
+                                )
 
                                 WidgetColumn(
                                     modifier = Modifier.fillMaxWidth(),
