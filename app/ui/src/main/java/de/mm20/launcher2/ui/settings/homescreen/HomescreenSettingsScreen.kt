@@ -36,6 +36,7 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.launcher.widgets.clock.ConfigureClockWidgetSheet
 import de.mm20.launcher2.ui.locals.LocalNavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -85,7 +86,7 @@ fun HomescreenSettingsScreen() {
                     title = stringResource(R.string.preference_screen_clockwidget),
                     summary = stringResource(R.string.preference_screen_clockwidget_summary),
                     onClick = {
-                        navController?.navigate("settings/homescreen/clock")
+                        viewModel.showClockWidgetSheet = true
                     }
                 )
                 SwitchPreference(
@@ -243,6 +244,10 @@ fun HomescreenSettingsScreen() {
                 )
             }
         }
+    }
+
+    if (viewModel.showClockWidgetSheet) {
+        ConfigureClockWidgetSheet(onDismiss = { viewModel.showClockWidgetSheet = false })
     }
 }
 

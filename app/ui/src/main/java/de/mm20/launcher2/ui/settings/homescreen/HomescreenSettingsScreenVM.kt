@@ -4,6 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,6 +25,8 @@ import org.koin.core.component.get
 class HomescreenSettingsScreenVM(
     private val dataStore: LauncherDataStore,
 ) : ViewModel() {
+
+    var showClockWidgetSheet by mutableStateOf(false)
 
 
     val dimWallpaper = dataStore.data.map { it.appearance.dimWallpaper }
