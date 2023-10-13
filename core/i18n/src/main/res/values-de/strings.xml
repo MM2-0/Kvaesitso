@@ -655,4 +655,10 @@
     <string name="import_theme_apply">Design anwenden</string>
     <string name="preference_blur_wallpaper_radius">Blur-Radius</string>
     <string name="import_theme_error">Die ausgewählte Datei konnte nicht gelesen werden. Bitte stellen Sie sicher, dass sie eine gültige Design-Datei (*.kvtheme) ausgewählt haben, und dass die Datei nicht beschädigt ist.</string>
+    <string name="preference_clock_widget_alignment">Ausrichtung</string>
+    <string name="preference_clock_widget_alignment_top">Oben</string>
+    <string name="preference_clock_widget_alignment_center">Mitte</string>
+    <string name="preference_clock_widget_alignment_bottom">Unten</string>
+    <string name="shortcut_label_unavailable">Nicht verfügbar</string>
+    <string name="shortcut_unavailable_description">Diese Verknüpfung ist nicht verfügbar, weil %1$s nicht die Standard-Start-App ist</string>
 </resources>
