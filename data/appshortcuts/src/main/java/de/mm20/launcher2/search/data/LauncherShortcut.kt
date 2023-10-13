@@ -73,6 +73,8 @@ data class LauncherShortcut(
             return false
         } catch (e: ActivityNotFoundException) {
             return false
+        } catch (e: SecurityException) {
+            return false
         }
         return true
     }
