@@ -19,6 +19,7 @@ import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 
 /**
  * Represents a modern (Android O+) launcher shortcut
@@ -103,6 +104,9 @@ data class LauncherShortcut(
                     context.resources.displayMetrics.densityDpi
                 )
             } catch (e: SecurityException) {
+                CrashReporter.logException(e)
+                null
+            } catch (e: NullPointerException) {
                 CrashReporter.logException(e)
                 null
             }
