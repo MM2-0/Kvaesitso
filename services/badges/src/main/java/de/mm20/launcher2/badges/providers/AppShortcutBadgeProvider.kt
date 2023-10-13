@@ -7,6 +7,7 @@ import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.data.UnavailableShortcut
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -39,6 +40,19 @@ class AppShortcutBadgeProvider(
                 send(null)
                 return@channelFlow
             }
+            withContext(Dispatchers.IO) {
+                val icon = try {
+                    context.packageManager.getApplicationIcon(
+                        packageName
+                    )
+                } catch (e: PackageManager.NameNotFoundException) {
+                    return@withContext
+                }
+                val badge = Badge(icon = BadgeDrawable(context, icon))
+                send(badge)
+            }
+        } else if (searchable is UnavailableShortcut) {
+            val packageName = searchable.packageName
             withContext(Dispatchers.IO) {
                 val icon = try {
                     context.packageManager.getApplicationIcon(

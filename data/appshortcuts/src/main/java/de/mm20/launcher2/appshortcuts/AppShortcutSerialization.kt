@@ -13,6 +13,7 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
+import de.mm20.launcher2.search.data.UnavailableShortcut
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 
@@ -38,12 +39,16 @@ class LauncherShortcutDeserializer(
 
     override fun deserialize(serialized: String): SavableSearchable? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        if (!launcherApps.hasShortcutHostPermission()) return null
+
+        val json = JSONObject(serialized)
+        val packageName = json.getString("packagename")
+        val id = json.getString("id")
+        val userSerial = json.optLong("user")
+
+        if (!launcherApps.hasShortcutHostPermission()) {
+            return UnavailableShortcut(context, id, packageName, userSerial)
+        }
         else {
-            val json = JSONObject(serialized)
-            val packageName = json.getString("packagename")
-            val id = json.getString("id")
-            val userSerial = json.optLong("user")
             val query = LauncherApps.ShortcutQuery()
             query.setPackage(packageName)
             query.setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED or

@@ -4,6 +4,7 @@ package de.mm20.launcher2.ui.launcher.search.shortcut
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDp
@@ -55,9 +56,11 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.LauncherShortcut
 import de.mm20.launcher2.search.data.LegacyShortcut
+import de.mm20.launcher2.search.data.UnavailableShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
@@ -98,6 +101,15 @@ fun AppShortcutItem(
     Column(
         modifier = modifier
     ) {
+        AnimatedVisibility(showDetails && shortcut is UnavailableShortcut) {
+            MissingPermissionBanner(
+                modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
+                text = stringResource(R.string.shortcut_unavailable_description, stringResource(R.string.app_name)),
+                onClick = {
+                    viewModel.requestShortcutPermission(context as AppCompatActivity)
+                }
+            )
+        }
         Row {
             Column(
                 modifier = Modifier
@@ -154,7 +166,6 @@ fun AppShortcutItem(
 
 
         AnimatedVisibility(showDetails) {
-
             val toolbarActions = mutableListOf<ToolbarAction>()
 
             if (LocalFavoritesEnabled.current) {

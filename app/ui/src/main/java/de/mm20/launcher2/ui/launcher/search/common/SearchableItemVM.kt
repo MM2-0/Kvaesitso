@@ -18,6 +18,8 @@ import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.File
@@ -45,6 +47,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val fileRepository: FileRepository by inject()
+    private val permissionsManager: PermissionsManager by inject()
 
     private val searchable = MutableStateFlow<SavableSearchable?>(null)
     private val iconSize = MutableStateFlow<Int>(0)
@@ -153,5 +156,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable is File) fileRepository.deleteFile(searchable)
         if (searchable is LauncherShortcut) appShortcutRepository.removePinnedShortcut(searchable)
         favoritesService.reset(searchable)
+    }
+
+    fun requestShortcutPermission(activity: AppCompatActivity) {
+        permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 }
