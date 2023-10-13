@@ -1,0 +1,5 @@
+- Clock widget can now be configured from home screen, like every other widget
+- Added several new variants of the default watch face
+- Added preference to set clock widget vertical alignment
+- Fix adding widgets on Android 14
+- Other bug fixes and improvements
