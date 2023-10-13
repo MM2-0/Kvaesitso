@@ -121,12 +121,16 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
                     }
                 } ?: return@withContext
                 val themeRes = activityInfo.themeResource
-                val ctx = context.createPackageContext(
-                    searchable.`package`,
-                    Context.CONTEXT_IGNORE_SECURITY
-                )
-                ctx.setTheme(themeRes)
+                val ctx = try {
+                    context.createPackageContext(
+                        searchable.`package`,
+                        Context.CONTEXT_IGNORE_SECURITY
+                    )
+                } catch (e: PackageManager.NameNotFoundException) {
+                    return@withContext
+                }
 
+                ctx.setTheme(themeRes)
                 val theme = ctx.theme
 
                 val typedValue = TypedValue()
