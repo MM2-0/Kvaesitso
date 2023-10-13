@@ -422,7 +422,7 @@ fun ConfigureClockWidgetSheet(
                     AnimatedVisibility(fillHeight == true) {
                         var showDropdown by remember { mutableStateOf(false) }
                         Preference(
-                            title = "Alignment",
+                            title = stringResource(R.string.preference_clock_widget_alignment),
                             summary = when (alignment) {
                                 ClockWidgetAlignment.Top -> stringResource(R.string.preference_clock_widget_alignment_top)
                                 ClockWidgetAlignment.Center -> stringResource(R.string.preference_clock_widget_alignment_center)
