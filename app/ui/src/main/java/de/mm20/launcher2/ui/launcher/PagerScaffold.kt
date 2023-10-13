@@ -63,6 +63,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollDispatcher
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -74,6 +75,7 @@ import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.input.pointer.util.addPointerInputChange
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalViewConfiguration
@@ -117,6 +119,8 @@ fun PagerScaffold(
     val searchVM: SearchVM = viewModel()
 
     val context = LocalContext.current
+
+    val hapticFeedback = LocalHapticFeedback.current
 
     val isSearchOpen by viewModel.isSearchOpen
     val isWidgetEditMode by viewModel.isWidgetEditMode
@@ -233,6 +237,9 @@ fun PagerScaffold(
     LaunchedEffect(currentPage) {
         if (currentPage == 1) viewModel.openSearch()
         else viewModel.closeSearch()
+        if (pagerState.currentPageOffsetFraction != 0f) {
+            hapticFeedback.performHapticFeedback(HapticFeedbackType.TextHandleMove)
+        }
     }
 
     LaunchedEffect(isSearchOpen) {
