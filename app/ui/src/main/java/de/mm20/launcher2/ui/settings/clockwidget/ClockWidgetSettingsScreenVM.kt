@@ -140,4 +140,19 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
             }
         }
     }
+
+    val alignment = dataStore.data.map { it.clockWidget.alignment }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setAlignment(alignment: ClockWidgetSettings.ClockWidgetAlignment) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setClockWidget(
+                        it.clockWidget.toBuilder()
+                            .setAlignment(alignment)
+                    ).build()
+            }
+        }
+    }
 }

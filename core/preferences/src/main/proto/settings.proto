@@ -144,6 +144,13 @@ message Settings {
       Dark = 2;
     }
     ClockWidgetColors color = 9;
+
+    enum ClockWidgetAlignment {
+      Bottom = 0;
+      Center = 1;
+      Top = 2;
+    }
+    ClockWidgetAlignment alignment = 10;
   }
   ClockWidgetSettings clock_widget = 7;
 

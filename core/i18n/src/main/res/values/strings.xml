@@ -585,6 +585,10 @@
     <string name="preference_clock_widget_color">Color</string>
     <string name="preference_clock_widget_style">Style</string>
     <string name="preference_clock_widget_style_summary">Select a clock</string>
+    <string name="preference_clock_widget_alignment">Alignment</string>
+    <string name="preference_clock_widget_alignment_top">Top</string>
+    <string name="preference_clock_widget_alignment_center">Center</string>
+    <string name="preference_clock_widget_alignment_bottom">Bottom</string>
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
     <string name="preference_clockwidget_favorites_part">Favorites</string>

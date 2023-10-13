@@ -62,6 +62,9 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     val color = dataStore.data.map { it.clockWidget.color }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val alignment = dataStore.data.map { it.clockWidget.alignment }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun updateTime(time: Long) {
         partProviders.value.forEach { it.setTime(time) }
     }

@@ -49,6 +49,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setDatePart(true)
                 .setFavoritesPart(false)
                 .setFillHeight(true)
+                .setAlignment(Settings.ClockWidgetSettings.ClockWidgetAlignment.Bottom)
                 .build()
         )
         .setFavorites(

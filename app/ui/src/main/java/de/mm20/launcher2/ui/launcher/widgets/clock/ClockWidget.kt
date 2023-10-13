@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -19,6 +20,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Alarm
+import androidx.compose.material.icons.rounded.AlignVerticalBottom
+import androidx.compose.material.icons.rounded.AlignVerticalCenter
+import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
 import androidx.compose.material.icons.rounded.DarkMode
@@ -30,6 +34,8 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Today
 import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material.icons.rounded.VerticalSplit
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,12 +64,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
+import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
 import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
@@ -84,6 +93,7 @@ fun ClockWidget(
     val layout by viewModel.layout.collectAsState()
     val clockStyle by viewModel.clockStyle.collectAsState()
     val color by viewModel.color.collectAsState()
+    val alignment by viewModel.alignment.collectAsState()
     val time = LocalTime.current
 
     val contentColor =
@@ -146,7 +156,11 @@ fun ClockWidget(
         } else {
             Box(
                 modifier = modifier,
-                contentAlignment = Alignment.BottomCenter
+                contentAlignment = when (alignment) {
+                    ClockWidgetAlignment.Center -> Alignment.Center
+                    ClockWidgetAlignment.Top -> Alignment.TopCenter
+                    else -> Alignment.BottomCenter
+                }
             ) {
 
                 CompositionLocalProvider(
@@ -277,6 +291,7 @@ fun ConfigureClockWidgetSheet(
     val color by viewModel.color.collectAsState()
     val style by viewModel.clockStyle.collectAsState()
     val fillHeight by viewModel.fillHeight.collectAsState()
+    val alignment by viewModel.alignment.collectAsState()
 
     val date by viewModel.datePart.collectAsState()
     val favorites by viewModel.favoritesPart.collectAsState()
@@ -404,6 +419,66 @@ fun ConfigureClockWidgetSheet(
                             viewModel.setFillHeight(it)
                         }
                     )
+                    AnimatedVisibility(fillHeight == true) {
+                        var showDropdown by remember { mutableStateOf(false) }
+                        Preference(
+                            title = "Alignment",
+                            summary = when (alignment) {
+                                ClockWidgetAlignment.Top -> stringResource(R.string.preference_clock_widget_alignment_top)
+                                ClockWidgetAlignment.Center -> stringResource(R.string.preference_clock_widget_alignment_center)
+                                else -> stringResource(R.string.preference_clock_widget_alignment_bottom)
+                            },
+                            icon = when (alignment) {
+                                ClockWidgetAlignment.Top -> Icons.Rounded.AlignVerticalTop
+                                ClockWidgetAlignment.Center -> Icons.Rounded.AlignVerticalCenter
+                                else -> Icons.Rounded.AlignVerticalBottom
+                            },
+                            onClick = {
+                                showDropdown = true
+                            }
+                        )
+                        DropdownMenu(
+                            expanded = showDropdown,
+                            onDismissRequest = { showDropdown = false }) {
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.AlignVerticalTop,
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_top)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Top)
+                                    showDropdown = false
+                                }
+                            )
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.AlignVerticalCenter,
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_center)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Center)
+                                    showDropdown = false
+                                })
+                            DropdownMenuItem(
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.AlignVerticalBottom,
+                                        null
+                                    )
+                                },
+                                text = { Text(stringResource(R.string.preference_clock_widget_alignment_bottom)) },
+                                onClick = {
+                                    viewModel.setAlignment(ClockWidgetAlignment.Bottom)
+                                    showDropdown = false
+                                })
+                        }
+                    }
                 }
             }
             OutlinedCard(

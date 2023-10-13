@@ -8,5 +8,8 @@ class Migration_17_18 : VersionedMigration(17, 18) {
             .setAppearance(builder.appearance.toBuilder()
                 .setBlurWallpaperRadius(32)
             )
+            .setClockWidget(builder.clockWidget.toBuilder()
+                    .setAlignment(Settings.ClockWidgetSettings.ClockWidgetAlignment.Bottom)
+            )
     }
 }
