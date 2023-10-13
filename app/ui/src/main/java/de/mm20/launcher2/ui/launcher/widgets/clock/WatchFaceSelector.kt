@@ -217,7 +217,7 @@ fun WatchFaceSelector(
                         expanded = showStyleDropdown,
                         onDismissRequest = { showStyleDropdown = false }
                     ) {
-                        for (style in styles.entries.distinctBy { it.value }) {
+                        for (style in styles.entries.distinctBy { it.value }.sortedBy { it.value }) {
                             DropdownMenuItem(
                                 onClick = {
                                     scope.launch {
