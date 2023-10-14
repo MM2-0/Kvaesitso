@@ -660,4 +660,10 @@
     <string name="import_theme_error">Impossibile leggere il file selezionato. Assicurati di aver selezionato un file del tema valido (*.kvtheme) e che il file non sia danneggiato.</string>
     <string name="action_import">Importa</string>
     <string name="import_theme_apply">Applica tema</string>
+    <string name="preference_clock_widget_alignment">Allineamento</string>
+    <string name="preference_clock_widget_alignment_top">Alto</string>
+    <string name="preference_clock_widget_alignment_center">Centro</string>
+    <string name="preference_clock_widget_alignment_bottom">Basso</string>
+    <string name="shortcut_label_unavailable">Non disponibile</string>
+    <string name="shortcut_unavailable_description">Questa scorciatoia non è disponibile perché %1$s non è il launcher predefinito</string>
 </resources>
