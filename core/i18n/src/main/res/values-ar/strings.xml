@@ -213,4 +213,19 @@
     <string name="disclaimer_currency_converter">أسعار الصرف كما ينشرها البنك المركزي الأوروبي مرة واحدة في اليوم. يتم توفير جميع المعلومات \"كما هي\" دون أي نوع من الضمان. لا نتحمل أي مسؤولية عن هذه المعلومات.
 \n
 \nاخر تحديث: %1$s</string>
+    <string name="action_import">استيراد</string>
+    <string name="file_type_launchertheme">%1$s نمط</string>
+    <string name="weather_condition_lightrainshowersandthunder">زخات مطر خفيفة ورعد</string>
+    <string name="weather_condition_heavyrain">أمطار غزيرة</string>
+    <string name="weather_condition_fair">نزيه</string>
+    <string name="weather_condition_fog">ضباب</string>
+    <string name="weather_condition_heavysnowshowersandthunder">زخات مطر خفيفة ورعد</string>
+    <string name="weather_condition_snowshowers">زخات ثلجية</string>
+    <string name="weather_condition_heavyrainandthunder">أمطار غزيرة ورعد</string>
+    <string name="weather_condition_wind">ريح</string>
+    <string name="weather_condition_unknown">مجهول</string>
+    <string name="weather_widget_show_details">اظهر التفاصيل</string>
+    <string name="weather_condition_snowshowersandthunder">زخات ثلجية ورعد</string>
+    <string name="weather_details_humidity">الرطوبة: %1$s</string>
+    <string name="weather_widget_hide_details">إظهار التفاصيل</string>
 </resources>
