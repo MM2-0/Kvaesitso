@@ -1,2 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="unit_meter_symbol">متر</string>
+    <plurals name="unit_meter">
+        <item quantity="zero">متر</item>
+        <item quantity="one">متر</item>
+        <item quantity="two">متران</item>
+        <item quantity="few">أمتار</item>
+        <item quantity="many">أمتار</item>
+        <item quantity="other">أمتار</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">كلم</string>
+    <plurals name="unit_kilometer">
+        <item quantity="zero">كيلومتر</item>
+        <item quantity="one">كيلومتر</item>
+        <item quantity="two">كيلومتران</item>
+        <item quantity="few">كيلومترات</item>
+        <item quantity="many">كيلومترات</item>
+        <item quantity="other">كيلومترات</item>
+    </plurals>
+    <string name="unit_centimeter_symbol">سم</string>
+    <plurals name="unit_centimeter">
+        <item quantity="zero">سنتيمتر</item>
+        <item quantity="one">سنتيمتر</item>
+        <item quantity="two">سنتيمتران</item>
+        <item quantity="few">سنتيمترات</item>
+        <item quantity="many">سنتيمترات</item>
+        <item quantity="other">سنتيمترات</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">مم</string>
+    <plurals name="unit_millimeter">
+        <item quantity="zero">ميلمتر</item>
+        <item quantity="one">ميلمتر</item>
+        <item quantity="two">ميلمتران</item>
+        <item quantity="few">ميلمترات</item>
+        <item quantity="many">ميلمترات</item>
+        <item quantity="other">ميلمترات</item>
+    </plurals>
+    <string name="unit_inch_symbol">بوصة</string>
+    <plurals name="unit_inch">
+        <item quantity="zero">بوصة</item>
+        <item quantity="one">بوصة</item>
+        <item quantity="two">بوصة</item>
+        <item quantity="few">بوصات</item>
+        <item quantity="many">بوصات</item>
+        <item quantity="other">بوصات</item>
+    </plurals>
+    <string name="unit_foot_symbol">قدم</string>
+    <plurals name="unit_foot">
+        <item quantity="zero">قدم</item>
+        <item quantity="one">قدم</item>
+        <item quantity="two">قدمان</item>
+        <item quantity="few">أقدام</item>
+        <item quantity="many">أقدام</item>
+        <item quantity="other">أقدام</item>
+    </plurals>
+    <string name="unit_yard_symbol">ياردة</string>
+    <plurals name="unit_yard">
+        <item quantity="zero">ياردة</item>
+        <item quantity="one">ياردة</item>
+        <item quantity="two">ياردتان</item>
+        <item quantity="few">ياردات</item>
+        <item quantity="many">ياردات</item>
+        <item quantity="other">ياردات</item>
+    </plurals>
+    <string name="unit_mile_symbol">ميل</string>
+    <plurals name="unit_mile">
+        <item quantity="zero">ميل</item>
+        <item quantity="one">ميل</item>
+        <item quantity="two">ميلان</item>
+        <item quantity="few">أميال</item>
+        <item quantity="many">أميال</item>
+        <item quantity="other">أميال</item>
+    </plurals>
+    <string name="unit_nautic_mile_symbol">نم</string>
+    <plurals name="unit_nautic_mile">
+        <item quantity="zero">ميل بحري</item>
+        <item quantity="one">ميل بحري</item>
+        <item quantity="two">ميلان بحريان</item>
+        <item quantity="few">أميال بحرية</item>
+        <item quantity="many">أميال بحرية</item>
+        <item quantity="other">أميال بحرية</item>
+    </plurals>
+    <string name="unit_sqmeter_symbol">م²</string>
+    <string name="unit_sqkilometer_symbol">كم²</string>
+    <string name="unit_sqcentimeter_symbol">سم²</string>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="zero">سنتيمتر مربع</item>
+        <item quantity="one">سنتيمتر مربع</item>
+        <item quantity="two">سنتيمتران مربعان</item>
+        <item quantity="few">سنتيمترات مربعة</item>
+        <item quantity="many">سنتيمترات مربعة</item>
+        <item quantity="other">سنتيمترات مربعة</item>
+    </plurals>
+    <string name="unit_sqmillimeter_symbol">مم²</string>
+    <string name="unit_sqinch_symbol">بوصة مربعة</string>
+    <plurals name="unit_sqinch">
+        <item quantity="zero">بوصة مربعة</item>
+        <item quantity="one">بوصة مربعة</item>
+        <item quantity="two">بوصتان مربعتان</item>
+        <item quantity="few">بوصات مربعة</item>
+        <item quantity="many">بوصات مربعة</item>
+        <item quantity="other">بوصات مربعة</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">قدم مربع</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="zero">قدم مربع</item>
+        <item quantity="one">قدم مربع</item>
+        <item quantity="two">قدمان مربعان</item>
+        <item quantity="few">أقدام مربعة</item>
+        <item quantity="many">أقدام مربعة</item>
+        <item quantity="other">أقدام مربعة</item>
+    </plurals>
+    <string name="unit_sqyard_symbol">ياردة مربعة</string>
+    <plurals name="unit_sqyard">
+        <item quantity="zero">ياردة مربعة</item>
+        <item quantity="one">ياردة مربعة</item>
+        <item quantity="two">باردتان مربعتان</item>
+        <item quantity="few">ياردات مربعة</item>
+        <item quantity="many">ياردات مربعة</item>
+        <item quantity="other">ياردات مربعة</item>
+    </plurals>
+    <plurals name="unit_sqmeter">
+        <item quantity="zero">متر مربع</item>
+        <item quantity="one">متر مربع</item>
+        <item quantity="two">متران مربعان</item>
+        <item quantity="few">أمتار مربعة</item>
+        <item quantity="many">أمتار مربعة</item>
+        <item quantity="other">أمتار مربعة</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="zero">كيلومتر مربع</item>
+        <item quantity="one">كيلومتر مربع</item>
+        <item quantity="two">كيلومتران مربعان</item>
+        <item quantity="few">كيلومترات مربعة</item>
+        <item quantity="many">كيلومترات مربعة</item>
+        <item quantity="other">كيلومترات مربعة</item>
+    </plurals>
+    <plurals name="unit_sqmillimeter">
+        <item quantity="zero">ميلمتر مربع</item>
+        <item quantity="one">ميلمتر مربع</item>
+        <item quantity="two">ميلمتران مربعان</item>
+        <item quantity="few">ميلمترات مربعة</item>
+        <item quantity="many">ميلمترات مربعة</item>
+        <item quantity="other">ميلمترات مربعة</item>
+    </plurals>
+</resources>
