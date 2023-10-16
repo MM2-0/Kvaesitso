@@ -660,4 +660,10 @@
     <string name="action_import">Import</string>
     <string name="file_type_launchertheme">Motiv aplikace %1$s</string>
     <string name="import_theme_apply">Použít motiv</string>
+    <string name="preference_clock_widget_alignment">Zarovnání</string>
+    <string name="preference_clock_widget_alignment_top">Nahoře</string>
+    <string name="preference_clock_widget_alignment_center">Uprostřed</string>
+    <string name="preference_clock_widget_alignment_bottom">Dole</string>
+    <string name="shortcut_label_unavailable">Nedostupné</string>
+    <string name="shortcut_unavailable_description">Tato zkratka je nedostupná, protože %1$s není nastaven jako výchozí launcher</string>
 </resources>
