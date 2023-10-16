@@ -655,4 +655,10 @@
     <string name="import_theme_error">Kon het geselecteerde bestand niet lezen. Controleer of je een geldig themabestand (*.kvtheme) hebt geselecteerd en dat het bestand niet beschadigd is.</string>
     <string name="action_import">Importeren</string>
     <string name="import_theme_apply">Thema toepassen</string>
+    <string name="preference_clock_widget_alignment">Uitlijning</string>
+    <string name="preference_clock_widget_alignment_center">Midden</string>
+    <string name="preference_clock_widget_alignment_bottom">Onderaan</string>
+    <string name="preference_clock_widget_alignment_top">Bovenaan</string>
+    <string name="shortcut_label_unavailable">Niet beschikbaar</string>
+    <string name="shortcut_unavailable_description">Deze snelkoppeling is niet beschikbaar omdat %1$s niet het standaardstartscherm is</string>
 </resources>
