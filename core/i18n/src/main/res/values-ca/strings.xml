@@ -650,4 +650,15 @@
     <string name="preference_charging_animation">Animació de càrrega de la bateria</string>
     <string name="preference_charging_animation_summary">Reprodueix una animació de bombolles mentre el dispositiu s\'està carregant</string>
     <string name="preference_custom_colors_corepalette">Paleta de colors</string>
+    <string name="import_theme_error">No s\'ha pogut llegir el fitxer seleccionat. Assegureu-vos que heu seleccionat un fitxer de tema vàlid (*.kvtheme) i que el fitxer no està malmès.</string>
+    <string name="preference_clock_widget_alignment">Alineació</string>
+    <string name="preference_clock_widget_alignment_top">Superior</string>
+    <string name="preference_clock_widget_alignment_center">Centre</string>
+    <string name="preference_clock_widget_alignment_bottom">Inferior</string>
+    <string name="shortcut_label_unavailable">No disponible</string>
+    <string name="shortcut_unavailable_description">Aquesta drecera no està disponible perquè %1$s no és el llançador predeterminat</string>
+    <string name="action_import">Importa</string>
+    <string name="file_type_launchertheme">%1$s tema</string>
+    <string name="import_theme_apply">Aplica el tema</string>
+    <string name="preference_blur_wallpaper_radius">Radi desenfocat</string>
 </resources>
