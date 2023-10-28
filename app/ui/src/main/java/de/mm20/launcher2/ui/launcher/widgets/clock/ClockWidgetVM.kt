@@ -30,24 +30,21 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
     private val partProviders = dataStore.data.map { it.clockWidget }.distinctUntilChanged().map {
         val providers = mutableListOf<PartProvider>()
         if (it.datePart) providers += DatePartProvider()
-        if (it.favoritesPart) providers += FavoritesPartProvider()
         if (it.musicPart) providers += MusicPartProvider()
         if (it.batteryPart) providers += BatteryPartProvider()
         if (it.alarmPart) providers += AlarmPartProvider()
         providers
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
-    fun getActiveParts(context: Context): Flow<List<PartProvider>> = channelFlow {
+    fun getActivePart(context: Context): Flow<PartProvider?> = channelFlow {
         partProviders.collectLatest { providers ->
             if (providers.isEmpty()) {
-                send(emptyList())
+                send(null)
                 return@collectLatest
             }
             val rankings = providers.map { it.getRanking(context).map { r -> r to it } }
             combine(rankings) { r ->
-                val sorted = r.sortedBy { it.first }
-                sorted.takeLast(if (sorted.last().second is FavoritesPartProvider) 2 else 1)
-                    .map { it.second }
+                r.filter { it.first > 0 }.maxByOrNull { it.first }?.second
             }.collectLatest {
                 send(it)
             }
@@ -63,6 +60,10 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val alignment = dataStore.data.map { it.clockWidget.alignment }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val dockProvider = dataStore.data
+        .map { if (it.clockWidget.favoritesPart) FavoritesPartProvider() else null }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun updateTime(time: Long) {

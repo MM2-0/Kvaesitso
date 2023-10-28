@@ -59,11 +59,10 @@ class FavoritesPartProvider : PartProvider, KoinComponent {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp)
                 .wrapContentHeight()
         ) {
             SearchResultGrid(
-                items = favorites, showLabels = false, columns = columns,
+                items = favorites, showLabels = false, columns = columns.coerceAtMost(favorites.size),
             )
         }
     }
