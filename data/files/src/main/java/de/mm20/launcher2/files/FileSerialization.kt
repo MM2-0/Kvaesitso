@@ -3,18 +3,22 @@ package de.mm20.launcher2.files
 import android.content.Context
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.files.providers.GDriveFile
+import de.mm20.launcher2.files.providers.LocalFile
+import de.mm20.launcher2.files.providers.NextcloudFile
+import de.mm20.launcher2.files.providers.OneDriveFile
+import de.mm20.launcher2.files.providers.OwncloudFile
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.*
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
-class LocalFileSerializer : SearchableSerializer {
+internal class LocalFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as LocalFile
         return jsonObjectOf(
@@ -26,10 +30,10 @@ class LocalFileSerializer : SearchableSerializer {
         get() = "file"
 }
 
-class LocalFileDeserializer(
+internal class LocalFileDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
-    override fun deserialize(serialized: String): SavableSearchable? {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
         val permissionsManager: PermissionsManager = get()
         if (!permissionsManager.checkPermissionOnce(
                 PermissionGroup.ExternalStorage
@@ -73,7 +77,7 @@ class LocalFileDeserializer(
     }
 }
 
-class GDriveFileSerializer : SearchableSerializer {
+internal class GDriveFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as GDriveFile
         return jsonObjectOf(
@@ -102,8 +106,8 @@ class GDriveFileSerializer : SearchableSerializer {
         get() = "gdrive"
 }
 
-class GDriveFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+internal class GDriveFileDeserializer : SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val id = json.getString("id")
         val label = json.getString("label")
@@ -133,7 +137,7 @@ class GDriveFileDeserializer : SearchableDeserializer {
     }
 }
 
-class OneDriveFileSerializer : SearchableSerializer {
+internal class OneDriveFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as OneDriveFile
         return jsonObjectOf(
@@ -160,8 +164,8 @@ class OneDriveFileSerializer : SearchableSerializer {
         get() = "onedrive"
 }
 
-class OneDriveFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+internal class OneDriveFileDeserializer : SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val fileId = json.getString("id")
         val label = json.getString("label")
@@ -188,7 +192,7 @@ class OneDriveFileDeserializer : SearchableDeserializer {
     }
 }
 
-class NextcloudFileSerializer : SearchableSerializer {
+internal class NextcloudFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as NextcloudFile
         return jsonObjectOf(
@@ -215,8 +219,8 @@ class NextcloudFileSerializer : SearchableSerializer {
         get() = "nextcloud"
 }
 
-class NextcloudFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+internal class NextcloudFileDeserializer : SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val id = json.getLong("id")
         val label = json.getString("label")
@@ -241,7 +245,7 @@ class NextcloudFileDeserializer : SearchableDeserializer {
     }
 }
 
-class OwncloudFileSerializer : SearchableSerializer {
+internal class OwncloudFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as OwncloudFile
         return jsonObjectOf(
@@ -268,8 +272,8 @@ class OwncloudFileSerializer : SearchableSerializer {
         get() = "owncloud"
 }
 
-class OwncloudFileDeserializer : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+internal class OwncloudFileDeserializer : SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val id = json.getLong("id")
         val label = json.getString("label")

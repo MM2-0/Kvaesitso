@@ -66,7 +66,7 @@ import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import com.google.accompanist.flowlayout.FlowRow
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -82,12 +82,11 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
-import kotlin.math.pow
 
 @Composable
 fun AppItem(
     modifier: Modifier = Modifier,
-    app: LauncherApp,
+    app: Application,
     onBack: () -> Unit
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
@@ -127,7 +126,7 @@ fun AppItem(
                 }
 
 
-                app.version?.let {
+                app.versionName?.let {
                     Text(
                         text = stringResource(R.string.app_info_version, it),
                         style = MaterialTheme.typography.bodySmall,
@@ -137,7 +136,7 @@ fun AppItem(
                     )
                 }
                 Text(
-                    text = app.`package`,
+                    text = app.componentName.packageName,
                     style = MaterialTheme.typography.bodySmall,
                     modifier = Modifier.padding(top = 1.dp),
                     maxLines = 1,
@@ -210,20 +209,21 @@ fun AppItem(
 
                     for (shortcut in shortcuts) {
                         val title =
-                            shortcut.launcherShortcut.shortLabel
-                                ?: shortcut.launcherShortcut.longLabel
-                                ?: continue
+                            shortcut.labelOverride ?: shortcut.label
                         val isPinned by remember(shortcut) { viewModel.isShortcutPinned(shortcut) }.collectAsState(
                             false
                         )
 
-                        val icon =
+                        val iconSizePx = InputChipDefaults.AvatarSize.toPixels()
+
+                        val icon by
                             remember {
                                 viewModel.getShortcutIcon(
                                     context,
-                                    shortcut.launcherShortcut
+                                    shortcut,
+                                    iconSizePx.toInt()
                                 )
-                            }
+                            }.collectAsState(null)
 
                         InputChip(
                             modifier = Modifier.width(IntrinsicSize.Max),
@@ -233,19 +233,17 @@ fun AppItem(
                             },
                             label = {
                                 Text(
-                                    title.toString(),
+                                    title,
                                     maxLines = 1,
                                     overflow = TextOverflow.Ellipsis,
                                     modifier = Modifier.weight(1f)
                                 )
                             },
                             avatar = {
-                                AsyncImage(
-                                    model = icon,
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .size(InputChipDefaults.AvatarSize),
+                                ShapedLauncherIcon(
+                                    size = InputChipDefaults.AvatarSize,
+                                    icon = { icon },
+                                    shape = CircleShape,
                                 )
                             },
                             trailingIcon = if (LocalFavoritesEnabled.current) {
@@ -311,7 +309,7 @@ fun AppItem(
                 label = stringResource(R.string.menu_app_info),
                 icon = Icons.Rounded.Info
             ) {
-                app.openAppInfo(context)
+                app.openAppDetails(context)
             })
 
         toolbarActions.add(
@@ -429,7 +427,7 @@ fun AppItem(
 
 @Composable
 fun AppItemGridPopup(
-    app: LauncherApp,
+    app: Application,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
@@ -454,7 +452,7 @@ fun AppItemGridPopup(
                     transformOrigin = TransformOrigin(1f, 0f)
                 )
                 .offset(
-                    x = lerp(16.dp, 0.dp,  animationProgress),
+                    x = lerp(16.dp, 0.dp, animationProgress),
                     y = lerp(-16.dp, 0.dp, animationProgress)
                 ),
             app = app,

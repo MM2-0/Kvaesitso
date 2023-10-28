@@ -9,11 +9,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.widgets.CalendarWidget
 import de.mm20.launcher2.widgets.CalendarWidgetConfig
@@ -34,14 +34,14 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
 
     private val calendarRepository: CalendarRepository by inject()
     private val favoritesService: FavoritesService by inject()
-    private val searchableRepository: SearchableRepository by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
 
     private val widgetConfig = MutableStateFlow(CalendarWidgetConfig())
 
     val calendarEvents = mutableStateOf<List<CalendarEvent>>(emptyList())
     val pinnedCalendarEvents =
         favoritesService.getFavorites(
-            includeTypes = listOf(CalendarEvent.Domain),
+            includeTypes = listOf("calendar"),
             automaticallySorted = true,
             manuallySorted = true,
         ).stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
@@ -164,12 +164,14 @@ class CalendarWidgetVM : ViewModel(), KoinComponent {
     suspend fun onActive() {
         selectDate(LocalDate.now())
         widgetConfig.collectLatest { config ->
-            calendarRepository.getUpcomingEvents(
+            calendarRepository.findMany(
+                from = System.currentTimeMillis(),
+                to = System.currentTimeMillis() + 14 * 24 * 60 * 60 * 1000L,
                 excludeAllDayEvents = !config.allDayEvents,
                 excludeCalendars = config.excludedCalendarIds,
             ).collectLatest { events ->
                 searchableRepository.getKeys(
-                    includeTypes = listOf(CalendarEvent.Domain),
+                    includeTypes = listOf("calendar"),
                     hidden = true,
                     limit = 9999,
                 ).collectLatest { hidden ->

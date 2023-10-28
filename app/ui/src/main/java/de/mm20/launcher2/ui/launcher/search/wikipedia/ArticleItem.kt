@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
-import de.mm20.launcher2.search.data.Wikipedia
+import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
@@ -46,18 +46,18 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.utils.htmlToAnnotatedString
 
 @Composable
-fun WikipediaItem(
+fun ArticleItem(
     modifier: Modifier = Modifier,
-    wikipedia: Wikipedia,
+    article: Article,
     onBack: (() -> Unit)? = null
 ) {
     val context = LocalContext.current
 
-    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${wikipedia.key}")
+    val viewModel: SearchableItemVM = listItemViewModel(key = "search-${article.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    LaunchedEffect(wikipedia, iconSize) {
-        viewModel.init(wikipedia, iconSize.toInt())
+    LaunchedEffect(article, iconSize) {
+        viewModel.init(article, iconSize.toInt())
     }
 
     Column(
@@ -65,13 +65,13 @@ fun WikipediaItem(
             viewModel.launch(context)
         }
     ) {
-        if (!wikipedia.image.isNullOrEmpty()) {
+        if (!article.imageUrl.isNullOrEmpty()) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .background(MaterialTheme.colorScheme.secondaryContainer),
-                model = wikipedia.image,
+                model = article.imageUrl,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
             )
@@ -80,7 +80,7 @@ fun WikipediaItem(
             modifier = Modifier.padding(16.dp),
         ) {
             Text(
-                text = wikipedia.label,
+                text = article.label,
                 style = MaterialTheme.typography.titleLarge
             )
             val tags by viewModel.tags.collectAsState(emptyList())
@@ -100,7 +100,7 @@ fun WikipediaItem(
             )
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
-                text = htmlToAnnotatedString(wikipedia.text),
+                text = htmlToAnnotatedString(article.text),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -134,7 +134,7 @@ fun WikipediaItem(
                 label = stringResource(R.string.menu_share),
                 icon = Icons.Rounded.Share,
                 action = {
-                    wikipedia.share(context)
+                    article.share(context)
                 }
             )
         )
@@ -143,7 +143,7 @@ fun WikipediaItem(
         toolbarActions.add(DefaultToolbarAction(
             label = stringResource(R.string.menu_customize),
             icon = Icons.Rounded.Edit,
-            action = { sheetManager.showCustomizeSearchableModal(wikipedia) }
+            action = { sheetManager.showCustomizeSearchableModal(article) }
         ))
 
         Toolbar(
@@ -160,8 +160,8 @@ fun WikipediaItem(
 }
 
 @Composable
-fun WikipediaItemGridPopup(
-    wikipedia: Wikipedia,
+fun ArticleItemGridPopup(
+    article: Article,
     show: MutableTransitionState<Boolean>,
     animationProgress: Float,
     origin: Rect,
@@ -178,10 +178,10 @@ fun WikipediaItemGridPopup(
             shrinkTowards = Alignment.Center,
         ) { origin.roundToIntRect().size },
     ) {
-        WikipediaItem(
+        ArticleItem(
             modifier = Modifier
                 .fillMaxWidth(),
-            wikipedia = wikipedia,
+            article = article,
             onBack = onDismiss
         )
     }

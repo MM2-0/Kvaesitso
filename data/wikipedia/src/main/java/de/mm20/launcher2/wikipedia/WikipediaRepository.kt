@@ -3,7 +3,10 @@ package de.mm20.launcher2.wikipedia
 import android.content.Context
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.data.Wikipedia
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.SearchableRepository
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import okhttp3.OkHttpClient
@@ -12,14 +15,11 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-interface WikipediaRepository {
-    fun search(query: String,  loadImages: Boolean = false): Flow<Wikipedia?>
-}
 
-internal class WikipediaRepositoryImpl(
+internal class WikipediaRepository(
     private val context: Context,
     private val dataStore: LauncherDataStore
-) : WikipediaRepository, KoinComponent {
+) : SearchableRepository<Article> {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
@@ -55,8 +55,8 @@ internal class WikipediaRepositoryImpl(
     private lateinit var wikipediaService: WikipediaApi
 
 
-    override fun search(query: String, loadImages: Boolean): Flow<Wikipedia?> = channelFlow {
-        send(null)
+    override fun search(query: String): Flow<ImmutableList<Wikipedia>> = channelFlow {
+        send(persistentListOf())
         withContext(Dispatchers.IO) {
             httpClient.dispatcher.cancelAll()
         }
@@ -66,7 +66,10 @@ internal class WikipediaRepositoryImpl(
         if (!::wikipediaService.isInitialized) return@channelFlow
         if (query.isBlank()) return@channelFlow
 
-        send(queryWikipedia(query, loadImages))
+        dataStore.data.map { it.wikipediaSearch.images }.collectLatest {
+            val wikipedia = queryWikipedia(query, false)
+            send(wikipedia?.let { persistentListOf(it) } ?: persistentListOf())
+        }
     }
 
     private suspend fun queryWikipedia(query: String, loadImages: Boolean): Wikipedia? {
@@ -92,9 +95,10 @@ internal class WikipediaRepositoryImpl(
             label = page.title,
             id = page.pageid,
             text = page.extract,
-            image = image,
-            url = page.fullurl,
-            wikipediaUrl = wikipediaUrl
+            imageUrl = image,
+            sourceUrl = page.fullurl,
+            wikipediaUrl = wikipediaUrl,
+            sourceName = context.getString(R.string.wikipedia_source),
         )
     }
 

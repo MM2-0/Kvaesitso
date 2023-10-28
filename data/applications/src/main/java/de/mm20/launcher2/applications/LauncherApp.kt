@@ -1,9 +1,10 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.applications
 
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.ApplicationInfo
 import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
@@ -13,43 +14,56 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.applications.R
 import de.mm20.launcher2.compat.PackageManagerCompat
-import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-data class LauncherApp(
-    val launcherActivityInfo: LauncherActivityInfo,
-    override val label: String,
-    val `package`: String,
-    val activity: String,
-    val flags: Int,
-    val version: String?,
+internal data class LauncherApp(
+    private val launcherActivityInfo: LauncherActivityInfo,
+    override val versionName: String?,
+    override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
-) : SavableSearchable {
+) : Application {
 
-    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo): this(
+    override val componentName: ComponentName
+        get() = launcherActivityInfo.componentName
+
+    override val label: String = launcherActivityInfo.label.toString()
+
+
+    constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
         launcherActivityInfo,
-        label = launcherActivityInfo.label.toString(),
-        `package` = launcherActivityInfo.applicationInfo.packageName,
-        activity = launcherActivityInfo.name,
-        flags = launcherActivityInfo.applicationInfo.flags,
-        version = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+        versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
     )
 
-    val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
+    override val user: UserHandle
+        get() = launcherActivityInfo.user
 
-    val canUninstall: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == 0 && isMainProfile
+    private val isMainProfile = launcherActivityInfo.user == Process.myUserHandle()
+
+    override val profile: AppProfile
+        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
+
+    override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
+
+    override val canUninstall: Boolean
+        get() = !isSystemApp && isMainProfile
 
     override val domain: String = Domain
     override val preferDetailsOverLaunch: Boolean = false
@@ -59,22 +73,10 @@ data class LauncherApp(
     }
 
     override val key: String
-        get() = if (isMainProfile) "${domain}://$`package`:$activity" else "${domain}://$`package`:$activity:${userSerialNumber}"
+        // For backwards compatibility, user serial number is not included in main profile
+        get() = if (isMainProfile) "${domain}://${componentName.packageName}:${componentName.packageName}"
+        else "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}"
 
-    fun getUser(): UserHandle? {
-        return launcherActivityInfo.user
-    }
-
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        return StaticLauncherIcon(
-            foregroundLayer = TintedIconLayer(
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,
-                scale = 0.65f,
-                color = 0xff3dda84.toInt(),
-            ),
-            backgroundLayer = ColorLayer(0xff3dda84.toInt())
-        )
-    }
 
     override suspend fun loadIcon(
         context: Context,
@@ -132,7 +134,7 @@ data class LauncherApp(
         }
         try {
             launcherApps.startMainActivity(
-                ComponentName(`package`, activity),
+                componentName,
                 launcherActivityInfo.user,
                 null,
                 options
@@ -145,11 +147,15 @@ data class LauncherApp(
         return true
     }
 
-    fun getStoreDetails(context: Context): StoreLink? {
+    override fun getStoreDetails(context: Context): StoreLink? {
         val pm = context.packageManager
         return try {
-            val installSourceInfo = PackageManagerCompat.getInstallSource(pm, `package`)
-            getStoreLinkForInstaller(installSourceInfo.initiatingPackageName, `package`)
+            val installSourceInfo =
+                PackageManagerCompat.getInstallSource(pm, componentName.packageName)
+            getStoreLinkForInstaller(
+                installSourceInfo.initiatingPackageName,
+                componentName.packageName
+            )
         } catch (e: PackageManager.NameNotFoundException) {
             null
         } catch (e: IllegalArgumentException) {
@@ -157,37 +163,33 @@ data class LauncherApp(
         }
     }
 
-    fun uninstall(context: Context) {
+    override fun uninstall(context: Context) {
         val intent = Intent(Intent.ACTION_DELETE)
-        intent.data = Uri.parse("package:$`package`")
+        intent.data = Uri.parse("package:${componentName.packageName}")
         context.startActivity(intent)
     }
 
-    fun openAppInfo(context: Context) {
+    override fun openAppDetails(context: Context) {
         val launcherApps = context.getSystemService<LauncherApps>()!!
 
         launcherApps.startAppDetailsActivity(
-            ComponentName(`package`, activity),
-            getUser(),
+            componentName,
+            user,
             null,
             null
         )
     }
 
-    suspend fun shareApkFile(context: Context) {
+    override val canShareApk: Boolean = true
+    override suspend fun shareApkFile(context: Context) {
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val fileCopy = java.io.File(
             context.cacheDir,
-            "${`package`}-${version}.apk"
+            "${componentName.packageName}-${versionName}.apk"
         )
         withContext(Dispatchers.IO) {
             try {
-                val user = getUser()
-                val info = if (user != null) {
-                    launcherApps.getApplicationInfo(`package`, 0, user)
-                } else {
-                    context.packageManager.getApplicationInfo(`package`, 0)
-                }
+                val info = launcherApps.getApplicationInfo(componentName.packageName, 0, user)
                 val file = java.io.File(info.publicSourceDir)
 
                 try {
@@ -212,6 +214,13 @@ data class LauncherApp(
         }
     }
 
+    override fun getActivityInfo(context: Context): ActivityInfo? {
+        if (isAtLeastApiLevel(31)) {
+            return launcherActivityInfo.activityInfo
+        }
+        return super.getActivityInfo(context)
+    }
+
     companion object {
         private fun getStoreLinkForInstaller(
             installerPackage: String?,
@@ -225,18 +234,21 @@ data class LauncherApp(
                         "http://www.amazon.com/gp/mas/dl/android?p=${packageName}"
                     )
                 }
+
                 "com.android.vending" -> {
                     StoreLink(
                         "Google Play Store",
                         "https://play.google.com/store/apps/details?id=${packageName}"
                     )
                 }
+
                 "org.fdroid.fdroid", "com.aurora.adroid" -> {
                     StoreLink(
                         "F-Droid",
                         "https://f-droid.org/packages/${packageName}"
                     )
                 }
+
                 else -> null
             }
         }
@@ -251,9 +263,8 @@ data class LauncherApp(
 
         const val Domain = "app"
     }
-}
 
-data class StoreLink(
-    val label: String,
-    val url: String
-)
+    override fun getSerializer(): SearchableSerializer {
+        return LauncherAppSerializer()
+    }
+}

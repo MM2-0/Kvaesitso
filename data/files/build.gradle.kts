@@ -51,4 +51,5 @@ dependencies {
     implementation(project(":core:i18n"))
     implementation(project(":core:permissions"))
     implementation(project(":core:crashreporter"))
+    implementation(project(":core:preferences"))
 }

@@ -1,7 +1,7 @@
 package de.mm20.launcher2.files.providers
 
-import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.File
 
-interface FileProvider {
+internal interface FileProvider {
     suspend fun search(query: String): List<File>
 }

@@ -5,23 +5,24 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
+import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Contact
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.LauncherApp
 import de.mm20.launcher2.search.data.UnitConverter
-import de.mm20.launcher2.search.data.Website
-import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
@@ -43,7 +44,7 @@ import org.koin.core.component.inject
 class SearchVM : ViewModel(), KoinComponent {
 
     private val favoritesService: FavoritesService by inject()
-    private val searchableRepository: SearchableRepository by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -55,13 +56,13 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = mutableStateOf("")
     val isSearchEmpty = mutableStateOf(true)
 
-    val appResults = mutableStateOf<List<LauncherApp>>(emptyList())
-    val workAppResults = mutableStateOf<List<LauncherApp>>(emptyList())
+    val appResults = mutableStateOf<List<Application>>(emptyList())
+    val workAppResults = mutableStateOf<List<Application>>(emptyList())
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
     val fileResults = mutableStateOf<List<File>>(emptyList())
     val contactResults = mutableStateOf<List<Contact>>(emptyList())
     val calendarResults = mutableStateOf<List<CalendarEvent>>(emptyList())
-    val wikipediaResults = mutableStateOf<List<Wikipedia>>(emptyList())
+    val articleResults = mutableStateOf<List<Article>>(emptyList())
     val websiteResults = mutableStateOf<List<Website>>(emptyList())
     val calculatorResults = mutableStateOf<List<Calculator>>(emptyList())
     val unitConverterResults = mutableStateOf<List<UnitConverter>>(emptyList())
@@ -185,15 +186,15 @@ class SearchVM : ViewModel(), KoinComponent {
 
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
-                        val apps = mutableListOf<LauncherApp>()
-                        val workApps = mutableListOf<LauncherApp>()
+                        val apps = mutableListOf<Application>()
+                        val workApps = mutableListOf<Application>()
                         val shortcuts = mutableListOf<AppShortcut>()
                         val files = mutableListOf<File>()
                         val contacts = mutableListOf<Contact>()
                         val events = mutableListOf<CalendarEvent>()
                         val unitConv = mutableListOf<UnitConverter>()
                         val calc = mutableListOf<Calculator>()
-                        val wikipedia = mutableListOf<Wikipedia>()
+                        val articles = mutableListOf<Article>()
                         val website = mutableListOf<Website>()
                         val actions = mutableListOf<SearchAction>()
                         for (r in resultsList) {
@@ -202,8 +203,8 @@ class SearchVM : ViewModel(), KoinComponent {
                                     hidden.add(r)
                                 }
 
-                                r is LauncherApp && !r.isMainProfile -> workApps.add(r)
-                                r is LauncherApp -> apps.add(r)
+                                r is Application && r.profile == AppProfile.Work -> workApps.add(r)
+                                r is Application -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)
                                 r is File -> files.add(r)
                                 r is Contact -> contacts.add(r)
@@ -211,7 +212,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is UnitConverter -> unitConv.add(r)
                                 r is Calculator -> calc.add(r)
                                 r is Website -> website.add(r)
-                                r is Wikipedia -> wikipedia.add(r)
+                                r is Article -> articles.add(r)
                                 r is SearchAction -> actions.add(r)
                             }
                         }
@@ -225,7 +226,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 calc,
                                 events,
                                 contacts,
-                                wikipedia,
+                                articles,
                                 website,
                                 files,
                                 actions
@@ -238,7 +239,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         fileResults.value = files
                         contactResults.value = contacts
                         calendarResults.value = events
-                        wikipediaResults.value = wikipedia
+                        articleResults.value = articles
                         websiteResults.value = website
                         calculatorResults.value = calc
                         unitConverterResults.value = unitConv

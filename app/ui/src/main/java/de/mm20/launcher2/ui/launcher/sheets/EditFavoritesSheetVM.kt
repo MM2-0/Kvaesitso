@@ -19,7 +19,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.AppShortcut
+import de.mm20.launcher2.appshortcuts.AppShortcut
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.services.favorites.FavoritesService
@@ -210,7 +210,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     fun createShortcut(context: Context, data: Intent?) {
         data ?: return cancelPickShortcut()
 
-        val shortcut = AppShortcut.fromPinRequestIntent(context, data)
+        val shortcut = AppShortcut(context, data)
 
         if (shortcut == null) {
             cancelPickShortcut()

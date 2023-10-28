@@ -1,33 +1,30 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.wikipedia
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.wikipedia.R
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.SearchableSerializer
 
-data class Wikipedia(
+internal data class Wikipedia(
     override val label: String,
     val id: Long,
-    val text: String,
-    val image: String?,
-    val url: String,
+    override val text: String,
+    override val imageUrl: String?,
+    override val sourceUrl: String,
+    override val sourceName: String,
     val wikipediaUrl: String,
     override val labelOverride: String? = null,
-) : SavableSearchable {
+) : Article {
 
     override val domain: String = Domain
-
-    override val preferDetailsOverLaunch: Boolean = false
 
     override fun overrideLabel(label: String): Wikipedia {
         return this.copy(labelOverride = label)
@@ -47,23 +44,28 @@ data class Wikipedia(
     }
 
     private fun getLaunchIntent(): Intent {
-        return Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        return Intent(Intent.ACTION_VIEW, Uri.parse(sourceUrl))
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(), options)
     }
 
-    fun share(context: Context) {
+    override val canShare: Boolean = true
+    override fun share(context: Context) {
         val text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY).toString()
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.putExtra(
             Intent.EXTRA_TEXT, "${label}\n\n" +
                     "${text.substring(0, 200)}…\n\n" +
-                    url
+                    sourceUrl
         )
         shareIntent.type = "text/plain"
         context.startActivity(Intent.createChooser(shareIntent, null))
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return WikipediaSerializer()
     }
 
     companion object {

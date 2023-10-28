@@ -4,8 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.gservices.DriveFileMeta
 import de.mm20.launcher2.gservices.GoogleApiHelper
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.GDriveFile
+import de.mm20.launcher2.search.File
 
 internal class GDriveFileProvider(
     private val context: Context

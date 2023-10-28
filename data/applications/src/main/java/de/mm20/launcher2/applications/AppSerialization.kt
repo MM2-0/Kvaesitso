@@ -1,4 +1,4 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.applications
 
 import android.content.ComponentName
 import android.content.Context
@@ -15,8 +15,8 @@ class LauncherAppSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as LauncherApp
         val json = JSONObject()
-        json.put("package", searchable.`package`)
-        json.put("activity", searchable.activity)
+        json.put("package", searchable.componentName.packageName)
+        json.put("activity", searchable.componentName.className)
         json.put("user", searchable.userSerialNumber)
         return json.toString()
     }
@@ -26,7 +26,7 @@ class LauncherAppSerializer : SearchableSerializer {
 }
 
 class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable? {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
         val json = JSONObject(serialized)
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val userManager = context.getSystemService<UserManager>()!!

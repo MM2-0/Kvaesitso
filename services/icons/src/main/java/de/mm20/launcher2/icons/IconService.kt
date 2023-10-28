@@ -32,15 +32,14 @@ import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -283,9 +282,9 @@ class IconService(
 
         val providerOptions = mutableListOf<CustomIcon>()
 
-        if (searchable is LauncherApp) {
+        if (searchable is Application) {
             val iconPackIcons = iconPackManager.getAllIconPackIcons(
-                searchable.launcherActivityInfo.componentName
+                searchable.componentName
             )
 
             providerOptions.addAll(

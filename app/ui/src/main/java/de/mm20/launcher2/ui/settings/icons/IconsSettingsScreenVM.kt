@@ -12,7 +12,7 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
@@ -224,7 +224,7 @@ class IconsSettingsScreenVM(
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
         return columnCount.flatMapLatest { cols ->
             favoritesService.getFavorites(
-                includeTypes = listOf(LauncherApp.Domain),
+                includeTypes = listOf("app"),
                 limit = cols,
                 manuallySorted = true,
                 automaticallySorted = true,

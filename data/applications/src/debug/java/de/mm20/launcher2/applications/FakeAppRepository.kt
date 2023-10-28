@@ -6,8 +6,8 @@ import android.content.Intent
 import android.content.pm.LauncherApps
 import android.os.Process
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.ktx.getSerialNumber
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -16,51 +16,18 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 
 /**
- * A fake implementation of [AppRepository] to simulate many installed apps.
+ * App repository that returns a fixed number of fake apps to simulate a large number of apps.
  */
-class FakeAppRepository(private val context: Context, private val fakePackages: Int) : AppRepository {
+class FakeAppRepository(private val context: Context, private val fakePackages: Int) : SearchableRepository<Application> {
 
 
-    private val fakeApp: LauncherApp
-
-    init {
-        val launcherApps = context.getSystemService<LauncherApps>()!!
-        fakeApp = LauncherApp(
-            context,
-            launcherApps.resolveActivity(
-                Intent().apply {
-                    component = ComponentName(
-                        context.packageName,
-                        "de.mm20.launcher2.ui.launcher.LauncherActivity"
-                    )
-                },
-                Process.myUserHandle()
-            ),
-        )
-    }
-
-    private fun randomString(): String {
-        val charset = "abcdefghijklmnopqrstuvwxyz"
-        return (1..10)
-            .map { charset.random() }
-            .joinToString("")
-    }
-
-    override fun getAllInstalledApps(): Flow<List<LauncherApp>> {
-        return flowOf(buildList {
-            repeat(fakePackages) {
-                add(fakeApp.copy(`package` = randomString(), activity = randomString()))
-            }
-        })
-    }
-
-    override fun getSuspendedPackages(): Flow<List<String>> {
-        return flowOf(emptyList())
-    }
-
-    override fun search(query: String): Flow<ImmutableList<LauncherApp>> {
+    override fun search(query: String): Flow<ImmutableList<Application>> {
         return if (query.isEmpty()) {
-            getAllInstalledApps().map { it.toImmutableList() }
+            buildList {
+                repeat(fakePackages) {
+                    add(FakeApp())
+                }
+            }.toImmutableList().let { flowOf(it) }
         } else {
             flowOf(persistentListOf())
         }

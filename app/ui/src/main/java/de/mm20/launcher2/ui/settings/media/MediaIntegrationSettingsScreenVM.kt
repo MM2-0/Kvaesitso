@@ -12,6 +12,7 @@ import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.AppProfile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -49,8 +50,8 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val musicApps = musicService.getInstalledPlayerPackages()
-            val allApps = appRepository.getAllInstalledApps().first().filter { it.isMainProfile }
-                .distinctBy { it.`package` }
+            val allApps = appRepository.findMany().first().filter { it.profile == AppProfile.Personal }
+                .distinctBy { it.componentName.packageName }
             val settings = dataStore.data.map { it.musicWidget }.first()
             val allowList = settings.allowListList
             val denyList = settings.denyListList
@@ -58,10 +59,10 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
             appList.value = allApps.map {
                 AppListItem(
                     label = it.label,
-                    packageName = it.`package`,
-                    isMusicApp = musicApps.contains(it.`package`),
-                    isChecked = allowList.contains(it.`package`) || (!denyList.contains(it.`package`) && musicApps.contains(
-                        it.`package`
+                    packageName = it.componentName.packageName,
+                    isMusicApp = musicApps.contains(it.componentName.packageName),
+                    isChecked = allowList.contains(it.componentName.packageName) || (!denyList.contains(it.componentName.packageName) && musicApps.contains(
+                        it.componentName.packageName
                     )),
                     icon = iconService.getIcon(it, (32 * density).roundToInt())
                         .shareIn(viewModelScope, SharingStarted.WhileSubscribed(10000))

@@ -31,8 +31,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.abs
@@ -107,23 +107,12 @@ fun rememberSplashScreenData(searchable: SavableSearchable?): SplashScreenData {
 
     LaunchedEffect(searchable) {
         withContext(Dispatchers.IO) {
-            if (searchable is LauncherApp) {
-                val activityInfo = if (isAtLeastApiLevel(31)) {
-                    searchable.launcherActivityInfo.activityInfo
-                } else {
-                    try {
-                        context.packageManager.getActivityInfo(
-                            searchable.launcherActivityInfo.componentName,
-                            0
-                        )
-                    } catch (e: PackageManager.NameNotFoundException) {
-                        null
-                    }
-                } ?: return@withContext
+            if (searchable is Application) {
+                val activityInfo = searchable.getActivityInfo(context) ?: return@withContext
                 val themeRes = activityInfo.themeResource
                 val ctx = try {
                     context.createPackageContext(
-                        searchable.`package`,
+                        searchable.componentName.packageName,
                         Context.CONTEXT_IGNORE_SECURITY
                     )
                 } catch (e: PackageManager.NameNotFoundException) {

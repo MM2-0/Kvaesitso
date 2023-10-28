@@ -15,9 +15,7 @@ data class SavedSearchable(
     var weight: Double
 ) {
     fun toDatabaseEntity(): SavedSearchableEntity? {
-        val serializer = getSerializer(searchable)
-
-        val data = searchable?.let { serializer.serialize(it) } ?: return null
+        val data = searchable?.serialize() ?: return null
 
         return SavedSearchableEntity(
             key = key,

@@ -11,9 +11,6 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.LauncherShortcut
-import de.mm20.launcher2.search.data.LegacyShortcut
-import de.mm20.launcher2.search.data.UnavailableShortcut
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 
@@ -37,7 +34,7 @@ class LauncherShortcutDeserializer(
     val context: Context
 ) : SearchableDeserializer, KoinComponent {
 
-    override fun deserialize(serialized: String): SavableSearchable? {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
 
         val json = JSONObject(serialized)
@@ -65,16 +62,9 @@ class LauncherShortcutDeserializer(
             } catch (e: IllegalStateException) {
                 return null
             }
-            val pm = context.packageManager
-            val appName = try {
-                pm.getApplicationInfo(packageName, 0).loadLabel(pm).toString()
-            } catch (e: PackageManager.NameNotFoundException) {
-                return null
-            }
-            if (shortcuts == null || shortcuts.isEmpty()) {
+            if (shortcuts.isNullOrEmpty()) {
                 return null
             } else {
-                val activity = shortcuts[0].activity
                 return LauncherShortcut(
                     context = context,
                     launcherShortcut = shortcuts[0],
@@ -82,6 +72,21 @@ class LauncherShortcutDeserializer(
             }
         }
     }
+}
+
+class UnavailableShortcutSerializer: SearchableSerializer {
+    override fun serialize(searchable: SavableSearchable): String? {
+        searchable as UnavailableShortcut
+        return jsonObjectOf(
+            "packagename" to searchable.packageName,
+            "id" to searchable.shortcutId,
+            "user" to searchable.userSerial,
+        ).toString()
+    }
+
+    override val typePrefix: String
+        get() = LauncherShortcut.Domain
+
 }
 
 class LegacyShortcutSerializer: SearchableSerializer {
@@ -106,7 +111,7 @@ class LegacyShortcutSerializer: SearchableSerializer {
 class LegacyShortcutDeserializer(
     val context: Context
 ): SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
         val label = json.getString("label")
         val intent = Intent.parseUri(json.getString("intent"), 0)

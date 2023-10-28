@@ -53,10 +53,7 @@ import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.LauncherShortcut
-import de.mm20.launcher2.search.data.LegacyShortcut
-import de.mm20.launcher2.search.data.UnavailableShortcut
+import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -101,7 +98,7 @@ fun AppShortcutItem(
     Column(
         modifier = modifier
     ) {
-        AnimatedVisibility(showDetails && shortcut is UnavailableShortcut) {
+        AnimatedVisibility(showDetails && shortcut.isUnavailable) {
             MissingPermissionBanner(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp),
                 text = stringResource(R.string.shortcut_unavailable_description, stringResource(R.string.app_name)),
@@ -213,7 +210,7 @@ fun AppShortcutItem(
                 action = { sheetManager.showCustomizeSearchableModal(shortcut) }
             ))
 
-            if (shortcut is LauncherShortcut && shortcut.launcherShortcut.isPinned) {
+            if (shortcut.canDelete) {
                 toolbarActions.add(DefaultToolbarAction(
                     label = stringResource(R.string.menu_delete),
                     icon = Icons.Rounded.Delete,
@@ -276,7 +273,7 @@ fun AppShortcutItem(
             text = { Text(stringResource(R.string.alert_delete_shortcut, shortcut.label)) },
             confirmButton = {
                 TextButton(onClick = {
-                    viewModel.delete()
+                    viewModel.delete(context)
                     requestDelete = false
                 }) {
                     Text(stringResource(android.R.string.ok))
@@ -330,9 +327,3 @@ fun ShortcutItemGridPopup(
     }
 }
 
-val AppShortcut.packageName: String?
-    get() = when (this) {
-        is LegacyShortcut -> intent.`package`
-        is LauncherShortcut -> launcherShortcut.`package`
-        else -> null
-    }

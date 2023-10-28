@@ -47,7 +47,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
-import de.mm20.launcher2.search.data.File
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -236,7 +236,7 @@ fun FileItem(
                             onDismissRequest = { showConfirmDialog = false },
                             confirmButton = {
                                 TextButton(onClick = {
-                                    viewModel.delete()
+                                    viewModel.delete(context)
                                     showConfirmDialog = false
                                 }) {
                                     Text(stringResource(android.R.string.ok))

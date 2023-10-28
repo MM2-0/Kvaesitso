@@ -1,11 +1,11 @@
 package de.mm20.launcher2.services.favorites
 
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import kotlinx.coroutines.flow.Flow
 
 class FavoritesService(
-    val searchableRepository: SearchableRepository,
+    val searchableRepository: SavableSearchableRepository,
 ) {
 
 

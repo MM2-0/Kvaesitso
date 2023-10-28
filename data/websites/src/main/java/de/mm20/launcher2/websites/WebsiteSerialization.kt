@@ -4,18 +4,17 @@ import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.Website
 import org.json.JSONObject
 
 class WebsiteSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
-        searchable as Website
+        searchable as WebsiteImpl
         return jsonObjectOf(
             "label" to searchable.label,
             "url" to searchable.url,
             "description" to searchable.description,
-            "image" to searchable.image,
-            "favicon" to searchable.favicon,
+            "image" to searchable.imageUrl,
+            "favicon" to searchable.faviconUrl,
             "color" to searchable.color
         ).toString()
     }
@@ -25,12 +24,12 @@ class WebsiteSerializer : SearchableSerializer {
 }
 
 class WebsiteDeserializer: SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable? {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
         val json = JSONObject(serialized)
-        return Website(
+        return WebsiteImpl(
             label = json.getString("label"),
-            favicon = json.getString("favicon"),
-            image = json.getString("image"),
+            faviconUrl = json.getString("favicon"),
+            imageUrl = json.getString("image"),
             description = json.getString("description"),
             url = json.getString("url"),
             color = json.getInt("color")

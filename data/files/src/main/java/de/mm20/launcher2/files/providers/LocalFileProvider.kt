@@ -1,13 +1,11 @@
 package de.mm20.launcher2.files.providers
 
 import android.content.Context
-import android.provider.DocumentsContract
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.LocalFile
+import de.mm20.launcher2.search.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

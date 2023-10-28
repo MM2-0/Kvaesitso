@@ -3,7 +3,7 @@ package de.mm20.launcher2.ui.settings.gestures
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -24,7 +24,7 @@ import org.koin.core.component.inject
 class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val searchableRepository: SearchableRepository by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
     private val iconService: IconService by inject()
 
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)

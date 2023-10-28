@@ -1,14 +1,17 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.files.providers
 
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import de.mm20.launcher2.files.NextcloudFileSerializer
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.SearchableSerializer
 
-data class NextcloudFile(
+internal data class NextcloudFile(
     val fileId: Long,
     override val label: String,
     override val path: String,
@@ -43,6 +46,10 @@ data class NextcloudFile(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(context), options)
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return NextcloudFileSerializer()
     }
 
     companion object {

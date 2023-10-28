@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.sheets
 import android.app.Activity
 import android.content.Context
 import android.content.pm.LauncherApps
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -64,6 +65,7 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -73,6 +75,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
 import androidx.compose.ui.unit.toSize
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.search.SavableSearchable
@@ -647,7 +650,6 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues
 
         }
 
-    val iconSize = 48.dp.toPixels().roundToInt()
     val activity = LocalLifecycleOwner.current as AppCompatActivity
     LazyColumn(
         contentPadding = paddingValues
@@ -664,31 +666,28 @@ fun ShortcutPicker(viewModel: EditFavoritesSheetVM, paddingValues: PaddingValues
             }
         }
         items(shortcutActivities) {
-            val icon by remember(it.key) { viewModel.getIcon(it, iconSize) }.collectAsState(null)
-            val badge by remember(it.key) { viewModel.getBadge(it) }.collectAsState(null)
+            val icon by remember(it) { it.getIcon(context) }.collectAsState(null)
             OutlinedCard(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 4.dp),
                 onClick = {
-                    val launcherApps =
-                        context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-                    val sender =
-                        launcherApps.getShortcutConfigActivityIntent(it.launcherActivityInfo)
-                            ?: return@OutlinedCard
-                    activityLauncher.launch(IntentSenderRequest.Builder(sender).build(), null)
+                    val intent = it.getIntent(context) ?: return@OutlinedCard run {
+                        Log.e("MM20", "Couldn't get intent for shortcut")
+                    }
+                    activityLauncher.launch(IntentSenderRequest.Builder(intent).build(), null)
                 }) {
                 Row(
                     modifier = Modifier.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ShapedLauncherIcon(
-                        size = 48.dp,
-                        icon = { icon },
-                        badge = { badge },
+                    AsyncImage(
+                        model = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(48.dp)
                     )
                     Text(
-                        text = it.labelOverride ?: it.label,
+                        text = it.label,
                         modifier = Modifier.padding(start = 16.dp),
                         style = MaterialTheme.typography.titleSmall
                     )

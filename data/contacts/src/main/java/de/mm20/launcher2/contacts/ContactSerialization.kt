@@ -1,20 +1,17 @@
 package de.mm20.launcher2.contacts
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.provider.ContactsContract
-import androidx.core.content.ContextCompat
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.Contact
+import kotlinx.coroutines.flow.first
 import org.json.JSONObject
 
-class ContactSerializer : SearchableSerializer {
+internal class ContactSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
-        searchable as Contact
+        searchable as AndroidContact
         return jsonObjectOf(
             "id" to searchable.id
         ).toString()
@@ -24,28 +21,15 @@ class ContactSerializer : SearchableSerializer {
         get() = "contact"
 }
 
-class ContactDeserializer(val context: Context) : SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable? {
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.READ_CONTACTS
-            ) != PackageManager.PERMISSION_GRANTED
-        ) return null
-        val id = JSONObject(serialized).getLong("id")
-        val rawContactsCursor = context.contentResolver.query(
-            ContactsContract.RawContacts.CONTENT_URI,
-            arrayOf(ContactsContract.RawContacts._ID),
-            "${ContactsContract.RawContacts.CONTACT_ID} = ?",
-            arrayOf(id.toString()),
-            null
-        ) ?: return null
-        val rawContacts = mutableSetOf<Long>()
-        while (rawContactsCursor.moveToNext()) {
-            rawContacts.add(rawContactsCursor.getLong(0))
-        }
-        rawContactsCursor.close()
-        if (rawContacts.isEmpty()) return null
+internal class ContactDeserializer(
+    private val contactRepository: ContactRepository,
+    private val permissionsManager: PermissionsManager
+) : SearchableDeserializer {
 
-        return Contact.contactById(context, id, rawContacts)
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
+        if (!permissionsManager.checkPermissionOnce(PermissionGroup.Contacts)) return null
+        val id = JSONObject(serialized).getLong("id")
+
+        return contactRepository.get(id).first()
     }
 }

@@ -6,18 +6,18 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
 import de.mm20.launcher2.icons.compat.ClockIconConfig
 import de.mm20.launcher2.icons.compat.toLauncherIcon
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class DynamicClockIconProvider(val context: Context, private val themed: Boolean) : IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? = withContext(Dispatchers.IO) {
-        if (searchable !is LauncherApp) return@withContext null
+        if (searchable !is Application) return@withContext null
         val pm = context.packageManager
         val appInfo = try {
             pm.getApplicationInfo(
-                searchable.`package`,
+                searchable.componentName.packageName,
                 PackageManager.GET_META_DATA
             )
         } catch (e: PackageManager.NameNotFoundException) {
@@ -47,7 +47,7 @@ class DynamicClockIconProvider(val context: Context, private val themed: Boolean
 
         // Workaround for Google Clock themed icon because it is weird and I don't understand
         // how to get the correct layers from the drawable without hardcoding them here.
-        val clockConfig = if (themed && searchable.`package` == "com.google.android.deskclock") {
+        val clockConfig = if (themed && searchable.componentName.packageName == "com.google.android.deskclock") {
             ClockIconConfig(
                 hourLayer = 0,
                 minuteLayer = 2,

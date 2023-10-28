@@ -2,8 +2,7 @@ package de.mm20.launcher2.files.providers
 
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.owncloud.OwncloudClient
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.OwncloudFile
+import de.mm20.launcher2.search.File
 
 internal class OwncloudFileProvider(
     private val owncloudClient: OwncloudClient

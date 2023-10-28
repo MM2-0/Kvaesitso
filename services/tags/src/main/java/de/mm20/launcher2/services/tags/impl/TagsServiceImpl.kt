@@ -1,7 +1,7 @@
 package de.mm20.launcher2.services.tags.impl
 
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.services.tags.TagsService
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 internal class TagsServiceImpl(
     private val customAttributesRepository: CustomAttributesRepository,
-    private val searchableRepository: SearchableRepository,
+    private val searchableRepository: SavableSearchableRepository,
 ) : TagsService {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
     override fun getAllTags(startsWith: String?): Flow<List<String>> {

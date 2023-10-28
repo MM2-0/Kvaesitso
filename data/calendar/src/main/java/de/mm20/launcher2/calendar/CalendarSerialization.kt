@@ -10,13 +10,12 @@ import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.data.CalendarEvent
 import org.json.JSONObject
 import java.util.*
 
 class CalendarEventSerializer: SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
-        searchable as CalendarEvent
+        searchable as AndroidCalendarEvent
         val json = JSONObject()
         json.put("id", searchable.id)
         return json.toString()
@@ -27,7 +26,7 @@ class CalendarEventSerializer: SearchableSerializer {
 }
 
 class CalendarEventDeserializer(val context: Context): SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable? {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CALENDAR) != PackageManager.PERMISSION_GRANTED) return null
         val json = JSONObject(serialized)
         val id = json.getLong("id")
@@ -86,7 +85,7 @@ class CalendarEventDeserializer(val context: Context): SearchableDeserializer {
             } else {
                 0
             }
-            return CalendarEvent(
+            return AndroidCalendarEvent(
                 label = title,
                 id = id,
                 color = color,

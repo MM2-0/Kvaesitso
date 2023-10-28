@@ -1,20 +1,20 @@
 package de.mm20.launcher2.search
 
-import org.koin.android.ext.koin.androidContext
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val searchModule = module {
     single<SearchService> {
         SearchServiceImpl(
+            get(named<Application>()),
+            get(named<AppShortcut>()),
+            get(named<CalendarEvent>()),
+            get(named<Contact>()),
+            get(named<File>()),
             get(),
             get(),
             get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
-            get(),
+            get(named<Website>()),
             get(),
             get(),
         )

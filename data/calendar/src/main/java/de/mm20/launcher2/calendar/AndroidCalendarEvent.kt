@@ -1,4 +1,4 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.calendar
 
 import android.content.ContentUris
 import android.content.Context
@@ -6,48 +6,31 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.CalendarContract
-import de.mm20.launcher2.icons.ColorLayer
-import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.SearchableSerializer
 import java.net.URLEncoder
-import java.text.SimpleDateFormat
 
-data class CalendarEvent(
+internal data class AndroidCalendarEvent(
     override val label: String,
     val id: Long,
-    val color: Int,
-    val startTime: Long,
-    val endTime: Long,
-    val allDay: Boolean,
-    val location: String,
-    val attendees: List<String>,
-    val description: String,
+    override val color: Int,
+    override val startTime: Long,
+    override val endTime: Long,
+    override val allDay: Boolean,
+    override val location: String?,
+    override val attendees: List<String>,
+    override val description: String?,
     val calendar: Long,
     override val labelOverride: String? = null,
-) : SavableSearchable {
+) : CalendarEvent {
 
     override val domain: String = Domain
 
     override val key: String
         get() = "$domain://$id"
-
-    override val preferDetailsOverLaunch: Boolean = true
-
-    override fun overrideLabel(label: String): CalendarEvent {
+    override fun overrideLabel(label: String): AndroidCalendarEvent {
         return this.copy(labelOverride = label)
-    }
-
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        val df = SimpleDateFormat("dd")
-        return StaticLauncherIcon(
-            foregroundLayer = TextLayer(
-                text = df.format(startTime),
-                color = color
-            ),
-            backgroundLayer = ColorLayer(color)
-        )
     }
 
     private fun getLaunchIntent(): Intent {
@@ -59,7 +42,8 @@ data class CalendarEvent(
         return context.tryStartActivity(getLaunchIntent(), options)
     }
 
-    fun openLocation(context: Context) {
+    override fun openLocation(context: Context) {
+        if (location == null) return
         context.tryStartActivity(
             Intent(Intent.ACTION_VIEW)
                 .setData(
@@ -74,6 +58,10 @@ data class CalendarEvent(
                 )
                 .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         )
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return CalendarEventSerializer()
     }
 
     companion object {

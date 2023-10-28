@@ -55,7 +55,7 @@ class EditTagSheetVM : ViewModel(), KoinComponent {
         viewModelScope.launch(Dispatchers.Default) {
             allTags = tagService.getAllTags().first().toSet()
             val items = if (tag != null) tagService.getTaggedItems(tag).first() else emptyList()
-            val apps = appRepository.getAllInstalledApps().first().sorted()
+            val apps = appRepository.findMany().first().sorted()
             taggedItems = items
             taggableApps = apps.map { app -> TaggableItem(app, items.any { app.key == it.key }) }
             taggableOther = items.mapNotNull { item ->

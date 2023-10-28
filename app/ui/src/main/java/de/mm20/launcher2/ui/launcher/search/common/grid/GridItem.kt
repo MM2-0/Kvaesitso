@@ -1,7 +1,5 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
-import android.content.ComponentName
-import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.MutableTransitionState
@@ -42,18 +40,17 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Contact
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.Website
-import de.mm20.launcher2.search.data.Wikipedia
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -66,13 +63,12 @@ import de.mm20.launcher2.ui.launcher.search.files.FileItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutItemGridPopup
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItemGridPopup
-import de.mm20.launcher2.ui.launcher.search.wikipedia.WikipediaItemGridPopup
+import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItemGridPopup
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.ui.overlays.Overlay
-import kotlin.math.min
 import kotlin.math.pow
 
 
@@ -121,9 +117,9 @@ fun GridItem(
 
         val windowSize = LocalWindowSize.current
 
-        if (item is LauncherApp) {
+        if (item is Application) {
             HandleEnterHomeTransition {
-                val cn = ComponentName(item.`package`, item.activity)
+                val cn = item.componentName
                 if (
                     it.componentName == cn &&
                     bounds.right > 0f && bounds.left < windowSize.width &&
@@ -240,7 +236,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                     )
             ) {
                 when (searchable) {
-                    is LauncherApp -> {
+                    is Application -> {
                         AppItemGridPopup(
                             app = searchable,
                             show = show,
@@ -264,9 +260,9 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                         )
                     }
 
-                    is Wikipedia -> {
-                        WikipediaItemGridPopup(
-                            wikipedia = searchable,
+                    is Article -> {
+                        ArticleItemGridPopup(
+                            article = searchable,
                             show = show,
                             animationProgress = animationProgress.value,
                             origin = origin,

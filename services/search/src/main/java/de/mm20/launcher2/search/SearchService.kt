@@ -1,13 +1,8 @@
 package de.mm20.launcher2.search
 
-import de.mm20.launcher2.applications.AppRepository
-import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.calculator.CalculatorRepository
-import de.mm20.launcher2.calendar.CalendarRepository
-import de.mm20.launcher2.contacts.ContactRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
-import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.preferences.Settings.AppShortcutSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
@@ -17,25 +12,11 @@ import de.mm20.launcher2.preferences.Settings.FilesSearchSettings
 import de.mm20.launcher2.preferences.Settings.UnitConverterSearchSettings
 import de.mm20.launcher2.preferences.Settings.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.Settings.WikipediaSearchSettings
-import de.mm20.launcher2.search.data.AppShortcut
 import de.mm20.launcher2.search.data.Calculator
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.Contact
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.GDriveFile
-import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.LocalFile
-import de.mm20.launcher2.search.data.NextcloudFile
-import de.mm20.launcher2.search.data.OneDriveFile
-import de.mm20.launcher2.search.data.OwncloudFile
 import de.mm20.launcher2.search.data.UnitConverter
-import de.mm20.launcher2.search.data.Website
-import de.mm20.launcher2.search.data.Wikipedia
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
-import de.mm20.launcher2.websites.WebsiteRepository
-import de.mm20.launcher2.wikipedia.WikipediaRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -84,15 +65,15 @@ interface SearchService {
 }
 
 internal class SearchServiceImpl(
-    private val appRepository: AppRepository,
-    private val appShortcutRepository: AppShortcutRepository,
-    private val calendarRepository: CalendarRepository,
-    private val contactRepository: ContactRepository,
-    private val fileRepository: FileRepository,
-    private val wikipediaRepository: WikipediaRepository,
+    private val appRepository: SearchableRepository<Application>,
+    private val appShortcutRepository: SearchableRepository<AppShortcut>,
+    private val calendarRepository: SearchableRepository<CalendarEvent>,
+    private val contactRepository: SearchableRepository<Contact>,
+    private val fileRepository: SearchableRepository<File>,
+    private val wikipediaRepository: SearchableRepository<Article>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
-    private val websiteRepository: WebsiteRepository,
+    private val websiteRepository: SearchableRepository<Website>,
     private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
 ) : SearchService {
@@ -184,7 +165,6 @@ internal class SearchServiceImpl(
             if (websites.enabled) {
                 launch {
                     websiteRepository.search(query)
-                        .map { it?.let { listOf(it) } ?: listOf() }
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
@@ -196,8 +176,7 @@ internal class SearchServiceImpl(
             if (wikipedia.enabled) {
                 launch {
                     delay(750)
-                    wikipediaRepository.search(query, loadImages = wikipedia.images)
-                        .map { it?.let { listOf(it) } ?: listOf() }
+                    wikipediaRepository.search(query)
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
@@ -210,11 +189,6 @@ internal class SearchServiceImpl(
                 launch {
                     fileRepository.search(
                         query,
-                        local = files.localFiles,
-                        nextcloud = files.nextcloud,
-                        owncloud = files.owncloud,
-                        onedrive = files.onedrive,
-                        gdrive = files.gdrive,
                     )
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
@@ -229,22 +203,7 @@ internal class SearchServiceImpl(
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
-                            it.copy(
-                                other = r
-                                    .filter {
-                                        it is LauncherApp ||
-                                                shortcuts.enabled && it is AppShortcut ||
-                                                files.localFiles && it is LocalFile ||
-                                                files.nextcloud && it is NextcloudFile ||
-                                                files.owncloud && it is OwncloudFile ||
-                                                files.onedrive && it is OneDriveFile ||
-                                                files.gdrive && it is GDriveFile ||
-                                                wikipedia.enabled && it is Wikipedia ||
-                                                websites.enabled && it is Website ||
-                                                calendars.enabled && it is CalendarEvent ||
-                                                contacts.enabled && it is Contact
-                                    }.toImmutableList()
-                            )
+                            it.copy(other = r.toImmutableList())
                         }
                     }
             }
@@ -257,7 +216,7 @@ internal class SearchServiceImpl(
 }
 
 data class SearchResults(
-    val apps: ImmutableList<LauncherApp>? = null,
+    val apps: ImmutableList<Application>? = null,
     val shortcuts: ImmutableList<AppShortcut>? = null,
     val contacts: ImmutableList<Contact>? = null,
     val calendars: ImmutableList<CalendarEvent>? = null,
@@ -265,7 +224,7 @@ data class SearchResults(
     val calculators: ImmutableList<Calculator>? = null,
     val unitConverters: ImmutableList<UnitConverter>? = null,
     val websites: ImmutableList<Website>? = null,
-    val wikipedia: ImmutableList<Wikipedia>? = null,
+    val wikipedia: ImmutableList<Article>? = null,
     val searchActions: ImmutableList<SearchAction>? = null,
     val other: ImmutableList<SavableSearchable>? = null,
 )

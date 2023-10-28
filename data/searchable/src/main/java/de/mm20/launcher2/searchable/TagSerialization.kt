@@ -19,7 +19,7 @@ class TagSerializer: SearchableSerializer {
 }
 
 class TagDeserializer: SearchableDeserializer {
-    override fun deserialize(serialized: String): SavableSearchable {
+    override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
 
         return Tag(json.getString("tag"))

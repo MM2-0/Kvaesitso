@@ -1,48 +1,55 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.files.providers
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import de.mm20.launcher2.files.OneDriveFileSerializer
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.SearchableSerializer
 
-data class OwncloudFile(
-        val fileId: Long,
+internal data class OneDriveFile(
+        val fileId: String,
         override val label: String,
         override val path: String,
         override val mimeType: String,
         override val size: Long,
         override val isDirectory: Boolean,
-        val server: String,
         override val metaData: List<Pair<Int, String>>,
+        val webUrl: String,
         override val labelOverride: String? = null,
 ) : File {
 
-    override fun overrideLabel(label: String): OwncloudFile {
+    override fun overrideLabel(label: String): OneDriveFile {
         return this.copy(labelOverride = label)
     }
 
     override val domain: String = Domain
 
-    override val key: String = "$domain://$server/$fileId"
+    override val key: String = "$domain://$fileId"
 
-    override val isStoredInCloud: Boolean
-        get() = true
+    override val providerIconRes = R.drawable.ic_badge_onedrive
 
-    override val providerIconRes = R.drawable.ic_badge_owncloud
+    override val isStoredInCloud = true
 
     private fun getLaunchIntent(): Intent {
         return Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("$server/f/$fileId")
+            data = Uri.parse(webUrl)
             flags = Intent.FLAG_ACTIVITY_NEW_TASK
         }
     }
+
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(getLaunchIntent(), options)
     }
 
+    override fun getSerializer(): SearchableSerializer {
+        return OneDriveFileSerializer()
+    }
+
     companion object {
-        const val Domain = "owncloud"
+        const val Domain = "onedrive"
     }
 }

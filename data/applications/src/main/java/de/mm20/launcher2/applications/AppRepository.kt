@@ -10,28 +10,34 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
-import android.util.Log
 import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.Locale
 
-interface AppRepository {
-    fun getAllInstalledApps(): Flow<List<LauncherApp>>
-    fun getSuspendedPackages(): Flow<List<String>>
-    fun search(query: String): Flow<ImmutableList<LauncherApp>>
+interface AppRepository : SearchableRepository<Application> {
+    override fun search(query: String): Flow<ImmutableList<Application>>
+
+    fun findMany(): Flow<ImmutableList<Application>>
 }
 
 internal class AppRepositoryImpl(
     private val context: Context,
 ) : AppRepository {
+    private val scope = CoroutineScope(Dispatchers.Default + Job())
 
     private val launcherApps =
         context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
@@ -40,9 +46,10 @@ internal class AppRepositoryImpl(
     private val suspendedPackages = MutableStateFlow<List<String>>(emptyList())
 
 
-    private val profiles: List<UserHandle> =
-        launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
+    private val profiles: List<UserHandle>
+        get() = launcherApps.profiles.takeIf { it.isNotEmpty() } ?: listOf(Process.myUserHandle())
 
+    private val mutex = Mutex()
 
     init {
         launcherApps.registerCallback(object : LauncherApps.Callback() {
@@ -51,15 +58,23 @@ internal class AppRepositoryImpl(
                 user: UserHandle,
                 replacing: Boolean
             ) {
-                installedApps.value =
-                    installedApps.value.filter { !packageNames.contains(it.`package`) }
+                scope.launch {
+                    mutex.withLock {
+                        installedApps.value =
+                            installedApps.value.filter { !packageNames.contains(it.componentName.packageName) }
+                    }
+                }
             }
 
             override fun onPackageChanged(packageName: String, user: UserHandle) {
-                val apps = installedApps.value.toMutableList()
-                apps.removeAll { packageName == it.`package` }
-                apps.addAll(getApplications(packageName))
-                installedApps.value = apps
+                scope.launch {
+                    mutex.withLock {
+                        val apps = installedApps.value.toMutableList()
+                        apps.removeAll { packageName == it.componentName.packageName }
+                        apps.addAll(getApplications(packageName))
+                        installedApps.value = apps
+                    }
+                }
             }
 
             override fun onPackagesAvailable(
@@ -67,23 +82,35 @@ internal class AppRepositoryImpl(
                 user: UserHandle,
                 replacing: Boolean
             ) {
-                val apps = installedApps.value.toMutableList()
-                for (packageName in packageNames) {
-                    apps.addAll(getApplications(packageName))
+                scope.launch {
+                    mutex.withLock {
+                        val apps = installedApps.value.toMutableList()
+                        for (packageName in packageNames) {
+                            apps.addAll(getApplications(packageName))
+                        }
+                        installedApps.value = apps
+                    }
                 }
-                installedApps.value = apps
             }
 
             override fun onPackageAdded(packageName: String, user: UserHandle) {
-                Log.d("MM20", "App installed: $packageName")
-                val apps = installedApps.value.toMutableList()
-                apps.addAll(getApplications(packageName))
-                installedApps.value = apps
+                scope.launch {
+                    mutex.withLock {
+                        val apps = installedApps.value.toMutableList()
+                        apps.addAll(getApplications(packageName))
+                        installedApps.value = apps
+                    }
+                }
             }
 
             override fun onPackageRemoved(packageName: String, user: UserHandle) {
-                installedApps.value =
-                    installedApps.value.filter { packageName != (it.`package`) || it.getUser() != user }
+                scope.launch {
+                    mutex.withLock {
+                        installedApps.value =
+                            installedApps.value.filter { packageName != (it.componentName.packageName) || it.user != user }
+
+                    }
+                }
             }
 
             override fun onShortcutsChanged(
@@ -91,40 +118,55 @@ internal class AppRepositoryImpl(
                 shortcuts: MutableList<ShortcutInfo>,
                 user: UserHandle
             ) {
-                super.onShortcutsChanged(packageName, shortcuts, user)
                 onPackageChanged(packageName, user)
             }
 
             override fun onPackagesSuspended(packageNames: Array<out String>?, user: UserHandle?) {
-                super.onPackagesSuspended(packageNames, user)
                 packageNames ?: return
-                suspendedPackages.value = suspendedPackages.value + packageNames
+                scope.launch {
+                    mutex.withLock {
+                        installedApps.value = installedApps.value.map {
+                            if (packageNames.contains(it.componentName.packageName)) {
+                                it.copy(isSuspended = true)
+                            } else {
+                                it
+                            }
+                        }
+                    }
+                }
             }
 
             override fun onPackagesUnsuspended(
                 packageNames: Array<out String>?,
                 user: UserHandle?
             ) {
-                super.onPackagesUnsuspended(packageNames, user)
                 packageNames ?: return
-                suspendedPackages.value =
-                    suspendedPackages.value.filter { packageNames.contains(it) }
+                scope.launch {
+                    mutex.withLock {
+                        installedApps.value = installedApps.value.map {
+                            if (packageNames.contains(it.componentName.packageName)) {
+                                it.copy(isSuspended = false)
+                            } else {
+                                it
+                            }
+                        }
+                    }
+                }
             }
 
         }, Handler(Looper.getMainLooper()))
-        val apps = profiles.map { p ->
-            try {
-                launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
-            } catch (e: SecurityException) {
-                emptyList()
+        scope.launch {
+            mutex.withLock {
+                val apps = profiles.map { p ->
+                    try {
+                        launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
+                    } catch (e: SecurityException) {
+                        emptyList()
+                    }
+                }.flatten()
+                installedApps.value = apps
             }
-        }.flatten()
-        installedApps.value = apps
-    }
-
-
-    override fun getSuspendedPackages(): Flow<List<String>> {
-        return suspendedPackages
+        }
     }
 
     private fun getApplications(packageName: String): List<LauncherApp> {
@@ -151,6 +193,10 @@ internal class AppRepositoryImpl(
         return LauncherApp(context, launcherActivityInfo)
     }
 
+    override fun findMany(): Flow<ImmutableList<Application>> {
+        return installedApps.map { it.toImmutableList() }
+    }
+
     override fun search(query: String): Flow<ImmutableList<LauncherApp>> {
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
@@ -169,10 +215,6 @@ internal class AppRepositoryImpl(
                 appResults.toImmutableList()
             }
         }
-    }
-
-    override fun getAllInstalledApps(): Flow<List<LauncherApp>> {
-        return installedApps
     }
 
     private fun matches(label: String, query: String): Boolean {

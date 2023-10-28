@@ -1,10 +1,9 @@
 package de.mm20.launcher2.data.customattrs
 
-import android.database.sqlite.SQLiteDatabase
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.collections.immutable.ImmutableList
@@ -48,7 +47,7 @@ interface CustomAttributesRepository {
 
 internal class CustomAttributesRepositoryImpl(
     private val appDatabase: AppDatabase,
-    private val searchableRepository: SearchableRepository
+    private val searchableRepository: SavableSearchableRepository
 ) : CustomAttributesRepository {
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 

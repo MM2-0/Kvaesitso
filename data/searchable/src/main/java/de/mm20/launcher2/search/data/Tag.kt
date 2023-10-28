@@ -6,6 +6,8 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.searchable.TagSerializer
 
 data class Tag(
     val tag: String,
@@ -31,6 +33,10 @@ data class Tag(
             foregroundLayer = TextLayer("#"),
             backgroundLayer = ColorLayer()
         )
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return TagSerializer()
     }
 
     companion object {

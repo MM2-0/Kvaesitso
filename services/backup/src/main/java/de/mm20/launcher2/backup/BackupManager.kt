@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.preferences.export
 import de.mm20.launcher2.preferences.import
@@ -22,7 +22,7 @@ import java.util.zip.ZipOutputStream
 class BackupManager(
     private val context: Context,
     private val dataStore: LauncherDataStore,
-    private val searchableRepository: SearchableRepository,
+    private val searchableRepository: SavableSearchableRepository,
     private val widgetRepository: WidgetRepository,
     private val searchActionRepository: SearchActionRepository,
     private val customAttrsRepository: CustomAttributesRepository,

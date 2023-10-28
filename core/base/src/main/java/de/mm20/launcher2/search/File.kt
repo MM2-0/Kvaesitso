@@ -1,13 +1,12 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.search
 
 import android.content.Context
 import androidx.core.content.ContextCompat
-import de.mm20.launcher2.files.R
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-import de.mm20.launcher2.search.SavableSearchable
-import java.util.*
+import java.util.Locale
 
 interface File : SavableSearchable {
     val path: String
@@ -21,7 +20,7 @@ interface File : SavableSearchable {
     override val preferDetailsOverLaunch: Boolean
         get() = false
 
-    open val providerIconRes: Int?
+    val providerIconRes: Int?
         get() = null
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {

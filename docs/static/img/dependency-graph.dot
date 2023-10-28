@@ -15,6 +15,7 @@ digraph {
   ":core:ktx" [fillcolor="#94c1ff"];
   ":core:permissions" [fillcolor="#94c1ff"];
   ":core:preferences" [fillcolor="#94c1ff"];
+  ":core:shared" [fillcolor="#94c1ff"];
   ":data:applications" [fillcolor="#fff694"];
   ":data:appshortcuts" [fillcolor="#fff694"];
   ":data:calculator" [fillcolor="#fff694"];
@@ -22,10 +23,11 @@ digraph {
   ":data:contacts" [fillcolor="#fff694"];
   ":data:currencies" [fillcolor="#fff694"];
   ":data:customattrs" [fillcolor="#fff694"];
-  ":data:favorites" [fillcolor="#fff694"];
   ":data:files" [fillcolor="#fff694"];
   ":data:notifications" [fillcolor="#fff694"];
   ":data:search-actions" [fillcolor="#fff694"];
+  ":data:searchable" [fillcolor="#fff694"];
+  ":data:themes" [fillcolor="#fff694"];
   ":data:unitconverter" [fillcolor="#fff694"];
   ":data:weather" [fillcolor="#fff694"];
   ":data:websites" [fillcolor="#fff694"];
@@ -37,9 +39,11 @@ digraph {
   ":libs:nextcloud" [fillcolor="#ad94ff"];
   ":libs:owncloud" [fillcolor="#ad94ff"];
   ":libs:webdav" [fillcolor="#ad94ff"];
+  ":plugins:sdk" [];
   ":services:accounts" [fillcolor="#ff9498"];
   ":services:backup" [fillcolor="#ff9498"];
   ":services:badges" [fillcolor="#ff9498"];
+  ":services:favorites" [fillcolor="#ff9498"];
   ":services:global-actions" [fillcolor="#ff9498"];
   ":services:icons" [fillcolor="#ff9498"];
   ":services:music" [fillcolor="#ff9498"];
@@ -64,13 +68,13 @@ digraph {
   ":app:app" -> ":core:crashreporter" [style=dotted]
   ":app:app" -> ":data:currencies" [style=dotted]
   ":app:app" -> ":data:customattrs" [style=dotted]
-  ":app:app" -> ":data:favorites" [style=dotted]
+  ":app:app" -> ":data:searchable" [style=dotted]
+  ":app:app" -> ":data:themes" [style=dotted]
   ":app:app" -> ":data:files" [style=dotted]
   ":app:app" -> ":libs:g-services" [style=dotted]
   ":app:app" -> ":core:i18n" [style=dotted]
   ":app:app" -> ":services:icons" [style=dotted]
   ":app:app" -> ":core:ktx" [style=dotted]
-  ":app:app" -> ":libs:ms-services" [style=dotted]
   ":app:app" -> ":services:music" [style=dotted]
   ":app:app" -> ":libs:nextcloud" [style=dotted]
   ":app:app" -> ":data:notifications" [style=dotted]
@@ -89,6 +93,7 @@ digraph {
   ":app:app" -> ":data:search-actions" [style=dotted]
   ":app:app" -> ":services:global-actions" [style=dotted]
   ":app:app" -> ":services:widgets" [style=dotted]
+  ":app:app" -> ":services:favorites" [style=dotted]
   ":app:ui" -> ":app:ui"
   ":app:ui" -> ":libs:material-color-utilities" [style=dotted]
   ":app:ui" -> ":core:base" [style=dotted]
@@ -107,7 +112,8 @@ digraph {
   ":app:ui" -> ":data:calculator" [style=dotted]
   ":app:ui" -> ":data:files" [style=dotted]
   ":app:ui" -> ":data:widgets" [style=dotted]
-  ":app:ui" -> ":data:favorites" [style=dotted]
+  ":app:ui" -> ":data:searchable" [style=dotted]
+  ":app:ui" -> ":data:themes" [style=dotted]
   ":app:ui" -> ":data:wikipedia" [style=dotted]
   ":app:ui" -> ":services:badges" [style=dotted]
   ":app:ui" -> ":core:crashreporter" [style=dotted]
@@ -118,112 +124,50 @@ digraph {
   ":app:ui" -> ":data:unitconverter" [style=dotted]
   ":app:ui" -> ":libs:nextcloud" [style=dotted]
   ":app:ui" -> ":libs:g-services" [style=dotted]
-  ":app:ui" -> ":libs:ms-services" [style=dotted]
   ":app:ui" -> ":libs:owncloud" [style=dotted]
   ":app:ui" -> ":services:accounts" [style=dotted]
   ":app:ui" -> ":services:backup" [style=dotted]
   ":app:ui" -> ":data:search-actions" [style=dotted]
   ":app:ui" -> ":services:global-actions" [style=dotted]
   ":app:ui" -> ":services:widgets" [style=dotted]
-  ":core:base" -> ":core:base"
-  ":core:base" -> ":core:ktx" [style=dotted]
-  ":core:base" -> ":core:i18n" [style=dotted]
-  ":core:compat" -> ":core:compat"
-  ":core:crashreporter" -> ":core:crashreporter"
-  ":core:crashreporter" -> ":core:base" [style=dotted]
+  ":app:ui" -> ":services:favorites" [style=dotted]
+  ":core:shared" -> ":core:shared"
   ":core:database" -> ":core:database"
   ":core:database" -> ":core:i18n" [style=dotted]
   ":core:database" -> ":core:ktx" [style=dotted]
-  ":core:i18n" -> ":core:i18n"
-  ":core:ktx" -> ":core:ktx"
-  ":core:permissions" -> ":core:permissions"
-  ":core:permissions" -> ":core:ktx" [style=dotted]
-  ":core:permissions" -> ":core:base" [style=dotted]
-  ":core:permissions" -> ":core:crashreporter" [style=dotted]
+  ":core:database" -> ":core:preferences" [style=dotted]
   ":core:preferences" -> ":core:preferences"
   ":core:preferences" -> ":core:ktx" [style=dotted]
   ":core:preferences" -> ":core:i18n" [style=dotted]
   ":core:preferences" -> ":core:base" [style=dotted]
   ":core:preferences" -> ":core:crashreporter" [style=dotted]
   ":core:preferences" -> ":libs:material-color-utilities" [style=dotted]
-  ":data:applications" -> ":data:applications"
-  ":data:applications" -> ":core:base" [style=dotted]
-  ":data:applications" -> ":core:ktx" [style=dotted]
-  ":data:applications" -> ":core:compat" [style=dotted]
-  ":data:appshortcuts" -> ":data:appshortcuts"
-  ":data:appshortcuts" -> ":data:applications" [style=dotted]
-  ":data:appshortcuts" -> ":core:permissions" [style=dotted]
-  ":data:appshortcuts" -> ":core:base" [style=dotted]
-  ":data:appshortcuts" -> ":core:ktx" [style=dotted]
-  ":data:calculator" -> ":data:calculator"
-  ":data:calculator" -> ":core:base" [style=dotted]
+  ":core:permissions" -> ":core:permissions"
+  ":core:permissions" -> ":core:ktx" [style=dotted]
+  ":core:permissions" -> ":core:base" [style=dotted]
+  ":core:permissions" -> ":core:crashreporter" [style=dotted]
+  ":core:compat" -> ":core:compat"
+  ":core:crashreporter" -> ":core:crashreporter"
+  ":core:crashreporter" -> ":core:base" [style=dotted]
+  ":core:i18n" -> ":core:i18n"
+  ":core:ktx" -> ":core:ktx"
+  ":core:base" -> ":core:base"
+  ":core:base" -> ":core:ktx" [style=dotted]
+  ":core:base" -> ":core:i18n" [style=dotted]
+  ":core:base" -> ":libs:material-color-utilities" [style=dotted]
   ":data:calendar" -> ":data:calendar"
   ":data:calendar" -> ":core:ktx" [style=dotted]
   ":data:calendar" -> ":core:base" [style=dotted]
   ":data:calendar" -> ":core:permissions" [style=dotted]
   ":data:calendar" -> ":libs:material-color-utilities" [style=dotted]
-  ":data:contacts" -> ":data:contacts"
-  ":data:contacts" -> ":core:ktx" [style=dotted]
-  ":data:contacts" -> ":core:base" [style=dotted]
-  ":data:contacts" -> ":core:permissions" [style=dotted]
-  ":data:currencies" -> ":data:currencies"
-  ":data:currencies" -> ":core:ktx" [style=dotted]
-  ":data:currencies" -> ":core:i18n" [style=dotted]
-  ":data:currencies" -> ":core:database" [style=dotted]
-  ":data:currencies" -> ":core:crashreporter" [style=dotted]
-  ":data:customattrs" -> ":data:customattrs"
-  ":data:customattrs" -> ":core:database" [style=dotted]
-  ":data:customattrs" -> ":core:base" [style=dotted]
-  ":data:customattrs" -> ":core:ktx" [style=dotted]
-  ":data:customattrs" -> ":core:crashreporter" [style=dotted]
-  ":data:customattrs" -> ":data:favorites" [style=dotted]
-  ":data:favorites" -> ":data:favorites"
-  ":data:favorites" -> ":core:base" [style=dotted]
-  ":data:favorites" -> ":data:calendar" [style=dotted]
-  ":data:favorites" -> ":core:database" [style=dotted]
-  ":data:favorites" -> ":core:preferences" [style=dotted]
-  ":data:favorites" -> ":data:applications" [style=dotted]
-  ":data:favorites" -> ":data:appshortcuts" [style=dotted]
-  ":data:favorites" -> ":data:contacts" [style=dotted]
-  ":data:favorites" -> ":core:ktx" [style=dotted]
-  ":data:favorites" -> ":data:files" [style=dotted]
-  ":data:favorites" -> ":data:websites" [style=dotted]
-  ":data:favorites" -> ":data:wikipedia" [style=dotted]
-  ":data:favorites" -> ":services:badges" [style=dotted]
-  ":data:favorites" -> ":core:crashreporter" [style=dotted]
-  ":data:files" -> ":data:files"
-  ":data:files" -> ":core:base" [style=dotted]
-  ":data:files" -> ":core:ktx" [style=dotted]
-  ":data:files" -> ":libs:ms-services" [style=dotted]
-  ":data:files" -> ":libs:g-services" [style=dotted]
-  ":data:files" -> ":libs:nextcloud" [style=dotted]
-  ":data:files" -> ":libs:owncloud" [style=dotted]
-  ":data:files" -> ":core:i18n" [style=dotted]
-  ":data:files" -> ":core:permissions" [style=dotted]
-  ":data:files" -> ":core:crashreporter" [style=dotted]
-  ":data:notifications" -> ":data:notifications"
-  ":data:notifications" -> ":core:permissions" [style=dotted]
-  ":data:search-actions" -> ":data:search-actions"
-  ":data:search-actions" -> ":core:base" [style=dotted]
-  ":data:search-actions" -> ":core:database" [style=dotted]
-  ":data:search-actions" -> ":core:ktx" [style=dotted]
-  ":data:search-actions" -> ":core:preferences" [style=dotted]
-  ":data:search-actions" -> ":core:crashreporter" [style=dotted]
-  ":data:unitconverter" -> ":data:unitconverter"
-  ":data:unitconverter" -> ":core:preferences" [style=dotted]
-  ":data:unitconverter" -> ":data:currencies" [style=dotted]
-  ":data:unitconverter" -> ":core:base" [style=dotted]
-  ":data:unitconverter" -> ":core:i18n" [style=dotted]
-  ":data:weather" -> ":data:weather"
-  ":data:weather" -> ":core:database" [style=dotted]
-  ":data:weather" -> ":core:ktx" [style=dotted]
-  ":data:weather" -> ":core:crashreporter" [style=dotted]
-  ":data:weather" -> ":core:preferences" [style=dotted]
-  ":data:weather" -> ":core:permissions" [style=dotted]
-  ":data:weather" -> ":core:i18n" [style=dotted]
-  ":data:websites" -> ":data:websites"
-  ":data:websites" -> ":core:base" [style=dotted]
-  ":data:websites" -> ":core:ktx" [style=dotted]
+  ":data:calculator" -> ":data:calculator"
+  ":data:calculator" -> ":core:base" [style=dotted]
+  ":data:appshortcuts" -> ":data:appshortcuts"
+  ":data:appshortcuts" -> ":data:applications" [style=dotted]
+  ":data:appshortcuts" -> ":core:permissions" [style=dotted]
+  ":data:appshortcuts" -> ":core:base" [style=dotted]
+  ":data:appshortcuts" -> ":core:ktx" [style=dotted]
+  ":data:appshortcuts" -> ":core:crashreporter" [style=dotted]
   ":data:widgets" -> ":data:widgets"
   ":data:widgets" -> ":data:weather" [style=dotted]
   ":data:widgets" -> ":data:calendar" [style=dotted]
@@ -233,40 +177,79 @@ digraph {
   ":data:widgets" -> ":core:preferences" [style=dotted]
   ":data:widgets" -> ":core:database" [style=dotted]
   ":data:widgets" -> ":core:crashreporter" [style=dotted]
+  ":data:searchable" -> ":data:searchable"
+  ":data:searchable" -> ":core:base" [style=dotted]
+  ":data:searchable" -> ":data:calendar" [style=dotted]
+  ":data:searchable" -> ":core:database" [style=dotted]
+  ":data:searchable" -> ":core:preferences" [style=dotted]
+  ":data:searchable" -> ":core:ktx" [style=dotted]
+  ":data:searchable" -> ":data:wikipedia" [style=dotted]
+  ":data:searchable" -> ":services:badges" [style=dotted]
+  ":data:searchable" -> ":core:crashreporter" [style=dotted]
+  ":data:unitconverter" -> ":data:unitconverter"
+  ":data:unitconverter" -> ":core:preferences" [style=dotted]
+  ":data:unitconverter" -> ":data:currencies" [style=dotted]
+  ":data:unitconverter" -> ":core:base" [style=dotted]
+  ":data:unitconverter" -> ":core:i18n" [style=dotted]
+  ":data:themes" -> ":data:themes"
+  ":data:themes" -> ":core:base" [style=dotted]
+  ":data:themes" -> ":core:database" [style=dotted]
+  ":data:themes" -> ":core:crashreporter" [style=dotted]
+  ":data:themes" -> ":libs:material-color-utilities" [style=dotted]
+  ":data:customattrs" -> ":data:customattrs"
+  ":data:customattrs" -> ":core:database" [style=dotted]
+  ":data:customattrs" -> ":core:base" [style=dotted]
+  ":data:customattrs" -> ":core:ktx" [style=dotted]
+  ":data:customattrs" -> ":core:crashreporter" [style=dotted]
+  ":data:customattrs" -> ":data:searchable" [style=dotted]
+  ":data:weather" -> ":data:weather"
+  ":data:weather" -> ":core:database" [style=dotted]
+  ":data:weather" -> ":core:ktx" [style=dotted]
+  ":data:weather" -> ":core:crashreporter" [style=dotted]
+  ":data:weather" -> ":core:preferences" [style=dotted]
+  ":data:weather" -> ":core:permissions" [style=dotted]
+  ":data:weather" -> ":core:i18n" [style=dotted]
+  ":data:files" -> ":data:files"
+  ":data:files" -> ":core:base" [style=dotted]
+  ":data:files" -> ":core:ktx" [style=dotted]
+  ":data:files" -> ":libs:g-services" [style=dotted]
+  ":data:files" -> ":libs:nextcloud" [style=dotted]
+  ":data:files" -> ":libs:owncloud" [style=dotted]
+  ":data:files" -> ":core:i18n" [style=dotted]
+  ":data:files" -> ":core:permissions" [style=dotted]
+  ":data:files" -> ":core:crashreporter" [style=dotted]
+  ":data:files" -> ":core:preferences" [style=dotted]
+  ":data:websites" -> ":data:websites"
+  ":data:websites" -> ":core:base" [style=dotted]
+  ":data:websites" -> ":core:ktx" [style=dotted]
+  ":data:search-actions" -> ":data:search-actions"
+  ":data:search-actions" -> ":core:base" [style=dotted]
+  ":data:search-actions" -> ":core:database" [style=dotted]
+  ":data:search-actions" -> ":core:ktx" [style=dotted]
+  ":data:search-actions" -> ":core:preferences" [style=dotted]
+  ":data:search-actions" -> ":core:crashreporter" [style=dotted]
   ":data:wikipedia" -> ":data:wikipedia"
   ":data:wikipedia" -> ":core:preferences" [style=dotted]
   ":data:wikipedia" -> ":core:base" [style=dotted]
   ":data:wikipedia" -> ":core:ktx" [style=dotted]
   ":data:wikipedia" -> ":core:crashreporter" [style=dotted]
-  ":libs:g-services" -> ":libs:g-services"
-  ":libs:g-services" -> ":core:i18n" [style=dotted]
-  ":libs:g-services" -> ":core:crashreporter" [style=dotted]
-  ":libs:material-color-utilities" -> ":libs:material-color-utilities"
-  ":libs:ms-services" -> ":libs:ms-services"
-  ":libs:ms-services" -> ":core:crashreporter" [style=dotted]
-  ":libs:nextcloud" -> ":libs:webdav"
-  ":libs:nextcloud" -> ":libs:nextcloud"
-  ":libs:nextcloud" -> ":core:i18n" [style=dotted]
-  ":libs:owncloud" -> ":libs:webdav"
-  ":libs:owncloud" -> ":libs:owncloud"
-  ":libs:owncloud" -> ":core:crashreporter" [style=dotted]
-  ":libs:owncloud" -> ":core:ktx" [style=dotted]
-  ":libs:owncloud" -> ":core:i18n" [style=dotted]
-  ":libs:webdav" -> ":libs:webdav"
-  ":libs:webdav" -> ":core:crashreporter" [style=dotted]
-  ":libs:webdav" -> ":core:ktx" [style=dotted]
-  ":services:accounts" -> ":services:accounts"
-  ":services:accounts" -> ":libs:g-services" [style=dotted]
-  ":services:accounts" -> ":libs:ms-services" [style=dotted]
-  ":services:accounts" -> ":libs:owncloud" [style=dotted]
-  ":services:accounts" -> ":libs:nextcloud" [style=dotted]
-  ":services:backup" -> ":services:backup"
-  ":services:backup" -> ":data:favorites" [style=dotted]
-  ":services:backup" -> ":data:widgets" [style=dotted]
-  ":services:backup" -> ":data:search-actions" [style=dotted]
-  ":services:backup" -> ":core:preferences" [style=dotted]
-  ":services:backup" -> ":core:ktx" [style=dotted]
-  ":services:backup" -> ":data:customattrs" [style=dotted]
+  ":data:contacts" -> ":data:contacts"
+  ":data:contacts" -> ":core:ktx" [style=dotted]
+  ":data:contacts" -> ":core:base" [style=dotted]
+  ":data:contacts" -> ":core:permissions" [style=dotted]
+  ":data:notifications" -> ":data:notifications"
+  ":data:notifications" -> ":core:permissions" [style=dotted]
+  ":data:applications" -> ":data:applications"
+  ":data:applications" -> ":core:base" [style=dotted]
+  ":data:applications" -> ":core:ktx" [style=dotted]
+  ":data:applications" -> ":core:compat" [style=dotted]
+  ":data:currencies" -> ":data:currencies"
+  ":data:currencies" -> ":core:ktx" [style=dotted]
+  ":data:currencies" -> ":core:i18n" [style=dotted]
+  ":data:currencies" -> ":core:database" [style=dotted]
+  ":data:currencies" -> ":core:crashreporter" [style=dotted]
+  ":plugins:sdk" -> ":plugins:sdk"
+  ":plugins:sdk" -> ":core:shared" [style=dotted]
   ":services:badges" -> ":services:badges"
   ":services:badges" -> ":core:ktx" [style=dotted]
   ":services:badges" -> ":data:applications" [style=dotted]
@@ -275,11 +258,36 @@ digraph {
   ":services:badges" -> ":core:preferences" [style=dotted]
   ":services:badges" -> ":core:base" [style=dotted]
   ":services:badges" -> ":data:files" [style=dotted]
-  ":services:global-actions" -> ":services:global-actions"
-  ":services:global-actions" -> ":core:preferences" [style=dotted]
-  ":services:global-actions" -> ":core:base" [style=dotted]
-  ":services:global-actions" -> ":core:i18n" [style=dotted]
-  ":services:global-actions" -> ":core:permissions" [style=dotted]
+  ":services:favorites" -> ":services:favorites"
+  ":services:favorites" -> ":core:base" [style=dotted]
+  ":services:favorites" -> ":core:i18n" [style=dotted]
+  ":services:favorites" -> ":data:searchable" [style=dotted]
+  ":services:backup" -> ":services:backup"
+  ":services:backup" -> ":data:searchable" [style=dotted]
+  ":services:backup" -> ":data:widgets" [style=dotted]
+  ":services:backup" -> ":data:search-actions" [style=dotted]
+  ":services:backup" -> ":core:preferences" [style=dotted]
+  ":services:backup" -> ":core:ktx" [style=dotted]
+  ":services:backup" -> ":data:customattrs" [style=dotted]
+  ":services:backup" -> ":data:themes" [style=dotted]
+  ":services:search" -> ":services:search"
+  ":services:search" -> ":data:calculator" [style=dotted]
+  ":services:search" -> ":data:unitconverter" [style=dotted]
+  ":services:search" -> ":data:customattrs" [style=dotted]
+  ":services:search" -> ":data:search-actions" [style=dotted]
+  ":services:search" -> ":core:base" [style=dotted]
+  ":services:search" -> ":core:preferences" [style=dotted]
+  ":services:search" -> ":core:crashreporter" [style=dotted]
+  ":services:search" -> ":core:ktx" [style=dotted]
+  ":services:music" -> ":services:music"
+  ":services:music" -> ":core:ktx" [style=dotted]
+  ":services:music" -> ":core:preferences" [style=dotted]
+  ":services:music" -> ":data:notifications" [style=dotted]
+  ":services:music" -> ":core:crashreporter" [style=dotted]
+  ":services:accounts" -> ":services:accounts"
+  ":services:accounts" -> ":libs:g-services" [style=dotted]
+  ":services:accounts" -> ":libs:owncloud" [style=dotted]
+  ":services:accounts" -> ":libs:nextcloud" [style=dotted]
   ":services:icons" -> ":data:customattrs"
   ":services:icons" -> ":services:icons"
   ":services:icons" -> ":core:database" [style=dotted]
@@ -288,37 +296,37 @@ digraph {
   ":services:icons" -> ":core:base" [style=dotted]
   ":services:icons" -> ":data:applications" [style=dotted]
   ":services:icons" -> ":core:crashreporter" [style=dotted]
-  ":services:music" -> ":services:music"
-  ":services:music" -> ":core:ktx" [style=dotted]
-  ":services:music" -> ":core:preferences" [style=dotted]
-  ":services:music" -> ":data:notifications" [style=dotted]
-  ":services:music" -> ":core:crashreporter" [style=dotted]
-  ":services:search" -> ":services:search"
-  ":services:search" -> ":data:applications" [style=dotted]
-  ":services:search" -> ":data:appshortcuts" [style=dotted]
-  ":services:search" -> ":data:calculator" [style=dotted]
-  ":services:search" -> ":data:calendar" [style=dotted]
-  ":services:search" -> ":data:contacts" [style=dotted]
-  ":services:search" -> ":data:files" [style=dotted]
-  ":services:search" -> ":data:unitconverter" [style=dotted]
-  ":services:search" -> ":data:websites" [style=dotted]
-  ":services:search" -> ":data:wikipedia" [style=dotted]
-  ":services:search" -> ":data:customattrs" [style=dotted]
-  ":services:search" -> ":data:search-actions" [style=dotted]
-  ":services:search" -> ":core:base" [style=dotted]
-  ":services:search" -> ":core:database" [style=dotted]
-  ":services:search" -> ":core:preferences" [style=dotted]
-  ":services:search" -> ":core:crashreporter" [style=dotted]
-  ":services:search" -> ":core:ktx" [style=dotted]
+  ":services:widgets" -> ":services:widgets"
+  ":services:widgets" -> ":core:base" [style=dotted]
+  ":services:widgets" -> ":core:i18n" [style=dotted]
+  ":services:widgets" -> ":data:widgets" [style=dotted]
+  ":services:global-actions" -> ":services:global-actions"
+  ":services:global-actions" -> ":core:preferences" [style=dotted]
+  ":services:global-actions" -> ":core:base" [style=dotted]
+  ":services:global-actions" -> ":core:i18n" [style=dotted]
+  ":services:global-actions" -> ":core:permissions" [style=dotted]
   ":services:tags" -> ":services:tags"
   ":services:tags" -> ":core:preferences" [style=dotted]
   ":services:tags" -> ":core:base" [style=dotted]
   ":services:tags" -> ":core:ktx" [style=dotted]
   ":services:tags" -> ":core:crashreporter" [style=dotted]
   ":services:tags" -> ":data:customattrs" [style=dotted]
-  ":services:tags" -> ":data:favorites" [style=dotted]
-  ":services:widgets" -> ":services:widgets"
-  ":services:widgets" -> ":core:base" [style=dotted]
-  ":services:widgets" -> ":core:i18n" [style=dotted]
-  ":services:widgets" -> ":data:widgets" [style=dotted]
+  ":services:tags" -> ":data:searchable" [style=dotted]
+  ":libs:nextcloud" -> ":libs:webdav"
+  ":libs:nextcloud" -> ":libs:nextcloud"
+  ":libs:nextcloud" -> ":core:i18n" [style=dotted]
+  ":libs:webdav" -> ":libs:webdav"
+  ":libs:webdav" -> ":core:crashreporter" [style=dotted]
+  ":libs:webdav" -> ":core:ktx" [style=dotted]
+  ":libs:g-services" -> ":libs:g-services"
+  ":libs:g-services" -> ":core:i18n" [style=dotted]
+  ":libs:g-services" -> ":core:crashreporter" [style=dotted]
+  ":libs:material-color-utilities" -> ":libs:material-color-utilities"
+  ":libs:owncloud" -> ":libs:webdav"
+  ":libs:owncloud" -> ":libs:owncloud"
+  ":libs:owncloud" -> ":core:crashreporter" [style=dotted]
+  ":libs:owncloud" -> ":core:ktx" [style=dotted]
+  ":libs:owncloud" -> ":core:i18n" [style=dotted]
+  ":libs:ms-services" -> ":libs:ms-services"
+  ":libs:ms-services" -> ":core:crashreporter" [style=dotted]
 }

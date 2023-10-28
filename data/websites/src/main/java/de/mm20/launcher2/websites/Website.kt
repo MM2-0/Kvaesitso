@@ -1,4 +1,4 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.websites
 
 import android.content.Context
 import android.content.Intent
@@ -9,19 +9,19 @@ import coil.imageLoader
 import coil.request.ImageRequest
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.websites.R
+import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.Website
 import java.util.concurrent.ExecutionException
 
-data class Website(
+internal data class WebsiteImpl(
     override val label: String,
-    val url: String,
-    val description: String,
-    val image: String,
-    val favicon: String,
-    val color: Int,
+    override val url: String,
+    override val description: String,
+    override val imageUrl: String,
+    override val faviconUrl: String,
+    override val color: Int,
     override val labelOverride: String? = null,
-) : SavableSearchable {
+) : Website {
 
     override val domain: String = Domain
 
@@ -38,10 +38,10 @@ data class Website(
         size: Int,
         themed: Boolean,
     ): LauncherIcon? {
-        if (favicon.isEmpty()) return null
+        if (faviconUrl.isEmpty()) return null
         try {
             val request = ImageRequest.Builder(context)
-                .data(favicon)
+                .data(faviconUrl)
                 .size(size)
                 .allowHardware(false)
                 .build()
@@ -90,7 +90,9 @@ data class Website(
         return context.tryStartActivity(getLaunchIntent(), options)
     }
 
-    fun share(context: Context) {
+    override val canShare: Boolean = true
+
+    override fun share(context: Context) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.putExtra(
             Intent.EXTRA_TEXT,
@@ -98,6 +100,10 @@ data class Website(
         )
         shareIntent.type = "text/plain"
         context.startActivity(Intent.createChooser(shareIntent, null))
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return WebsiteSerializer()
     }
 
     companion object {

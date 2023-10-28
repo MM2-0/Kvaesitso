@@ -1,6 +1,7 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.appshortcuts
 
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
@@ -12,11 +13,13 @@ import android.os.Process
 import android.util.Log
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getSerialNumber
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.lang.NullPointerException
@@ -24,7 +27,7 @@ import java.lang.NullPointerException
 /**
  * Represents a modern (Android O+) launcher shortcut
  */
-data class LauncherShortcut(
+internal data class LauncherShortcut(
     val launcherShortcut: ShortcutInfo,
     override val appName: String?,
     internal val userSerialNumber: Long,
@@ -32,6 +35,11 @@ data class LauncherShortcut(
 ) : AppShortcut {
 
     override val domain: String = Domain
+    override val componentName: ComponentName?
+        get() = launcherShortcut.activity
+
+    override val packageName: String
+        get() = launcherShortcut.`package`
 
     constructor(
         context: Context,
@@ -48,7 +56,7 @@ data class LauncherShortcut(
     )
 
     override val label: String
-        get() = launcherShortcut.shortLabel?.toString() ?: ""
+        get() = launcherShortcut.shortLabel?.toString() ?: launcherShortcut.longLabel?.toString() ?: ""
 
     override fun overrideLabel(label: String): LauncherShortcut {
         return this.copy(labelOverride = label)
@@ -56,8 +64,10 @@ data class LauncherShortcut(
 
     override val preferDetailsOverLaunch: Boolean = false
 
+    private val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
+    override val profile: AppProfile
+        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
-    val isMainProfile = launcherShortcut.userHandle == Process.myUserHandle()
 
     override val key: String
         get() = if (isMainProfile) {
@@ -142,6 +152,31 @@ data class LauncherShortcut(
                 scale = 1f
             ),
             backgroundLayer = TransparentLayer
+        )
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return LauncherShortcutSerializer()
+    }
+
+    override suspend fun delete(context: Context) {
+        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
+        if (!launcherApps.hasShortcutHostPermission()) return
+        val pinnedShortcutsQuery = LauncherApps.ShortcutQuery().apply {
+            setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
+        }
+        val userHandle = launcherShortcut.userHandle
+        val allPinned = launcherApps.getShortcuts(pinnedShortcutsQuery, userHandle)
+
+        if (allPinned == null) {
+            Log.e("MM20", "Could not remove shortcut ${key}: shortcut query returned null")
+            return
+        }
+
+        launcherApps.pinShortcuts(
+            launcherShortcut.`package`,
+            allPinned.filter { it.id != launcherShortcut.id }.map { it.id },
+            userHandle
         )
     }
 

@@ -1,4 +1,4 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.files.providers
 
 import android.content.Context
 import android.content.Intent
@@ -16,17 +16,21 @@ import android.util.Size
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.files.LocalFileSerializer
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
 import java.io.IOException
 import java.io.File as JavaIOFile
 
-data class LocalFile(
+internal data class LocalFile(
     val id: Long,
     override val path: String,
     override val mimeType: String,
@@ -186,7 +190,7 @@ data class LocalFile(
 
         val file = java.io.File(path)
 
-        withContext(Dispatchers.IO) {
+        withContext(NonCancellable + Dispatchers.IO) {
             file.deleteRecursively()
 
             context.contentResolver.delete(
@@ -351,5 +355,9 @@ data class LocalFile(
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         shareIntent.type = mimeType
         context.startActivity(Intent.createChooser(shareIntent, null))
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return LocalFileSerializer()
     }
 }

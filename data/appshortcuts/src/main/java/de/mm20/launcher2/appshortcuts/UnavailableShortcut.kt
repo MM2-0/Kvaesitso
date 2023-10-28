@@ -1,24 +1,27 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.appshortcuts
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Process
 import android.os.UserManager
-import de.mm20.launcher2.appshortcuts.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SearchableSerializer
 
 /**
  * Shortcut class that is used when a [LauncherShortcut] is not available, e.g. missing permissions
  * when Kvaesitso is not set as default launcher.
  */
-class UnavailableShortcut(
+internal class UnavailableShortcut(
     override val label: String,
     override val appName: String?,
-    val packageName: String,
+    override val packageName: String,
     val shortcutId: String,
     val isMainProfile: Boolean,
     val userSerial: Long,
@@ -33,6 +36,8 @@ class UnavailableShortcut(
         }
 
     override val labelOverride: String?
+        get() = null
+    override val componentName: ComponentName?
         get() = null
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
@@ -55,6 +60,14 @@ class UnavailableShortcut(
     override fun launch(context: Context, options: Bundle?): Boolean {
         return false
     }
+
+    override fun getSerializer(): SearchableSerializer {
+        return UnavailableShortcutSerializer()
+    }
+
+    override val isUnavailable: Boolean = true
+    override val profile: AppProfile
+        get() = TODO("Not yet implemented")
 
     companion object {
         internal operator fun invoke(context: Context, id: String, packageName: String, userSerial: Long): UnavailableShortcut? {

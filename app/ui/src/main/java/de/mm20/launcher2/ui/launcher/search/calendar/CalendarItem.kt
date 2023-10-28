@@ -41,13 +41,14 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.lifecycleScope
-import de.mm20.launcher2.search.data.CalendarEvent
+import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -83,12 +84,13 @@ fun CalendarItem(
     val snackbarHostState = LocalSnackbarHostState.current
 
     val darkMode = LocalDarkTheme.current
+    val secondaryColor = MaterialTheme.colorScheme.secondary
 
     Row(
         modifier = modifier
             .drawBehind {
                 val color = TonalPalette
-                    .fromInt(calendar.color)
+                    .fromInt(calendar.color ?: secondaryColor.toArgb())
                     .tone(
                         if (darkMode) 80 else 40
                     )
@@ -151,7 +153,7 @@ fun CalendarItem(
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
-                    if (calendar.description.isNotBlank()) {
+                    if (calendar.description != null) {
                         Row(
                             Modifier
                                 .fillMaxWidth(),
@@ -163,7 +165,7 @@ fun CalendarItem(
                                 contentDescription = null
                             )
                             Text(
-                                text = calendar.description,
+                                text = calendar.description!!,
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -185,7 +187,7 @@ fun CalendarItem(
                             )
                         }
                     }
-                    if (calendar.location.isNotBlank()) {
+                    if (calendar.location != null) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
@@ -200,7 +202,7 @@ fun CalendarItem(
                                 contentDescription = null
                             )
                             Text(
-                                text = calendar.location,
+                                text = calendar.location!!,
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -320,8 +322,7 @@ fun CalendarItemGridPopup(
     ) {
         CalendarItem(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(calendar.color).copy(alpha = 1f - animationProgress)),
+                .fillMaxWidth(),
             calendar = calendar,
             showDetails = true,
             onBack = onDismiss

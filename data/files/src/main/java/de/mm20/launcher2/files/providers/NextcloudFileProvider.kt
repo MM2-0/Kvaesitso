@@ -2,8 +2,7 @@ package de.mm20.launcher2.files.providers
 
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.NextcloudFile
+import de.mm20.launcher2.search.File
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.min

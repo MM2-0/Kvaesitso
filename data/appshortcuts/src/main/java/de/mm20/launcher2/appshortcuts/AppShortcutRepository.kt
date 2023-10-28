@@ -1,21 +1,19 @@
 package de.mm20.launcher2.appshortcuts
 
+import android.content.ComponentName
 import android.content.Context
-import android.content.pm.LauncherActivityInfo
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.os.Handler
 import android.os.Looper
 import android.os.Process
 import android.os.UserHandle
-import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -28,22 +26,25 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
 import org.apache.commons.text.similarity.FuzzyScore
 import java.util.Locale
 
-interface AppShortcutRepository {
+interface AppShortcutRepository : SearchableRepository<AppShortcut> {
 
-    fun search(query: String): Flow<ImmutableList<AppShortcut>>
-    suspend fun getShortcutsForActivity(
-        launcherActivityInfo: LauncherActivityInfo,
-        count: Int = 5
-    ): List<LauncherShortcut>
+    fun findMany(
+        componentName: ComponentName? = null,
+        user: UserHandle = Process.myUserHandle(),
+        manifest: Boolean = false,
+        dynamic: Boolean = false,
+        pinned: Boolean = false,
+        cached: Boolean = false,
+        limit: Int = 5,
+    ): Flow<ImmutableList<AppShortcut>>
 
-    suspend fun getShortcutsConfigActivities(): List<LauncherApp>
-
-    fun removePinnedShortcut(shortcut: LauncherShortcut)
+    suspend fun getShortcutsConfigActivities(): List<AppShortcutConfigActivity>
 }
 
 internal class AppShortcutRepositoryImpl(
@@ -53,33 +54,58 @@ internal class AppShortcutRepositoryImpl(
 
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
-    override suspend fun getShortcutsForActivity(
-        launcherActivityInfo: LauncherActivityInfo,
-        count: Int,
-    ) = withContext(Dispatchers.IO) {
-        val launcherApps = context.getSystemService<LauncherApps>()!!
-        if (!launcherApps.hasShortcutHostPermission()) return@withContext emptyList()
-        val query = LauncherApps.ShortcutQuery()
-            .setPackage(launcherActivityInfo.applicationInfo.packageName)
-            .setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST)
-        val shortcuts = try {
-            launcherApps.getShortcuts(query, launcherActivityInfo.user)
-        } catch (e: IllegalStateException) {
-            emptyList()
-        }
-        val appShortcuts = mutableListOf<LauncherShortcut>()
-        appShortcuts.addAll(shortcuts
-            ?.let {
-                if (it.size > count) it.subList(0, count)
-                else it
-            }
-            ?.map {
-                LauncherShortcut(
-                    context,
-                    it,
+    override fun findMany(
+        componentName: ComponentName?,
+        user: UserHandle,
+        manifest: Boolean,
+        dynamic: Boolean,
+        pinned: Boolean,
+        cached: Boolean,
+        limit: Int
+    ): Flow<ImmutableList<AppShortcut>> = flow {
+        val shortcuts = withContext(Dispatchers.IO) {
+            val launcherApps = context.getSystemService<LauncherApps>()!!
+            if (!launcherApps.hasShortcutHostPermission()) return@withContext emptyList()
+            val query = LauncherApps.ShortcutQuery()
+                .setActivity(componentName)
+                .setQueryFlags(
+                    buildQueryFlags(manifest, dynamic, pinned, cached)
                 )
-            } ?: emptyList())
-        appShortcuts
+            val shortcuts = try {
+                launcherApps.getShortcuts(query, user)
+            } catch (e: IllegalStateException) {
+                emptyList()
+            }
+            val appShortcuts = mutableListOf<LauncherShortcut>()
+            appShortcuts.addAll(shortcuts
+                ?.let {
+                    if (it.size > limit) it.subList(0, limit)
+                    else it
+                }
+                ?.map {
+                    LauncherShortcut(
+                        context,
+                        it,
+                    )
+                } ?: emptyList()
+            )
+            appShortcuts
+        }
+        emit(shortcuts.toImmutableList())
+    }
+
+    private fun buildQueryFlags(
+        manifest: Boolean,
+        dynamic: Boolean,
+        pinned: Boolean,
+        cached: Boolean,
+    ): Int {
+        var flags = 0
+        if (manifest) flags = flags or LauncherApps.ShortcutQuery.FLAG_MATCH_MANIFEST
+        if (dynamic) flags = flags or LauncherApps.ShortcutQuery.FLAG_MATCH_DYNAMIC
+        if (pinned) flags = flags or LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED
+        if (cached) flags = flags or LauncherApps.ShortcutQuery.FLAG_MATCH_CACHED
+        return flags
     }
 
     override fun search(query: String) = channelFlow<ImmutableList<AppShortcut>> {
@@ -92,7 +118,6 @@ internal class AppShortcutRepositoryImpl(
                 send(persistentListOf())
                 return@withContext
             }
-
 
             shortcutChangeEmitter.collectLatest {
                 val launcherApps =
@@ -180,39 +205,16 @@ internal class AppShortcutRepositoryImpl(
         }
     }.shareIn(scope, SharingStarted.WhileSubscribed(500), 1)
 
-    override fun removePinnedShortcut(shortcut: LauncherShortcut) {
-        val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
-        if (!launcherApps.hasShortcutHostPermission()) return
-        val pinnedShortcutsQuery = LauncherApps.ShortcutQuery().apply {
-            setQueryFlags(LauncherApps.ShortcutQuery.FLAG_MATCH_PINNED)
-        }
-        val userHandle = shortcut.launcherShortcut.userHandle
-        val allPinned = launcherApps.getShortcuts(pinnedShortcutsQuery, userHandle)
-
-        if (allPinned == null) {
-            Log.e("MM20", "Could not remove shortcut ${shortcut.key}: shortcut query returned null")
-            return
-        }
-
-        launcherApps.pinShortcuts(
-            shortcut.launcherShortcut.`package`,
-            allPinned.filter { it.id != shortcut.launcherShortcut.id }.map { it.id },
-            userHandle
-        )
-    }
-
-    override suspend fun getShortcutsConfigActivities(): List<LauncherApp> {
+    override suspend fun getShortcutsConfigActivities(): List<AppShortcutConfigActivity> {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return emptyList()
-        val results = mutableListOf<LauncherApp>()
+        val results = mutableListOf<AppShortcutConfigActivity>()
         val profiles = launcherApps.profiles
         for (profile in profiles) {
             val activities = launcherApps.getShortcutConfigActivityList(null, profile)
             results.addAll(
                 activities.map {
-                    LauncherApp(
-                        context, it
-                    )
+                    AppShortcutConfigActivity(it)
                 }
             )
         }

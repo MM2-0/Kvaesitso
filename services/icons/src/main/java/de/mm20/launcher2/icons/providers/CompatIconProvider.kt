@@ -6,8 +6,8 @@ import android.content.pm.PackageManager
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.compat.AdaptiveIconDrawableCompat
 import de.mm20.launcher2.icons.compat.toLauncherIcon
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.LauncherApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -16,8 +16,8 @@ class CompatIconProvider(
     private val themed: Boolean = false,
 ) : IconProvider {
     override suspend fun getIcon(searchable: SavableSearchable, size: Int): LauncherIcon? {
-        if (searchable !is LauncherApp) return null
-        val component = ComponentName(searchable.`package`, searchable.activity)
+        if (searchable !is Application) return null
+        val component = searchable.componentName
 
         val icon = withContext(Dispatchers.IO) {
             val activityInfo = try {

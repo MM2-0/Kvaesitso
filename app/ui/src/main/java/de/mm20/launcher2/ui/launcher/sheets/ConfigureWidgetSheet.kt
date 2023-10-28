@@ -74,7 +74,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.data.UserCalendar
+import de.mm20.launcher2.calendar.UserCalendar
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage

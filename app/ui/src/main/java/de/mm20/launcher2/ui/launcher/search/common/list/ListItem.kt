@@ -9,9 +9,11 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.*
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem

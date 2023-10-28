@@ -6,8 +6,8 @@ import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.data.CalendarEvent
-import de.mm20.launcher2.search.data.UserCalendar
+import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -18,16 +18,16 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import org.koin.core.component.KoinComponent
 import java.util.Calendar
 
-interface CalendarRepository {
-
-    fun search(query: String): Flow<ImmutableList<CalendarEvent>>
-    fun getUpcomingEvents(
-        excludeCalendars: List<Long>,
-        excludeAllDayEvents: Boolean
-    ): Flow<List<CalendarEvent>>
+interface CalendarRepository: SearchableRepository<CalendarEvent> {
+    fun findMany(
+        from: Long = System.currentTimeMillis(),
+        to: Long = from + 14 * 24 * 60 * 60 * 1000L,
+        excludeCalendars: List<Long> = emptyList(),
+        excludeAllDayEvents: Boolean = false,
+        limit: Int = 999,
+    ): Flow<ImmutableList<CalendarEvent>>
 
     suspend fun getCalendars(): List<UserCalendar>
 }
@@ -60,16 +60,43 @@ internal class CalendarRepositoryImpl(
 
     }
 
+    override fun findMany(
+        from: Long,
+        to: Long,
+        excludeCalendars: List<Long>,
+        excludeAllDayEvents: Boolean,
+        limit: Int,
+    ) = channelFlow<ImmutableList<CalendarEvent>> {
+        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
+        hasPermission.collectLatest {
+            if (it) {
+                val events = withContext(Dispatchers.IO) {
+                    queryCalendarEvents(
+                        query = "",
+                        intervalStart = from,
+                        intervalEnd = to,
+                        limit = limit,
+                        excludeAllDayEvents = excludeAllDayEvents,
+                        excludeCalendars = excludeCalendars
+                    )
+                }
+                send(events.toImmutableList())
+            } else {
+                send(persistentListOf())
+            }
+        }
+    }
+
     private suspend fun queryCalendarEvents(
-        query: String,
+        query: String?,
         intervalStart: Long,
         intervalEnd: Long,
         limit: Int = 10,
         excludeAllDayEvents: Boolean = false,
         excludeCalendars: List<Long> = emptyList(),
-    ): List<CalendarEvent> {
+    ): List<AndroidCalendarEvent> {
         val results = withContext(Dispatchers.IO) {
-            val results = mutableListOf<CalendarEvent>()
+            val results = mutableListOf<AndroidCalendarEvent>()
             val builder = CalendarContract.Instances.CONTENT_URI.buildUpon()
             ContentUris.appendId(builder, intervalStart)
             ContentUris.appendId(builder, intervalEnd)
@@ -86,10 +113,10 @@ internal class CalendarRepositoryImpl(
                 CalendarContract.Instances.DESCRIPTION
             )
             val selection = mutableListOf<String>()
-            if (query.isNotEmpty()) selection.add("${CalendarContract.Instances.TITLE} LIKE ?")
+            if (query != null) selection.add("${CalendarContract.Instances.TITLE} LIKE ?")
             if (excludeCalendars.isNotEmpty()) selection.add("${CalendarContract.Instances.CALENDAR_ID} NOT IN (${excludeCalendars.joinToString()})")
             if (excludeAllDayEvents) selection.add("${CalendarContract.Instances.ALL_DAY} = 0")
-            val selArgs = if (query.isBlank()) null else arrayOf("%$query%")
+            val selArgs = if (query != null) null else arrayOf("%$query%")
             val sort =
                 "${CalendarContract.Instances.BEGIN} ASC" + if (limit > -1) " LIMIT $limit" else ""
             val cursor = context.contentResolver.query(
@@ -128,7 +155,7 @@ internal class CalendarRepositoryImpl(
                 } else {
                     0
                 }
-                val event = CalendarEvent(
+                val event = AndroidCalendarEvent(
                     label = cursor.getStringOrNull(1) ?: "",
                     id = cursor.getLong(0),
                     color = cursor.getInt(5),
@@ -148,32 +175,6 @@ internal class CalendarRepositoryImpl(
         }
 
         return results
-    }
-
-    override fun getUpcomingEvents(
-        excludeCalendars: List<Long>,
-        excludeAllDayEvents: Boolean,
-    ): Flow<List<CalendarEvent>> = channelFlow {
-        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        hasPermission.collectLatest {
-            if (it) {
-                val now = System.currentTimeMillis()
-                val end = now + 14 * 24 * 60 * 60 * 1000L
-                val events = withContext(Dispatchers.IO) {
-                    queryCalendarEvents(
-                        query = "",
-                        intervalStart = now,
-                        intervalEnd = end,
-                        limit = 700,
-                        excludeAllDayEvents = excludeAllDayEvents,
-                        excludeCalendars = excludeCalendars
-                    )
-                }
-                send(events)
-            } else {
-                send(emptyList())
-            }
-        }
     }
 
     override suspend fun getCalendars(): List<UserCalendar> {

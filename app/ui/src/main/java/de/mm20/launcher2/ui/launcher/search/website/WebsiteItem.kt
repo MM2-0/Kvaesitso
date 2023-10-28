@@ -32,7 +32,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import coil.compose.AsyncImage
-import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
@@ -64,13 +64,13 @@ fun WebsiteItem(
             viewModel.launch(context)
         }
     ) {
-        if (website.image.isNotBlank()) {
+        if (website.imageUrl != null) {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(16f / 9f)
                     .background(MaterialTheme.colorScheme.secondaryContainer),
-                model = website.image,
+                model = website.imageUrl,
                 contentScale = ContentScale.Crop,
                 contentDescription = null
             )
@@ -93,7 +93,7 @@ fun WebsiteItem(
             }
             Text(
                 modifier = Modifier.padding(vertical = 8.dp),
-                text = website.description,
+                text = website.description ?: "",
                 style = MaterialTheme.typography.bodySmall
             )
         }

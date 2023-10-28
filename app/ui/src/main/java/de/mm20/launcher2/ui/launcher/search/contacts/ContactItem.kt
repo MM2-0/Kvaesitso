@@ -17,16 +17,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.Message
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Email
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.MoreHoriz
 import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.icons.rounded.Whatsapp
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarDuration
@@ -36,6 +40,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
@@ -49,7 +54,8 @@ import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.data.Contact
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.ContactInfoType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.Chip
@@ -144,164 +150,38 @@ fun ContactItem(
         }
 
         AnimatedVisibility(showDetails) {
+            val groups = remember {
+                contact.contactInfos.groupBy { it.type }
+            }
             Column {
 
-                if (contact.phones.isNotEmpty()) {
+                for ((type, items) in groups) {
                     Row(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Rounded.Call, contentDescription = null)
+                        Icon(when(type) {
+                            ContactInfoType.Phone -> Icons.Rounded.Call
+                            ContactInfoType.Message -> Icons.AutoMirrored.Rounded.Message
+                            ContactInfoType.Email -> Icons.Rounded.Email
+                            ContactInfoType.Postal -> Icons.Rounded.Home
+                            ContactInfoType.Telegram -> Icons.Rounded.Telegram
+                            ContactInfoType.Whatsapp -> Icons.Rounded.Whatsapp
+                            ContactInfoType.Signal -> Icons.Rounded.Signal
+                            ContactInfoType.Other -> Icons.Rounded.MoreHoriz
+                        }, contentDescription = null)
                         LazyRow(
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(start = 16.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            items(contact.phones.toList()) {
+                            items(items.toList()) {
                                 Chip(
                                     modifier = Modifier.padding(end = 16.dp),
                                     text = it.label,
                                     onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
-                if (contact.emails.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Rounded.Email, contentDescription = null)
-                        LazyRow(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            items(contact.emails.toList()) {
-                                Chip(
-                                    modifier = Modifier.padding(end = 16.dp),
-                                    text = it.label,
-                                    onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
-                if (contact.signal.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Rounded.Signal, contentDescription = null)
-                        LazyRow(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            items(contact.signal.toList()) {
-                                Chip(
-                                    modifier = Modifier.padding(end = 16.dp),
-                                    text = it.label,
-                                    onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
-                if (contact.telegram.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Rounded.Telegram, contentDescription = null)
-                        LazyRow(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            items(contact.telegram.toList()) {
-                                Chip(
-                                    modifier = Modifier.padding(end = 16.dp),
-                                    text = it.label,
-                                    onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
-                if (contact.whatsapp.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Rounded.WhatsApp, contentDescription = null)
-                        LazyRow(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            items(contact.whatsapp.toList()) {
-                                Chip(
-                                    modifier = Modifier.padding(end = 16.dp),
-                                    text = it.label,
-                                    onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
-                                    }
-                                )
-                            }
-                        }
-                    }
-                }
-                if (contact.postals.isNotEmpty()) {
-                    Row(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(Icons.Rounded.Place, contentDescription = null)
-                        LazyRow(
-                            modifier = Modifier
-                                .weight(1f)
-                                .padding(start = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            items(contact.postals.toList()) {
-                                Chip(
-                                    modifier = Modifier.padding(end = 16.dp),
-                                    text = it.label,
-                                    onClick = {
-                                        context.tryStartActivity(
-                                            Intent(Intent.ACTION_VIEW).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                                .setData(Uri.parse(it.data))
-                                        )
+                                        context.tryStartActivity(it.intent)
                                     }
                                 )
                             }

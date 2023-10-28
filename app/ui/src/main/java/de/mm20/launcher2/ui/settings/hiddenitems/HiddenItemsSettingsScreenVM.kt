@@ -1,20 +1,17 @@
 package de.mm20.launcher2.ui.settings.hiddenitems
 
-import android.content.ComponentName
 import android.content.Context
-import android.content.pm.LauncherApps
 import android.os.Bundle
-import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.applications.AppRepository
-import de.mm20.launcher2.searchable.SearchableRepository
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.LauncherApp
+import de.mm20.launcher2.search.Application
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,16 +27,16 @@ import org.koin.core.component.inject
 
 class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     private val appRepository: AppRepository by inject()
-    private val searchableRepository: SearchableRepository by inject()
+    private val searchableRepository: SavableSearchableRepository by inject()
     private val iconService: IconService by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    val allApps = appRepository.getAllInstalledApps().map {
+    val allApps = appRepository.findMany().map {
         withContext(Dispatchers.Default) { it.sorted() }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
     val hiddenItems: StateFlow<List<SavableSearchable>> = flow {
         val hidden =
-            searchableRepository.get(hidden = true).first().filter { it !is LauncherApp }.sorted()
+            searchableRepository.get(hidden = true).first().filter { it !is Application }.sorted()
         emit(hidden)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
@@ -67,15 +64,8 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
         searchable.launch(context, bundle)
     }
 
-    fun openAppInfo(context: Context, app: LauncherApp) {
-        val launcherApps = context.getSystemService<LauncherApps>()!!
-
-        launcherApps.startAppDetailsActivity(
-            ComponentName(app.`package`, app.activity),
-            app.getUser(),
-            null,
-            null
-        )
+    fun openAppInfo(context: Context, app: Application) {
+        app.openAppDetails(context)
     }
 
     val hiddenItemsButton = dataStore.data.map { it.searchBar.hiddenItemsButton }

@@ -1,17 +1,18 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.search
 
+import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
 import androidx.core.content.ContextCompat
-import de.mm20.launcher2.appshortcuts.R
+import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
-import de.mm20.launcher2.search.SavableSearchable
 
-interface AppShortcut: SavableSearchable {
+interface AppShortcut : SavableSearchable {
 
     val appName: String?
+    val componentName: ComponentName?
+    val packageName: String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = false
@@ -27,10 +28,13 @@ interface AppShortcut: SavableSearchable {
         )
     }
 
-    companion object {
-        fun fromPinRequestIntent(context: Context, data: Intent): AppShortcut? {
-            return LauncherShortcut.fromPinRequestIntent(context, data)
-                ?: LegacyShortcut.fromPinRequestIntent(context, data)
-        }
-    }
+    val canDelete: Boolean
+        get() = false
+
+    suspend fun delete(context: Context) {}
+
+    val isUnavailable: Boolean
+        get() = false
+
+    val profile: AppProfile
 }

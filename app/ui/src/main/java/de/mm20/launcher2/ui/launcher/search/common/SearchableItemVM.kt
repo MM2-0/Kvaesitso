@@ -4,27 +4,22 @@ import android.content.Context
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.Drawable
-import android.service.notification.StatusBarNotification
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
-import de.mm20.launcher2.files.FileRepository
 import de.mm20.launcher2.icons.IconService
+import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.data.AppShortcut
-import de.mm20.launcher2.search.data.File
-import de.mm20.launcher2.search.data.LauncherApp
-import de.mm20.launcher2.search.data.LauncherShortcut
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
@@ -33,9 +28,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -46,7 +43,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val tagsService: TagsService by inject()
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
-    private val fileRepository: FileRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
 
     private val searchable = MutableStateFlow<SavableSearchable?>(null)
@@ -93,13 +89,19 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     }
 
     val notifications = searchable.flatMapLatest { searchable ->
-        if (searchable !is LauncherApp) emptyFlow()
-        else notificationRepository.notifications.map { it.filter { it.packageName == searchable.`package` && !it.isGroupSummary } }
+        if (searchable !is Application) emptyFlow()
+        else notificationRepository.notifications.map { it.filter { it.packageName == searchable.componentName.packageName && !it.isGroupSummary } }
     }
 
     val shortcuts = searchable.map {
-        if (it !is LauncherApp) emptyList()
-        else appShortcutRepository.getShortcutsForActivity(it.launcherActivityInfo, 5)
+        if (it !is Application) emptyList()
+        else appShortcutRepository
+            .findMany(
+                componentName = it.componentName,
+                user = it.user,
+                manifest = true,
+                dynamic = true,
+            ).first()
     }
 
     open fun launch(context: Context, bounds: Rect? = null): Boolean {
@@ -120,7 +122,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable.launch(context, bundle)) {
             favoritesService.reportLaunch(searchable)
             return true
-        } else if (searchable is LauncherApp || searchable is AppShortcut) {
+        } else if (searchable is Application || searchable is AppShortcut) {
             favoritesService.reset(searchable)
         }
         return false
@@ -130,9 +132,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         notificationRepository.cancelNotification(notification)
     }
 
-    fun getShortcutIcon(context: Context, shortcut: ShortcutInfo): Drawable? {
-        val launcherApps = context.getSystemService<LauncherApps>() ?: return null
-        return launcherApps.getShortcutIconDrawable(shortcut, 0)
+    fun getShortcutIcon(context: Context, shortcut: AppShortcut, size: Int): Flow<LauncherIcon?> {
+        return iconService.getIcon(shortcut, size)
     }
 
     fun isShortcutPinned(shortcut: AppShortcut): Flow<Boolean> {
@@ -151,10 +152,18 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         shortcut.launch(context, null)
     }
 
-    fun delete() {
+    fun delete(context: Context) {
         val searchable = searchable.value ?: return
-        if (searchable is File) fileRepository.deleteFile(searchable)
-        if (searchable is LauncherShortcut) appShortcutRepository.removePinnedShortcut(searchable)
+        if (searchable is File) {
+            viewModelScope.launch {
+                searchable.delete(context.applicationContext)
+            }
+        }
+        if (searchable is AppShortcut) {
+            viewModelScope.launch {
+                searchable.delete(context.applicationContext)
+            }
+        }
         favoritesService.reset(searchable)
     }
 

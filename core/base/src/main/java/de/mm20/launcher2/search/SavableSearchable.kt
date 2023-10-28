@@ -8,8 +8,6 @@ import de.mm20.launcher2.ktx.romanize
 import java.text.Collator
 
 interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
-
-    val domain: String
     val key: String
 
     val label: String
@@ -39,6 +37,13 @@ interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
         val label2 = other.labelOverride ?: other.label
         return Collator.getInstance().apply { strength = Collator.SECONDARY }
             .compare(label1.romanize(), label2.romanize())
+    }
+
+    val domain: String
+    fun getSerializer(): SearchableSerializer
+
+    interface Companion {
+        val Domain: String
     }
 
 }

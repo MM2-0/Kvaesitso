@@ -24,9 +24,13 @@ import kotlinx.coroutines.withContext
 import org.json.JSONArray
 import org.json.JSONException
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.get
+import org.koin.core.error.InstanceCreationException
+import org.koin.core.error.NoBeanDefFoundException
+import org.koin.core.qualifier.named
 import java.io.File
 
-interface SearchableRepository {
+interface SavableSearchableRepository {
 
     fun insert(
         searchable: SavableSearchable,
@@ -114,11 +118,11 @@ interface SearchableRepository {
     suspend fun cleanupDatabase(): Int
 }
 
-internal class SearchableRepositoryImpl(
+internal class SavableSearchableRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
     private val dataStore: LauncherDataStore
-) : SearchableRepository, KoinComponent {
+) : SavableSearchableRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
@@ -348,10 +352,17 @@ internal class SearchableRepositoryImpl(
         return database.searchableDao().sortByWeight(keys)
     }
 
-    private fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {
-        val deserializer: SearchableDeserializer =
-            getDeserializer(context, entity.type)
-        val searchable = deserializer.deserialize(entity.serializedSearchable)
+    private suspend fun fromDatabaseEntity(entity: SavedSearchableEntity): SavedSearchable {
+        val deserializer: SearchableDeserializer? = try {
+            get(named(entity.type))
+        } catch (e: NoBeanDefFoundException) {
+            CrashReporter.logException(e)
+            null
+        } catch (e: InstanceCreationException) {
+            CrashReporter.logException(e)
+            null
+        }
+        val searchable = deserializer?.deserialize(entity.serializedSearchable)
         if (searchable == null) removeInvalidItem(entity.key)
         return SavedSearchable(
             key = entity.key,

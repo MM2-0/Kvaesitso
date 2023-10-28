@@ -1,5 +1,6 @@
-package de.mm20.launcher2.search.data
+package de.mm20.launcher2.appshortcuts
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.Intent.ShortcutIconResource
@@ -10,8 +11,11 @@ import de.mm20.launcher2.icons.*
 import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.SearchableSerializer
 
-data class LegacyShortcut(
+internal data class LegacyShortcut(
     val intent: Intent,
     override val label: String,
     override val appName: String?,
@@ -22,6 +26,9 @@ data class LegacyShortcut(
     override val domain = Domain
     override val key: String = "$domain://${intent.toUri(0)}"
 
+    override val profile: AppProfile
+        get() = AppProfile.Personal
+
     override fun overrideLabel(label: String): LegacyShortcut {
         return this.copy(labelOverride = label)
     }
@@ -31,7 +38,10 @@ data class LegacyShortcut(
         return context.tryStartActivity(intent, options)
     }
 
-    val packageName: String?
+    override val componentName: ComponentName?
+        get() = intent.component
+
+    override val packageName: String?
         get() = intent.`package` ?: intent.component?.packageName
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
@@ -73,6 +83,10 @@ data class LegacyShortcut(
             ),
             backgroundLayer = TransparentLayer
         )
+    }
+
+    override fun getSerializer(): SearchableSerializer {
+        return LegacyShortcutSerializer()
     }
 
     companion object {

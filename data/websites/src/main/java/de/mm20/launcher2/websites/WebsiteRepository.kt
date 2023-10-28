@@ -2,8 +2,12 @@ package de.mm20.launcher2.websites
 
 import android.content.Context
 import android.webkit.URLUtil
+import androidx.compose.runtime.Immutable
 import androidx.core.graphics.toColorInt
-import de.mm20.launcher2.search.data.Website
+import de.mm20.launcher2.search.SearchableRepository
+import de.mm20.launcher2.search.Website
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -20,11 +24,8 @@ import java.net.URISyntaxException
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-interface WebsiteRepository {
-    fun search(query: String): Flow<Website?>
-}
 
-internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, KoinComponent {
+internal class WebsiteRepository(val context: Context) : SearchableRepository<Website> {
 
     private val httpClient = OkHttpClient
         .Builder()
@@ -33,16 +34,17 @@ internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, 
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
         .build()
 
-    override fun search(query: String): Flow<Website?> = channelFlow {
-        send(null)
+    override fun search(query: String): Flow<ImmutableList<Website>> = channelFlow {
+        send(persistentListOf())
         withContext(Dispatchers.IO) {
             httpClient.dispatcher.cancelAll()
         }
         if (query.isBlank()) return@channelFlow
 
         val website = queryWebsite(query)
-        send(website)
-
+        website?.let {
+            send(persistentListOf(it))
+        }
     }
 
     private suspend fun queryWebsite(query: String): Website? {
@@ -84,12 +86,12 @@ internal class WebsiteRepositoryImpl(val context: Context) : WebsiteRepository, 
                     doc.head().select("link[href~=.*\\.(ico|png)]").attr("href")
                 if (favicon.isNotBlank()) favicon = resolveUrl(response.request.url, favicon)
                 if (image.isNotBlank()) image = resolveUrl(response.request.url, image)
-                return@withContext Website(
+                return@withContext WebsiteImpl(
                     label = title,
                     url = url,
                     description = description,
-                    image = image,
-                    favicon = favicon,
+                    imageUrl = image,
+                    faviconUrl = favicon,
                     color = color
                 )
             } catch (e: IOException) {
