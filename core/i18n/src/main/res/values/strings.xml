@@ -701,7 +701,7 @@
         <item quantity="other">Full in %1$s minutes</item>
     </plurals>
     <string name="backup_select_components">Select what to backup:</string>
-    <string name="backup_not_included">Connected accounts and 3rd party app widgets will not be backed up.</string>
+    <string name="backup_not_included">Connected accounts will not be backed up. Third party app widgets can only be restored on this device.</string>
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>
