@@ -25,7 +25,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
@@ -70,7 +69,7 @@ internal class SearchServiceImpl(
     private val calendarRepository: SearchableRepository<CalendarEvent>,
     private val contactRepository: SearchableRepository<Contact>,
     private val fileRepository: SearchableRepository<File>,
-    private val wikipediaRepository: SearchableRepository<Article>,
+    private val articleRepository: SearchableRepository<Article>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
     private val websiteRepository: SearchableRepository<Website>,
@@ -176,7 +175,7 @@ internal class SearchServiceImpl(
             if (wikipedia.enabled) {
                 launch {
                     delay(750)
-                    wikipediaRepository.search(query)
+                    articleRepository.search(query)
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
