@@ -415,7 +415,7 @@
     <string name="preference_screen_backup_summary">Launcherdaten exportieren und importieren</string>
     <string name="preference_backup">Sichern</string>
     <string name="backup_select_components">Auswählen, was gesichert werden soll:</string>
-    <string name="backup_not_included">Verbundene Konten und Drittanbieter-App-Widgets werden nicht mitgesichert.</string>
+    <string name="backup_not_included">Verbundene Konten werden nicht mitgesichert. Drittanbieter-App-Widgets können nur auf diesem Gerät wiederhergestellt werden.</string>
     <string name="restore_meta">Erstellt um %1$s auf %2$s mit %3$s.</string>
     <string name="restore_select_components">Auswählen, was wiederhergestellt werden soll. Bestehende Daten werden überschrieben!</string>
     <string name="restore_complete">Die Sicherung wurde wiederhergestellt.</string>
