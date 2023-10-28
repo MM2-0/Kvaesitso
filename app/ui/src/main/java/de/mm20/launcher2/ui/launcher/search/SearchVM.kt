@@ -104,7 +104,9 @@ class SearchVM : ViewModel(), KoinComponent {
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
-        bestMatch.value = null
+
+        if (isSearchEmpty.value)
+            bestMatch.value = null
 
         try {
             searchJob?.cancel()
