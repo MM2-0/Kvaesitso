@@ -43,7 +43,7 @@ dependencies {
 
     implementation(project(":core:base"))
     implementation(project(":data:calendar"))
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":core:preferences"))
     implementation(project(":core:ktx"))
     implementation(project(":data:wikipedia"))

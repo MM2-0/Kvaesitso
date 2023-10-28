@@ -160,7 +160,7 @@ dependencies {
     implementation(project(":data:websites"))
     implementation(project(":data:widgets"))
     implementation(project(":data:wikipedia"))
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":data:search-actions"))
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))

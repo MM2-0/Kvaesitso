@@ -10,7 +10,6 @@ digraph {
   ":core:base" [fillcolor="#94c1ff"];
   ":core:compat" [fillcolor="#94c1ff"];
   ":core:crashreporter" [fillcolor="#94c1ff"];
-  ":core:database" [fillcolor="#94c1ff"];
   ":core:i18n" [fillcolor="#94c1ff"];
   ":core:ktx" [fillcolor="#94c1ff"];
   ":core:permissions" [fillcolor="#94c1ff"];
@@ -23,6 +22,7 @@ digraph {
   ":data:contacts" [fillcolor="#fff694"];
   ":data:currencies" [fillcolor="#fff694"];
   ":data:customattrs" [fillcolor="#fff694"];
+  ":data:database" [fillcolor="#fff694"];
   ":data:files" [fillcolor="#fff694"];
   ":data:notifications" [fillcolor="#fff694"];
   ":data:search-actions" [fillcolor="#fff694"];
@@ -89,7 +89,7 @@ digraph {
   ":app:app" -> ":data:websites" [style=dotted]
   ":app:app" -> ":data:widgets" [style=dotted]
   ":app:app" -> ":data:wikipedia" [style=dotted]
-  ":app:app" -> ":core:database" [style=dotted]
+  ":app:app" -> ":data:database" [style=dotted]
   ":app:app" -> ":data:search-actions" [style=dotted]
   ":app:app" -> ":services:global-actions" [style=dotted]
   ":app:app" -> ":services:widgets" [style=dotted]
@@ -132,10 +132,6 @@ digraph {
   ":app:ui" -> ":services:widgets" [style=dotted]
   ":app:ui" -> ":services:favorites" [style=dotted]
   ":core:shared" -> ":core:shared"
-  ":core:database" -> ":core:database"
-  ":core:database" -> ":core:i18n" [style=dotted]
-  ":core:database" -> ":core:ktx" [style=dotted]
-  ":core:database" -> ":core:preferences" [style=dotted]
   ":core:preferences" -> ":core:preferences"
   ":core:preferences" -> ":core:ktx" [style=dotted]
   ":core:preferences" -> ":core:i18n" [style=dotted]
@@ -175,12 +171,12 @@ digraph {
   ":data:widgets" -> ":core:ktx" [style=dotted]
   ":data:widgets" -> ":core:base" [style=dotted]
   ":data:widgets" -> ":core:preferences" [style=dotted]
-  ":data:widgets" -> ":core:database" [style=dotted]
+  ":data:widgets" -> ":data:database" [style=dotted]
   ":data:widgets" -> ":core:crashreporter" [style=dotted]
   ":data:searchable" -> ":data:searchable"
   ":data:searchable" -> ":core:base" [style=dotted]
   ":data:searchable" -> ":data:calendar" [style=dotted]
-  ":data:searchable" -> ":core:database" [style=dotted]
+  ":data:searchable" -> ":data:database" [style=dotted]
   ":data:searchable" -> ":core:preferences" [style=dotted]
   ":data:searchable" -> ":core:ktx" [style=dotted]
   ":data:searchable" -> ":data:wikipedia" [style=dotted]
@@ -193,17 +189,21 @@ digraph {
   ":data:unitconverter" -> ":core:i18n" [style=dotted]
   ":data:themes" -> ":data:themes"
   ":data:themes" -> ":core:base" [style=dotted]
-  ":data:themes" -> ":core:database" [style=dotted]
+  ":data:themes" -> ":data:database" [style=dotted]
   ":data:themes" -> ":core:crashreporter" [style=dotted]
   ":data:themes" -> ":libs:material-color-utilities" [style=dotted]
+  ":data:database" -> ":data:database"
+  ":data:database" -> ":core:i18n" [style=dotted]
+  ":data:database" -> ":core:ktx" [style=dotted]
+  ":data:database" -> ":core:preferences" [style=dotted]
   ":data:customattrs" -> ":data:customattrs"
-  ":data:customattrs" -> ":core:database" [style=dotted]
+  ":data:customattrs" -> ":data:database" [style=dotted]
   ":data:customattrs" -> ":core:base" [style=dotted]
   ":data:customattrs" -> ":core:ktx" [style=dotted]
   ":data:customattrs" -> ":core:crashreporter" [style=dotted]
   ":data:customattrs" -> ":data:searchable" [style=dotted]
   ":data:weather" -> ":data:weather"
-  ":data:weather" -> ":core:database" [style=dotted]
+  ":data:weather" -> ":data:database" [style=dotted]
   ":data:weather" -> ":core:ktx" [style=dotted]
   ":data:weather" -> ":core:crashreporter" [style=dotted]
   ":data:weather" -> ":core:preferences" [style=dotted]
@@ -224,7 +224,7 @@ digraph {
   ":data:websites" -> ":core:ktx" [style=dotted]
   ":data:search-actions" -> ":data:search-actions"
   ":data:search-actions" -> ":core:base" [style=dotted]
-  ":data:search-actions" -> ":core:database" [style=dotted]
+  ":data:search-actions" -> ":data:database" [style=dotted]
   ":data:search-actions" -> ":core:ktx" [style=dotted]
   ":data:search-actions" -> ":core:preferences" [style=dotted]
   ":data:search-actions" -> ":core:crashreporter" [style=dotted]
@@ -246,7 +246,7 @@ digraph {
   ":data:currencies" -> ":data:currencies"
   ":data:currencies" -> ":core:ktx" [style=dotted]
   ":data:currencies" -> ":core:i18n" [style=dotted]
-  ":data:currencies" -> ":core:database" [style=dotted]
+  ":data:currencies" -> ":data:database" [style=dotted]
   ":data:currencies" -> ":core:crashreporter" [style=dotted]
   ":plugins:sdk" -> ":plugins:sdk"
   ":plugins:sdk" -> ":core:shared" [style=dotted]
@@ -290,7 +290,7 @@ digraph {
   ":services:accounts" -> ":libs:nextcloud" [style=dotted]
   ":services:icons" -> ":data:customattrs"
   ":services:icons" -> ":services:icons"
-  ":services:icons" -> ":core:database" [style=dotted]
+  ":services:icons" -> ":data:database" [style=dotted]
   ":services:icons" -> ":core:preferences" [style=dotted]
   ":services:icons" -> ":core:ktx" [style=dotted]
   ":services:icons" -> ":core:base" [style=dotted]

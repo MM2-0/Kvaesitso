@@ -43,7 +43,7 @@ dependencies {
     implementation(libs.suncalc)
     implementation(libs.koin.android)
 
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":core:ktx"))
     implementation(project(":core:crashreporter"))
     implementation(project(":core:preferences"))

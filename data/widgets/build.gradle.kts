@@ -52,7 +52,7 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:preferences"))
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":core:crashreporter"))
 
 }

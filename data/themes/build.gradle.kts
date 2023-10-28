@@ -44,7 +44,7 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":core:base"))
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":core:crashreporter"))
     implementation(project(":libs:material-color-utilities"))
 

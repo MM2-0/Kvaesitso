@@ -44,6 +44,6 @@ dependencies {
 
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
-    implementation(project(":core:database"))
+    implementation(project(":data:database"))
     implementation(project(":core:crashreporter"))
 }

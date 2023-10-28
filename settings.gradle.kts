@@ -24,7 +24,7 @@ include(":core:compat")
 include(":core:preferences")
 include(":core:ktx")
 include(":core:i18n")
-include(":core:database")
+include(":data:database")
 include(":core:permissions")
 include(":core:shared")
 
