@@ -484,15 +484,6 @@ fun ConfigureClockWidgetSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_clockwidget_date_part),
-                        summary = stringResource(R.string.preference_clockwidget_date_part_summary),
-                        icon = Icons.Rounded.Today,
-                        value = date == true,
-                        onValueChanged = {
-                            viewModel.setDatePart(it)
-                        }
-                    )
-                    SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_favorites_part),
                         summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
                         icon = Icons.Rounded.Star,
@@ -503,12 +494,27 @@ fun ConfigureClockWidgetSheet(
                     )
                 }
             }
+            Text(
+                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
+                style = MaterialTheme.typography.titleSmall,
+                color = MaterialTheme.colorScheme.secondary,
+                text = stringResource(R.string.preference_clockwidget_dynamic_zone)
+            )
             OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier,
             ) {
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_clockwidget_date_part),
+                        summary = stringResource(R.string.preference_clockwidget_date_part_summary),
+                        icon = Icons.Rounded.Today,
+                        value = date == true,
+                        onValueChanged = {
+                            viewModel.setDatePart(it)
+                        }
+                    )
                     SwitchPreference(
                         title = stringResource(R.string.preference_clockwidget_music_part),
                         summary = stringResource(R.string.preference_clockwidget_music_part_summary),

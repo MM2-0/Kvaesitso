@@ -589,9 +589,10 @@
     <string name="preference_clock_widget_alignment_top">Top</string>
     <string name="preference_clock_widget_alignment_center">Center</string>
     <string name="preference_clock_widget_alignment_bottom">Bottom</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamic zone</string>
     <string name="preference_clockwidget_date_part">Date</string>
     <string name="preference_clockwidget_date_part_summary">Show the current date</string>
-    <string name="preference_clockwidget_favorites_part">Favorites</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Show the first row of pinned items</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Show media controls when there is an active media session</string>
