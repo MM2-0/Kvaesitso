@@ -17,7 +17,6 @@ data class BackupMetadata(
      * Backup schema version in format x.y.
      */
     val format: String,
-    val components: Set<BackupComponent>,
 ) {
 
     internal suspend fun writeToFile(file: File) {
@@ -26,7 +25,7 @@ data class BackupMetadata(
             "timestamp" to timestamp,
             "format" to format,
             "versionName" to appVersionName,
-            "components" to JSONArray(components.map { it.value })
+            "components" to JSONArray()
         )
         withContext(Dispatchers.IO) {
             file.outputStream().bufferedWriter().use {
@@ -46,14 +45,6 @@ data class BackupMetadata(
                         timestamp = json.optLong("timestamp"),
                         format = json.optString("format"),
                         appVersionName = json.optString("versionName"),
-                        components = json.getJSONArray("components").let {
-                            val set = mutableSetOf<BackupComponent>()
-                            for (i in 0 until it.length()) {
-                                val component = BackupComponent.fromValue(it.getString(i))
-                                if (component != null) set.add(component)
-                            }
-                            set
-                        }
                     )
                 } catch (e: JSONException) {
                     return@withContext null

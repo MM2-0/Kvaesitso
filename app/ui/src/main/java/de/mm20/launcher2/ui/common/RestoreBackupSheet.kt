@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.common
 
 import android.net.Uri
 import android.text.format.DateUtils
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,14 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.backup.BackupCompatibility
-import de.mm20.launcher2.backup.BackupComponent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
@@ -38,7 +35,6 @@ fun RestoreBackupSheet(
     }
 
     val state by viewModel.state
-    val selectedComponents by viewModel.selectedComponents
     val compatibility by viewModel.compatibility
 
     BottomSheetDialog(
@@ -52,7 +48,6 @@ fun RestoreBackupSheet(
 
             if (state == RestoreBackupState.Ready && compatibility != BackupCompatibility.Incompatible) {
                 Button(
-                    enabled = selectedComponents.isNotEmpty(),
                     onClick = { viewModel.restore() }) {
                     Text(stringResource(R.string.preference_restore))
                 }
@@ -137,60 +132,6 @@ fun RestoreBackupSheet(
                                             stringResource(R.string.app_name)
                                         )
                                     )
-                                }
-                                Text(
-                                    stringResource(R.string.restore_select_components),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
-                                )
-                                val components by viewModel.availableComponents
-                                for (component in components) {
-                                    Row(
-                                        modifier = Modifier
-                                            .clickable {
-                                                viewModel.toggleComponent(
-                                                    component
-                                                )
-                                            }
-                                            .padding(vertical = 4.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Icon(
-                                            imageVector = when (component) {
-                                                BackupComponent.Favorites -> Icons.Rounded.Star
-                                                BackupComponent.Settings -> Icons.Rounded.Settings
-                                                BackupComponent.SearchActions -> Icons.Rounded.ArrowOutward
-                                                BackupComponent.Widgets -> Icons.Rounded.Widgets
-                                                BackupComponent.Customizations -> Icons.Rounded.Edit
-                                                BackupComponent.Themes -> Icons.Rounded.Palette
-                                            },
-                                            contentDescription = null
-                                        )
-                                        Text(
-                                            text = stringResource(
-                                                when (component) {
-                                                    BackupComponent.Favorites -> R.string.backup_component_favorites
-                                                    BackupComponent.Settings -> R.string.backup_component_settings
-                                                    BackupComponent.SearchActions -> R.string.backup_component_searchactions
-                                                    BackupComponent.Widgets -> R.string.backup_component_widgets
-                                                    BackupComponent.Customizations -> R.string.backup_component_customizations
-                                                    BackupComponent.Themes -> R.string.backup_component_themes
-                                                }
-                                            ),
-                                            style = MaterialTheme.typography.titleMedium,
-                                            modifier = Modifier
-                                                .weight(1f)
-                                                .padding(horizontal = 16.dp)
-                                        )
-                                        Checkbox(
-                                            checked = selectedComponents.contains(
-                                                component
-                                            ),
-                                            onCheckedChange = {
-                                                viewModel.toggleComponent(component)
-                                            }
-                                        )
-                                    }
                                 }
                             }
                         }

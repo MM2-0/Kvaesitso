@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.backup.BackupCompatibility
-import de.mm20.launcher2.backup.BackupComponent
 import de.mm20.launcher2.backup.BackupManager
 import de.mm20.launcher2.backup.BackupMetadata
 import kotlinx.coroutines.launch
@@ -21,9 +20,6 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
     val state = mutableStateOf(RestoreBackupState.Parsing)
     val metadata = mutableStateOf<BackupMetadata?>(null)
     val compatibility = mutableStateOf<BackupCompatibility?>(null)
-    val selectedComponents = mutableStateOf(setOf<BackupComponent>())
-
-    val availableComponents = mutableStateOf(emptyList<BackupComponent>())
 
     fun setInputUri(uri: Uri) {
         restoreUri = uri
@@ -32,33 +28,20 @@ class RestoreBackupSheetVM : ViewModel(), KoinComponent {
             val metadata = backupManager.readBackupMeta(uri)
             if (metadata == null) {
                 state.value = RestoreBackupState.InvalidFile
-                availableComponents.value = emptyList()
             } else {
                 state.value = RestoreBackupState.Ready
                 compatibility.value = backupManager.checkCompatibility(metadata)
-                availableComponents.value = metadata.components.toList().sortedBy { it.ordinal }
             }
-            selectedComponents.value = metadata?.components ?: emptySet()
             this@RestoreBackupSheetVM.metadata.value = metadata
         }
     }
 
-    fun  toggleComponent(component: BackupComponent) {
-        val components = selectedComponents.value ?: emptySet()
-        if (components.contains(component)) {
-            selectedComponents.value = components - component
-        } else {
-            selectedComponents.value = components + component
-        }
-    }
-
     fun restore() {
-        val components = selectedComponents.value ?: return
         val uri = restoreUri ?: return
 
         viewModelScope.launch {
             state.value = RestoreBackupState.Restoring
-            backupManager.restore(uri, components)
+            backupManager.restore(uri)
             state.value = RestoreBackupState.Restored
         }
     }

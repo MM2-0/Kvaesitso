@@ -1,6 +1,7 @@
 package de.mm20.launcher2.themes
 
 import android.content.Context
+import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -16,13 +17,12 @@ import kotlinx.coroutines.withContext
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import java.io.File
-import java.lang.IllegalArgumentException
 import java.util.UUID
 
 class ThemeRepository(
     private val context: Context,
     private val database: AppDatabase,
-) {
+) : Backupable {
     private val scope = CoroutineScope(Dispatchers.IO + Job())
 
     fun getThemes(): Flow<List<Theme>> {
@@ -89,7 +89,7 @@ class ThemeRepository(
         }
     }
 
-    suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
         val dao = database.themeDao()
         val themes = dao.getAll().first().map { Theme(it) }
         val data = ThemeJson.encodeToString(themes)
@@ -100,7 +100,7 @@ class ThemeRepository(
         }
     }
 
-    suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun restore(fromDir: File) = withContext(Dispatchers.IO) {
         val dao = database.themeDao()
         dao.deleteAll()
 

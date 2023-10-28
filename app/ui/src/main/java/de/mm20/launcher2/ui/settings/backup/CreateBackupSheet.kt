@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.backup.BackupComponent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
@@ -33,20 +32,23 @@ fun CreateBackupSheet(
 
     val viewModel: CreateBackupSheetVM = viewModel()
 
-    LaunchedEffect(null) {
-        viewModel.reset()
-    }
-
-    val components by viewModel.selectedComponents
-    val state by viewModel.state
-
-
     val backupLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.CreateDocument("application/vnd.de.mm20.launcher2.backup"),
         onResult = {
             if (it != null) viewModel.createBackup(it)
         }
     )
+    LaunchedEffect(null) {
+        viewModel.reset()
+        val fileName = "${
+            ZonedDateTime.now().format(
+                DateTimeFormatter.ISO_INSTANT
+            ).replace(":", "_")
+        }.kvaesitso"
+        backupLauncher.launch(fileName)
+    }
+
+    val state by viewModel.state
 
     BottomSheetDialog(
         onDismissRequest = onDismissRequest,
@@ -58,7 +60,6 @@ fun CreateBackupSheet(
         confirmButton = {
             if (state == CreateBackupState.Ready) {
                 Button(
-                    enabled = components.isNotEmpty(),
                     onClick = {
                         val fileName = "${
                             ZonedDateTime.now().format(
@@ -87,68 +88,7 @@ fun CreateBackupSheet(
         ) {
             when (state) {
                 CreateBackupState.Ready -> {
-                    Column {
-                        Text(
-                            stringResource(R.string.backup_select_components),
-                            style = MaterialTheme.typography.titleSmall,
-                            modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_settings),
-                            icon = Icons.Rounded.Settings,
-                            checked = components.contains(BackupComponent.Settings),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Settings)
-                            }
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_favorites),
-                            icon = Icons.Rounded.Star,
-                            checked = components.contains(BackupComponent.Favorites),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Favorites)
-                            }
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_widgets),
-                            icon = Icons.Rounded.Widgets,
-                            checked = components.contains(BackupComponent.Widgets),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Widgets)
-                            }
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_customizations),
-                            icon = Icons.Rounded.Edit,
-                            checked = components.contains(BackupComponent.Customizations),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Customizations)
-                            }
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_searchactions),
-                            icon = Icons.Rounded.TravelExplore,
-                            checked = components.contains(BackupComponent.SearchActions),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.SearchActions)
-                            }
-                        )
-                        BackupableComponent(
-                            title = stringResource(R.string.backup_component_themes),
-                            icon = Icons.Rounded.Palette,
-                            checked = components.contains(BackupComponent.Themes),
-                            onCheckedChange = {
-                                viewModel.toggleComponent(BackupComponent.Themes)
-                            }
-                        )
-                        SmallMessage(
-                            modifier = Modifier
-                                .padding(top = 8.dp)
-                                .fillMaxWidth(),
-                            icon = Icons.Rounded.Warning,
-                            text = stringResource(R.string.backup_not_included)
-                        )
-                    }
+
                 }
                 CreateBackupState.BackingUp -> {
                     Box(
@@ -173,39 +113,6 @@ fun CreateBackupSheet(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun BackupableComponent(
-    title: String,
-    icon: ImageVector,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-) {
-    Row(
-        modifier = Modifier
-            .clickable {
-                onCheckedChange(!checked)
-            }
-            .padding(vertical = 4.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null
-        )
-        Text(
-            text = title,
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = 16.dp)
-        )
-        Checkbox(
-            checked = checked,
-            onCheckedChange = onCheckedChange
-        )
     }
 }
 

@@ -3,6 +3,7 @@ package de.mm20.launcher2.preferences
 import android.content.Context
 import androidx.datastore.core.DataStoreFactory
 import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -10,6 +11,19 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.firstOrNull
 import java.io.File
+
+internal class LauncherStoreBackupComponent(
+    private val context: Context,
+    private val dataStore: LauncherDataStore
+): Backupable {
+    override suspend fun backup(toDir: File) {
+        dataStore.export(toDir)
+    }
+
+    override suspend fun restore(fromDir: File) {
+        dataStore.import(context, fromDir)
+    }
+}
 
 suspend fun LauncherDataStore.export(toDir: File) {
     val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())

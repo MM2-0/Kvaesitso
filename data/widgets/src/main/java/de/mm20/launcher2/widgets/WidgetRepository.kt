@@ -1,6 +1,7 @@
 package de.mm20.launcher2.widgets
 
 import androidx.room.withTransaction
+import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.WidgetEntity
@@ -13,7 +14,7 @@ import org.json.JSONException
 import java.io.File
 import java.util.UUID
 
-interface WidgetRepository {
+interface WidgetRepository: Backupable {
     fun get(parent: UUID? = null, limit: Int = 100, offset: Int = 0): Flow<List<Widget>>
     fun update(widget: Widget)
     fun create(widget: Widget, position: Int, parentId: UUID? = null)
@@ -22,9 +23,6 @@ interface WidgetRepository {
 
     fun exists(type: String): Flow<Boolean>
     fun count(type: String): Flow<Int>
-
-    suspend fun export(toDir: File)
-    suspend fun import(fromDir: File)
 }
 
 internal class WidgetRepositoryImpl(
@@ -93,7 +91,7 @@ internal class WidgetRepositoryImpl(
     }
 
 
-    override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
         val dao = database.backupDao()
         var page = 0
         do {
@@ -119,7 +117,7 @@ internal class WidgetRepositoryImpl(
         } while (widgets.size == 100)
     }
 
-    override suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun restore(fromDir: File) = withContext(Dispatchers.IO) {
         val dao = database.backupDao()
         dao.wipeWidgets()
 

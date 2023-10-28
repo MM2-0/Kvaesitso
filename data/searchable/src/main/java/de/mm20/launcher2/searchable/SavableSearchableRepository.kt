@@ -3,6 +3,7 @@ package de.mm20.launcher2.searchable
 import android.content.Context
 import android.util.Log
 import androidx.room.withTransaction
+import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
@@ -30,7 +31,7 @@ import org.koin.core.error.NoBeanDefFoundException
 import org.koin.core.qualifier.named
 import java.io.File
 
-interface SavableSearchableRepository {
+interface SavableSearchableRepository: Backupable {
 
     fun insert(
         searchable: SavableSearchable,
@@ -106,9 +107,6 @@ interface SavableSearchableRepository {
      * Items that don't exist in the database will not be returned.
      */
     suspend fun getByKeys(keys: List<String>): List<SavableSearchable>
-
-    suspend fun export(toDir: File)
-    suspend fun import(fromDir: File)
 
     /**
      * Remove database entries that are invalid. This includes
@@ -392,7 +390,7 @@ internal class SavableSearchableRepositoryImpl(
             .mapNotNull { fromDatabaseEntity(it).searchable }
     }
 
-    override suspend fun export(toDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun backup(toDir: File) = withContext(Dispatchers.IO) {
         val dao = database.backupDao()
         var page = 0
         do {
@@ -420,7 +418,7 @@ internal class SavableSearchableRepositoryImpl(
         } while (favorites.size == 100)
     }
 
-    override suspend fun import(fromDir: File) = withContext(Dispatchers.IO) {
+    override suspend fun restore(fromDir: File) = withContext(Dispatchers.IO) {
         val dao = database.backupDao()
         dao.wipeFavorites()
 

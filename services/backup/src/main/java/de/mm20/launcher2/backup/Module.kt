@@ -4,5 +4,5 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
 val backupModule = module {
-    single { BackupManager(androidContext(), get(), get(), get(), get(), get(), get()) }
+    single { BackupManager(androidContext(), getAll()) }
 }

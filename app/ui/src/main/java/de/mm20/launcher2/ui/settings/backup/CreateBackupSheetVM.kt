@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.backup.BackupComponent
 import de.mm20.launcher2.backup.BackupManager
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -16,30 +15,17 @@ class CreateBackupSheetVM : ViewModel(), KoinComponent {
 
     val state = mutableStateOf(CreateBackupState.Ready)
 
-    val selectedComponents = mutableStateOf(BackupComponent.values().toSet())
-
     fun reset() {
         state.value = CreateBackupState.Ready
     }
 
     fun createBackup(uri: Uri) {
-        val components = selectedComponents.value ?: return
         viewModelScope.launch {
             state.value = CreateBackupState.BackingUp
-            backupManager.backup(uri, components)
+            backupManager.backup(uri)
             state.value = CreateBackupState.BackedUp
         }
     }
-
-    fun  toggleComponent(component: BackupComponent) {
-        val components = selectedComponents.value ?: emptySet()
-        if (components.contains(component)) {
-            selectedComponents.value = components - component
-        } else {
-            selectedComponents.value = components + component
-        }
-    }
-
 }
 
 enum class CreateBackupState {

@@ -62,7 +62,6 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     appShortcutsModule,
                     baseModule,
                     calculatorModule,
-                    backupModule,
                     badgesModule,
                     calendarModule,
                     contactsModule,
@@ -87,6 +86,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     wikipediaModule,
                     servicesTagsModule,
                     widgetsServiceModule,
+                    backupModule,
                 )
             )
         }

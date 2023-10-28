@@ -3,14 +3,6 @@ package de.mm20.launcher2.backup
 import android.content.Context
 import android.net.Uri
 import android.os.Build
-import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
-import de.mm20.launcher2.searchable.SavableSearchableRepository
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.export
-import de.mm20.launcher2.preferences.import
-import de.mm20.launcher2.searchactions.SearchActionRepository
-import de.mm20.launcher2.themes.ThemeRepository
-import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.*
 import java.io.File
 import java.io.InputStream
@@ -21,12 +13,7 @@ import java.util.zip.ZipOutputStream
 
 class BackupManager(
     private val context: Context,
-    private val dataStore: LauncherDataStore,
-    private val searchableRepository: SavableSearchableRepository,
-    private val widgetRepository: WidgetRepository,
-    private val searchActionRepository: SearchActionRepository,
-    private val customAttrsRepository: CustomAttributesRepository,
-    private val themesRepository: ThemeRepository,
+    private val components: List<Backupable>,
 ) {
     private val scope = CoroutineScope(Dispatchers.Default + Job())
 
@@ -35,8 +22,7 @@ class BackupManager(
      * @return Uri to the created backup archive
      */
     suspend fun backup(
-        uri: Uri,
-        include: Set<BackupComponent> = BackupComponent.entries.toSet()
+        uri: Uri
     ) {
 
         val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
@@ -45,7 +31,6 @@ class BackupManager(
             appVersionName = packageInfo.versionName,
             timestamp = System.currentTimeMillis(),
             deviceName = Build.MODEL,
-            components = include,
             format = BackupFormat,
         )
 
@@ -60,28 +45,8 @@ class BackupManager(
             val metaFile = File(backupDir, "meta")
             meta.writeToFile(metaFile)
 
-            if (include.contains(BackupComponent.Settings)) {
-                dataStore.export(backupDir)
-            }
-
-            if (include.contains(BackupComponent.Favorites)) {
-                searchableRepository.export(backupDir)
-            }
-
-            if (include.contains(BackupComponent.Widgets)) {
-                widgetRepository.export(backupDir)
-            }
-
-            if (include.contains(BackupComponent.SearchActions)) {
-                searchActionRepository.export(backupDir)
-            }
-
-            if (include.contains(BackupComponent.Customizations)) {
-                customAttrsRepository.export(backupDir)
-            }
-
-            if (include.contains(BackupComponent.Themes)) {
-                themesRepository.export(backupDir)
+            for (component in components) {
+                component.backup(backupDir)
             }
 
             createArchive(backupDir, outputStream)
@@ -92,7 +57,6 @@ class BackupManager(
 
     suspend fun restore(
         uri: Uri,
-        include: Set<BackupComponent> = BackupComponent.values().toSet()
     ) {
         val job = scope.launch {
             withContext(Dispatchers.IO) {
@@ -105,28 +69,8 @@ class BackupManager(
                 extractArchive(inputStream, restoreDir)
                 inputStream.close()
 
-                if (include.contains(BackupComponent.Settings)) {
-                    dataStore.import(context, restoreDir)
-                }
-
-                if (include.contains(BackupComponent.Favorites)) {
-                    searchableRepository.import(restoreDir)
-                }
-
-                if (include.contains(BackupComponent.Widgets)) {
-                    widgetRepository.import(restoreDir)
-                }
-
-                if (include.contains(BackupComponent.SearchActions)) {
-                    searchActionRepository.import(restoreDir)
-                }
-
-                if (include.contains(BackupComponent.Customizations)) {
-                    customAttrsRepository.import(restoreDir)
-                }
-
-                if (include.contains(BackupComponent.Themes)) {
-                    themesRepository.import(restoreDir)
+                for (component in components) {
+                    component.restore(restoreDir)
                 }
             }
         }
@@ -198,7 +142,7 @@ class BackupManager(
          */
 
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 7
+        private const val BackupFormatMinor = 8
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }
