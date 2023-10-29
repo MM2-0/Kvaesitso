@@ -8,18 +8,20 @@ import de.mm20.launcher2.files.OneDriveFileSerializer
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.ImmutableMap
 
 internal data class OneDriveFile(
-        val fileId: String,
-        override val label: String,
-        override val path: String,
-        override val mimeType: String,
-        override val size: Long,
-        override val isDirectory: Boolean,
-        override val metaData: List<Pair<Int, String>>,
-        val webUrl: String,
-        override val labelOverride: String? = null,
+    val fileId: String,
+    override val label: String,
+    override val path: String,
+    override val mimeType: String,
+    override val size: Long,
+    override val isDirectory: Boolean,
+    override val metaData: ImmutableMap<FileMetaType, String>,
+    val webUrl: String,
+    override val labelOverride: String? = null,
 ) : File {
 
     override fun overrideLabel(label: String): OneDriveFile {

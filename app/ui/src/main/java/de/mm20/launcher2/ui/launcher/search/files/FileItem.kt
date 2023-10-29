@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -136,7 +137,7 @@ fun FileItem(
                         )
                         for ((k, v) in file.metaData) {
                             Text(
-                                text = stringResource(k, v),
+                                text = stringResource(k.labelRes, v),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -366,3 +367,21 @@ private fun formatFileSize(size: Long): String {
         else -> "${DecimalFormat("#,##0.#").format(size / 1000000000000.0)} TB"
     }
 }
+
+private val FileMetaType.labelRes: Int
+    get() {
+        return when (this) {
+            FileMetaType.Title -> R.string.file_meta_title
+            FileMetaType.Artist -> R.string.file_meta_artist
+            FileMetaType.Album -> R.string.file_meta_album
+            FileMetaType.Duration -> R.string.file_meta_duration
+            FileMetaType.Year -> R.string.file_meta_year
+            FileMetaType.Dimensions -> R.string.file_meta_dimensions
+            FileMetaType.Location -> R.string.file_meta_location
+            FileMetaType.AppName -> R.string.file_meta_app_name
+            FileMetaType.AppVersion -> R.string.file_meta_app_version
+            FileMetaType.AppMinSdk -> R.string.file_meta_app_min_sdk
+            FileMetaType.AppPackageName -> R.string.file_meta_app_pkgname
+            FileMetaType.Owner -> R.string.file_meta_owner
+        }
+    }

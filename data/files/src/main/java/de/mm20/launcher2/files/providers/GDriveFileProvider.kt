@@ -5,6 +5,9 @@ import de.mm20.launcher2.files.R
 import de.mm20.launcher2.gservices.DriveFileMeta
 import de.mm20.launcher2.gservices.GoogleApiHelper
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.FileMetaType
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toImmutableMap
 
 internal class GDriveFileProvider(
     private val context: Context
@@ -27,13 +30,13 @@ internal class GDriveFileProvider(
         }
     }
 
-    private fun getMetadata(file: DriveFileMeta): List<Pair<Int, String>> {
-        val metaData = mutableListOf<Pair<Int, String>>()
+    private fun getMetadata(file: DriveFileMeta): ImmutableMap<FileMetaType, String> {
+        val metaData = mutableMapOf<FileMetaType, String>()
         val owners = file.owners
-        metaData.add(R.string.file_meta_owner to owners.joinToString(separator = ", "))
-        val width = file.width ?: file.width
-        val height = file.height ?: file.height
-        if (width != null && height != null) metaData.add(R.string.file_meta_dimensions to "${width}x$height")
-        return metaData
+        metaData[FileMetaType.Owner] = owners.joinToString(separator = ", ")
+        val width = file.width
+        val height = file.height
+        if (width != null && height != null) metaData[FileMetaType.Dimensions] = "${width}x${height}"
+        return metaData.toImmutableMap()
     }
 }

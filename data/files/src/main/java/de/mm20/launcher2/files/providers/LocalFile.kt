@@ -17,13 +17,19 @@ import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.files.LocalFileSerializer
-import de.mm20.launcher2.files.R
-import de.mm20.launcher2.icons.*
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.formatToString
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.media.ThumbnailUtilsCompat
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.withContext
@@ -36,7 +42,7 @@ internal data class LocalFile(
     override val mimeType: String,
     override val size: Long,
     override val isDirectory: Boolean,
-    override val metaData: List<Pair<Int, String>>,
+    override val metaData: ImmutableMap<FileMetaType, String>,
     override val labelOverride: String? = null
 ) : File {
 
@@ -75,6 +81,7 @@ internal data class LocalFile(
                     backgroundLayer = ColorLayer()
                 )
             }
+
             mimeType.startsWith("video/") -> {
                 val thumbnail = withContext(Dispatchers.IO) {
                     ThumbnailUtilsCompat.createVideoThumbnail(
@@ -91,6 +98,7 @@ internal data class LocalFile(
                     backgroundLayer = ColorLayer()
                 )
             }
+
             mimeType.startsWith("audio/") -> {
                 val thumbnail = withContext(Dispatchers.IO) {
                     val mediaMetadataRetriever = MediaMetadataRetriever()
@@ -123,6 +131,7 @@ internal data class LocalFile(
                 )
 
             }
+
             mimeType == "application/vnd.android.package-archive" -> {
                 val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
                 val icon = withContext(Dispatchers.IO) {
@@ -145,6 +154,7 @@ internal data class LocalFile(
                             } ?: TransparentLayer,
                         )
                     }
+
                     else -> {
                         return StaticLauncherIcon(
                             foregroundLayer = StaticIconLayer(
@@ -238,48 +248,55 @@ internal data class LocalFile(
             context: Context,
             mimeType: String,
             path: String
-        ): List<Pair<Int, String>> {
-            val metaData = mutableListOf<Pair<Int, String>>()
+        ): ImmutableMap<FileMetaType, String> {
+            val metaData = mutableMapOf<FileMetaType, String>()
             when {
                 mimeType.startsWith("audio/") -> {
                     val retriever = MediaMetadataRetriever()
                     try {
                         retriever.setDataSource(path)
-                        arrayOf(
-                            R.string.file_meta_title to MediaMetadataRetriever.METADATA_KEY_TITLE,
-                            R.string.file_meta_artist to MediaMetadataRetriever.METADATA_KEY_ARTIST,
-                            R.string.file_meta_album to MediaMetadataRetriever.METADATA_KEY_ALBUM,
-                            R.string.file_meta_year to MediaMetadataRetriever.METADATA_KEY_YEAR
-                        ).forEach {
-                            retriever.extractMetadata(it.second)
-                                ?.let { m -> metaData.add(it.first to m) }
-                        }
-                        val duration =
-                            retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                                ?.toLong() ?: 0
-                        val d = DateUtils.formatElapsedTime((duration) / 1000)
-                        metaData.add(3, R.string.file_meta_duration to d)
+
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_TITLE)
+                            ?.let { metaData[FileMetaType.Title] = it }
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ARTIST)
+                            ?.let { metaData[FileMetaType.Artist] = it }
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_ALBUM)
+                            ?.let { metaData[FileMetaType.Album] = it }
+                        retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_YEAR)
+                            ?.let { metaData[FileMetaType.Year] = it }
+                        retriever
+                            .extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
+                            ?.toLongOrNull()
+                            ?.let {
+                                metaData[FileMetaType.Duration] =
+                                    DateUtils.formatElapsedTime((it) / 1000)
+                            }
                         retriever.release()
                     } catch (e: RuntimeException) {
                         retriever.release()
                     }
                 }
+
                 mimeType.startsWith("video/") -> {
                     val retriever = MediaMetadataRetriever()
                     try {
                         retriever.setDataSource(path)
                         val width =
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH)
-                                ?.toLong() ?: 0
+                                ?.toLongOrNull()
                         val height =
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT)
-                                ?.toLong() ?: 0
-                        metaData.add(R.string.file_meta_dimensions to "${width}x$height")
+                                ?.toLongOrNull()
+                        if (width != null && height != null) {
+                            metaData[FileMetaType.Dimensions] = "${width}x$height"
+                        }
                         val duration =
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)
-                                ?.toLong() ?: 0
-                        val d = DateUtils.formatElapsedTime(duration / 1000)
-                        metaData.add(R.string.file_meta_duration to d)
+                                ?.toLongOrNull()
+                                ?.let {
+                                    metaData[FileMetaType.Duration] =
+                                        DateUtils.formatElapsedTime((it) / 1000)
+                                }
                         val loc =
                             retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_LOCATION)
                         if (Geocoder.isPresent() && loc != null) {
@@ -290,9 +307,15 @@ internal data class LocalFile(
                                 loc.lastIndexOfAny(charArrayOf('+', '-')),
                                 loc.indexOf('/')
                             ).toDouble()
-                            val list = Geocoder(context).getFromLocation(lon, lat, 1)
+                            val list = try {
+                                Geocoder(context).getFromLocation(lon, lat, 1)
+                            } catch (e: IOException) {
+                                null
+                            } catch (e: IllegalArgumentException) {
+                                null
+                            }
                             if (list != null && list.size > 0) {
-                                metaData.add(R.string.file_meta_location to list[0].formatToString())
+                                metaData[FileMetaType.Location] = list[0].formatToString()
                             }
                         }
                         retriever.release()
@@ -304,40 +327,48 @@ internal data class LocalFile(
                         retriever.release()
                     }
                 }
+
                 mimeType.startsWith("image/") -> {
                     val options = BitmapFactory.Options()
                     options.inJustDecodeBounds = true
                     BitmapFactory.decodeFile(path, options)
                     val width = options.outWidth
                     val height = options.outHeight
-                    metaData.add(R.string.file_meta_dimensions to "${width}x$height")
+                    if (height >= 0 && width >= 0) {
+                        metaData[FileMetaType.Dimensions] = "${width}x$height"
+                    }
                     try {
                         val exif = ExifInterface(path)
                         val loc = exif.latLong
                         if (loc != null && Geocoder.isPresent()) {
-                            val list = Geocoder(context).getFromLocation(loc[0], loc[1], 1)
+                            val list = try {
+                                Geocoder(context).getFromLocation(loc[0], loc[1], 1)
+                            } catch (e: IllegalArgumentException) {
+                                null
+                            } catch (e: IOException) {
+                                null
+                            }
                             if (list != null && list.size > 0) {
-                                metaData.add(R.string.file_meta_location to list[0].formatToString())
+                                metaData[FileMetaType.Location] = list[0].formatToString()
                             }
                         }
                     } catch (_: IOException) {
 
                     }
                 }
+
                 mimeType == "application/vnd.android.package-archive" -> {
                     val pkgInfo = context.packageManager.getPackageArchiveInfo(path, 0)
-                        ?: return metaData
-                    metaData.add(
-                        R.string.file_meta_app_name to pkgInfo.applicationInfo.loadLabel(
-                            context.packageManager
-                        ).toString()
-                    )
-                    metaData.add(R.string.file_meta_app_pkgname to pkgInfo.packageName)
-                    metaData.add(R.string.file_meta_app_version to pkgInfo.versionName)
-                    metaData.add(R.string.file_meta_app_min_sdk to pkgInfo.applicationInfo.minSdkVersion.toString())
+                        ?: return metaData.toImmutableMap()
+                    metaData[FileMetaType.AppName] =
+                        pkgInfo.applicationInfo.loadLabel(context.packageManager).toString()
+                    metaData[FileMetaType.AppPackageName] = pkgInfo.packageName
+                    metaData[FileMetaType.AppVersion] = pkgInfo.versionName
+                    metaData[FileMetaType.AppMinSdk] =
+                        pkgInfo.applicationInfo.minSdkVersion.toString()
                 }
             }
-            return metaData
+            return metaData.toImmutableMap()
         }
     }
 

@@ -3,6 +3,8 @@ package de.mm20.launcher2.files.providers
 import de.mm20.launcher2.files.R
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.FileMetaType
+import kotlinx.collections.immutable.persistentMapOf
 
 internal class OwncloudFileProvider(
     private val owncloudClient: OwncloudClient
@@ -19,7 +21,8 @@ internal class OwncloudFileProvider(
                 size = it.size,
                 isDirectory = it.isDirectory,
                 server = server,
-                metaData = it.owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
+                metaData = it.owner?.let { persistentMapOf(FileMetaType.Owner to it) }
+                    ?: persistentMapOf()
             )
         }
     }

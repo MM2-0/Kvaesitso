@@ -6,6 +6,7 @@ import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import kotlinx.collections.immutable.ImmutableMap
 import java.util.Locale
 
 interface File : SavableSearchable {
@@ -13,7 +14,7 @@ interface File : SavableSearchable {
     val mimeType: String
     val size: Long
     val isDirectory: Boolean
-    val metaData: List<Pair<Int, String>>
+    val metaData: ImmutableMap<FileMetaType, String>
 
     val isStoredInCloud: Boolean
 
@@ -139,4 +140,19 @@ interface File : SavableSearchable {
     fun share(context: Context) {}
     suspend fun delete(context: Context) {}
 
+}
+
+enum class FileMetaType {
+    Title,
+    Artist,
+    Album,
+    Duration,
+    Year,
+    Dimensions,
+    Location,
+    AppName,
+    AppVersion,
+    AppMinSdk,
+    AppPackageName,
+    Owner,
 }

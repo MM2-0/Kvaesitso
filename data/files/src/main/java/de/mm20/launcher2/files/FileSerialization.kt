@@ -11,9 +11,12 @@ import de.mm20.launcher2.files.providers.OwncloudFile
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.collections.immutable.toImmutableMap
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -93,8 +96,8 @@ internal class GDriveFileSerializer : SearchableSerializer {
             for ((k, v) in searchable.metaData) {
                 put(
                     when (k) {
-                        R.string.file_meta_owner -> "owner"
-                        R.string.file_meta_dimensions -> "dimensions"
+                        FileMetaType.Owner -> "owner"
+                        FileMetaType.Dimensions -> "dimensions"
                         else -> "other"
                     }, v
                 )
@@ -119,10 +122,10 @@ internal class GDriveFileDeserializer : SearchableDeserializer {
         val uri = json.getString("uri")
         val owner = json.optString("owner")
         val dimensions = json.optString("dimensions")
-        val metaData = mutableListOf<Pair<Int, String>>()
-        owner.takeIf { it.isNotEmpty() }?.let { metaData.add(R.string.file_meta_owner to it) }
+        val metaData = mutableMapOf<FileMetaType, String>()
+        owner.takeIf { it.isNotEmpty() }?.let { metaData[FileMetaType.Owner] = it }
         dimensions.takeIf { it.isNotEmpty() }
-            ?.let { metaData.add(R.string.file_meta_dimensions to it) }
+            ?.let { metaData[FileMetaType.Dimensions] = it }
         return GDriveFile(
             fileId = id,
             label = label,
@@ -132,7 +135,7 @@ internal class GDriveFileDeserializer : SearchableDeserializer {
             directoryColor = color,
             isDirectory = directory,
             viewUri = uri,
-            metaData = metaData
+            metaData = metaData.toImmutableMap()
         )
     }
 }
@@ -151,8 +154,8 @@ internal class OneDriveFileSerializer : SearchableSerializer {
             for ((k, v) in searchable.metaData) {
                 put(
                     when (k) {
-                        R.string.file_meta_owner -> "owner"
-                        R.string.file_meta_dimensions -> "dimensions"
+                        FileMetaType.Owner -> "owner"
+                        FileMetaType.Dimensions -> "dimensions"
                         else -> "other"
                     }, v
                 )
@@ -175,10 +178,10 @@ internal class OneDriveFileDeserializer : SearchableDeserializer {
         val webUrl = json.getString("webUrl")
         val owner = json.optString("owner")
         val dimensions = json.optString("dimensions")
-        val metaData = mutableListOf<Pair<Int, String>>()
-        owner.takeIf { it.isNotEmpty() }?.let { metaData.add(R.string.file_meta_owner to it) }
+        val metaData = mutableMapOf<FileMetaType, String>()
+        owner.takeIf { it.isNotEmpty() }?.let { metaData[FileMetaType.Owner] = it }
         dimensions.takeIf { it.isNotEmpty() }
-            ?.let { metaData.add(R.string.file_meta_dimensions to it) }
+            ?.let { metaData[FileMetaType.Dimensions] = it }
         return OneDriveFile(
             fileId = fileId,
             label = label,
@@ -186,7 +189,7 @@ internal class OneDriveFileDeserializer : SearchableDeserializer {
             mimeType = mimeType,
             size = size,
             isDirectory = isDirectory,
-            metaData = metaData,
+            metaData = metaData.toImmutableMap(),
             webUrl = webUrl
         )
     }
@@ -207,7 +210,7 @@ internal class NextcloudFileSerializer : SearchableSerializer {
             for ((k, v) in searchable.metaData) {
                 put(
                     when (k) {
-                        R.string.file_meta_owner -> "owner"
+                        FileMetaType.Owner -> "owner"
                         else -> "other"
                     }, v
                 )
@@ -239,7 +242,7 @@ internal class NextcloudFileDeserializer : SearchableDeserializer {
             size = size,
             isDirectory = isDirectory,
             server = server,
-            metaData = owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
+            metaData = owner?.let { persistentMapOf(FileMetaType.Owner to it) } ?: persistentMapOf()
 
         )
     }
@@ -260,7 +263,7 @@ internal class OwncloudFileSerializer : SearchableSerializer {
             for ((k, v) in searchable.metaData) {
                 put(
                     when (k) {
-                        R.string.file_meta_owner -> "owner"
+                        FileMetaType.Owner -> "owner"
                         else -> "other"
                     }, v
                 )
@@ -292,7 +295,7 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
             size = size,
             isDirectory = isDirectory,
             server = server,
-            metaData = owner?.let { listOf(R.string.file_meta_owner to it) } ?: emptyList()
+            metaData = owner?.let { persistentMapOf(FileMetaType.Owner to it) } ?: persistentMapOf()
 
         )
     }
