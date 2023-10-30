@@ -74,7 +74,7 @@ internal data class LauncherApp(
 
     override val key: String
         // For backwards compatibility, user serial number is not included in main profile
-        get() = if (isMainProfile) "${domain}://${componentName.packageName}:${componentName.packageName}"
+        get() = if (isMainProfile) "${domain}://${componentName.packageName}:${componentName.className}"
         else "${domain}://${componentName.packageName}:${componentName.className}:${userSerialNumber}"
 
 
