@@ -24,6 +24,18 @@ fun Context.tryStartActivity(intent: Intent, bundle: Bundle? = null): Boolean {
         startActivity(intent, bundle)
         true
     } catch (e: ActivityNotFoundException) {
+        if (intent.type == "resource/folder") {
+            packageManager.getLaunchIntentForPackage("com.android.documentsui")?.let {
+                it.setDataAndType(intent.data, intent.type)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+                return try {
+                    startActivity(it, bundle)
+                    true
+                } catch (_: Exception) { false }
+            }
+        }
+
         false
     } catch (e: SecurityException) {
         false
