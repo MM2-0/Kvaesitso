@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ktx
 
 import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -24,15 +25,16 @@ fun Context.tryStartActivity(intent: Intent, bundle: Bundle? = null): Boolean {
         startActivity(intent, bundle)
         true
     } catch (e: ActivityNotFoundException) {
-        if (intent.type == "resource/folder") {
-            packageManager.getLaunchIntentForPackage("com.android.documentsui")?.let {
-                it.setDataAndType(intent.data, intent.type)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
 
-                return try {
-                    startActivity(it, bundle)
-                    true
-                } catch (_: Exception) { false }
+        if (intent.data?.path == "/storage/emulated/0/Download") {
+            val aospDocsViewDownloadsIntent = Intent()
+                .setComponent(ComponentName("com.android.documentsui", "com.android.documentsui.ViewDownloadsActivity"))
+
+            return try {
+                startActivity(aospDocsViewDownloadsIntent, bundle)
+                true
+            } catch (_: Exception) {
+                false
             }
         }
 
