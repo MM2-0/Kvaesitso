@@ -25,19 +25,6 @@ fun Context.tryStartActivity(intent: Intent, bundle: Bundle? = null): Boolean {
         startActivity(intent, bundle)
         true
     } catch (e: ActivityNotFoundException) {
-
-        if (intent.data?.path == "/storage/emulated/0/Download") {
-            val aospDocsViewDownloadsIntent = Intent()
-                .setComponent(ComponentName("com.android.documentsui", "com.android.documentsui.ViewDownloadsActivity"))
-
-            return try {
-                startActivity(aospDocsViewDownloadsIntent, bundle)
-                true
-            } catch (_: Exception) {
-                false
-            }
-        }
-
         false
     } catch (e: SecurityException) {
         false

@@ -1,5 +1,6 @@
 package de.mm20.launcher2.files.providers
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
@@ -184,7 +185,19 @@ internal data class LocalFile(
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
-        return context.tryStartActivity(getLaunchIntent(context), options)
+        if (context.tryStartActivity(getLaunchIntent(context), options))
+            return true
+
+        // startsWith allows path to end with a slash
+        if (isDirectory && path.startsWith("/storage/emulated/0/Download")) {
+            val aospViewDownloadsIntent = Intent()
+                .setComponent(ComponentName("com.android.documentsui", "com.android.documentsui.ViewDownloadsActivity"))
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            return context.tryStartActivity(aospViewDownloadsIntent, options)
+        }
+
+        return false
     }
 
     override val isDeletable: Boolean
