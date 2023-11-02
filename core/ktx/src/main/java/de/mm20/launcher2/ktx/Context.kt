@@ -1,7 +1,6 @@
 package de.mm20.launcher2.ktx
 
 import android.content.ActivityNotFoundException
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
