@@ -5,7 +5,7 @@ interface SearchableSerializer {
     val typePrefix: String
 }
 
-class NullSerializer : SearchableSerializer {
+class NullSerializer : SearchableSerializer{
     override fun serialize(searchable: SavableSearchable): String? {
         return null
     }

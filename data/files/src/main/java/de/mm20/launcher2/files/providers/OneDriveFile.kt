@@ -34,8 +34,6 @@ internal data class OneDriveFile(
 
     override val providerIconRes = R.drawable.ic_badge_onedrive
 
-    override val isStoredInCloud = true
-
     private fun getLaunchIntent(): Intent {
         return Intent(Intent.ACTION_VIEW).apply {
             data = Uri.parse(webUrl)

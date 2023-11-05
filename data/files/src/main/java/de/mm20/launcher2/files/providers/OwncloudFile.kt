@@ -9,6 +9,7 @@ import de.mm20.launcher2.files.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.ImmutableMap
 
@@ -31,9 +32,6 @@ internal data class OwncloudFile(
     override val domain: String = Domain
 
     override val key: String = "$domain://$server/$fileId"
-
-    override val isStoredInCloud: Boolean
-        get() = true
 
     override val providerIconRes = R.drawable.ic_badge_owncloud
 

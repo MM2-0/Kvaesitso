@@ -1,28 +1,8 @@
-package de.mm20.launcher2.provider.files
+package de.mm20.launcher2.plugin.contracts
 
-import android.content.ContentUris
-import android.net.Uri
+abstract class FilePluginContract {
 
-object FilePluginContract {
-    object Roots {
-        const val Id = "id"
-        const val DisplayName = "display_name"
-        const val Description = "description"
-        const val Status = "status"
-        const val AccountAuthority = "account_authority"
-
-        const val PathSegment = "roots"
-
-        fun getContentUri(authority: String): Uri {
-            return Uri.Builder()
-                .scheme("content")
-                .authority(authority)
-                .path(PathSegment)
-                .build()
-        }
-    }
-
-    object Files {
+    object FileColumns {
         /**
          * The unique ID of the file.
          * Type: String
@@ -36,7 +16,8 @@ object FilePluginContract {
         const val DisplayName = "display_name"
 
         /**
-         * The MIME type of the file.
+         * The MIME type of the file. This is used to determine how to open the file. Make sure that
+         * this is either a common MIME type or that your app can handle this MIME type.
          * Type: String?
          */
         const val MimeType = "mime_type"
@@ -52,6 +33,22 @@ object FilePluginContract {
          * Type: String?
          */
         const val Path = "path"
+
+        /**
+         * The URI to view the file.
+         * Type: String?
+         */
+        const val ContentUri = "uri"
+
+        const val ThumbnailUri = "thumbnail_uri"
+
+        const val StorageStrategy = "storage_strategy"
+
+        /**
+         * Whether the file is a directory.
+         * Type: Int
+         */
+        const val IsDirectory = "is_directory"
 
         const val MetaTitle = "meta_title"
         const val MetaArtist = "meta_artist"

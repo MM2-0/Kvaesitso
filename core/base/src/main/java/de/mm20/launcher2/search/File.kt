@@ -16,8 +16,6 @@ interface File : SavableSearchable {
     val isDirectory: Boolean
     val metaData: ImmutableMap<FileMetaType, String>
 
-    val isStoredInCloud: Boolean
-
     override val preferDetailsOverLaunch: Boolean
         get() = false
 

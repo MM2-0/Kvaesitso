@@ -56,8 +56,6 @@ internal data class LocalFile(
 
     override val key = "$domain://$path"
 
-    override val isStoredInCloud = false
-
     override suspend fun loadIcon(
         context: Context,
         size: Int,

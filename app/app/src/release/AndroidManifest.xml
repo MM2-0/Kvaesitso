@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <permission
+        android:name="de.mm20.launcher2.permission.USE_PLUGINS"
+        android:label="Use Kvaesitso plugins"
+        android:protectionLevel="dangerous" />
+
+</manifest>
