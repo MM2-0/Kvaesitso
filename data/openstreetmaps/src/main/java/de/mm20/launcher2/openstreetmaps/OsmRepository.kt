@@ -28,7 +28,7 @@ import org.koin.core.component.inject
 
 internal class OsmRepository(
     private val context: Context,
-) : SearchableRepository<OsmLocation>, KoinComponent {
+) : SearchableRepository<de.mm20.launcher2.search.Location>, KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
@@ -73,7 +73,7 @@ internal class OsmRepository(
 
             val location = getCurrentLocation() ?: return@collectLatest
 
-            val radius = 1000
+            val radius = 1000 // TODO: make configurable
 
             val encodedQuery = """[out:json];
                 node(around:$radius,${location.latitude},${location.longitude})["name"~"$query",i];
@@ -85,7 +85,7 @@ internal class OsmRepository(
 
             val jsonString = response.body?.string() ?: return@collectLatest
 
-
+            println(jsonString)
         }
     }
 

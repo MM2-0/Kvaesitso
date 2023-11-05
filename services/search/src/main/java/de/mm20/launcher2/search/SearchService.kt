@@ -61,7 +61,7 @@ interface SearchService {
             .setEnabled(false)
             .build(),
         openstreetmaps: Settings.OpenStreetMapsSearchSettings = Settings.OpenStreetMapsSearchSettings.newBuilder()
-            .setEnabled(false)
+            .setEnabled(true) // TODO: Change this to false
             .build(),
     ): Flow<SearchResults>
 }
@@ -90,7 +90,7 @@ internal class SearchServiceImpl(
         calculator: CalculatorSearchSettings,
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
-        wikipedia: Settings.WikipediaSearchSettings,
+        wikipedia: WikipediaSearchSettings,
         openstreetmaps: Settings.OpenStreetMapsSearchSettings,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
