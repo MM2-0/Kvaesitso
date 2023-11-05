@@ -20,6 +20,7 @@ import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
@@ -56,6 +57,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = mutableStateOf("")
     val isSearchEmpty = mutableStateOf(true)
 
+    val locationResults = mutableStateOf<List<Location>>(emptyList())
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())

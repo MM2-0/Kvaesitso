@@ -10,7 +10,6 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import okhttp3.OkHttpClient
-import org.koin.core.component.KoinComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit

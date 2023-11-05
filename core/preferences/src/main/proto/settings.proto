@@ -383,4 +383,9 @@ message Settings {
     bool charging = 1;
   }
   AnimationSettings animations = 31;
+
+  message OpenStreetMapsSearchSettings {
+    bool enabled = 1;
+  }
+  OpenStreetMapsSearchSettings open_street_maps_search = 32;
 }

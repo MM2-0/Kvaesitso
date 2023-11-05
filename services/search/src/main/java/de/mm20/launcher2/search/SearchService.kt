@@ -32,32 +32,35 @@ import kotlinx.coroutines.supervisorScope
 interface SearchService {
     fun search(
         query: String,
-        shortcuts: AppShortcutSearchSettings = Settings.AppShortcutSearchSettings.newBuilder()
+        shortcuts: AppShortcutSearchSettings = AppShortcutSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        contacts: ContactsSearchSettings = Settings.ContactsSearchSettings.newBuilder()
+        contacts: ContactsSearchSettings = ContactsSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        calendars: CalendarSearchSettings = Settings.CalendarSearchSettings.newBuilder()
+        calendars: CalendarSearchSettings = CalendarSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        files: FilesSearchSettings = Settings.FilesSearchSettings.newBuilder()
+        files: FilesSearchSettings = FilesSearchSettings.newBuilder()
             .setLocalFiles(false)
             .setGdrive(false)
             .setOnedrive(false)
             .setOwncloud(false)
             .setNextcloud(false)
             .build(),
-        calculator: CalculatorSearchSettings = Settings.CalculatorSearchSettings.newBuilder()
+        calculator: CalculatorSearchSettings = CalculatorSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        unitConverter: UnitConverterSearchSettings = Settings.UnitConverterSearchSettings.newBuilder()
+        unitConverter: UnitConverterSearchSettings = UnitConverterSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        websites: WebsiteSearchSettings = Settings.WebsiteSearchSettings.newBuilder()
+        websites: WebsiteSearchSettings = WebsiteSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        wikipedia: WikipediaSearchSettings = Settings.WikipediaSearchSettings.newBuilder()
+        wikipedia: WikipediaSearchSettings = WikipediaSearchSettings.newBuilder()
+            .setEnabled(false)
+            .build(),
+        openstreetmaps: Settings.OpenStreetMapsSearchSettings = Settings.OpenStreetMapsSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
     ): Flow<SearchResults>
@@ -70,6 +73,7 @@ internal class SearchServiceImpl(
     private val contactRepository: SearchableRepository<Contact>,
     private val fileRepository: SearchableRepository<File>,
     private val articleRepository: SearchableRepository<Article>,
+    private val locationRepository: SearchableRepository<Location>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
     private val websiteRepository: SearchableRepository<Website>,
@@ -86,7 +90,8 @@ internal class SearchServiceImpl(
         calculator: CalculatorSearchSettings,
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
-        wikipedia: WikipediaSearchSettings,
+        wikipedia: Settings.WikipediaSearchSettings,
+        openstreetmaps: Settings.OpenStreetMapsSearchSettings,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -180,6 +185,17 @@ internal class SearchServiceImpl(
                         .collectLatest { r ->
                             results.update {
                                 it.copy(wikipedia = r.toImmutableList())
+                            }
+                        }
+                }
+            }
+            if (openstreetmaps.enabled) {
+                launch {
+                    locationRepository.search(query)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(other = r.toImmutableList())
                             }
                         }
                 }

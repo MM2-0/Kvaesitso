@@ -13,7 +13,7 @@ android {
     }
 
     packaging {
-        //resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
         resources.excludes.add("META-INF/license.txt")
@@ -165,6 +165,7 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
+    implementation(project(":data:openstreetmaps"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)
