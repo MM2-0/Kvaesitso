@@ -40,18 +40,68 @@ data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val d
                 LocalTime.now().isBefore(startTime.plus(duration))
 
     companion object {
-
-        private val regex: Lazy<Regex> = lazy {
-            // TODO come up with regex to alleviate parsing errors
-            Regex("asdf")
+        private val timeRegex by lazy { Regex("""(?:\d{2}:\d{2}-?){2}""", RegexOption.IGNORE_CASE) }
+        private val singleDayRegex by lazy {
+            Regex(
+                """[mtwfsp][ouehra]""",
+                RegexOption.IGNORE_CASE
+            )
+        }
+        private val dayRangeRegex by lazy {
+            Regex(
+                """[mtwfsp][ouehra]-[mtwfsp][ouehra]""",
+                RegexOption.IGNORE_CASE
+            )
         }
 
-        fun fromOverpassElement(it: String) : List<OpeningTime>? {
-            // TODO log parsing errors
-            if (it.isBlank())
-                return null
+        fun fromOverpassElement(it: String?): List<OpeningTime>? {
+            if (it.isNullOrBlank()) return null
 
             val openingTimes = mutableListOf<OpeningTime>()
+
+            var blocks =
+                it.split(',', ';', ' ').mapNotNull { if (it.isBlank()) null else it.trim() }
+            val groups = mutableListOf<List<String>>()
+
+            while (true) {
+                if (blocks.isEmpty())
+                    break
+                if (blocks.size < 2) {
+                    groups.add(blocks)
+                    break
+                }
+
+                var nextDayIndex =
+                    blocks.subList(1, blocks.size).indexOfFirst { !timeRegex.matches(it) } + 1
+                val nextTimeIndex =
+                    blocks.indexOfFirst { timeRegex.matches(it) }
+
+                if (nextTimeIndex == -1)
+                    break
+                if (nextDayIndex == -1) {
+                    groups.add(blocks)
+                    break
+                }
+
+                if (nextDayIndex < nextTimeIndex) {
+                    val nextDayAfterTimeIndex = blocks.subList(nextTimeIndex, blocks.size)
+                        .indexOfFirst { !timeRegex.matches(it) }
+                    if (nextDayAfterTimeIndex == -1) {
+                        groups.add(blocks)
+                        break
+                    }
+                    nextDayIndex = nextTimeIndex + nextDayAfterTimeIndex
+                }
+
+                groups.add(blocks.subList(0, nextDayIndex))
+                blocks = blocks.subList(nextDayIndex, blocks.size)
+            }
+
+
+
+            for (group in groups) {
+                print(group)
+            }
 
             // "Mo-Sa 11:00-14:00, 17:00-23:00; Su 11:00-23:00"
             // "Mo-Sa 11:00-21:00; PH,Su off"
@@ -78,7 +128,11 @@ data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val d
 
                         startTime to Duration.between(startTime, endTime)
                     } catch (e: DateTimeParseException) {
-                        Log.e("OpeningTimeFromOverpassElement", "Failed to parse opening time $it", e)
+                        Log.e(
+                            "OpeningTimeFromOverpassElement",
+                            "Failed to parse opening time $it",
+                            e
+                        )
                         null
                     }
                 }
@@ -86,9 +140,9 @@ data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val d
                 openingTimes.addAll(
                     daysOfWeekRange
                         .union(daysOfWeekList)
-                        .flatMap {
-                            day -> startAndDurations.map {
-                                (start, duration) -> OpeningTime(day, start, duration)
+                        .flatMap { day ->
+                            startAndDurations.map { (start, duration) ->
+                                OpeningTime(day, start, duration)
                             }
                         }
                 )
