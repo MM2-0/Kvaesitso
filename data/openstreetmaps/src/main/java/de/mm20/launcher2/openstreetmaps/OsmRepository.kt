@@ -4,8 +4,9 @@ import android.Manifest
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
+import android.util.Log
 import androidx.core.content.getSystemService
-import com.balsikandar.crashreporter.CrashReporter
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -13,6 +14,7 @@ import java.util.concurrent.TimeUnit
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -25,6 +27,9 @@ import okhttp3.OkHttpClient
 import org.koin.core.component.KoinComponent
 import retrofit2.Retrofit
 import org.koin.core.component.inject
+import retrofit2.HttpException
+import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.cancellation.CancellationException
 
 internal class OsmRepository(
     private val context: Context,
@@ -50,7 +55,9 @@ internal class OsmRepository(
             try {
                 retrofit = Retrofit.Builder()
                     .client(httpClient)
-                    .baseUrl("https://overpass-api.de/")
+                    .baseUrl("https://overpass-api.de/") // TODO make configurable
+                    .addConverterFactory(OverpassQueryConverterFactory())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .build()
                 overpassService = retrofit.create(OverpassApi::class.java)
             } catch (e: Exception) {
@@ -75,17 +82,27 @@ internal class OsmRepository(
 
             val radius = 1000 // TODO: make configurable
 
-            val encodedQuery = """[out:json];
-                node(around:$radius,${location.latitude},${location.longitude})["name"~"$query",i];
-                out;
-            """.trimIndent()
+            val result = try {
+                overpassService.search(
+                    OverpassQuery(
+                        name = query,
+                        radius = radius,
+                        latitude = 49.792,
+                        longitude = 9.932,
+                    )
+                )
+            } catch (_: HttpException) {
+                return@collectLatest
+            } catch (_: CancellationException) {
+                return@collectLatest
+            } catch (e: Exception) {
+                Log.e("OsmRepository", "Failed to search for $query", e)
+                return@collectLatest
+            }
 
-            val response = overpassService.search(encodedQuery)
-            if (!response.isSuccessful) return@collectLatest
+            val parsed = OsmLocation.fromOverpassResponse(result).toImmutableList()
 
-            val jsonString = response.body?.string() ?: return@collectLatest
-
-            println(jsonString)
+            send(parsed)
         }
     }
 

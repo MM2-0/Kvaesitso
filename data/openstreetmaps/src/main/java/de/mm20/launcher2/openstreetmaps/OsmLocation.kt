@@ -9,8 +9,13 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.util.Locale
 
 internal data class OsmLocation(
+    val id: Long,
     override val label: String,
     override val category: LocationCategory?,
     override val latitude: Double,
@@ -18,6 +23,7 @@ internal data class OsmLocation(
     override val street: String?,
     override val houseNumber: String?,
     override val openingHours: List<OpeningTime>?,
+    val websiteUrl: String?,
     override val preferDetailsOverLaunch: Boolean,
     override val labelOverride: String? = null,
 ) : Location {
@@ -28,11 +34,11 @@ internal data class OsmLocation(
         return this.copy(labelOverride = label)
     }
 
-    override val key: String = "$domain://$latitude:$longitude"
+    override val key: String = "$domain://$id"
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(
-            Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude")),
+            Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")),
             options
         )
     }
@@ -46,6 +52,25 @@ internal data class OsmLocation(
     }
 
     companion object {
+        fun fromOverpassResponse(result: OverpassResponse): List<OsmLocation> = result.elements.mapNotNull {
+            OsmLocation(
+                id = it.id,
+                label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,
+                category = try {
+                    it.tags["amenity"]?.let { LocationCategory.valueOf(it.uppercase(Locale.ROOT)) }
+                } catch (_: Exception) {
+                    LocationCategory.OTHER
+                },
+                latitude = it.lat,
+                longitude = it.lon,
+                street = it.tags["addr:street"],
+                houseNumber = it.tags["addr:housenumber"],
+                openingHours = it.tags["opening_hours"]?.let { OpeningTime.fromOverpassElement(it) },
+                websiteUrl = it.tags["website"],
+                preferDetailsOverLaunch = !it.tags.containsKey("website"),
+            )
+        }
+
         const val DOMAIN = "OpenStreetMaps"
     }
 }
