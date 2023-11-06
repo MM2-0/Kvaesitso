@@ -401,7 +401,7 @@
     <string name="preference_custom_colors_n1">Neutro</string>
     <string name="preference_custom_colors_n2">Variante neutra</string>
     <string name="file_type_launcherbackup">%1$s backup</string>
-    <string name="backup_not_included">Non verrà eseguito il backup degli account collegati e dei widget di app di terze parti.</string>
+    <string name="backup_not_included">Non verrà eseguito il backup degli account collegati. I widget delle app di terze parti possono essere ripristinati solo su questo dispositivo.</string>
     <string name="backup_component_favorites">Preferiti e app nascoste</string>
     <string name="backup_component_settings">Impostazioni</string>
     <string name="backup_component_websearches">Scorciatoie di ricerca sul web</string>
@@ -422,7 +422,7 @@
     <string name="weather_location_search_no_result">Posizione non trovata.</string>
     <string name="preference_font">Carattere</string>
     <string name="restore_complete">Il backup è stato ripristinato.</string>
-    <string name="preference_clockwidget_favorites_part">Preferiti</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostra la prima riga di elementi appuntati</string>
     <string name="preference_backup_summary">Esporta preferenze e dati del launcher</string>
     <string name="preference_search_currencyconverter_summary">Scarica periodicamente i tassi di cambio per convertire le valute</string>
@@ -666,4 +666,5 @@
     <string name="preference_clock_widget_alignment_bottom">Basso</string>
     <string name="shortcut_label_unavailable">Non disponibile</string>
     <string name="shortcut_unavailable_description">Questa scorciatoia non è disponibile perché %1$s non è il launcher predefinito</string>
+    <string name="preference_clockwidget_dynamic_zone">Zona dinamica</string>
 </resources>
