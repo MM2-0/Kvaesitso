@@ -386,7 +386,7 @@
     <string name="preference_clock_widget_style_summary">Kies een klok</string>
     <string name="preference_clockwidget_date_part">Datum</string>
     <string name="preference_clockwidget_date_part_summary">Huidige datum tonen</string>
-    <string name="preference_clockwidget_favorites_part">Favorieten</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_search_favorites">Favorieten</string>
     <string name="preference_search_favorites_summary">Vastgezette en vaak gebruikte items tonen boven het applicatieraster</string>
     <string name="preference_search_files">Bestanden</string>
@@ -661,4 +661,5 @@
     <string name="preference_clock_widget_alignment_top">Bovenaan</string>
     <string name="shortcut_label_unavailable">Niet beschikbaar</string>
     <string name="shortcut_unavailable_description">Deze snelkoppeling is niet beschikbaar omdat %1$s niet het standaardstartscherm is</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamische zone</string>
 </resources>
