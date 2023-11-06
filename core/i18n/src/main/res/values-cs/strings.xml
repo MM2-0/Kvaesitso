@@ -356,7 +356,7 @@
     <string name="preference_clock_widget_style">Styl</string>
     <string name="preference_clock_widget_style_summary">Vyberte hodiny</string>
     <string name="preference_clockwidget_date_part">Datum</string>
-    <string name="preference_clockwidget_favorites_part">Oblíbené</string>
+    <string name="preference_clockwidget_favorites_part">Dok</string>
     <string name="preference_clockwidget_favorites_part_summary">Zobrazit první řádek připnutých položek</string>
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_music_part_summary">Zobrazit ovládání médií, když je aktivní jejich přehrávání</string>
@@ -428,7 +428,7 @@
     <string name="connect_account">Připojit účet</string>
     <string name="battery_part_charging">Nabíjení</string>
     <string name="backup_select_components">Vyberte, co zálohovat:</string>
-    <string name="backup_not_included">Připojené účty a widgety aplikací třetích stran nebudou zálohovány.</string>
+    <string name="backup_not_included">Připojené účty nebudou zálohovány. Widgety aplikací třetích stran lze obnovit pouze na tomto zařízení.</string>
     <string name="backup_component_favorites">Oblíbené a skryté aplikace</string>
     <string name="backup_component_settings">Nastavení</string>
     <string name="backup_component_websearches">Zkratky webového vyhledávání</string>
@@ -666,4 +666,5 @@
     <string name="preference_clock_widget_alignment_bottom">Dole</string>
     <string name="shortcut_label_unavailable">Nedostupné</string>
     <string name="shortcut_unavailable_description">Tato zkratka je nedostupná, protože %1$s není nastaven jako výchozí launcher</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamická zóna</string>
 </resources>
