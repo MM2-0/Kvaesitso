@@ -3,6 +3,7 @@ package de.mm20.launcher2.database.daos
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import de.mm20.launcher2.database.entities.PluginEntity
@@ -26,15 +27,15 @@ interface PluginDao {
     @Query("SELECT * FROM Plugins WHERE authority = :authority")
     fun get(authority: String): Flow<PluginEntity>
 
-    @Insert
-    fun insertMany(plugins: List<PluginEntity>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertMany(plugins: List<PluginEntity>)
 
-    @Insert
-    fun insert(plugin: PluginEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(plugin: PluginEntity)
 
     @Update
-    fun update(plugin: PluginEntity)
+    suspend fun update(plugin: PluginEntity)
 
     @Query("DELETE FROM Plugins")
-    fun deleteMany()
+    suspend fun deleteMany()
 }

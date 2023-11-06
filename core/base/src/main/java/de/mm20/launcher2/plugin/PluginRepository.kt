@@ -1,5 +1,7 @@
 package de.mm20.launcher2.plugin
 
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 
 interface PluginRepository {
@@ -10,8 +12,8 @@ interface PluginRepository {
     ): Flow<List<Plugin>>
     fun get(authority: String): Flow<Plugin?>
 
-    fun insertMany(plugins: List<Plugin>)
-    fun insert(plugin: Plugin)
-    fun update(plugin: Plugin)
-    fun deleteMany()
+    fun insertMany(plugins: List<Plugin>): Job
+    fun insert(plugin: Plugin): Job
+    fun update(plugin: Plugin): Job
+    fun deleteMany(): Job
 }

@@ -2,9 +2,16 @@ package de.mm20.launcher2.files.providers
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import coil.imageLoader
+import coil.request.ImageRequest
 import de.mm20.launcher2.files.PluginFileSerializer
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.icons.StaticIconLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.File
@@ -45,6 +52,21 @@ data class PluginFile(
 
     override fun getSerializer(): SearchableSerializer {
         return PluginFileSerializer()
+    }
+
+    override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {
+        if (thumbnailUri != null) {
+            val request = ImageRequest.Builder(context)
+                .data(thumbnailUri)
+                .build()
+            val result = context.imageLoader.execute(request)
+            val drawable = result.drawable ?: return null
+            return StaticLauncherIcon(
+                foregroundLayer = StaticIconLayer(icon = drawable, scale = 1.5f),
+                backgroundLayer = ColorLayer(),
+            )
+        }
+        return null
     }
 
     companion object {

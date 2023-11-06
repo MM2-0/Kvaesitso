@@ -2,9 +2,12 @@ package de.mm20.launcher2.plugins
 
 import PluginScanner
 import android.content.BroadcastReceiver
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.plugin.Plugin
@@ -16,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -32,7 +36,11 @@ interface PluginService {
     fun enablePlugin(plugin: Plugin)
     fun disablePlugin(plugin: Plugin)
     fun getPluginsWithState(type: PluginType? = null): Flow<List<PluginWithState>>
+
+    fun isPluginHostInstalled(): Flow<Boolean>
     suspend fun getPluginState(plugin: Plugin): PluginState?
+
+    suspend fun getPluginIcon(plugin: Plugin): Drawable?
 }
 
 internal class PluginServiceImpl(
@@ -41,6 +49,10 @@ internal class PluginServiceImpl(
 ) : PluginService {
 
     private val scope: CoroutineScope = CoroutineScope(Job() + Dispatchers.Default)
+
+    private val pluginHostInstalled = MutableStateFlow(false)
+
+    private val mutex = Mutex()
 
     init {
         refreshPlugins()
@@ -65,9 +77,16 @@ internal class PluginServiceImpl(
         repository.update(plugin.copy(enabled = false))
     }
 
-    private val mutex = Mutex()
     private fun refreshPlugins() {
         scope.launch {
+            try {
+                val permission =
+                    context.packageManager.getPermissionInfo(PluginContract.Permission, 0)
+                pluginHostInstalled.value = permission != null
+            } catch (e: PackageManager.NameNotFoundException) {
+                pluginHostInstalled.value = false
+                return@launch
+            }
             mutex.withLock {
                 val enabledPlugins =
                     repository.findMany(enabled = true).first().map { it.authority }
@@ -79,8 +98,8 @@ internal class PluginServiceImpl(
                         it
                     }
                 }
-                repository.deleteMany()
-                repository.insertMany(plugins)
+                repository.deleteMany().join()
+                repository.insertMany(plugins).join()
             }
         }
     }
@@ -125,6 +144,26 @@ internal class PluginServiceImpl(
             }
 
             else -> null
+        }
+    }
+
+    override fun isPluginHostInstalled(): Flow<Boolean> {
+        return pluginHostInstalled
+    }
+
+    override suspend fun getPluginIcon(plugin: Plugin): Drawable? {
+        return withContext(Dispatchers.IO) {
+            val info = try {
+                context.packageManager.getProviderInfo(
+                    ComponentName(
+                        plugin.packageName,
+                        plugin.className
+                    ), 0
+                )
+            } catch (e: PackageManager.NameNotFoundException) {
+                return@withContext null
+            }
+            info.loadIcon(context.packageManager) ?: info.applicationInfo?.loadIcon(context.packageManager)
         }
     }
 

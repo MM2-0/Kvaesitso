@@ -4,6 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
+import android.util.Log
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.config.StorageStrategy
@@ -36,7 +37,13 @@ class PluginFileProvider(
                 null,
                 null,
                 cancellationSignal
-            ) ?: return@suspendCancellableCoroutine it.resume(emptyList<File>())
+            )
+
+            if (cursor == null) {
+                Log.e("MM20", "Plugin ${plugin.authority} returned null cursor")
+                it.resume(emptyList())
+                return@suspendCancellableCoroutine
+            }
 
             val results = fromCursor(cursor) ?: emptyList()
             it.resume(results)

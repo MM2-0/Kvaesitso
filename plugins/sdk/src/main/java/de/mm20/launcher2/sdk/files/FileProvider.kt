@@ -1,16 +1,15 @@
 package de.mm20.launcher2.sdk.files
 
-import android.database.Cursor
 import android.database.MatrixCursor
-import android.net.Uri
+import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.sdk.base.SearchPluginProvider
 
 abstract class FileProvider : SearchPluginProvider<File>() {
     abstract override suspend fun search(query: String): List<File>
 
-    final override fun getPluginType(): de.mm20.launcher2.plugin.PluginType {
-        return de.mm20.launcher2.plugin.PluginType.FileSearch
+    final override fun getPluginType(): PluginType {
+        return PluginType.FileSearch
     }
 
     override fun createCursor(capacity: Int): MatrixCursor {

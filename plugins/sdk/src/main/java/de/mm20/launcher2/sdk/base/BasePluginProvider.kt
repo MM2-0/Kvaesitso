@@ -1,6 +1,8 @@
 package de.mm20.launcher2.sdk.base
 
 import android.content.ContentProvider
+import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
@@ -41,6 +43,13 @@ abstract class BasePluginProvider : ContentProvider() {
 
     open suspend fun getPluginState(): PluginState {
         return PluginState.Ready
+    }
+
+    internal fun checkPermissionOrThrow(context: Context) {
+        if (context.checkCallingPermission(PluginContract.Permission) == PackageManager.PERMISSION_GRANTED) {
+            return
+        }
+        throw SecurityException("Caller does not have permission to use plugins")
     }
 
 }

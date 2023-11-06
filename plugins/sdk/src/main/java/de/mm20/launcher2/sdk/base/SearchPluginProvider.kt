@@ -45,7 +45,7 @@ abstract class SearchPluginProvider<T> : BasePluginProvider() {
         val context = context ?: return null
         checkPermissionOrThrow(context)
         when {
-            uri.path == SearchPluginContract.Paths.Search -> {
+            uri.pathSegments.size == 1 && uri.pathSegments.first() == SearchPluginContract.Paths.Search -> {
                 val query =
                     uri.getQueryParameter(SearchPluginContract.Paths.QueryParam) ?: return null
                 val results = search(query, cancellationSignal)
@@ -53,7 +53,7 @@ abstract class SearchPluginProvider<T> : BasePluginProvider() {
                 for (result in results) {
                     writeToCursor(cursor, result)
                 }
-                return null
+                return cursor
             }
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
                 val id = uri.pathSegments[1]
@@ -110,12 +110,4 @@ abstract class SearchPluginProvider<T> : BasePluginProvider() {
 
     internal abstract fun createCursor(capacity: Int): MatrixCursor
     internal abstract fun writeToCursor(cursor: MatrixCursor, item: T)
-
-
-    private fun checkPermissionOrThrow(context: Context) {
-        if (context.checkCallingPermission(PluginContract.Permission) == PackageManager.PERMISSION_GRANTED) {
-            return
-        }
-        throw SecurityException("Caller does not have permission to use plugins")
-    }
 }
