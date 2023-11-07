@@ -61,7 +61,8 @@ interface SearchService {
             .setEnabled(false)
             .build(),
         openstreetmaps: Settings.OpenStreetMapsSearchSettings = Settings.OpenStreetMapsSearchSettings.newBuilder()
-            .setEnabled(true) // TODO: Change this to false
+            .setEnabled(true) // TODO set this to false
+            .setSearchRadius(1000)
             .build(),
     ): Flow<SearchResults>
 }

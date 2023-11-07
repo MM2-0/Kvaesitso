@@ -22,6 +22,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -57,7 +58,7 @@ internal class OsmRepository(
             try {
                 retrofit = Retrofit.Builder()
                     .client(httpClient)
-                    .baseUrl("https://overpass-api.de/") // TODO make configurable
+                    .baseUrl("https://overpass-api.de/") // TODO make configurable (maybe)
                     .addConverterFactory(OverpassQueryConverterFactory())
                     .addConverterFactory(GsonConverterFactory.create())
                     .build()
@@ -73,38 +74,40 @@ internal class OsmRepository(
 
         if (query.length < 3) return@channelFlow
 
-        hasLocationPermission.collectLatest {
-            if (!it) return@collectLatest
+        hasLocationPermission.collectLatest { locationPermission ->
+            if (!locationPermission) return@collectLatest
 
-            withContext(Dispatchers.IO) {
-                httpClient.dispatcher.cancelAll()
-            }
+            dataStore.data.map { it.openStreetMapsSearch.searchRadius }
+                .collectLatest { searchRadius ->
 
-            val location = getCurrentLocation() ?: return@collectLatest
+                    withContext(Dispatchers.IO) {
+                        httpClient.dispatcher.cancelAll()
+                    }
 
-            val radius = 1000 // TODO: make configurable
+                    val location = getCurrentLocation() ?: return@collectLatest
 
-            val result = try {
-                overpassService.search(
-                    OverpassQuery(
-                        name = query,
-                        radius = radius,
-                        latitude = location.latitude,
-                        longitude = location.longitude,
-                    )
-                )
-            } catch (_: HttpException) {
-                return@collectLatest
-            } catch (_: CancellationException) {
-                return@collectLatest
-            } catch (e: Exception) {
-                Log.e("OsmRepository", "Failed to search for $query", e)
-                return@collectLatest
-            }
+                    val result = try {
+                        overpassService.search(
+                            OverpassQuery(
+                                name = query,
+                                radius = searchRadius,
+                                latitude = location.latitude,
+                                longitude = location.longitude,
+                            )
+                        )
+                    } catch (_: HttpException) {
+                        return@collectLatest
+                    } catch (_: CancellationException) {
+                        return@collectLatest
+                    } catch (e: Exception) {
+                        Log.e("OsmRepository", "Failed to search for $query", e)
+                        return@collectLatest
+                    }
 
-            val parsed = OsmLocation.fromOverpassResponse(result).toImmutableList()
+                    val parsed = OsmLocation.fromOverpassResponse(result).toImmutableList()
 
-            send(parsed)
+                    send(parsed)
+                }
         }
     }
 
@@ -114,7 +117,7 @@ internal class OsmRepository(
         val hasCoarseAccess = context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
 
         return if (hasFineAccess) lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-            else if (hasCoarseAccess) lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-            else null
+        else if (hasCoarseAccess) lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        else null
     }
 }
