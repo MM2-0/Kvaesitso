@@ -4,13 +4,13 @@ import android.Manifest
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
-import android.location.LocationRequest
 import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import java.util.concurrent.TimeUnit
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
@@ -34,6 +34,7 @@ import kotlin.coroutines.cancellation.CancellationException
 
 internal class OsmRepository(
     private val context: Context,
+    private val dataStore: LauncherDataStore
 ) : SearchableRepository<de.mm20.launcher2.search.Location>, KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
@@ -88,8 +89,8 @@ internal class OsmRepository(
                     OverpassQuery(
                         name = query,
                         radius = radius,
-                        latitude = 49.792,
-                        longitude = 9.932,
+                        latitude = location.latitude,
+                        longitude = location.longitude,
                     )
                 )
             } catch (_: HttpException) {

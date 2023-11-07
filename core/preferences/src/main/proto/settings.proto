@@ -386,6 +386,7 @@ message Settings {
 
   message OpenStreetMapsSearchSettings {
     bool enabled = 1;
+    uint32 search_radius = 2;
   }
   OpenStreetMapsSearchSettings open_street_maps_search = 32;
 }
