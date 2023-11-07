@@ -93,8 +93,12 @@ data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val d
                             val endTime =
                                 LocalTime.parse(it.substringAfter('-'), DATE_TIME_FORMATTER)
 
-                            // if (endTime < startTime)
-                            startTime to Duration.between(startTime, endTime)
+                            var duration = Duration.between(startTime, endTime)
+
+                            if (duration.isNegative || duration.isZero)
+                                duration += Duration.ofDays(1)
+
+                            startTime to duration
                         } catch (dtpe: DateTimeParseException) {
                             Log.e(
                                 "OpeningTimeFromOverpassElement",
