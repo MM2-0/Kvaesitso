@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Context
 import android.location.Location
 import android.location.LocationManager
+import android.location.LocationRequest
 import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.crashreporter.CrashReporter
@@ -108,13 +109,11 @@ internal class OsmRepository(
 
     private fun getCurrentLocation(): Location? {
         val lm = context.getSystemService<LocationManager>()!!
-        var location: Location? = null
-        if (context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        }
-        if (location == null && context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        }
-        return location
+        val hasFineAccess = context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+        val hasCoarseAccess = context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+
+        return if (hasFineAccess) lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            else if (hasCoarseAccess) lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+            else null
     }
 }
