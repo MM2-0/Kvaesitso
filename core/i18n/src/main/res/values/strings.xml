@@ -413,6 +413,8 @@
     <string name="missing_permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
     <!-- Missing calendar permission, used in calendar search results -->
     <string name="missing_permission_calendar_search">Grant calendar permission to search your calendar.</string>
+    <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Grant location permission to search nearby locations.</string>
     <!-- Missing files permission, used in files search results -->
     <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <!-- Missing files permission, used in contact search results -->
@@ -637,7 +639,9 @@
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
+    <string name="preference_search_locations">Locations</string>
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
+    <string name="preference_search_locations_summary">Show a preview of a location matching the query</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
     <string name="preference_search_localfiles">Local files</string>

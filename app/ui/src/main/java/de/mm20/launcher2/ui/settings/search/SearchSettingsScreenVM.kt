@@ -119,6 +119,18 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
+    val locations = dataStore.data.map { it.openStreetMapsSearch.enabled }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+    fun setLocations(locations: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder().setOpenStreetMapsSearch(
+                        it.openStreetMapsSearch.toBuilder().setEnabled(locations)
+                    ).build()
+            }
+        }
+    }
+
     val autoFocus = dataStore.data.map { it.searchBar.autoFocus }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setAutoFocus(autoFocus: Boolean) {

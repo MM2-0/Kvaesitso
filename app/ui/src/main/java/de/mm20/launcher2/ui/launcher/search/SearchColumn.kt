@@ -90,6 +90,7 @@ fun SearchColumn(
     val unitConverter by viewModel.unitConverterResults
     val calculator by viewModel.calculatorResults
     val wikipedia by viewModel.articleResults
+    val locations by viewModel.locationResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
 
@@ -100,6 +101,7 @@ fun SearchColumn(
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
+    val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
@@ -293,6 +295,30 @@ fun SearchColumn(
             items = contacts.toImmutableList(),
             reverse = reverse,
             key = "contacts",
+            highlightedItem = bestMatch as? SavableSearchable
+        )
+        ListResults(
+            before = if (missingLocationPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_location_search),
+                        onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableLocationSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
+                        }
+                    )
+                }
+            } else null,
+            items = locations.toImmutableList(),
+            reverse = reverse,
+            key = "locations",
             highlightedItem = bestMatch as? SavableSearchable
         )
         for (wiki in wikipedia) {

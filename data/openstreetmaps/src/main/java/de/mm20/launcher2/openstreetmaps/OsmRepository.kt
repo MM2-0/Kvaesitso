@@ -45,9 +45,10 @@ internal class OsmRepository(
 
     private val httpClient = OkHttpClient
         .Builder()
-        .connectTimeout(200, TimeUnit.MILLISECONDS)
-        .readTimeout(3000, TimeUnit.MILLISECONDS)
-        .writeTimeout(1000, TimeUnit.MILLISECONDS)
+        // TODO set sensible timeouts that dont cause issues
+        //.connectTimeout(200, TimeUnit.MILLISECONDS)
+        //.readTimeout(5000, TimeUnit.MILLISECONDS)
+        //.writeTimeout(2500, TimeUnit.MILLISECONDS)
         .build()
 
     private lateinit var retrofit: Retrofit
@@ -74,40 +75,49 @@ internal class OsmRepository(
 
         if (query.length < 3) return@channelFlow
 
-        hasLocationPermission.collectLatest { locationPermission ->
-            if (!locationPermission) return@collectLatest
+        hasLocationPermission.collectLatest locationPermission@{ locationPermission ->
+            if (!locationPermission) return@locationPermission
+
+            withContext(Dispatchers.IO) {
+                httpClient.dispatcher.cancelAll()
+            }
+
+            val location = getCurrentLocation() ?: return@locationPermission
 
             dataStore.data.map { it.openStreetMapsSearch.searchRadius }
-                .collectLatest { searchRadius ->
+                .collectLatest dataStore@{ searchRadius ->
+                    val result =
+                        queryOverpass(query, searchRadius, location.latitude, location.longitude)
 
-                    withContext(Dispatchers.IO) {
-                        httpClient.dispatcher.cancelAll()
-                    }
-
-                    val location = getCurrentLocation() ?: return@collectLatest
-
-                    val result = try {
-                        overpassService.search(
-                            OverpassQuery(
-                                name = query,
-                                radius = searchRadius,
-                                latitude = location.latitude,
-                                longitude = location.longitude,
-                            )
-                        )
-                    } catch (_: HttpException) {
-                        return@collectLatest
-                    } catch (_: CancellationException) {
-                        return@collectLatest
-                    } catch (e: Exception) {
-                        Log.e("OsmRepository", "Failed to search for $query", e)
-                        return@collectLatest
-                    }
-
-                    val parsed = OsmLocation.fromOverpassResponse(result).toImmutableList()
-
-                    send(parsed)
+                    if (result != null)
+                        send(OsmLocation.fromOverpassResponse(result).toImmutableList())
                 }
+
+        }
+    }
+
+    private suspend fun queryOverpass(
+        query: String,
+        radius: Int,
+        latitude: Double,
+        longitude: Double
+    ): OverpassResponse? {
+        return try {
+            overpassService.search(
+                OverpassQuery(
+                    name = query,
+                    radius = radius,
+                    latitude = latitude,
+                    longitude = longitude,
+                )
+            )
+        } catch (_: HttpException) {
+            null
+        } catch (_: CancellationException) {
+            null
+        } catch (e: Exception) {
+            Log.e("OsmRepository", "Failed to search for $query", e)
+            null
         }
     }
 

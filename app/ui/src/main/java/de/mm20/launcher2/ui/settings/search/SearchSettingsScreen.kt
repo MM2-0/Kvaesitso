@@ -173,6 +173,20 @@ fun SearchSettingsScreen() {
                     }
                 )
 
+                val locations by viewModel.locations.collectAsStateWithLifecycle(null)
+                PreferenceWithSwitch(
+                    title= stringResource(R.string.preference_search_locations),
+                    summary = stringResource(R.string.preference_search_locations_summary),
+                    icon = Icons.Rounded.Map,
+                    switchValue = locations == true,
+                    onSwitchChanged = {
+                        viewModel.setLocations(it)
+                    },
+                    onClick = {
+                        navController?.navigate("settings/search/locations")
+                    }
+                )
+
                 Preference(
                     title = stringResource(R.string.preference_screen_search_actions),
                     summary = stringResource(R.string.preference_search_search_actions_summary),

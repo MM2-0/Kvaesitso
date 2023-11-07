@@ -61,7 +61,7 @@ interface SearchService {
             .setEnabled(false)
             .build(),
         openstreetmaps: Settings.OpenStreetMapsSearchSettings = Settings.OpenStreetMapsSearchSettings.newBuilder()
-            .setEnabled(true) // TODO set this to false
+            .setEnabled(false)
             .setSearchRadius(1000)
             .build(),
     ): Flow<SearchResults>
@@ -196,7 +196,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(other = r.toImmutableList())
+                                it.copy(locations = r.toImmutableList())
                             }
                         }
                 }
@@ -241,6 +241,7 @@ data class SearchResults(
     val unitConverters: ImmutableList<UnitConverter>? = null,
     val websites: ImmutableList<Website>? = null,
     val wikipedia: ImmutableList<Article>? = null,
+    val locations: ImmutableList<Location>? = null,
     val searchActions: ImmutableList<SearchAction>? = null,
     val other: ImmutableList<SavableSearchable>? = null,
 )

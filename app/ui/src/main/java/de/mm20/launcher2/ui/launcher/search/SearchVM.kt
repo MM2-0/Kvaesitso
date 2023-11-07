@@ -128,6 +128,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     shortcuts = settings.appShortcutSearch,
                     websites = settings.websiteSearch,
                     wikipedia = settings.wikipediaSearch,
+                    openstreetmaps = settings.openStreetMapsSearch,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
@@ -137,6 +138,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.files,
                             results.contacts,
                             results.calendars,
+                            results.locations,
                             results.wikipedia,
                             results.websites,
                             results.calculators,
@@ -199,6 +201,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         val unitConv = mutableListOf<UnitConverter>()
                         val calc = mutableListOf<Calculator>()
                         val articles = mutableListOf<Article>()
+                        val locations = mutableListOf<Location>()
                         val website = mutableListOf<Website>()
                         val actions = mutableListOf<SearchAction>()
                         for (r in resultsList) {
@@ -217,6 +220,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is Calculator -> calc.add(r)
                                 r is Website -> website.add(r)
                                 r is Article -> articles.add(r)
+                                r is Location -> locations.add(r)
                                 r is SearchAction -> actions.add(r)
                             }
                         }
@@ -229,6 +233,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 unitConv,
                                 calc,
                                 events,
+                                locations,
                                 contacts,
                                 articles,
                                 website,
@@ -244,6 +249,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         contactResults.value = contacts
                         calendarResults.value = events
                         articleResults.value = articles
+                        locationResults.value = locations
                         websiteResults.value = website
                         calculatorResults.value = calc
                         unitConverterResults.value = unitConv
@@ -288,6 +294,25 @@ class SearchVM : ViewModel(), KoinComponent {
             dataStore.updateData {
                 it.toBuilder()
                     .setContactsSearch(it.contactsSearch.toBuilder().setEnabled(false))
+                    .build()
+            }
+        }
+    }
+
+    val missingLocationPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.Location),
+        dataStore.data.map { it.openStreetMapsSearch.enabled }.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestLocationPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Location)
+    }
+
+    fun disableLocationSearch() {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setOpenStreetMapsSearch(it.openStreetMapsSearch.toBuilder().setEnabled(false))
                     .build()
             }
         }
