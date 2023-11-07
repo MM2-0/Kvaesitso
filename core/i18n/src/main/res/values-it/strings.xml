@@ -667,4 +667,9 @@
     <string name="shortcut_label_unavailable">Non disponibile</string>
     <string name="shortcut_unavailable_description">Questa scorciatoia non è disponibile perché %1$s non è il launcher predefinito</string>
     <string name="preference_clockwidget_dynamic_zone">Zona dinamica</string>
+    <string name="preference_screen_plugins">Plugin</string>
+    <string name="missing_permission_plugins">Per utilizzare i plugin è necessaria l\'autorizzazione del plugin.</string>
+    <string name="preference_screen_plugins_summary">Gestisci estensioni installate</string>
+    <string name="no_plugins_installed">Nessun plugin installato</string>
+    <string name="plugin_host_not_installed">Host del plugin non installato</string>
 </resources>
