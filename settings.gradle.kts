@@ -45,6 +45,7 @@ include(":data:weather")
 include(":data:notifications")
 include(":data:search-actions")
 include(":data:searchable")
+include(":data:plugins")
 
 include(":services:accounts")
 include(":services:tags")
@@ -66,3 +67,4 @@ include(":services:favorites")
 
 include(":plugins:sdk")
 include(":data:openstreetmaps")
+include(":services:plugins")

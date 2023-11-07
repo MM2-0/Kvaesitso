@@ -8,12 +8,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import de.mm20.launcher2.database.daos.PluginDao
 import de.mm20.launcher2.database.daos.ThemeDao
 import de.mm20.launcher2.database.entities.CurrencyEntity
 import de.mm20.launcher2.database.entities.CustomAttributeEntity
 import de.mm20.launcher2.database.entities.ForecastEntity
 import de.mm20.launcher2.database.entities.IconEntity
 import de.mm20.launcher2.database.entities.IconPackEntity
+import de.mm20.launcher2.database.entities.PluginEntity
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.database.entities.ThemeEntity
@@ -33,6 +35,7 @@ import de.mm20.launcher2.database.migrations.Migration_21_22
 import de.mm20.launcher2.database.migrations.Migration_22_23
 import de.mm20.launcher2.database.migrations.Migration_23_24
 import de.mm20.launcher2.database.migrations.Migration_24_25
+import de.mm20.launcher2.database.migrations.Migration_25_26
 import de.mm20.launcher2.database.migrations.Migration_6_7
 import de.mm20.launcher2.database.migrations.Migration_7_8
 import de.mm20.launcher2.database.migrations.Migration_8_9
@@ -51,7 +54,8 @@ import java.util.UUID
         CustomAttributeEntity::class,
         SearchActionEntity::class,
         ThemeEntity::class,
-    ], version = 25, exportSchema = true
+        PluginEntity::class,
+    ], version = 26, exportSchema = true
 )
 @TypeConverters(ComponentNameConverter::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -68,6 +72,8 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun searchActionDao(): SearchActionDao
 
     abstract fun themeDao(): ThemeDao
+
+    abstract fun pluginDao(): PluginDao
 
     companion object {
         private var _instance: AppDatabase? = null
@@ -147,6 +153,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_22_23(),
                         Migration_23_24(),
                         Migration_24_25(context),
+                        Migration_25_26(),
                     ).build()
             if (_instance == null) _instance = instance
             return instance

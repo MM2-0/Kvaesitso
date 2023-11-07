@@ -384,7 +384,7 @@
     <string name="missing_permission_appshortcuts_search">%1$s als Standard-Start-App festlegen, um App-Shortcuts durchsuchen zu können.</string>
     <string name="preference_search_appshortcuts_summary">App-Shortcuts durchsuchen</string>
     <string name="widget_name_favorites">Favoriten</string>
-    <string name="preference_clockwidget_favorites_part">Favoriten</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Die erste Zeile der Favoriten anzeigen</string>
     <string name="preference_grid_icon_size">Symbolgröße</string>
     <string name="preference_custom_colors_advanced_mode">Erweiterter Modus</string>
@@ -415,7 +415,7 @@
     <string name="preference_screen_backup_summary">Launcherdaten exportieren und importieren</string>
     <string name="preference_backup">Sichern</string>
     <string name="backup_select_components">Auswählen, was gesichert werden soll:</string>
-    <string name="backup_not_included">Verbundene Konten und Drittanbieter-App-Widgets werden nicht mitgesichert.</string>
+    <string name="backup_not_included">Verbundene Konten werden nicht mitgesichert. Drittanbieter-App-Widgets können nur auf diesem Gerät wiederhergestellt werden.</string>
     <string name="restore_meta">Erstellt um %1$s auf %2$s mit %3$s.</string>
     <string name="restore_select_components">Auswählen, was wiederhergestellt werden soll. Bestehende Daten werden überschrieben!</string>
     <string name="restore_complete">Die Sicherung wurde wiederhergestellt.</string>
@@ -661,4 +661,10 @@
     <string name="preference_clock_widget_alignment_bottom">Unten</string>
     <string name="shortcut_label_unavailable">Nicht verfügbar</string>
     <string name="shortcut_unavailable_description">Diese Verknüpfung ist nicht verfügbar, weil %1$s nicht die Standard-Start-App ist</string>
+    <string name="missing_permission_plugins">Plugin-Berechtigung wird benötigt, um Plugins zu benutzen.</string>
+    <string name="preference_screen_plugins">Plugins</string>
+    <string name="preference_screen_plugins_summary">Installierte Erweiterungen verwalten</string>
+    <string name="no_plugins_installed">Keine Plugins installiert</string>
+    <string name="plugin_host_not_installed">Plugin-Host nicht installiert</string>
+    <string name="preference_clockwidget_dynamic_zone">Dynamische Zone</string>
 </resources>

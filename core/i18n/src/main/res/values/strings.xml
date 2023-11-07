@@ -421,6 +421,7 @@
     <string name="missing_permission_appshortcuts_search">Set %1$s as default home app to search app shortcuts.</string>
     <!-- Missing permission app shortcuts permission, used when creating a shortcut in the edit favorites sheet -->
     <string name="missing_permission_appshortcuts_create">Set %1$s as default home app to create shortcuts.</string>
+    <string name="missing_permission_plugins">Plugin permission is required to use plugins.</string>
     <!-- Grant a permission, shown in permission banners -->
     <string name="grant_permission">Grant</string>
     <!-- Appearance preference title -->
@@ -503,6 +504,10 @@
     <string name="preference_icon_shape_hexagon">Hexagon</string>
     <string name="preference_category_searchbar">Search bar</string>
     <string name="preference_screen_integrations">Integrations</string>
+    <string name="preference_screen_plugins">Plugins</string>
+    <string name="preference_screen_plugins_summary">Manage installed extensions</string>
+    <string name="no_plugins_installed">No plugins installed</string>
+    <string name="plugin_host_not_installed">Plugin host not installed</string>
     <string name="preference_theme_system">Follow system</string>
     <string name="preference_themed_icons">Themed icons</string>
     <string name="preference_themed_icons_summary">Color icons with the application\'s color scheme</string>
@@ -702,8 +707,7 @@
         <item quantity="other">Full in %1$s minutes</item>
     </plurals>
     <string name="backup_select_components">Select what to backup:</string>
-    <string name="backup_info">The following data will be backed up:</string>
-    <string name="backup_not_included">Connected accounts and 3rd party app widgets will not be backed up.</string>
+    <string name="backup_not_included">Connected accounts will not be backed up. Third party app widgets can only be restored on this device.</string>
     <string name="backup_component_favorites">Favorites &amp; hidden apps</string>
     <string name="backup_component_settings">Settings</string>
     <string name="backup_component_websearches">Web search shortcuts</string>

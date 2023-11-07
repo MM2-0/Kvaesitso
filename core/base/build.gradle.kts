@@ -50,5 +50,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:i18n"))
     implementation(project(":libs:material-color-utilities"))
+    api(project(":core:shared"))
 
 }

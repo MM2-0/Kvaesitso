@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.main
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Apps
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Extension
 import androidx.compose.material.icons.rounded.Gesture
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Info
@@ -72,6 +73,14 @@ fun MainSettingsScreen() {
                     summary = stringResource(id = R.string.preference_screen_integrations_summary),
                     onClick = {
                         navController?.navigate("settings/integrations")
+                    }
+                )
+                Preference(
+                    icon = Icons.Rounded.Extension,
+                    title = stringResource(id = R.string.preference_screen_plugins),
+                    summary = stringResource(id = R.string.preference_screen_plugins_summary),
+                    onClick = {
+                        navController?.navigate("settings/plugins")
                     }
                 )
                 Preference(

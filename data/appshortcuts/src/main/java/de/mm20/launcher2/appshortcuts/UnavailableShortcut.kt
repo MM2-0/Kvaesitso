@@ -67,7 +67,7 @@ internal class UnavailableShortcut(
 
     override val isUnavailable: Boolean = true
     override val profile: AppProfile
-        get() = TODO("Not yet implemented")
+        get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
     companion object {
         internal operator fun invoke(context: Context, id: String, packageName: String, userSerial: Long): UnavailableShortcut? {

@@ -17,6 +17,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.plugin.contracts.PluginContract
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 
@@ -63,6 +64,7 @@ enum class PermissionGroup {
     Notifications,
     AppShortcuts,
     Accessibility,
+    Plugins,
 }
 
 internal class PermissionsManagerImpl(
@@ -82,6 +84,9 @@ internal class PermissionsManagerImpl(
     )
     private val locationPermissionState = MutableStateFlow(
         checkPermissionOnce(PermissionGroup.Location)
+    )
+    private val pluginsPermissionState = MutableStateFlow(
+        checkPermissionOnce(PermissionGroup.Plugins)
     )
     private val notificationsPermissionState = MutableStateFlow(false)
     private val accessibilityPermissionState = MutableStateFlow(false)
@@ -153,6 +158,14 @@ internal class PermissionsManagerImpl(
                     CrashReporter.logException(e)
                 }
             }
+
+            PermissionGroup.Plugins -> {
+                ActivityCompat.requestPermissions(
+                    context,
+                    pluginPermissions,
+                    permissionGroup.ordinal
+                )
+            }
         }
     }
 
@@ -168,6 +181,10 @@ internal class PermissionsManagerImpl(
 
             PermissionGroup.Contacts -> {
                 contactPermissions.all { context.checkPermission(it) }
+            }
+
+            PermissionGroup.Plugins -> {
+                pluginPermissions.all { context.checkPermission(it) }
             }
 
             PermissionGroup.ExternalStorage -> {
@@ -201,6 +218,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState
             PermissionGroup.Accessibility -> accessibilityPermissionState
+            PermissionGroup.Plugins -> pluginsPermissionState
         }
     }
 
@@ -209,7 +227,7 @@ internal class PermissionsManagerImpl(
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        val permissionGroup = PermissionGroup.values().getOrNull(requestCode) ?: return
+        val permissionGroup = PermissionGroup.entries.getOrNull(requestCode) ?: return
         val granted = grantResults.all { it == PackageManager.PERMISSION_GRANTED }
         when (permissionGroup) {
             PermissionGroup.Calendar -> calendarPermissionState.value = granted
@@ -219,6 +237,7 @@ internal class PermissionsManagerImpl(
             PermissionGroup.Notifications -> notificationsPermissionState.value = granted
             PermissionGroup.AppShortcuts -> appShortcutsPermissionState.value = granted
             PermissionGroup.Accessibility -> accessibilityPermissionState.value = granted
+            PermissionGroup.Plugins -> pluginsPermissionState.value = granted
         }
     }
 
@@ -261,5 +280,6 @@ internal class PermissionsManagerImpl(
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         )
+        private val pluginPermissions = arrayOf(PluginContract.Permission)
     }
 }

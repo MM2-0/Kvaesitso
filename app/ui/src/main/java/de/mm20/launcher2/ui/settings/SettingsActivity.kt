@@ -2,21 +2,23 @@ package de.mm20.launcher2.ui.settings
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.core.view.WindowCompat
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.google.accompanist.navigation.animation.AnimatedNavHost
-import com.google.accompanist.navigation.animation.composable
-import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -45,6 +47,7 @@ import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
 import de.mm20.launcher2.ui.settings.tags.TagsSettingsScreen
@@ -53,20 +56,17 @@ import de.mm20.launcher2.ui.settings.weather.WeatherIntegrationSettingsScreen
 import de.mm20.launcher2.ui.settings.wikipedia.WikipediaSettingsScreen
 import de.mm20.launcher2.ui.theme.LauncherTheme
 import de.mm20.launcher2.ui.theme.wallpaperColorsAsState
-import org.koin.android.ext.android.inject
 import java.net.URLDecoder
 import java.util.UUID
 
 class SettingsActivity : BaseActivity() {
-
-    private val dataStore: LauncherDataStore by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
-            val navController = rememberAnimatedNavController()
+            val navController = rememberNavController()
 
             LaunchedEffect(intent) {
                 intent.getStringExtra(EXTRA_ROUTE)
@@ -80,13 +80,21 @@ class SettingsActivity : BaseActivity() {
                 ProvideSettings {
                     LauncherTheme {
                         OverlayHost {
-                            AnimatedNavHost(
+                            NavHost(
                                 navController = navController,
                                 startDestination = "settings",
-                                exitTransition = { fadeOut(tween(300, 300)) },
-                                enterTransition = { fadeIn(tween(200)) },
-                                popEnterTransition = { fadeIn(tween(0)) },
-                                popExitTransition = { fadeOut(tween(200)) },
+                                exitTransition = {
+                                    fadeOut() + scaleOut(targetScale = 0.5f)
+                                },
+                                enterTransition = {
+                                    slideInHorizontally { it }
+                                },
+                                popEnterTransition = {
+                                    fadeIn() + scaleIn(initialScale = 0.5f)
+                                },
+                                popExitTransition = {
+                                    slideOutHorizontally { it }
+                                },
                             ) {
                                 composable("settings") {
                                     MainSettingsScreen()
@@ -155,6 +163,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/integrations") {
                                     IntegrationsSettingsScreen()
+                                }
+                                composable("settings/plugins") {
+                                    PluginsSettingsScreen()
                                 }
                                 composable("settings/about") {
                                     AboutSettingsScreen()

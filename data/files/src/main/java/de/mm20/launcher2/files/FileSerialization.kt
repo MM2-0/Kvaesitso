@@ -1,22 +1,31 @@
 package de.mm20.launcher2.files
 
 import android.content.Context
+import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.files.providers.GDriveFile
 import de.mm20.launcher2.files.providers.LocalFile
 import de.mm20.launcher2.files.providers.NextcloudFile
 import de.mm20.launcher2.files.providers.OneDriveFile
 import de.mm20.launcher2.files.providers.OwncloudFile
+import de.mm20.launcher2.files.providers.PluginFile
+import de.mm20.launcher2.files.providers.PluginFileProvider
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginRepository
+import de.mm20.launcher2.plugin.config.StorageStrategy
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
+import kotlinx.coroutines.flow.firstOrNull
+import org.json.JSONException
 import org.json.JSONObject
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -299,4 +308,86 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
 
         )
     }
+}
+
+internal class PluginFileSerializer(
+) : SearchableSerializer {
+    override fun serialize(searchable: SavableSearchable): String? {
+        searchable as PluginFile
+        if (searchable.storageStrategy == StorageStrategy.StoreReference) {
+            return jsonObjectOf(
+                "id" to searchable.id,
+                "authority" to searchable.authority,
+                "strategy" to "ref"
+            ).toString()
+        } else {
+            return jsonObjectOf(
+                "id" to searchable.id,
+                "path" to searchable.path,
+                "mimeType" to searchable.mimeType,
+                "size" to searchable.size,
+                "label" to searchable.label,
+                "uri" to searchable.uri.toString(),
+                "thumbnailUri" to searchable.thumbnailUri?.toString(),
+                "isDirectory" to searchable.isDirectory,
+                "authority" to searchable.authority,
+                "strategy" to "copy",
+            ).toString()
+        }
+    }
+
+    override val typePrefix: String
+        get() = PluginFile.Domain
+
+}
+
+internal class PluginFileDeserializer(
+    private val context: Context,
+    private val pluginRepository: PluginRepository,
+): SearchableDeserializer {
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
+        val jsonObject = JSONObject(serialized)
+
+        return if (jsonObject.optString("strategy", "ref") == "ref") {
+            getByRef(jsonObject)
+        } else {
+            getByCopy(jsonObject)
+        }
+    }
+
+    private suspend fun getByRef(obj: JSONObject): File? {
+        try {
+            val authority = obj.getString("authority")
+            val id = obj.getString("id")
+            val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
+            val provider = PluginFileProvider(context, plugin)
+            return provider.getFile(id)
+        } catch (e: Exception) {
+            CrashReporter.logException(e)
+            return null
+        }
+    }
+    private fun getByCopy(obj: JSONObject): File? {
+        try {
+            val uri = obj.getString("uri")
+            val thumbnailUri = obj.optString("thumbnailUri")
+            return PluginFile(
+                id = obj.getString("id"),
+                path = obj.getString("path"),
+                mimeType = obj.getString("mimeType"),
+                size = obj.optLong("size", 0L),
+                metaData = persistentMapOf(),
+                label = obj.getString("label"),
+                uri = Uri.parse(uri),
+                thumbnailUri = thumbnailUri.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) },
+                storageStrategy = StorageStrategy.StoreCopy,
+                isDirectory = obj.optBoolean("isDirectory", false),
+                authority = obj.getString("authority"),
+            )
+        } catch (e: JSONException) {
+            CrashReporter.logException(e)
+            return null
+        }
+    }
+
 }

@@ -33,8 +33,6 @@ internal data class GDriveFile(
 
     override val key: String = "$domain://$fileId"
 
-    override val isStoredInCloud = true
-
     override val providerIconRes = R.drawable.ic_badge_gdrive
 
     private fun getLaunchIntent(): Intent {

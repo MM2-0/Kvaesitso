@@ -34,8 +34,13 @@ koin = "3.2.0"
 protobuf = "3.14.0"
 retrofit = "2.9.0"
 junit = "4.13"
+<<<<<<< HEAD
 androidx-test-ext-junit = "1.1.5"
 espresso-core = "3.5.1"
+=======
+junitVersion = "1.1.5"
+espressoCore = "3.5.1"
+>>>>>>> upstream/main
 
 [libraries]
 gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "android-gradle-plugin" }
@@ -133,8 +138,8 @@ tinypinyin = { group = "com.github.promeg", name = "tinypinyin", version = "2.0.
 emoji4j = { group = "com.sigpwned", name = "emoji4j-core", version = "15.0.1" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 
 
 

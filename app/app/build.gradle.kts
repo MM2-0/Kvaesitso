@@ -140,6 +140,7 @@ dependencies {
     implementation(project(":data:currencies"))
     implementation(project(":data:customattrs"))
     implementation(project(":data:searchable"))
+    implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
     implementation(project(":data:files"))
     implementation(project(":libs:g-services"))
@@ -166,6 +167,7 @@ dependencies {
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
     implementation(project(":data:openstreetmaps"))
+    implementation(project(":services:plugins"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)
