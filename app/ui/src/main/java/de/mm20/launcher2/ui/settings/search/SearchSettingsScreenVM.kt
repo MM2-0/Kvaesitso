@@ -21,12 +21,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     val favorites = dataStore.data.map { it.favorites.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setFavorites(favorites: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setFavorites(
-                        it.favorites.toBuilder().setEnabled(favorites)
-                    ).build()
+                    it.favorites.toBuilder().setEnabled(favorites)
+                ).build()
             }
         }
     }
@@ -41,8 +42,8 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setContactsSearch(
-                        it.contactsSearch.toBuilder().setEnabled(contacts)
-                    ).build()
+                    it.contactsSearch.toBuilder().setEnabled(contacts)
+                ).build()
             }
         }
     }
@@ -55,12 +56,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val calendar = dataStore.data.map { it.calendarSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setCalendar(calendar: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setCalendarSearch(
-                        it.calendarSearch.toBuilder().setEnabled(calendar)
-                    ).build()
+                    it.calendarSearch.toBuilder().setEnabled(calendar)
+                ).build()
             }
         }
     }
@@ -76,20 +78,21 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setCalculatorSearch(
-                        it.calculatorSearch.toBuilder().setEnabled(calculator)
-                    ).build()
+                    it.calculatorSearch.toBuilder().setEnabled(calculator)
+                ).build()
             }
         }
     }
 
     val unitConverter = dataStore.data.map { it.unitConverterSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setUnitConverter(unitConverter: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setUnitConverterSearch(
-                        it.unitConverterSearch.toBuilder().setEnabled(unitConverter)
-                    ).build()
+                    it.unitConverterSearch.toBuilder().setEnabled(unitConverter)
+                ).build()
             }
         }
     }
@@ -101,56 +104,60 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setWikipediaSearch(
-                        it.wikipediaSearch.toBuilder().setEnabled(wikipedia)
-                    ).build()
+                    it.wikipediaSearch.toBuilder().setEnabled(wikipedia)
+                ).build()
             }
         }
     }
 
     val websites = dataStore.data.map { it.websiteSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setWebsites(websites: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setWebsiteSearch(
-                        it.websiteSearch.toBuilder().setEnabled(websites)
-                    ).build()
+                    it.websiteSearch.toBuilder().setEnabled(websites)
+                ).build()
             }
         }
     }
 
-    val locations = dataStore.data.map { it.openStreetMapsSearch.enabled }
+    val locations = dataStore.data.map { it.locationsSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setLocations(locations: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
-                it.toBuilder().setOpenStreetMapsSearch(
-                        it.openStreetMapsSearch.toBuilder().setEnabled(locations)
-                    ).build()
+                it.toBuilder().setLocationsSearch(
+                    it.locationsSearch.toBuilder().setEnabled(locations)
+                ).build()
             }
         }
     }
 
     val autoFocus = dataStore.data.map { it.searchBar.autoFocus }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setAutoFocus(autoFocus: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setSearchBar(
-                        it.searchBar.toBuilder().setAutoFocus(autoFocus)
-                    ).build()
+                    it.searchBar.toBuilder().setAutoFocus(autoFocus)
+                ).build()
             }
         }
     }
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setLaunchOnEnter(launchOnEnter: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setSearchBar(
-                        it.searchBar.toBuilder().setLaunchOnEnter(launchOnEnter)
-                    ).build()
+                    it.searchBar.toBuilder().setLaunchOnEnter(launchOnEnter)
+                ).build()
             }
         }
     }
@@ -159,18 +166,20 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     val appShortcuts = dataStore.data.map { it.appShortcutSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setAppShortcuts(appShortcuts: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder().setAppShortcutSearch(
-                        it.appShortcutSearch.toBuilder().setEnabled(appShortcuts)
-                    ).build()
+                    it.appShortcutSearch.toBuilder().setEnabled(appShortcuts)
+                ).build()
             }
         }
     }
 
     val searchResultOrdering = dataStore.data.map { it.resultOrdering.ordering }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setSearchResultOrdering(searchResultOrdering: Settings.SearchResultOrderingSettings.Ordering) {
         viewModelScope.launch {
             dataStore.updateData {
@@ -184,6 +193,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {

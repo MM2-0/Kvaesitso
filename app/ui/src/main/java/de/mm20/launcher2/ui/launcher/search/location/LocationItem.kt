@@ -113,17 +113,8 @@ fun LocationItem(
                             Text(
                                 text = location.getSummary(
                                     context,
-                                    userLocation?.let {
-                                        val result = FloatArray(1)
-                                        android.location.Location.distanceBetween(
-                                            it.latitude,
-                                            it.longitude,
-                                            location.latitude,
-                                            location.longitude,
-                                            result
-                                        )
-                                        result[0]
-                                    }),
+                                    userLocation?.distanceTo(location.toAndroidLocation())
+                                ),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -153,15 +144,15 @@ fun LocationItem(
                     }
                 }
 
-                var heading = 0f
+                var deltaHeading = 0f
                 if (userLocation != null && userHeading != null) {
-                    heading = userHeading!! - userLocation!!.bearingTo(location)
-                    if (heading < 0f || 180f < heading) {
-                        heading += 360f
+                    deltaHeading = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
+                    if (deltaHeading < 0f || 180f < deltaHeading) {
+                        deltaHeading += 360f
                     }
                 }
 
-                val directionArrowAngle by animateFloatAsState(targetValue = heading)
+                val directionArrowAngle by animateFloatAsState(targetValue = deltaHeading)
                 /*
                 Column {
 
@@ -326,19 +317,6 @@ fun LocationItem(
             }
         }
     }
-}
-
-
-private fun android.location.Location.bearingTo(other: Location): Float {
-    // calculate bearing from this object to supplied location
-    val lat1 = Math.toRadians(latitude)
-    val long1 = Math.toRadians(longitude)
-    val lat2 = Math.toRadians(other.latitude)
-    val long2 = Math.toRadians(other.longitude)
-    val deltaLong = long2 - long1
-    val y = sin(deltaLong) * cos(lat2)
-    val x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(deltaLong)
-    return ((Math.toDegrees(atan2(y, x)) + 360) % 360).toFloat()
 }
 
 private fun Location.getSummary(context: Context, distance: Float?): String {

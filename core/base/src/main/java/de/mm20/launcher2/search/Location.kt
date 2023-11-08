@@ -23,6 +23,12 @@ interface Location : SavableSearchable {
 
     override val preferDetailsOverLaunch: Boolean
         get() = false
+
+    fun toAndroidLocation() = android.location.Location("KvaesitsoLocationService")
+        .apply {
+            latitude = latitude
+            longitude = longitude
+        }
 }
 
 enum class LocationCategory {

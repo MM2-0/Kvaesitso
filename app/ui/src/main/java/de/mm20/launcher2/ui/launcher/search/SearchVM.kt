@@ -128,7 +128,7 @@ class SearchVM : ViewModel(), KoinComponent {
                     shortcuts = settings.appShortcutSearch,
                     websites = settings.websiteSearch,
                     wikipedia = settings.wikipediaSearch,
-                    openstreetmaps = settings.openStreetMapsSearch,
+                    locations = settings.locationsSearch,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
@@ -301,7 +301,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingLocationPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Location),
-        dataStore.data.map { it.openStreetMapsSearch.enabled }.distinctUntilChanged()
+        dataStore.data.map { it.locationsSearch.enabled }.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestLocationPermission(context: AppCompatActivity) {
@@ -312,7 +312,7 @@ class SearchVM : ViewModel(), KoinComponent {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
-                    .setOpenStreetMapsSearch(it.openStreetMapsSearch.toBuilder().setEnabled(false))
+                    .setLocationsSearch(it.locationsSearch.toBuilder().setEnabled(false))
                     .build()
             }
         }

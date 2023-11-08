@@ -201,8 +201,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             if (event?.sensor?.type != Sensor.TYPE_HEADING)
                 return
 
-            val magneticNorthHeading = event.values[0]
-            trueNorthHeading.value = magneticNorthHeading + (geomagneticField?.declination ?: 0f)
+            // eastward heading from magnetic north plus correction for geographic north, if available
+            trueNorthHeading.value = event.values[0] + (geomagneticField?.declination ?: 0f)
         }
 
         override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}

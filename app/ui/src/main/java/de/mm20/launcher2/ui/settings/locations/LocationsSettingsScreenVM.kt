@@ -13,14 +13,14 @@ import org.koin.core.component.inject
 class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
-    val locations = dataStore.data.map { it.openStreetMapsSearch.enabled }
+    val locations = dataStore.data.map { it.locationsSearch.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLocations(openStreetMaps: Boolean) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
-                    .setOpenStreetMapsSearch(
-                        it.openStreetMapsSearch.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
                             .setEnabled(openStreetMaps)
                     )
                     .build()
@@ -28,14 +28,14 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
         }
     }
 
-    val radius = dataStore.data.map { it.openStreetMapsSearch.searchRadius }
+    val radius = dataStore.data.map { it.locationsSearch.searchRadius }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1000)
     fun setRadius(radius: Int) {
         viewModelScope.launch {
             dataStore.updateData {
                 it.toBuilder()
-                    .setOpenStreetMapsSearch(
-                        it.openStreetMapsSearch.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
                             .setSearchRadius(radius)
                     )
                     .build()
