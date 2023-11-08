@@ -82,15 +82,15 @@ internal class OsmRepository(
                 httpClient.dispatcher.cancelAll()
             }
 
-            val location = getCurrentLocation() ?: return@locationPermission
+            val userLocation = getCurrentLocation() ?: return@locationPermission
 
             dataStore.data.map { it.openStreetMapsSearch.searchRadius }
                 .collectLatest dataStore@{ searchRadius ->
                     val result =
-                        queryOverpass(query, searchRadius, location.latitude, location.longitude)
+                        queryOverpass(query, searchRadius, userLocation.latitude, userLocation.longitude)
 
                     if (result != null)
-                        send(OsmLocation.fromOverpassResponse(result).toImmutableList())
+                        send(OsmLocation.fromOverpassResponse(result, userLocation).toImmutableList())
                 }
 
         }

@@ -26,6 +26,7 @@ internal data class OsmLocation(
     val websiteUrl: String?,
     override val preferDetailsOverLaunch: Boolean,
     override val labelOverride: String? = null,
+    override val distanceMeters: Double? = null,
 ) : Location {
 
     override val domain: String = DOMAIN
@@ -38,7 +39,10 @@ internal data class OsmLocation(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(
-            Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")),
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")
+            ),
             options
         )
     }
@@ -52,7 +56,12 @@ internal data class OsmLocation(
     }
 
     companion object {
-        fun fromOverpassResponse(result: OverpassResponse): List<OsmLocation> = result.elements.mapNotNull {
+        fun fromOverpassResponse(
+            result: OverpassResponse,
+            userLocation: android.location.Location? = null
+        ): List<OsmLocation> = result.elements.mapNotNull {
+            val distanceMeters = userLocation?.let { 123 }
+
             OsmLocation(
                 id = it.id,
                 label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,
@@ -68,6 +77,17 @@ internal data class OsmLocation(
                 openingHours = it.tags["opening_hours"]?.let { OpeningTime.fromOverpassElement(it) },
                 websiteUrl = it.tags["website"],
                 preferDetailsOverLaunch = !it.tags.containsKey("website"),
+                distanceMeters = userLocation?.let { userLocation ->
+                    val results = FloatArray(1)
+                    android.location.Location.distanceBetween(
+                        userLocation.latitude,
+                        userLocation.longitude,
+                        it.lat,
+                        it.lon,
+                        results
+                    )
+                    results[0].toDouble()
+                }
             )
         }
 

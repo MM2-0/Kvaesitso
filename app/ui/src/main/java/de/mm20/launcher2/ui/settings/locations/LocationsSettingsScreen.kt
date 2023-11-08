@@ -19,8 +19,6 @@ import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import java.text.DecimalFormat
-import kotlin.math.floor
-import kotlin.math.log
 
 @Composable
 fun LocationsSettingsScreen() {

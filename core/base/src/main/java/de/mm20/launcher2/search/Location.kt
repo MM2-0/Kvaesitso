@@ -16,6 +16,8 @@ interface Location : SavableSearchable {
     val latitude: Double
     val longitude: Double
 
+    val distanceMeters: Double?
+
     val street: String?
     val houseNumber: String?
 
@@ -117,8 +119,13 @@ data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val d
                         val dowEnd = dayOfWeekFromString(it.substringAfter('-'))
                             ?: return@flatMap emptyList()
 
-                        enumValues<DayOfWeek>().toList()
-                            .subList(dowStart.ordinal, dowEnd.ordinal + 1)
+                        val daysOfWeek = enumValues<DayOfWeek>().toList()
+
+                        if (dowStart.ordinal > dowEnd.ordinal) // "We-Mo"
+                            daysOfWeek.subList(dowStart.ordinal, daysOfWeek.size)
+                                .union(daysOfWeek.subList(0, dowEnd.ordinal + 1))
+                        else
+                            daysOfWeek.subList(dowStart.ordinal, dowEnd.ordinal + 1)
                     }.union(
                         group.filter { singleDayRegex.matches(it) }
                             .mapNotNull { dayOfWeekFromString(it) }
