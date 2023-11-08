@@ -6,6 +6,8 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Fastfood
@@ -15,6 +17,8 @@ import androidx.compose.material.icons.rounded.LocalCafe
 import androidx.compose.material.icons.rounded.LocalGroceryStore
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Restaurant
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,15 +26,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
+import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -54,13 +61,11 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val hasLocationPermission by viewModel.hasLocationPermission.collectAsState(false)
     val userLocation by viewModel.userLocation.collectAsState(null)
 
     DisposableEffect(location) {
         viewModel.init(location, iconSize.toInt())
-        if (hasLocationPermission == true)
-            viewModel.startLocationUpdates(context)
+        viewModel.startLocationUpdates(context)
 
         onDispose {
             viewModel.stopLocationUpdates(context)
@@ -71,8 +76,8 @@ fun LocationItem(
     val snackbarHostState = LocalSnackbarHostState.current
 
     val darkMode = LocalDarkTheme.current
-    val secondaryColor = MaterialTheme.colorScheme.secondary
-    val primaryColor = MaterialTheme.colorScheme.primary
+    val closedColor = MaterialTheme.colorScheme.secondary
+    val openColor = MaterialTheme.colorScheme.tertiary
 
     Row(modifier = modifier) {
         Column(
@@ -94,20 +99,25 @@ fun LocationItem(
                     )
                     Row {
                         Icon(
-                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
+                            modifier = Modifier.padding(end = 16.dp),
                             imageVector = location.category.getImageVector(),
                             contentDescription = null
                         )
-                        Text(text = location.labelOverride ?: location.label, style = textStyle)
+                        Text(
+                            modifier = Modifier.fillMaxHeight(),
+                            text = location.labelOverride ?: location.label,
+                            style = textStyle
+                        )
                     }
                     AnimatedVisibility(!showDetails) {
                         Row(modifier = Modifier.padding(top = 2.dp)) {
                             if (!location.openingHours.isNullOrEmpty()) {
                                 val isOpen = location.openingHours!!.any { it.isOpen }
                                 Text(
+                                    modifier = Modifier.padding(end = 8.dp),
                                     text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = if (isOpen) primaryColor else secondaryColor
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = if (isOpen) openColor else closedColor
                                 )
                             }
                             Text(
@@ -133,10 +143,8 @@ fun LocationItem(
                 }
             }
             AnimatedVisibility(showDetails) {
-                val userHeading by viewModel.trueNorthHeading.collectAsState(null)
-
                 DisposableEffect(showDetails) {
-                    if (showDetails && hasLocationPermission == true)
+                    if (showDetails)
                         viewModel.startHeadingUpdates(context)
 
                     onDispose {
@@ -144,6 +152,7 @@ fun LocationItem(
                     }
                 }
 
+                val userHeading by viewModel.trueNorthHeading.collectAsState(null)
                 var deltaHeading = 0f
                 if (userLocation != null && userHeading != null) {
                     deltaHeading = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
@@ -153,172 +162,22 @@ fun LocationItem(
                 }
 
                 val directionArrowAngle by animateFloatAsState(targetValue = deltaHeading)
-                /*
+
                 Column {
 
-                    Row(
-                        Modifier
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                            imageVector = Icons.Rounded.Schedule,
-                            contentDescription = null
-                        )
-                        Text(
-                            text = calendar.formatTime(context),
-                            style = MaterialTheme.typography.bodySmall
-                        )
-                    }
-                    if (calendar.description != null) {
-                        Row(
-                            Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Notes,
-                                contentDescription = null
-                            )
-                            Text(
-                                text = calendar.description!!,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    }
-                    if (calendar.attendees.isNotEmpty()) {
-                        Row(
-                            Modifier
-                                .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.People,
-                                contentDescription = null
-                            )
-                            Text(
-                                text = calendar.attendees.joinToString(),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    }
-                    if (calendar.location != null) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable {
-                                    calendar.openLocation(context)
-                                }
-                        ) {
-                            Icon(
-                                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp),
-                                imageVector = Icons.Rounded.Place,
-                                contentDescription = null
-                            )
-                            Text(
-                                text = calendar.location!!,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
+                    Row {
+
                     }
 
-                    val toolbarActions = mutableListOf<ToolbarAction>()
+                }
 
-                    if (LocalFavoritesEnabled.current) {
-                        val isPinned by viewModel.isPinned.collectAsState(false)
-                        val favAction = if (isPinned) {
-                            DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
-                                action = {
-                                    viewModel.unpin()
-                                }
-                            )
-                        } else {
-                            DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
-                                action = {
-                                    viewModel.pin()
-                                })
-                        }
-                        toolbarActions.add(favAction)
-                    }
 
-                    val isHidden by viewModel.isHidden.collectAsState(false)
-                    val hideAction = if (isHidden) {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_unhide),
-                            icon = Icons.Rounded.Visibility,
-                            action = {
-                                viewModel.unhide()
-                                onBack()
-                            }
-                        )
-                    } else {
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_hide),
-                            icon = Icons.Rounded.VisibilityOff,
-                            action = {
-                                viewModel.hide()
-                                onBack()
-                                lifecycleOwner.lifecycleScope.launch {
-                                    val result = snackbarHostState.showSnackbar(
-                                        message = context.getString(
-                                            R.string.msg_item_hidden,
-                                            calendar.label
-                                        ),
-                                        actionLabel = context.getString(R.string.action_undo),
-                                        duration = SnackbarDuration.Short,
-                                    )
-                                    if (result == SnackbarResult.ActionPerformed) {
-                                        viewModel.unhide()
-                                    }
-                                }
-                            })
-                    }
-
-                    toolbarActions.add(
-                        DefaultToolbarAction(
-                            label = stringResource(R.string.menu_calendar_open_externally),
-                            icon = Icons.Rounded.OpenInNew,
-                            action = {
-                                viewModel.launch(context)
-                                onBack()
-                            }
-                        )
-                    )
-
-                    val sheetManager = LocalBottomSheetManager.current
-                    toolbarActions.add(DefaultToolbarAction(
-                        label = stringResource(R.string.menu_customize),
-                        icon = Icons.Rounded.Edit,
-                        action = { sheetManager.showCustomizeSearchableModal(calendar) }
-                    ))
-
-                    toolbarActions.add(hideAction)
-
-                    Toolbar(
-                        leftActions = listOf(
-                            DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = Icons.Rounded.ArrowBack
-                            ) {
-                                onBack()
-                            }
-                        ),
-                        rightActions = toolbarActions
-                    )
-                    */
             }
         }
     }
 }
 
+@Composable
 private fun Location.getSummary(context: Context, distance: Float?): String {
     val summary = StringBuilder()
     if (distance != null) {

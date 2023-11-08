@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.GeomagneticField
@@ -21,6 +22,7 @@ import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -180,9 +182,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
-
     val userLocation = MutableStateFlow<Location?>(null)
     private val locationListener = LocationListener {
         userLocation.value = it
@@ -238,22 +237,31 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         context
             .getSystemService<LocationManager>()
             ?.runCatching {
-                userLocation.value =
-                    this.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-                        ?: this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+                val hasFineAccess =
+                    context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                val hasCoarseAccess =
+                    context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-                this.requestLocationUpdates(
-                    LocationManager.GPS_PROVIDER,
-                    1000,
-                    0f,
-                    locationListener
-                )
-                this.requestLocationUpdates(
-                    LocationManager.NETWORK_PROVIDER,
-                    1000,
-                    0f,
-                    locationListener
-                )
+                userLocation.value =
+                    (if (hasFineAccess) this.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
+                        ?: if (hasCoarseAccess) this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+
+                if (hasFineAccess) {
+                    this.requestLocationUpdates(
+                        LocationManager.GPS_PROVIDER,
+                        1000,
+                        0f,
+                        locationListener
+                    )
+                }
+                if (hasCoarseAccess) {
+                    this.requestLocationUpdates(
+                        LocationManager.NETWORK_PROVIDER,
+                        1000,
+                        0f,
+                        locationListener
+                    )
+                }
             }?.onFailure {
                 Log.e("SearchableItemVM", "Failed to start location updates", it)
             }
