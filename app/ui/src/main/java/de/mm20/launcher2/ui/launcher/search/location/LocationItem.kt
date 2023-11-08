@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.Fastfood
 import androidx.compose.material.icons.rounded.Hotel
 import androidx.compose.material.icons.rounded.LocalBar
@@ -28,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -38,6 +41,7 @@ import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
@@ -62,6 +66,7 @@ fun LocationItem(
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by viewModel.userLocation.collectAsState(null)
+    val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
     DisposableEffect(location) {
         viewModel.init(location, iconSize.toInt())
@@ -121,10 +126,7 @@ fun LocationItem(
                                 )
                             }
                             Text(
-                                text = location.getSummary(
-                                    context,
-                                    userLocation?.distanceTo(location.toAndroidLocation())
-                                ),
+                                text = location.getSummary(context, distance),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -152,22 +154,42 @@ fun LocationItem(
                     }
                 }
 
-                val userHeading by viewModel.trueNorthHeading.collectAsState(null)
-                var deltaHeading = 0f
-                if (userLocation != null && userHeading != null) {
-                    deltaHeading = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
-                    if (deltaHeading < 0f || 180f < deltaHeading) {
-                        deltaHeading += 360f
-                    }
-                }
-
-                val directionArrowAngle by animateFloatAsState(targetValue = deltaHeading)
-
                 Column {
-
                     Row {
 
+                        Column {
+                            Text("Hier könnte ihre Werbung stehen")
+                        }
+
+                        val userHeading by viewModel.trueNorthHeading.collectAsState(null)
+                        if (userLocation != null && userHeading != null) {
+                            val directionArrowAngle by animateFloatAsState(
+                                targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
+                            )
+                            Column {
+                                Icon(
+                                    modifier = Modifier
+                                        .padding(top = 8.dp, bottom = 8.dp, start = 16.dp)
+                                        .rotate(directionArrowAngle),
+                                    imageVector = Icons.Rounded.ArrowUpward,
+                                    contentDescription = null
+                                )
+                                Text("km")
+                            }
+                        }
+
+
                     }
+                    Toolbar(
+                        leftActions = listOf(
+                            DefaultToolbarAction(
+                                label = stringResource(id = R.string.menu_back),
+                                icon = Icons.Rounded.ArrowBack
+                            ) {
+                                onBack()
+                            }
+                        )
+                    )
 
                 }
 

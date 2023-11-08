@@ -6,6 +6,7 @@ import android.content.Context
 import android.hardware.GeomagneticField
 import android.hardware.Sensor
 import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
 import android.hardware.SensorEventListener2
 import android.hardware.SensorManager
 import android.location.Location
@@ -195,25 +196,26 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     private var geomagneticField: GeomagneticField? = null
     val trueNorthHeading = MutableStateFlow<Float?>(null)
-    private val sensorListener = object : SensorEventListener2 {
+    private val sensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent?) {
-            if (event?.sensor?.type != Sensor.TYPE_HEADING)
+            if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
                 return
 
+            val rotationMatrix = FloatArray(9)
+            val orientationAngles = FloatArray(3)
+
+            SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+            SensorManager.getOrientation(rotationMatrix, orientationAngles)
+
             // eastward heading from magnetic north plus correction for geographic north, if available
-            trueNorthHeading.value = event.values[0] + (geomagneticField?.declination ?: 0f)
+            trueNorthHeading.value =
+                orientationAngles[0] * 180f / Math.PI.toFloat() + (geomagneticField?.declination ?: 0f)
         }
 
         override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
-
-        override fun onFlushCompleted(p0: Sensor?) {}
     }
 
     fun startHeadingUpdates(context: Context) {
-        // Sensor.TYPE_HEADING requires tiramisu
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
-            return
-
         if (trueNorthHeading.value != null) // somebody is listening!!! O_o
             return
 
@@ -222,7 +224,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             ?.runCatching {
                 this.registerListener(
                     sensorListener,
-                    this.getDefaultSensor(Sensor.TYPE_HEADING) ?: return@runCatching,
+                    this.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) ?: return@runCatching,
                     SensorManager.SENSOR_DELAY_UI
                 )
             }?.onFailure {
@@ -245,6 +247,15 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                 userLocation.value =
                     (if (hasFineAccess) this.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
                         ?: if (hasCoarseAccess) this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+
+                if (userLocation.value != null) {
+                    geomagneticField = GeomagneticField(
+                        userLocation.value!!.latitude.toFloat(),
+                        userLocation.value!!.longitude.toFloat(),
+                        userLocation.value!!.altitude.toFloat(),
+                        userLocation.value!!.time
+                    )
+                }
 
                 if (hasFineAccess) {
                     this.requestLocationUpdates(
