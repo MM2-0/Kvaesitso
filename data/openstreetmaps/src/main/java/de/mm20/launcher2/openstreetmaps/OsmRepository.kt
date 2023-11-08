@@ -87,10 +87,15 @@ internal class OsmRepository(
             dataStore.data.map { it.openStreetMapsSearch.searchRadius }
                 .collectLatest dataStore@{ searchRadius ->
                     val result =
-                        queryOverpass(query, searchRadius, userLocation.latitude, userLocation.longitude)
+                        queryOverpass(
+                            query,
+                            searchRadius,
+                            userLocation.latitude,
+                            userLocation.longitude
+                        )
 
                     if (result != null)
-                        send(OsmLocation.fromOverpassResponse(result, userLocation).toImmutableList())
+                        send(OsmLocation.fromOverpassResponse(result).toImmutableList())
                 }
 
         }

@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -25,8 +25,6 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
-import java.text.DecimalFormat
-import kotlin.math.roundToInt
 
 @Composable
 fun LocationItem(
@@ -39,8 +37,17 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    LaunchedEffect(location) {
+    val hasLocationPermission by viewModel.hasLocationPermission.collectAsState(false)
+    val userLocation by viewModel.userLocation.collectAsState(null)
+
+    DisposableEffect(location) {
         viewModel.init(location, iconSize.toInt())
+        if (hasLocationPermission == true)
+            viewModel.startLocationUpdates(context)
+
+        onDispose {
+            viewModel.stopLocationUpdates(context)
+        }
     }
 
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -261,6 +268,7 @@ private fun Location.getSummary(context: Context): String {
         summary.append(this.category) // TODO Localize
         summary.append(' ')
     }
+    /*
     if (this.distanceMeters != null) {
         val isKm = this.distanceMeters!! > 1000
         val value =
@@ -271,6 +279,7 @@ private fun Location.getSummary(context: Context): String {
             context.getString(if (isKm) R.string.unit_kilometer_symbol else R.string.unit_meter_symbol)
         summary.append(value, ' ', unit, ' ')
     }
+    */
     if (this.street != null) {
         summary.append(this.street)
         summary.append(" ")

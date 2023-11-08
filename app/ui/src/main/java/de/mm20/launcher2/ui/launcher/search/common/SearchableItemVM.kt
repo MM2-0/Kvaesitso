@@ -4,7 +4,12 @@ import android.content.Context
 import android.content.pm.LauncherApps
 import android.content.pm.ShortcutInfo
 import android.graphics.drawable.Drawable
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
@@ -46,7 +51,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
 
     private val searchable = MutableStateFlow<SavableSearchable?>(null)
-    private val iconSize = MutableStateFlow<Int>(0)
+    private val iconSize = MutableStateFlow(0)
     fun init(searchable: SavableSearchable, iconSize: Int) {
         this.searchable.value = searchable
         this.iconSize.value = iconSize
@@ -104,7 +109,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             ).first()
     }
 
-    open fun launch(context: Context, bounds: Rect? = null): Boolean {
+    fun launch(context: Context, bounds: Rect? = null): Boolean {
         val searchable = searchable.value ?: return false
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
@@ -170,4 +175,23 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun requestShortcutPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
+
+    val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
+    val userLocation = MutableStateFlow<Location?>(null)
+    private val locationListener = LocationListener { location -> userLocation.value = location }
+
+    fun startLocationUpdates(context: Context) {
+        try {
+            val lm = context.getSystemService<LocationManager>() ?: return
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 50f, locationListener)
+            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50f, locationListener)
+        } catch (e: SecurityException) {
+            Log.e("SearchableItemVM", "Failed to start location updates", e)
+        }
+    }
+
+    fun stopLocationUpdates(context: Context) =
+        context.getSystemService<LocationManager>()?.removeUpdates(locationListener)
 }
