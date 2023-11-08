@@ -1,15 +1,17 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
-import android.content.pm.LauncherApps
-import android.content.pm.ShortcutInfo
-import android.graphics.drawable.Drawable
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener2
+import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
@@ -179,19 +181,51 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
+
     val userLocation = MutableStateFlow<Location?>(null)
     private val locationListener = LocationListener { location -> userLocation.value = location }
 
-    fun startLocationUpdates(context: Context) {
+    val degreesToTarget = MutableStateFlow<Float?>(null)
+    private val sensorListener = object : SensorEventListener2 {
+        override fun onSensorChanged(event: SensorEvent?) {
+            if (event?.sensor?.type != Sensor.TYPE_HEADING)
+                return
+
+            degreesToTarget.value = event.values[0] // TODO magnetic north
+        }
+
+        override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
+
+        override fun onFlushCompleted(p0: Sensor?) {}
+    }
+
+    // Sensor.TYPE_HEADING requires tiramisu
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun startPoseUpdates(context: Context) {
+        if (userLocation.value != null) // somebody is listening!!! O_o
+            return
         try {
             val lm = context.getSystemService<LocationManager>() ?: return
             lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 50f, locationListener)
             lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50f, locationListener)
+
+            val sm = context.getSystemService<SensorManager>() ?: return
+            sm.registerListener(
+                sensorListener,
+                sm.getDefaultSensor(Sensor.TYPE_HEADING) ?: return,
+                SensorManager.SENSOR_DELAY_UI
+            )
         } catch (e: SecurityException) {
             Log.e("SearchableItemVM", "Failed to start location updates", e)
         }
     }
 
-    fun stopLocationUpdates(context: Context) =
+    fun stopPoseUpdates(context: Context) {
         context.getSystemService<LocationManager>()?.removeUpdates(locationListener)
+        context.getSystemService<SensorManager>()?.unregisterListener(sensorListener)
+
+        // remove this if viewmodels are actually destroyed (I don't know)
+        userLocation.value = null
+        degreesToTarget.value = null
+    }
 }

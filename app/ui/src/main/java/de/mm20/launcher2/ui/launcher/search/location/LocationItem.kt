@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.launcher.search.location
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -40,13 +41,15 @@ fun LocationItem(
     val hasLocationPermission by viewModel.hasLocationPermission.collectAsState(false)
     val userLocation by viewModel.userLocation.collectAsState(null)
 
+    val deltaHeadingToLocation by animateFloatAsState(targetValue = userLocation?.bearingTo(location) ?: 0f)
+
     DisposableEffect(location) {
         viewModel.init(location, iconSize.toInt())
         if (hasLocationPermission == true)
-            viewModel.startLocationUpdates(context)
+            viewModel.startPoseUpdates(context)
 
         onDispose {
-            viewModel.stopLocationUpdates(context)
+            viewModel.stopPoseUpdates(context)
         }
     }
 
@@ -260,6 +263,10 @@ fun LocationItem(
             }
         }
     }
+}
+
+private fun android.location.Location.bearingTo(other: Location) : Float {
+    this.
 }
 
 private fun Location.getSummary(context: Context): String {
