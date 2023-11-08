@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.hardware.GeomagneticField
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener2
@@ -181,17 +183,26 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
         .stateIn(viewModelScope, SharingStarted.Lazily, null)
 
-
     val userLocation = MutableStateFlow<Location?>(null)
-    private val locationListener = LocationListener { location -> userLocation.value = location }
+    private val locationListener = LocationListener {
+        userLocation.value = it
+        geomagneticField = GeomagneticField(
+            it.latitude.toFloat(),
+            it.longitude.toFloat(),
+            it.altitude.toFloat(),
+            it.time
+        )
+    }
 
-    val degreesToTarget = MutableStateFlow<Float?>(null)
+    private var geomagneticField: GeomagneticField? = null
+    val trueNorthHeading = MutableStateFlow<Float?>(null)
     private val sensorListener = object : SensorEventListener2 {
         override fun onSensorChanged(event: SensorEvent?) {
             if (event?.sensor?.type != Sensor.TYPE_HEADING)
                 return
 
-            degreesToTarget.value = event.values[0] // TODO magnetic north
+            val magneticNorthHeading = event.values[0]
+            trueNorthHeading.value = magneticNorthHeading + (geomagneticField?.declination ?: 0f)
         }
 
         override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
@@ -199,33 +210,67 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         override fun onFlushCompleted(p0: Sensor?) {}
     }
 
-    // Sensor.TYPE_HEADING requires tiramisu
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
-    fun startPoseUpdates(context: Context) {
-        if (userLocation.value != null) // somebody is listening!!! O_o
+    fun startHeadingUpdates(context: Context) {
+        // Sensor.TYPE_HEADING requires tiramisu
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU)
             return
-        try {
-            val lm = context.getSystemService<LocationManager>() ?: return
-            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 50f, locationListener)
-            lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 50f, locationListener)
 
-            val sm = context.getSystemService<SensorManager>() ?: return
-            sm.registerListener(
-                sensorListener,
-                sm.getDefaultSensor(Sensor.TYPE_HEADING) ?: return,
-                SensorManager.SENSOR_DELAY_UI
-            )
-        } catch (e: SecurityException) {
-            Log.e("SearchableItemVM", "Failed to start location updates", e)
-        }
+        if (trueNorthHeading.value != null) // somebody is listening!!! O_o
+            return
+
+        context
+            .getSystemService<SensorManager>()
+            ?.runCatching {
+                this.registerListener(
+                    sensorListener,
+                    this.getDefaultSensor(Sensor.TYPE_HEADING) ?: return@runCatching,
+                    SensorManager.SENSOR_DELAY_UI
+                )
+            }?.onFailure {
+                Log.e("SearchableItemVM", "Failed to start heading updates", it)
+            }
     }
 
-    fun stopPoseUpdates(context: Context) {
-        context.getSystemService<LocationManager>()?.removeUpdates(locationListener)
+    fun startLocationUpdates(context: Context) {
+        if (userLocation.value != null)
+            return
+
+        context
+            .getSystemService<LocationManager>()
+            ?.runCatching {
+                userLocation.value =
+                    this.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+                        ?: this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+
+                this.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    1000,
+                    0f,
+                    locationListener
+                )
+                this.requestLocationUpdates(
+                    LocationManager.NETWORK_PROVIDER,
+                    1000,
+                    0f,
+                    locationListener
+                )
+            }?.onFailure {
+                Log.e("SearchableItemVM", "Failed to start location updates", it)
+            }
+    }
+
+    fun stopHeadingUpdates(context: Context) {
         context.getSystemService<SensorManager>()?.unregisterListener(sensorListener)
 
         // remove this if viewmodels are actually destroyed (I don't know)
+        trueNorthHeading.value = null
+    }
+
+    fun stopLocationUpdates(context: Context) {
+        context.getSystemService<LocationManager>()?.removeUpdates(locationListener)
+
+        // also applies to this
         userLocation.value = null
-        degreesToTarget.value = null
+        geomagneticField = null
     }
 }
