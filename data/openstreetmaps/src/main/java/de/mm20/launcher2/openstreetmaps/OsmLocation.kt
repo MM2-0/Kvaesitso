@@ -20,7 +20,7 @@ internal data class OsmLocation(
     override val street: String?,
     override val houseNumber: String?,
     override val openingHours: List<OpeningTime>?,
-    val websiteUrl: String?,
+    override val websiteUrl: String?,
     override val preferDetailsOverLaunch: Boolean,
     override val labelOverride: String? = null,
 ) : Location {

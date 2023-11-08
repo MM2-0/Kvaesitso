@@ -21,6 +21,8 @@ interface Location : SavableSearchable {
 
     val openingHours: List<OpeningTime>?
 
+    val websiteUrl: String?
+
     override val preferDetailsOverLaunch: Boolean
         get() = false
 

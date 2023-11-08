@@ -1,13 +1,14 @@
 package de.mm20.launcher2.ui.launcher.search.location
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
@@ -17,10 +18,10 @@ import androidx.compose.material.icons.rounded.Hotel
 import androidx.compose.material.icons.rounded.LocalBar
 import androidx.compose.material.icons.rounded.LocalCafe
 import androidx.compose.material.icons.rounded.LocalGroceryStore
+import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.Restaurant
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -28,31 +29,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
-import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
+import kotlinx.coroutines.launch
 import java.text.DecimalFormat
-import kotlin.math.atan2
-import kotlin.math.cos
 import kotlin.math.roundToInt
-import kotlin.math.sin
 
 @Composable
 fun LocationItem(
@@ -77,10 +72,6 @@ fun LocationItem(
         }
     }
 
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val snackbarHostState = LocalSnackbarHostState.current
-
-    val darkMode = LocalDarkTheme.current
     val closedColor = MaterialTheme.colorScheme.secondary
     val openColor = MaterialTheme.colorScheme.tertiary
 
@@ -158,7 +149,7 @@ fun LocationItem(
                     Row {
 
                         Column {
-                            Text("Hier könnte ihre Werbung stehen")
+                            Text("Opening times")
                         }
 
                         val userHeading by viewModel.trueNorthHeading.collectAsState(null)
@@ -180,6 +171,7 @@ fun LocationItem(
 
 
                     }
+
                     Toolbar(
                         leftActions = listOf(
                             DefaultToolbarAction(
@@ -188,6 +180,27 @@ fun LocationItem(
                             ) {
                                 onBack()
                             }
+                        ),
+                        rightActions = listOfNotNull(
+                            DefaultToolbarAction(
+                                label = stringResource(id = R.string.menu_map),
+                                icon = Icons.Rounded.Map
+                            ) {
+                                viewModel.viewModelScope.launch {
+                                    location.launch(context, null)
+                                }
+                            },
+                            location.websiteUrl.runCatching {
+                                val uri = Uri.parse(this)
+                                DefaultToolbarAction(
+                                    label = stringResource(id = R.string.menu_website),
+                                    icon = Icons.Rounded.TravelExplore
+                                ) {
+                                    viewModel.viewModelScope.launch {
+                                        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                                    }
+                                }
+                            }.getOrNull(),
                         )
                     )
 
