@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -29,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -47,6 +49,14 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
+import java.time.DayOfWeek
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.time.format.TextStyle
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -146,10 +156,53 @@ fun LocationItem(
                 }
 
                 Column {
-                    Row {
+                    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
 
-                        Column {
-                            Text("Opening times")
+                        if (!location.openingHours.isNullOrEmpty()) {
+                            val today = LocalDateTime.now().dayOfWeek
+                            val daysOfWeek = enumValues<DayOfWeek>()
+
+                            val nextOpeningTime =
+                                (0 until DayOfWeek.SUNDAY.ordinal)
+                                    .firstNotNullOfOrNull {
+                                        val dow =
+                                            daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
+                                        location.openingHours!!.filter { it.dayOfWeek == dow }
+                                            .firstOrNull {
+                                                it.dayOfWeek != today || it.startTime.isAfter(
+                                                    LocalTime.now()
+                                                )
+                                            }
+                                    } ?: location.openingHours!!.first()
+
+                            val openIndex = location.openingHours!!.indexOfFirst { it.isOpen }
+                            val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                            if (openIndex != -1) {
+                                Text(
+                                    text = stringResource(
+                                        R.string.location_open_until,
+                                        (LocalTime.now() + location.openingHours!![openIndex].duration).format(
+                                            timeFormatter
+                                        )
+                                    )
+                                )
+                            }
+                            Text(
+                                text = stringResource(
+                                    if (nextOpeningTime.dayOfWeek == today) R.string.location_open_next
+                                    else R.string.location_open_next_day,
+                                    if (nextOpeningTime.dayOfWeek == today) Duration.between(
+                                        nextOpeningTime.startTime,
+                                        LocalTime.now()
+                                    )
+                                    else "${
+                                        nextOpeningTime.dayOfWeek.getDisplayName(
+                                            TextStyle.SHORT,
+                                            Locale.getDefault()
+                                        )
+                                    } ${nextOpeningTime.startTime.format(timeFormatter)}"
+                                )
+                            )
                         }
 
                         val userHeading by viewModel.trueNorthHeading.collectAsState(null)
@@ -157,7 +210,7 @@ fun LocationItem(
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
                             )
-                            Column {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(
                                     modifier = Modifier
                                         .padding(top = 8.dp, bottom = 8.dp, start = 16.dp)
@@ -165,7 +218,11 @@ fun LocationItem(
                                     imageVector = Icons.Rounded.ArrowUpward,
                                     contentDescription = null
                                 )
-                                Text("km")
+                                if (distance != null) {
+                                    Text(
+                                        text = distance.metersToString(context)
+                                    )
+                                }
                             }
                         }
 
@@ -212,28 +269,30 @@ fun LocationItem(
     }
 }
 
-@Composable
 private fun Location.getSummary(context: Context, distance: Float?): String {
     val summary = StringBuilder()
     if (distance != null) {
-        val isKm = distance >= 1000f
-        val value =
-            if (isKm) DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
-                .format(distance / 1000f)
-            else distance.roundToInt().toString()
-        val unit =
-            context.getString(if (isKm) R.string.unit_kilometer_symbol else R.string.unit_meter_symbol)
-        summary.append(value, ' ', unit, ' ')
+        summary.append(distance.metersToString(context), ' ')
     }
     if (this.street != null) {
-        summary.append(this.street)
-        summary.append(" ")
+        summary.append(this.street, ' ')
         if (this.houseNumber != null) {
-            summary.append(this.houseNumber)
-            summary.append(' ')
+            summary.append(this.houseNumber, ' ')
         }
     }
     return summary.toString()
+}
+
+private fun Float.metersToString(context: Context): String {
+    val isKm = this >= 1000f
+    val value =
+        if (isKm) DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
+            .format(this / 1000f)
+        else this.roundToInt().toString()
+    val unit =
+        context.getString(if (isKm) R.string.unit_kilometer_symbol else R.string.unit_meter_symbol)
+
+    return "$value $unit"
 }
 
 private fun LocationCategory?.getImageVector(): ImageVector = when (this) {

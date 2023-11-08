@@ -2,6 +2,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="location_open">Open</string>
     <string name="location_closed">Closed</string>
+    <string name="location_open_until">Open until %1$s</string>
+    <string name="location_open_next">Opens in %1$s</string>
+    <string name="location_open_next_day">Opens next %1$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
