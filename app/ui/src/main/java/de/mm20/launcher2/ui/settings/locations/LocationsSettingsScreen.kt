@@ -44,6 +44,7 @@ fun LocationsSettingsScreen() {
                 min = 500,
                 max = 10000,
                 step = 500,
+                enabled = locations == true,
                 onValueChanged = {
                     viewModel.setRadius(it)
                 },
