@@ -11,7 +11,6 @@ import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import java.util.concurrent.TimeUnit
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -36,7 +35,7 @@ import kotlin.coroutines.cancellation.CancellationException
 internal class OsmRepository(
     private val context: Context,
     private val dataStore: LauncherDataStore
-) : SearchableRepository<de.mm20.launcher2.search.Location>, KoinComponent {
+) : SearchableRepository<OsmLocation>, KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
@@ -45,7 +44,7 @@ internal class OsmRepository(
 
     private val httpClient = OkHttpClient
         .Builder()
-        // TODO set sensible timeouts that dont cause issues
+        // TODO set sensible timeouts that don't cause issues
         //.connectTimeout(200, TimeUnit.MILLISECONDS)
         //.readTimeout(5000, TimeUnit.MILLISECONDS)
         //.writeTimeout(2500, TimeUnit.MILLISECONDS)
@@ -84,7 +83,7 @@ internal class OsmRepository(
 
             val userLocation = getCurrentLocation() ?: return@locationPermission
 
-            dataStore.data.map { it.openStreetMapsSearch.searchRadius }
+            dataStore.data.map { it.locationsSearch.searchRadius }
                 .collectLatest dataStore@{ searchRadius ->
                     val result =
                         queryOverpass(

@@ -9,9 +9,6 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import java.util.Locale
 
 internal data class OsmLocation(

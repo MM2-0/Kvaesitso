@@ -3,7 +3,7 @@ package de.mm20.launcher2.search
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.Settings.LocationsSearchSettings
 import de.mm20.launcher2.preferences.Settings.AppShortcutSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
@@ -60,7 +60,7 @@ interface SearchService {
         wikipedia: WikipediaSearchSettings = WikipediaSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        openstreetmaps: Settings.OpenStreetMapsSearchSettings = Settings.OpenStreetMapsSearchSettings.newBuilder()
+        locations: LocationsSearchSettings = LocationsSearchSettings.newBuilder()
             .setEnabled(false)
             .setSearchRadius(1000)
             .build(),
@@ -92,7 +92,7 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-        openstreetmaps: Settings.OpenStreetMapsSearchSettings,
+        locations: LocationsSearchSettings,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -190,7 +190,7 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (openstreetmaps.enabled) {
+            if (locations.enabled) {
                 launch {
                     locationRepository.search(query)
                         .withCustomLabels(customAttributesRepository)
