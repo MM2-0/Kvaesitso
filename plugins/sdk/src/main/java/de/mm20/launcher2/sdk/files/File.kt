@@ -50,9 +50,4 @@ data class File(
      *  If null, a default icon will be shown, depending on the file type.
      */
     val thumbnailUri: Uri? = null,
-
-    /**
-     * How the launcher should store this file in its database (i.e. when the user adds it to favorites).
-     */
-    val storageStrategy: StorageStrategy = StorageStrategy.StoreCopy,
 )

@@ -21,5 +21,14 @@ enum class StorageStrategy {
      * Use this strategy if your plugin needs to perform network requests to retrieve search
      * results and if you don't want to implement a cache for search results.
      */
-    StoreCopy,
+    StoreCopy;
+    companion object {
+        fun valueOfOrElse(value: String, default: StorageStrategy): StorageStrategy {
+            return try {
+                valueOf(value)
+            } catch (e: IllegalArgumentException) {
+                default
+            }
+        }
+    }
 }

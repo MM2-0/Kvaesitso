@@ -6,9 +6,12 @@ import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
 import androidx.core.database.getStringOrNull
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.Plugin
+import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
+import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.File
 import kotlinx.collections.immutable.persistentMapOf
@@ -32,12 +35,19 @@ class PluginFileProvider(
             it.invokeOnCancellation {
                 cancellationSignal.cancel()
             }
-            val cursor = context.contentResolver.query(
-                uri,
-                null,
-                null,
-                cancellationSignal
-            )
+            val cursor = try {
+                context.contentResolver.query(
+                    uri,
+                    null,
+                    null,
+                    cancellationSignal
+                )
+            } catch (e: Exception) {
+                Log.e("MM20", "Plugin ${plugin.authority} threw exception")
+                CrashReporter.logException(e)
+                it.resume(emptyList())
+                return@suspendCancellableCoroutine
+            }
 
             if (cursor == null) {
                 Log.e("MM20", "Plugin ${plugin.authority} returned null cursor")
@@ -48,6 +58,26 @@ class PluginFileProvider(
             val results = fromCursor(cursor) ?: emptyList()
             it.resume(results)
         }
+    }
+
+    private fun getPluginConfig(): SearchPluginConfig? {
+        val configBundle = try {
+            context.contentResolver.call(
+                Uri.Builder()
+                    .scheme("content")
+                    .authority(plugin.authority)
+                    .build(),
+                PluginContract.Methods.GetConfig,
+                null,
+                null
+            ) ?: return null
+        } catch (e: Exception) {
+            Log.e("MM20", "Plugin ${plugin.authority} threw exception")
+            CrashReporter.logException(e)
+            return null
+        }
+
+        return SearchPluginConfig(configBundle)
     }
 
     suspend fun getFile(id: String): File? {
@@ -76,6 +106,14 @@ class PluginFileProvider(
     }
 
     private fun fromCursor(cursor: Cursor): List<File>? {
+        val config = getPluginConfig()
+
+        if (config == null) {
+            Log.e("MM20", "Plugin ${plugin.authority} returned null config")
+            cursor.close()
+            return null
+        }
+
         val idIndex = cursor
             .getColumnIndex(FilePluginContract.FileColumns.Id)
             .takeIf { it >= 0 }
@@ -95,9 +133,6 @@ class PluginFileProvider(
         val thumbnailUriIndex =
             cursor.getColumnIndex(FilePluginContract.FileColumns.ThumbnailUri)
                 .takeIf { it >= 0 }
-        val storageStrategyIndex =
-            cursor.getColumnIndex(FilePluginContract.FileColumns.StorageStrategy)
-                .takeIf { it >= 0 }
         val directoryIndex =
             cursor.getColumnIndex(FilePluginContract.FileColumns.IsDirectory).takeIf { it >= 0 }
 
@@ -116,13 +151,7 @@ class PluginFileProvider(
                     thumbnailUri = thumbnailUriIndex?.let {
                         cursor.getStringOrNull(it)
                     }?.let { Uri.parse(it) },
-                    storageStrategy = try {
-                        storageStrategyIndex?.let {
-                            StorageStrategy.valueOf(cursor.getString(it))
-                        }
-                    } catch (e: IllegalArgumentException) {
-                        null
-                    } ?: StorageStrategy.StoreCopy,
+                    storageStrategy = config.storageStrategy,
                     isDirectory = directoryIndex?.let { cursor.getInt(it) } == 1,
                     authority = plugin.authority,
                 )
