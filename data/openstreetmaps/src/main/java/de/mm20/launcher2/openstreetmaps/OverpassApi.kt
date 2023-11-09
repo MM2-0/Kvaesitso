@@ -35,7 +35,9 @@ interface OverpassApi {
 
 class OverpassQueryConverter : Converter<OverpassQuery, RequestBody> {
     override fun convert(value: OverpassQuery): RequestBody {
+
         // allow other characters in between query words, if there are multiple
+        // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
         val escapedQueryName = value
             .name
             .split(' ')
