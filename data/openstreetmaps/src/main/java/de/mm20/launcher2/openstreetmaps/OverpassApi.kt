@@ -34,12 +34,25 @@ interface OverpassApi {
 }
 
 class OverpassQueryConverter : Converter<OverpassQuery, RequestBody> {
-    override fun convert(value: OverpassQuery): RequestBody = """
-        [out:json];
-        node(around:${value.radius},${value.latitude},${value.longitude})
-        ["name"~"${value.name}"${if(value.caseInvariant){ ",i" } else { "" }}];
-        out;
-    """.trimIndent().toRequestBody()
+    override fun convert(value: OverpassQuery): RequestBody {
+        // allow other characters in between query words, if there are multiple
+        val escapedQueryName = value
+            .name
+            .split(' ')
+            .joinToString(
+                separator = ".*",
+                prefix = "\"",
+                postfix = "\""
+            ) { Regex.escapeReplacement(it) }
+
+        val overpassQlBuilder = StringBuilder()
+        overpassQlBuilder.append("[out:json];")
+        overpassQlBuilder.append("node(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
+        overpassQlBuilder.append("[name~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
+        overpassQlBuilder.append("out;")
+
+        return overpassQlBuilder.toString().toRequestBody()
+    }
 }
 
 class OverpassQueryConverterFactory : Converter.Factory() {
