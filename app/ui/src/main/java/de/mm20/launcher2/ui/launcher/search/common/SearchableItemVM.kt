@@ -1,20 +1,16 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.hardware.GeomagneticField
 import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
-import android.hardware.SensorEventListener2
 import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
@@ -35,9 +31,11 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -183,58 +181,21 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val userLocation = MutableStateFlow<Location?>(null)
-    private val locationListener = LocationListener {
-        userLocation.value = it
-        geomagneticField = GeomagneticField(
-            it.latitude.toFloat(),
-            it.longitude.toFloat(),
-            it.altitude.toFloat(),
-            it.time
-        )
+    private var declination: Float? = null
+    private fun updateDeclination(location: Location) {
+        declination = GeomagneticField(
+            location.latitude.toFloat(),
+            location.longitude.toFloat(),
+            location.altitude.toFloat(),
+            location.time
+        ).declination
     }
 
-    private var geomagneticField: GeomagneticField? = null
-    val trueNorthHeading = MutableStateFlow<Float?>(null)
-    private val sensorListener = object : SensorEventListener {
-        override fun onSensorChanged(event: SensorEvent?) {
-            if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
-                return
-
-            val rotationMatrix = FloatArray(9)
-            val orientationAngles = FloatArray(3)
-
-            SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
-            SensorManager.getOrientation(rotationMatrix, orientationAngles)
-
-            // eastward heading from magnetic north plus correction for geographic north, if available
-            trueNorthHeading.value =
-                orientationAngles[0] * 180f / Math.PI.toFloat() + (geomagneticField?.declination ?: 0f)
+    fun getUserLocation(context: Context): Flow<Location> = callbackFlow {
+        val locationCallback = LocationListener {
+            updateDeclination(it)
+            trySend(it)
         }
-
-        override fun onAccuracyChanged(p0: Sensor?, p1: Int) {}
-    }
-
-    fun startHeadingUpdates(context: Context) {
-        if (trueNorthHeading.value != null) // somebody is listening!!! O_o
-            return
-
-        context
-            .getSystemService<SensorManager>()
-            ?.runCatching {
-                this.registerListener(
-                    sensorListener,
-                    this.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) ?: return@runCatching,
-                    SensorManager.SENSOR_DELAY_UI
-                )
-            }?.onFailure {
-                Log.e("SearchableItemVM", "Failed to start heading updates", it)
-            }
-    }
-
-    fun startLocationUpdates(context: Context) {
-        if (userLocation.value != null)
-            return
 
         context
             .getSystemService<LocationManager>()
@@ -244,17 +205,13 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                 val hasCoarseAccess =
                     context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-                userLocation.value =
+                val location =
                     (if (hasFineAccess) this.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
                         ?: if (hasCoarseAccess) this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
 
-                if (userLocation.value != null) {
-                    geomagneticField = GeomagneticField(
-                        userLocation.value!!.latitude.toFloat(),
-                        userLocation.value!!.longitude.toFloat(),
-                        userLocation.value!!.altitude.toFloat(),
-                        userLocation.value!!.time
-                    )
+                if (location != null) {
+                    updateDeclination(location)
+                    trySend(location)
                 }
 
                 if (hasFineAccess) {
@@ -262,7 +219,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                         LocationManager.GPS_PROVIDER,
                         1000,
                         0f,
-                        locationListener
+                        locationCallback
                     )
                 }
                 if (hasCoarseAccess) {
@@ -270,26 +227,52 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                         LocationManager.NETWORK_PROVIDER,
                         1000,
                         0f,
-                        locationListener
+                        locationCallback
                     )
                 }
             }?.onFailure {
                 Log.e("SearchableItemVM", "Failed to start location updates", it)
             }
+
+        awaitClose {
+            context.getSystemService<LocationManager>()?.removeUpdates(locationCallback)
+        }
     }
 
-    fun stopHeadingUpdates(context: Context) {
-        context.getSystemService<SensorManager>()?.unregisterListener(sensorListener)
+    fun getUserHeading(context: Context): Flow<Float> = callbackFlow {
+        val sensorCallback = object : SensorEventListener {
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+            override fun onSensorChanged(event: SensorEvent?) {
+                if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
+                    return
 
-        // remove this if viewmodels are actually destroyed (I don't know)
-        trueNorthHeading.value = null
-    }
+                val rotationMatrix = FloatArray(9)
+                val orientationAngles = FloatArray(3)
 
-    fun stopLocationUpdates(context: Context) {
-        context.getSystemService<LocationManager>()?.removeUpdates(locationListener)
+                SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
+                SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-        // also applies to this
-        userLocation.value = null
-        geomagneticField = null
+                trySend(
+                    // eastward heading from magnetic north plus correction for geographic north, if available
+                    orientationAngles[0] * 180f / Math.PI.toFloat() + (declination ?: 0f)
+                )
+            }
+        }
+
+        context
+            .getSystemService<SensorManager>()
+            ?.runCatching {
+                this.registerListener(
+                    sensorCallback,
+                    this.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) ?: return@runCatching,
+                    SensorManager.SENSOR_DELAY_UI
+                )
+            }?.onFailure {
+                Log.e("SearchableItemVM", "Failed to start heading updates", it)
+            }
+
+        awaitClose {
+            context.getSystemService<SensorManager>()?.unregisterListener(sensorCallback)
+        }
     }
 }

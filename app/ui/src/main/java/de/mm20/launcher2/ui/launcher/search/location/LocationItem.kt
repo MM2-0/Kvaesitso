@@ -27,7 +27,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -37,6 +37,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.i18n.R
@@ -70,16 +71,11 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val userLocation by viewModel.userLocation.collectAsState(null)
+    val userLocation by viewModel.getUserLocation(context).collectAsStateWithLifecycle(null)
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
-    DisposableEffect(location) {
+    LaunchedEffect(location) {
         viewModel.init(location, iconSize.toInt())
-        viewModel.startLocationUpdates(context)
-
-        onDispose {
-            viewModel.stopLocationUpdates(context)
-        }
     }
 
     val closedColor = MaterialTheme.colorScheme.secondary
@@ -146,15 +142,6 @@ fun LocationItem(
                 }
             }
             AnimatedVisibility(showDetails) {
-                DisposableEffect(showDetails) {
-                    if (showDetails)
-                        viewModel.startHeadingUpdates(context)
-
-                    onDispose {
-                        viewModel.stopHeadingUpdates(context)
-                    }
-                }
-
                 Column {
                     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
 
@@ -205,7 +192,7 @@ fun LocationItem(
                             )
                         }
 
-                        val userHeading by viewModel.trueNorthHeading.collectAsState(null)
+                        val userHeading by viewModel.getUserHeading(context).collectAsStateWithLifecycle(null)
                         if (userLocation != null && userHeading != null) {
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
