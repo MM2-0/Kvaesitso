@@ -51,7 +51,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
-import kotlin.math.roundToInt
 
 @Composable
 fun LocationItem(
@@ -98,10 +97,11 @@ fun LocationItem(
                     val badge by viewModel.badge.collectAsState(null)
                     Row {
                         ShapedLauncherIcon(
-                            modifier = Modifier.padding(end = 16.dp),
+                            modifier = Modifier
+                                .padding(end = 16.dp),
                             size = 48.dp,
                             icon = { icon },
-                            badge = { badge }
+                            badge = { badge },
                         )
                         Text(
                             modifier = Modifier.fillMaxHeight(),
@@ -163,12 +163,11 @@ fun LocationItem(
                             val openIndex = location.openingHours!!.indexOfFirst { it.isOpen }
                             val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
                             if (openIndex != -1) {
+                                val todaySchedule = location.openingHours!![openIndex]
                                 Text(
                                     text = stringResource(
                                         R.string.location_open_until,
-                                        (LocalTime.now() + location.openingHours!![openIndex].duration).format(
-                                            timeFormatter
-                                        )
+                                        (todaySchedule.startTime + todaySchedule.duration).format(timeFormatter)
                                     )
                                 )
                             }
