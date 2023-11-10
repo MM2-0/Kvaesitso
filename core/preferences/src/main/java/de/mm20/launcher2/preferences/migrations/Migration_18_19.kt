@@ -8,7 +8,7 @@ class Migration_18_19  : VersionedMigration(18,19) {
             .setLocationsSearch(
                 Settings.LocationsSearchSettings.newBuilder()
                     .setEnabled(false)
-                    .setSearchRadius(1000)
+                    .setSearchRadius(1500)
             )
     }
 }
