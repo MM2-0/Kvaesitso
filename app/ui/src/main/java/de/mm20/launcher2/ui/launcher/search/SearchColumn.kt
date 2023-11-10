@@ -39,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
@@ -60,6 +61,9 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.ceil
+
+private const val PRIORITY_MIN = Int.MAX_VALUE
+private const val PRIORITY_MAX = Int.MIN_VALUE
 
 @Composable
 fun SearchColumn(
@@ -111,6 +115,7 @@ fun SearchColumn(
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
+    // is it correct to use remember here?
     val locationPriorities = remember { mutableStateMapOf<String, Int>() }
 
     LazyColumn(
@@ -319,12 +324,18 @@ fun SearchColumn(
                     )
                 }
             } else null,
-            items = locations.sortedBy { locationPriorities[it.key] ?: Int.MAX_VALUE }.toImmutableList(),
+            items = locations.sortedBy { locationPriorities[it.key] ?: PRIORITY_MIN }
+                .toImmutableList(),
             reverse = reverse,
             key = "locations",
-            highlightedItem = bestMatch as? SavableSearchable,
+            highlightedItem = (bestMatch as? SavableSearchable)?.let {
+                if (it is Location)
+                    locationPriorities[it.key] = PRIORITY_MAX
+                it
+            },
             priorityCallback = { key, priority ->
-                locationPriorities[key] = priority
+                if ((bestMatch as? SavableSearchable)?.key != key)
+                    locationPriorities[key] = priority
             }
         )
         for (wiki in wikipedia) {
