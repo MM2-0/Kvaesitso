@@ -18,16 +18,21 @@ fun Float.toDp(): Dp {
 }
 
 fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): String {
+    val decimalFormat = DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
+
     val (value, unit) = if (imperialUnits) {
+        // yee haw
         val asFeet = this * 3.28084f
+        val isYards = asFeet >= 3f
         val isMiles = asFeet >= 5280f
         val value =
-            if (isMiles) DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
-                .format(asFeet / 5280f)
+            if (isMiles) decimalFormat.format(asFeet / 5280f)
+            else if (isYards) decimalFormat.format(asFeet / 3f)
             else asFeet.roundToInt().toString()
 
         val unit = context.getString(
             if (isMiles) R.string.unit_mile_symbol
+            else if (isYards) R.string.unit_yard_symbol
             else R.string.unit_foot_symbol
         )
 
@@ -35,8 +40,7 @@ fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): Str
     } else {
         val isK = this >= 1000f
         val value =
-            if (isK) DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
-                .format(this / 1000f)
+            if (isK) decimalFormat.format(this / 1000f)
             else this.roundToInt().toString()
 
         val unit = context.getString(
