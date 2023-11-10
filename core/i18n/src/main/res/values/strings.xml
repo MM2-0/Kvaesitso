@@ -2,8 +2,11 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="location_open">Open</string>
     <string name="location_closed">Closed</string>
+    <!-- Shown when a location search result is open until TIMESTAMP (hours:minutes) of the same day -->
     <string name="location_open_until">Open until %1$s</string>
+    <!-- Shown when a location search result opens in TIMESPAN on the same day -->
     <string name="location_open_next">Opens in %1$s</string>
+    <!-- Shown when a location search result opens next DAY-OF-WEEK -->
     <string name="location_open_next_day">Opens next %1$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
