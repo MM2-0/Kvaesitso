@@ -1,5 +1,6 @@
 package de.mm20.launcher2.openstreetmaps
 
+import android.util.Log
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
@@ -32,14 +33,19 @@ class OsmLocationDeserializer : SearchableDeserializer {
     private val overpassService = retrofit.create(OverpassApi::class.java)
 
     override suspend fun deserialize(serialized: String): SavableSearchable? =
-        OsmLocation.fromOverpassResponse(
-            overpassService.search(
-                OverpassIdQuery(
-                    JSONObject(
-                        serialized
-                    ).getLong("id")
+        serialized.runCatching {
+            OsmLocation.fromOverpassResponse(
+                overpassService.search(
+                    OverpassIdQuery(
+                        JSONObject(
+                            serialized
+                        ).getLong("id")
+                    )
                 )
-            )
-        ).firstOrNull()
+            ).firstOrNull()
+        }.onFailure {
+            Log.e("OsmLocationDeserializer", "Request failed", it)
+        }.getOrNull()
+
 
 }
