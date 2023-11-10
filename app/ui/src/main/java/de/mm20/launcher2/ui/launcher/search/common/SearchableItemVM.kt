@@ -31,7 +31,9 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -218,7 +220,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     this.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         1000,
-                        0f,
+                        1f,
                         locationCallback
                     )
                 }
@@ -226,7 +228,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     this.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER,
                         1000,
-                        0f,
+                        1f,
                         locationCallback
                     )
                 }

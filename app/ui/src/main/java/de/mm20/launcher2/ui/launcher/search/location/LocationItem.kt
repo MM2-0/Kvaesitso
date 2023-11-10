@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -71,7 +72,7 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val userLocation by viewModel.getUserLocation(context).collectAsStateWithLifecycle(null)
+    val userLocation by remember(context) { viewModel.getUserLocation(context) }.collectAsStateWithLifecycle(null)
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
     LaunchedEffect(location) {
@@ -192,7 +193,7 @@ fun LocationItem(
                             )
                         }
 
-                        val userHeading by viewModel.getUserHeading(context).collectAsStateWithLifecycle(null)
+                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(null)
                         if (userLocation != null && userHeading != null) {
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
