@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -109,6 +110,8 @@ fun SearchColumn(
     val tagsScrollState = rememberScrollState()
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
+
+    val locationPriorities = remember { mutableStateMapOf<String, Int>() }
 
     LazyColumn(
         state = state,
@@ -316,10 +319,13 @@ fun SearchColumn(
                     )
                 }
             } else null,
-            items = locations.toImmutableList(),
+            items = locations.sortedBy { locationPriorities[it.key] ?: Int.MAX_VALUE }.toImmutableList(),
             reverse = reverse,
             key = "locations",
-            highlightedItem = bestMatch as? SavableSearchable
+            highlightedItem = bestMatch as? SavableSearchable,
+            priorityCallback = { key, priority ->
+                locationPriorities[key] = priority
+            }
         )
         for (wiki in wikipedia) {
             SingleResult(highlight = bestMatch == wiki) {
@@ -462,7 +468,8 @@ fun LazyListScope.ListResults(
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
-    highlightedItem: SavableSearchable?
+    priorityCallback: ((key: String, priority: Int) -> Unit)? = null,
+    highlightedItem: SavableSearchable?,
 ) {
     if (before != null) {
         item(key = "$key-before") {
@@ -492,7 +499,8 @@ fun LazyListScope.ListResults(
                     bottom = if (if (reverse) it == 0 else it == items.size - 1) 8.dp else 4.dp,
                 ),
                 item = items[it],
-                highlight = items[it].key == highlightedItem?.key
+                highlight = items[it].key == highlightedItem?.key,
+                priorityCallback = priorityCallback
             )
         }
     }
@@ -513,7 +521,8 @@ fun LazyListScope.ListResults(
 fun ListRow(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
-    highlight: Boolean
+    highlight: Boolean,
+    priorityCallback: ((key: String, priority: Int) -> Unit)? = null,
 ) {
     Box(
         modifier = modifier.padding(
@@ -525,7 +534,8 @@ fun ListRow(
             modifier = Modifier
                 .fillMaxWidth(),
             item = item,
-            highlight = highlight
+            highlight = highlight,
+            priorityCallback = priorityCallback,
         )
     }
 }
