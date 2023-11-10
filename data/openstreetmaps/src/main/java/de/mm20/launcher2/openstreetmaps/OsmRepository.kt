@@ -108,8 +108,8 @@ internal class OsmRepository(
     ): OverpassResponse? {
         return try {
             overpassService.search(
-                OverpassQuery(
-                    name = query,
+                OverpassFuzzyRadiusQuery(
+                    query = query,
                     radius = radius,
                     latitude = latitude,
                     longitude = longitude,

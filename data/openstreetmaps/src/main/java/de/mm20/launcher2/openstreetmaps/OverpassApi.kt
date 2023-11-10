@@ -8,12 +8,16 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 import java.lang.reflect.Type
 
-data class OverpassQuery(
-    val name: String,
+data class OverpassFuzzyRadiusQuery(
+    val query: String,
     val radius: Int,
     val latitude: Double,
     val longitude: Double,
     val caseInvariant: Boolean = true,
+)
+
+data class OverpassIdQuery(
+    val id: Long,
 )
 
 data class OverpassResponse(
@@ -30,16 +34,19 @@ data class OverpassResponseElement(
 
 interface OverpassApi {
     @POST("api/interpreter")
-    suspend fun search(@Body data: OverpassQuery): OverpassResponse
+    suspend fun search(@Body data: OverpassFuzzyRadiusQuery): OverpassResponse
+
+    @POST("api/interpreter")
+    suspend fun search(@Body data: OverpassIdQuery): OverpassResponse
 }
 
-class OverpassQueryConverter : Converter<OverpassQuery, RequestBody> {
-    override fun convert(value: OverpassQuery): RequestBody {
+class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, RequestBody> {
+    override fun convert(value: OverpassFuzzyRadiusQuery): RequestBody {
 
         // allow other characters in between query words, if there are multiple
         // https://dev.overpass-api.de/overpass-doc/en/criteria/per_tag.html#regex
         val escapedQueryName = value
-            .name
+            .query
             .split(' ')
             .joinToString(
                 separator = ".*",
@@ -57,6 +64,14 @@ class OverpassQueryConverter : Converter<OverpassQuery, RequestBody> {
     }
 }
 
+class OverpassIdQueryConverter : Converter<OverpassIdQuery, RequestBody> {
+    override fun convert(value: OverpassIdQuery): RequestBody = """
+        [out:json];
+        node(${value.id});
+        out;
+    """.trimIndent().toRequestBody()
+}
+
 class OverpassQueryConverterFactory : Converter.Factory() {
     override fun requestBodyConverter(
         type: Type,
@@ -64,10 +79,13 @@ class OverpassQueryConverterFactory : Converter.Factory() {
         methodAnnotations: Array<out Annotation>,
         retrofit: Retrofit
     ): Converter<*, RequestBody>? {
-        if (type != OverpassQuery::class.java)
-            return null
+        if (type == OverpassFuzzyRadiusQuery::class.java)
+            return OverpassFuzzyRadiusQueryConverter()
 
-        return OverpassQueryConverter()
+        if (type == OverpassIdQuery::class.java)
+            return OverpassIdQueryConverter()
+
+        return null
     }
 }
 
