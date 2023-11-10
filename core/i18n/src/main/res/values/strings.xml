@@ -870,4 +870,7 @@
     <string name="shortcut_label_unavailable">Unavailable</string>
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
+    <string name="length_unit">Unit of length</string>
+    <string name="imperial">Imperial</string>
+    <string name="metric">Metric</string>
 </resources>

@@ -14,14 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
-import androidx.compose.material.icons.rounded.Fastfood
-import androidx.compose.material.icons.rounded.Hotel
-import androidx.compose.material.icons.rounded.LocalBar
-import androidx.compose.material.icons.rounded.LocalCafe
-import androidx.compose.material.icons.rounded.LocalGroceryStore
 import androidx.compose.material.icons.rounded.Map
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Restaurant
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -34,23 +27,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDateTime
@@ -73,6 +65,8 @@ fun LocationItem(
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by remember(context) { viewModel.getUserLocation(context) }.collectAsStateWithLifecycle(null)
+    val insaneUnits by viewModel.useInsaneUnits.collectAsState()
+
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
     LaunchedEffect(location) {
@@ -100,11 +94,14 @@ fun LocationItem(
                         if (showDetails) MaterialTheme.typography.titleMedium
                         else MaterialTheme.typography.titleSmall
                     )
+                    val icon by viewModel.icon.collectAsStateWithLifecycle()
+                    val badge by viewModel.badge.collectAsState(null)
                     Row {
-                        Icon(
+                        ShapedLauncherIcon(
                             modifier = Modifier.padding(end = 16.dp),
-                            imageVector = location.category.getImageVector(),
-                            contentDescription = null
+                            size = 48.dp,
+                            icon = { icon },
+                            badge = { badge }
                         )
                         Text(
                             modifier = Modifier.fillMaxHeight(),
@@ -124,7 +121,7 @@ fun LocationItem(
                                 )
                             }
                             Text(
-                                text = location.getSummary(context, distance),
+                                text = location.getSummary(context, distance, insaneUnits),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -208,7 +205,7 @@ fun LocationItem(
                                 )
                                 if (distance != null) {
                                     Text(
-                                        text = distance.metersToString(context)
+                                        text = distance.metersToLocalizedString(context, insaneUnits)
                                     )
                                 }
                             }
@@ -250,17 +247,15 @@ fun LocationItem(
                     )
 
                 }
-
-
             }
         }
     }
 }
 
-private fun Location.getSummary(context: Context, distance: Float?): String {
+private fun Location.getSummary(context: Context, distance: Float?, imperialUnits: Boolean): String {
     val summary = StringBuilder()
     if (distance != null) {
-        summary.append(distance.metersToString(context), ' ')
+        summary.append(distance.metersToLocalizedString(context,  imperialUnits), ' ')
     }
     if (this.street != null) {
         summary.append(this.street, ' ')
@@ -269,26 +264,4 @@ private fun Location.getSummary(context: Context, distance: Float?): String {
         }
     }
     return summary.toString()
-}
-
-private fun Float.metersToString(context: Context): String {
-    val isKm = this >= 1000f
-    val value =
-        if (isKm) DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
-            .format(this / 1000f)
-        else this.roundToInt().toString()
-    val unit =
-        context.getString(if (isKm) R.string.unit_kilometer_symbol else R.string.unit_meter_symbol)
-
-    return "$value $unit"
-}
-
-private fun LocationCategory?.getImageVector(): ImageVector = when (this) {
-    LocationCategory.RESTAURANT -> Icons.Rounded.Restaurant
-    LocationCategory.FAST_FOOD -> Icons.Rounded.Fastfood
-    LocationCategory.BAR -> Icons.Rounded.LocalBar
-    LocationCategory.CAFE -> Icons.Rounded.LocalCafe
-    LocationCategory.HOTEL -> Icons.Rounded.Hotel
-    LocationCategory.SUPERMARKET -> Icons.Rounded.LocalGroceryStore
-    else -> Icons.Rounded.Place
 }

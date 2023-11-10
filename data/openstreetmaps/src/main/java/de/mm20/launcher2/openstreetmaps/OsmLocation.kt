@@ -50,10 +50,6 @@ internal data class OsmLocation(
         )
     }
 
-    override fun getPlaceholderIcon(context: Context): Nothing {
-        TODO()
-    }
-
     override fun getSerializer(): SearchableSerializer {
         return OsmLocationSerializer()
     }

@@ -28,8 +28,23 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
         }
     }
 
+    val insaneUnits = dataStore.data.map { it.locationsSearch.useInsaneUnits }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setInsaneUnits(insaneUnits: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setUseInsaneUnits(insaneUnits)
+                    )
+                    .build()
+            }
+        }
+    }
+
     val radius = dataStore.data.map { it.locationsSearch.searchRadius }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1000)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1500)
     fun setRadius(radius: Int) {
         viewModelScope.launch {
             dataStore.updateData {

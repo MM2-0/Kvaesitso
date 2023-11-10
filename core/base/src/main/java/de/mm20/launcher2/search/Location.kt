@@ -1,5 +1,11 @@
 package de.mm20.launcher2.search
 
+import android.content.Context
+import androidx.core.content.ContextCompat
+import de.mm20.launcher2.base.R
+import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.TintedIconLayer
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -20,7 +26,27 @@ interface Location : SavableSearchable {
     val websiteUrl: String?
 
     override val preferDetailsOverLaunch: Boolean
-        get() = false
+        get() = true
+
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        val (resId, bgColor) = when (category) {
+            LocationCategory.RESTAURANT -> R.drawable.ic_location_restaurant to R.color.orange
+            LocationCategory.FAST_FOOD -> R.drawable.ic_location_fastfood to R.color.red
+            LocationCategory.BAR -> R.drawable.ic_location_bar to R.color.amber
+            LocationCategory.CAFE -> R.drawable.ic_location_cafe to R.color.brown
+            LocationCategory.HOTEL -> R.drawable.ic_location_hotel to R.color.green
+            LocationCategory.SUPERMARKET -> R.drawable.ic_location_supermarket to R.color.lightblue
+            else -> R.drawable.ic_location_place to R.color.bluegrey
+        }
+        return StaticLauncherIcon(
+            foregroundLayer = TintedIconLayer(
+                icon = ContextCompat.getDrawable(context, resId)!!,
+                scale = 0.5f,
+                color = ContextCompat.getColor(context, bgColor)
+            ),
+            backgroundLayer = ColorLayer(ContextCompat.getColor(context, bgColor))
+        )
+    }
 
     fun toAndroidLocation(): android.location.Location {
         val location = android.location.Location("KvaesitsoLocationProvider")

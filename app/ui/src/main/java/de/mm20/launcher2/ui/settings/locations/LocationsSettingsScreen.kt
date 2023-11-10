@@ -9,16 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import java.text.DecimalFormat
+import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 
 @Composable
 fun LocationsSettingsScreen() {
@@ -34,6 +35,19 @@ fun LocationsSettingsScreen() {
                     viewModel.setLocations(it)
                 }
             )
+            val insaneUnits by viewModel.insaneUnits.collectAsState()
+            ListPreference(
+                title = stringResource(R.string.length_unit),
+                items = listOf(
+                    stringResource(R.string.imperial) to true,
+                    stringResource(R.string.metric) to false
+                ),
+                enabled = locations == true,
+                value = insaneUnits,
+                onValueChanged = {
+                    viewModel.setInsaneUnits(it)
+                }
+            )
             val radius by viewModel.radius.collectAsState()
             SliderPreference(
                 title = stringResource(R.string.preference_search_locations_radius),
@@ -47,22 +61,14 @@ fun LocationsSettingsScreen() {
                     viewModel.setRadius(it)
                 },
                 label = {
-                    val isKm = it >= 1000
-                    val format = remember {
-                        DecimalFormat().apply {
-                            maximumFractionDigits = 1
-                            minimumFractionDigits = 0
-                        }
-                    }
                     Text(
                         modifier = Modifier
                             .width(64.dp)
                             .padding(start = 16.dp),
-                        text =
-                        if (isKm) "${format.format(it / 1000.0)} ${stringResource(R.string.unit_kilometer_symbol)}"
-                        else "${format.format(it)} ${stringResource(R.string.unit_meter_symbol)}",
+                        text = it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits),
                         style = MaterialTheme.typography.titleSmall
                     )
+                    it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits)
                 }
             )
         }

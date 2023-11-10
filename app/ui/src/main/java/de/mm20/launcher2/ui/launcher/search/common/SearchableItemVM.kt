@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
@@ -24,6 +26,7 @@ import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.AppShortcut
@@ -56,6 +59,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val dataStore: LauncherDataStore by inject()
 
     private val searchable = MutableStateFlow<SavableSearchable?>(null)
     private val iconSize = MutableStateFlow(0)
@@ -182,6 +186,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     fun requestShortcutPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
+
+    val useInsaneUnits = dataStore.data.map { it.locationsSearch.useInsaneUnits }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     private var declination: Float? = null
     private fun updateDeclination(location: Location) {
