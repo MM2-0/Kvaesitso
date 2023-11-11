@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import androidx.core.graphics.blue
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme
@@ -194,7 +195,7 @@ fun createFactorySettings(context: Context): Settings {
         .setLocationsSearch(
             Settings.LocationsSearchSettings.newBuilder()
                 .setEnabled(false)
-                .setUseInsaneUnits(0 != R.bool.default_imperialUnits)
+                .setUseInsaneUnits(context.resources.getBoolean(R.bool.default_imperialUnits))
                 .setSearchRadius(1500)
                 .setCustomOverpassUrl("https://overpass-api.de")
                 .setShowMap(false)
