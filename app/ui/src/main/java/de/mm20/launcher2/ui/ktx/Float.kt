@@ -17,6 +17,8 @@ fun Float.toDp(): Dp {
     return (this / LocalDensity.current.density).dp
 }
 
+fun Float.roundToString(): String = this.roundToInt().toString()
+
 fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): String {
     val decimalFormat = DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
 
@@ -27,8 +29,8 @@ fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): Str
         val isMiles = asFeet >= 5280f
         val value =
             if (isMiles) decimalFormat.format(asFeet / 5280f)
-            else if (isYards) decimalFormat.format(asFeet / 3f)
-            else asFeet.roundToInt().toString()
+            else if (isYards) (asFeet / 3f).roundToString()
+            else asFeet.roundToString()
 
         val unit = context.getString(
             if (isMiles) R.string.unit_mile_symbol
