@@ -2,10 +2,13 @@ package de.mm20.launcher2.sdk.files
 
 import android.database.MatrixCursor
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.sdk.base.SearchPluginProvider
 
-abstract class FileProvider : SearchPluginProvider<File>() {
+abstract class FileProvider(
+    config: SearchPluginConfig = SearchPluginConfig(),
+) : SearchPluginProvider<File>(config) {
     abstract override suspend fun search(query: String): List<File>
 
     final override fun getPluginType(): PluginType {
@@ -23,7 +26,6 @@ abstract class FileProvider : SearchPluginProvider<File>() {
                 FilePluginContract.FileColumns.ContentUri,
                 FilePluginContract.FileColumns.ThumbnailUri,
                 FilePluginContract.FileColumns.IsDirectory,
-                FilePluginContract.FileColumns.StorageStrategy
             ),
             capacity,
         )
@@ -40,7 +42,6 @@ abstract class FileProvider : SearchPluginProvider<File>() {
                 item.uri.toString(),
                 item.thumbnailUri?.toString(),
                 if (item.isDirectory) 1 else 0,
-                item.storageStrategy.name,
             )
         )
     }

@@ -60,7 +60,7 @@ internal data class LauncherApp(
     override val profile: AppProfile
         get() = if (isMainProfile) AppProfile.Personal else AppProfile.Work
 
-    override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM == 0
+    override val isSystemApp: Boolean = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM != 0
 
     override val canUninstall: Boolean
         get() = !isSystemApp && isMainProfile

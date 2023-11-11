@@ -244,7 +244,7 @@
     <string name="preference_clock_widget_style_summary">เลือกนาฬิกา</string>
     <string name="preference_clockwidget_date_part">วันที่</string>
     <string name="preference_clockwidget_date_part_summary">แสดงวันที่ปัจจุบัน</string>
-    <string name="preference_clockwidget_favorites_part">รายการโปรด</string>
+    <string name="preference_clockwidget_favorites_part">แถบใช้งาน</string>
     <string name="preference_clockwidget_music_part">สื่อ</string>
     <string name="preference_clockwidget_music_part_summary">แสดงตัวควบคุมสื่อเมื่อมีสื่อกำลังเล่น</string>
     <string name="preference_clockwidget_battery_part">แบตเตอรี่</string>
@@ -591,7 +591,7 @@
     <string name="preference_search_wikipedia_pictures_summary">จะใช้อินเทอร์เน็ตมือถือเยอะขึ้นมาก</string>
     <string name="backup_select_components">เลือกสิ่งที่ต้องการสำรองข้อมูล:</string>
     <string name="preference_google_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาใน Google Drive</string>
-    <string name="backup_not_included">บัญชีที่เชื่อมต่อไว้และวิดเจ็ตของแอปนอกระบบจะไม่ได้รับการสำรองข้อมูล</string>
+    <string name="backup_not_included">ข้อมูลของบัญชีที่เชื่อมต่อไว้จะไม่ถูกสำรอง และวิดเจ็ตนอกระบบจะถูกกู้คืนได้บนอุปกรณ์เครื่องนี้เท่านั้น</string>
     <string name="preference_calendar_hide_allday">ซ่อนกิจกรรมที่ทำตลอดวัน</string>
     <string name="backup_complete">การสำรองข้อมูลเสร็จสิ้น</string>
     <string name="preference_screen_buildinfo_summary">ข้อมูลเพิ่มเติมเกี่ยวกับบิลด์นี้ของแอป</string>
@@ -656,4 +656,10 @@
     <string name="preference_clock_widget_alignment">การจัดตำแหน่ง</string>
     <string name="preference_clock_widget_alignment_bottom">ด้านล่าง</string>
     <string name="shortcut_unavailable_description">ไม่สามารถเข้าถึงทางลัดนี้ได้ เนื่องจาก %1$s ไม่ได้ถูกตั้งเป็นตัวใช้งานเริ่มต้น</string>
+    <string name="missing_permission_plugins">คุณต้องอนุญาตให้ใช้ปลั๊กอินจึงจะใช้งานได้</string>
+    <string name="preference_clockwidget_dynamic_zone">ส่วนไดนามิก</string>
+    <string name="preference_screen_plugins">ปลั๊กอิน</string>
+    <string name="preference_screen_plugins_summary">จัดการส่วนเสริมที่ติดตั้งไว้</string>
+    <string name="no_plugins_installed">ยังไม่ได้ติดตั้งปลั๊กอินใด</string>
+    <string name="plugin_host_not_installed">ยังไม่ได้ติดตั้งโฮสต์ปลั๊กอิน</string>
 </resources>

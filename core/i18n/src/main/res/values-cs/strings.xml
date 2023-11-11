@@ -667,4 +667,9 @@
     <string name="shortcut_label_unavailable">Nedostupné</string>
     <string name="shortcut_unavailable_description">Tato zkratka je nedostupná, protože %1$s není nastaven jako výchozí launcher</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamická zóna</string>
+    <string name="missing_permission_plugins">Pro používání doplňků je vyžadováno oprávnění k doplňkům.</string>
+    <string name="preference_screen_plugins">Doplňky</string>
+    <string name="preference_screen_plugins_summary">Spravovat nainstalované doplňky</string>
+    <string name="no_plugins_installed">Nejsou nainstalovány žádné doplňky</string>
+    <string name="plugin_host_not_installed">Hostitel doplňků není nainstalován</string>
 </resources>

@@ -1,19 +1,19 @@
 package de.mm20.launcher2.sdk.base
 
 import android.content.ContentValues
-import android.content.Context
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.CancellationSignal
-import de.mm20.launcher2.plugin.contracts.PluginContract
+import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-abstract class SearchPluginProvider<T> : BasePluginProvider() {
+abstract class SearchPluginProvider<T>(
+    private val config: SearchPluginConfig,
+) : BasePluginProvider() {
 
     /**
      * Search for items matching the given query
@@ -106,6 +106,10 @@ abstract class SearchPluginProvider<T> : BasePluginProvider() {
             }
             deferred.await()
         }
+    }
+
+    final override fun getPluginConfig(): Bundle {
+        return config.toBundle()
     }
 
     internal abstract fun createCursor(capacity: Int): MatrixCursor

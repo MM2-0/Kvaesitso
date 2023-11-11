@@ -34,12 +34,19 @@ abstract class BasePluginProvider : ContentProvider() {
                     }
                 }
             }
+            PluginContract.Methods.GetConfig -> {
+                getPluginConfig()
+            }
 
             else -> super.call(method, arg, extras)
         }
     }
 
     internal abstract fun getPluginType(): PluginType
+
+    internal open fun getPluginConfig(): Bundle {
+        return Bundle.EMPTY
+    }
 
     open suspend fun getPluginState(): PluginState {
         return PluginState.Ready

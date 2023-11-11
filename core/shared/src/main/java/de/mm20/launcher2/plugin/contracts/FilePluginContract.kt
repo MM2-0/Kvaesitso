@@ -42,8 +42,6 @@ abstract class FilePluginContract {
 
         const val ThumbnailUri = "thumbnail_uri"
 
-        const val StorageStrategy = "storage_strategy"
-
         /**
          * Whether the file is a directory.
          * Type: Int
