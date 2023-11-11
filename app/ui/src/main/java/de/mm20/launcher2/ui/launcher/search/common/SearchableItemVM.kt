@@ -201,7 +201,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val mapTileServerUrl = dataStore.data.map { it.locationsSearch.customTileServerUrl }
-        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+        .stateIn(viewModelScope, SharingStarted.Lazily, "")
 
     private var declination: Float? = null
     private fun updateDeclination(location: Location) {
@@ -296,35 +296,5 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         awaitClose {
             context.getSystemService<SensorManager>()?.unregisterListener(sensorCallback)
         }
-    }
-
-    companion object : KoinComponent {
-        private val context: Context by inject()
-
-        val mapTileLoaderUserAgent = "${context.packageName}/${
-            context.packageManager.getPackageInfo(
-                context.packageName,
-                0
-            ).versionName
-        }"
-
-        val mapTileLoader = ImageLoader
-            .Builder(context)
-            .memoryCache {
-                MemoryCache.Builder(context)
-                    .maxSizePercent(0.05)
-                    .build()
-            }
-            .memoryCachePolicy(CachePolicy.ENABLED)
-            .diskCache {
-                DiskCache.Builder()
-                    .directory(context.cacheDir.resolve("osm_tiles"))
-                    .maxSizePercent(0.01)
-                    .build()
-            }
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .respectCacheHeaders(true)
-            .networkCachePolicy(CachePolicy.ENABLED)
-            .build()
     }
 }
