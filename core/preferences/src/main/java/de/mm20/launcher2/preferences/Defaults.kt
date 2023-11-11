@@ -191,6 +191,13 @@ fun createFactorySettings(context: Context): Settings {
             Settings.AnimationSettings.newBuilder()
                 .setCharging(true)
         )
+        .setLocationsSearch(
+            Settings.LocationsSearchSettings.newBuilder()
+                .setEnabled(false)
+                .setUseInsaneUnits(false)
+                .setSearchRadius(1500)
+                .setCustomUrl("https://overpass-api.de")
+        )
         .build()
 }
 

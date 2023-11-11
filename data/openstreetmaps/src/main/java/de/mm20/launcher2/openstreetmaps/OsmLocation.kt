@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.net.Uri
 import android.util.Log
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.coroutines.flow.map
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
@@ -20,7 +24,7 @@ import java.util.Locale
 
 internal data class OsmLocation(
     val id: Long,
-    override val label: String,
+    override var label: String,
     var category: LocationCategory?,
     override val latitude: Double,
     override val longitude: Double,
@@ -85,9 +89,7 @@ internal data class OsmLocation(
     private suspend fun updateCache() {
         val upToDateEntry = idRepository.searchForId(id) ?: return
 
-        // we should also update label here, since it might have changed
-        // label = upToDateEntry.label
-
+        label = upToDateEntry.label
         category = upToDateEntry.category
         street = upToDateEntry.street
         houseNumber = upToDateEntry.houseNumber
@@ -95,11 +97,13 @@ internal data class OsmLocation(
         websiteUrl = upToDateEntry.websiteUrl
     }
 
-    companion object {
+    companion object : KoinComponent {
 
         const val DOMAIN = "OpenStreetMaps"
 
-        private val idRepository = BaseOsmRepository("https://overpass-api.de/")
+        private val dataStore: LauncherDataStore by inject()
+        private val idRepository =
+            BaseOsmRepository(dataStore.data.map { it.locationsSearch.customUrl })
 
         fun fromOverpassResponse(
             result: OverpassResponse

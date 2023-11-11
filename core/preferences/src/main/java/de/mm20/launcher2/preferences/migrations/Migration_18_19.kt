@@ -9,6 +9,7 @@ class Migration_18_19  : VersionedMigration(18,19) {
                 Settings.LocationsSearchSettings.newBuilder()
                     .setEnabled(false)
                     .setSearchRadius(1500)
+                    .setCustomUrl("https://overpass-api.de/")
             )
     }
 }

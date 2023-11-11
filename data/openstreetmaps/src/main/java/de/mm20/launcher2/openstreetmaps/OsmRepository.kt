@@ -20,6 +20,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -32,7 +33,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import kotlin.coroutines.cancellation.CancellationException
 
 internal open class BaseOsmRepository(
-    overpassUrl: String
+    overpassUrl: Flow<String>
 ) {
     protected val httpClient = OkHttpClient()
     protected lateinit var overpassService: OverpassApi
@@ -40,21 +41,21 @@ internal open class BaseOsmRepository(
     init {
         CoroutineScope(Job() + Dispatchers.Default).launch {
             try {
-                setBaseUrl(overpassUrl)
+                overpassUrl
+                    .distinctUntilChanged()
+                    .collectLatest {
+                        overpassService = Retrofit.Builder()
+                            .client(httpClient)
+                            .baseUrl(it)
+                            .addConverterFactory(OverpassQueryConverterFactory())
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build()
+                            .create(OverpassApi::class.java)
+                    }
             } catch (e: Exception) {
                 Log.e("OsmRepository", "Failed to create overpassService", e)
             }
         }
-    }
-
-    private fun setBaseUrl(url: String) {
-        overpassService = Retrofit.Builder()
-            .client(httpClient)
-            .baseUrl(url)
-            .addConverterFactory(OverpassQueryConverterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(OverpassApi::class.java)
     }
 
     suspend fun searchForId(id: Long): OsmLocation? = try {
@@ -78,7 +79,7 @@ internal open class BaseOsmRepository(
 internal class OsmRepository(
     private val context: Context,
     private val dataStore: LauncherDataStore
-) : BaseOsmRepository("https://overpass-api.de/"),
+) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customUrl }),
     SearchableRepository<OsmLocation>,
     KoinComponent {
 

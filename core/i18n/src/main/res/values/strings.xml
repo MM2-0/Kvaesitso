@@ -873,4 +873,6 @@
     <string name="length_unit">Unit of length</string>
     <string name="imperial">Imperial</string>
     <string name="metric">Metric</string>
+    <string name="preference_search_location_custom_overpass_url">Overpass Url</string>
+    <string name="overpass_url">https://overpass-api.de/</string>
 </resources>

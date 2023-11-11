@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.locations
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -52,6 +53,27 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
                     .setLocationsSearch(
                         it.locationsSearch.toBuilder()
                             .setSearchRadius(radius)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val customUrl = dataStore.data.map { it.locationsSearch.customUrl }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setCustomUrl(customUrl: String) {
+        var customUrl = customUrl
+        if (customUrl.endsWith('/'))
+            customUrl = customUrl.substring(0, customUrl.length - 1)
+        if (customUrl.endsWith("/api/interpreter"))
+            customUrl = customUrl.substring(0, customUrl.length - "/api/interpreter".length)
+
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setCustomUrl(customUrl)
                     )
                     .build()
             }

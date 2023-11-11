@@ -19,6 +19,7 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.component.preferences.TextPreference
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 
 @Composable
@@ -71,6 +72,16 @@ fun LocationsSettingsScreen() {
                     it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits)
                 }
             )
+            val customUrl by viewModel.customUrl.collectAsState()
+            TextPreference(
+                title = stringResource(R.string.preference_search_location_custom_overpass_url),
+                value = customUrl,
+                placeholder = stringResource(id = R.string.overpass_url),
+                summary = customUrl.takeIf { !it.isNullOrBlank() }
+                    ?: stringResource(id = R.string.overpass_url),
+                onValueChanged = {
+                    viewModel.setCustomUrl(it)
+                })
         }
     }
 }

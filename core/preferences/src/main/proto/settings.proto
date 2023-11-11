@@ -388,6 +388,7 @@ message Settings {
     bool enabled = 1;
     uint32 search_radius = 2;
     bool use_insane_units = 3;
+    string custom_url = 4;
   }
   LocationsSearchSettings locations_search = 32;
 }
