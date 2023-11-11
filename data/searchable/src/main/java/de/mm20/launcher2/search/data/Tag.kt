@@ -28,7 +28,7 @@ data class Tag(
         return this.copy(labelOverride = label)
     }
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TextLayer("#"),
             backgroundLayer = ColorLayer()

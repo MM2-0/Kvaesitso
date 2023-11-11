@@ -27,7 +27,7 @@ interface Application: SavableSearchable {
     val user: UserHandle
     val versionName: String?
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_file_android)!!,

@@ -60,7 +60,7 @@ internal data class WebsiteImpl(
 
     }
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val color = if (color != 0) color else 0xFFF76F8E.toInt()
         if (label.isNotBlank()) {
             return StaticLauncherIcon(

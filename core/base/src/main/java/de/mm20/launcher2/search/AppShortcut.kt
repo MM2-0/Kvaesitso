@@ -17,7 +17,7 @@ interface AppShortcut : SavableSearchable {
     override val preferDetailsOverLaunch: Boolean
         get() = false
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 color = 0xFF3DDA84.toInt(),

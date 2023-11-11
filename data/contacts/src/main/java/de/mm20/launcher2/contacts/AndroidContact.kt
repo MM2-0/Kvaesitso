@@ -52,7 +52,7 @@ internal data class AndroidContact(
         return context.tryStartActivity(intent, options)
     }
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val iconText =
             if (firstName.isNotEmpty()) firstName[0].toString() else "" + if (lastName.isNotEmpty()) lastName[0].toString() else ""
 

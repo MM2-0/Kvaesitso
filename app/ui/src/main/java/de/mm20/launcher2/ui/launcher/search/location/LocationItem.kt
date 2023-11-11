@@ -23,7 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -33,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -42,6 +45,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.Duration
@@ -72,8 +76,17 @@ fun LocationItem(
     if (distance != null)
         priorityCallback?.invoke(location.key, distance.roundToInt())
 
+    val openingHours = remember { mutableStateOf<List<OpeningTime>?>(null) }
+    val websiteUrl = remember { mutableStateOf<String?>(null) }
+    val street = remember { mutableStateOf<String?>(null) }
+    val houseNumber = remember { mutableStateOf<String?>(null) }
+
     LaunchedEffect(location) {
         viewModel.init(location, iconSize.toInt())
+        openingHours.value = location.getOpeningHours()
+        websiteUrl.value = location.getWebsiteUrl()
+        street.value = location.getStreet()
+        houseNumber.value = location.getHouseNumber()
     }
 
     val closedColor = MaterialTheme.colorScheme.secondary
@@ -115,8 +128,8 @@ fun LocationItem(
                     }
                     AnimatedVisibility(!showDetails) {
                         Row(modifier = Modifier.padding(top = 2.dp)) {
-                            if (!location.openingHours.isNullOrEmpty()) {
-                                val isOpen = location.openingHours!!.any { it.isOpen }
+                            if (!openingHours.value.isNullOrEmpty()) {
+                                val isOpen = openingHours.value!!.any { it.isOpen }
                                 Text(
                                     modifier = Modifier.padding(end = 8.dp),
                                     text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
@@ -125,7 +138,7 @@ fun LocationItem(
                                 )
                             }
                             Text(
-                                text = location.getSummary(context, distance, insaneUnits),
+                                text = getLocationSummary(context, distance, street.value, houseNumber.value, insaneUnits),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -147,7 +160,8 @@ fun LocationItem(
                 Column {
                     Row(horizontalArrangement = Arrangement.SpaceEvenly) {
 
-                        if (!location.openingHours.isNullOrEmpty()) {
+                        if (!openingHours.value.isNullOrEmpty()) {
+                            val oh = openingHours.value!!
                             val today = LocalDateTime.now().dayOfWeek
                             val daysOfWeek = enumValues<DayOfWeek>()
 
@@ -156,22 +170,24 @@ fun LocationItem(
                                     .firstNotNullOfOrNull {
                                         val dow =
                                             daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
-                                        location.openingHours!!.filter { it.dayOfWeek == dow }
+                                        oh.filter { it.dayOfWeek == dow }
                                             .firstOrNull {
                                                 it.dayOfWeek != today || it.startTime.isAfter(
                                                     LocalTime.now()
                                                 )
                                             }
-                                    } ?: location.openingHours!!.first()
+                                    } ?: oh.first()
 
-                            val openIndex = location.openingHours!!.indexOfFirst { it.isOpen }
+                            val openIndex = oh.indexOfFirst { it.isOpen }
                             val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
                             if (openIndex != -1) {
-                                val todaySchedule = location.openingHours!![openIndex]
+                                val todaySchedule = oh[openIndex]
                                 Text(
                                     text = stringResource(
                                         R.string.location_open_until,
-                                        (todaySchedule.startTime + todaySchedule.duration).format(timeFormatter)
+                                        (todaySchedule.startTime + todaySchedule.duration).format(
+                                            timeFormatter
+                                        )
                                     )
                                 )
                             }
@@ -193,7 +209,9 @@ fun LocationItem(
                             )
                         }
 
-                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(null)
+                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(
+                            null
+                        )
                         if (userLocation != null && userHeading != null) {
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
@@ -208,7 +226,10 @@ fun LocationItem(
                                 )
                                 if (distance != null) {
                                     Text(
-                                        text = distance.metersToLocalizedString(context, insaneUnits)
+                                        text = distance.metersToLocalizedString(
+                                            context,
+                                            insaneUnits
+                                        )
                                     )
                                 }
                             }
@@ -235,7 +256,7 @@ fun LocationItem(
                                     location.launch(context, null)
                                 }
                             },
-                            location.websiteUrl.runCatching {
+                            websiteUrl.value.runCatching {
                                 val uri = Uri.parse(this)
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_website),
@@ -255,15 +276,21 @@ fun LocationItem(
     }
 }
 
-private fun Location.getSummary(context: Context, distance: Float?, imperialUnits: Boolean): String {
+private fun getLocationSummary(
+    context: Context,
+    distance: Float?,
+    street: String?,
+    houseNumber: String?,
+    imperialUnits: Boolean
+): String {
     val summary = StringBuilder()
     if (distance != null) {
-        summary.append(distance.metersToLocalizedString(context,  imperialUnits), ' ')
+        summary.append(distance.metersToLocalizedString(context, imperialUnits), ' ')
     }
-    if (this.street != null) {
-        summary.append(this.street, ' ')
-        if (this.houseNumber != null) {
-            summary.append(this.houseNumber, ' ')
+    if (street != null) {
+        summary.append(street, ' ')
+        if (houseNumber != null) {
+            summary.append(houseNumber, ' ')
         }
     }
     return summary.toString()

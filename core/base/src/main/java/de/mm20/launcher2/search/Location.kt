@@ -13,23 +13,20 @@ import java.time.LocalTime
 
 interface Location : SavableSearchable {
 
-    val category: LocationCategory?
-
     val latitude: Double
     val longitude: Double
 
-    val street: String?
-    val houseNumber: String?
-
-    val openingHours: List<OpeningTime>?
-
-    val websiteUrl: String?
+    suspend fun getCategory(): LocationCategory?
+    suspend fun getStreet(): String?
+    suspend fun getHouseNumber(): String?
+    suspend fun getOpeningHours(): List<OpeningTime>?
+    suspend fun getWebsiteUrl(): String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = true
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        val (resId, bgColor) = when (category) {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+        val (resId, bgColor) = when (getCategory()) {
             LocationCategory.RESTAURANT -> R.drawable.ic_location_restaurant to R.color.orange
             LocationCategory.FAST_FOOD -> R.drawable.ic_location_fastfood to R.color.red
             LocationCategory.BAR -> R.drawable.ic_location_bar to R.color.amber

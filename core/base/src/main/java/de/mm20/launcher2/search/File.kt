@@ -22,7 +22,7 @@ interface File : SavableSearchable {
     val providerIconRes: Int?
         get() = null
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when {
             isDirectory -> R.drawable.ic_file_folder to R.color.lightblue
             mimeType.startsWith("image/") -> R.drawable.ic_file_picture to R.color.teal

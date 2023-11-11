@@ -32,7 +32,7 @@ internal data class Wikipedia(
 
     override val key = "$domain://$wikipediaUrl:$id"
 
-    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 icon = ContextCompat.getDrawable(context, R.drawable.ic_wikipedia)!!,

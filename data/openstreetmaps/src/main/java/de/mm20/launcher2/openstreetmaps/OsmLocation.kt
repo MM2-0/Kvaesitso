@@ -21,24 +21,22 @@ import java.util.Locale
 internal data class OsmLocation(
     val id: Long,
     override val label: String,
-    override val category: LocationCategory?,
+    var category: LocationCategory?,
     override val latitude: Double,
     override val longitude: Double,
-    override val street: String?,
-    override val houseNumber: String?,
-    override val openingHours: List<OpeningTime>?,
-    override val websiteUrl: String?,
-    override val preferDetailsOverLaunch: Boolean,
+    var street: String?,
+    var houseNumber: String?,
+    var openingHours: List<OpeningTime>?,
+    var websiteUrl: String?,
     override val labelOverride: String? = null,
 ) : Location {
 
     override val domain: String = DOMAIN
+    override val key: String = "$domain://$id"
 
     override fun overrideLabel(label: String): OsmLocation {
         return this.copy(labelOverride = label)
     }
-
-    override val key: String = "$domain://$id"
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return context.tryStartActivity(
@@ -50,11 +48,59 @@ internal data class OsmLocation(
         )
     }
 
+    override suspend fun getCategory(): LocationCategory? {
+        if (category == null)
+            updateCache()
+        return category
+    }
+
+    override suspend fun getStreet(): String? {
+        if (street == null)
+            updateCache()
+        return street
+    }
+
+    override suspend fun getHouseNumber(): String? {
+        if (houseNumber == null)
+            updateCache()
+        return houseNumber
+    }
+
+    override suspend fun getOpeningHours(): List<OpeningTime>? {
+        if (openingHours == null)
+            updateCache()
+        return openingHours
+    }
+
+    override suspend fun getWebsiteUrl(): String? {
+        if (websiteUrl == null)
+            updateCache()
+        return websiteUrl
+    }
+
     override fun getSerializer(): SearchableSerializer {
         return OsmLocationSerializer()
     }
 
+    private suspend fun updateCache() {
+        val upToDateEntry = idRepository.searchForId(id) ?: return
+
+        // we should also update label here, since it might have changed
+        // label = upToDateEntry.label
+
+        category = upToDateEntry.category
+        street = upToDateEntry.street
+        houseNumber = upToDateEntry.houseNumber
+        openingHours = upToDateEntry.openingHours
+        websiteUrl = upToDateEntry.websiteUrl
+    }
+
     companion object {
+
+        const val DOMAIN = "OpenStreetMaps"
+
+        private val idRepository = BaseOsmRepository("https://overpass-api.de/")
+
         fun fromOverpassResponse(
             result: OverpassResponse
         ): List<OsmLocation> = result.elements.mapNotNull {
@@ -72,11 +118,8 @@ internal data class OsmLocation(
                 houseNumber = it.tags["addr:housenumber"],
                 openingHours = it.tags["opening_hours"]?.let { ot -> parseOpeningTimes(ot) },
                 websiteUrl = it.tags["website"],
-                preferDetailsOverLaunch = !it.tags.containsKey("website"),
             )
         }
-
-        const val DOMAIN = "OpenStreetMaps"
     }
 }
 
