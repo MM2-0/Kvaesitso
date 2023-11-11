@@ -19,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import coil.ImageLoader
@@ -47,7 +46,7 @@ fun MapTiles(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    val hueColor = MaterialTheme.colorScheme.surfaceContainerHigh
+    val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
     val (yStart, yStop, xStart, xStop) = getRowColTileCoordinatesAround(
         location.latitude,
@@ -80,7 +79,7 @@ fun MapTiles(
                                 )
                                 .build(),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(hueColor, BlendMode.Hue),
+                            colorFilter = ColorFilter.tint(tintColor, BlendMode.Saturation),
                         )
                     }
                 }
