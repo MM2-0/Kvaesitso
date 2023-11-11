@@ -79,7 +79,7 @@ internal open class BaseOsmRepository(
 internal class OsmRepository(
     private val context: Context,
     private val dataStore: LauncherDataStore
-) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customUrl }),
+) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl }),
     SearchableRepository<OsmLocation>,
     KoinComponent {
 

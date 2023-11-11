@@ -59,9 +59,9 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
         }
     }
 
-    val customUrl = dataStore.data.map { it.locationsSearch.customUrl }
+    val customOverpassUrl = dataStore.data.map { it.locationsSearch.customOverpassUrl }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
-    fun setCustomUrl(customUrl: String) {
+    fun setCustomOverpassUrl(customUrl: String) {
         var customUrl = customUrl
         if (customUrl.endsWith('/'))
             customUrl = customUrl.substring(0, customUrl.length - 1)
@@ -73,7 +73,52 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
                 it.toBuilder()
                     .setLocationsSearch(
                         it.locationsSearch.toBuilder()
-                            .setCustomUrl(customUrl)
+                            .setCustomOverpassUrl(customUrl)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val showMap = dataStore.data.map { it.locationsSearch.showMap }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setShowMap(showMap: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setShowMap(showMap)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val showPositionOnMap = dataStore.data.map { it.locationsSearch.showPositionOnMap }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    fun setShowPositionOnMap(showPositionOnMap: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setShowPositionOnMap(showPositionOnMap)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val customTileServerUrl = dataStore.data.map { it.locationsSearch.customTileServerUrl }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    fun setCustomTileServerUrl(customTileServerUrl: String) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setCustomTileServerUrl(customTileServerUrl)
                     )
                     .build()
             }

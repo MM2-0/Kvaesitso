@@ -9,8 +9,12 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -28,10 +32,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.search.OpeningTime
@@ -53,7 +60,10 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
+import kotlin.math.asinh
 import kotlin.math.roundToInt
+import kotlin.math.sqrt
+import kotlin.math.tan
 
 @Composable
 fun LocationItem(
@@ -136,7 +146,13 @@ fun LocationItem(
                                 )
                             }
                             Text(
-                                text = getLocationSummary(context, distance, street.value, houseNumber.value, insaneUnits),
+                                text = getLocationSummary(
+                                    context,
+                                    distance,
+                                    street.value,
+                                    houseNumber.value,
+                                    insaneUnits
+                                ),
                                 style = MaterialTheme.typography.bodySmall
                             )
                         }
@@ -207,9 +223,7 @@ fun LocationItem(
                             )
                         }
 
-                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(
-                            null
-                        )
+                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(null)
                         if (userLocation != null && userHeading != null) {
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
@@ -232,8 +246,38 @@ fun LocationItem(
                                 }
                             }
                         }
+                    }
 
+                    val showMap by viewModel.showMap.collectAsState()
+                    if (showMap) {
 
+                        val zoomLevel = 19
+                        val nTiles = 4
+
+                        val (yStart, yStop, xStart, xStop) = getRowColTileCoordinatesAround(
+                            location.latitude,
+                            location.longitude,
+                            zoomLevel,
+                            nTiles
+                        )
+
+                        val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
+
+                        for (y in yStart..yStop) {
+                            Row(horizontalArrangement = Arrangement.Center) {
+                                for (x in xStart..xStop) {
+                                    AsyncImage(
+                                        modifier = Modifier.width(256.dp).height(256.dp),
+                                        imageLoader = SearchableItemVM.mapTileLoader,
+                                        model = ImageRequest.Builder(context)
+                                            .data("$tileServerUrl/$zoomLevel/$x/$y.png")
+                                            .addHeader("User-Agent", SearchableItemVM.mapTileLoaderUserAgent)
+                                            .build(),
+                                        contentDescription = null,
+                                    )
+                                }
+                            }
+                        }
                     }
 
                     Toolbar(
@@ -292,4 +336,61 @@ private fun getLocationSummary(
         }
     }
     return summary.toString()
+}
+
+private fun getDoubleTileCoordinates(
+    latitude: Double,
+    longitude: Double,
+    zoomLevel: Int
+): Pair<Double, Double> {
+    // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Mathematics
+    val latRadians = Math.toRadians(latitude)
+    val n = 1 shl zoomLevel
+    val xCoordinate = (longitude + 180.0) / 360.0 * n
+    val yCoordinate = (1.0 - asinh(tan(latRadians)) / Math.PI) / 2.0 * n
+
+    return yCoordinate to xCoordinate
+}
+
+data class TileCoordinateRange(val yStart: Int, val yStop: Int, val xStart: Int, val xStop: Int)
+
+private fun getRowColTileCoordinatesAround(
+    latitude: Double,
+    longitude: Double,
+    zoomLevel: Int,
+    nTiles: Int
+): TileCoordinateRange {
+    if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
+        throw IllegalArgumentException("nTiles must be a square number")
+
+    val sideLen = sqrt(nTiles.toDouble()).toInt()
+    val sideLenHalf = sideLen / 2
+
+    val (yCoordinate, xCoordinate) = getDoubleTileCoordinates(latitude, longitude, zoomLevel)
+    val xTile = xCoordinate.toInt()
+    val yTile = yCoordinate.toInt()
+
+    val yStart: Int
+    val yStop: Int
+    val xStart: Int
+    val xStop: Int
+
+    if (sideLen % 2 == 1) {
+        // center tile is defined
+        yStart = yTile - sideLenHalf
+        yStop = yTile + sideLenHalf
+        xStart = xTile - sideLenHalf
+        xStop = xTile + sideLenHalf
+    } else {
+        // center tile is not defined; take adjacent tiles closest to coordinate of interest
+        val leftOfCenter = (xCoordinate % 1.0) < 0.5
+        val topOfCenter = (yCoordinate % 1.0) < 0.5
+
+        yStart = if (topOfCenter) yTile - sideLen / 2 else yTile - sideLen / 2 + 1
+        yStop = if (topOfCenter) yTile + sideLen / 2 - 1 else yTile + sideLen / 2
+        xStart = if (leftOfCenter) xTile - sideLen / 2 else xTile - sideLen / 2 + 1
+        xStop = if (leftOfCenter) xTile + sideLen / 2 - 1 else xTile + sideLen / 2
+    }
+
+    return TileCoordinateRange(yStart, yStop, xStart, xStop)
 }

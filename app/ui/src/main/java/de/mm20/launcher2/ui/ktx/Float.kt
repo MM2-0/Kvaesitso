@@ -40,13 +40,13 @@ fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): Str
 
         value to unit
     } else {
-        val isK = this >= 1000f
+        val isKm = this >= 1000f
         val value =
-            if (isK) decimalFormat.format(this / 1000f)
-            else this.roundToInt().toString()
+            if (isKm) decimalFormat.format(this / 1000f)
+            else this.roundToString()
 
         val unit = context.getString(
-            if (isK) R.string.unit_kilometer_symbol
+            if (isKm) R.string.unit_kilometer_symbol
             else R.string.unit_meter_symbol
         )
 

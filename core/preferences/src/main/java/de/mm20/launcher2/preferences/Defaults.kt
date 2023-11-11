@@ -194,9 +194,12 @@ fun createFactorySettings(context: Context): Settings {
         .setLocationsSearch(
             Settings.LocationsSearchSettings.newBuilder()
                 .setEnabled(false)
-                .setUseInsaneUnits(false)
+                .setUseInsaneUnits(0 != R.bool.default_imperialUnits)
                 .setSearchRadius(1500)
-                .setCustomUrl("https://overpass-api.de")
+                .setCustomOverpassUrl("https://overpass-api.de")
+                .setShowMap(false)
+                .setShowPositionOnMap(false)
+                .setCustomTileServerUrl("https://tile.openstreetmap.org")
         )
         .build()
 }

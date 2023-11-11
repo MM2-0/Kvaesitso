@@ -17,6 +17,10 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
+import coil.ImageLoader
+import coil.disk.DiskCache
+import coil.memory.MemoryCache
+import coil.request.CachePolicy
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
@@ -190,6 +194,15 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val useInsaneUnits = dataStore.data.map { it.locationsSearch.useInsaneUnits }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
+    val showMap = dataStore.data.map { it.locationsSearch.showMap }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val showPositionOnMap = dataStore.data.map { it.locationsSearch.showPositionOnMap }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val mapTileServerUrl = dataStore.data.map { it.locationsSearch.customTileServerUrl }
+        .stateIn(viewModelScope, SharingStarted.Lazily, null)
+
     private var declination: Float? = null
     private fun updateDeclination(location: Location) {
         declination = GeomagneticField(
@@ -283,5 +296,35 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         awaitClose {
             context.getSystemService<SensorManager>()?.unregisterListener(sensorCallback)
         }
+    }
+
+    companion object : KoinComponent {
+        private val context: Context by inject()
+
+        val mapTileLoaderUserAgent = "${context.packageName}/${
+            context.packageManager.getPackageInfo(
+                context.packageName,
+                0
+            ).versionName
+        }"
+
+        val mapTileLoader = ImageLoader
+            .Builder(context)
+            .memoryCache {
+                MemoryCache.Builder(context)
+                    .maxSizePercent(0.05)
+                    .build()
+            }
+            .memoryCachePolicy(CachePolicy.ENABLED)
+            .diskCache {
+                DiskCache.Builder()
+                    .directory(context.cacheDir.resolve("osm_tiles"))
+                    .maxSizePercent(0.01)
+                    .build()
+            }
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .respectCacheHeaders(true)
+            .networkCachePolicy(CachePolicy.ENABLED)
+            .build()
     }
 }

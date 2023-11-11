@@ -103,7 +103,7 @@ internal data class OsmLocation(
 
         private val dataStore: LauncherDataStore by inject()
         private val idRepository =
-            BaseOsmRepository(dataStore.data.map { it.locationsSearch.customUrl })
+            BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl })
 
         fun fromOverpassResponse(
             result: OverpassResponse
