@@ -6,19 +6,20 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
-import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,7 +33,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -261,21 +263,63 @@ fun LocationItem(
                             nTiles
                         )
 
+                        var (yUser, xUser) = getDoubleTileCoordinates(
+                            userLocation!!.latitude,
+                            userLocation!!.longitude,
+                            zoomLevel
+                        )
+
+                        val tileSize = 175.dp
+                        val totalWidth = tileSize * (xStop - xStart + 1)
+                        val totalHeight = tileSize * (yStop - yStart + 1)
+
+                        val drawUser = yStart < yUser && yUser < yStop + 1 && xStart < xUser && xUser < xStop + 1
+                        if (drawUser) {
+                            yUser = (yUser - yStart) / (yStop + 1 - yStart) * totalHeight.toPixels()
+                            xUser = (xUser - xStart) / (xStop + 1 - xStart) * totalWidth.toPixels()
+                        }
+
                         val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
 
-                        for (y in yStart..yStop) {
-                            Row(horizontalArrangement = Arrangement.Center) {
-                                for (x in xStart..xStop) {
-                                    AsyncImage(
-                                        modifier = Modifier.width(256.dp).height(256.dp),
-                                        imageLoader = SearchableItemVM.mapTileLoader,
-                                        model = ImageRequest.Builder(context)
-                                            .data("$tileServerUrl/$zoomLevel/$x/$y.png")
-                                            .addHeader("User-Agent", SearchableItemVM.mapTileLoaderUserAgent)
-                                            .build(),
-                                        contentDescription = null,
+                        Box(
+                            modifier = Modifier
+                                .width(totalWidth)
+                                .height(totalHeight)
+                                .clickable(true) {
+                                    viewModel.viewModelScope.launch {
+                                        location.launch(context, null)
+                                    }
+                                }
+                        ) {
+                            Column(modifier = Modifier.matchParentSize()) {
+                                for (y in yStart..yStop) {
+                                    Row {
+                                        for (x in xStart..xStop) {
+                                            AsyncImage(
+                                                modifier = Modifier.size(tileSize),
+                                                imageLoader = SearchableItemVM.mapTileLoader,
+                                                model = ImageRequest.Builder(context)
+                                                    .data("$tileServerUrl/$zoomLevel/$x/$y.png")
+                                                    .addHeader(
+                                                        "User-Agent",
+                                                        SearchableItemVM.mapTileLoaderUserAgent
+                                                    )
+                                                    .build(),
+                                                contentDescription = null,
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                            Canvas(modifier = Modifier.matchParentSize()) {
+                                if (drawUser) {
+                                    drawCircle(
+                                        color = Color.Red,
+                                        radius = 20f,
+                                        center = Offset(xUser.toFloat(), yUser.toFloat())
                                     )
                                 }
+                                // maybe draw circle around POI?
                             }
                         }
                     }
@@ -290,14 +334,6 @@ fun LocationItem(
                             }
                         ),
                         rightActions = listOfNotNull(
-                            DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_map),
-                                icon = Icons.Rounded.Map
-                            ) {
-                                viewModel.viewModelScope.launch {
-                                    location.launch(context, null)
-                                }
-                            },
                             websiteUrl.value.runCatching {
                                 val uri = Uri.parse(this)
                                 DefaultToolbarAction(
