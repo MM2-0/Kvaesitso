@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search.location
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.compose.animation.core.EaseInOutBounce
@@ -46,6 +48,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
@@ -54,7 +57,13 @@ import de.mm20.launcher2.search.SearchableSerializer
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import org.koin.core.context.GlobalContext
+import org.koin.core.context.KoinContext
+import org.koin.core.context.KoinContextHandler
 import org.koin.core.context.startKoin
+import java.time.DayOfWeek
+import java.time.Duration
+import java.time.LocalTime
 import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.ln
@@ -347,8 +356,10 @@ private fun getRowColTileCoordinatesAround(
 private fun MapTilesPreview() {
     val context = LocalContext.current
 
-    startKoin {
-        androidContext(context)
+    if (GlobalContext.getKoinApplicationOrNull() == null) {
+        startKoin {
+            androidContext(context)
+        }
     }
 
     val borderShape = MaterialTheme.shapes.medium
@@ -362,52 +373,47 @@ private fun MapTilesPreview() {
             )
             .clip(borderShape),
         tileServerUrl = "https://tile.openstreetmap.org",
-        location = object : Location {
-            override val latitude: Double
-                get() = 52.5162700
-            override val longitude: Double
-                get() = 13.3777021
-
-            override suspend fun getCategory(): LocationCategory? {
-                TODO()
-            }
-
-            override suspend fun getStreet(): String {
-                TODO()
-            }
-
-            override suspend fun getHouseNumber(): String {
-                TODO()
-            }
-
-            override suspend fun getOpeningHours(): List<OpeningTime> {
-                TODO()
-            }
-
-            override suspend fun getWebsiteUrl(): String? {
-                TODO()
-            }
-
-            override val key: String = "MOCKLOCATION"
-            override val label: String = "Brandenburger Tor"
-
-            override fun overrideLabel(label: String): SavableSearchable {
-                TODO()
-            }
-
-            override fun launch(context: Context, options: Bundle?): Boolean {
-                TODO()
-            }
-
-            override val domain: String = "MOCKLOCATION"
-
-            override fun getSerializer(): SearchableSerializer {
-                TODO()
-            }
-
-        },
+        location = MockLocation,
         zoomLevel = 19,
         numberOfTiles = 9,
         userLocation = 52.51623 to 13.4048
     )
+}
+
+internal object MockLocation : Location {
+
+    override val domain: String = "MOCKLOCATION"
+    override val key: String = "MOCKLOCATION"
+    override val label: String = "Brandenburger Tor"
+
+    override val latitude = 52.5162700
+    override val longitude = 13.3777021
+
+    override suspend fun getCategory(): LocationCategory = LocationCategory.OTHER
+
+    override suspend fun getStreet(): String = "Pariser Platz"
+
+    override suspend fun getHouseNumber(): String = "1"
+
+    override suspend fun getOpeningHours(): List<OpeningTime> = enumValues<DayOfWeek>().map {
+        OpeningTime(
+            dayOfWeek = it,
+            startTime = LocalTime.MIDNIGHT,
+            duration = Duration.ofDays(1)
+        )
+    }
+
+    override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
+
+    override fun overrideLabel(label: String): SavableSearchable = TODO()
+
+    override fun launch(context: Context, options: Bundle?): Boolean =
+        context.tryStartActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("https://en.wikipedia.org/wiki/Brandenburg_Gate")
+            )
+        )
+
+    override fun getSerializer(): SearchableSerializer = TODO()
 }
