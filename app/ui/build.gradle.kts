@@ -6,6 +6,10 @@ plugins {
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
+    packaging {
+        resources.excludes.add("META-INF/DEPENDENCIES")
+    }
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         

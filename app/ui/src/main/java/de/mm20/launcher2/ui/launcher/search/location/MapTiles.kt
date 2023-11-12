@@ -1,17 +1,22 @@
 package de.mm20.launcher2.ui.launcher.search.location
 
 import android.content.Context
+import android.os.Bundle
+import android.util.Log
 import androidx.compose.animation.core.EaseInOutBounce
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -20,6 +25,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
@@ -29,6 +35,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.minus
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
@@ -37,9 +47,18 @@ import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.LocationCategory
+import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SearchableSerializer
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.math.asinh
+import org.koin.core.context.startKoin
+import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.ln
+import kotlin.math.sinh
 import kotlin.math.sqrt
 import kotlin.math.tan
 
@@ -59,7 +78,7 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
-    val (yStart, yStop, xStart, xStop) = getRowColTileCoordinatesAround(
+    val (start, stop) = getRowColTileCoordinatesAround(
         location.latitude,
         location.longitude,
         zoomLevel,
@@ -74,13 +93,13 @@ fun MapTiles(
         contentAlignment = Alignment.Center,
     ) {
         Column(modifier = Modifier.matchParentSize()) {
-            for (y in yStart..yStop) {
+            for (y in start.y..stop.y) {
                 Row(
                     modifier = Modifier
                         .weight(1f / sideLength)
                         .fillMaxSize()
                 ) {
-                    for (x in xStart..xStop) {
+                    for (x in start.x..stop.x) {
                         AsyncImage(
                             modifier = Modifier
                                 .weight(1f / sideLength)
@@ -97,7 +116,13 @@ fun MapTiles(
                             colorFilter = ColorFilter.tint(tintColor, BlendMode.Saturation),
                             onState = {
                                 if (it is AsyncImagePainter.State.Success)
-                                    drawnTiles.value++
+                                    drawnTiles.intValue++
+                                if (it is AsyncImagePainter.State.Error)
+                                    Log.e(
+                                        "MapTiles",
+                                        "Error loading tile: $x, $y @$zoomLevel",
+                                        it.result.throwable
+                                    )
                             }
                         )
                     }
@@ -135,12 +160,12 @@ fun MapTiles(
                         zoomLevel
                     )
                     // user inside of map tiles?
-                    if (yStart < yUser && yUser < yStop + 1 &&
-                        xStart < xUser && xUser < xStop + 1
+                    if (start.y < yUser && yUser < stop.y + 1 &&
+                        start.x < xUser && xUser < stop.x + 1
                     ) {
                         val userIndicatorOffset =
                             Offset(xUser.toFloat(), yUser.toFloat())
-                                .scaleToTiles(xStart, xStop, yStart, yStop, size)
+                                .scaleToTiles(start, sideLength, size)
                         drawCircle(
                             color = userLocationBorderColor,
                             radius = 18.5f * locationIndicatorAnimation,
@@ -153,6 +178,7 @@ fun MapTiles(
                         )
                     }
                 }
+
                 val (yLocation, xLocation) = getDoubleTileCoordinates(
                     latitude = location.latitude,
                     longitude = location.longitude,
@@ -160,7 +186,7 @@ fun MapTiles(
                 )
                 val locationIndicatorOffset =
                     Offset(xLocation.toFloat(), yLocation.toFloat())
-                        .scaleToTiles(xStart, xStop, yStart, yStop, size)
+                        .scaleToTiles(start, sideLength, size)
                 drawCircle(
                     color = locationBorderColor,
                     radius = 32f,
@@ -209,16 +235,16 @@ fun MapTiles(
 // this scaling is not correct, as this linearity may not hold (mercator projection)
 // but at this zoom level, it should not be too bad
 // still, this does not return the correct offset
+// maybe osm does not display its labels correctly?
 private fun Offset.scaleToTiles(
-    xStart: Int,
-    xStop: Int,
-    yStart: Int,
-    yStop: Int,
-    factor: Size
-): Offset = Offset(
-    x = (x - xStart) / (xStop + 1f - xStart) * factor.width,
-    y = (y - yStart) / (yStop + 1f - yStart) * factor.height
-)
+    tilesTopLeft: IntOffset,
+    sideLenTiles: Float,
+    boardSize: Size,
+): Offset {
+    assert(boardSize.width == boardSize.height)
+
+    return (this - tilesTopLeft) * (boardSize.width / sideLenTiles)
+}
 
 private object TileMapRepository : KoinComponent {
     private val context: Context by inject()
@@ -227,7 +253,7 @@ private object TileMapRepository : KoinComponent {
         context.packageManager.getPackageInfo(
             context.packageName,
             0
-        ).versionName
+        )?.versionName ?: "dev"
     }"
 
     val loader = ImageLoader
@@ -247,7 +273,6 @@ private object TileMapRepository : KoinComponent {
         .diskCachePolicy(CachePolicy.ENABLED)
         .respectCacheHeaders(true)
         .networkCachePolicy(CachePolicy.ENABLED)
-        .crossfade(true)
         .build()
 }
 
@@ -258,14 +283,23 @@ private fun getDoubleTileCoordinates(
 ): Pair<Double, Double> {
     // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Mathematics
     val latRadians = Math.toRadians(latitude)
-    val n = 1 shl zoomLevel
-    val xCoordinate = (longitude + 180.0) / 360.0 * n
-    val yCoordinate = (1.0 - asinh(tan(latRadians)) / Math.PI) / 2.0 * n
+    val xCoordinate = (longitude + 180.0) / 360.0 * (1 shl zoomLevel)
+    val yCoordinate =
+        (1.0 - ln(tan(latRadians) + 1.0 / cos(latRadians)) / Math.PI) * (1 shl (zoomLevel - 1))
 
     return yCoordinate to xCoordinate
 }
 
-data class TileCoordinateRange(val yStart: Int, val yStop: Int, val xStart: Int, val xStop: Int)
+private fun getTopLeftLatLon(xTile: Int, yTile: Int, zoom: Int): Pair<Double, Double> {
+    val n = 1 shl zoom
+    val lonDeg = xTile / n * 360.0 - 180.0
+    val latRad = atan(sinh(Math.PI * (1.0 - 2.0 * yTile / n)))
+    val latDeg = Math.toDegrees(latRad)
+
+    return latDeg to lonDeg
+}
+
+data class TileCoordinateRange(val start: IntOffset, val stop: IntOffset)
 
 private fun getRowColTileCoordinatesAround(
     latitude: Double,
@@ -305,5 +339,75 @@ private fun getRowColTileCoordinatesAround(
         xStop = if (leftOfCenter) xTile + sideLen / 2 - 1 else xTile + sideLen / 2
     }
 
-    return TileCoordinateRange(yStart, yStop, xStart, xStop)
+    return TileCoordinateRange(IntOffset(xStart, yStart), IntOffset(xStop, yStop))
+}
+
+@Preview
+@Composable
+private fun MapTilesPreview() {
+    val context = LocalContext.current
+
+    startKoin {
+        androidContext(context)
+    }
+
+    val borderShape = MaterialTheme.shapes.medium
+
+    MapTiles(
+        modifier = Modifier
+            .size(300.dp)
+            .border(
+                BorderStroke(1.dp, MaterialTheme.colorScheme.outline),
+                borderShape
+            )
+            .clip(borderShape),
+        tileServerUrl = "https://tile.openstreetmap.org",
+        location = object : Location {
+            override val latitude: Double
+                get() = 52.5162700
+            override val longitude: Double
+                get() = 13.3777021
+
+            override suspend fun getCategory(): LocationCategory? {
+                TODO()
+            }
+
+            override suspend fun getStreet(): String {
+                TODO()
+            }
+
+            override suspend fun getHouseNumber(): String {
+                TODO()
+            }
+
+            override suspend fun getOpeningHours(): List<OpeningTime> {
+                TODO()
+            }
+
+            override suspend fun getWebsiteUrl(): String? {
+                TODO()
+            }
+
+            override val key: String = "MOCKLOCATION"
+            override val label: String = "Brandenburger Tor"
+
+            override fun overrideLabel(label: String): SavableSearchable {
+                TODO()
+            }
+
+            override fun launch(context: Context, options: Bundle?): Boolean {
+                TODO()
+            }
+
+            override val domain: String = "MOCKLOCATION"
+
+            override fun getSerializer(): SearchableSerializer {
+                TODO()
+            }
+
+        },
+        zoomLevel = 19,
+        numberOfTiles = 9,
+        userLocation = 52.51623 to 13.4048
+    )
 }

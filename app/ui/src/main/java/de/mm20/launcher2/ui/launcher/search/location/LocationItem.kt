@@ -3,21 +3,17 @@ package de.mm20.launcher2.ui.launcher.search.location
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -35,19 +31,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.BlendMode
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -56,7 +50,6 @@ import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -67,10 +60,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
-import kotlin.math.asinh
 import kotlin.math.roundToInt
-import kotlin.math.sqrt
-import kotlin.math.tan
 
 @Composable
 fun LocationItem(
@@ -84,7 +74,9 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val userLocation by remember(context) { viewModel.getUserLocation(context) }.collectAsStateWithLifecycle(null)
+    val userLocation by remember(context) { viewModel.getUserLocation(context) }.collectAsStateWithLifecycle(
+        null
+    )
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
@@ -230,7 +222,9 @@ fun LocationItem(
                             )
                         }
 
-                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(null)
+                        val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(
+                            null
+                        )
                         if (userLocation != null && userHeading != null) {
                             val directionArrowAngle by animateFloatAsState(
                                 targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
@@ -325,4 +319,51 @@ private fun getLocationSummary(
         }
     }
     return summary.toString()
+}
+
+@Preview
+@Composable
+private fun LocationItemMock() {
+    LocationItem(
+        location = object : Location {
+            override val label: String = "Brandenburger Tor"
+            override val key: String = "MockLocation"
+
+            override val latitude = 52.520008
+            override val longitude = 13.404954
+            override suspend fun getCategory(): LocationCategory = LocationCategory.OTHER
+            override suspend fun getStreet(): String = "Pariser Platz"
+            override suspend fun getHouseNumber(): String = "1"
+
+            override suspend fun getOpeningHours(): List<OpeningTime> =
+                enumValues<DayOfWeek>().map { day ->
+                    OpeningTime(
+                        dayOfWeek = day,
+                        startTime = LocalTime.MIDNIGHT,
+                        duration = Duration.ofDays(1)
+                    )
+                }
+
+            override suspend fun getWebsiteUrl(): String =
+                "https://en.wikipedia.org/wiki/Brandenburg_Gate"
+
+            override fun overrideLabel(label: String): SavableSearchable = TODO()
+
+            override fun launch(context: Context, options: Bundle?): Boolean {
+                context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://en.wikipedia.org/wiki/Brandenburg_Gate")
+                    )
+                )
+                return true
+            }
+
+            override val domain: String = "MOCKLOCATION"
+
+            override fun getSerializer(): SearchableSerializer = TODO()
+        },
+        showDetails = true,
+        onBack = { }
+    )
 }
