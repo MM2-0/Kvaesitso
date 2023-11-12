@@ -12,20 +12,26 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
 import coil.ImageLoader
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
@@ -61,8 +67,12 @@ fun MapTiles(
     )
 
     val sideLength = sqrt(numberOfTiles.toFloat())
+    val drawnTiles = remember { mutableIntStateOf(0) }
 
-    Box(modifier = modifier) {
+    Box(
+        modifier = modifier,
+        contentAlignment = Alignment.Center,
+    ) {
         Column(modifier = Modifier.matchParentSize()) {
             for (y in yStart..yStop) {
                 Row(
@@ -85,98 +95,113 @@ fun MapTiles(
                                 .build(),
                             contentDescription = null,
                             colorFilter = ColorFilter.tint(tintColor, BlendMode.Saturation),
+                            onState = {
+                                if (it is AsyncImagePainter.State.Success)
+                                    drawnTiles.value++
+                            }
                         )
                     }
                 }
             }
         }
-        val locationBorderColor = MaterialTheme.colorScheme.inversePrimary
-        val userLocationColor = MaterialTheme.colorScheme.primary
-        val userLocationBorderColor = MaterialTheme.colorScheme.outline
 
-        val locationIndicatorTransition = rememberInfiniteTransition("locationIndicatorTransition")
-        val locationIndicatorAnimation by locationIndicatorTransition.animateFloat(
-            initialValue = 0.8f,
-            targetValue = 1f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(1000, easing = EaseInOutBounce),
-                repeatMode = RepeatMode.Reverse
-            ),
-            label = "locationIndicatorAnimation"
-        )
+        if (numberOfTiles == drawnTiles.intValue) {
+            val locationBorderColor = MaterialTheme.colorScheme.inversePrimary
+            val userLocationColor = MaterialTheme.colorScheme.primary
+            val userLocationBorderColor = MaterialTheme.colorScheme.outline
 
-        val textMeasurer = rememberTextMeasurer()
-        val osmAttributionTextStyle = MaterialTheme.typography.labelSmall
-        val osmAttributionTextColor = MaterialTheme.colorScheme.onSurface
-        val osmAttributaionSurface = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f)
+            val infiniteTransition = rememberInfiniteTransition("infiniteTransition")
+            val locationIndicatorAnimation by infiniteTransition.animateFloat(
+                initialValue = 0.8f,
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(1000, easing = EaseInOutBounce),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "locationIndicatorAnimation"
+            )
 
-        Canvas(modifier = Modifier.matchParentSize()) {
-            if (userLocation != null) {
-                val (yUser, xUser) = getDoubleTileCoordinates(
-                    latitude = userLocation.first,
-                    longitude = userLocation.second,
+            val textMeasurer = rememberTextMeasurer()
+            val osmAttributionTextStyle = MaterialTheme.typography.labelSmall
+            val osmAttributionTextColor = MaterialTheme.colorScheme.onSurface
+            val osmAttributionSurface =
+                MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f)
+
+            Canvas(modifier = Modifier.matchParentSize()) {
+                if (userLocation != null) {
+                    val (yUser, xUser) = getDoubleTileCoordinates(
+                        latitude = userLocation.first,
+                        longitude = userLocation.second,
+                        zoomLevel
+                    )
+                    // user inside of map tiles?
+                    if (yStart < yUser && yUser < yStop + 1 &&
+                        xStart < xUser && xUser < xStop + 1
+                    ) {
+                        val userIndicatorOffset =
+                            Offset(xUser.toFloat(), yUser.toFloat())
+                                .scaleToTiles(xStart, xStop, yStart, yStop, size)
+                        drawCircle(
+                            color = userLocationBorderColor,
+                            radius = 18.5f * locationIndicatorAnimation,
+                            center = userIndicatorOffset
+                        )
+                        drawCircle(
+                            color = userLocationColor,
+                            radius = 13.5f * locationIndicatorAnimation,
+                            center = userIndicatorOffset
+                        )
+                    }
+                }
+                val (yLocation, xLocation) = getDoubleTileCoordinates(
+                    latitude = location.latitude,
+                    longitude = location.longitude,
                     zoomLevel
                 )
-                // user inside of map tiles?
-                if (yStart < yUser && yUser < yStop + 1 &&
-                    xStart < xUser && xUser < xStop + 1
-                ) {
-                    val userIndicatorOffset =
-                        Offset(xUser.toFloat(), yUser.toFloat())
-                            .scaleToTiles(xStart, xStop, yStart, yStop, size)
-                    drawCircle(
-                        color = userLocationBorderColor,
-                        radius = 18.5f * locationIndicatorAnimation,
-                        center = userIndicatorOffset
+                val locationIndicatorOffset =
+                    Offset(xLocation.toFloat(), yLocation.toFloat())
+                        .scaleToTiles(xStart, xStop, yStart, yStop, size)
+                drawCircle(
+                    color = locationBorderColor,
+                    radius = 32f,
+                    center = locationIndicatorOffset,
+                    alpha = locationIndicatorAnimation,
+                    blendMode = BlendMode.DstIn
+                )
+                if (osmAttribution != null) {
+                    val measureResult = textMeasurer.measure(
+                        osmAttribution,
+                        maxLines = 1,
+                        style = osmAttributionTextStyle
                     )
-                    drawCircle(
-                        color = userLocationColor,
-                        radius = 13.5f * locationIndicatorAnimation,
-                        center = userIndicatorOffset
+                    val osmLabelPadding = 6f
+                    val textOffset = Offset(
+                        x = size.width - measureResult.size.width - osmLabelPadding,
+                        y = size.height - measureResult.size.height - osmLabelPadding
+                    )
+                    drawRoundRect(
+                        color = osmAttributionSurface,
+                        topLeft = textOffset - Offset(osmLabelPadding, 0f),
+                        size = Size(
+                            width = measureResult.size.width + 2 * osmLabelPadding,
+                            height = measureResult.size.height + osmLabelPadding
+                        ),
+                        cornerRadius = CornerRadius(8f, 8f)
+                    )
+                    drawText(
+                        measureResult,
+                        color = osmAttributionTextColor,
+                        topLeft = textOffset
                     )
                 }
             }
-            val (yLocation, xLocation) = getDoubleTileCoordinates(
-                latitude = location.latitude,
-                longitude = location.longitude,
-                zoomLevel
+        } else {
+            val loadingColor = MaterialTheme.colorScheme.secondary
+            CircularProgressIndicator(
+                modifier = Modifier.fillMaxSize(.15f),
+                color = loadingColor,
+                strokeCap = StrokeCap.Round,
             )
-            val locationIndicatorOffset =
-                Offset(xLocation.toFloat(), yLocation.toFloat())
-                    .scaleToTiles(xStart, xStop, yStart, yStop, size)
-            drawCircle(
-                color = locationBorderColor,
-                radius = 32f,
-                center = locationIndicatorOffset,
-                alpha = locationIndicatorAnimation,
-                blendMode = BlendMode.DstIn
-            )
-            if (osmAttribution != null) {
-                val measureResult = textMeasurer.measure(
-                    osmAttribution,
-                    maxLines = 1,
-                    style = osmAttributionTextStyle
-                )
-                val osmLabelPadding = 6f
-                val textOffset = Offset(
-                    x = size.width - measureResult.size.width - osmLabelPadding,
-                    y = size.height - measureResult.size.height - osmLabelPadding
-                )
-                drawRoundRect(
-                    color = osmAttributaionSurface,
-                    topLeft = textOffset - Offset(osmLabelPadding, 0f),
-                    size = Size(
-                        width = measureResult.size.width + 2 * osmLabelPadding,
-                        height = measureResult.size.height + osmLabelPadding
-                    ),
-                    cornerRadius = CornerRadius(8f, 8f)
-                )
-                drawText(
-                    measureResult,
-                    color = osmAttributionTextColor,
-                    topLeft = textOffset
-                )
-            }
         }
     }
 }
