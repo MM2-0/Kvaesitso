@@ -16,11 +16,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.disk.DiskCache
@@ -44,6 +47,8 @@ fun MapTiles(
     numberOfTiles: Int,
     userLocation: UserLocation?,
     modifier: Modifier = Modifier,
+    // https://wiki.openstreetmap.org/wiki/Attribution_guidelines/2021-06-04_draft#Attribution_text
+    osmAttribution: String? = "© OpenStreetMap",
 ) {
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
@@ -100,6 +105,11 @@ fun MapTiles(
             label = "locationIndicatorAnimation"
         )
 
+        val textMeasurer = rememberTextMeasurer()
+        val osmAttributionTextStyle = MaterialTheme.typography.labelSmall
+        val osmAttributionTextColor = MaterialTheme.colorScheme.onSurface
+        val osmAttributaionSurface = MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f)
+
         Canvas(modifier = Modifier.matchParentSize()) {
             if (userLocation != null) {
                 val (yUser, xUser) = getDoubleTileCoordinates(
@@ -141,12 +151,39 @@ fun MapTiles(
                 alpha = locationIndicatorAnimation,
                 blendMode = BlendMode.DstIn
             )
+            if (osmAttribution != null) {
+                val measureResult = textMeasurer.measure(
+                    osmAttribution,
+                    maxLines = 1,
+                    style = osmAttributionTextStyle
+                )
+                val osmLabelPadding = 6f
+                val textOffset = Offset(
+                    x = size.width - measureResult.size.width - osmLabelPadding,
+                    y = size.height - measureResult.size.height - osmLabelPadding
+                )
+                drawRoundRect(
+                    color = osmAttributaionSurface,
+                    topLeft = textOffset - Offset(osmLabelPadding, 0f),
+                    size = Size(
+                        width = measureResult.size.width + 2 * osmLabelPadding,
+                        height = measureResult.size.height + osmLabelPadding
+                    ),
+                    cornerRadius = CornerRadius(8f, 8f)
+                )
+                drawText(
+                    measureResult,
+                    color = osmAttributionTextColor,
+                    topLeft = textOffset
+                )
+            }
         }
     }
 }
 
-// this scaling is not necessarily correct since the projections are
-// mercartor projections and thus not linear (as this scaling is)
+// this scaling is not correct, as this linearity may not hold (mercator projection)
+// but at this zoom level, it should not be too bad
+// still, this does not return the correct offset
 private fun Offset.scaleToTiles(
     xStart: Int,
     xStop: Int,
