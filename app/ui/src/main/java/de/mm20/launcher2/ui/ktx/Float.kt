@@ -1,13 +1,18 @@
 package de.mm20.launcher2.ui.ktx
 
 import android.content.Context
+import androidx.compose.animation.core.AnimationVector2D
+import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import java.text.DecimalFormat
+import kotlin.math.atan2
+import kotlin.math.cos
 import kotlin.math.roundToInt
+import kotlin.math.sin
 
 /**
  * Converts the given pixel size to a Dp value based on the current density
@@ -17,10 +22,14 @@ fun Float.toDp(): Dp {
     return (this / LocalDensity.current.density).dp
 }
 
+val Float.Companion.PI: Float
+    get() = 3.1415927f
+
 fun Float.roundToString(): String = this.roundToInt().toString()
 
 fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): String {
-    val decimalFormat = DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
+    val decimalFormat =
+        DecimalFormat().apply { maximumFractionDigits = 1; minimumFractionDigits = 0 }
 
     val (value, unit) = if (imperialUnits) {
         // yee haw
@@ -55,3 +64,12 @@ fun Float.metersToLocalizedString(context: Context, imperialUnits: Boolean): Str
 
     return "$value $unit"
 }
+
+// https://stackoverflow.com/a/68651222
+val Float.Companion.DegreesConverter
+    get() = TwoWayConverter<Float, AnimationVector2D>({
+        val rad = it * Float.PI / 180f
+        AnimationVector2D(sin(rad), cos(rad))
+    }, {
+        (atan2(it.v1, it.v2) * 180f / Float.PI + 360f) % 360f
+    })

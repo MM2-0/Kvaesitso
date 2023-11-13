@@ -3,7 +3,7 @@ package de.mm20.launcher2.ui.launcher.search.location
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -44,6 +44,7 @@ import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -131,7 +132,9 @@ fun LocationItem(
                         val isOpen = openingHours!!.any { it.isOpen }
                         AnimatedVisibility(!showDetails) {
                             Text(
-                                modifier = Modifier.padding(top = 4.dp).fillMaxWidth(),
+                                modifier = Modifier
+                                    .padding(top = 4.dp)
+                                    .fillMaxWidth(),
                                 text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = if (isOpen) openColor else closedColor,
@@ -149,8 +152,9 @@ fun LocationItem(
                         null
                     )
                     if (userLocation != null && userHeading != null) {
-                        val directionArrowAngle by animateFloatAsState(
-                            targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
+                        val directionArrowAngle by animateValueAsState(
+                            targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!,
+                            typeConverter = Float.DegreesConverter
                         )
                         Icon(
                             modifier = Modifier.rotate(directionArrowAngle),
