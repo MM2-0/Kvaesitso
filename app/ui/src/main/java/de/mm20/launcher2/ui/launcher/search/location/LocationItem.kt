@@ -1,21 +1,17 @@
 package de.mm20.launcher2.ui.launcher.search.location
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -40,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -49,17 +46,8 @@ import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
-import de.mm20.launcher2.ui.launcher.sheets.Separator
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
-import java.time.format.TextStyle
-import java.util.Locale
 import kotlin.math.roundToInt
 
 @Composable
@@ -233,7 +221,7 @@ fun LocationItem(
                                     icon = Icons.Rounded.TravelExplore
                                 ) {
                                     viewModel.viewModelScope.launch {
-                                        context.startActivity(
+                                        context.tryStartActivity(
                                             Intent(
                                                 Intent.ACTION_VIEW,
                                                 Uri.parse(it)
