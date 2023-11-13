@@ -197,6 +197,9 @@ fun LocationItem(
                         val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
                         val shape = MaterialTheme.shapes.small
 
+                        val applyTheming by viewModel.applyMapTheming.collectAsState()
+                        val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
+
                         MapTiles(
                             modifier = Modifier
                                 .padding(top = 8.dp, bottom = 8.dp)
@@ -209,7 +212,8 @@ fun LocationItem(
                             location = location,
                             zoomLevel = zoomLevel,
                             numberOfTiles = nTiles,
-                            userLocation = userLocation?.let { it.latitude to it.longitude },
+                            applyTheming = applyTheming,
+                            userLocation = if (showPositionOnMap) userLocation?.let { it.latitude to it.longitude } else null,
                         )
                     }
 

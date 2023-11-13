@@ -392,6 +392,8 @@ message Settings {
     bool show_map = 5;
     bool show_position_on_map = 6;
     string custom_tile_server_url = 7;
+    bool hide_uncategorized = 8;
+    bool theme_map = 9;
   }
   LocationsSearchSettings locations_search = 32;
 }

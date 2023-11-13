@@ -11,6 +11,8 @@ class Migration_18_19  : VersionedMigration(18,19) {
                     .setSearchRadius(1500)
                     .setCustomOverpassUrl("https://overpass-api.de/")
                     .setShowMap(false)
+                    .setThemeMap(true)
+                    .setHideUncategorized(true)
                     .setShowPositionOnMap(false)
                     .setCustomTileServerUrl("https://tile.openstreetmap.org")
             )

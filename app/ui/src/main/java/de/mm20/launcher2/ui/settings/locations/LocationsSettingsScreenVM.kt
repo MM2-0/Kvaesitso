@@ -124,4 +124,35 @@ class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
             }
         }
     }
+
+    val hideUncategorized = dataStore.data.map { it.locationsSearch.hideUncategorized }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setHideUncategorized(hideUncategorized: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setHideUncategorized(hideUncategorized)
+                    )
+                    .build()
+            }
+        }
+    }
+
+    val themeMap = dataStore.data.map { it.locationsSearch.themeMap }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    fun setThemeMap(themeMap: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setLocationsSearch(
+                        it.locationsSearch.toBuilder()
+                            .setThemeMap(themeMap)
+                    )
+                    .build()
+            }
+        }
+    }
+
 }

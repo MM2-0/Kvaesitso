@@ -80,6 +80,7 @@ fun MapTiles(
     zoomLevel: Int,
     numberOfTiles: Int,
     userLocation: UserLocation?,
+    applyTheming: Boolean,
     modifier: Modifier = Modifier,
     // https://wiki.openstreetmap.org/wiki/Attribution_guidelines/2021-06-04_draft#Attribution_text
     osmAttribution: String? = "© OpenStreetMap",
@@ -122,7 +123,7 @@ fun MapTiles(
                                 )
                                 .build(),
                             contentDescription = null,
-                            colorFilter = ColorFilter.tint(tintColor, BlendMode.Saturation),
+                            colorFilter = if (applyTheming) ColorFilter.tint(tintColor, BlendMode.Saturation) else null,
                             onState = {
                                 if (it is AsyncImagePainter.State.Success)
                                     drawnTiles.intValue++
@@ -376,6 +377,7 @@ private fun MapTilesPreview() {
         location = MockLocation,
         zoomLevel = 19,
         numberOfTiles = 9,
+        applyTheming = false,
         userLocation = 52.51623 to 13.4048
     )
 }

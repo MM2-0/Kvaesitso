@@ -200,6 +200,8 @@ fun createFactorySettings(context: Context): Settings {
                 .setCustomOverpassUrl("https://overpass-api.de")
                 .setShowMap(false)
                 .setShowPositionOnMap(false)
+                .setThemeMap(true)
+                .setHideUncategorized(true)
                 .setCustomTileServerUrl("https://tile.openstreetmap.org")
         )
         .build()

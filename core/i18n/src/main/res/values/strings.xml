@@ -875,4 +875,13 @@
     <string name="metric">Metric</string>
     <string name="preference_search_location_custom_overpass_url">Overpass Url</string>
     <string name="overpass_url">https://overpass-api.de</string>
+    <string name="preference_search_locations_hide_uncategorized">Hide uncategorized locations</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Show only results with well defined categories, like cafés or restaurants.</string>
+    <string name="preference_search_locations_show_map">Display map preview</string>
+    <string name="preference_search_locations_show_map_summary">Shows a map preview with the location when tapping the search result</string>
+    <string name="preference_search_locations_theme_map">Map Theming</string>
+    <string name="preference_search_locations_theme_map_summary">Applies current Material theme to map preview</string>
+    <string name="preference_search_locations_show_position_on_map">Show location</string>
+    <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
+    <string name="tile_server_url">https://tile.openstreetmap.org</string>
 </resources>

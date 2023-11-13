@@ -105,17 +105,41 @@ internal data class OsmLocation(
         private val idRepository =
             BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl })
 
+        private val categoryTags = setOf(
+            "amenity",
+            "shop",
+            "sport",   // "sport:soccer"
+            "railway", // "railway:stop"
+            "highway", // "highway:bus_stop"
+            "tourism", // "tourism:museum"
+        )
+
         fun fromOverpassResponse(
             result: OverpassResponse
         ): List<OsmLocation> = result.elements.mapNotNull {
             OsmLocation(
                 id = it.id,
                 label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,
-                category = try {
-                    it.tags["amenity"]?.let { LocationCategory.valueOf(it.uppercase(Locale.ROOT)) }
-                } catch (_: Exception) {
-                    LocationCategory.OTHER
-                },
+                category = it.tags.firstNotNullOfOrNull { (tag, value) ->
+                    if (categoryTags.contains(tag)) {
+                        value
+                            .split(' ', ',', '.') // in case there are multiple
+                            .firstNotNullOfOrNull { value ->
+                                runCatching {
+                                    LocationCategory.valueOf(value.uppercase(Locale.ROOT))
+                                }.getOrElse {
+                                    runCatching {
+                                        LocationCategory.valueOf(
+                                            // e.g. "railway:stop" -> "RAILWAY_STOP"
+                                            "${tag}_$value".uppercase(
+                                                Locale.ROOT
+                                            )
+                                        )
+                                    }.getOrNull()
+                                }
+                            }
+                    } else null
+                } ?: LocationCategory.OTHER,
                 latitude = it.lat,
                 longitude = it.lon,
                 street = it.tags["addr:street"],

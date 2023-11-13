@@ -74,6 +74,16 @@ fun LocationsSettingsScreen() {
                         it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits)
                     }
                 )
+                val hideUncategorized by viewModel.hideUncategorized.collectAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations_hide_uncategorized),
+                    summary = stringResource(R.string.preference_search_locations_hide_uncategorized_summary),
+                    value = hideUncategorized,
+                    enabled = locations == true,
+                    onValueChanged = {
+                        viewModel.setHideUncategorized(it)
+                    }
+                )
                 val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
                 TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_overpass_url),
@@ -89,29 +99,41 @@ fun LocationsSettingsScreen() {
             PreferenceCategory {
                 val showMap by viewModel.showMap.collectAsState()
                 SwitchPreference(
-                    title = "show map", //stringResource(R.string.preference_search_locations_show_map),
-                    summary = "show map summary", //stringResource(R.string.preference_search_locations_show_map_summary),
+                    title = stringResource(R.string.preference_search_locations_show_map),
+                    summary = stringResource(R.string.preference_search_locations_show_map_summary),
+                    enabled = locations == true,
                     value = showMap,
                     onValueChanged = {
                         viewModel.setShowMap(it)
                     }
                 )
+                val themeMap by viewModel.themeMap.collectAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations_theme_map),
+                    summary = stringResource(R.string.preference_search_locations_theme_map_summary),
+                    value = themeMap,
+                    enabled = locations == true && showMap,
+                    onValueChanged = {
+                        viewModel.setThemeMap(it)
+                    }
+                )
                 val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
                 SwitchPreference(
-                    title = "show position",//stringResource(R.string.preference_search_locations_show_position_on_map),
-                    summary = "show position summary", //stringResource(R.string.preference_search_locations_show_position_on_map_summary),
+                    title = stringResource(R.string.preference_search_locations_show_position_on_map),
+                    summary = stringResource(R.string.preference_search_locations_show_position_on_map_summary),
                     value = showPositionOnMap,
+                    enabled = locations == true && showMap,
                     onValueChanged = {
                         viewModel.setShowPositionOnMap(it)
                     }
                 )
                 val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
                 TextPreference(
-                    title = "tileserver url", //stringResource(R.string.preference_search_location_custom_tile_server_url),
+                    title = stringResource(R.string.preference_search_location_custom_tile_server_url),
                     value = customTileServerUrl,
-                    placeholder = "tileserver url placeholder", //stringResource(id = R.string.tile_server_url),
+                    placeholder = stringResource(id = R.string.tile_server_url),
                     summary = customTileServerUrl.takeIf { !it.isNullOrBlank() }
-                        ?: "tileserver url summary", //stringResource(id = R.string.tile_server_url),
+                        ?: stringResource(id = R.string.tile_server_url),
                     onValueChanged = {
                         viewModel.setCustomTileServerUrl(it)
                     }

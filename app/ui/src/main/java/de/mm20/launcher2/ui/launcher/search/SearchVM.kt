@@ -185,6 +185,9 @@ class SearchVM : ViewModel(), KoinComponent {
                                 }
                             }
 
+                            // TODO add pre-sorting of location types
+                            // to reduce overhead when locations come into view and thus get sorted
+
                             else -> 0
                         }
                     }

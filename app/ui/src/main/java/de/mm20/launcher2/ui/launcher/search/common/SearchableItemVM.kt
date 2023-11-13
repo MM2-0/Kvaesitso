@@ -190,6 +190,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val showMap = dataStore.data.map { it.locationsSearch.showMap }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
+    val applyMapTheming = dataStore.data.map { it.locationsSearch.themeMap }
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
     val showPositionOnMap = dataStore.data.map { it.locationsSearch.showPositionOnMap }
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
