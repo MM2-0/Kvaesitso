@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -82,17 +83,17 @@ fun LocationItem(
     if (distance != null)
         priorityCallback?.invoke(location.key, distance.roundToInt())
 
-    val openingHours = remember { mutableStateOf<List<OpeningTime>?>(null) }
-    val websiteUrl = remember { mutableStateOf<String?>(null) }
-    val street = remember { mutableStateOf<String?>(null) }
-    val houseNumber = remember { mutableStateOf<String?>(null) }
+    var openingHours by remember { mutableStateOf<List<OpeningTime>?>(null) }
+    var websiteUrl by remember { mutableStateOf<String?>(null) }
+    var street by remember { mutableStateOf<String?>(null) }
+    var houseNumber by remember { mutableStateOf<String?>(null) }
 
     LaunchedEffect(location) {
         viewModel.init(location, iconSize.toInt())
-        openingHours.value = location.getOpeningHours()
-        websiteUrl.value = location.getWebsiteUrl()
-        street.value = location.getStreet()
-        houseNumber.value = location.getHouseNumber()
+        openingHours = location.getOpeningHours()
+        websiteUrl = location.getWebsiteUrl()
+        street = location.getStreet()
+        houseNumber = location.getHouseNumber()
     }
 
     val closedColor = MaterialTheme.colorScheme.secondary
@@ -130,8 +131,8 @@ fun LocationItem(
                         text = location.labelOverride ?: location.label,
                         style = textStyle
                     )
-                    if (!openingHours.value.isNullOrEmpty()) {
-                        val isOpen = openingHours.value!!.any { it.isOpen }
+                    if (!openingHours.isNullOrEmpty()) {
+                        val isOpen = openingHours!!.any { it.isOpen }
                         Text(
                             modifier = Modifier.padding(top = 4.dp),
                             text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
@@ -174,8 +175,8 @@ fun LocationItem(
                 // schedule
                 // rows then cols
                 Column {
-                    if (!openingHours.value.isNullOrEmpty()) {
-                        for ((dow, hours) in openingHours.value!!.groupBy { it.dayOfWeek }) {
+                    if (!openingHours.isNullOrEmpty()) {
+                        for ((dow, hours) in openingHours!!.groupBy { it.dayOfWeek }) {
                             Text(
                                 modifier = Modifier.align(Alignment.CenterHorizontally),
                                 text = "$dow: ${hours.joinToString(separator = " ") { "${it.startTime} - ${it.startTime + it.duration}" }}",
@@ -211,10 +212,7 @@ fun LocationItem(
 
                     Text(
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = getLocationSummary(
-                            street.value,
-                            houseNumber.value,
-                        ),
+                        text = getLocationSummary(street, houseNumber),
                         style = MaterialTheme.typography.bodySmall
                     )
 
@@ -229,17 +227,21 @@ fun LocationItem(
                             }
                         ),
                         rightActions = listOfNotNull(
-                            websiteUrl.value.runCatching {
-                                val uri = Uri.parse(this)
+                            websiteUrl?.let {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_website),
                                     icon = Icons.Rounded.TravelExplore
                                 ) {
                                     viewModel.viewModelScope.launch {
-                                        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
+                                        context.startActivity(
+                                            Intent(
+                                                Intent.ACTION_VIEW,
+                                                Uri.parse(it)
+                                            )
+                                        )
                                     }
                                 }
-                            }.getOrNull(),
+                            },
                         )
                     )
 
