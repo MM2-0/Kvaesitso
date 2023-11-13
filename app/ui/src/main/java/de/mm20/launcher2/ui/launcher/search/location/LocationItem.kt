@@ -32,6 +32,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
@@ -109,6 +111,7 @@ fun LocationItem(
                     )
                 }
                 Column(
+                    modifier = Modifier.fillMaxWidth(.75f),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     val textStyle by animateTextStyleAsState(
@@ -117,20 +120,28 @@ fun LocationItem(
                     )
                     Text(
                         text = location.labelOverride ?: location.label,
-                        style = textStyle
+                        modifier = Modifier.fillMaxWidth(),
+                        style = textStyle,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
+                        softWrap = true,
+                        textAlign = if (showDetails) TextAlign.Center else TextAlign.Start,
                     )
                     if (!openingHours.isNullOrEmpty()) {
                         val isOpen = openingHours!!.any { it.isOpen }
-                        Text(
-                            modifier = Modifier.padding(top = 4.dp),
-                            text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
-                            style = MaterialTheme.typography.labelSmall,
-                            color = if (isOpen) openColor else closedColor
-                        )
+                        AnimatedVisibility(!showDetails) {
+                            Text(
+                                modifier = Modifier.padding(top = 4.dp).fillMaxWidth(),
+                                text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
+                                style = MaterialTheme.typography.labelSmall,
+                                color = if (isOpen) openColor else closedColor,
+                                textAlign = TextAlign.Start,
+                            )
+                        }
                     }
                 }
                 Column(
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 12.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
