@@ -500,6 +500,7 @@ fun LazyListScope.ListResults(
         }
     ) {
         PartialCardRow(
+            modifier = Modifier.animateItemPlacement(),
             isFirst = it == 0 && before == null,
             isLast = it == items.lastIndex && after == null,
             reverse = reverse
