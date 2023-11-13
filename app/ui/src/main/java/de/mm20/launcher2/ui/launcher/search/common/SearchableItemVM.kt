@@ -15,16 +15,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.getSystemService
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
-import coil.ImageLoader
-import coil.disk.DiskCache
-import coil.memory.MemoryCache
-import coil.request.CachePolicy
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
+import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
@@ -38,9 +33,7 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -261,7 +254,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         }
     }
 
-    fun getUserHeading(context: Context): Flow<Float> = callbackFlow {
+    fun getNorthHeading(context: Context): Flow<Float> = callbackFlow {
         val sensorCallback = object : SensorEventListener {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
             override fun onSensorChanged(event: SensorEvent?) {
@@ -274,9 +267,14 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                 SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
+                val (azimuth, _, roll) = orientationAngles
+
+                val isScreenUpsideDown = roll < -Float.PI / 2f || Float.PI / 2f < roll
+
                 trySend(
-                    // eastward heading from magnetic north plus correction for geographic north, if available
-                    orientationAngles[0] * 180f / Math.PI.toFloat() + (declination ?: 0f)
+                    (if (isScreenUpsideDown) -1f else 1f) *
+                            // eastward heading from magnetic north plus correction for geographic north, if available
+                            (azimuth * 180f / Float.PI + (declination ?: 0f))
                 )
             }
         }

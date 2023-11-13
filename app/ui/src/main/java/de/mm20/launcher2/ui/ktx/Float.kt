@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ui.R
 import java.text.DecimalFormat
 import kotlin.math.atan2
@@ -21,9 +22,6 @@ import kotlin.math.sin
 fun Float.toDp(): Dp {
     return (this / LocalDensity.current.density).dp
 }
-
-val Float.Companion.PI: Float
-    get() = 3.1415927f
 
 fun Float.roundToString(): String = this.roundToInt().toString()
 

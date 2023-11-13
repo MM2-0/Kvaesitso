@@ -148,7 +148,7 @@ fun LocationItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
-                    val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(
+                    val userHeading by remember(context) { viewModel.getNorthHeading(context) }.collectAsStateWithLifecycle(
                         null
                     )
                     if (userLocation != null && userHeading != null) {
@@ -247,7 +247,6 @@ fun LocationItem(
                             },
                         )
                     )
-
                 }
             }
         }
