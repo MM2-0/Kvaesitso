@@ -251,7 +251,7 @@ fun PagerScaffold(
             } else {
                 pagerState.animateScrollToPage(0)
             }
-            searchVM.search("")
+            searchVM.search("", context = null)
         }
     }
 
@@ -263,7 +263,7 @@ fun PagerScaffold(
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
-                searchVM.search("")
+                searchVM.search("", context = null)
                 true
             }
 
@@ -631,7 +631,7 @@ fun PagerScaffold(
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = isSearchOpen,
             value = { value },
-            onValueChange = { searchVM.search(it) },
+            onValueChange = { searchVM.search(it, context) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,

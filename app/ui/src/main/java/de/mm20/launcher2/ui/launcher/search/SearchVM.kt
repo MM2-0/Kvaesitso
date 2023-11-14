@@ -26,6 +26,8 @@ import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
+import de.mm20.launcher2.ui.ktx.getUserLocation
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -34,6 +36,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
@@ -86,7 +89,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
-        search("", true)
+        search("", context = null, forceRestart = true)
     }
 
     fun launchBestMatchOrAction(context: Context) {
@@ -102,7 +105,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     private var searchJob: Job? = null
-    fun search(query: String, forceRestart: Boolean = false) {
+    fun search(query: String, context: Context?, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
@@ -168,6 +171,10 @@ class SearchVM : ViewModel(), KoinComponent {
                             }
                         }
 
+                    val lastUserLocation = if (settings.locationsSearch.enabled &&
+                        !results.locations.isNullOrEmpty()
+                    ) context?.getUserLocation()?.firstOrNull() else null
+
                     resultsList = resultsList.sortedWith { a, b ->
                         when {
                             a is SavableSearchable && b !is SavableSearchable -> -1
@@ -179,15 +186,16 @@ class SearchVM : ViewModel(), KoinComponent {
                                 val bRank = relevance.indexOf(bKey)
                                 when {
                                     aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
+                                    a is Location && b is Location && lastUserLocation != null -> {
+                                        val aDistance = lastUserLocation.distanceTo(a.toAndroidLocation())
+                                        val bDistance = lastUserLocation.distanceTo(b.toAndroidLocation())
+                                        aDistance.compareTo(bDistance)
+                                    }
                                     aRank == -1 && bRank != -1 -> 1
                                     aRank != -1 && bRank == -1 -> -1
                                     else -> a.compareTo(b)
                                 }
                             }
-
-                            // TODO add pre-sorting of location types
-                            // to reduce overhead when locations come into view and thus get sorted
-
                             else -> 0
                         }
                     }
