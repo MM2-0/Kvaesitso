@@ -427,7 +427,7 @@
     <string name="preference_hidden_items">Résultats de recherche cachés</string>
     <string name="preference_hidden_items_summary">Gérer les applications et recherches cachées</string>
     <string name="backup_select_components">Sélectionnez ce que vous voulez sauvegarder :</string>
-    <string name="backup_not_included">Les comptes connectés et les widgets externes ne seront pas sauvegardés.</string>
+    <string name="backup_not_included">Les comptes connectés ne seront pas sauvegardés. Seuls les applications et les widgets externes peuvent être restaurés sur cet appareil</string>
     <string name="backup_component_favorites">Favoris et applications cachées</string>
     <string name="backup_component_websearches">Raccourcis de recherches Internet</string>
     <string name="backup_component_widgets">Widgets intégrés</string>
@@ -684,4 +684,20 @@
     <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
     <string name="search_action_websearch">Recherche internet</string>
     <string name="confirmation_delete_color_scheme">Voulez-vous supprimer le thème %1$s \?</string>
+    <string name="import_theme_apply">Appliquer le thème</string>
+    <string name="import_theme_error">Le fichier sélectionne n\'a pas pu être lu. Assurez-vous d\'avoir sélectionner un fichier de thème valide (*.kvtheme) et que ce fichier ne soit pas corrompu.</string>
+    <string name="preference_clock_widget_alignment">Alignement</string>
+    <string name="preference_clock_widget_alignment_top">Haut</string>
+    <string name="preference_clock_widget_alignment_center">Milieu</string>
+    <string name="preference_clock_widget_alignment_bottom">Bas</string>
+    <string name="shortcut_label_unavailable">Indisponible</string>
+    <string name="shortcut_unavailable_description">Ce raccourci n\'est pas disponible car %1$s n\'est pas le lanceur par défaut</string>
+    <string name="backup_component_themes">Thème de couleur</string>
+    <string name="action_import">Importer</string>
+    <string name="file_type_launchertheme">Thème %1$s</string>
+    <string name="missing_permission_plugins">La permission d\'accès aux plugins est nécessaire pour utiliser ces derniers</string>
+    <string name="preference_screen_plugins">Plugins</string>
+    <string name="preference_screen_plugins_summary">Gérer les extensions installées</string>
+    <string name="no_plugins_installed">Aucun plugins installés</string>
+    <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
 </resources>
