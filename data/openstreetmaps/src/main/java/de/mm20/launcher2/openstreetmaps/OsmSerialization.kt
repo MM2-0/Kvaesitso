@@ -30,7 +30,7 @@ class OsmLocationDeserializer : SearchableDeserializer {
             id = json.getLong("id"),
             latitude = json.getDouble("lat"),
             longitude = json.getDouble("lon"),
-            category = json.getString("category")?.let { LocationCategory.valueOf(it) },
+            category = json.getString("category").runCatching { LocationCategory.valueOf(this) }.getOrNull(),
             label = json.getString("label"),
             street = null,
             houseNumber = null,
