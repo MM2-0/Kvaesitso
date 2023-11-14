@@ -43,8 +43,8 @@ fun Context.getUserLocation() = channelFlow {
                 this@getUserLocation.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
 
             val location =
-                (if (hasFineAccess) this.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
-                    ?: if (hasCoarseAccess) this.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+                (if (hasFineAccess) this@runCatching.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
+                    ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
 
             if (location != null) {
                 updateDeclination(location)
@@ -52,7 +52,7 @@ fun Context.getUserLocation() = channelFlow {
             }
 
             if (hasFineAccess) {
-                this.requestLocationUpdates(
+                this@runCatching.requestLocationUpdates(
                     LocationManager.GPS_PROVIDER,
                     1000,
                     1f,
@@ -60,7 +60,7 @@ fun Context.getUserLocation() = channelFlow {
                 )
             }
             if (hasCoarseAccess) {
-                this.requestLocationUpdates(
+                this@runCatching.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     1000,
                     1f,
@@ -104,9 +104,10 @@ fun Context.getNorthHeading(): Flow<Float> = callbackFlow {
     this@getNorthHeading
         .getSystemService<SensorManager>()
         ?.runCatching {
-            this.registerListener(
+            this@runCatching.registerListener(
                 sensorCallback,
-                this.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR) ?: return@runCatching,
+                this@runCatching.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
+                    ?: return@runCatching,
                 SensorManager.SENSOR_DELAY_UI
             )
         }?.onFailure {
