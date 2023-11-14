@@ -45,6 +45,8 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.ktx.DegreesConverter
+import de.mm20.launcher2.ui.ktx.getNorthHeading
+import de.mm20.launcher2.ui.ktx.getUserLocation
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -65,14 +67,11 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val userLocation by remember(context) { viewModel.getUserLocation(context) }.collectAsStateWithLifecycle(
-        null
-    )
+    val userLocation by remember(context) { context.getUserLocation() }.collectAsStateWithLifecycle(null)
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
-    if (distance != null)
-        priorityCallback?.invoke(location.key, distance.roundToInt())
+    if (distance != null) priorityCallback?.invoke(location.key, distance.roundToInt())
 
     var openingHours by remember { mutableStateOf<List<OpeningTime>?>(null) }
     var websiteUrl by remember { mutableStateOf<String?>(null) }
@@ -148,9 +147,7 @@ fun LocationItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
-                    val userHeading by remember(context) { viewModel.getNorthHeading(context) }.collectAsStateWithLifecycle(
-                        null
-                    )
+                    val userHeading by remember(context) { context.getNorthHeading() }.collectAsStateWithLifecycle(null)
                     if (userLocation != null && userHeading != null) {
                         val directionArrowAngle by animateValueAsState(
                             targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!,
@@ -165,10 +162,8 @@ fun LocationItem(
                     if (distance != null) {
                         Text(
                             text = distance.metersToLocalizedString(
-                                context,
-                                insaneUnits
-                            ),
-                            style = MaterialTheme.typography.labelSmall
+                                context, insaneUnits
+                            ), style = MaterialTheme.typography.labelSmall
                         )
                     }
                 }
@@ -223,16 +218,13 @@ fun LocationItem(
                         style = MaterialTheme.typography.bodySmall
                     )
 
-                    Toolbar(
-                        modifier = Modifier.fillMaxWidth(),
-                        leftActions = listOf(
-                            DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = Icons.Rounded.ArrowBack
-                            ) {
-                                onBack()
-                            }
-                        ),
+                    Toolbar(modifier = Modifier.fillMaxWidth(),
+                        leftActions = listOf(DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_back),
+                            icon = Icons.Rounded.ArrowBack
+                        ) {
+                            onBack()
+                        }),
                         rightActions = listOfNotNull(
                             websiteUrl?.let {
                                 DefaultToolbarAction(
@@ -242,8 +234,7 @@ fun LocationItem(
                                     viewModel.viewModelScope.launch {
                                         context.tryStartActivity(
                                             Intent(
-                                                Intent.ACTION_VIEW,
-                                                Uri.parse(it)
+                                                Intent.ACTION_VIEW, Uri.parse(it)
                                             )
                                         )
                                     }
@@ -254,8 +245,7 @@ fun LocationItem(
                 }
             }
         }
-    }
-    /*
+    }/*
     Row(modifier = modifier) {
         Column(
             modifier = Modifier.weight(1f)
