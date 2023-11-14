@@ -198,7 +198,7 @@ internal class SearchServiceImpl(
                             results.update {
                                 it.copy(
                                     locations = r.filter {
-                                        locations.hideUncategorized && it.getCategory() != LocationCategory.OTHER
+                                        !locations.hideUncategorized || it.getCategory() != LocationCategory.OTHER
                                     }.toImmutableList()
                                 )
                             }
