@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,7 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.TravelExplore
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -40,6 +44,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -52,6 +57,13 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
+import java.time.DayOfWeek
+import java.time.Duration
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
+import java.time.format.TextStyle
 import kotlin.math.roundToInt
 
 @Composable
@@ -87,9 +99,6 @@ fun LocationItem(
         houseNumber = location.getHouseNumber()
     }
 
-    val closedColor = MaterialTheme.colorScheme.secondary
-    val openColor = MaterialTheme.colorScheme.tertiary
-
     Row(modifier = modifier) {
         Column {
             Row(
@@ -119,14 +128,16 @@ fun LocationItem(
                         if (showDetails) MaterialTheme.typography.titleMedium
                         else MaterialTheme.typography.titleSmall
                     )
+                    val titleAlignment by animateHorizontalAlignmentAsState(
+                        targetAlignment = if (showDetails) Alignment.CenterHorizontally else Alignment.Start
+                    )
                     Text(
                         text = location.labelOverride ?: location.label,
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.align(titleAlignment),
                         style = textStyle,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
                         softWrap = true,
-                        textAlign = if (showDetails) TextAlign.Center else TextAlign.Start,
                     )
                     if (!openingHours.isNullOrEmpty()) {
                         val isOpen = openingHours!!.any { it.isOpen }
@@ -137,7 +148,7 @@ fun LocationItem(
                                     .fillMaxWidth(),
                                 text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
                                 style = MaterialTheme.typography.labelSmall,
-                                color = if (isOpen) openColor else closedColor,
+                                color = if (isOpen) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.secondary,
                                 textAlign = TextAlign.Start,
                             )
                         }
@@ -173,23 +184,37 @@ fun LocationItem(
                 }
             }
             AnimatedVisibility(showDetails) {
-
-                // schedule
-                // rows then cols
                 Column {
-                    if (!openingHours.isNullOrEmpty()) {
-                        for ((dow, hours) in openingHours!!.groupBy { it.dayOfWeek }) {
+                    val hasOpeningTimes = !openingHours.isNullOrEmpty()
+                    val daysOfWeek = enumValues<DayOfWeek>()
+
+                    val javaLocale = java.util.Locale.forLanguageTag(Locale.current.toLanguageTag())
+                    val timeFormatter = DateTimeFormatter
+                        .ofLocalizedTime(FormatStyle.SHORT)
+                        .withLocale(javaLocale)
+
+                    if (hasOpeningTimes) {
+                        val openIndex = openingHours!!.indexOfFirst { it.isOpen }
+                        if (openIndex != -1) {
+                            val todaySchedule = openingHours!![openIndex]
                             Text(
-                                modifier = Modifier.align(Alignment.CenterHorizontally),
-                                text = "$dow: ${hours.joinToString(separator = " ") { "${it.startTime} - ${it.startTime + it.duration}" }}",
-                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(bottom = 8.dp),
+                                text = stringResource(
+                                    R.string.location_open_until,
+                                    (todaySchedule.startTime + todaySchedule.duration).format(
+                                        timeFormatter
+                                    )
+                                ),
+                                style = MaterialTheme.typography.labelMedium,
+                                color = MaterialTheme.colorScheme.tertiary,
                             )
                         }
                     }
 
                     val showMap by viewModel.showMap.collectAsState()
                     if (showMap) {
-
                         val zoomLevel = 19
                         val nTiles = 4
 
@@ -199,14 +224,19 @@ fun LocationItem(
                         val applyTheming by viewModel.applyMapTheming.collectAsState()
                         val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
 
+                        HorizontalDivider()
+
                         MapTiles(
                             modifier = Modifier
-                                .padding(top = 8.dp, bottom = 8.dp)
+                                .padding(top = 16.dp, bottom = 8.dp)
                                 .align(Alignment.CenterHorizontally)
-                                .fillMaxSize(.8f)
+                                .fillMaxSize(.9125f)
                                 .aspectRatio(1f)
                                 .border(1.dp, MaterialTheme.colorScheme.outline, shape)
-                                .clip(shape),
+                                .clip(shape)
+                                .clickable {
+                                    viewModel.launch(context)
+                                },
                             tileServerUrl = tileServerUrl,
                             location = location,
                             zoomLevel = zoomLevel,
@@ -214,15 +244,63 @@ fun LocationItem(
                             applyTheming = applyTheming,
                             userLocation = if (showPositionOnMap) userLocation?.let { it.latitude to it.longitude } else null,
                         )
+
+                        val address = buildAddress(street, houseNumber)
+                        if (address != null) {
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(bottom = 8.dp),
+                                text = address,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
                     }
 
-                    Text(
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        text = getLocationSummary(street, houseNumber),
-                        style = MaterialTheme.typography.bodySmall
-                    )
+                    HorizontalDivider(Modifier.padding(top = 8.dp))
 
-                    Toolbar(modifier = Modifier.fillMaxWidth(),
+                    if (hasOpeningTimes) {
+                        val today = LocalDateTime.now().dayOfWeek
+                        val nextOpeningTime =
+                            (0 until DayOfWeek.SUNDAY.ordinal)
+                                .firstNotNullOfOrNull {
+                                    val dow =
+                                        daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
+                                    openingHours!!.filter { it.dayOfWeek == dow }
+                                        .firstOrNull {
+                                            it.dayOfWeek != today || it.startTime.isAfter(
+                                                LocalTime.now()
+                                            )
+                                        }
+                                } ?: openingHours!!.first()
+
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(top = 8.dp),
+                            text = stringResource(
+                                if (nextOpeningTime.dayOfWeek == today) R.string.location_open_next
+                                else R.string.location_open_next_day,
+                                if (nextOpeningTime.dayOfWeek == today) {
+                                    val untilOpenToday = Duration.between(
+                                        LocalTime.now(),
+                                        nextOpeningTime.startTime,
+                                    )
+                                    "${untilOpenToday.toHours()}h ${untilOpenToday.toMinutes() % 60L}m"
+                                } else "${
+                                    nextOpeningTime.dayOfWeek.getDisplayName(
+                                        TextStyle.FULL_STANDALONE,
+                                        javaLocale
+                                    )
+                                } ${nextOpeningTime.startTime.format(timeFormatter)}"
+                            ),
+                            style = MaterialTheme.typography.labelMedium,
+                        )
+                    }
+
+                    Toolbar(
+                        modifier = Modifier.fillMaxWidth(),
                         leftActions = listOf(DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_back),
                             icon = Icons.Rounded.ArrowBack
@@ -230,6 +308,14 @@ fun LocationItem(
                             onBack()
                         }),
                         rightActions = listOfNotNull(
+                            if (!showMap) {
+                                DefaultToolbarAction(
+                                    label = stringResource(id = R.string.menu_map),
+                                    icon = Icons.Rounded.Map
+                                ) {
+                                    viewModel.launch(context)
+                                }
+                            } else null,
                             websiteUrl?.let {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_website),
@@ -249,223 +335,13 @@ fun LocationItem(
                 }
             }
         }
-    }/*
-    Row(modifier = modifier) {
-        Column(
-            modifier = Modifier.weight(1f)
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                val padding by animateDpAsState(if (showDetails) 16.dp else 12.dp)
-                Column(
-                    modifier = Modifier.padding(
-                        top = padding,
-                        start = padding,
-                        bottom = 12.dp,
-                        end = padding
-                    )
-                ) {
-                    val textStyle by animateTextStyleAsState(
-                        if (showDetails) MaterialTheme.typography.titleMedium
-                        else MaterialTheme.typography.titleSmall
-                    )
-                    val icon by viewModel.icon.collectAsStateWithLifecycle()
-                    val badge by viewModel.badge.collectAsState(null)
-                    Row {
-                        ShapedLauncherIcon(
-                            modifier = Modifier
-                                .padding(end = 16.dp),
-                            size = 48.dp,
-                            icon = { icon },
-                            badge = { badge },
-                        )
-                        Text(
-                            modifier = Modifier.fillMaxHeight(),
-                            text = location.labelOverride ?: location.label,
-                            style = textStyle
-                        )
-                    }
-                    AnimatedVisibility(!showDetails) {
-                        Row(modifier = Modifier.padding(top = 2.dp)) {
-                            if (!openingHours.value.isNullOrEmpty()) {
-                                val isOpen = openingHours.value!!.any { it.isOpen }
-                                Text(
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    text = context.getString(if (isOpen) R.string.location_open else R.string.location_closed),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = if (isOpen) openColor else closedColor
-                                )
-                            }
-                            Text(
-                                text = getLocationSummary(
-                                    context,
-                                    distance,
-                                    street.value,
-                                    houseNumber.value,
-                                    insaneUnits
-                                ),
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                    }
-                    AnimatedVisibility(showDetails) {
-                        val tags by viewModel.tags.collectAsState(emptyList())
-                        if (tags.isNotEmpty()) {
-                            Text(
-                                modifier = Modifier.padding(top = 1.dp, bottom = 4.dp),
-                                text = tags.joinToString(separator = " #", prefix = "#"),
-                                color = MaterialTheme.colorScheme.secondary,
-                                style = MaterialTheme.typography.labelSmall
-                            )
-                        }
-                    }
-                }
-                Column(
-                    modifier = Modifier.padding(
-                        top = padding,
-                        start = padding,
-                        bottom = 12.dp,
-                        end = padding
-                    ),
-                    horizontalAlignment = Alignment.End,
-                    verticalArrangement = Arrangement.Top
-                ) {
-                    val userHeading by remember(context) { viewModel.getUserHeading(context) }.collectAsStateWithLifecycle(null)
-                    if (userLocation != null && userHeading != null) {
-                        val directionArrowAngle by animateFloatAsState(
-                            targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!
-                        )
-                        if (distance != null) {
-                            Text(
-                                text = distance.metersToLocalizedString(
-                                    context,
-                                    insaneUnits
-                                )
-                            )
-                        }
-                        Icon(
-                            modifier = Modifier
-                                .padding(top = 8.dp, bottom = 8.dp, start = 16.dp)
-                                .rotate(directionArrowAngle),
-                            imageVector = Icons.Rounded.ArrowUpward,
-                            contentDescription = null
-                        )
-                    }
-                }
-            }
-            AnimatedVisibility(showDetails) {
-                Column {
-                    Row(horizontalArrangement = Arrangement.SpaceEvenly) {
-
-                        if (!openingHours.value.isNullOrEmpty()) {
-                            val oh = openingHours.value!!
-                            val today = LocalDateTime.now().dayOfWeek
-                            val daysOfWeek = enumValues<DayOfWeek>()
-
-                            val nextOpeningTime =
-                                (0 until DayOfWeek.SUNDAY.ordinal)
-                                    .firstNotNullOfOrNull {
-                                        val dow =
-                                            daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
-                                        oh.filter { it.dayOfWeek == dow }
-                                            .firstOrNull {
-                                                it.dayOfWeek != today || it.startTime.isAfter(
-                                                    LocalTime.now()
-                                                )
-                                            }
-                                    } ?: oh.first()
-
-                            val openIndex = oh.indexOfFirst { it.isOpen }
-                            val timeFormatter = DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
-                            if (openIndex != -1) {
-                                val todaySchedule = oh[openIndex]
-                                Text(
-                                    text = stringResource(
-                                        R.string.location_open_until,
-                                        (todaySchedule.startTime + todaySchedule.duration).format(
-                                            timeFormatter
-                                        )
-                                    )
-                                )
-                            }
-                            Text(
-                                text = stringResource(
-                                    if (nextOpeningTime.dayOfWeek == today) R.string.location_open_next
-                                    else R.string.location_open_next_day,
-                                    if (nextOpeningTime.dayOfWeek == today) Duration.between(
-                                        nextOpeningTime.startTime,
-                                        LocalTime.now()
-                                    )
-                                    else "${
-                                        nextOpeningTime.dayOfWeek.getDisplayName(
-                                            TextStyle.SHORT,
-                                            Locale.getDefault()
-                                        )
-                                    } ${nextOpeningTime.startTime.format(timeFormatter)}"
-                                )
-                            )
-                        }
-                    }
-
-                    val showMap by viewModel.showMap.collectAsState()
-                    if (showMap) {
-
-                        val zoomLevel = 19
-                        val nTiles = 4
-
-                        val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
-                        val shape = MaterialTheme.shapes.small
-
-                        MapTiles(
-                            modifier = Modifier
-                                .size(300.dp)
-                                .border(1.dp, MaterialTheme.colorScheme.secondaryContainer, shape)
-                                .clip(shape),
-                            tileServerUrl = tileServerUrl,
-                            location = location,
-                            zoomLevel = zoomLevel,
-                            numberOfTiles = nTiles,
-                            userLocation = userLocation?.let { it.latitude to it.longitude },
-                        )
-                    }
-
-                    Toolbar(
-                        leftActions = listOf(
-                            DefaultToolbarAction(
-                                label = stringResource(id = R.string.menu_back),
-                                icon = Icons.Rounded.ArrowBack
-                            ) {
-                                onBack()
-                            }
-                        ),
-                        rightActions = listOfNotNull(
-                            websiteUrl.value.runCatching {
-                                val uri = Uri.parse(this)
-                                DefaultToolbarAction(
-                                    label = stringResource(id = R.string.menu_website),
-                                    icon = Icons.Rounded.TravelExplore
-                                ) {
-                                    viewModel.viewModelScope.launch {
-                                        context.startActivity(Intent(Intent.ACTION_VIEW, uri))
-                                    }
-                                }
-                            }.getOrNull(),
-                        )
-                    )
-
-                }
-            }
-        }
     }
-    */
 }
 
-private fun getLocationSummary(
+private fun buildAddress(
     street: String?,
     houseNumber: String?,
-): String {
+): String? {
     val summary = StringBuilder()
     if (street != null) {
         summary.append(street, ' ')
@@ -473,5 +349,5 @@ private fun getLocationSummary(
             summary.append(houseNumber, ' ')
         }
     }
-    return summary.toString()
+    return if (summary.isEmpty()) null else summary.toString()
 }
