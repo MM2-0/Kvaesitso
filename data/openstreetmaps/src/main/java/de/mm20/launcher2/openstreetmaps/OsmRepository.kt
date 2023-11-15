@@ -10,6 +10,7 @@ import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -102,13 +103,13 @@ internal class OsmRepository(
 
             val userLocation = getCurrentLocation() ?: return@locationPermission
 
-            dataStore.data.map { it.locationsSearch.searchRadius }
-                .collectLatest dataStore@{ searchRadius ->
+            dataStore.data.map { it.locationsSearch }
+                .collectLatest dataStore@{ settings ->
                     val result = try {
                         overpassService.search(
                             OverpassFuzzyRadiusQuery(
                                 query = query,
-                                radius = searchRadius,
+                                radius = settings.searchRadius,
                                 latitude = userLocation.latitude,
                                 longitude = userLocation.longitude,
                             )
@@ -122,10 +123,33 @@ internal class OsmRepository(
                         null
                     }
 
-                    if (result != null)
-                        send(OsmLocation.fromOverpassResponse(result).toImmutableList())
+                    if (result != null) {
+                        send(
+                            OsmLocation.fromOverpassResponse(result)
+                                .filter {
+                                    it.isWellDefined &&
+                                            (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)
+                                }.groupBy {
+                                    it.label.lowercase()
+                                }.flatMap { (_, duplicates) ->
+                                    // deduplicate results with same labels, if
+                                    // - same category
+                                    // - distance is less than 100m
+                                    if (duplicates.size < 2) duplicates
+                                    else {
+                                        val luckyFirst = duplicates.first()
+                                        duplicates
+                                            .drop(1)
+                                            .filter {
+                                                it.category != luckyFirst.category ||
+                                                        it.toAndroidLocation()
+                                                            .distanceTo(luckyFirst.toAndroidLocation()) > 100.0
+                                            } + luckyFirst
+                                    }
+                                }.toImmutableList()
+                        )
+                    }
                 }
-
         }
     }
 

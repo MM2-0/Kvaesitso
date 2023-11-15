@@ -196,11 +196,7 @@ internal class SearchServiceImpl(
                         .withCustomLabels(customAttributesRepository)
                         .collectLatest { r ->
                             results.update {
-                                it.copy(
-                                    locations = r.filter {
-                                        !locations.hideUncategorized || it.getCategory() != LocationCategory.OTHER
-                                    }.toImmutableList()
-                                )
+                                it.copy(locations = r.toImmutableList())
                             }
                         }
                 }

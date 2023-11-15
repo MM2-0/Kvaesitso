@@ -16,12 +16,14 @@ interface Location : SavableSearchable {
 
     val latitude: Double
     val longitude: Double
+    val fixMeUrl: String?
 
     suspend fun getCategory(): LocationCategory?
     suspend fun getStreet(): String?
     suspend fun getHouseNumber(): String?
     suspend fun getOpeningHours(): ImmutableList<OpeningTime>?
     suspend fun getWebsiteUrl(): String?
+    suspend fun getPhoneNumber(): String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = true

@@ -390,6 +390,7 @@ internal object MockLocation : Location {
     override val domain: String = "MOCKLOCATION"
     override val key: String = "MOCKLOCATION"
     override val label: String = "Brandenburger Tor"
+    override val fixMeUrl: String = "https://www.openstreetmap.org/fixthemap"
 
     override val latitude = 52.5162700
     override val longitude = 13.3777021
@@ -410,6 +411,8 @@ internal object MockLocation : Location {
         }.toImmutableList()
 
     override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
+
+    override suspend fun getPhoneNumber(): String = "+49 1234567"
 
     override fun overrideLabel(label: String): SavableSearchable = TODO()
 

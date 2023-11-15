@@ -25,20 +25,33 @@ import java.time.format.ResolverStyle
 import java.util.Locale
 
 internal data class OsmLocation(
-    val id: Long,
+    internal val id: Long,
     override var label: String,
-    var category: LocationCategory?,
-    override val latitude: Double,
-    override val longitude: Double,
-    var street: String?,
-    var houseNumber: String?,
-    var openingHours: ImmutableList<OpeningTime>?,
-    var websiteUrl: String?,
+    internal var category: LocationCategory?,
+    private val _latitude: Double?,
+    private val _longitude: Double?,
+    private var street: String?,
+    private var houseNumber: String?,
+    private var openingHours: ImmutableList<OpeningTime>?,
+    private var websiteUrl: String?,
+    private var phoneNumber: String?,
+    private var isCacheUpToDate: Boolean,
     override val labelOverride: String? = null,
 ) : Location {
 
-    override val domain: String = DOMAIN
+    override val domain: String
+        get() = DOMAIN
     override val key: String = "$domain://$id"
+    override val fixMeUrl: String
+        get() = FIXMEURL
+
+    override val latitude: Double
+        get() = _latitude ?: 0.0
+    override val longitude: Double
+        get() = _longitude ?: 0.0
+
+    val isWellDefined: Boolean
+        get() = _latitude != null && _longitude != null
 
     override fun overrideLabel(label: String): OsmLocation {
         return this.copy(labelOverride = label)
@@ -55,33 +68,51 @@ internal data class OsmLocation(
     }
 
     override suspend fun getCategory(): LocationCategory? {
+        if (isCacheUpToDate)
+            return category
         if (category == null)
             updateCache()
         return category
     }
 
     override suspend fun getStreet(): String? {
+        if (isCacheUpToDate)
+            return street
         if (street == null)
             updateCache()
         return street
     }
 
     override suspend fun getHouseNumber(): String? {
+        if (isCacheUpToDate)
+            return houseNumber
         if (houseNumber == null)
             updateCache()
         return houseNumber
     }
 
     override suspend fun getOpeningHours(): ImmutableList<OpeningTime>? {
+        if (isCacheUpToDate)
+            return openingHours
         if (openingHours == null)
             updateCache()
         return openingHours
     }
 
     override suspend fun getWebsiteUrl(): String? {
+        if (isCacheUpToDate)
+            return websiteUrl
         if (websiteUrl == null)
             updateCache()
         return websiteUrl
+    }
+
+    override suspend fun getPhoneNumber(): String? {
+        if (isCacheUpToDate)
+            return phoneNumber
+        if (phoneNumber == null)
+            updateCache()
+        return phoneNumber
     }
 
     override fun getSerializer(): SearchableSerializer {
@@ -97,11 +128,14 @@ internal data class OsmLocation(
         houseNumber = upToDateEntry.houseNumber
         openingHours = upToDateEntry.openingHours
         websiteUrl = upToDateEntry.websiteUrl
+
+        isCacheUpToDate = true
     }
 
     companion object : KoinComponent {
 
         const val DOMAIN = "OpenStreetMaps"
+        const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
 
         private val dataStore: LauncherDataStore by inject()
         private val idRepository =
@@ -142,12 +176,14 @@ internal data class OsmLocation(
                             }
                     } else null
                 } ?: LocationCategory.OTHER,
-                latitude = it.lat,
-                longitude = it.lon,
+                _latitude = it.lat,
+                _longitude = it.lon,
                 street = it.tags["addr:street"],
                 houseNumber = it.tags["addr:housenumber"],
                 openingHours = it.tags["opening_hours"]?.let { ot -> parseOpeningTimes(ot) },
                 websiteUrl = it.tags["website"],
+                phoneNumber = it.tags["phone"],
+                isCacheUpToDate = true,
             )
         }
     }

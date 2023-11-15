@@ -27,8 +27,8 @@ data class OverpassResponse(
 data class OverpassResponseElement(
     val type: String,
     val id: Long,
-    val lat: Double,
-    val lon: Double,
+    val lat: Double?,
+    val lon: Double?,
     val tags: Map<String, String>,
 )
 
