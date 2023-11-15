@@ -89,7 +89,9 @@ internal class OsmRepository(
     override fun search(query: String): Flow<ImmutableList<OsmLocation>> = channelFlow {
         send(persistentListOf())
 
-        if (query.length < 3) return@channelFlow
+        // values higher than 2 might block searches for "dm"
+        // (Drogerie Markt, a problem specific to germany, but probably also relevant for other countries)
+        if (query.length < 2) return@channelFlow
 
         hasLocationPermission.collectLatest locationPermission@{ locationPermission ->
             if (!locationPermission) return@locationPermission

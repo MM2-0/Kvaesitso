@@ -87,6 +87,7 @@ interface Location : SavableSearchable {
             LocationCategory.ART -> R.drawable.ic_location_art to R.color.deeporange
             LocationCategory.KIOSK -> R.drawable.ic_location_kiosk to R.color.bluegrey
             LocationCategory.MUSEUM -> R.drawable.ic_location_museum to R.color.deeporange
+            LocationCategory.PARCEL_LOCKER -> R.drawable.ic_location_parcel_locker to R.color.bluegrey
             else -> R.drawable.ic_location_place to R.color.bluegrey
         }
         return StaticLauncherIcon(
@@ -180,7 +181,8 @@ enum class LocationCategory {
     ART,
     KIOSK,
     BUS_STOP,
-    MUSEUM
+    MUSEUM,
+    PARCEL_LOCKER
 }
 
 data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {

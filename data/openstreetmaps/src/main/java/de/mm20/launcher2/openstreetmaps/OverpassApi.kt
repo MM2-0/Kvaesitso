@@ -56,7 +56,8 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
 
         val overpassQlBuilder = StringBuilder()
         overpassQlBuilder.append("[out:json];")
-        overpassQlBuilder.append("node(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
+        // nw: node or way
+        overpassQlBuilder.append("nw(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
         overpassQlBuilder.append("[name~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
         overpassQlBuilder.append("out;")
 
