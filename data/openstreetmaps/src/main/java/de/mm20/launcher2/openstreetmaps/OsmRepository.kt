@@ -13,6 +13,8 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -101,27 +103,37 @@ internal class OsmRepository(
 
             dataStore.data.map { it.locationsSearch }
                 .collectLatest dataStore@{ settings ->
-                    val result = try {
-                        overpassService.search(
-                            OverpassFuzzyRadiusQuery(
-                                query = query,
-                                radius = settings.searchRadius,
-                                latitude = userLocation.latitude,
-                                longitude = userLocation.longitude,
+                    suspend fun searchByTag(tag: String): OverpassResponse? =
+                        overpassService.runCatching {
+                            this.search(
+                                OverpassFuzzyRadiusQuery(
+                                    tag = tag,
+                                    query = query,
+                                    radius = settings.searchRadius,
+                                    latitude = userLocation.latitude,
+                                    longitude = userLocation.longitude,
+                                )
                             )
-                        )
-                    } catch (_: HttpException) {
-                        null
-                    } catch (_: CancellationException) {
-                        null
-                    } catch (e: Exception) {
-                        Log.e("OsmRepository", "Failed to search for $query", e)
-                        null
+                        }.onFailure {
+                            if (it !is HttpException && it !is CancellationException) {
+                                Log.e("OsmRepository", "Failed to search for $tag: $query", it)
+                            }
+                        }.getOrNull()
+
+                    val result = awaitAll(
+                        // optionally query by "amenity" or "shop" here
+                        // if we want to make searching for locations fuzzier
+                        async(this.coroutineContext) { searchByTag("name") },
+                        async(this.coroutineContext) { searchByTag("brand") },
+                    ).flatMap {
+                        it?.let {
+                            OsmLocation.fromOverpassResponse(it)
+                        } ?: emptyList()
                     }
 
-                    if (result != null) {
+                    if (result.isNotEmpty()) {
                         send(
-                            OsmLocation.fromOverpassResponse(result)
+                            result
                                 .filter {
                                     it.isWellDefined &&
                                             (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)

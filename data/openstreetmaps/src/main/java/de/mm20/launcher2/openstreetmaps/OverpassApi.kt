@@ -9,6 +9,7 @@ import retrofit2.http.POST
 import java.lang.reflect.Type
 
 data class OverpassFuzzyRadiusQuery(
+    val tag: String = "name",
     val query: String,
     val radius: Int,
     val latitude: Double,
@@ -64,7 +65,7 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
         overpassQlBuilder.append("[out:json];")
         // nw: node or way
         overpassQlBuilder.append("nw(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
-        overpassQlBuilder.append("[name~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
+        overpassQlBuilder.append('[', value.tag, '~', escapedQueryName, if (value.caseInvariant) ",i];" else "];")
         // center to add the center coordinate of a way to the result, if applicable
         overpassQlBuilder.append("out center;")
 
