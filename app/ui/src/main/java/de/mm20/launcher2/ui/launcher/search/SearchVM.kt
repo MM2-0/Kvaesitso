@@ -50,7 +50,6 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
-    private val devicePoseProvider: DevicePoseProvider by inject()
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -171,10 +170,6 @@ class SearchVM : ViewModel(), KoinComponent {
                             }
                         }
 
-                    val lastUserLocation = if (settings.locationsSearch.enabled &&
-                        !results.locations.isNullOrEmpty()
-                    ) devicePoseProvider.getUserLocation().firstOrNull() else null
-
                     resultsList = resultsList.sortedWith { a, b ->
                         when {
                             a is SavableSearchable && b !is SavableSearchable -> -1
@@ -186,11 +181,6 @@ class SearchVM : ViewModel(), KoinComponent {
                                 val bRank = relevance.indexOf(bKey)
                                 when {
                                     aRank != -1 && bRank != -1 -> aRank.compareTo(bRank)
-                                    a is Location && b is Location && lastUserLocation != null -> {
-                                        val aDistance = lastUserLocation.distanceTo(a.toAndroidLocation())
-                                        val bDistance = lastUserLocation.distanceTo(b.toAndroidLocation())
-                                        aDistance.compareTo(bDistance)
-                                    }
                                     aRank == -1 && bRank != -1 -> 1
                                     aRank != -1 && bRank == -1 -> -1
                                     else -> a.compareTo(b)

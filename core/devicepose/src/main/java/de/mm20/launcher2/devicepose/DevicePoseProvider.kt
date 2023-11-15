@@ -32,7 +32,7 @@ class DevicePoseProvider internal constructor(
         ).declination
     }
 
-    fun getUserLocation() = channelFlow {
+    fun getLocation() = channelFlow {
         val locationCallback = LocationListener {
             updateDeclination(it)
             trySend(it)

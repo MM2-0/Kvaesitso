@@ -176,8 +176,8 @@ internal data class OsmLocation(
                             }
                     } else null
                 } ?: LocationCategory.OTHER,
-                _latitude = it.lat,
-                _longitude = it.lon,
+                _latitude = it.lat ?: it.center?.lat,
+                _longitude = it.lon ?: it.center?.lon,
                 street = it.tags["addr:street"],
                 houseNumber = it.tags["addr:housenumber"],
                 openingHours = it.tags["opening_hours"]?.let { ot -> parseOpeningTimes(ot) },

@@ -1,12 +1,7 @@
 package de.mm20.launcher2.openstreetmaps
 
-import android.Manifest
-import android.content.Context
-import android.location.Location
-import android.location.LocationManager
 import android.util.Log
-import androidx.core.content.getSystemService
-import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -22,6 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,8 +74,8 @@ internal open class BaseOsmRepository(
 }
 
 internal class OsmRepository(
-    private val context: Context,
-    private val dataStore: LauncherDataStore
+    private val dataStore: LauncherDataStore,
+    private val poseProvider: DevicePoseProvider,
 ) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl }),
     SearchableRepository<OsmLocation>,
     KoinComponent {
@@ -101,7 +97,7 @@ internal class OsmRepository(
                 httpClient.dispatcher.cancelAll()
             }
 
-            val userLocation = getCurrentLocation() ?: return@locationPermission
+            val userLocation = poseProvider.getLocation().firstOrNull() ?: return@locationPermission
 
             dataStore.data.map { it.locationsSearch }
                 .collectLatest dataStore@{ settings ->
@@ -146,20 +142,12 @@ internal class OsmRepository(
                                                             .distanceTo(luckyFirst.toAndroidLocation()) > 100.0
                                             } + luckyFirst
                                     }
+                                }.sortedBy {
+                                    userLocation.distanceTo(it.toAndroidLocation())
                                 }.toImmutableList()
                         )
                     }
                 }
         }
-    }
-
-    private fun getCurrentLocation(): Location? {
-        val lm = context.getSystemService<LocationManager>()!!
-        val hasFineAccess = context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)
-        val hasCoarseAccess = context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-        return if (hasFineAccess) lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        else if (hasCoarseAccess) lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        else null
     }
 }

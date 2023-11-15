@@ -54,4 +54,5 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:permissions"))
     implementation(project(":core:crashreporter"))
+    implementation(project(":core:devicepose"))
 }

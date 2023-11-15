@@ -24,11 +24,17 @@ data class OverpassResponse(
     val elements: List<OverpassResponseElement>,
 )
 
+data class OverpassResponseElementCenter(
+    val lat: Double,
+    val lon: Double,
+)
+
 data class OverpassResponseElement(
     val type: String,
     val id: Long,
     val lat: Double?,
     val lon: Double?,
+    val center: OverpassResponseElementCenter?,
     val tags: Map<String, String>,
 )
 
@@ -59,7 +65,8 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
         // nw: node or way
         overpassQlBuilder.append("nw(around:", value.radius, ',', value.latitude, ',', value.longitude, ')')
         overpassQlBuilder.append("[name~", escapedQueryName, if (value.caseInvariant) ",i];" else "];")
-        overpassQlBuilder.append("out;")
+        // center to add the center coordinate of a way to the result, if applicable
+        overpassQlBuilder.append("out center;")
 
         return overpassQlBuilder.toString().toRequestBody()
     }
@@ -69,7 +76,7 @@ class OverpassIdQueryConverter : Converter<OverpassIdQuery, RequestBody> {
     override fun convert(value: OverpassIdQuery): RequestBody = """
         [out:json];
         nw(${value.id});
-        out;
+        out center;
     """.trimIndent().toRequestBody()
 }
 

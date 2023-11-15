@@ -67,7 +67,7 @@ fun LocationItem(
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by remember {
-        viewModel.devicePoseProvider.getUserLocation()
+        viewModel.devicePoseProvider.getLocation()
     }.collectAsStateWithLifecycle(null)
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
