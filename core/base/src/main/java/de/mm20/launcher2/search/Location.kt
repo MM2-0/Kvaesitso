@@ -29,9 +29,18 @@ interface Location : SavableSearchable {
         get() = true
 
     override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        val (resId, bgColor) = when (getCategory()) {
-            LocationCategory.RESTAURANT -> R.drawable.ic_location_restaurant to R.color.orange
-            LocationCategory.FAST_FOOD -> R.drawable.ic_location_fastfood to R.color.red
+        val category = getCategory()
+        val (resId, bgColor) = when (category) {
+            LocationCategory.FAST_FOOD, LocationCategory.RESTAURANT -> with(labelOverride ?: label) {
+                when {
+                    contains("pizza", ignoreCase = true) -> R.drawable.ic_location_pizza to R.color.red
+                    contains("ramen", ignoreCase = true) -> R.drawable.ic_location_ramen to R.color.orange
+                    contains("tapas", ignoreCase = true) -> R.drawable.ic_location_tapas to R.color.orange
+                    contains("keba" /* b or p, depending on locale */, ignoreCase = true) -> R.drawable.ic_location_kebab to R.color.orange
+                    category == LocationCategory.FAST_FOOD -> R.drawable.ic_location_fastfood to R.color.orange
+                    else -> R.drawable.ic_location_restaurant to R.color.red
+                }
+            }
             LocationCategory.BAR -> R.drawable.ic_location_bar to R.color.amber
             LocationCategory.CAFE, LocationCategory.COFFEE_SHOP -> R.drawable.ic_location_cafe to R.color.brown
             LocationCategory.HOTEL -> R.drawable.ic_location_hotel to R.color.green
@@ -91,6 +100,7 @@ interface Location : SavableSearchable {
             LocationCategory.KIOSK -> R.drawable.ic_location_kiosk to R.color.bluegrey
             LocationCategory.MUSEUM -> R.drawable.ic_location_museum to R.color.deeporange
             LocationCategory.PARCEL_LOCKER -> R.drawable.ic_location_parcel_locker to R.color.bluegrey
+            LocationCategory.TRAVEL_AGENCY -> R.drawable.ic_location_travel_agency to R.color.lightblue
             else -> R.drawable.ic_location_place to R.color.bluegrey
         }
         return StaticLauncherIcon(
@@ -186,7 +196,8 @@ enum class LocationCategory {
     BUS_STOP,
     MUSEUM,
     PARCEL_LOCKER,
-    CHEMIST
+    CHEMIST,
+    TRAVEL_AGENCY
 }
 
 data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {

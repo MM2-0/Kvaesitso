@@ -157,7 +157,7 @@ internal data class OsmLocation(
                 id = it.id,
                 label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,
                 category = it.tags.firstNotNullOfOrNull { (tag, value) ->
-                    if (categoryTags.contains(tag)) {
+                    if (tag.lowercase() in categoryTags) {
                         value
                             .split(' ', ',', '.') // in case there are multiple
                             .firstNotNullOfOrNull { value ->
