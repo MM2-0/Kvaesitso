@@ -3,7 +3,11 @@ package de.mm20.launcher2.ui.launcher.search.location
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,16 +16,21 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Map
+import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,12 +42,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
@@ -55,6 +67,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -64,6 +77,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import kotlin.math.pow
 import kotlin.math.roundToInt
 
 @Composable
@@ -87,9 +101,11 @@ fun LocationItem(
     if (distance != null) priorityCallback?.invoke(location.key, distance.roundToInt())
 
     var openingHours by remember { mutableStateOf<ImmutableList<OpeningTime>?>(null) }
+    var phoneNumber by remember { mutableStateOf<String?>(null) }
     var websiteUrl by remember { mutableStateOf<String?>(null) }
     var street by remember { mutableStateOf<String?>(null) }
     var houseNumber by remember { mutableStateOf<String?>(null) }
+    var showBugreportDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(location) {
         viewModel.init(location, iconSize.toInt())
@@ -97,6 +113,7 @@ fun LocationItem(
         websiteUrl = location.getWebsiteUrl()
         street = location.getStreet()
         houseNumber = location.getHouseNumber()
+        phoneNumber = location.getPhoneNumber()
     }
 
     Row(modifier = modifier) {
@@ -230,7 +247,7 @@ fun LocationItem(
                             modifier = Modifier
                                 .padding(top = 16.dp, bottom = 8.dp)
                                 .align(Alignment.CenterHorizontally)
-                                .fillMaxSize(.9125f)
+                                .fillMaxWidth(.9125f)
                                 .aspectRatio(1f)
                                 .border(1.dp, MaterialTheme.colorScheme.outline, shape)
                                 .clip(shape)
@@ -308,6 +325,7 @@ fun LocationItem(
                             onBack()
                         }),
                         rightActions = listOfNotNull(
+
                             if (!showMap) {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_map),
@@ -316,6 +334,20 @@ fun LocationItem(
                                     viewModel.launch(context)
                                 }
                             } else null,
+                            phoneNumber?.let {
+                                DefaultToolbarAction(
+                                    label = stringResource(id = R.string.menu_dial),
+                                    icon = Icons.Rounded.Phone
+                                ) {
+                                    viewModel.viewModelScope.launch {
+                                        context.tryStartActivity(
+                                            Intent(
+                                                Intent.ACTION_DIAL, Uri.parse("tel:$it")
+                                            )
+                                        )
+                                    }
+                                }
+                            },
                             websiteUrl?.let {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_website),
@@ -330,11 +362,107 @@ fun LocationItem(
                                     }
                                 }
                             },
+                            location.fixMeUrl?.let {
+                                DefaultToolbarAction(
+                                    label = stringResource(id = R.string.menu_bugreport),
+                                    icon = Icons.Rounded.BugReport,
+                                ) {
+                                    showBugreportDialog = true
+                                }
+                            }
                         )
                     )
                 }
             }
         }
+    }
+
+    if (showBugreportDialog && location.fixMeUrl != null) {
+        AlertDialog(
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 35.dp,
+            confirmButton = {
+                TextButton(
+                    onClick = { showBugreportDialog = false },
+                    shape = MaterialTheme.shapes.medium,
+                ) {
+                    Text(
+                        text = stringResource(id = android.R.string.ok),
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+            },
+            onDismissRequest = {
+                showBugreportDialog = false
+            },
+            text = {
+                Column(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.alert_bugreport),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        softWrap = true,
+                        textAlign = TextAlign.Justify
+                    )
+                    HorizontalDivider(Modifier.padding(vertical = 8.dp))
+                    Text(
+                        modifier = modifier.clickable {
+                            showBugreportDialog = false
+                            viewModel.viewModelScope.launch {
+                                context.tryStartActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
+                                    )
+                                )
+                            }
+                        },
+                        text = location.fixMeUrl!!,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun LocationItemGridPopup(
+    location: Location,
+    show: MutableTransitionState<Boolean>,
+    animationProgress: Float,
+    origin: Rect,
+    onDismiss: () -> Unit
+) {
+    AnimatedVisibility(
+        show,
+        enter = expandIn(
+            animationSpec = tween(300),
+            expandFrom = Alignment.TopEnd,
+        ) { origin.roundToIntRect().size },
+        exit = shrinkOut(
+            animationSpec = tween(300),
+            shrinkTowards = Alignment.TopEnd,
+        ) { origin.roundToIntRect().size },
+    ) {
+        LocationItem(
+            modifier = Modifier.fillMaxWidth()
+                .scale(
+                    1 - (1 - LocalGridSettings.current.iconSize / 84f) * (1 - animationProgress),
+                    transformOrigin = TransformOrigin(1f, 0f)
+                )
+                .offset(
+                    x = 16.dp * (1 - animationProgress).pow(10),
+                    y = (-16).dp * (1 - animationProgress),
+                ),
+            location = location,
+            showDetails = true,
+            onBack = onDismiss,
+        )
     }
 }
 

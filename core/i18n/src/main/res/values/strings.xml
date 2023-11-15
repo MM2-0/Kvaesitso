@@ -884,4 +884,7 @@
     <string name="preference_search_locations_show_position_on_map">Show location</string>
     <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
     <string name="tile_server_url">https://tile.openstreetmap.org</string>
+    <string name="menu_dial">Dial</string>
+    <string name="menu_bugreport">Bug Report</string>
+    <string name="alert_bugreport">You have reached the bug-report dialog. In case the location result contains incorrect data, please double check with the provider and tap the link below if the issue is theirs. If this is not the case, please raise an issue on GitHub with the location that you were looking up!</string>
 </resources>
