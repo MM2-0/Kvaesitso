@@ -50,6 +50,7 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
@@ -73,7 +74,7 @@ fun LocationItem(
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
     if (distance != null) priorityCallback?.invoke(location.key, distance.roundToInt())
 
-    var openingHours by remember { mutableStateOf<List<OpeningTime>?>(null) }
+    var openingHours by remember { mutableStateOf<ImmutableList<OpeningTime>?>(null) }
     var websiteUrl by remember { mutableStateOf<String?>(null) }
     var street by remember { mutableStateOf<String?>(null) }
     var houseNumber by remember { mutableStateOf<String?>(null) }

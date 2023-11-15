@@ -68,7 +68,7 @@ class OverpassFuzzyRadiusQueryConverter : Converter<OverpassFuzzyRadiusQuery, Re
 class OverpassIdQueryConverter : Converter<OverpassIdQuery, RequestBody> {
     override fun convert(value: OverpassIdQuery): RequestBody = """
         [out:json];
-        node(${value.id});
+        nw(${value.id});
         out;
     """.trimIndent().toRequestBody()
 }

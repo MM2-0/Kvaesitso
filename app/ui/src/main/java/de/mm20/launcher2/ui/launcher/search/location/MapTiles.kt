@@ -54,12 +54,12 @@ import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
-import org.koin.core.context.KoinContext
-import org.koin.core.context.KoinContextHandler
 import org.koin.core.context.startKoin
 import java.time.DayOfWeek
 import java.time.Duration
@@ -123,7 +123,10 @@ fun MapTiles(
                                 )
                                 .build(),
                             contentDescription = null,
-                            colorFilter = if (applyTheming) ColorFilter.tint(tintColor, BlendMode.Saturation) else null,
+                            colorFilter = if (applyTheming) ColorFilter.tint(
+                                tintColor,
+                                BlendMode.Saturation
+                            ) else null,
                             onState = {
                                 if (it is AsyncImagePainter.State.Success)
                                     drawnTiles.intValue++
@@ -397,13 +400,14 @@ internal object MockLocation : Location {
 
     override suspend fun getHouseNumber(): String = "1"
 
-    override suspend fun getOpeningHours(): List<OpeningTime> = enumValues<DayOfWeek>().map {
-        OpeningTime(
-            dayOfWeek = it,
-            startTime = LocalTime.MIDNIGHT,
-            duration = Duration.ofDays(1)
-        )
-    }
+    override suspend fun getOpeningHours(): ImmutableList<OpeningTime> =
+        enumValues<DayOfWeek>().map {
+            OpeningTime(
+                dayOfWeek = it,
+                startTime = LocalTime.MIDNIGHT,
+                duration = Duration.ofDays(1)
+            )
+        }.toImmutableList()
 
     override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 

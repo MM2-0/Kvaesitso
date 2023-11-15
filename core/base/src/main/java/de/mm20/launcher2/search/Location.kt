@@ -6,6 +6,7 @@ import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import kotlinx.collections.immutable.ImmutableList
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
@@ -19,7 +20,7 @@ interface Location : SavableSearchable {
     suspend fun getCategory(): LocationCategory?
     suspend fun getStreet(): String?
     suspend fun getHouseNumber(): String?
-    suspend fun getOpeningHours(): List<OpeningTime>?
+    suspend fun getOpeningHours(): ImmutableList<OpeningTime>?
     suspend fun getWebsiteUrl(): String?
 
     override val preferDetailsOverLaunch: Boolean

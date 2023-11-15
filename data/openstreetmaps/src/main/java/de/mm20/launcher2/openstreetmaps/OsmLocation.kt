@@ -11,6 +11,8 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningTime
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -30,7 +32,7 @@ internal data class OsmLocation(
     override val longitude: Double,
     var street: String?,
     var houseNumber: String?,
-    var openingHours: List<OpeningTime>?,
+    var openingHours: ImmutableList<OpeningTime>?,
     var websiteUrl: String?,
     override val labelOverride: String? = null,
 ) : Location {
@@ -70,7 +72,7 @@ internal data class OsmLocation(
         return houseNumber
     }
 
-    override suspend fun getOpeningHours(): List<OpeningTime>? {
+    override suspend fun getOpeningHours(): ImmutableList<OpeningTime>? {
         if (openingHours == null)
             updateCache()
         return openingHours
@@ -175,7 +177,17 @@ private val dayRangeRegex by lazy {
     )
 }
 
-internal fun parseOpeningTimes(it: String?): List<OpeningTime>? {
+private val twentyFourSeven = enumValues<DayOfWeek>().map {
+    OpeningTime(
+        dayOfWeek = it,
+        startTime = LocalTime.MIDNIGHT,
+        duration = Duration.ofDays(1)
+    )
+}.toImmutableList()
+
+// If this is not sufficient, resort to implementing https://wiki.openstreetmap.org/wiki/Key:opening_hours/specification
+// or port https://github.com/opening-hours/opening_hours.js
+internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
     if (it.isNullOrBlank()) return null
 
     val openingTimes = mutableListOf<OpeningTime>()
@@ -186,6 +198,9 @@ internal fun parseOpeningTimes(it: String?): List<OpeningTime>? {
     // "Mo-Th 10:00-24:00, Fr,Sa 10:00-05:00, PH,Su 12:00-22:00"
     var blocks =
         it.split(',', ';', ' ').mapNotNull { if (it.isBlank()) null else it.trim() }
+
+    if (blocks.first() == "24/7")
+        return twentyFourSeven
 
     fun dayOfWeekFromString(it: String): DayOfWeek? = when (it.lowercase()) {
         "mo" -> DayOfWeek.MONDAY
@@ -303,5 +318,5 @@ internal fun parseOpeningTimes(it: String?): List<OpeningTime>? {
         blocks = blocks.subList(nextGroupIndex, blocks.size)
     }
 
-    return openingTimes
+    return openingTimes.toImmutableList()
 }
