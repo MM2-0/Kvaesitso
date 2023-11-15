@@ -123,6 +123,7 @@ internal class OsmRepository(
                     val result = awaitAll(
                         // optionally query by "amenity" or "shop" here
                         // if we want to make searching for locations fuzzier
+                        // however, this would not account for localized queries like "Bäcker" (shop:bakery)
                         async(this.coroutineContext) { searchByTag("name") },
                         async(this.coroutineContext) { searchByTag("brand") },
                     ).flatMap {

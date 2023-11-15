@@ -68,7 +68,7 @@ interface Location : SavableSearchable {
             LocationCategory.HARDWARE -> R.drawable.ic_location_hardware to R.color.brown
             LocationCategory.ELECTRONICS -> R.drawable.ic_location_electronics to R.color.blue
             LocationCategory.SHOES -> R.drawable.ic_location_shoes to R.color.pink
-            LocationCategory.MALL, LocationCategory.DEPARTMENT_STORE -> R.drawable.ic_location_mall to R.color.blue
+            LocationCategory.MALL, LocationCategory.DEPARTMENT_STORE, LocationCategory.CHEMIST -> R.drawable.ic_location_mall to R.color.blue
             LocationCategory.OPTICIAN -> R.drawable.ic_location_optician to R.color.blue
             LocationCategory.JEWELRY -> R.drawable.ic_location_jewelry to R.color.pink
             LocationCategory.GIFT -> R.drawable.ic_location_gift to R.color.pink
@@ -185,7 +185,8 @@ enum class LocationCategory {
     KIOSK,
     BUS_STOP,
     MUSEUM,
-    PARCEL_LOCKER
+    PARCEL_LOCKER,
+    CHEMIST
 }
 
 data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {
