@@ -21,7 +21,7 @@ interface Location : SavableSearchable {
     suspend fun getCategory(): LocationCategory?
     suspend fun getStreet(): String?
     suspend fun getHouseNumber(): String?
-    suspend fun getOpeningHours(): ImmutableList<OpeningTime>?
+    suspend fun getOpeningSchedule(): OpeningSchedule?
     suspend fun getWebsiteUrl(): String?
     suspend fun getPhoneNumber(): String?
 
@@ -201,11 +201,16 @@ enum class LocationCategory {
     FITNESS_CENTRE
 }
 
-data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {
+data class OpeningHours(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {
     val isOpen: Boolean
         get() = LocalDate.now().dayOfWeek == dayOfWeek &&
                 LocalTime.now().isAfter(startTime) &&
                 LocalTime.now().isBefore(startTime.plus(duration))
 
     override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
+}
+
+data class OpeningSchedule(val isTwentyFourSeven: Boolean, val openingHours: ImmutableList<OpeningHours>) {
+    val isOpen: Boolean
+        get() = isTwentyFourSeven || openingHours.any { it.isOpen }
 }

@@ -887,4 +887,5 @@
     <string name="menu_dial">Dial</string>
     <string name="menu_bugreport">Bug Report</string>
     <string name="alert_bugreport">You have reached the bug-report dialog. In case the location result contains incorrect data, please double check with the provider and tap the link below if the issue is theirs. If this is not the case, please raise an issue on GitHub with the location that you were looking up!</string>
+    <string name="location_open_24_7">Open 24/7</string>
 </resources>

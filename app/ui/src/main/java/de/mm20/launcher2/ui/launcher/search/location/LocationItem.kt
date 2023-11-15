@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -55,7 +54,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -68,7 +67,6 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.Duration
@@ -100,7 +98,7 @@ fun LocationItem(
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
     if (distance != null) priorityCallback?.invoke(location.key, distance.roundToInt())
 
-    var openingHours by remember { mutableStateOf<ImmutableList<OpeningTime>?>(null) }
+    var openingSchedule by remember { mutableStateOf<OpeningSchedule?>(null) }
     var phoneNumber by remember { mutableStateOf<String?>(null) }
     var websiteUrl by remember { mutableStateOf<String?>(null) }
     var street by remember { mutableStateOf<String?>(null) }
@@ -109,7 +107,7 @@ fun LocationItem(
 
     LaunchedEffect(location) {
         viewModel.init(location, iconSize.toInt())
-        openingHours = location.getOpeningHours()
+        openingSchedule = location.getOpeningSchedule()
         websiteUrl = location.getWebsiteUrl()
         street = location.getStreet()
         houseNumber = location.getHouseNumber()
@@ -156,8 +154,8 @@ fun LocationItem(
                         overflow = TextOverflow.Ellipsis,
                         softWrap = true,
                     )
-                    if (!openingHours.isNullOrEmpty()) {
-                        val isOpen = openingHours!!.any { it.isOpen }
+                    if (!openingSchedule?.openingHours.isNullOrEmpty()) {
+                        val isOpen = openingSchedule!!.isOpen
                         AnimatedVisibility(!showDetails) {
                             Text(
                                 modifier = Modifier
@@ -202,7 +200,8 @@ fun LocationItem(
             }
             AnimatedVisibility(showDetails) {
                 Column {
-                    val hasOpeningTimes = !openingHours.isNullOrEmpty()
+                    val isTwentyFourSeven = openingSchedule?.isTwentyFourSeven ?: false
+                    val hasOpeningHours = !openingSchedule?.openingHours.isNullOrEmpty()
                     val daysOfWeek = enumValues<DayOfWeek>()
 
                     val javaLocale = java.util.Locale.forLanguageTag(Locale.current.toLanguageTag())
@@ -210,10 +209,20 @@ fun LocationItem(
                         .ofLocalizedTime(FormatStyle.SHORT)
                         .withLocale(javaLocale)
 
-                    if (hasOpeningTimes) {
-                        val openIndex = openingHours!!.indexOfFirst { it.isOpen }
+                    if (isTwentyFourSeven) {
+                        Text(
+                            modifier = Modifier
+                                .align(Alignment.CenterHorizontally)
+                                .padding(bottom = 8.dp),
+                            text = stringResource(id = R.string.location_open_24_7),
+                            style = MaterialTheme.typography.labelMedium,
+                            color = MaterialTheme.colorScheme.tertiary,
+                        )
+                    } else if (hasOpeningHours) {
+                        val oh = openingSchedule!!.openingHours
+                        val openIndex = oh.indexOfFirst { it.isOpen }
                         if (openIndex != -1) {
-                            val todaySchedule = openingHours!![openIndex]
+                            val todaySchedule = oh[openIndex]
                             Text(
                                 modifier = Modifier
                                     .align(Alignment.CenterHorizontally)
@@ -277,20 +286,21 @@ fun LocationItem(
 
                     HorizontalDivider(Modifier.padding(top = 8.dp))
 
-                    if (hasOpeningTimes) {
+                    if (!isTwentyFourSeven && hasOpeningHours) {
                         val today = LocalDateTime.now().dayOfWeek
+                        val oh = openingSchedule!!.openingHours
                         val nextOpeningTime =
                             (0 until DayOfWeek.SUNDAY.ordinal)
                                 .firstNotNullOfOrNull {
                                     val dow =
                                         daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
-                                    openingHours!!.filter { it.dayOfWeek == dow }
+                                    oh.filter { it.dayOfWeek == dow }
                                         .firstOrNull {
                                             it.dayOfWeek != today || it.startTime.isAfter(
                                                 LocalTime.now()
                                             )
                                         }
-                                } ?: openingHours!!.first()
+                                } ?: oh.first()
 
                         Text(
                             modifier = Modifier

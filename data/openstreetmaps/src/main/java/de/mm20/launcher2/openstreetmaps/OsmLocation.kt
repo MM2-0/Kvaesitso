@@ -9,7 +9,8 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.search.OpeningHours
+import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
@@ -32,7 +33,7 @@ internal data class OsmLocation(
     private val _longitude: Double?,
     private var street: String?,
     private var houseNumber: String?,
-    private var openingHours: ImmutableList<OpeningTime>?,
+    private var openingSchedule: OpeningSchedule?,
     private var websiteUrl: String?,
     private var phoneNumber: String?,
     private var isCacheUpToDate: Boolean,
@@ -91,12 +92,12 @@ internal data class OsmLocation(
         return houseNumber
     }
 
-    override suspend fun getOpeningHours(): ImmutableList<OpeningTime>? {
+    override suspend fun getOpeningSchedule(): OpeningSchedule? {
         if (isCacheUpToDate)
-            return openingHours
-        if (openingHours == null)
+            return openingSchedule
+        if (openingSchedule == null)
             updateCache()
-        return openingHours
+        return openingSchedule
     }
 
     override suspend fun getWebsiteUrl(): String? {
@@ -126,7 +127,7 @@ internal data class OsmLocation(
         category = upToDateEntry.category
         street = upToDateEntry.street
         houseNumber = upToDateEntry.houseNumber
-        openingHours = upToDateEntry.openingHours
+        openingSchedule = upToDateEntry.openingSchedule
         websiteUrl = upToDateEntry.websiteUrl
 
         isCacheUpToDate = true
@@ -181,7 +182,7 @@ internal data class OsmLocation(
                 _longitude = it.lon ?: it.center?.lon,
                 street = it.tags["addr:street"],
                 houseNumber = it.tags["addr:housenumber"],
-                openingHours = it.tags["opening_hours"]?.let { ot -> parseOpeningTimes(ot) },
+                openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"],
                 phoneNumber = it.tags["phone"],
                 isCacheUpToDate = true,
@@ -214,8 +215,10 @@ private val dayRangeRegex by lazy {
     )
 }
 
-private val twentyFourSeven = enumValues<DayOfWeek>().map {
-    OpeningTime(
+private val daysOfWeek = enumValues<DayOfWeek>().toList().toImmutableList()
+
+private val twentyFourSeven = daysOfWeek.map {
+    OpeningHours(
         dayOfWeek = it,
         startTime = LocalTime.MIDNIGHT,
         duration = Duration.ofDays(1)
@@ -224,10 +227,10 @@ private val twentyFourSeven = enumValues<DayOfWeek>().map {
 
 // If this is not sufficient, resort to implementing https://wiki.openstreetmap.org/wiki/Key:opening_hours/specification
 // or port https://github.com/opening-hours/opening_hours.js
-internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
+internal fun parseOpeningSchedule(it: String?): OpeningSchedule? {
     if (it.isNullOrBlank()) return null
 
-    val openingTimes = mutableListOf<OpeningTime>()
+    val openingHours = mutableListOf<OpeningHours>()
 
     // e.g.
     // "Mo-Sa 11:00-14:00, 17:00-23:00; Su 11:00-23:00"
@@ -237,7 +240,10 @@ internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
         it.split(',', ';', ' ').mapNotNull { if (it.isBlank()) null else it.trim() }
 
     if (blocks.first() == "24/7")
-        return twentyFourSeven
+        return OpeningSchedule(
+            isTwentyFourSeven = true,
+            openingHours = twentyFourSeven
+        )
 
     fun dayOfWeekFromString(it: String): DayOfWeek? = when (it.lowercase()) {
         "mo" -> DayOfWeek.MONDAY
@@ -249,6 +255,9 @@ internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
         "su" -> DayOfWeek.SUNDAY
         else -> null
     }
+
+    var allDay = false
+    var everyDay = false
 
     fun parseGroup(group: List<String>) {
         if (group.isEmpty())
@@ -287,8 +296,6 @@ internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
                 val dowEnd = dayOfWeekFromString(it.substringAfter('-'))
                     ?: return@flatMap emptyList()
 
-                val daysOfWeek = enumValues<DayOfWeek>().toList()
-
                 if (dowStart.ordinal <= dowEnd.ordinal)
                     daysOfWeek.subList(dowStart.ordinal, dowEnd.ordinal + 1)
                 else // "We-Mo"
@@ -299,17 +306,21 @@ internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
                     .mapNotNull { dayOfWeekFromString(it) }
             )
 
-        // if no time specified, treat as "all day" TODO really?
-        if (times.isEmpty())
+        // if no time specified, treat as "all day"
+        if (times.isEmpty()) {
+            allDay = true
             times = listOf(LocalTime.MIDNIGHT to Duration.ofDays(1))
+        }
 
         // if no day specified, treat as "every day"
-        if (days.isEmpty())
-            days = enumValues<DayOfWeek>().toSet()
+        if (days.isEmpty()) {
+            everyDay = true
+            days = daysOfWeek.toSet()
+        }
 
-        openingTimes.addAll(days.flatMap { day ->
+        openingHours.addAll(days.flatMap { day ->
             times.map { (start, duration) ->
-                OpeningTime(
+                OpeningHours(
                     dayOfWeek = day,
                     startTime = start,
                     duration = duration
@@ -355,5 +366,8 @@ internal fun parseOpeningTimes(it: String?): ImmutableList<OpeningTime>? {
         blocks = blocks.subList(nextGroupIndex, blocks.size)
     }
 
-    return openingTimes.toImmutableList()
+    return OpeningSchedule(
+        isTwentyFourSeven = allDay && everyDay,
+        openingHours.toImmutableList()
+    )
 }

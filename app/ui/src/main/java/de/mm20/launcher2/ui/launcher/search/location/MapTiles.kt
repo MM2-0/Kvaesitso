@@ -51,7 +51,8 @@ import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningTime
+import de.mm20.launcher2.search.OpeningHours
+import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.ImmutableList
@@ -401,14 +402,7 @@ internal object MockLocation : Location {
 
     override suspend fun getHouseNumber(): String = "1"
 
-    override suspend fun getOpeningHours(): ImmutableList<OpeningTime> =
-        enumValues<DayOfWeek>().map {
-            OpeningTime(
-                dayOfWeek = it,
-                startTime = LocalTime.MIDNIGHT,
-                duration = Duration.ofDays(1)
-            )
-        }.toImmutableList()
+    override suspend fun getOpeningSchedule(): OpeningSchedule = OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
 
     override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 

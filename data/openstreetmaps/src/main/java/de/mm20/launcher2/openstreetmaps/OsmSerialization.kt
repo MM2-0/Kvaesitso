@@ -34,7 +34,7 @@ class OsmLocationDeserializer : SearchableDeserializer {
             label = json.getString("label"),
             street = null,
             houseNumber = null,
-            openingHours = null,
+            openingSchedule = null,
             websiteUrl = null,
             phoneNumber = null,
             isCacheUpToDate = false,
