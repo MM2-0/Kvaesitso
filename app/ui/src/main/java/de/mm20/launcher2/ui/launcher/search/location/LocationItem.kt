@@ -45,8 +45,6 @@ import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.ktx.DegreesConverter
-import de.mm20.launcher2.ui.ktx.getNorthHeading
-import de.mm20.launcher2.ui.ktx.getUserLocation
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -67,7 +65,9 @@ fun LocationItem(
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
-    val userLocation by remember(context) { context.getUserLocation() }.collectAsStateWithLifecycle(null)
+    val userLocation by remember {
+        viewModel.devicePoseProvider.getUserLocation()
+    }.collectAsStateWithLifecycle(null)
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
@@ -147,7 +147,10 @@ fun LocationItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
-                    val userHeading by remember(context) { context.getNorthHeading() }.collectAsStateWithLifecycle(null)
+                    val userHeading by remember {
+                        viewModel.devicePoseProvider.getNorthHeading()
+                    }.collectAsStateWithLifecycle(null)
+
                     if (userLocation != null && userHeading != null) {
                         val directionArrowAngle by animateValueAsState(
                             targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!,

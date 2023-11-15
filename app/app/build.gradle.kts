@@ -168,6 +168,7 @@ dependencies {
     implementation(project(":services:favorites"))
     implementation(project(":data:openstreetmaps"))
     implementation(project(":services:plugins"))
+    implementation(project(":core:devicepose"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)

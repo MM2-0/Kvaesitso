@@ -252,7 +252,7 @@ fun PullDownScaffold(
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )
         } else {
-            searchVM.search("", context = null)
+            searchVM.search("")
             if (viewModel.skipNextSearchAnimation) {
                 pagerState.scrollToPage(0)
                 viewModel.skipNextSearchAnimation = false
@@ -273,7 +273,7 @@ fun PullDownScaffold(
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
-                searchVM.search("", context = null)
+                searchVM.search("")
                 true
             }
 
@@ -604,7 +604,7 @@ fun PullDownScaffold(
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
             showHiddenItemsButton = isSearchOpen,
             value = { value },
-            onValueChange = { searchVM.search(it, context) },
+            onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,

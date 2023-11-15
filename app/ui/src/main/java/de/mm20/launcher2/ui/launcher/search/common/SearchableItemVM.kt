@@ -1,26 +1,14 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
-import android.Manifest
 import android.content.Context
-import android.hardware.GeomagneticField
-import android.hardware.Sensor
-import android.hardware.SensorEvent
-import android.hardware.SensorEventListener
-import android.hardware.SensorManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.ktx.PI
-import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -33,11 +21,9 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.first
@@ -57,6 +43,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
+
+    val devicePoseProvider: DevicePoseProvider by inject()
 
     private val searchable = MutableStateFlow<SavableSearchable?>(null)
     private val iconSize = MutableStateFlow(0)

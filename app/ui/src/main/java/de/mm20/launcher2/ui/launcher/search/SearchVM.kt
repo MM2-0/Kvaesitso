@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -26,8 +27,6 @@ import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
-import de.mm20.launcher2.ui.ktx.getUserLocation
-import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -51,6 +50,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
+    private val devicePoseProvider: DevicePoseProvider by inject()
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -89,7 +89,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
-        search("", context = null, forceRestart = true)
+        search("", forceRestart = true)
     }
 
     fun launchBestMatchOrAction(context: Context) {
@@ -105,7 +105,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     private var searchJob: Job? = null
-    fun search(query: String, context: Context?, forceRestart: Boolean = false) {
+    fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
@@ -173,7 +173,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
                     val lastUserLocation = if (settings.locationsSearch.enabled &&
                         !results.locations.isNullOrEmpty()
-                    ) context?.getUserLocation()?.firstOrNull() else null
+                    ) devicePoseProvider.getUserLocation().firstOrNull() else null
 
                     resultsList = resultsList.sortedWith { a, b ->
                         when {
