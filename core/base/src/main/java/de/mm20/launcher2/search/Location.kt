@@ -91,7 +91,7 @@ interface Location : SavableSearchable {
             LocationCategory.SOCCER -> R.drawable.ic_location_soccer to R.color.green
             LocationCategory.BASKETBALL -> R.drawable.ic_location_basketball to R.color.orange
             LocationCategory.TENNIS -> R.drawable.ic_location_tennis to R.color.orange
-            LocationCategory.FITNESS -> R.drawable.ic_location_fitness to R.color.orange
+            LocationCategory.FITNESS, LocationCategory.FITNESS_CENTRE -> R.drawable.ic_location_fitness to R.color.orange
             LocationCategory.TRAM_STOP -> R.drawable.ic_location_tram_stop to R.color.blue
             LocationCategory.RAILWAY_STOP -> R.drawable.ic_location_railway_stop to R.color.lightblue
             LocationCategory.BUS_STATION, LocationCategory.BUS_STOP -> R.drawable.ic_location_bus_station to R.color.blue
@@ -197,7 +197,8 @@ enum class LocationCategory {
     MUSEUM,
     PARCEL_LOCKER,
     CHEMIST,
-    TRAVEL_AGENCY
+    TRAVEL_AGENCY,
+    FITNESS_CENTRE
 }
 
 data class OpeningTime(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {

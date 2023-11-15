@@ -148,6 +148,7 @@ internal data class OsmLocation(
             "railway", // "railway:stop"
             "highway", // "highway:bus_stop"
             "tourism", // "tourism:museum"
+            "leisure", // "leisure:fitness_center"
         )
 
         fun fromOverpassResponse(
