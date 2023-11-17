@@ -314,7 +314,10 @@ fun LocationItem(
                                         LocalTime.now(),
                                         nextOpeningTime.startTime,
                                     )
-                                    "${untilOpenToday.toHours()}h ${untilOpenToday.toMinutes() % 60L}m"
+                                    val hours = untilOpenToday.toHours()
+                                    val minutes = untilOpenToday.toMinutes() % 60L
+                                    if (hours > 0L) "${hours}h ${minutes}m"
+                                    else "${minutes}m"
                                 } else "${
                                     nextOpeningTime.dayOfWeek.getDisplayName(
                                         TextStyle.FULL_STANDALONE,
