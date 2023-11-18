@@ -64,6 +64,8 @@ import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import kotlin.math.asinh
+import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -138,7 +140,8 @@ fun MapTiles(
                                 BlendMode.Saturation
                             ) else null,
                             onState = {
-                                val stateIndex = (y - start.y) * (stop.y - start.y + 1) + (x - start.x)
+                                val stateIndex =
+                                    (y - start.y) * (stop.y - start.y + 1) + (x - start.x)
                                 if (it is AsyncImagePainter.State.Loading)
                                     imageStates[stateIndex] = false
                                 if (it is AsyncImagePainter.State.Success)
@@ -374,24 +377,32 @@ private fun getEnclosingTiles(
             var xStop = max(locationTileX, userTileX)
             var yStop = max(locationTileY, userTileY)
 
-            if (xStop - xStart < sideLen) {
-                if (sideLen % 2 == 1) {
-                    xStart = locationTileX - sideLenHalf
-                    xStop = locationTileX + sideLenHalf
+            val xRem = sideLen - xStop + xStart - 1
+            if (0 < xRem) {
+                val leftOfCenter = (locationX % 1.0) < 0.5
+                val ceil = ceil(xRem / 2.0).toInt()
+                val floor = floor(xRem / 2.0).toInt()
+
+                if (leftOfCenter) {
+                    xStart -= ceil
+                    xStop += floor
                 } else {
-                    val leftOfCenter = (locationX % 1.0) < 0.5
-                    xStart -= if (leftOfCenter) sideLenHalf else sideLenHalf - 1
-                    xStop += if (leftOfCenter) sideLenHalf - 1 else sideLenHalf
+                    xStart -= floor
+                    xStop += ceil
                 }
             }
-            if (yStop - yStart < sideLen) {
-                if (sideLen % 2 == 1) {
-                    yStart = locationTileY - sideLenHalf
-                    yStop = locationTileY + sideLenHalf
+            val yRem = sideLen - yStop + yStart - 1
+            if (0 < yRem) {
+                val topOfCenter = (locationY % 1.0) < 0.5
+                val ceil = ceil(yRem / 2.0).toInt()
+                val floor = floor(yRem / 2.0).toInt()
+
+                if (topOfCenter) {
+                    yStart -= ceil
+                    yStop += floor
                 } else {
-                    val topOfCenter = (locationY % 1.0) < 0.5
-                    yStart -= if (topOfCenter) sideLenHalf else sideLenHalf - 1
-                    yStop += if (topOfCenter) sideLenHalf - 1 else sideLenHalf
+                    yStart -= floor
+                    yStop += ceil
                 }
             }
 
