@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.compose.animation.core.EaseInOutBounce
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -181,20 +182,39 @@ fun MapTiles(
             val osmAttributionSurface =
                 MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f)
 
-            Canvas(modifier = Modifier.matchParentSize()) {
+            val (yLocation, xLocation) = remember(location, zoom) {
+                getDoubleTileCoordinates(
+                    latitude = location.latitude,
+                    longitude = location.longitude,
+                    zoom
+                )
+            }
+            val (yUser, xUser) = remember(userLocation, zoom) {
                 if (userLocation != null) {
-                    val (yUser, xUser) = getDoubleTileCoordinates(
+                    getDoubleTileCoordinates(
                         latitude = userLocation.first,
                         longitude = userLocation.second,
                         zoom
                     )
-                    // user inside of map tiles?
+                } else {
+                    -1.0 to -1.0
+                }
+            }
+            val animatedUserIndicatorOffset by animateOffsetAsState(
+                targetValue = Offset(xUser.toFloat(), yUser.toFloat()),
+                animationSpec = tween(
+                    1000,
+                    250
+                )
+            )
+
+            Canvas(modifier = Modifier.matchParentSize()) {
+                if (userLocation != null) {
                     if (start.y < yUser && yUser < stop.y + 1 &&
                         start.x < xUser && xUser < stop.x + 1
                     ) {
-                        val userIndicatorOffset =
-                            Offset(xUser.toFloat(), yUser.toFloat())
-                                .scaleToTiles(start, sideLength, size)
+                        val userIndicatorOffset = animatedUserIndicatorOffset
+                            .scaleToTiles(start, sideLength, size)
                         drawCircle(
                             color = userLocationBorderColor,
                             radius = 18.5f * locationIndicatorAnimation,
@@ -208,11 +228,6 @@ fun MapTiles(
                     }
                 }
 
-                val (yLocation, xLocation) = getDoubleTileCoordinates(
-                    latitude = location.latitude,
-                    longitude = location.longitude,
-                    zoom
-                )
                 val locationIndicatorOffset =
                     Offset(xLocation.toFloat(), yLocation.toFloat())
                         .scaleToTiles(start, sideLength, size)
@@ -345,11 +360,11 @@ private fun getEnclosingTiles(
     val sideLen = sqrt(nTiles.toDouble()).toInt()
     val sideLenHalf = sideLen / 2
 
-    // start at previous zoom to do less calculations, because if
+    // start at previous zoom (+1) to do less calculations, because if
     //  - user comes closer to location:
     //      we might be able to increase the zoom level by one
-    //  - user moves further away from location (which is less likely):
-    //      we still iterate down to minimum zoom
+    //  - user moves further away from location:
+    //      we still iterate down to minimum zoom and there is no need to start with ZOOM_MAX for that
     for (zoomLevel in previousZoomLevel
         .intValue
         .let { if (it == -1) ZOOM_MAX else min(it + 1, ZOOM_MAX) } downTo ZOOM_MIN
