@@ -84,16 +84,26 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
+    var previousZoomLevel: Int? = null
     val (start, stop, zoom) = remember(userLocation) {
-        userLocation
+        val tileCoordinateRange = userLocation
             ?.runCatching {
-                getEnclosingTiles(location, numberOfTiles, this)
+                getEnclosingTiles(
+                    location,
+                    numberOfTiles,
+                    this,
+                    previousZoomLevel
+                )
             }
             ?.onFailure {
                 Log.e("MapTiles", "Enclosing calculation failed", it)
             }
             ?.getOrNull()
             ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
+
+        previousZoomLevel = tileCoordinateRange.zoomLevel
+
+        tileCoordinateRange
     }
 
     val sideLength = sqrt(numberOfTiles.toFloat())
@@ -143,6 +153,7 @@ fun MapTiles(
                 }
             }
         }
+
 
         if (numberOfTiles == drawnTiles.intValue) {
             val locationBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
@@ -318,10 +329,12 @@ private fun getTilesAround(
 const val ZOOM_MAX = 19
 const val ZOOM_MIN = 0
 
+
 private fun getEnclosingTiles(
     location: Location,
     nTiles: Int,
     userLocation: UserLocation,
+    previousZoomLevel: Int?,
 ): TileCoordinateRange {
     if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
         throw IllegalArgumentException("nTiles must be a square number")
@@ -329,7 +342,12 @@ private fun getEnclosingTiles(
     val sideLen = sqrt(nTiles.toDouble()).toInt()
     val sideLenHalf = sideLen / 2
 
-    for (zoomLevel in ZOOM_MAX downTo ZOOM_MIN) {
+    // start at previous zoom to do less calculations, because if
+    //  - user comes closer to location:
+    //      we might be able to increase the zoom level by one
+    //  - user moves further away from location (which is less likely):
+    //      we still iterate down to minimum zoom
+    for (zoomLevel in (previousZoomLevel?.let { it + 1 } ?: ZOOM_MAX) downTo ZOOM_MIN) {
 
         val (locationY, locationX) = getDoubleTileCoordinates(
             location.latitude,
