@@ -374,20 +374,20 @@ private fun getEnclosingTiles(
             var xStop = max(locationTileX, userTileX)
             var yStop = max(locationTileY, userTileY)
 
-            if (xStart == xStop) {
+            if (xStop - xStart < sideLen) {
                 if (sideLen % 2 == 1) {
-                    xStart -= sideLenHalf
-                    xStop += sideLenHalf
+                    xStart = locationTileX - sideLenHalf
+                    xStop = locationTileX + sideLenHalf
                 } else {
                     val leftOfCenter = (locationX % 1.0) < 0.5
                     xStart -= if (leftOfCenter) sideLenHalf else sideLenHalf - 1
                     xStop += if (leftOfCenter) sideLenHalf - 1 else sideLenHalf
                 }
             }
-            if (yStart == yStop) {
+            if (yStop - yStart < sideLen) {
                 if (sideLen % 2 == 1) {
-                    yStart -= sideLenHalf
-                    yStop += sideLenHalf
+                    yStart = locationTileY - sideLenHalf
+                    yStop = locationTileY + sideLenHalf
                 } else {
                     val topOfCenter = (locationY % 1.0) < 0.5
                     yStart -= if (topOfCenter) sideLenHalf else sideLenHalf - 1
