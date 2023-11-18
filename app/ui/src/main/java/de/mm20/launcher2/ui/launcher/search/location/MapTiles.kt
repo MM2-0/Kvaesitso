@@ -145,7 +145,7 @@ fun MapTiles(
         }
 
         if (numberOfTiles == drawnTiles.intValue) {
-            val locationBorderColor = MaterialTheme.colorScheme.inversePrimary
+            val locationBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
             val userLocationColor = MaterialTheme.colorScheme.primary
             val userLocationBorderColor = MaterialTheme.colorScheme.outline
 
@@ -205,8 +205,7 @@ fun MapTiles(
                     color = locationBorderColor,
                     radius = 32f,
                     center = locationIndicatorOffset,
-                    alpha = locationIndicatorAnimation,
-                    blendMode = BlendMode.DstIn
+                    alpha = locationIndicatorAnimation * 0.5f
                 )
                 if (osmAttribution != null) {
                     val measureResult = textMeasurer.measure(
@@ -307,10 +306,10 @@ private fun getTilesAround(
         val leftOfCenter = (xCoordinate % 1.0) < 0.5
         val topOfCenter = (yCoordinate % 1.0) < 0.5
 
-        yStart = if (topOfCenter) yTile - sideLen / 2 else yTile - sideLen / 2 + 1
-        yStop = if (topOfCenter) yTile + sideLen / 2 - 1 else yTile + sideLen / 2
-        xStart = if (leftOfCenter) xTile - sideLen / 2 else xTile - sideLen / 2 + 1
-        xStop = if (leftOfCenter) xTile + sideLen / 2 - 1 else xTile + sideLen / 2
+        yStart = if (topOfCenter) yTile - sideLenHalf else yTile - sideLenHalf + 1
+        yStop = if (topOfCenter) yTile + sideLenHalf - 1 else yTile + sideLenHalf
+        xStart = if (leftOfCenter) xTile - sideLenHalf else xTile - sideLenHalf + 1
+        xStop = if (leftOfCenter) xTile + sideLenHalf - 1 else xTile + sideLenHalf
     }
 
     return TileCoordinateRange(IntOffset(xStart, yStart), IntOffset(xStop, yStop), zoomLevel)
@@ -359,8 +358,9 @@ private fun getEnclosingTiles(
                     xStart -= sideLenHalf
                     xStop += sideLenHalf
                 } else {
-                    xStart -= sideLenHalf - 1
-                    xStop += sideLenHalf
+                    val leftOfCenter = (locationX % 1.0) < 0.5
+                    xStart -= if (leftOfCenter) sideLenHalf else sideLenHalf - 1
+                    xStop += if (leftOfCenter) sideLenHalf - 1 else sideLenHalf
                 }
             }
             if (yStart == yStop) {
@@ -368,8 +368,9 @@ private fun getEnclosingTiles(
                     yStart -= sideLenHalf
                     yStop += sideLenHalf
                 } else {
-                    yStart -= sideLenHalf - 1
-                    yStop += sideLenHalf
+                    val topOfCenter = (locationY % 1.0) < 0.5
+                    yStart -= if (topOfCenter) sideLenHalf else sideLenHalf - 1
+                    yStop += if (topOfCenter) sideLenHalf - 1 else sideLenHalf
                 }
             }
 
