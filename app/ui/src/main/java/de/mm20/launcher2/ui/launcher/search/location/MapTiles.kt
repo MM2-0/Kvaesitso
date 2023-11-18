@@ -55,20 +55,15 @@ import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalTime
-import kotlin.math.atan
-import kotlin.math.cos
-import kotlin.math.ln
-import kotlin.math.sinh
+import kotlin.math.asinh
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.math.tan
 
@@ -78,7 +73,7 @@ typealias UserLocation = Pair<Double, Double>
 fun MapTiles(
     tileServerUrl: String,
     location: Location,
-    zoomLevel: Int,
+    initialZoomLevel: Int,
     numberOfTiles: Int,
     userLocation: UserLocation?,
     applyTheming: Boolean,
@@ -89,12 +84,17 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
-    val (start, stop) = getRowColTileCoordinatesAround(
-        location.latitude,
-        location.longitude,
-        zoomLevel,
-        numberOfTiles
-    )
+    val (start, stop, zoom) = remember(userLocation) {
+        userLocation
+            ?.runCatching {
+                getEnclosingTiles(location, numberOfTiles, this)
+            }
+            ?.onFailure {
+                Log.e("MapTiles", "Enclosing calculation failed", it)
+            }
+            ?.getOrNull()
+            ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
+    }
 
     val sideLength = sqrt(numberOfTiles.toFloat())
     val drawnTiles = remember { mutableIntStateOf(0) }
@@ -117,7 +117,7 @@ fun MapTiles(
                                 .fillMaxSize(),
                             imageLoader = TileMapRepository.loader,
                             model = ImageRequest.Builder(context)
-                                .data("$tileServerUrl/$zoomLevel/$x/$y.png")
+                                .data("$tileServerUrl/$zoom/$x/$y.png")
                                 .addHeader(
                                     "User-Agent",
                                     TileMapRepository.userAgent
@@ -134,7 +134,7 @@ fun MapTiles(
                                 if (it is AsyncImagePainter.State.Error)
                                     Log.e(
                                         "MapTiles",
-                                        "Error loading tile: $x, $y @$zoomLevel",
+                                        "Error loading tile: $x, $y @$zoom",
                                         it.result.throwable
                                     )
                             }
@@ -171,7 +171,7 @@ fun MapTiles(
                     val (yUser, xUser) = getDoubleTileCoordinates(
                         latitude = userLocation.first,
                         longitude = userLocation.second,
-                        zoomLevel
+                        zoom
                     )
                     // user inside of map tiles?
                     if (start.y < yUser && yUser < stop.y + 1 &&
@@ -196,7 +196,7 @@ fun MapTiles(
                 val (yLocation, xLocation) = getDoubleTileCoordinates(
                     latitude = location.latitude,
                     longitude = location.longitude,
-                    zoomLevel
+                    zoom
                 )
                 val locationIndicatorOffset =
                     Offset(xLocation.toFloat(), yLocation.toFloat())
@@ -246,10 +246,7 @@ fun MapTiles(
     }
 }
 
-// this scaling is not correct, as this linearity may not hold (mercator projection)
-// but at this zoom level, it should not be too bad
-// still, this does not return the correct offset
-// maybe osm does not display its labels correctly?
+// osm does not necessarily display its labels correctly for nodes, so this will be off in some cases
 private fun Offset.scaleToTiles(
     tilesTopLeft: IntOffset,
     sideLenTiles: Float,
@@ -258,6 +255,133 @@ private fun Offset.scaleToTiles(
     assert(boardSize.width == boardSize.height)
 
     return (this - tilesTopLeft) * (boardSize.width / sideLenTiles)
+}
+
+private fun getDoubleTileCoordinates(
+    latitude: Double,
+    longitude: Double,
+    zoomLevel: Int
+): Pair<Double, Double> {
+    // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Mathematics
+    val latRadians = Math.toRadians(latitude)
+    val xCoordinate = (longitude + 180.0) / 360.0 * (1 shl zoomLevel)
+    val yCoordinate = (1.0 - asinh(tan(latRadians)) / Math.PI) * (1 shl (zoomLevel - 1))
+
+    return yCoordinate to xCoordinate
+}
+
+data class TileCoordinateRange(val start: IntOffset, val stop: IntOffset, val zoomLevel: Int)
+
+private fun getTilesAround(
+    location: Location,
+    zoomLevel: Int,
+    nTiles: Int
+): TileCoordinateRange {
+    if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
+        throw IllegalArgumentException("nTiles must be a square number")
+
+    val sideLen = sqrt(nTiles.toDouble()).toInt()
+    val sideLenHalf = sideLen / 2
+
+    val (yCoordinate, xCoordinate) = getDoubleTileCoordinates(
+        location.latitude,
+        location.longitude,
+        zoomLevel
+    )
+    val xTile = xCoordinate.toInt()
+    val yTile = yCoordinate.toInt()
+
+    val yStart: Int
+    val yStop: Int
+    val xStart: Int
+    val xStop: Int
+
+    if (sideLen % 2 == 1) {
+        // center tile is defined
+        yStart = yTile - sideLenHalf
+        yStop = yTile + sideLenHalf
+        xStart = xTile - sideLenHalf
+        xStop = xTile + sideLenHalf
+    } else {
+        // center tile is not defined; take adjacent tiles closest to coordinate of interest
+        val leftOfCenter = (xCoordinate % 1.0) < 0.5
+        val topOfCenter = (yCoordinate % 1.0) < 0.5
+
+        yStart = if (topOfCenter) yTile - sideLen / 2 else yTile - sideLen / 2 + 1
+        yStop = if (topOfCenter) yTile + sideLen / 2 - 1 else yTile + sideLen / 2
+        xStart = if (leftOfCenter) xTile - sideLen / 2 else xTile - sideLen / 2 + 1
+        xStop = if (leftOfCenter) xTile + sideLen / 2 - 1 else xTile + sideLen / 2
+    }
+
+    return TileCoordinateRange(IntOffset(xStart, yStart), IntOffset(xStop, yStop), zoomLevel)
+}
+
+const val ZOOM_MAX = 19
+const val ZOOM_MIN = 0
+
+private fun getEnclosingTiles(
+    location: Location,
+    nTiles: Int,
+    userLocation: UserLocation,
+): TileCoordinateRange {
+    if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
+        throw IllegalArgumentException("nTiles must be a square number")
+
+    val sideLen = sqrt(nTiles.toDouble()).toInt()
+    val sideLenHalf = sideLen / 2
+
+    for (zoomLevel in ZOOM_MAX downTo ZOOM_MIN) {
+
+        val (locationY, locationX) = getDoubleTileCoordinates(
+            location.latitude,
+            location.longitude,
+            zoomLevel
+        )
+        val (userY, userX) = getDoubleTileCoordinates(
+            userLocation.first,
+            userLocation.second,
+            zoomLevel
+        )
+
+        val (locationTileY, locationTileX) = locationY.toInt() to locationX.toInt()
+        val (userTileY, userTileX) = userY.toInt() to userX.toInt()
+
+        if (locationTileY - sideLenHalf <= userTileY && userTileY <= locationTileY + sideLenHalf &&
+            locationTileX - sideLenHalf <= userTileX && userTileX <= locationTileX + sideLenHalf
+        ) {
+            var xStart = min(locationTileX, userTileX)
+            var yStart = min(locationTileY, userTileY)
+            var xStop = max(locationTileX, userTileX)
+            var yStop = max(locationTileY, userTileY)
+
+            if (xStart == xStop) {
+                if (sideLen % 2 == 1) {
+                    xStart -= sideLenHalf
+                    xStop += sideLenHalf
+                } else {
+                    xStart -= sideLenHalf - 1
+                    xStop += sideLenHalf
+                }
+            }
+            if (yStart == yStop) {
+                if (sideLen % 2 == 1) {
+                    yStart -= sideLenHalf
+                    yStop += sideLenHalf
+                } else {
+                    yStart -= sideLenHalf - 1
+                    yStop += sideLenHalf
+                }
+            }
+
+            return TileCoordinateRange(
+                IntOffset(xStart, yStart),
+                IntOffset(xStop, yStop),
+                zoomLevel
+            )
+        }
+    }
+
+    throw IllegalStateException("Unreachable (right?) | lat: ${location.latitude} | lon: ${location.longitude} | user: $userLocation | nTiles: $nTiles")
 }
 
 private object TileMapRepository : KoinComponent {
@@ -290,72 +414,6 @@ private object TileMapRepository : KoinComponent {
         .build()
 }
 
-private fun getDoubleTileCoordinates(
-    latitude: Double,
-    longitude: Double,
-    zoomLevel: Int
-): Pair<Double, Double> {
-    // https://wiki.openstreetmap.org/wiki/Slippy_map_tilenames#Mathematics
-    val latRadians = Math.toRadians(latitude)
-    val xCoordinate = (longitude + 180.0) / 360.0 * (1 shl zoomLevel)
-    val yCoordinate =
-        (1.0 - ln(tan(latRadians) + 1.0 / cos(latRadians)) / Math.PI) * (1 shl (zoomLevel - 1))
-
-    return yCoordinate to xCoordinate
-}
-
-private fun getTopLeftLatLon(xTile: Int, yTile: Int, zoom: Int): Pair<Double, Double> {
-    val n = 1 shl zoom
-    val lonDeg = xTile / n * 360.0 - 180.0
-    val latRad = atan(sinh(Math.PI * (1.0 - 2.0 * yTile / n)))
-    val latDeg = Math.toDegrees(latRad)
-
-    return latDeg to lonDeg
-}
-
-data class TileCoordinateRange(val start: IntOffset, val stop: IntOffset)
-
-private fun getRowColTileCoordinatesAround(
-    latitude: Double,
-    longitude: Double,
-    zoomLevel: Int,
-    nTiles: Int
-): TileCoordinateRange {
-    if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
-        throw IllegalArgumentException("nTiles must be a square number")
-
-    val sideLen = sqrt(nTiles.toDouble()).toInt()
-    val sideLenHalf = sideLen / 2
-
-    val (yCoordinate, xCoordinate) = getDoubleTileCoordinates(latitude, longitude, zoomLevel)
-    val xTile = xCoordinate.toInt()
-    val yTile = yCoordinate.toInt()
-
-    val yStart: Int
-    val yStop: Int
-    val xStart: Int
-    val xStop: Int
-
-    if (sideLen % 2 == 1) {
-        // center tile is defined
-        yStart = yTile - sideLenHalf
-        yStop = yTile + sideLenHalf
-        xStart = xTile - sideLenHalf
-        xStop = xTile + sideLenHalf
-    } else {
-        // center tile is not defined; take adjacent tiles closest to coordinate of interest
-        val leftOfCenter = (xCoordinate % 1.0) < 0.5
-        val topOfCenter = (yCoordinate % 1.0) < 0.5
-
-        yStart = if (topOfCenter) yTile - sideLen / 2 else yTile - sideLen / 2 + 1
-        yStop = if (topOfCenter) yTile + sideLen / 2 - 1 else yTile + sideLen / 2
-        xStart = if (leftOfCenter) xTile - sideLen / 2 else xTile - sideLen / 2 + 1
-        xStop = if (leftOfCenter) xTile + sideLen / 2 - 1 else xTile + sideLen / 2
-    }
-
-    return TileCoordinateRange(IntOffset(xStart, yStart), IntOffset(xStop, yStop))
-}
-
 @Preview
 @Composable
 private fun MapTilesPreview() {
@@ -379,7 +437,7 @@ private fun MapTilesPreview() {
             .clip(borderShape),
         tileServerUrl = "https://tile.openstreetmap.org",
         location = MockLocation,
-        zoomLevel = 19,
+        initialZoomLevel = 19,
         numberOfTiles = 9,
         applyTheming = false,
         userLocation = 52.51623 to 13.4048
@@ -402,7 +460,8 @@ internal object MockLocation : Location {
 
     override suspend fun getHouseNumber(): String = "1"
 
-    override suspend fun getOpeningSchedule(): OpeningSchedule = OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
+    override suspend fun getOpeningSchedule(): OpeningSchedule =
+        OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
 
     override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 

@@ -265,7 +265,7 @@ fun LocationItem(
                                 },
                             tileServerUrl = tileServerUrl,
                             location = location,
-                            zoomLevel = zoomLevel,
+                            initialZoomLevel = zoomLevel,
                             numberOfTiles = nTiles,
                             applyTheming = applyTheming,
                             userLocation = if (showPositionOnMap) userLocation?.let { it.latitude to it.longitude } else null,
