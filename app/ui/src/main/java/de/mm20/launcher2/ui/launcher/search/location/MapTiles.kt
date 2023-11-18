@@ -22,9 +22,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -84,7 +86,7 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
-    var previousZoomLevel: Int? = null
+    val previousZoomLevel = remember { mutableIntStateOf(-1) }
     val (start, stop, zoom) = remember(userLocation) {
         val tileCoordinateRange = userLocation
             ?.runCatching {
@@ -101,7 +103,7 @@ fun MapTiles(
             ?.getOrNull()
             ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
 
-        previousZoomLevel = tileCoordinateRange.zoomLevel
+        previousZoomLevel.value = tileCoordinateRange.zoomLevel
 
         tileCoordinateRange
     }
@@ -329,12 +331,11 @@ private fun getTilesAround(
 const val ZOOM_MAX = 19
 const val ZOOM_MIN = 0
 
-
 private fun getEnclosingTiles(
     location: Location,
     nTiles: Int,
     userLocation: UserLocation,
-    previousZoomLevel: Int?,
+    previousZoomLevel: MutableIntState,
 ): TileCoordinateRange {
     if (sqrt(nTiles.toDouble()) % 1.0 != 0.0)
         throw IllegalArgumentException("nTiles must be a square number")
@@ -347,7 +348,10 @@ private fun getEnclosingTiles(
     //      we might be able to increase the zoom level by one
     //  - user moves further away from location (which is less likely):
     //      we still iterate down to minimum zoom
-    for (zoomLevel in (previousZoomLevel?.let { it + 1 } ?: ZOOM_MAX) downTo ZOOM_MIN) {
+    for (zoomLevel in previousZoomLevel
+        .intValue
+        .let { if (it == -1) ZOOM_MAX else min(it + 1, ZOOM_MAX) } downTo ZOOM_MIN
+    ) {
 
         val (locationY, locationX) = getDoubleTileCoordinates(
             location.latitude,
