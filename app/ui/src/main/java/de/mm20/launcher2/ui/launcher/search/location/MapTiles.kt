@@ -88,7 +88,7 @@ fun MapTiles(
 
     val previousZoomLevel = remember { mutableIntStateOf(-1) }
     val (start, stop, zoom) = remember(userLocation) {
-        val tileCoordinateRange = userLocation
+        userLocation
             ?.runCatching {
                 getEnclosingTiles(
                     location,
@@ -102,10 +102,6 @@ fun MapTiles(
             }
             ?.getOrNull()
             ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
-
-        previousZoomLevel.value = tileCoordinateRange.zoomLevel
-
-        tileCoordinateRange
     }
 
     val sideLength = sqrt(numberOfTiles.toFloat())
@@ -395,6 +391,8 @@ private fun getEnclosingTiles(
                     yStop += if (topOfCenter) sideLenHalf - 1 else sideLenHalf
                 }
             }
+
+            previousZoomLevel.intValue = zoomLevel
 
             return TileCoordinateRange(
                 IntOffset(xStart, yStart),
