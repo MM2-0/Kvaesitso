@@ -242,7 +242,7 @@ fun LocationItem(
                     val showMap by viewModel.showMap.collectAsState()
                     if (showMap) {
                         val zoomLevel = 19
-                        val nTiles = 9
+                        val nTiles = 4
 
                         val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
                         val shape = MaterialTheme.shapes.small
@@ -290,16 +290,15 @@ fun LocationItem(
                         val today = LocalDateTime.now().dayOfWeek
                         val oh = openingSchedule!!.openingHours
                         val nextOpeningTime =
-                            (0 until DayOfWeek.SUNDAY.ordinal)
+                            (0..DayOfWeek.SUNDAY.ordinal)
                                 .firstNotNullOfOrNull {
                                     val dow =
-                                        daysOfWeek[(today.ordinal + it) % DayOfWeek.SUNDAY.ordinal]
-                                    oh.filter { it.dayOfWeek == dow }
-                                        .firstOrNull {
-                                            it.dayOfWeek != today || it.startTime.isAfter(
-                                                LocalTime.now()
-                                            )
-                                        }
+                                        daysOfWeek[(today.ordinal + it) % (DayOfWeek.SUNDAY.ordinal + 1)]
+                                    oh.filter {
+                                        it.dayOfWeek == dow
+                                    }.firstOrNull {
+                                        it.dayOfWeek != today || it.startTime.isAfter(LocalTime.now())
+                                    }
                                 } ?: oh.first()
 
                         Text(
@@ -463,7 +462,8 @@ fun LocationItemGridPopup(
         ) { origin.roundToIntRect().size },
     ) {
         LocationItem(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .scale(
                     1 - (1 - LocalGridSettings.current.iconSize / 84f) * (1 - animationProgress),
                     transformOrigin = TransformOrigin(1f, 0f)

@@ -89,8 +89,6 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
-    val sideLength = sqrt(numberOfTiles.toFloat())
-
     val previousZoomLevel = remember { mutableIntStateOf(-1) }
     val (start, stop, zoom) = remember(userLocation) {
         userLocation
@@ -108,6 +106,8 @@ fun MapTiles(
             ?.getOrNull()
             ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
     }
+
+    val sideLength = stop.x - start.x + 1
 
     val imageStates = remember { (0 until numberOfTiles).map { false }.toMutableStateList() }
 
@@ -201,7 +201,10 @@ fun MapTiles(
                 }
             }
             val animatedUserIndicatorOffset by animateOffsetAsState(
-                targetValue = Offset(xUser.toFloat(), yUser.toFloat()),
+                targetValue = (Offset(
+                    xUser.toFloat(),
+                    yUser.toFloat()
+                ) - start) / sideLength.toFloat(),
                 animationSpec = tween(
                     1000,
                     250
@@ -209,12 +212,13 @@ fun MapTiles(
             )
 
             Canvas(modifier = Modifier.matchParentSize()) {
+                assert(size.width == size.height)
+
                 if (userLocation != null) {
                     if (start.y < yUser && yUser < stop.y + 1 &&
                         start.x < xUser && xUser < stop.x + 1
                     ) {
-                        val userIndicatorOffset = animatedUserIndicatorOffset
-                            .scaleToTiles(start, sideLength, size)
+                        val userIndicatorOffset = animatedUserIndicatorOffset * size.width
                         drawCircle(
                             color = userLocationBorderColor,
                             radius = 18.5f * locationIndicatorAnimation,
@@ -229,8 +233,10 @@ fun MapTiles(
                 }
 
                 val locationIndicatorOffset =
-                    Offset(xLocation.toFloat(), yLocation.toFloat())
-                        .scaleToTiles(start, sideLength, size)
+                    (Offset(
+                        xLocation.toFloat(),
+                        yLocation.toFloat()
+                    ) - start) / sideLength.toFloat() * size.width
                 drawCircle(
                     color = locationBorderColor,
                     radius = 32f,
@@ -273,17 +279,6 @@ fun MapTiles(
             )
         }
     }
-}
-
-// osm does not necessarily display its labels correctly for nodes, so this will be off in some cases
-private fun Offset.scaleToTiles(
-    tilesTopLeft: IntOffset,
-    sideLenTiles: Float,
-    boardSize: Size,
-): Offset {
-    assert(boardSize.width == boardSize.height)
-
-    return (this - tilesTopLeft) * (boardSize.width / sideLenTiles)
 }
 
 private fun getDoubleTileCoordinates(
