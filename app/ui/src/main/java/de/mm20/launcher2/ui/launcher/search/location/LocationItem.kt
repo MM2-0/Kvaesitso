@@ -242,7 +242,7 @@ fun LocationItem(
                     val showMap by viewModel.showMap.collectAsState()
                     if (showMap) {
                         val zoomLevel = 19
-                        val nTiles = 4
+                        val nTiles = 9
 
                         val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
                         val shape = MaterialTheme.shapes.small

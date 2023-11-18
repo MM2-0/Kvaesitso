@@ -26,7 +26,7 @@ import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -86,6 +86,8 @@ fun MapTiles(
     val context = LocalContext.current
     val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
 
+    val sideLength = sqrt(numberOfTiles.toFloat())
+
     val previousZoomLevel = remember { mutableIntStateOf(-1) }
     val (start, stop, zoom) = remember(userLocation) {
         userLocation
@@ -104,8 +106,7 @@ fun MapTiles(
             ?: getTilesAround(location, initialZoomLevel, numberOfTiles)
     }
 
-    val sideLength = sqrt(numberOfTiles.toFloat())
-    val drawnTiles = remember { mutableIntStateOf(0) }
+    val imageStates = remember { (0 until numberOfTiles).map { false }.toMutableStateList() }
 
     Box(
         modifier = modifier,
@@ -137,8 +138,11 @@ fun MapTiles(
                                 BlendMode.Saturation
                             ) else null,
                             onState = {
+                                val stateIndex = (y - start.y) * (stop.y - start.y + 1) + (x - start.x)
+                                if (it is AsyncImagePainter.State.Loading)
+                                    imageStates[stateIndex] = false
                                 if (it is AsyncImagePainter.State.Success)
-                                    drawnTiles.intValue++
+                                    imageStates[stateIndex] = true
                                 if (it is AsyncImagePainter.State.Error)
                                     Log.e(
                                         "MapTiles",
@@ -152,8 +156,7 @@ fun MapTiles(
             }
         }
 
-
-        if (numberOfTiles == drawnTiles.intValue) {
+        if (imageStates.all { it }) {
             val locationBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
             val userLocationColor = MaterialTheme.colorScheme.primary
             val userLocationBorderColor = MaterialTheme.colorScheme.outline
