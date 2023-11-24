@@ -48,9 +48,7 @@ class DevicePoseProvider internal constructor(
 
                 val location =
                     (if (hasFineAccess) this@runCatching.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
-                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(
-                            LocationManager.NETWORK_PROVIDER
-                        ) else null
+                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
 
                 if (location != null) {
                     updateDeclination(location)
@@ -74,7 +72,7 @@ class DevicePoseProvider internal constructor(
                     )
                 }
             }?.onFailure {
-                Log.e("SearchableItemVM", "Failed to start location updates", it)
+                Log.e("SearchableItemVM", "Failed to register location listener", it)
             }
 
         awaitClose {
@@ -140,7 +138,7 @@ class DevicePoseProvider internal constructor(
                         SensorManager.SENSOR_DELAY_UI
                     )
                 }?.onFailure {
-                    Log.e("SearchableItemVM", "Failed to start heading updates", it)
+                    Log.e("SearchableItemVM", "Failed to register GRAVITY listener", it)
                 }
 
             awaitClose {
