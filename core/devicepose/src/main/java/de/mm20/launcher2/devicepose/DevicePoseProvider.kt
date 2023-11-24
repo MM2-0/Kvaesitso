@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import de.mm20.launcher2.ktx.checkPermission
+import kotlinx.coroutines.flow.combine
 
 class DevicePoseProvider internal constructor(
     private val context: Context
@@ -47,7 +48,9 @@ class DevicePoseProvider internal constructor(
 
                 val location =
                     (if (hasFineAccess) this@runCatching.getLastKnownLocation(LocationManager.GPS_PROVIDER) else null)
-                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
+                        ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(
+                            LocationManager.NETWORK_PROVIDER
+                        ) else null
 
                 if (location != null) {
                     updateDeclination(location)
@@ -79,8 +82,8 @@ class DevicePoseProvider internal constructor(
         }
     }
 
-    fun getNorthHeading(): Flow<Float> = callbackFlow {
-        val sensorCallback = object : SensorEventListener {
+    fun getAzimuthRadians(): Flow<Float> = callbackFlow {
+        val azimuthCallback = object : SensorEventListener {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
             override fun onSensorChanged(event: SensorEvent?) {
                 if (event?.sensor?.type != Sensor.TYPE_ROTATION_VECTOR)
@@ -92,15 +95,7 @@ class DevicePoseProvider internal constructor(
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                 SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                val (azimuth, _, roll) = orientationAngles
-
-                val isScreenUpsideDown = roll < -Float.PI / 2f || Float.PI / 2f < roll
-
-                trySend(
-                    (if (isScreenUpsideDown) -1f else 1f) *
-                            // eastward heading from magnetic north plus correction for geographic north, if available
-                            (azimuth * 180f / Float.PI + (declination ?: 0f))
-                )
+                trySend(orientationAngles[0])
             }
         }
 
@@ -108,17 +103,56 @@ class DevicePoseProvider internal constructor(
             .getSystemService<SensorManager>()
             ?.runCatching {
                 this@runCatching.registerListener(
-                    sensorCallback,
+                    azimuthCallback,
                     this@runCatching.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                         ?: return@runCatching,
                     SensorManager.SENSOR_DELAY_UI
                 )
             }?.onFailure {
-                Log.e("SearchableItemVM", "Failed to start heading updates", it)
+                Log.e("DevicePoseProvider", "Failed to register ROTATION_VECTOR listener", it)
             }
 
         awaitClose {
-            context.getSystemService<SensorManager>()?.unregisterListener(sensorCallback)
+            context.getSystemService<SensorManager>()?.unregisterListener(azimuthCallback)
+        }
+    }
+
+    fun getHeadingToDegrees(headingEastwardDegrees: Float): Flow<Float> = combine(
+        getAzimuthRadians(),
+        callbackFlow {
+            val upsideDownCallback = object : SensorEventListener {
+                override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+                override fun onSensorChanged(event: SensorEvent?) {
+                    if (event?.sensor?.type != Sensor.TYPE_GRAVITY)
+                        return
+
+                    val (_, _, z) = event.values
+                    trySend(z < 0f)
+                }
+            }
+            context
+                .getSystemService<SensorManager>()
+                ?.runCatching {
+                    this@runCatching.registerListener(
+                        upsideDownCallback,
+                        this@runCatching.getDefaultSensor(Sensor.TYPE_GRAVITY)
+                            ?: return@runCatching,
+                        SensorManager.SENSOR_DELAY_UI
+                    )
+                }?.onFailure {
+                    Log.e("SearchableItemVM", "Failed to start heading updates", it)
+                }
+
+            awaitClose {
+                context.getSystemService<SensorManager>()?.unregisterListener(upsideDownCallback)
+            }
+        }) { azimuthRadians, isUpsideDown ->
+        val azimuthDegrees = azimuthRadians * 180f / Float.PI
+
+        if (isUpsideDown) {
+            azimuthDegrees - headingEastwardDegrees
+        } else {
+            headingEastwardDegrees - azimuthDegrees
         }
     }
 }

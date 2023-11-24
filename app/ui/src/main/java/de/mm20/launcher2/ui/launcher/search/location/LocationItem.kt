@@ -67,6 +67,7 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
 import java.time.Duration
@@ -174,13 +175,16 @@ fun LocationItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
-                    val userHeading by remember {
-                        viewModel.devicePoseProvider.getNorthHeading()
+                    val targetHeading by remember(userLocation, location) {
+                        if (userLocation != null)
+                            viewModel.devicePoseProvider.getHeadingToDegrees(userLocation!!.bearingTo(location.toAndroidLocation()))
+                        else
+                            emptyFlow()
                     }.collectAsStateWithLifecycle(null)
 
-                    if (userLocation != null && userHeading != null) {
+                    if (targetHeading != null) {
                         val directionArrowAngle by animateValueAsState(
-                            targetValue = userLocation!!.bearingTo(location.toAndroidLocation()) - userHeading!!,
+                            targetValue =  targetHeading!!,
                             typeConverter = Float.DegreesConverter
                         )
                         Icon(

@@ -12,7 +12,6 @@ import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
