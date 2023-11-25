@@ -46,7 +46,6 @@ class PluginScanner(
                         className = providerInfo.name,
                         type = type,
                         authority = authority,
-                        settingsActivity = providerInfo.metaData?.getString("de.mm20.launcher2.plugin.settings"),
                         enabled = false,
                     )
                 )
