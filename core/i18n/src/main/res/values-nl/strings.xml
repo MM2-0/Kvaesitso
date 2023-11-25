@@ -429,7 +429,7 @@
     <string name="preference_widgets_edit_button_summary">Knop tonen om widgets toe te voegen, te verwijderen of te verplaatsen</string>
     <string name="no_account_google">Je bent nog niet ingelogd bij Google</string>
     <string name="connect_account">Account verbinden</string>
-    <string name="backup_not_included">Verbonden accounts en widgets van derde partijen zullen niet geback-upt worden.</string>
+    <string name="backup_not_included">Verbonden accounts zullen niet geback-upt worden. Widgets van derde partijen kunnen alleen op dit toestel teruggezet worden.</string>
     <string name="backup_component_favorites">Favorieten &amp; verborgen applicaties</string>
     <string name="restore_different_minor_version">De back-up is gemaakt met een andere versie van %1$s. Bepaalde gegevens kunnen mogelijk niet correct teruggezet worden.</string>
     <string name="restore_meta">Gemaakt op %1$s op %2$s met %3$s.</string>
@@ -662,4 +662,9 @@
     <string name="shortcut_label_unavailable">Niet beschikbaar</string>
     <string name="shortcut_unavailable_description">Deze snelkoppeling is niet beschikbaar omdat %1$s niet het standaardstartscherm is</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamische zone</string>
+    <string name="missing_permission_plugins">Je moet toestemming geven om plug-ins te kunnen gebruiken.</string>
+    <string name="preference_screen_plugins_summary">Geïnstalleerde uitbreidingen beheren</string>
+    <string name="no_plugins_installed">Geen plug-ins geïnstalleerd</string>
+    <string name="plugin_host_not_installed">Plug-inhost niet geïnstalleerd</string>
+    <string name="preference_screen_plugins">Plug-ins</string>
 </resources>
