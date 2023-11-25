@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.accounts.Account
 import de.mm20.launcher2.accounts.AccountType
 import de.mm20.launcher2.accounts.AccountsRepository
+import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -18,7 +19,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
+    private val fileSearchSettings: FileSearchSettings by inject()
     private val accountsRepository: AccountsRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
 
@@ -43,84 +44,28 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val localFiles = dataStore.data.map { it.fileSearch.localFiles }
+    val localFiles = fileSearchSettings.localFiles
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLocalFiles(localFiles: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(
-                        it.fileSearch
-                            .toBuilder()
-                            .setLocalFiles(localFiles)
-                    )
-                    .build()
-            }
-        }
+        fileSearchSettings.setLocalFiles(localFiles)
     }
 
-    val nextcloud = dataStore.data.map { it.fileSearch.nextcloud }
+    val nextcloud = fileSearchSettings.nextcloudFiles
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setNextcloud(nextcloud: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(
-                        it.fileSearch
-                            .toBuilder()
-                            .setNextcloud(nextcloud)
-                    )
-                    .build()
-            }
-        }
+        fileSearchSettings.setNextcloudFiles(nextcloud)
     }
 
-    val gdrive = dataStore.data.map { it.fileSearch.gdrive }
+    val gdrive = fileSearchSettings.gdriveFiles
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setGdrive(gdrive: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(
-                        it.fileSearch
-                            .toBuilder()
-                            .setGdrive(gdrive)
-                    )
-                    .build()
-            }
-        }
+        fileSearchSettings.setGdriveFiles(gdrive)
     }
 
-    val onedrive = dataStore.data.map { it.fileSearch.onedrive }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setOneDrive(onedrive: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(
-                        it.fileSearch
-                            .toBuilder()
-                            .setOnedrive(onedrive)
-                    )
-                    .build()
-            }
-        }
-    }
-
-    val owncloud = dataStore.data.map { it.fileSearch.owncloud }
+    val owncloud = fileSearchSettings.owncloudFiles
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setOwncloud(owncloud: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(
-                        it.fileSearch
-                            .toBuilder()
-                            .setOwncloud(owncloud)
-                    )
-                    .build()
-            }
-        }
+        fileSearchSettings.setOwncloudFiles(owncloud)
     }
 
     fun requestFilePermission(context: AppCompatActivity) {

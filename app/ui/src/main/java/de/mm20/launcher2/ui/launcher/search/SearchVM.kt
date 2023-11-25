@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -47,6 +48,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
+    private val fileSearchSettings: FileSearchSettings by inject()
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -122,7 +124,6 @@ class SearchVM : ViewModel(), KoinComponent {
                     unitConverter = settings.unitConverterSearch,
                     calendars = settings.calendarSearch,
                     contacts = settings.contactsSearch,
-                    files = settings.fileSearch,
                     shortcuts = settings.appShortcutSearch,
                     websites = settings.websiteSearch,
                     wikipedia = settings.wikipediaSearch,
@@ -293,7 +294,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingFilesPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.ExternalStorage),
-        dataStore.data.map { it.fileSearch.localFiles }.distinctUntilChanged()
+        fileSearchSettings.localFiles.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestFilesPermission(context: AppCompatActivity) {

@@ -41,13 +41,6 @@ interface SearchService {
         calendars: CalendarSearchSettings = Settings.CalendarSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        files: FilesSearchSettings = Settings.FilesSearchSettings.newBuilder()
-            .setLocalFiles(false)
-            .setGdrive(false)
-            .setOnedrive(false)
-            .setOwncloud(false)
-            .setNextcloud(false)
-            .build(),
         calculator: CalculatorSearchSettings = Settings.CalculatorSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
@@ -82,7 +75,6 @@ internal class SearchServiceImpl(
         shortcuts: AppShortcutSearchSettings,
         contacts: ContactsSearchSettings,
         calendars: CalendarSearchSettings,
-        files: FilesSearchSettings,
         calculator: CalculatorSearchSettings,
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
@@ -184,18 +176,16 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (files.localFiles || files.owncloud || files.onedrive || files.gdrive || files.nextcloud) {
-                launch {
-                    fileRepository.search(
-                        query,
-                    )
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(files = r.toImmutableList())
-                            }
+            launch {
+                fileRepository.search(
+                    query,
+                )
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(files = r.toImmutableList())
                         }
-                }
+                    }
             }
             launch {
                 customAttributesRepository.search(query)
