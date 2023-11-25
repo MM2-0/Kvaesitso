@@ -15,6 +15,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -80,9 +81,6 @@ fun PreferenceScreen(
     content: LazyListScope.() -> Unit,
 ) {
     val navController = LocalNavController.current
-    val systemUiController = rememberSystemUiController()
-    systemUiController.setStatusBarColor(MaterialTheme.colorScheme.surface)
-    systemUiController.setNavigationBarColor(Color.Black)
 
     val context = LocalContext.current
 
@@ -124,7 +122,7 @@ fun PreferenceScreen(
                             activity?.onBackPressed()
                         }
                     }) {
-                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "Back")
+                        Icon(imageVector = Icons.AutoMirrored.Rounded.ArrowBack, contentDescription = "Back")
                     }
                 },
                 actions = {

@@ -1,17 +1,21 @@
 package de.mm20.launcher2.ui.settings
 
 import android.os.Bundle
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -21,6 +25,7 @@ import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
 import de.mm20.launcher2.ui.overlays.OverlayHost
@@ -47,6 +52,7 @@ import de.mm20.launcher2.ui.settings.license.LicenseScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
+import de.mm20.launcher2.ui.settings.plugins.PluginSettingsScreen
 import de.mm20.launcher2.ui.settings.plugins.PluginsSettingsScreen
 import de.mm20.launcher2.ui.settings.search.SearchSettingsScreen
 import de.mm20.launcher2.ui.settings.searchactions.SearchActionsSettingsScreen
@@ -79,6 +85,15 @@ class SettingsActivity : BaseActivity() {
             ) {
                 ProvideSettings {
                     LauncherTheme {
+                        val systemBarColor = MaterialTheme.colorScheme.surfaceDim
+                        val systemBarColorAlt = MaterialTheme.colorScheme.onSurface
+                        val isDarkTheme = LocalDarkTheme.current
+                        LaunchedEffect(isDarkTheme, systemBarColor, systemBarColorAlt) {
+                            enableEdgeToEdge(
+                                if (isDarkTheme) SystemBarStyle.dark(systemBarColor.toArgb())
+                                else SystemBarStyle.light(systemBarColor.toArgb(), systemBarColorAlt.toArgb())
+                            )
+                        }
                         OverlayHost {
                             NavHost(
                                 navController = navController,
@@ -166,6 +181,9 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable("settings/plugins") {
                                     PluginsSettingsScreen()
+                                }
+                                composable("settings/plugins/{id}") {
+                                    PluginSettingsScreen(it.arguments?.getString("id") ?: return@composable)
                                 }
                                 composable("settings/about") {
                                     AboutSettingsScreen()

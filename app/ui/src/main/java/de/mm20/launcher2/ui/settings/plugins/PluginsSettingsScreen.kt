@@ -2,15 +2,16 @@ package de.mm20.launcher2.ui.settings.plugins
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Extension
 import androidx.compose.material.icons.rounded.ExtensionOff
+import androidx.compose.material.icons.rounded.Verified
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,19 +24,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
 fun PluginsSettingsScreen() {
     val viewModel: PluginsSettingsScreenVM = viewModel()
+    val navController = LocalNavController.current
     val hostInstalled by viewModel.hostInstalled.collectAsState(null)
     val hasPermission by viewModel.hasPermission.collectAsState(null)
     val context = LocalContext.current
-    val plugins by viewModel.plugins.collectAsState(null)
+    val pluginPackages by viewModel.pluginPackages.collectAsState(null)
+    val enabledPackages by viewModel.enabledPluginPackages.collectAsState(emptyList())
+    val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())
     PreferenceScreen(title = stringResource(R.string.preference_screen_plugins)) {
         when {
             hostInstalled == false -> {
@@ -73,7 +80,7 @@ fun PluginsSettingsScreen() {
                 }
             }
 
-            plugins?.isEmpty() == true -> {
+            pluginPackages?.isEmpty() == true -> {
                 item {
                     Column(
                         modifier = Modifier
@@ -92,28 +99,61 @@ fun PluginsSettingsScreen() {
                 }
             }
 
-            plugins != null -> {
-                items(plugins!!) { item ->
-                    val icon by remember(item.plugin.authority) {
-                        viewModel.getIcon(item.plugin)
-                    }.collectAsState(null)
-                    Preference(
-                        title = { Text(item.plugin.label) },
-                        summary = item.plugin.description?.let { { Text(it) } },
-                        controls = {
-                            Switch(checked = item.plugin.enabled, onCheckedChange = {
-                                viewModel.setPluginEnabled(item.plugin, it)
-                            })
-                        },
-                        icon = {
-                            AsyncImage(model = icon, contentDescription = null, modifier = Modifier.size(36.dp))
-                        },
-                        onClick = {
-                            viewModel.setPluginEnabled(item.plugin, !item.plugin.enabled)
+            else -> {
+                if (enabledPackages.isNotEmpty()) {
+                    item {
+                        PreferenceCategory("Enabled") {
+                            for (plugin in enabledPackages) {
+                                PluginPreference(viewModel, plugin)
+                            }
                         }
-                    )
+                    }
+                }
+                if (disabledPackages.isNotEmpty()) {
+                    item {
+                        PreferenceCategory("Installed") {
+                            for (plugin in disabledPackages) {
+                                PluginPreference(viewModel, plugin)
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+@Composable
+private fun PluginPreference(viewModel: PluginsSettingsScreenVM, plugin: PluginPackage) {
+    val navController = LocalNavController.current
+    val icon by remember(plugin.packageName) {
+        viewModel.getIcon(plugin)
+    }.collectAsState(null)
+    Preference(
+        title = {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(plugin.label)
+                if (plugin.isOfficial) {
+                    Icon(
+                        Icons.Rounded.Verified, null,
+                        modifier = Modifier.padding(start = 4.dp).size(16.dp),
+                        tint = MaterialTheme.colorScheme.secondary,
+                    )
+                }
+            }
+        },
+        summary = plugin.description?.let { { Text(it) } },
+        icon = {
+            AsyncImage(
+                model = icon,
+                contentDescription = null,
+                modifier = Modifier.size(36.dp)
+            )
+        },
+        onClick = {
+            navController?.navigate("settings/plugins/${plugin.packageName}")
+        }
+    )
 }

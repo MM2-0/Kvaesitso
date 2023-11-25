@@ -3,13 +3,16 @@ package de.mm20.launcher2.ui.settings.plugins
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.plugin.Plugin
+import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugins.PluginService
-import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -20,23 +23,23 @@ class PluginsSettingsScreenVM : ViewModel(), KoinComponent {
 
     val hostInstalled = pluginService.isPluginHostInstalled()
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Plugins)
-    val plugins = hasPermission.flatMapLatest {
-        if (it) pluginService.getPluginsWithState() else emptyFlow()
+    val pluginPackages = pluginService
+        .getPluginPackages()
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed(100), 1)
+
+    val enabledPluginPackages = pluginPackages.mapLatest {
+        it.filter { it.enabled }.sortedBy { it.label }
     }
 
-    fun setPluginEnabled(plugin: Plugin, value: Boolean) {
-        if (value) {
-            pluginService.enablePlugin(plugin)
-        } else {
-            pluginService.disablePlugin(plugin)
-        }
+    val disabledPluginPackages = pluginPackages.mapLatest {
+        it.filter { !it.enabled }.sortedBy { it.label }
     }
 
     fun requestPermission(context: Context) {
         permissionsManager.requestPermission(context as AppCompatActivity, PermissionGroup.Plugins)
     }
 
-    fun getIcon(plugin: Plugin) = flow {
-        emit(pluginService.getPluginIcon(plugin))
+    fun getIcon(plugin: PluginPackage) = flow {
+        emit(pluginService.getPluginPackageIcon(plugin))
     }
 }
