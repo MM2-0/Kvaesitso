@@ -23,7 +23,7 @@
     <string name="wind_north_north_west">北北西</string>
     <string name="wikipedia_url">https://ja.wikipedia.org</string>
     <string name="menu_favorites_pin">ピン留め</string>
-    <string name="menu_share_apk_file">APKファイル</string>
+    <string name="menu_share_apk_file">APK ファイル</string>
     <string name="menu_share_store_link">%1$sリンク</string>
     <string name="menu_hide">非表示</string>
     <string name="menu_customize">編集</string>
@@ -37,8 +37,8 @@
     <string name="menu_contacts_open_externally">連絡先アプリで開く</string>
     <string name="menu_calendar_open_externally">カレンダーアプリで開く</string>
     <string name="menu_remove">取り外す</string>
-    <string name="msg_item_hidden">%1$sが非表示された。</string>
-    <string name="app_info_version">バージョン%1$s</string>
+    <string name="msg_item_hidden"></string>
+    <string name="app_info_version">バージョン %1$s</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
