@@ -653,6 +653,7 @@
     <string name="preference_search_locations_radius">Search radius</string>
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
     <string name="preference_search_locations_summary">Show a preview of a location matching the query</string>
+    <string name="preference_search_locations_show_position_on_map_summary">Shows your location in the map preview</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
     <string name="preference_search_localfiles">Local files</string>
