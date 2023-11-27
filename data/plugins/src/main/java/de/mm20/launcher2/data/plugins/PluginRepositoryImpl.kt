@@ -52,6 +52,14 @@ internal class PluginRepositoryImpl(
         }
     }
 
+    override fun updateMany(plugins: List<Plugin>): Job {
+        return scope.launch {
+            dao.updateMany(
+                plugins.map { PluginEntity(it) }
+            )
+        }
+    }
+
     override fun deleteMany(): Job {
         return scope.launch {
             dao.deleteMany()

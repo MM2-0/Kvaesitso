@@ -72,7 +72,7 @@ internal class CalendarRepositoryImpl(
             if (it) {
                 val events = withContext(Dispatchers.IO) {
                     queryCalendarEvents(
-                        query = "",
+                        query = null,
                         intervalStart = from,
                         intervalEnd = to,
                         limit = limit,
@@ -116,7 +116,7 @@ internal class CalendarRepositoryImpl(
             if (query != null) selection.add("${CalendarContract.Instances.TITLE} LIKE ?")
             if (excludeCalendars.isNotEmpty()) selection.add("${CalendarContract.Instances.CALENDAR_ID} NOT IN (${excludeCalendars.joinToString()})")
             if (excludeAllDayEvents) selection.add("${CalendarContract.Instances.ALL_DAY} = 0")
-            val selArgs = if (query != null) null else arrayOf("%$query%")
+            val selArgs = if (query != null) arrayOf("%$query%") else null
             val sort =
                 "${CalendarContract.Instances.BEGIN} ASC" + if (limit > -1) " LIMIT $limit" else ""
             val cursor = context.contentResolver.query(

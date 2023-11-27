@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
@@ -35,9 +36,11 @@ android {
 
 dependencies {
     implementation(libs.bundles.kotlin)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.exifinterface)
+    implementation(libs.androidx.datastore)
 
     implementation(libs.bundles.androidx.lifecycle)
 

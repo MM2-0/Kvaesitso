@@ -4,7 +4,7 @@ compileSdk = "34"
 targetSdk = "34"
 
 gradle = "8.1.2"
-android-gradle-plugin = "8.1.2"
+android-gradle-plugin = "8.1.4"
 protobuf-gradle-plugin = "0.9.4"
 ksp-gradle-plugin = "1.9.0-1.0.13"
 

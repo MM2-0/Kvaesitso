@@ -47,7 +47,6 @@ class SearchablePickerVM: ViewModel(), KoinComponent {
                 shortcuts = settings.appShortcutSearch,
                 contacts = settings.contactsSearch,
                 calendars = settings.calendarSearch,
-                files = settings.fileSearch,
             ).collectLatest {
                 if (searchQuery != query) return@collectLatest
                 items  = withContext(Dispatchers.Default) {

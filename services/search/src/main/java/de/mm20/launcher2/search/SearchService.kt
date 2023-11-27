@@ -92,7 +92,7 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-        locations: LocationsSearchSettings,
+        locations: LocationsSearchSettings
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -201,18 +201,16 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (files.localFiles || files.owncloud || files.onedrive || files.gdrive || files.nextcloud) {
-                launch {
-                    fileRepository.search(
-                        query,
-                    )
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(files = r.toImmutableList())
-                            }
+            launch {
+                fileRepository.search(
+                    query,
+                )
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(files = r.toImmutableList())
                         }
-                }
+                    }
             }
             launch {
                 customAttributesRepository.search(query)

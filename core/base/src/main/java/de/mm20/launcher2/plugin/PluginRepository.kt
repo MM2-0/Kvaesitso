@@ -15,5 +15,6 @@ interface PluginRepository {
     fun insertMany(plugins: List<Plugin>): Job
     fun insert(plugin: Plugin): Job
     fun update(plugin: Plugin): Job
+    fun updateMany(plugins: List<Plugin>): Job
     fun deleteMany(): Job
 }

@@ -169,7 +169,7 @@ message Settings {
     bool nextcloud = 4;
     bool owncloud = 5;
   }
-  FilesSearchSettings file_search = 9;
+  FilesSearchSettings file_search = 9 [deprecated = true];
 
   message ContactsSearchSettings {
     bool enabled = 1;

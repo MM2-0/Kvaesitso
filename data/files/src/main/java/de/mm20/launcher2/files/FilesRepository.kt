@@ -7,6 +7,7 @@ import de.mm20.launcher2.files.providers.LocalFileProvider
 import de.mm20.launcher2.files.providers.NextcloudFileProvider
 import de.mm20.launcher2.files.providers.OwncloudFileProvider
 import de.mm20.launcher2.files.providers.PluginFileProvider
+import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.nextcloud.NextcloudApiHelper
 import de.mm20.launcher2.owncloud.OwncloudClient
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -28,7 +29,7 @@ import kotlinx.coroutines.flow.map
 internal class FileRepository(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
-    private val dataStore: LauncherDataStore,
+    private val settings: FileSearchSettings,
     private val pluginRepository: PluginRepository,
 ) : SearchableRepository<File> {
 
@@ -52,8 +53,7 @@ internal class FileRepository(
             enabled = true,
         )
 
-        dataStore.data.map { it.fileSearch }
-            .combine(filePlugins) { settings, plugins ->
+        settings.data.combine(filePlugins) { settings, plugins ->
                 settings to plugins
             }.collectLatest { (settings, plugins) ->
                 val providers = mutableListOf<FileProvider>()
@@ -64,9 +64,9 @@ internal class FileRepository(
                         permissionsManager
                     )
                 )
-                if (settings.gdrive) providers.add(GDriveFileProvider(context))
-                if (settings.nextcloud) providers.add(NextcloudFileProvider(nextcloudClient))
-                if (settings.owncloud) providers.add(OwncloudFileProvider(owncloudClient))
+                if (settings.gdriveFiles) providers.add(GDriveFileProvider(context))
+                if (settings.nextcloudFiles) providers.add(NextcloudFileProvider(nextcloudClient))
+                if (settings.owncloudFiles) providers.add(OwncloudFileProvider(owncloudClient))
 
                 for (plugin in plugins) {
                     providers.add(PluginFileProvider(context, plugin))

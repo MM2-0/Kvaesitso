@@ -360,6 +360,7 @@ internal class PluginFileDeserializer(
             val authority = obj.getString("authority")
             val id = obj.getString("id")
             val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
+            if (!plugin.enabled) return null
             val provider = PluginFileProvider(context, plugin)
             return provider.getFile(id)
         } catch (e: Exception) {

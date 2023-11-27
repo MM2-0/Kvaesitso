@@ -9,8 +9,13 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Build
+import android.util.Base64
+import android.util.Log
 import androidx.core.content.ContextCompat
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.Plugin
+import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
@@ -21,11 +26,14 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
+import java.security.MessageDigest
 
 data class PluginWithState(
     val plugin: Plugin,
@@ -33,14 +41,20 @@ data class PluginWithState(
 )
 
 interface PluginService {
-    fun enablePlugin(plugin: Plugin)
-    fun disablePlugin(plugin: Plugin)
+    fun enablePluginPackage(plugin: PluginPackage)
+    fun disablePluginPackage(plugin: PluginPackage)
     fun getPluginsWithState(type: PluginType? = null): Flow<List<PluginWithState>>
 
     fun isPluginHostInstalled(): Flow<Boolean>
+
+    fun getPluginPackages(): Flow<List<PluginPackage>>
+    fun getPluginPackage(packageName: String): Flow<PluginPackage?>
     suspend fun getPluginState(plugin: Plugin): PluginState?
 
+    suspend fun getPluginPackageIcon(plugin: PluginPackage): Drawable?
+
     suspend fun getPluginIcon(plugin: Plugin): Drawable?
+    fun uninstallPluginPackage(context: Context, plugin: PluginPackage)
 }
 
 internal class PluginServiceImpl(
@@ -56,28 +70,34 @@ internal class PluginServiceImpl(
 
     init {
         refreshPlugins()
-        ContextCompat.registerReceiver(
-            context,
-            AppUpdateReceiver(),
-            IntentFilter().apply {
-                addAction(Intent.ACTION_PACKAGE_ADDED)
-                addAction(Intent.ACTION_PACKAGE_REMOVED)
-                addAction(Intent.ACTION_PACKAGE_REPLACED)
-                addAction(Intent.ACTION_PACKAGE_CHANGED)
-            },
-            ContextCompat.RECEIVER_NOT_EXPORTED
+        context.registerReceiver(AppUpdateReceiver(), IntentFilter().apply {
+            addAction(Intent.ACTION_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_ADDED)
+            addAction(Intent.ACTION_PACKAGE_REMOVED)
+            addAction(Intent.ACTION_MY_PACKAGE_REPLACED)
+            addAction(Intent.ACTION_PACKAGE_CHANGED)
+            addDataScheme("package")
+        })
+    }
+
+    override fun enablePluginPackage(plugin: PluginPackage) {
+        repository.updateMany(
+            plugin.plugins.map {
+                it.copy(enabled = true)
+            }
         )
     }
 
-    override fun enablePlugin(plugin: Plugin) {
-        repository.update(plugin.copy(enabled = true))
-    }
-
-    override fun disablePlugin(plugin: Plugin) {
-        repository.update(plugin.copy(enabled = false))
+    override fun disablePluginPackage(plugin: PluginPackage) {
+        repository.updateMany(
+            plugin.plugins.map {
+                it.copy(enabled = false)
+            }
+        )
     }
 
     private fun refreshPlugins() {
+        Log.d("PluginService", "Refreshing plugins")
         scope.launch {
             try {
                 val permission =
@@ -88,11 +108,11 @@ internal class PluginServiceImpl(
                 return@launch
             }
             mutex.withLock {
-                val enabledPlugins =
-                    repository.findMany(enabled = true).first().map { it.authority }
+                val enabledPluginPackages =
+                    repository.findMany(enabled = true).first().map { it.packageName }.distinct()
                 val scanner = PluginScanner(context)
                 val plugins = scanner.findPlugins().map {
-                    if (it.authority in enabledPlugins) {
+                    if (it.packageName in enabledPluginPackages) {
                         it.copy(enabled = true)
                     } else {
                         it
@@ -101,6 +121,7 @@ internal class PluginServiceImpl(
                 repository.deleteMany().join()
                 repository.insertMany(plugins).join()
             }
+            Log.d("PluginService", "done.")
         }
     }
 
@@ -131,20 +152,7 @@ internal class PluginServiceImpl(
                 null
             )
         } ?: return null
-        val type = bundle.getString("type") ?: return null
-        return when (type) {
-            "Ready" -> PluginState.Ready
-            "SetupRequired" -> {
-                val setupActivity = bundle.getString("setupActivity") ?: return null
-                val message = bundle.getString("message")
-                PluginState.SetupRequired(
-                    setupActivity = setupActivity,
-                    message = message,
-                )
-            }
-
-            else -> null
-        }
+        return PluginState.fromBundle(bundle)
     }
 
     override fun isPluginHostInstalled(): Flow<Boolean> {
@@ -163,13 +171,129 @@ internal class PluginServiceImpl(
             } catch (e: PackageManager.NameNotFoundException) {
                 return@withContext null
             }
-            info.loadIcon(context.packageManager) ?: info.applicationInfo?.loadIcon(context.packageManager)
+            info.loadIcon(context.packageManager)
+                ?: info.applicationInfo?.loadIcon(context.packageManager)
         }
+    }
+
+    override suspend fun getPluginPackageIcon(plugin: PluginPackage): Drawable? {
+        return withContext(Dispatchers.IO) {
+            try {
+                context.packageManager.getApplicationIcon(
+                    plugin.packageName
+                )
+            } catch (e: PackageManager.NameNotFoundException) {
+                return@withContext null
+            }
+        }
+    }
+
+    override fun getPluginPackages(): Flow<List<PluginPackage>> {
+        return repository.findMany().map {
+            val packageGroups = it.groupBy { it.packageName }
+            packageGroups.mapNotNull { (packageName, plugins) ->
+                val appInfo = try {
+                    context.packageManager.getApplicationInfo(
+                        packageName,
+                        PackageManager.GET_META_DATA
+                    )
+                } catch (e: PackageManager.NameNotFoundException) {
+                    return@mapNotNull null
+                }
+                val settingsActivity = context.packageManager.queryIntentActivities(
+                    Intent().apply {
+                        `package` = packageName
+                        action = "de.mm20.launcher2.action.PLUGIN_SETTINGS"
+                    },
+                    0
+                ).firstOrNull()
+                val signature = getSignature(packageName)
+                PluginPackage(
+                    packageName = packageName,
+                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
+                    author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
+                    plugins = plugins,
+                    settings = settingsActivity?.let {
+                        Intent().apply {
+                            component =
+                                ComponentName(it.activityInfo.packageName, it.activityInfo.name)
+                        }
+                    },
+                    isOfficial = OFFICIAL_PLUGIN_SIGNATURES.contains(signature),
+                )
+            }
+        }.flowOn(Dispatchers.Default)
+    }
+
+    override fun getPluginPackage(packageName: String): Flow<PluginPackage?> {
+        val appInfo = try {
+            context.packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+        } catch (e: PackageManager.NameNotFoundException) {
+            return flowOf(null)
+        }
+        val settingsActivityInfo = context.packageManager.queryIntentActivities(
+            Intent().apply {
+                `package` = packageName
+                action = "de.mm20.launcher2.action.PLUGIN_SETTINGS"
+            },
+            0
+        ).firstOrNull()
+        val signature = getSignature(packageName)
+        return repository.findMany(packageName = packageName)
+            .map {
+                PluginPackage(
+                    packageName = packageName,
+                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
+                    author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
+                    plugins = it,
+                    settings = settingsActivityInfo?.let {
+                        Intent().apply {
+                            component =
+                                ComponentName(it.activityInfo.packageName, it.activityInfo.name)
+                        }
+                    },
+                    isOfficial = OFFICIAL_PLUGIN_SIGNATURES.contains(signature),
+                )
+            }
+            .flowOn(Dispatchers.Default)
+    }
+
+    private fun getSignature(packageName: String): String? {
+        val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val pi = context.packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_SIGNING_CERTIFICATES
+            )
+            pi.signingInfo.apkContentsSigners.firstOrNull()
+        } else {
+            val pi = context.packageManager.getPackageInfo(
+                packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            pi.signatures.firstOrNull()
+        }
+        return if (signature != null) {
+            val digest = MessageDigest.getInstance("SHA")
+            digest.update(signature.toByteArray())
+            Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
+        } else null
     }
 
     private inner class AppUpdateReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             refreshPlugins()
         }
+    }
+
+    override fun uninstallPluginPackage(context: Context, plugin: PluginPackage) {
+        val intent = Intent(Intent.ACTION_DELETE)
+        intent.data = Uri.parse("package:${plugin.packageName}")
+        context.tryStartActivity(intent)
+    }
+
+    companion object {
+        private val OFFICIAL_PLUGIN_SIGNATURES = listOf("rx1fSnL7r5/OMoFC0e1KPqTndXQ=")
     }
 }

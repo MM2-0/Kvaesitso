@@ -36,6 +36,9 @@ interface PluginDao {
     @Update
     suspend fun update(plugin: PluginEntity)
 
+    @Update
+    suspend fun updateMany(plugins: List<PluginEntity>)
+
     @Query("DELETE FROM Plugins")
     suspend fun deleteMany()
 }
