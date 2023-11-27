@@ -80,7 +80,7 @@ class DevicePoseProvider internal constructor(
         }
     }
 
-    fun getAzimuthRadians(): Flow<Float> = callbackFlow {
+    fun getAzimuthDegrees(samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI): Flow<Float> = callbackFlow {
         val azimuthCallback = object : SensorEventListener {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
             override fun onSensorChanged(event: SensorEvent?) {
@@ -93,7 +93,7 @@ class DevicePoseProvider internal constructor(
                 SensorManager.getRotationMatrixFromVector(rotationMatrix, event.values)
                 SensorManager.getOrientation(rotationMatrix, orientationAngles)
 
-                trySend(orientationAngles[0])
+                trySend(orientationAngles[0] * 180f / Float.PI + (declination ?: 0f))
             }
         }
 
@@ -104,7 +104,7 @@ class DevicePoseProvider internal constructor(
                     azimuthCallback,
                     this@runCatching.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
                         ?: return@runCatching,
-                    SensorManager.SENSOR_DELAY_UI
+                    samplingPeriodUs
                 )
             }?.onFailure {
                 Log.e("DevicePoseProvider", "Failed to register ROTATION_VECTOR listener", it)
@@ -115,8 +115,8 @@ class DevicePoseProvider internal constructor(
         }
     }
 
-    fun getHeadingToDegrees(headingEastwardDegrees: Float): Flow<Float> = combine(
-        getAzimuthRadians(),
+    fun getHeadingToDegrees(headingEastwardDegrees: Float, samplingPeriodUs: Int = SensorManager.SENSOR_DELAY_UI): Flow<Float> = combine(
+        getAzimuthDegrees(samplingPeriodUs),
         callbackFlow {
             val upsideDownCallback = object : SensorEventListener {
                 override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
@@ -135,7 +135,7 @@ class DevicePoseProvider internal constructor(
                         upsideDownCallback,
                         this@runCatching.getDefaultSensor(Sensor.TYPE_GRAVITY)
                             ?: return@runCatching,
-                        SensorManager.SENSOR_DELAY_UI
+                        samplingPeriodUs
                     )
                 }?.onFailure {
                     Log.e("SearchableItemVM", "Failed to register GRAVITY listener", it)
@@ -144,8 +144,7 @@ class DevicePoseProvider internal constructor(
             awaitClose {
                 context.getSystemService<SensorManager>()?.unregisterListener(upsideDownCallback)
             }
-        }) { azimuthRadians, isUpsideDown ->
-        val azimuthDegrees = azimuthRadians * 180f / Float.PI
+        }) { azimuthDegrees, isUpsideDown ->
 
         if (isUpsideDown) {
             azimuthDegrees - headingEastwardDegrees
