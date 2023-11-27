@@ -41,13 +41,6 @@ interface SearchService {
         calendars: CalendarSearchSettings = CalendarSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        files: FilesSearchSettings = FilesSearchSettings.newBuilder()
-            .setLocalFiles(false)
-            .setGdrive(false)
-            .setOnedrive(false)
-            .setOwncloud(false)
-            .setNextcloud(false)
-            .build(),
         calculator: CalculatorSearchSettings = CalculatorSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
@@ -87,7 +80,6 @@ internal class SearchServiceImpl(
         shortcuts: AppShortcutSearchSettings,
         contacts: ContactsSearchSettings,
         calendars: CalendarSearchSettings,
-        files: FilesSearchSettings,
         calculator: CalculatorSearchSettings,
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
