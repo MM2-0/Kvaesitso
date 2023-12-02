@@ -81,11 +81,10 @@ internal open class BaseOsmRepository(
 internal class OsmRepository(
     private val dataStore: LauncherDataStore,
     private val poseProvider: DevicePoseProvider,
+    permissionsManager: PermissionsManager,
 ) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl }),
-    SearchableRepository<OsmLocation>,
-    KoinComponent {
+    SearchableRepository<OsmLocation> {
 
-    private val permissionsManager: PermissionsManager by inject()
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
     override fun search(query: String): Flow<ImmutableList<OsmLocation>> = channelFlow {
