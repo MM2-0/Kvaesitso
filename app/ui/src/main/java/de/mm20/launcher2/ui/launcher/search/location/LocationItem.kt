@@ -84,8 +84,7 @@ fun LocationItem(
     modifier: Modifier = Modifier,
     location: Location,
     showDetails: Boolean,
-    onBack: () -> Unit,
-    priorityCallback: ((key: String, priority: Int) -> Unit)? = null
+    onBack: () -> Unit
 ) {
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
@@ -97,7 +96,6 @@ fun LocationItem(
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
-    if (distance != null) priorityCallback?.invoke(location.key, distance.roundToInt())
 
     var openingSchedule by remember { mutableStateOf<OpeningSchedule?>(null) }
     var phoneNumber by remember { mutableStateOf<String?>(null) }

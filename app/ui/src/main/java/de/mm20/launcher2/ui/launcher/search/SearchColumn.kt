@@ -115,9 +115,6 @@ fun SearchColumn(
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
-    // is it correct to use remember here?
-    val locationPriorities = remember { mutableStateMapOf<String, Int>() }
-
     LazyColumn(
         state = state,
         modifier = modifier,
@@ -324,19 +321,10 @@ fun SearchColumn(
                     )
                 }
             } else null,
-            items = locations.sortedBy { locationPriorities[it.key] ?: PRIORITY_MIN }
-                .toImmutableList(),
+            items = locations.toImmutableList(),
             reverse = reverse,
             key = "locations",
-            highlightedItem = (bestMatch as? SavableSearchable)?.let {
-                if (it is Location)
-                    locationPriorities[it.key] = PRIORITY_MAX
-                it
-            },
-            priorityCallback = { key, priority ->
-                if ((bestMatch as? SavableSearchable)?.key != key)
-                    locationPriorities[key] = priority
-            }
+            highlightedItem = bestMatch as? SavableSearchable
         )
         for (wiki in wikipedia) {
             SingleResult(highlight = bestMatch == wiki) {
@@ -479,7 +467,6 @@ fun LazyListScope.ListResults(
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
-    priorityCallback: ((key: String, priority: Int) -> Unit)? = null,
     highlightedItem: SavableSearchable?,
 ) {
     if (before != null) {
@@ -500,7 +487,6 @@ fun LazyListScope.ListResults(
         }
     ) {
         PartialCardRow(
-            modifier = Modifier.animateItemPlacement(),
             isFirst = it == 0 && before == null,
             isLast = it == items.lastIndex && after == null,
             reverse = reverse
@@ -511,8 +497,7 @@ fun LazyListScope.ListResults(
                     bottom = if (if (reverse) it == 0 else it == items.size - 1) 8.dp else 4.dp,
                 ),
                 item = items[it],
-                highlight = items[it].key == highlightedItem?.key,
-                priorityCallback = priorityCallback
+                highlight = items[it].key == highlightedItem?.key
             )
         }
     }
@@ -533,8 +518,7 @@ fun LazyListScope.ListResults(
 fun ListRow(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
-    highlight: Boolean,
-    priorityCallback: ((key: String, priority: Int) -> Unit)? = null,
+    highlight: Boolean
 ) {
     Box(
         modifier = modifier.padding(
@@ -546,8 +530,7 @@ fun ListRow(
             modifier = Modifier
                 .fillMaxWidth(),
             item = item,
-            highlight = highlight,
-            priorityCallback = priorityCallback,
+            highlight = highlight
         )
     }
 }

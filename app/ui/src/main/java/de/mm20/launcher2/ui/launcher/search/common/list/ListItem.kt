@@ -30,8 +30,7 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 fun ListItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
-    highlight: Boolean = false,
-    priorityCallback: ((key: String, priority: Int) -> Unit)? = null
+    highlight: Boolean = false
 ) {
     var showDetails by remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -112,8 +111,7 @@ fun ListItem(
                             onLongClick = { showDetails = true }),
                     location = item,
                     showDetails = showDetails,
-                    onBack = { showDetails = false },
-                    priorityCallback = priorityCallback
+                    onBack = { showDetails = false }
                 )
             }
 
