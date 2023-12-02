@@ -270,7 +270,7 @@ fun LocationItem(
                             initialZoomLevel = zoomLevel,
                             numberOfTiles = nTiles,
                             applyTheming = applyTheming,
-                            userLocation = if (showPositionOnMap) userLocation?.let { it.latitude to it.longitude } else null,
+                            userLocation = if (showPositionOnMap) userLocation?.let { UserLocation(it.latitude, it.longitude) } else null,
                         )
 
                         val address = buildAddress(street, houseNumber)

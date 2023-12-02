@@ -72,7 +72,7 @@ import kotlin.math.min
 import kotlin.math.sqrt
 import kotlin.math.tan
 
-typealias UserLocation = Pair<Double, Double>
+data class UserLocation(val lat: Double, val lon: Double)
 
 @Composable
 fun MapTiles(
@@ -195,8 +195,8 @@ fun MapTiles(
             val (yUser, xUser) = remember(userLocation, zoom) {
                 if (userLocation != null) {
                     getDoubleTileCoordinates(
-                        latitude = userLocation.first,
-                        longitude = userLocation.second,
+                        latitude = userLocation.lat,
+                        longitude = userLocation.lon,
                         zoom
                     )
                 } else {
@@ -374,8 +374,8 @@ private fun getEnclosingTiles(
             zoomLevel
         )
         val (userY, userX) = getDoubleTileCoordinates(
-            userLocation.first,
-            userLocation.second,
+            userLocation.lat,
+            userLocation.lon,
             zoomLevel
         )
 
@@ -488,7 +488,7 @@ private fun MapTilesPreview() {
         initialZoomLevel = 19,
         numberOfTiles = 9,
         applyTheming = false,
-        userLocation = 52.51623 to 13.4048
+        userLocation = UserLocation(52.51623, 13.4048)
     )
 }
 
