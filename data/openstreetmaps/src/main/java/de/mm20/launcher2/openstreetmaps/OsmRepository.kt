@@ -138,9 +138,11 @@ internal class OsmRepository(
                                 .filter {
                                     it.isWellDefined &&
                                             (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)
-                                }.groupBy {
+                                }
+                                .groupBy {
                                     it.label.lowercase()
-                                }.flatMap { (_, duplicates) ->
+                                }
+                                .flatMap { (_, duplicates) ->
                                     // deduplicate results with same labels, if
                                     // - same category
                                     // - distance is less than 100m
@@ -151,12 +153,11 @@ internal class OsmRepository(
                                             .drop(1)
                                             .filter {
                                                 it.category != luckyFirst.category ||
-                                                        it.toAndroidLocation()
-                                                            .distanceTo(luckyFirst.toAndroidLocation()) > 100.0
+                                                        it.distanceTo(luckyFirst) > 100.0
                                             } + luckyFirst
                                     }
                                 }.sortedBy {
-                                    userLocation.distanceTo(it.toAndroidLocation())
+                                    it.distanceTo(userLocation)
                                 }.toImmutableList()
                         )
                     }

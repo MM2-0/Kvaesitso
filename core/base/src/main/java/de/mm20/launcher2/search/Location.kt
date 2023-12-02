@@ -31,16 +31,35 @@ interface Location : SavableSearchable {
     override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val category = getCategory()
         val (resId, bgColor) = when (category) {
-            LocationCategory.FAST_FOOD, LocationCategory.RESTAURANT -> with(labelOverride ?: label) {
+            LocationCategory.FAST_FOOD, LocationCategory.RESTAURANT -> with(
+                labelOverride ?: label
+            ) {
                 when {
-                    contains("pizza", ignoreCase = true) -> R.drawable.ic_location_pizza to R.color.red
-                    contains("ramen", ignoreCase = true) -> R.drawable.ic_location_ramen to R.color.orange
-                    contains("tapas", ignoreCase = true) -> R.drawable.ic_location_tapas to R.color.orange
-                    contains("keba" /* b or p, depending on locale */, ignoreCase = true) -> R.drawable.ic_location_kebab to R.color.orange
+                    contains(
+                        "pizza",
+                        ignoreCase = true
+                    ) -> R.drawable.ic_location_pizza to R.color.red
+
+                    contains(
+                        "ramen",
+                        ignoreCase = true
+                    ) -> R.drawable.ic_location_ramen to R.color.orange
+
+                    contains(
+                        "tapas",
+                        ignoreCase = true
+                    ) -> R.drawable.ic_location_tapas to R.color.orange
+
+                    contains(
+                        "keba" /* b or p, depending on locale */,
+                        ignoreCase = true
+                    ) -> R.drawable.ic_location_kebab to R.color.orange
+
                     category == LocationCategory.FAST_FOOD -> R.drawable.ic_location_fastfood to R.color.orange
                     else -> R.drawable.ic_location_restaurant to R.color.red
                 }
             }
+
             LocationCategory.BAR -> R.drawable.ic_location_bar to R.color.amber
             LocationCategory.CAFE, LocationCategory.COFFEE_SHOP -> R.drawable.ic_location_cafe to R.color.brown
             LocationCategory.HOTEL -> R.drawable.ic_location_hotel to R.color.green
@@ -121,6 +140,12 @@ interface Location : SavableSearchable {
 
         return location
     }
+
+    fun distanceTo(androidLocation: android.location.Location): Float =
+        androidLocation.distanceTo(this.toAndroidLocation())
+
+    fun distanceTo(otherLocation: Location): Float =
+        this.toAndroidLocation().distanceTo(otherLocation.toAndroidLocation())
 }
 
 // https://taginfo.openstreetmap.org/tags
@@ -201,7 +226,11 @@ enum class LocationCategory {
     FITNESS_CENTRE
 }
 
-data class OpeningHours(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val duration: Duration) {
+data class OpeningHours(
+    val dayOfWeek: DayOfWeek,
+    val startTime: LocalTime,
+    val duration: Duration
+) {
     val isOpen: Boolean
         get() = LocalDate.now().dayOfWeek == dayOfWeek &&
                 LocalTime.now().isAfter(startTime) &&
@@ -210,7 +239,10 @@ data class OpeningHours(val dayOfWeek: DayOfWeek, val startTime: LocalTime, val 
     override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
 }
 
-data class OpeningSchedule(val isTwentyFourSeven: Boolean, val openingHours: ImmutableList<OpeningHours>) {
+data class OpeningSchedule(
+    val isTwentyFourSeven: Boolean,
+    val openingHours: ImmutableList<OpeningHours>
+) {
     val isOpen: Boolean
         get() = isTwentyFourSeven || openingHours.any { it.isOpen }
 }
