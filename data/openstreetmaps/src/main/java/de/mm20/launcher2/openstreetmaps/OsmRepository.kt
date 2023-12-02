@@ -18,8 +18,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -92,76 +95,77 @@ internal class OsmRepository(
         // (Drogerie Markt, a problem specific to germany, but probably also relevant for other countries)
         if (query.length < 2) return@channelFlow
 
-        hasLocationPermission.collectLatest locationPermission@{ locationPermission ->
-            if (!locationPermission) return@locationPermission
+        hasLocationPermission.collectLatest { locationPermission ->
+            if (!locationPermission) return@collectLatest
 
-            withContext(Dispatchers.IO) {
-                httpClient.dispatcher.cancelAll()
-            }
+            dataStore.data.map { it.locationsSearch }.collectLatest dataStore@{ settings ->
+                if (!settings.enabled) return@dataStore
 
-            val userLocation = poseProvider.getLocation().firstOrNull() ?: return@locationPermission
+                val userLocation = poseProvider.getLocation().firstOrNull() ?: return@dataStore
 
-            dataStore.data.map { it.locationsSearch }
-                .collectLatest dataStore@{ settings ->
-                    suspend fun searchByTag(tag: String): OverpassResponse? =
-                        overpassService.runCatching {
-                            this.search(
-                                OverpassFuzzyRadiusQuery(
-                                    tag = tag,
-                                    query = query,
-                                    radius = settings.searchRadius,
-                                    latitude = userLocation.latitude,
-                                    longitude = userLocation.longitude,
-                                )
-                            )
-                        }.onFailure {
-                            if (it !is HttpException && it !is CancellationException) {
-                                Log.e("OsmRepository", "Failed to search for $tag: $query", it)
-                            }
-                        }.getOrNull()
-
-                    val result = awaitAll(
-                        // optionally query by "amenity" or "shop" here
-                        // if we want to make searching for locations fuzzier
-                        // however, this would not account for localized queries like "Bäcker" (shop:bakery)
-                        async(this.coroutineContext) { searchByTag("name") },
-                        async(this.coroutineContext) { searchByTag("brand") },
-                    ).flatMap {
-                        it?.let {
-                            OsmLocation.fromOverpassResponse(it)
-                        } ?: emptyList()
-                    }
-
-                    if (result.isNotEmpty()) {
-                        send(
-                            result
-                                .filter {
-                                    it.isWellDefined &&
-                                            (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)
-                                }
-                                .groupBy {
-                                    it.label.lowercase()
-                                }
-                                .flatMap { (_, duplicates) ->
-                                    // deduplicate results with same labels, if
-                                    // - same category
-                                    // - distance is less than 100m
-                                    if (duplicates.size < 2) duplicates
-                                    else {
-                                        val luckyFirst = duplicates.first()
-                                        duplicates
-                                            .drop(1)
-                                            .filter {
-                                                it.category != luckyFirst.category ||
-                                                        it.distanceTo(luckyFirst) > 100.0
-                                            } + luckyFirst
-                                    }
-                                }.sortedBy {
-                                    it.distanceTo(userLocation)
-                                }.toImmutableList()
-                        )
-                    }
+                withContext(Dispatchers.IO) {
+                    httpClient.dispatcher.cancelAll()
                 }
+
+                suspend fun searchByTag(tag: String): OverpassResponse? =
+                    overpassService.runCatching {
+                        this.search(
+                            OverpassFuzzyRadiusQuery(
+                                tag = tag,
+                                query = query,
+                                radius = settings.searchRadius,
+                                latitude = userLocation.latitude,
+                                longitude = userLocation.longitude,
+                            )
+                        )
+                    }.onFailure {
+                        if (it !is HttpException && it !is CancellationException) {
+                            Log.e("OsmRepository", "Failed to search for $tag: $query", it)
+                        }
+                    }.getOrNull()
+
+                val result = awaitAll(
+                    // optionally query by "amenity" or "shop" here
+                    // if we want to make searching for locations fuzzier
+                    // however, this would not account for localized queries like "Bäcker" (shop:bakery)
+                    async(this.coroutineContext) { searchByTag("name") },
+                    async(this.coroutineContext) { searchByTag("brand") },
+                ).flatMap {
+                    it?.let {
+                        OsmLocation.fromOverpassResponse(it)
+                    } ?: emptyList()
+                }
+
+                if (result.isNotEmpty()) {
+                    send(
+                        result
+                            .filter {
+                                it.isWellDefined &&
+                                        (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)
+                            }
+                            .groupBy {
+                                it.label.lowercase()
+                            }
+                            .flatMap { (_, duplicates) ->
+                                // deduplicate results with same labels, if
+                                // - same category
+                                // - distance is less than 100m
+                                if (duplicates.size < 2) duplicates
+                                else {
+                                    val luckyFirst = duplicates.first()
+                                    duplicates
+                                        .drop(1)
+                                        .filter {
+                                            it.category != luckyFirst.category ||
+                                                    it.distanceTo(luckyFirst) > 100.0
+                                        } + luckyFirst
+                                }
+                            }.sortedBy {
+                                it.distanceTo(userLocation)
+                            }.toImmutableList()
+                    )
+                }
+            }
         }
     }
 }
