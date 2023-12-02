@@ -143,16 +143,19 @@ fun MapTiles(
                             onState = {
                                 val stateIndex =
                                     (y - start.y) * (stop.y - start.y + 1) + (x - start.x)
-                                if (it is AsyncImagePainter.State.Loading)
-                                    imageStates[stateIndex] = false
-                                if (it is AsyncImagePainter.State.Success)
-                                    imageStates[stateIndex] = true
-                                if (it is AsyncImagePainter.State.Error)
-                                    Log.e(
-                                        "MapTiles",
-                                        "Error loading tile: $x, $y @$zoom",
-                                        it.result.throwable
-                                    )
+                                when (it) {
+                                    is AsyncImagePainter.State.Loading -> imageStates[stateIndex] = false
+                                    is AsyncImagePainter.State.Success -> imageStates[stateIndex] = true
+                                    is AsyncImagePainter.State.Error -> {
+                                        imageStates[stateIndex] = false
+                                        Log.e(
+                                            "MapTiles",
+                                            "Error loading tile: $x, $y @$zoom",
+                                            it.result.throwable
+                                        )
+                                    }
+                                    else -> {}
+                                }
                             }
                         )
                     }
