@@ -12,18 +12,20 @@ import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
 
-interface Location : SavableSearchable {
+abstract class Location : SavableSearchable {
 
-    val latitude: Double
-    val longitude: Double
-    val fixMeUrl: String?
+    private var lastDistance: Float? = null
 
-    suspend fun getCategory(): LocationCategory?
-    suspend fun getStreet(): String?
-    suspend fun getHouseNumber(): String?
-    suspend fun getOpeningSchedule(): OpeningSchedule?
-    suspend fun getWebsiteUrl(): String?
-    suspend fun getPhoneNumber(): String?
+    abstract val latitude: Double
+    abstract val longitude: Double
+    abstract val fixMeUrl: String?
+
+    abstract suspend fun getCategory(): LocationCategory?
+    abstract suspend fun getStreet(): String?
+    abstract suspend fun getHouseNumber(): String?
+    abstract suspend fun getOpeningSchedule(): OpeningSchedule?
+    abstract suspend fun getWebsiteUrl(): String?
+    abstract suspend fun getPhoneNumber(): String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = true
@@ -141,11 +143,20 @@ interface Location : SavableSearchable {
         return location
     }
 
-    fun distanceTo(androidLocation: android.location.Location): Float =
-        androidLocation.distanceTo(this.toAndroidLocation())
+    fun distanceTo(androidLocation: android.location.Location): Float {
+        lastDistance = androidLocation.distanceTo(this.toAndroidLocation())
+        return lastDistance!!
+    }
 
     fun distanceTo(otherLocation: Location): Float =
-        this.toAndroidLocation().distanceTo(otherLocation.toAndroidLocation())
+        this.distanceTo(otherLocation.toAndroidLocation())
+
+    override fun compareTo(other: SavableSearchable): Int {
+        if (other !is Location || other.lastDistance == null || this.lastDistance == null)
+            return super.compareTo(other)
+
+        return lastDistance!!.compareTo(other.lastDistance!!)
+    }
 }
 
 // https://taginfo.openstreetmap.org/tags

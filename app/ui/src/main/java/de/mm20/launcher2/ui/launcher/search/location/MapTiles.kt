@@ -489,7 +489,7 @@ private fun MapTilesPreview() {
     )
 }
 
-internal object MockLocation : Location {
+internal object MockLocation : Location() {
 
     override val domain: String = "MOCKLOCATION"
     override val key: String = "MOCKLOCATION"

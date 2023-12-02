@@ -37,7 +37,7 @@ internal data class OsmLocation(
     private var phoneNumber: String?,
     private var isCacheUpToDate: Boolean,
     override val labelOverride: String? = null,
-) : Location {
+) : Location() {
 
     override val domain: String
         get() = DOMAIN
