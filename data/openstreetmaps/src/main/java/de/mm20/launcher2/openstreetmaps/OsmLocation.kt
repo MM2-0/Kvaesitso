@@ -27,9 +27,9 @@ import java.util.Locale
 internal data class OsmLocation(
     internal val id: Long,
     override var label: String,
-    internal var category: LocationCategory?,
-    private val _latitude: Double?,
-    private val _longitude: Double?,
+    override var category: LocationCategory?,
+    override val latitude: Double,
+    override val longitude: Double,
     private var street: String?,
     private var houseNumber: String?,
     private var openingSchedule: OpeningSchedule?,
@@ -45,14 +45,6 @@ internal data class OsmLocation(
     override val fixMeUrl: String
         get() = FIXMEURL
 
-    override val latitude: Double
-        get() = _latitude ?: 0.0
-    override val longitude: Double
-        get() = _longitude ?: 0.0
-
-    val isWellDefined: Boolean
-        get() = _latitude != null && _longitude != null
-
     override fun overrideLabel(label: String): OsmLocation {
         return this.copy(labelOverride = label)
     }
@@ -65,14 +57,6 @@ internal data class OsmLocation(
             ),
             options
         )
-    }
-
-    override suspend fun getCategory(): LocationCategory? {
-        if (isCacheUpToDate)
-            return category
-        if (category == null)
-            updateCache()
-        return category
     }
 
     override suspend fun getStreet(): String? {
@@ -177,8 +161,8 @@ internal data class OsmLocation(
                             }
                     } else null
                 } ?: LocationCategory.OTHER,
-                _latitude = it.lat ?: it.center?.lat,
-                _longitude = it.lon ?: it.center?.lon,
+                latitude = it.lat ?: it.center?.lat ?: return@mapNotNull null,
+                longitude = it.lon ?: it.center?.lon ?: return@mapNotNull null,
                 street = it.tags["addr:street"],
                 houseNumber = it.tags["addr:housenumber"],
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },

@@ -20,7 +20,7 @@ abstract class Location : SavableSearchable {
     abstract val longitude: Double
     abstract val fixMeUrl: String?
 
-    abstract suspend fun getCategory(): LocationCategory?
+    abstract var category: LocationCategory? protected set
     abstract suspend fun getStreet(): String?
     abstract suspend fun getHouseNumber(): String?
     abstract suspend fun getOpeningSchedule(): OpeningSchedule?
@@ -30,8 +30,7 @@ abstract class Location : SavableSearchable {
     override val preferDetailsOverLaunch: Boolean
         get() = true
 
-    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
-        val category = getCategory()
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when (category) {
             LocationCategory.FAST_FOOD, LocationCategory.RESTAURANT -> with(
                 labelOverride ?: label

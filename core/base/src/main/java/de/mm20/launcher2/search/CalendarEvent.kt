@@ -20,7 +20,7 @@ interface CalendarEvent: SavableSearchable {
         get() = true
 
 
-    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val df = SimpleDateFormat("dd")
         return StaticLauncherIcon(
             foregroundLayer = TextLayer(

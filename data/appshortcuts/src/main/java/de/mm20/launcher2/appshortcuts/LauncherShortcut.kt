@@ -90,7 +90,7 @@ internal data class LauncherShortcut(
         return true
     }
 
-    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 color = 0xFF3DDA84.toInt(),

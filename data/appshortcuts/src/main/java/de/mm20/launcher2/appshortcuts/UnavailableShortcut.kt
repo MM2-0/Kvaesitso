@@ -40,7 +40,7 @@ internal class UnavailableShortcut(
     override val componentName: ComponentName?
         get() = null
 
-    override suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
+    override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
                 icon = context.getDrawable(R.drawable.ic_file_android)!!,

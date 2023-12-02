@@ -23,7 +23,7 @@ interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
      */
     val preferDetailsOverLaunch: Boolean
 
-    suspend fun getPlaceholderIcon(context: Context): StaticLauncherIcon
+    fun getPlaceholderIcon(context: Context): StaticLauncherIcon
 
     suspend fun loadIcon(
         context: Context,

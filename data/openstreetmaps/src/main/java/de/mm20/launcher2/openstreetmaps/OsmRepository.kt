@@ -140,8 +140,7 @@ internal class OsmRepository(
                     send(
                         result
                             .filter {
-                                it.isWellDefined &&
-                                        (!settings.hideUncategorized || it.getCategory() != LocationCategory.OTHER)
+                                !settings.hideUncategorized || (it.category != null && it.category != LocationCategory.OTHER)
                             }
                             .groupBy {
                                 it.label.lowercase()

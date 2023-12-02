@@ -28,8 +28,8 @@ class OsmLocationDeserializer : SearchableDeserializer {
         val json = JSONObject(serialized)
         return OsmLocation(
             id = json.getLong("id"),
-            _latitude = json.getDouble("lat"),
-            _longitude = json.getDouble("lon"),
+            latitude = json.getDouble("lat"),
+            longitude = json.getDouble("lon"),
             category = json.getString("category").runCatching { LocationCategory.valueOf(this) }.getOrNull(),
             label = json.getString("label"),
             street = null,

@@ -502,7 +502,7 @@ internal object MockLocation : Location() {
     override val latitude = 52.5162700
     override val longitude = 13.3777021
 
-    override suspend fun getCategory(): LocationCategory = LocationCategory.OTHER
+    override var category: LocationCategory? = LocationCategory.OTHER
 
     override suspend fun getStreet(): String = "Pariser Platz"
 
