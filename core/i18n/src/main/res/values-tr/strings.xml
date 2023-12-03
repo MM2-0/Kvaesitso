@@ -137,4 +137,26 @@
     <string name="easter_egg_3">Tekrar söylemeyeceğim: burada kesinlikle hiçbir paskalya yumurtası saklı değil</string>
     <string name="easter_egg_text">Beni buldun. Tebrik ederim. Buna değdi mi\?</string>
     <string name="edit_favorites_dialog_unpinned">Sabitlenmemiş - sık kullanılan</string>
+    <string name="file_type_launchertheme">%1$s teması</string>
+    <string name="login_flow_login">Giriş Yap</string>
+    <string name="disclaimer">Sorumluluk reddi</string>
+    <string name="owncloud_username">Kullanıcı adı</string>
+    <string name="owncloud_password_empty">Şifre boş bırakılamaz</string>
+    <string name="login_flow_continue">Devam et</string>
+    <string name="owncloud_username_empty">Kullanıcı adı boş bırakılamaz</string>
+    <string name="owncloud_server_url">Owncloud sunucu URL\'si</string>
+    <string name="owncloud_login_2fa_hint">İki faktörlü kimlik doğrulamayı etkinleştirdiyseniz, burada bir uygulama parolası kullanmanız gerekir.</string>
+    <string name="owncloud_login_failed">Giriş başarısız: kullanıcı adı ya da şifre hatalı.</string>
+    <string name="owncloud_server_invalid_url">Bu URL geçerli bir Owncloud kurulumuna göstermiyor</string>
+    <string name="owncloud_password">Şifre</string>
+    <string name="edit">Düzenle</string>
+    <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
+    <string name="widget_name_notes">Not</string>
+    <string name="notes_widget_action_dismiss">İptal et</string>
+    <string name="notes_widget_placeholder">Bir not yaz…</string>
+    <string name="notes_widget_action_new">Yeni not</string>
+    <string name="notes_widget_export_filename">Not_%1$s</string>
+    <string name="notes_widget_dismissed">Not iptal edildi.</string>
+    <string name="notes_widget_action_save">Kaydet</string>
+    <string name="action_import">İçe aktar</string>
 </resources>
