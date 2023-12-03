@@ -438,7 +438,7 @@
     <string name="preference_layout">Disposition</string>
     <string name="preference_layout_summary">Organisation générale de la barre de recherche, des widgets et des résultats de recherches</string>
     <string name="preference_grid_icon_size">Taille d\'icône</string>
-    <string name="preference_clockwidget_favorites_part">Favoris</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="widget_name_favorites">Favoris</string>
     <string name="msg_item_hidden">%1$s a été caché.</string>
     <string name="action_undo">Annuler</string>
@@ -700,4 +700,6 @@
     <string name="preference_screen_plugins_summary">Gérer les extensions installées</string>
     <string name="no_plugins_installed">Aucun plugins installés</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
+    <string name="plugin_host_not_installed">Hôte du plugin non installé</string>
+    <string name="preference_blur_wallpaper_radius">Rayon de flou</string>
 </resources>
