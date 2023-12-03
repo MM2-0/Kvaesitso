@@ -10,9 +10,9 @@ import de.mm20.launcher2.accounts.AccountsRepository
 import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugins.PluginService
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -22,6 +22,7 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val fileSearchSettings: FileSearchSettings by inject()
     private val accountsRepository: AccountsRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val pluginService: PluginService by inject()
 
     val hasFilePermission = permissionsManager.hasPermission(PermissionGroup.ExternalStorage)
             .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -32,6 +33,14 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
     val googleAccount = mutableStateOf<Account?>(null)
 
     val googleAvailable = accountsRepository.isSupported(AccountType.Google)
+
+    val availablePlugins = pluginService.getPluginsWithState(
+        type = PluginType.FileSearch,
+        enabled = true,
+    )
+
+    val enabledPlugins = fileSearchSettings.enabledPlugins
+
 
     fun onResume() {
         viewModelScope.launch {
@@ -74,5 +83,9 @@ class FileSearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun login(context: AppCompatActivity, accountType: AccountType) {
         accountsRepository.signin(context, accountType)
+    }
+
+    fun setPluginEnabled(authority: String, enabled: Boolean) {
+        fileSearchSettings.setPluginEnabled(authority, enabled)
     }
 }

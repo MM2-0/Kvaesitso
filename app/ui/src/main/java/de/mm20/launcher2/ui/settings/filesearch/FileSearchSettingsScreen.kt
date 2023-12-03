@@ -1,12 +1,14 @@
 package de.mm20.launcher2.ui.settings.filesearch
 
+import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBox
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,10 +21,13 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.accounts.AccountType
+import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
+import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -40,6 +45,13 @@ fun FileSearchSettingsScreen() {
             viewModel.onResume()
         }
     }
+
+    val plugins by viewModel.availablePlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED,
+    )
+    val enabledPlugins by viewModel.enabledPlugins.collectAsStateWithLifecycle(null)
+
     val loading by viewModel.loading
     PreferenceScreen(title = stringResource(R.string.preference_search_files)) {
         if (loading == true) {
@@ -172,6 +184,38 @@ fun FileSearchSettingsScreen() {
                             viewModel.setGdrive(it)
                         },
                         enabled = googleAccount != null
+                    )
+                }
+                for (plugin in plugins) {
+                    val state = plugin.state
+                    if (state is PluginState.SetupRequired) {
+                        Banner(
+                            modifier = Modifier.padding(16.dp),
+                            text = state.message ?: "You need to setup this plugin first",
+                            icon = Icons.Rounded.ErrorOutline,
+                            primaryAction = {
+                                TextButton(onClick = {
+                                    try {
+                                        state.setupActivity.send()
+                                    } catch (e: PendingIntent.CanceledException) {
+                                        CrashReporter.logException(e)
+                                    }
+                                }) {
+                                    Text("Set up")
+                                }
+                            }
+                        )
+                    }
+                    SwitchPreference(
+                        title = plugin.plugin.label,
+                        enabled = enabledPlugins != null && state is PluginState.Ready,
+                        summary = (state as? PluginState.Ready)?.text
+                            ?: (state as? PluginState.SetupRequired)?.message
+                            ?: plugin.plugin.description,
+                        value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                        onValueChanged = {
+                            viewModel.setPluginEnabled(plugin.plugin.authority, it)
+                        },
                     )
                 }
             }

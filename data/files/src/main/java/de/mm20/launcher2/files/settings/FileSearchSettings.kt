@@ -87,6 +87,17 @@ class FileSearchSettings(
         }
     }
 
+    val enabledPlugins: Flow<Set<String>>
+        get(): Flow<Set<String>> {
+            return context.dataStore.data.map { it.plugins }
+        }
+
+    fun setEnabledPlugins(enabledPlugins: Set<String>) {
+        updateData {
+            it.copy(plugins = enabledPlugins)
+        }
+    }
+
     override suspend fun backup(toDir: File) {
         val data = context.dataStore.data.first()
         val file = File(toDir, "file_search.json")
@@ -107,6 +118,16 @@ class FileSearchSettings(
             CrashReporter.logException(e)
         } catch (e: IllegalArgumentException) {
             CrashReporter.logException(e)
+        }
+    }
+
+    fun setPluginEnabled(authority: String, enabled: Boolean) {
+        updateData {
+            if (enabled) {
+                it.copy(plugins = it.plugins + authority)
+            } else {
+                it.copy(plugins = it.plugins - authority)
+            }
         }
     }
 }

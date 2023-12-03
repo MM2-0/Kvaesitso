@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.util.Log
-import androidx.core.content.ContextCompat
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginPackage
@@ -43,7 +42,10 @@ data class PluginWithState(
 interface PluginService {
     fun enablePluginPackage(plugin: PluginPackage)
     fun disablePluginPackage(plugin: PluginPackage)
-    fun getPluginsWithState(type: PluginType? = null): Flow<List<PluginWithState>>
+    fun getPluginsWithState(
+        type: PluginType? = null,
+        enabled: Boolean? = null,
+    ): Flow<List<PluginWithState>>
 
     fun isPluginHostInstalled(): Flow<Boolean>
 
@@ -127,9 +129,11 @@ internal class PluginServiceImpl(
 
     override fun getPluginsWithState(
         type: PluginType?,
+        enabled: Boolean?,
     ): Flow<List<PluginWithState>> {
         return repository.findMany(
             type = type,
+            enabled = enabled,
         ).map {
             it.map {
                 PluginWithState(

@@ -7,11 +7,13 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
+import de.mm20.launcher2.plugins.PluginWithState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,6 +28,7 @@ import org.koin.core.component.inject
 
 class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService by inject<PluginService>()
+    private val fileSearchSettings: FileSearchSettings by inject()
 
     private var pluginPackageName = MutableStateFlow<String?>(null)
 
@@ -47,11 +50,17 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
         it?.plugins?.map { it.type }?.distinct() ?: emptyList()
     }
 
-    val states: Flow<List<PluginState?>> = pluginPackage.map {
-        it?.plugins?.map {
-            pluginService.getPluginState(it)
-        } ?: emptyList()
-    }
+    val filePlugins = pluginPackage
+        .map {
+            it?.plugins?.mapNotNull {
+                if (it.type == PluginType.FileSearch) {
+                    val state = pluginService.getPluginState(it)
+                    PluginWithState(it, state)
+                } else {
+                    null
+                }
+            } ?: emptyList()
+        }
 
 
     fun init(pluginId: String) {
@@ -77,5 +86,11 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     fun uninstall(context: Context) {
         val plugin = pluginPackage.value ?: return
         pluginService.uninstallPluginPackage(context, plugin)
+    }
+
+
+    val enabledFileSearchPlugins = fileSearchSettings.enabledPlugins
+    fun setFileSearchPluginEnabled(authority: String, enabled: Boolean) {
+        fileSearchSettings.setPluginEnabled(authority, enabled)
     }
 }

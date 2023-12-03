@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.settings.plugins
 
+import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -16,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.ErrorOutline
+import androidx.compose.material.icons.rounded.FileCopy
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Verified
@@ -25,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,7 +41,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -55,10 +62,13 @@ fun PluginSettingsScreen(pluginId: String) {
     val pluginPackage by viewModel.pluginPackage.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle(null)
     val types by viewModel.types.collectAsStateWithLifecycle(emptyList())
-    val states by viewModel.states.collectAsStateWithLifecycle(
+
+    val filePlugins by viewModel.filePlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
     )
+
+    val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(null)
 
     Scaffold(
         topBar = {
@@ -247,8 +257,45 @@ fun PluginSettingsScreen(pluginId: String) {
                 )
             }
             AnimatedVisibility(pluginPackage?.enabled == true) {
-                PreferenceCategory {
-
+                if (filePlugins.isNotEmpty()) {
+                    PreferenceCategory(
+                        "File search",
+                        iconPadding = false,
+                    ) {
+                        for (plugin in filePlugins) {
+                            val state = plugin.state
+                            if (state is PluginState.SetupRequired) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = state.message ?: "You need to setup this plugin first",
+                                    icon = Icons.Rounded.ErrorOutline,
+                                    primaryAction = {
+                                        TextButton(onClick = {
+                                            try {
+                                                state.setupActivity.send()
+                                            } catch (e: PendingIntent.CanceledException) {
+                                                CrashReporter.logException(e)
+                                            }
+                                        }) {
+                                            Text("Set up")
+                                        }
+                                    }
+                                )
+                            }
+                            SwitchPreference(
+                                title = plugin.plugin.label,
+                                enabled = enabledFileSearchPlugins != null && state is PluginState.Ready,
+                                summary = (state as? PluginState.Ready)?.text
+                                    ?: (state as? PluginState.SetupRequired)?.message
+                                    ?: plugin.plugin.description,
+                                value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                onValueChanged = {
+                                    viewModel.setFileSearchPluginEnabled(plugin.plugin.authority, it)
+                                },
+                                iconPadding = false,
+                            )
+                        }
+                    }
                 }
             }
         }

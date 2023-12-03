@@ -53,9 +53,7 @@ internal class FileRepository(
             enabled = true,
         )
 
-        settings.data.combine(filePlugins) { settings, plugins ->
-                settings to plugins
-            }.collectLatest { (settings, plugins) ->
+        settings.data.collectLatest { settings ->
                 val providers = mutableListOf<FileProvider>()
 
                 if (settings.localFiles) providers.add(
@@ -68,7 +66,7 @@ internal class FileRepository(
                 if (settings.nextcloudFiles) providers.add(NextcloudFileProvider(nextcloudClient))
                 if (settings.owncloudFiles) providers.add(OwncloudFileProvider(owncloudClient))
 
-                for (plugin in plugins) {
+                for (plugin in settings.plugins) {
                     providers.add(PluginFileProvider(context, plugin))
                 }
 

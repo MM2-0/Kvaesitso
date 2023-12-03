@@ -20,12 +20,12 @@ import kotlin.coroutines.resume
 
 class PluginFileProvider(
     private val context: Context,
-    private val plugin: Plugin,
+    private val pluginAuthority: String,
 ) : FileProvider {
     override suspend fun search(query: String): List<File> {
         val uri = Uri.Builder()
             .scheme("content")
-            .authority(plugin.authority)
+            .authority(pluginAuthority)
             .path(SearchPluginContract.Paths.Search)
             .appendQueryParameter(SearchPluginContract.Paths.QueryParam, query)
             .build()
@@ -43,14 +43,14 @@ class PluginFileProvider(
                     cancellationSignal
                 )
             } catch (e: Exception) {
-                Log.e("MM20", "Plugin ${plugin.authority} threw exception")
+                Log.e("MM20", "Plugin ${pluginAuthority} threw exception")
                 CrashReporter.logException(e)
                 it.resume(emptyList())
                 return@suspendCancellableCoroutine
             }
 
             if (cursor == null) {
-                Log.e("MM20", "Plugin ${plugin.authority} returned null cursor")
+                Log.e("MM20", "Plugin ${pluginAuthority} returned null cursor")
                 it.resume(emptyList())
                 return@suspendCancellableCoroutine
             }
@@ -65,14 +65,14 @@ class PluginFileProvider(
             context.contentResolver.call(
                 Uri.Builder()
                     .scheme("content")
-                    .authority(plugin.authority)
+                    .authority(pluginAuthority)
                     .build(),
                 PluginContract.Methods.GetConfig,
                 null,
                 null
             ) ?: return null
         } catch (e: Exception) {
-            Log.e("MM20", "Plugin ${plugin.authority} threw exception")
+            Log.e("MM20", "Plugin ${pluginAuthority} threw exception")
             CrashReporter.logException(e)
             return null
         }
@@ -83,7 +83,7 @@ class PluginFileProvider(
     suspend fun getFile(id: String): File? {
         val uri = Uri.Builder()
             .scheme("content")
-            .authority(plugin.authority)
+            .authority(pluginAuthority)
             .path(SearchPluginContract.Paths.Root)
             .appendPath(id)
             .build()
@@ -109,7 +109,7 @@ class PluginFileProvider(
         val config = getPluginConfig()
 
         if (config == null) {
-            Log.e("MM20", "Plugin ${plugin.authority} returned null config")
+            Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
             cursor.close()
             return null
         }
@@ -153,7 +153,7 @@ class PluginFileProvider(
                     }?.let { Uri.parse(it) },
                     storageStrategy = config.storageStrategy,
                     isDirectory = directoryIndex?.let { cursor.getInt(it) } == 1,
-                    authority = plugin.authority,
+                    authority = pluginAuthority,
                 )
             )
         }
