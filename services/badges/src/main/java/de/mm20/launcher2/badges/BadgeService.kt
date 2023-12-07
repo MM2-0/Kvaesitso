@@ -2,6 +2,7 @@ package de.mm20.launcher2.badges
 
 import android.content.Context
 import de.mm20.launcher2.badges.providers.*
+import de.mm20.launcher2.badges.settings.BadgeSettings
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.*
@@ -13,16 +14,17 @@ interface BadgeService {
     fun getBadge(searchable: Searchable): Flow<Badge?>
 }
 
-internal class BadgeServiceImpl(private val context: Context) : BadgeService, KoinComponent {
+internal class BadgeServiceImpl(
+    private val context: Context,
+    private val settings: BadgeSettings,
+) : BadgeService, KoinComponent {
 
-    private val dataStore: LauncherDataStore by inject()
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
     private val badgeProviders = MutableStateFlow<List<BadgeProvider>>(emptyList())
 
     init {
         scope.launch {
-            dataStore.data.map { it.badges }.distinctUntilChanged().collectLatest {
+            settings.data.distinctUntilChanged().collectLatest {
                 val providers = mutableListOf<BadgeProvider>()
                 providers += WorkProfileBadgeProvider()
                 if (it.notifications) {
@@ -37,7 +39,9 @@ internal class BadgeServiceImpl(private val context: Context) : BadgeService, Ko
                 if (it.suspendedApps) {
                     providers += SuspendedAppsBadgeProvider()
                 }
-                providers += PluginBadgeProvider(context)
+                if (it.plugins) {
+                    providers += PluginBadgeProvider(context)
+                }
                 badgeProviders.value = providers
             }
         }

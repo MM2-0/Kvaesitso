@@ -139,7 +139,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 
 [bundles]
-kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable"]
+kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
 androidx-lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-viewmodelcompose", "androidx-lifecycle-runtimecompose"]
 retrofit = ["retrofit-core", "retrofit-gson"]
 tests = ["junit"]

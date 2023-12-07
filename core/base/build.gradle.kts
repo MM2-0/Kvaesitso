@@ -42,6 +42,7 @@ dependencies {
 
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.datastore)
     implementation(libs.materialcomponents.core)
 
     implementation(libs.koin.android)

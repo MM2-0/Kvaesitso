@@ -552,6 +552,8 @@
     <string name="preference_cloud_badges_summary">Show a badge for files that are stored in a cloud</string>
     <string name="preference_shortcut_badges">Shortcut badges</string>
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
+    <string name="preference_plugin_badges">Plugin badges</string>
+    <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
     <string name="preference_microsoft">Microsoft</string>
     <string name="preference_ms_signin">Sign in with Microsoft</string>
     <string name="preference_ms_signin_summary">Sign in to search OneDrive</string>
