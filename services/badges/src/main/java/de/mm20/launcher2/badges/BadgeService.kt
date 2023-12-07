@@ -37,6 +37,7 @@ internal class BadgeServiceImpl(private val context: Context) : BadgeService, Ko
                 if (it.suspendedApps) {
                     providers += SuspendedAppsBadgeProvider()
                 }
+                providers += PluginBadgeProvider(context)
                 badgeProviders.value = providers
             }
         }
