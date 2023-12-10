@@ -330,7 +330,7 @@
     <string name="preference_clock_widget_style_summary">Seleccioneu un rellotge</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_clockwidget_date_part_summary">Mostra la data actual</string>
-    <string name="preference_clockwidget_favorites_part">Preferits</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostra la primera fila d\'elements fixats</string>
     <string name="preference_clockwidget_music_part">Media</string>
     <string name="preference_clockwidget_music_part_summary">Mostra els controls multimèdia quan hi ha una sessió multimèdia activa</string>
@@ -420,7 +420,7 @@
     <string name="no_account_microsoft">Encara no heu connectat cap compte de Microsoft</string>
     <string name="no_account_google">Encara no has connectat cap compte de Google</string>
     <string name="backup_select_components">Seleccioneu de què voleu fer una còpia de seguretat:</string>
-    <string name="backup_not_included">No es farà una còpia de seguretat dels comptes connectats i dels widgets d\'aplicacions de tercers.</string>
+    <string name="backup_not_included">No es farà una còpia de seguretat dels comptes connectats. Els widgets d\'aplicacions de tercers només es poden restaurar en aquest dispositiu.</string>
     <string name="backup_component_favorites">Preferits i aplicacions ocultes</string>
     <string name="backup_component_settings">Configuració</string>
     <string name="backup_component_websearches">Dreceres de pàgines web</string>
@@ -661,4 +661,12 @@
     <string name="file_type_launchertheme">%1$s tema</string>
     <string name="import_theme_apply">Aplica el tema</string>
     <string name="preference_blur_wallpaper_radius">Radi desenfocat</string>
+    <string name="preference_plugin_badges">Insígnies de connectors</string>
+    <string name="preference_clockwidget_dynamic_zone">Zona dinàmica</string>
+    <string name="preference_screen_plugins">Connectors</string>
+    <string name="preference_screen_plugins_summary">Gestioneu les extensions instal·lades</string>
+    <string name="no_plugins_installed">No hi ha connectors instal·lats</string>
+    <string name="plugin_host_not_installed">L\'amfitrió del connector no està instal·lat</string>
+    <string name="missing_permission_plugins">Es requereix permís de connector per utilitzar connectors.</string>
+    <string name="preference_plugin_badges_summary">Indiqueu amb quin connector s\'ha creat un resultat de cerca</string>
 </resources>
