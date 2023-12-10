@@ -144,7 +144,7 @@ internal class PluginServiceImpl(
         }
     }
 
-    override suspend fun getPluginState(plugin: Plugin): PluginState? {
+    override suspend fun getPluginState(plugin: Plugin): PluginState {
         val bundle = withContext(Dispatchers.IO) {
             context.contentResolver.call(
                 Uri.Builder()
@@ -155,8 +155,8 @@ internal class PluginServiceImpl(
                 null,
                 null
             )
-        } ?: return null
-        return PluginState.fromBundle(bundle)
+        } ?: return PluginState.Error
+        return PluginState.fromBundle(bundle) ?: PluginState.Error
     }
 
     override fun isPluginHostInstalled(): Flow<Boolean> {

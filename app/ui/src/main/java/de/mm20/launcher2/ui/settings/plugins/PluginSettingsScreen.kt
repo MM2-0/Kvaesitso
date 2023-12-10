@@ -17,11 +17,14 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.ErrorOutline
 import androidx.compose.material.icons.rounded.FileCopy
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Verified
+import androidx.compose.material.icons.rounded.Warning
+import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -191,7 +194,6 @@ fun PluginSettingsScreen(pluginId: String) {
                                     start = 12.dp,
                                     end = 12.dp,
                                     top = 16.dp,
-                                    bottom = 24.dp
                                 ),
                             style = MaterialTheme.typography.bodyMedium,
                         )
@@ -199,7 +201,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     Row(
                         modifier = Modifier
                             .horizontalScroll(rememberScrollState())
-                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp)
+                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp, top = 24.dp)
                     ) {
                         for (type in types) {
                             Row(
@@ -268,7 +270,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 Banner(
                                     modifier = Modifier.padding(16.dp),
                                     text = state.message ?: "You need to setup this plugin first",
-                                    icon = Icons.Rounded.ErrorOutline,
+                                    icon = Icons.Rounded.Info,
                                     primaryAction = {
                                         TextButton(onClick = {
                                             try {
@@ -280,6 +282,13 @@ fun PluginSettingsScreen(pluginId: String) {
                                             Text("Set up")
                                         }
                                     }
+                                )
+                            } else if (state is PluginState.Error) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = "This plugin isn't working correctly",
+                                    icon = Icons.Rounded.Error,
+                                    color = MaterialTheme.colorScheme.errorContainer,
                                 )
                             }
                             SwitchPreference(
