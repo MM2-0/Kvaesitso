@@ -667,4 +667,6 @@
     <string name="no_plugins_installed">Keine Plugins installiert</string>
     <string name="plugin_host_not_installed">Plugin-Host nicht installiert</string>
     <string name="preference_clockwidget_dynamic_zone">Dynamische Zone</string>
+    <string name="preference_plugin_badges">Plugin-Plaketten</string>
+    <string name="preference_plugin_badges_summary">Anzeigen, von welchem Plugin ein Suchergebnis stammt</string>
 </resources>

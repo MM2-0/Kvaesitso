@@ -672,4 +672,6 @@
     <string name="preference_screen_plugins_summary">Spravovat nainstalované doplňky</string>
     <string name="no_plugins_installed">Nejsou nainstalovány žádné doplňky</string>
     <string name="plugin_host_not_installed">Hostitel doplňků není nainstalován</string>
+    <string name="preference_plugin_badges">Odznaky doplňků</string>
+    <string name="preference_plugin_badges_summary">Zobrazit, který doplněk vytvořil výsledek vyhledávání</string>
 </resources>
