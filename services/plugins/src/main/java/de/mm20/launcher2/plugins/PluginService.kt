@@ -214,7 +214,8 @@ internal class PluginServiceImpl(
                 val signature = getSignature(packageName)
                 PluginPackage(
                     packageName = packageName,
-                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
+                        ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
                     author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
                     plugins = plugins,
@@ -248,7 +249,8 @@ internal class PluginServiceImpl(
             .map {
                 PluginPackage(
                     packageName = packageName,
-                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
+                        ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
                     author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
                     plugins = it,

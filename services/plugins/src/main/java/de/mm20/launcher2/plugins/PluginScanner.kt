@@ -2,7 +2,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginType
@@ -40,7 +39,8 @@ class PluginScanner(
                     } ?: continue
                 plugins.add(
                     Plugin(
-                        label = cr.loadLabel(context.packageManager).toString(),
+                        label = providerInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
+                            ?: cr.loadLabel(context.packageManager).toString(),
                         description = providerInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
                         packageName = providerInfo.packageName,
                         className = providerInfo.name,
