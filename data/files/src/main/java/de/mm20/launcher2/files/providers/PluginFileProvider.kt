@@ -15,14 +15,16 @@ import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.File
 import kotlinx.collections.immutable.persistentMapOf
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
 class PluginFileProvider(
     private val context: Context,
     private val pluginAuthority: String,
 ) : FileProvider {
-    override suspend fun search(query: String): List<File> {
+    override suspend fun search(query: String): List<File> = withContext(Dispatchers.IO) {
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
@@ -31,7 +33,7 @@ class PluginFileProvider(
             .build()
         val cancellationSignal = CancellationSignal()
 
-        return suspendCancellableCoroutine {
+        return@withContext suspendCancellableCoroutine {
             it.invokeOnCancellation {
                 cancellationSignal.cancel()
             }
