@@ -13,6 +13,8 @@ import android.os.Build
 import android.util.Base64
 import android.util.Log
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.permissions.PermissionGroup
+import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginRepository
@@ -24,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -62,6 +65,7 @@ interface PluginService {
 internal class PluginServiceImpl(
     private val context: Context,
     private val repository: PluginRepository,
+    private val permissionsManager: PermissionsManager,
 ) : PluginService {
 
     private val scope: CoroutineScope = CoroutineScope(Job() + Dispatchers.Default)
@@ -80,6 +84,14 @@ internal class PluginServiceImpl(
             addAction(Intent.ACTION_PACKAGE_CHANGED)
             addDataScheme("package")
         })
+
+        scope.launch {
+            permissionsManager.hasPermission(PermissionGroup.Plugins).collectLatest {
+                if (it) {
+                    refreshPlugins()
+                }
+            }
+        }
     }
 
     override fun enablePluginPackage(plugin: PluginPackage) {
