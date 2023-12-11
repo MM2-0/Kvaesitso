@@ -48,6 +48,8 @@ abstract class FilePluginContract {
          */
         const val IsDirectory = "is_directory"
 
+        const val Owner = "owner"
+
         const val MetaTitle = "meta_title"
         const val MetaArtist = "meta_artist"
         const val MetaAlbum = "meta_album"
@@ -59,6 +61,5 @@ abstract class FilePluginContract {
         const val MetaAppName = "meta_app_name"
         const val MetaAppPackageName = "meta_app_package_name"
         const val MetaAppMinSdkVersion = "meta_app_min_sdk_version"
-        const val MetaOwner = "meta_owner"
     }
 }

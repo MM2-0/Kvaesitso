@@ -4,17 +4,19 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
+import android.text.format.DateUtils
 import android.util.Log
+import androidx.core.database.getIntOrNull
+import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
-import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.File
-import kotlinx.collections.immutable.persistentMapOf
+import de.mm20.launcher2.search.FileMetaType
+import kotlinx.collections.immutable.toPersistentMap
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -138,6 +140,40 @@ class PluginFileProvider(
         val directoryIndex =
             cursor.getColumnIndex(FilePluginContract.FileColumns.IsDirectory).takeIf { it >= 0 }
 
+        val ownerIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.Owner).takeIf { it >= 0 }
+
+        val metaTitleIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaTitle).takeIf { it >= 0 }
+
+        val metaArtistIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaArtist).takeIf { it >= 0 }
+
+        val metaAlbumIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAlbum).takeIf { it >= 0 }
+
+        val metaDurationIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaDuration).takeIf { it >= 0 }
+
+        val metaYearIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaYear).takeIf { it >= 0 }
+
+        val metaWidthIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaWidth).takeIf { it >= 0 }
+
+        val metaHeightIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaHeight).takeIf { it >= 0 }
+
+        val metaLocationIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaLocation).takeIf { it >= 0 }
+
+        val metaAppNameIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAppName).takeIf { it >= 0 }
+
+        val metaAppPackageNameIndex =
+            cursor.getColumnIndex(FilePluginContract.FileColumns.MetaAppPackageName)
+                .takeIf { it >= 0 }
+
         val results = mutableListOf<File>()
         while (cursor.moveToNext()) {
             results.add(
@@ -147,7 +183,42 @@ class PluginFileProvider(
                     mimeType = typeIndex?.let { cursor.getString(it) }
                         ?: "application/octet-stream",
                     size = sizeIndex?.let { cursor.getLong(it) } ?: 0,
-                    metaData = persistentMapOf(),
+                    metaData = buildMap {
+                        metaTitleIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.Title, it)
+                        }
+                        metaArtistIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.Artist, it)
+                        }
+                        metaAlbumIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.Album, it)
+                        }
+                        metaDurationIndex?.let { cursor.getLongOrNull(it) }?.let {
+                            put(FileMetaType.Duration, DateUtils.formatElapsedTime(it / 1000L))
+                        }
+                        metaYearIndex?.let { cursor.getIntOrNull(it) }?.let {
+                            put(FileMetaType.Year, it.toString())
+                        }
+                        if (metaWidthIndex != null && metaHeightIndex != null) {
+                            val width = cursor.getIntOrNull(metaWidthIndex)
+                            val height = cursor.getIntOrNull(metaHeightIndex)
+                            if (width != null && height != null) {
+                                put(FileMetaType.Dimensions, "${width}x${height}")
+                            }
+                        }
+                        metaLocationIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.Location, it)
+                        }
+                        metaAppNameIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.AppName, it)
+                        }
+                        metaAppPackageNameIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.AppPackageName, it)
+                        }
+                        ownerIndex?.let { cursor.getStringOrNull(it) }?.let {
+                            put(FileMetaType.Owner, it)
+                        }
+                    }.toPersistentMap(),
                     label = cursor.getString(nameIndex),
                     uri = Uri.parse(cursor.getString(contentUriIndex)),
                     thumbnailUri = thumbnailUriIndex?.let {
