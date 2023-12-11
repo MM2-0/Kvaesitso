@@ -667,4 +667,6 @@
     <string name="no_plugins_installed">Geen plug-ins geïnstalleerd</string>
     <string name="plugin_host_not_installed">Plug-inhost niet geïnstalleerd</string>
     <string name="preference_screen_plugins">Plug-ins</string>
+    <string name="preference_plugin_badges">Pluginbadges</string>
+    <string name="preference_plugin_badges_summary">Aangeven welke plugin een zoekresultaat heeft teruggegeven</string>
 </resources>
