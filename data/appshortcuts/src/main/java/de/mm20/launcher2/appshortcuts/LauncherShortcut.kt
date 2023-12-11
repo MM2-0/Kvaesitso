@@ -159,6 +159,9 @@ internal data class LauncherShortcut(
         return LauncherShortcutSerializer()
     }
 
+    override val canDelete: Boolean
+        get() = launcherShortcut.isPinned
+
     override suspend fun delete(context: Context) {
         val launcherApps = context.getSystemService(Context.LAUNCHER_APPS_SERVICE) as LauncherApps
         if (!launcherApps.hasShortcutHostPermission()) return
