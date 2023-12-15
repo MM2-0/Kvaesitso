@@ -7,7 +7,7 @@ import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.sdk.base.SearchPluginProvider
 
 abstract class FileProvider(
-    config: SearchPluginConfig = SearchPluginConfig(),
+    config: SearchPluginConfig,
 ) : SearchPluginProvider<File>(config) {
     abstract override suspend fun search(query: String): List<File>
 
