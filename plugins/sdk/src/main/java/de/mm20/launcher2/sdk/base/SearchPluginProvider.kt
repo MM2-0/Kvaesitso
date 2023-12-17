@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
-import kotlinx.coroutines.async
+import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.runBlocking
 
 abstract class SearchPluginProvider<T>(
@@ -97,14 +97,8 @@ abstract class SearchPluginProvider<T>(
         query: String,
         cancellationSignal: CancellationSignal?
     ): List<T> {
-        return runBlocking {
-            val deferred = async {
-                search(query)
-            }
-            cancellationSignal?.setOnCancelListener {
-                deferred.cancel()
-            }
-            deferred.await()
+        return launchWithCancellationSignal(cancellationSignal) {
+            search(query)
         }
     }
 
