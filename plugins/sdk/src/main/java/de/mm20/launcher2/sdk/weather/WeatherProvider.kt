@@ -17,6 +17,7 @@ import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
+import java.util.Locale
 import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
@@ -59,9 +60,11 @@ abstract class WeatherProvider(
                     ?.toDoubleOrNull()
                 val id = uri.getQueryParameter(WeatherPluginContract.ForecastParams.Id)
                 val name = uri.getQueryParameter(WeatherPluginContract.ForecastParams.LocationName)
+                val lang = uri.getQueryParameter(WeatherPluginContract.ForecastParams.Language)
+                    ?: Locale.getDefault().language
 
                 val forecasts = launchWithCancellationSignal(cancellationSignal) {
-                    getWeatherData(lat, lon, id, name)
+                    getWeatherData(lat, lon, id, name, lang)
                 } ?: return null
                 return createForecastCursor(forecasts)
             }
@@ -69,10 +72,13 @@ abstract class WeatherProvider(
             uri.pathSegments.size == 1 && uri.pathSegments.first() == WeatherPluginContract.Paths.Locations -> {
                 val query =
                     uri.getQueryParameter(WeatherPluginContract.LocationParams.Query) ?: return null
+                val lang = uri.getQueryParameter(WeatherPluginContract.LocationParams.Language)
+                    ?: Locale.getDefault().language
+
                 val locations = launchWithCancellationSignal(
                     cancellationSignal
                 ) {
-                    findLocations(query)
+                    findLocations(query, lang)
                 }
                 return createLocationsCursor(locations)
             }
@@ -84,16 +90,17 @@ abstract class WeatherProvider(
         lat: Double?,
         lon: Double?,
         id: String?,
-        locationName: String?
+        locationName: String?,
+        lang: String,
     ): List<Forecast>? {
         if (lat != null && lon != null && locationName == null) {
-            return getWeatherData(lat, lon)
+            return getWeatherData(lat, lon, lang)
         }
         if (id != null && locationName != null) {
-            return getWeatherData(WeatherLocation.Id(id, locationName))
+            return getWeatherData(WeatherLocation.Id(id, locationName), lang)
         }
         if (locationName != null && lat != null && lon != null) {
-            return getWeatherData(WeatherLocation.LatLon(locationName, lat, lon))
+            return getWeatherData(WeatherLocation.LatLon(locationName, lat, lon), lang)
         }
         return null
     }
@@ -208,8 +215,11 @@ abstract class WeatherProvider(
      * Find locations based on a query string.
      * The default implementation uses the Android Geocoder and returns a list of lat lon locations.
      * It also supports lat/lon coordinates in the format "[lat] [lon] [name]" or "[lat] [lon]".
+     * @param query the query string
+     * @param lang the ISO 639 language code of the language that the user has set for the launcher.
+     * Should be used for location names if supported by the provider.
      */
-    open suspend fun findLocations(query: String): List<WeatherLocation> {
+    open suspend fun findLocations(query: String, lang: String): List<WeatherLocation> {
         val context = context ?: return emptyList()
         val parts = query.split(" ", limit = 3)
         val lat = parts.getOrNull(0)?.toDoubleOrNull()
@@ -281,16 +291,24 @@ abstract class WeatherProvider(
     /**
      * Get weather data for the current location. This is called when the user has set
      * the location to "Current location".
+     * @param lat the latitude of the current location
+     * @param lon the longitude of the current location
+     * @param lang the ISO 639 language code of the language that the user has set for the launcher.
+     * Should be used for weather conditions and location names if supported by the provider.
      */
-    abstract suspend fun getWeatherData(lat: Double, lon: Double): List<Forecast>?
+    abstract suspend fun getWeatherData(lat: Double, lon: Double, lang: String?): List<Forecast>?
 
     /**
      * Get weather data for a set location. This is called when the user has set
      * the location to a custom location.
      * @param location the location that the user has set. This is guaranteed
      * to be one of the locations returned by [findLocations].
+     * @param lang the ISO 639 language code of the language that the user has set for the launcher.
+     * Should be used for weather conditions if supported by the provider.
      * @return the weather data for the given location
-     * Note that returned forecasts should use the same location name as the location parameter.
+     * Note that returned forecasts should use the name that is set in the [location] parameter as
+     * the location name, in order to avoid confusion when the user has set the location to a
+     * custom location.
      */
-    abstract suspend fun getWeatherData(location: WeatherLocation): List<Forecast>?
+    abstract suspend fun getWeatherData(location: WeatherLocation, lang: String?): List<Forecast>?
 }

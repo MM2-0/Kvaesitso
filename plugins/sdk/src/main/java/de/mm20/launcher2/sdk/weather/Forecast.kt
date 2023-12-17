@@ -75,7 +75,7 @@ val Double.inch
 
 
 enum class WeatherIcon {
-    None,
+    Unknown,
     Clear,
     Cloudy,
     Cold,

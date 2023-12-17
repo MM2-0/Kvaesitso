@@ -11,6 +11,7 @@ object WeatherPluginContract {
         const val Lon = "lon"
         const val Id = "id"
         const val LocationName = "location_name"
+        const val Language = "lang"
     }
 
     object ForecastColumns {
@@ -36,6 +37,7 @@ object WeatherPluginContract {
 
     object LocationParams {
         const val Query = "query"
+        const val Language = "lang"
     }
 
     object LocationColumns {
