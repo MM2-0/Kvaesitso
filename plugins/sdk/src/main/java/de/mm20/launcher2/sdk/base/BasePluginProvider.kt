@@ -8,17 +8,22 @@ import android.os.Bundle
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.sdk.PluginState
+import de.mm20.launcher2.sdk.permissions.PluginPermissionManager
+import de.mm20.launcher2.sdk.permissions.permissionsDataStore
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
 abstract class BasePluginProvider : ContentProvider() {
 
     override fun call(method: String, arg: String?, extras: Bundle?): Bundle? {
+        val context = context ?: return null
         return when (method) {
             PluginContract.Methods.GetType -> Bundle().apply {
                 putString("type", getPluginType().name)
             }
 
             PluginContract.Methods.GetState -> {
+                checkPermissionOrThrow(context)
                 val state = runBlocking {
                     getPluginState()
                 }
@@ -27,6 +32,7 @@ abstract class BasePluginProvider : ContentProvider() {
             }
 
             PluginContract.Methods.GetConfig -> {
+                checkPermissionOrThrow(context)
                 getPluginConfig()
             }
 
@@ -45,7 +51,12 @@ abstract class BasePluginProvider : ContentProvider() {
     }
 
     internal fun checkPermissionOrThrow(context: Context) {
-        if (context.checkCallingPermission(PluginContract.Permission) == PackageManager.PERMISSION_GRANTED) {
+        val callingPackage = callingPackage ?: throw IllegalArgumentException("No calling package")
+        val permissionManager = PluginPermissionManager(context)
+        val hasPermission = runBlocking {
+            permissionManager.hasPermission(callingPackage).first()
+        }
+        if (hasPermission) {
             return
         }
         throw SecurityException("Caller does not have permission to use plugins")

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -50,16 +51,23 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
         it?.plugins?.map { it.type }?.distinct() ?: emptyList()
     }
 
-    val filePlugins = pluginPackage
+    val states = pluginPackage
         .map {
-            it?.plugins?.mapNotNull {
-                if (it.type == PluginType.FileSearch) {
-                    val state = pluginService.getPluginState(it)
-                    PluginWithState(it, state)
-                } else {
-                    null
-                }
+            it?.plugins?.map {
+                val state = pluginService.getPluginState(it)
+                PluginWithState(it, state)
             } ?: emptyList()
+        }
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    val hasPermission = states
+        .map {
+            it.none { it.state is PluginState.NoPermission }
+        }
+
+    val filePlugins = states
+        .map {
+            it.filter { it.plugin.type == PluginType.FileSearch }
         }
 
 

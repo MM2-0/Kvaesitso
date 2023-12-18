@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_permission_message"><![CDATA[<b>%1$s</b> wants to access data from <b>%2$s</b>.]]></string>
+    <string name="request_permission_deny_button">Deny</string>
+    <string name="request_permission_allow_button">Allow</string>
+</resources>

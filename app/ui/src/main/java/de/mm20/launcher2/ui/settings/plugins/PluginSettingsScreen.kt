@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.settings.plugins
 
+import android.app.Activity
 import android.app.PendingIntent
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -18,13 +22,10 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Error
-import androidx.compose.material.icons.rounded.ErrorOutline
-import androidx.compose.material.icons.rounded.FileCopy
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Verified
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material.icons.rounded.WarningAmber
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -66,12 +67,25 @@ fun PluginSettingsScreen(pluginId: String) {
     val icon by viewModel.icon.collectAsStateWithLifecycle(null)
     val types by viewModel.types.collectAsStateWithLifecycle(emptyList())
 
+    val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(
+        null,
+        minActiveState = Lifecycle.State.RESUMED
+    )
     val filePlugins by viewModel.filePlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
     )
 
-    val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(null)
+    val requestPermissionStarter =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.setPluginEnabled(true)
+            }
+        }
+
+    val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(
+        null
+    )
 
     Scaffold(
         topBar = {
@@ -217,6 +231,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 Icon(
                                     when (type) {
                                         PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
+                                        PluginType.Weather -> Icons.Rounded.LightMode
                                     },
                                     null,
                                     modifier = Modifier.size(16.dp),
@@ -225,6 +240,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 Text(
                                     when (type) {
                                         PluginType.FileSearch -> "File search"
+                                        PluginType.Weather -> "Weather provider"
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,
@@ -249,16 +265,25 @@ fun PluginSettingsScreen(pluginId: String) {
                 color = surfaceColor,
             ) {
                 SwitchPreference(
-                    enabled = pluginPackage != null,
+                    enabled = pluginPackage != null && hasPermission != null,
                     iconPadding = false,
                     title = "Enable plugin",
-                    value = pluginPackage?.enabled == true,
+                    value = pluginPackage?.enabled == true && hasPermission == true,
                     onValueChanged = {
-                        viewModel.setPluginEnabled(it)
+                        if (hasPermission == true) {
+                            viewModel.setPluginEnabled(it)
+                        } else {
+                            requestPermissionStarter.launch(
+                                Intent().apply {
+                                    `package` = pluginPackage?.packageName
+                                    action = "de.mm20.launcher2.plugin.REQUEST_PERMISSION"
+                                }
+                            )
+                        }
                     }
                 )
             }
-            AnimatedVisibility(pluginPackage?.enabled == true) {
+            AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
                 if (filePlugins.isNotEmpty()) {
                     PreferenceCategory(
                         "File search",
@@ -299,7 +324,10 @@ fun PluginSettingsScreen(pluginId: String) {
                                     ?: plugin.plugin.description,
                                 value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
                                 onValueChanged = {
-                                    viewModel.setFileSearchPluginEnabled(plugin.plugin.authority, it)
+                                    viewModel.setFileSearchPluginEnabled(
+                                        plugin.plugin.authority,
+                                        it
+                                    )
                                 },
                                 iconPadding = false,
                             )
