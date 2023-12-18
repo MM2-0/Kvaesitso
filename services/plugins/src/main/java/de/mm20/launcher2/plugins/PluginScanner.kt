@@ -50,6 +50,7 @@ class PluginScanner(
                     )
                 )
             } catch (e: SecurityException) {
+                CrashReporter.logException(e)
                 continue
             } catch (e: Exception) {
                 CrashReporter.logException(e)

@@ -27,7 +27,6 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LargeMessage
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -36,7 +35,6 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun PluginsSettingsScreen() {
     val viewModel: PluginsSettingsScreenVM = viewModel()
-    val context = LocalContext.current
     val pluginPackages by viewModel.pluginPackages.collectAsState(null)
     val enabledPackages by viewModel.enabledPluginPackages.collectAsState(emptyList())
     val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())

@@ -1,12 +1,7 @@
 package de.mm20.launcher2.ui.settings.plugins
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.ktx.normalize
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugins.PluginService
 import kotlinx.coroutines.flow.SharingStarted

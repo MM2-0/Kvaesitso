@@ -109,6 +109,7 @@ internal class PluginServiceImpl(
                 }
                 repository.deleteMany().join()
                 repository.insertMany(plugins).join()
+                Log.d("PluginService", "${plugins.size} plugins found.")
             }
             Log.d("PluginService", "done.")
         }
