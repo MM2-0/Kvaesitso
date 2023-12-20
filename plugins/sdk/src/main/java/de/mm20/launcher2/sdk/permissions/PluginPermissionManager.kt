@@ -11,13 +11,15 @@ class PluginPermissionManager(
     private val dataStore = context.applicationContext.permissionsDataStore
 
     fun hasPermission(pluginPackage: String): Flow<Boolean> {
-        return dataStore.data.map { it.contains(pluginPackage) }
+        return dataStore.data.map { it.granted.contains(pluginPackage) }
     }
 
     fun grantPermission(pluginPackage: String) {
         runBlocking {
             dataStore.updateData {
-                it + pluginPackage
+                it.copy(
+                    granted = it.granted + pluginPackage
+                )
             }
         }
     }
@@ -25,7 +27,9 @@ class PluginPermissionManager(
     fun revokePermission(pluginPackage: String) {
         runBlocking {
             dataStore.updateData {
-                it - pluginPackage
+                it.copy(
+                    granted = it.granted - pluginPackage
+                )
             }
         }
     }
