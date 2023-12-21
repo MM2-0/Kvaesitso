@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="request_permission_deny_button">Verweigern</string>
+    <string name="request_permission_message"><b>%1$s</b> möchte auf Daten von <b>%2$s</b> zugreifen.</string>
+    <string name="request_permission_allow_button">Zulassen</string>
+</resources>
