@@ -1,12 +1,23 @@
 package de.mm20.launcher2.weather.metno
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Base64
+import android.util.Log
+import androidx.annotation.WorkerThread
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.weather.*
+import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.GeocoderWeatherProvider
+import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.weather.WeatherLocation
+import de.mm20.launcher2.weather.WeatherProvider
+import de.mm20.launcher2.weather.settings.ProviderSettings
+import de.mm20.launcher2.weather.settings.WeatherSettings
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.json.JSONException
@@ -15,13 +26,110 @@ import org.shredzone.commons.suncalc.SunTimes
 import java.io.IOException
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import kotlin.math.roundToInt
 
-class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
+internal class MetNoProvider(
+    private val context: Context,
+    private val weatherSettings: WeatherSettings,
+): GeocoderWeatherProvider(context) {
+    override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
+        return when (location) {
+            is WeatherLocation.LatLon -> withContext(Dispatchers.IO) {
+                getWeatherData(location.lat, location.lon, location.name)
+            }
+            else -> {
+                Log.e("MetNoProvider", "Unsupported location type: $location")
+                null
+            }
+        }
+    }
 
-    override val preferences: SharedPreferences
-        get() = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
+    override suspend fun getWeatherData(lat: Double, lon: Double): List<Forecast>? {
+        val locationName = getLocationName(lat, lon)
+        return withContext(Dispatchers.IO) {
+            getWeatherData(lat, lon, locationName)
+        }
+    }
+
+    @WorkerThread
+    private suspend fun getWeatherData(lat: Double, lon: Double, locationName: String): List<Forecast>? {
+        val lastUpdate = weatherSettings.lastUpdate.first()
+        val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
+        val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
+        try {
+            val forecasts = mutableListOf<Forecast>()
+
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
+
+            val httpClient = OkHttpClient()
+
+            val latParam = String.format(Locale.ROOT, "%.4f", lat)
+            val lonParam = String.format(Locale.ROOT, "%.4f", lon)
+
+            val forecastRequest = Request.Builder()
+                .url("https://api.met.no/weatherapi/locationforecast/2.0/?lat=$latParam&lon=$lonParam")
+                .addHeader("User-Agent", getUserAgent() ?: return null)
+                .addHeader("If-Modified-Since", ifModifiedSince)
+                .get()
+                .build()
+
+            val response = httpClient.newCall(forecastRequest).execute()
+            val responseBody = response.body?.string() ?: return null
+
+            val json = JSONObject(responseBody)
+            val properties = json.getJSONObject("properties")
+            val meta = properties.getJSONObject("meta")
+            val updatedAt = dateFormat.parse(meta.getString("updated_at"))?.time
+                ?: System.currentTimeMillis()
+            val timeseries = properties.getJSONArray("timeseries")
+
+            for (i in 0 until timeseries.length()) {
+                val fc = timeseries.getJSONObject(i)
+                val data = fc.getJSONObject("data")
+                val timestamp = dateFormat.parse(fc.getString("time"))?.time ?: continue
+                val details = data.getJSONObject("instant").getJSONObject("details")
+                var hours = 0
+                val nextHours = data.optJSONObject("next_1_hours")?.also { hours = 1 }
+                    ?: data.optJSONObject("next_6_hours")?.also { hours = 6 }
+                    ?: data.optJSONObject("next_12_hours")?.also { hours = 12 }
+                    ?: continue
+                val symbolCode = nextHours.optJSONObject("summary")?.getString("symbol_code")
+                    ?: continue
+                val precipitationAmount =
+                    (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
+                        ?: 0.0) / hours
+                forecasts.add(
+                    Forecast(
+                        timestamp = timestamp,
+                        temperature = details.getDouble("air_temperature") + 273.15,
+                        updateTime = updatedAt,
+                        clouds = details.getDouble("cloud_area_fraction").roundToInt(),
+                        humidity = details.getDouble("relative_humidity"),
+                        windDirection = details.getDouble("wind_from_direction"),
+                        windSpeed = details.getDouble("wind_speed"),
+                        pressure = details.getDouble("air_pressure_at_sea_level"),
+                        location = locationName,
+                        provider = context.getString(R.string.provider_metno),
+                        providerUrl = "https://www.yr.no/",
+                        icon = iconForCode(symbolCode),
+                        condition = conditionForCode(symbolCode),
+                        precipitation = precipitationAmount,
+                        night = isNight(timestamp, lat, lon)
+
+                    )
+                )
+            }
+            return forecasts
+        } catch (e: JSONException) {
+            CrashReporter.logException(e)
+        } catch (e: IOException) {
+            CrashReporter.logException(e)
+        }
+        return null
+    }
+
 
     private fun isNight(timestamp: Long, lat: Double, lon: Double): Boolean {
         val sunTimes = SunTimes.compute().on(Date(timestamp)).at(lat, lon).execute()
@@ -48,6 +156,37 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
         return !(rise.toEpochSecond() * 1000 < timestamp && timestamp < set.toEpochSecond() * 1000)
 
     }
+
+    private fun getUserAgent(): String? {
+        val contactData = getContactInfo() ?: return null
+
+        val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val pi = context.packageManager.getPackageInfo(
+                context.packageName,
+                PackageManager.GET_SIGNING_CERTIFICATES
+            )
+            pi.signingInfo.apkContentsSigners.firstOrNull()
+        } else {
+            val pi = context.packageManager.getPackageInfo(
+                context.packageName,
+                PackageManager.GET_SIGNATURES
+            )
+            pi.signatures.firstOrNull()
+        }
+        val signatureHash = if (signature != null) {
+            val digest = MessageDigest.getInstance("SHA")
+            digest.update(signature.toByteArray())
+            Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
+        } else "null"
+        return "${context.packageName}/signature:$signatureHash $contactData"
+    }
+
+    private fun getContactInfo(): String? {
+        val resId = getContactResId(context).takeIf { it != 0 } ?: return null
+        return context.getString(resId).takeIf { it.isNotBlank() }
+    }
+
+
 
     private fun conditionForCode(code: String): String {
         return context.getString(
@@ -124,132 +263,15 @@ class MetNoProvider(override val context: Context) : LatLonWeatherProvider() {
         }
     }
 
-    override fun isUpdateRequired(): Boolean {
-        return getLastUpdate() + (1000 * 60 * 60) <= System.currentTimeMillis()
-    }
-
-    private fun getUserAgent(): String? {
-        val contactData = getContactInfo() ?: return null
-
-        val signature = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            val pi = context.packageManager.getPackageInfo(
-                context.packageName,
-                PackageManager.GET_SIGNING_CERTIFICATES
-            )
-            pi.signingInfo.apkContentsSigners.firstOrNull()
-        } else {
-            val pi = context.packageManager.getPackageInfo(
-                context.packageName,
-                PackageManager.GET_SIGNATURES
-            )
-            pi.signatures.firstOrNull()
-        }
-        val signatureHash = if (signature != null) {
-            val digest = MessageDigest.getInstance("SHA")
-            digest.update(signature.toByteArray())
-            Base64.encodeToString(digest.digest(), Base64.NO_WRAP)
-        } else "null"
-        return "${context.packageName}/signature:$signatureHash $contactData"
-    }
-
-    override fun isAvailable(): Boolean {
-        return getContactResId() != 0
-    }
-
-    private fun getContactInfo(): String? {
-        val resId = getContactResId().takeIf { it != 0 } ?: return null
-        return context.getString(resId).takeIf { it.isNotBlank() }
-    }
-
-
-    override val name: String
-        get() = context.getString(R.string.provider_metno)
-
-    private fun getContactResId(): Int {
-        return context.resources.getIdentifier("metno_contact", "string", context.packageName)
-    }
-
-    override suspend fun loadWeatherData(location: LatLonWeatherLocation): WeatherUpdateResult<LatLonWeatherLocation>? {
-
-        val lastUpdate = getLastUpdate()
-        val httpDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ROOT)
-        val ifModifiedSince = httpDateFormat.format(Date(lastUpdate))
-        try {
-            val forecasts = mutableListOf<Forecast>()
-
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
-
-            val httpClient = OkHttpClient()
-
-            val latParam = String.format(Locale.ROOT, "%.4f", location.lat)
-            val lonParam = String.format(Locale.ROOT, "%.4f", location.lon)
-
-            val forecastRequest = Request.Builder()
-                .url("https://api.met.no/weatherapi/locationforecast/2.0/?lat=$latParam&lon=$lonParam")
-                .addHeader("User-Agent", getUserAgent() ?: return null)
-                .addHeader("If-Modified-Since", ifModifiedSince)
-                .get()
-                .build()
-
-            val response = httpClient.newCall(forecastRequest).execute()
-            val responseBody = response.body?.string() ?: return null
-
-            val json = JSONObject(responseBody)
-            val properties = json.getJSONObject("properties")
-            val meta = properties.getJSONObject("meta")
-            val updatedAt = dateFormat.parse(meta.getString("updated_at"))?.time
-                ?: System.currentTimeMillis()
-            val timeseries = properties.getJSONArray("timeseries")
-
-            for (i in 0 until timeseries.length()) {
-                val fc = timeseries.getJSONObject(i)
-                val data = fc.getJSONObject("data")
-                val timestamp = dateFormat.parse(fc.getString("time"))?.time ?: continue
-                val details = data.getJSONObject("instant").getJSONObject("details")
-                var hours = 0
-                val nextHours = data.optJSONObject("next_1_hours")?.also { hours = 1 }
-                    ?: data.optJSONObject("next_6_hours")?.also { hours = 6 }
-                    ?: data.optJSONObject("next_12_hours")?.also { hours = 12 }
-                    ?: continue
-                val symbolCode = nextHours.optJSONObject("summary")?.getString("symbol_code")
-                    ?: continue
-                val precipitationAmount =
-                    (nextHours.optJSONObject("details")?.optDouble("precipitation_amount")
-                        ?: 0.0) / hours
-                forecasts.add(
-                    Forecast(
-                        timestamp = timestamp,
-                        temperature = details.getDouble("air_temperature") + 273.15,
-                        updateTime = updatedAt,
-                        clouds = details.getDouble("cloud_area_fraction").roundToInt(),
-                        humidity = details.getDouble("relative_humidity"),
-                        windDirection = details.getDouble("wind_from_direction"),
-                        windSpeed = details.getDouble("wind_speed"),
-                        pressure = details.getDouble("air_pressure_at_sea_level"),
-                        location = location.name,
-                        provider = context.getString(R.string.provider_metno),
-                        providerUrl = "https://www.yr.no/",
-                        icon = iconForCode(symbolCode),
-                        condition = conditionForCode(symbolCode),
-                        precipitation = precipitationAmount,
-                        night = isNight(timestamp, location.lat, location.lon)
-
-                    )
-                )
-            }
-            return WeatherUpdateResult(
-                forecasts = forecasts,
-                location = location
-            )
-        } catch (e: JSONException) {
-            CrashReporter.logException(e)
-        } catch (e: IOException) {
-            CrashReporter.logException(e)
-        }
-        return null
-    }
-
     companion object {
-        private const val PREFERENCES = "metno"
+        fun isAvailable(context: Context): Boolean {
+            return getContactResId(context) != 0
+        }
+
+        private fun getContactResId(context: Context): Int {
+            return context.resources.getIdentifier("metno_contact", "string", context.packageName)
+        }
+
+        internal const val Id = "metno"
     }
 }

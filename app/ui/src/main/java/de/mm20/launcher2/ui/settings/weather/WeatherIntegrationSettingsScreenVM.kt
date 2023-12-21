@@ -7,13 +7,16 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.WeatherSettings
 import de.mm20.launcher2.weather.WeatherLocation
+import de.mm20.launcher2.weather.WeatherProviderInfo
 import de.mm20.launcher2.weather.WeatherRepository
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
@@ -21,15 +24,16 @@ import org.koin.core.component.inject
 
 class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val repository: WeatherRepository by inject()
+    private val weatherSettings: WeatherSettings by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
-    val availableProviders = repository.getAvailableProviders()
+    val availableProviders = repository.getProviders()
 
-    val weatherProvider = repository.selectedProvider
+    val weatherProvider = weatherSettings.providerId
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setWeatherProvider(provider: WeatherSettings.WeatherProvider) {
-        repository.selectProvider(provider)
+    fun setWeatherProvider(provider: String) {
+        weatherSettings.setProviderId(provider)
     }
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }
@@ -43,13 +47,19 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val autoLocation = repository.autoLocation
+    val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
     fun setAutoLocation(autoLocation: Boolean) {
-        repository.setAutoLocation(autoLocation)
+        weatherSettings.setAutoLocation(autoLocation)
     }
 
-    val location = mutableStateOf<WeatherLocation?>(null)
+    val location = weatherSettings.autoLocation.flatMapLatest {
+        if (it) {
+            repository.getForecasts(limit = 1).map { it.firstOrNull()?.location }
+        } else {
+            weatherSettings.location.map { it?.name }
+        }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -59,22 +69,8 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
 
-    init {
-        viewModelScope.launch {
-            val autoLocation = repository.autoLocation
-            val location = repository.location
-            val lastLocation = repository.lastLocation
-            combine(autoLocation, lastLocation, location) { autoLoc, lastLoc, loc ->
-                if (autoLoc) lastLoc
-                else loc
-            }.collectLatest {
-                this@WeatherIntegrationSettingsScreenVM.location.value = it
-            }
-        }
-    }
-
     fun clearWeatherData() {
-        repository.clearForecasts()
+        repository.deleteForecasts()
     }
 
 }

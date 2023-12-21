@@ -4,12 +4,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherRepository
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import kotlin.coroutines.coroutineContext
 
 class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
+    private val weatherSettings: WeatherSettings by inject()
     private val repository: WeatherRepository by inject()
 
     val isSearchingLocation = mutableStateOf(false)
@@ -27,7 +30,7 @@ class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
             debounceSearchJob = launch {
                 delay(1000)
                 isSearchingLocation.value = true
-                locationResults.value = repository.lookupLocation(query)
+                locationResults.value = repository.searchLocations(query).first()
                 isSearchingLocation.value = false
             }
         }
@@ -35,7 +38,6 @@ class WeatherLocationSearchDialogVM: ViewModel(), KoinComponent {
 
     fun setLocation(location: WeatherLocation) {
         locationResults.value = emptyList()
-        repository.setAutoLocation(false)
-        repository.setLocation(location)
+        weatherSettings.setLocation(location)
     }
 }

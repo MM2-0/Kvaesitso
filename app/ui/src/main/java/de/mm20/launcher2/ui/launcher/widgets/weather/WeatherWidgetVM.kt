@@ -9,6 +9,7 @@ import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -21,6 +22,7 @@ import kotlin.math.min
 
 class WeatherWidgetVM : ViewModel(), KoinComponent {
     private val weatherRepository: WeatherRepository by inject()
+    private val weatherSettings: WeatherSettings by inject()
 
     private val permissionsManager: PermissionsManager by inject()
 
@@ -58,7 +60,7 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
         currentForecast.value = getCurrentlySelectedForecast()
     }
 
-    private val forecastsFlow = weatherRepository.forecasts
+    private val forecastsFlow = weatherRepository.getDailyForecasts()
 
     /**
      * All available forecasts, grouped by day
@@ -106,7 +108,7 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     fun requestLocationPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Location)
     }
-    val autoLocation = weatherRepository.autoLocation
+    val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }

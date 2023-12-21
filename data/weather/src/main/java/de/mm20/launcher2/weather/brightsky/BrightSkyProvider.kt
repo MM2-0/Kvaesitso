@@ -1,23 +1,23 @@
 package de.mm20.launcher2.weather.brightsky
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.weather.*
+import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.GeocoderWeatherProvider
+import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.weather.WeatherLocation
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
-import java.lang.Exception
 import kotlin.math.roundToInt
 
-class BrightskyProvider(
-    override val context: Context
-) : LatLonWeatherProvider() {
-
-
-    val apiClient by lazy {
+internal class BrightSkyProvider(
+    private val context: Context,
+) : GeocoderWeatherProvider(context) {
+    private val apiClient by lazy {
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.brightsky.dev/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -25,8 +25,27 @@ class BrightskyProvider(
         retrofit.create<BrightSkyApi>()
     }
 
-    override suspend fun loadWeatherData(location: LatLonWeatherLocation): WeatherUpdateResult<LatLonWeatherLocation>? {
 
+    override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
+        return when (location) {
+            is WeatherLocation.LatLon -> getWeatherData(location.lat, location.lon, location.name)
+            else -> {
+                Log.e("BrightSkyProvider", "Unsupported location type: $location")
+                null
+            }
+        }
+    }
+
+    override suspend fun getWeatherData(lat: Double, lon: Double): List<Forecast>? {
+        val locationName = getLocationName(lat, lon)
+        return getWeatherData(lat, lon, locationName)
+    }
+
+    private suspend fun getWeatherData(
+        lat: Double,
+        lon: Double,
+        locationName: String
+    ): List<Forecast>? {
         val result = runCatching {
             val format = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
             val date = Calendar.getInstance()
@@ -37,8 +56,8 @@ class BrightskyProvider(
             apiClient.weather(
                 date = startDate,
                 lastDate = endDate,
-                lat = location.lat,
-                lon = location.lon,
+                lat = lat,
+                lon = lon,
             )
         }.getOrElse {
             CrashReporter.logException(Exception(it))
@@ -55,7 +74,7 @@ class BrightskyProvider(
                     condition = getCondition(weather.icon ?: continue) ?: continue,
                     humidity = weather.relativeHumidity ?: -1.0,
                     icon = getIcon(weather.icon) ?: continue,
-                    location = location.name,
+                    location = locationName,
                     maxTemp = weather.temperature ?: continue,
                     minTemp = weather.temperature,
                     night = (weather.sunshine ?: 100.0).roundToInt() == 0,
@@ -71,9 +90,7 @@ class BrightskyProvider(
                 )
             )
         }
-        return WeatherUpdateResult(
-            forecasts, location
-        )
+        return forecasts
     }
 
     private fun getIcon(icon: String): Int? {
@@ -109,21 +126,8 @@ class BrightskyProvider(
         return context.getString(resId)
     }
 
-    override val preferences: SharedPreferences
-        get() = context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
-
-    override fun isUpdateRequired(): Boolean {
-        return getLastUpdate() + 3600000 < System.currentTimeMillis()
-    }
-
-    override fun isAvailable(): Boolean {
-        return true
-    }
-
-    override val name: String
-        get() = context.getString(R.string.provider_brightsky)
-
     companion object {
-        const val PREFS = "bright_sky"
+        internal const val Id = "dwd"
     }
+
 }

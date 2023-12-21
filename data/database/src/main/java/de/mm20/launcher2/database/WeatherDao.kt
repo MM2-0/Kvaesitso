@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeatherDao {
-    @Query("SELECT * FROM ${ForecastEntity.TABLE_NAME} ORDER BY timestamp ASC")
-    fun getForecasts(): Flow<List<ForecastEntity>>
+    @Query("SELECT * FROM ${ForecastEntity.TABLE_NAME} ORDER BY timestamp ASC LIMIT :limit")
+    fun getForecasts(limit: Int = 99999): Flow<List<ForecastEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(forecasts: List<ForecastEntity>)
