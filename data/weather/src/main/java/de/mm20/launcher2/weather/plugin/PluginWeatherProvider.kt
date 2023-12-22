@@ -58,6 +58,7 @@ internal class PluginWeatherProvider(
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
+            .path(WeatherPluginContract.Paths.Forecasts)
             .appendQueryParameter(WeatherPluginContract.ForecastParams.Lat, lat.toString())
             .appendQueryParameter(WeatherPluginContract.ForecastParams.Lon, lon.toString())
             .appendQueryParameter(WeatherPluginContract.ForecastParams.Language, getLang())
