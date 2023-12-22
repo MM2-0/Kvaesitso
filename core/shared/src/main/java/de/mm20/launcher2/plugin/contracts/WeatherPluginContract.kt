@@ -2,7 +2,7 @@ package de.mm20.launcher2.plugin.contracts
 
 object WeatherPluginContract {
     object Paths {
-        const val Weather = "weather"
+        const val Forecasts = "forecasts"
         const val Locations = "locations"
     }
 

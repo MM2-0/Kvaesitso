@@ -11,6 +11,8 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginRepository
+import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
@@ -39,6 +41,7 @@ internal class WeatherRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
     private val settings: WeatherSettings,
+    private val pluginRepository: PluginRepository,
 ) : WeatherRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -158,7 +161,12 @@ internal class WeatherRepositoryImpl(
         if (HereProvider.isAvailable(context)) {
             providers.add(WeatherProviderInfo(HereProvider.Id, context.getString(R.string.provider_here)))
         }
-        return flowOf(providers)
+        val pluginProviders = pluginRepository.findMany(type = PluginType.Weather, enabled = true)
+        return pluginProviders.map {
+            providers + it.map {
+                WeatherProviderInfo(it.authority, it.label)
+            }
+        }
     }
 }
 
@@ -173,7 +181,7 @@ class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
         val settingsData = settings.data.first()
         val provider = WeatherProvider.getInstance(settingsData.provider)
 
-        val updateInterval = provider.updateInterval
+        val updateInterval = provider.getUpdateInterval()
         val lastUpdate = settingsData.lastUpdate
 
         if (lastUpdate + updateInterval > System.currentTimeMillis()) {

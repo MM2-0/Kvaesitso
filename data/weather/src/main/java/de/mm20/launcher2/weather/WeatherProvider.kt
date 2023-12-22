@@ -6,8 +6,9 @@ import org.koin.core.parameter.parametersOf
 
 interface WeatherProvider {
 
-    val updateInterval: Long
-        get() = 1000 * 60 * 60L
+    suspend fun getUpdateInterval(): Long {
+        return 1000 * 60 * 60L
+    }
 
     suspend fun getWeatherData(location: WeatherLocation): List<Forecast>?
     suspend fun getWeatherData(lat: Double, lon: Double): List<Forecast>?

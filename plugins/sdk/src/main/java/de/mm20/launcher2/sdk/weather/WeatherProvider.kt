@@ -53,7 +53,7 @@ abstract class WeatherProvider(
         checkPermissionOrThrow(context)
 
         when {
-            uri.pathSegments.size == 1 && uri.pathSegments.first() == WeatherPluginContract.Paths.Weather -> {
+            uri.pathSegments.size == 1 && uri.pathSegments.first() == WeatherPluginContract.Paths.Forecasts -> {
                 val lat = uri.getQueryParameter(WeatherPluginContract.ForecastParams.Lat)
                     ?.toDoubleOrNull()
                 val lon = uri.getQueryParameter(WeatherPluginContract.ForecastParams.Lon)
