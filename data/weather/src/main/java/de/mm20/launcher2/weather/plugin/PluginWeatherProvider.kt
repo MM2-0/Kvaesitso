@@ -83,13 +83,13 @@ internal class PluginWeatherProvider(
             } catch (e: Exception) {
                 Log.e("MM20", "Plugin $pluginAuthority threw exception")
                 CrashReporter.logException(e)
-                it.resume(emptyList())
+                it.resume(null)
                 return@suspendCancellableCoroutine
             }
 
             if (cursor == null) {
-                Log.e("MM20", "Plugin $pluginAuthority returned null cursor")
-                it.resume(emptyList())
+                Log.e("MM20", "(getWeatherData) Plugin $pluginAuthority returned null cursor")
+                it.resume(null)
                 return@suspendCancellableCoroutine
             }
 
