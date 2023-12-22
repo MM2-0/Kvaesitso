@@ -57,7 +57,7 @@ internal data class Wikipedia(
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.putExtra(
             Intent.EXTRA_TEXT, "${label}\n\n" +
-                    "${text.substring(0, 200)}…\n\n" +
+                    "${text.substring(0, 200.coerceAtMost(text.length))}…\n\n" +
                     sourceUrl
         )
         shareIntent.type = "text/plain"
