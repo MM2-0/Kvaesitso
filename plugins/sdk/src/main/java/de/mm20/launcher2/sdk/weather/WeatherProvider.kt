@@ -83,7 +83,7 @@ abstract class WeatherProvider(
                 return createLocationsCursor(locations)
             }
         }
-        return super.query(uri, projection, queryArgs, cancellationSignal)
+        return null
     }
 
     private suspend fun getWeatherData(
