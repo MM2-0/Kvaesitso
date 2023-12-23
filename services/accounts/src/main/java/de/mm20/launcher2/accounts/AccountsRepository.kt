@@ -93,13 +93,6 @@ internal class AccountsRepositoryImpl(
         }
     }
 
-    private suspend fun getMicrosoftAccount(): Account? {
-        return null
-        /*return msGraphApiHelper.getUser()?.let {
-            Account(it.name, AccountType.Microsoft)
-        }*/
-    }
-
     private suspend fun getNextcloudAccount(): Account? {
         return nextcloudApiHelper.getLoggedInUser()?.let {
             Account(it.displayName, AccountType.Nextcloud)

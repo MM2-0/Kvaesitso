@@ -554,9 +554,6 @@
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
     <string name="preference_plugin_badges">Plugin badges</string>
     <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Sign in with Microsoft</string>
-    <string name="preference_ms_signin_summary">Sign in to search OneDrive</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -697,8 +694,6 @@
     <string name="no_account_nextcloud">You haven\'t connected a Nextcloud account yet</string>
     <!-- Used in an info banner if a specific feature requires an Owncloud account -->
     <string name="no_account_owncloud">You haven\'t connected an Owncloud account yet</string>
-    <!-- Used in an info banner if a specific feature requires a Microsoft account -->
-    <string name="no_account_microsoft">You haven\'t connected a Microsoft account yet</string>
     <!-- Used in an info banner if a specific feature requires a Google account -->
     <string name="no_account_google">You haven\'t connected a Google account yet</string>
     <!-- Used in info banners that indicate that an account is required to enable a certain feature -->

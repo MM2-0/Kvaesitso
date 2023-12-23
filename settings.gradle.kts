@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven(url = "https://pkgs.dev.azure.com/MicrosoftDeviceSDK/DuoSDK-Public/_packaging/Duo-SDK-Feed/maven/v1")
         jcenter() // For tinypinyin
     }
 }
@@ -60,7 +59,6 @@ include(":libs:nextcloud")
 include(":libs:owncloud")
 include(":libs:webdav")
 include(":libs:g-services")
-include(":libs:ms-services")
 include(":services:global-actions")
 include(":services:widgets")
 include(":services:favorites")

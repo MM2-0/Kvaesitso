@@ -117,12 +117,6 @@ google-apiclient = { group = "com.google.api-client", name = "google-api-client"
 google-drive = { group = "com.google.apis", name = "google-api-services-drive", version = "v3-rev20221219-2.0.0" }
 google-oauth2 = { group = "com.google.apis", name = "google-api-services-oauth2", version = "v2-rev20200213-2.0.0" }
 
-gson = { group = "com.google.code.gson", name = "gson", version = "2.10.1" }
-guava = { group = "com.google.guava", name = "guava", version = "31.1-android" }
-
-microsoft-graph = { group = "com.microsoft.graph", name = "microsoft-graph", version = "5.53.0" }
-microsoft-identity = { group = "com.microsoft.identity.client", name = "msal", version = "4.2.0" }
-
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
 
