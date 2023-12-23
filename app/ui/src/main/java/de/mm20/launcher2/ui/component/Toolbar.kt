@@ -1,12 +1,32 @@
 package de.mm20.launcher2.ui.component
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.PlainTooltip
+import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.integerResource
@@ -14,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.locals.LocalWindowPosition
+import kotlinx.coroutines.launch
 import kotlin.math.min
 
 @Composable
@@ -35,6 +56,7 @@ fun Toolbar(
 
 @Composable
 fun Icons(actions: List<ToolbarAction>, slots: Int) {
+    val scope = rememberCoroutineScope()
     for (i in 0 until min(slots, actions.size)) {
         if (i == slots - 1 && slots != actions.size) {
             var showMenu by remember { mutableStateOf(false) }
@@ -45,7 +67,6 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
                 Box(
                     modifier = Modifier
                         .size(48.dp)
-                        .offset(0.dp, LocalWindowPosition.current.toDp())
                 ) {
                     DropdownMenu(
                         expanded = showMenu,
@@ -60,32 +81,64 @@ fun Icons(actions: List<ToolbarAction>, slots: Int) {
             }
         } else {
             val action = actions[i]
-            when (action) {
-                is DefaultToolbarAction -> {
-                    IconButton(action.action) {
-                        Icon(action.icon, contentDescription = action.label)
+            val tooltipState = rememberTooltipState()
+            TooltipBox(
+                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                tooltip = {
+                    PlainTooltip {
+                        Text(action.label)
                     }
-                }
-                is SubmenuToolbarAction -> {
-                    Box {
-                        var showMenu by remember { mutableStateOf(false) }
-                        IconButton({
-                            showMenu = true
-                        }) {
+                },
+                state = tooltipState
+            ) {
+                when (action) {
+                    is DefaultToolbarAction -> {
+                        IconButton(
+                            onClick = action.action,
+                            modifier = Modifier.combinedClickable(
+                                onClick = {},
+                                onLongClick = {
+                                    scope.launch {
+                                        tooltipState.show()
+                                    }
+                                }
+                            )
+                        ) {
                             Icon(action.icon, contentDescription = action.label)
                         }
-                        Box(
-                            modifier = Modifier
-                                .size(48.dp)
-                                .offset(0.dp, LocalWindowPosition.current.toDp())
-                        ) {
-                            DropdownMenu(
-                                expanded = showMenu,
-                                onDismissRequest = { showMenu = false },
-                                modifier = Modifier.animateContentSize()
+                    }
+
+                    is SubmenuToolbarAction -> {
+                        Box {
+                            var showMenu by remember { mutableStateOf(false) }
+                            IconButton(
+                                onClick = {
+                                    showMenu = true
+                                },
+                                modifier = Modifier.combinedClickable(
+                                    onClick = {},
+                                    onLongClick = {
+                                        scope.launch {
+                                            tooltipState.show()
+                                        }
+                                    }
+                                )
                             ) {
-                                OverflowMenuItems(items = action.children) {
-                                    showMenu = false
+                                Icon(action.icon, contentDescription = action.label)
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .size(48.dp)
+                                    .offset(0.dp, LocalWindowPosition.current.toDp())
+                            ) {
+                                DropdownMenu(
+                                    expanded = showMenu,
+                                    onDismissRequest = { showMenu = false },
+                                    modifier = Modifier.animateContentSize()
+                                ) {
+                                    OverflowMenuItems(items = action.children) {
+                                        showMenu = false
+                                    }
                                 }
                             }
                         }
@@ -118,6 +171,7 @@ fun ColumnScope.OverflowMenuItems(items: List<ToolbarAction>, onDismiss: () -> U
                         }
                     )
                 }
+
                 is DefaultToolbarAction -> {
                     DropdownMenuItem(
                         onClick = {
