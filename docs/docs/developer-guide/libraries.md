@@ -9,8 +9,8 @@ The following libraries are commonly used (libraries that are only used in singl
 - **KotlinX coroutines** for asynchronous operations
 - **Jetpack Compose and Accompanist** for all user interfaces _(TODO: Owncloud and Nextcloud signin are not ported to Compose yet)_
 - **AndroidX Room** to store launcher data in an Sqlite database
-- **AndroidX Protobuf Datastore** to store additional user preferences
+- **AndroidX Datastore** to store additional user preferences
 - **Koin** for dependency injection
 - **Coil** to load and transform images
-- **OkHttp and Retrofit** for HTTP requests
+- **OkHttp and Retrofit** for HTTP requests _(TODO: Migrate to Ktor (?))_
 - Several other **AndroidX** libraries (Work, Lifecycle, AppCompat, …)
