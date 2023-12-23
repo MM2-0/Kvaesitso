@@ -261,8 +261,6 @@
     <string name="preference_search_calendar_summary">Поиск предстоящих встреч и мероприятий</string>
     <string name="preference_search_appshortcuts">Ярлыки приложений</string>
     <string name="preference_search_calculator">Калькулятор</string>
-    <string name="preference_ms_signin">Войти с помощью Microsoft</string>
-    <string name="preference_ms_signin_summary">Войдите для поиска в OneDrive</string>
     <string name="preference_search_wikipedia_summary">Поиск в свободной энциклопедии</string>
     <string name="preference_search_websites_summary">Показать предварительный просмотр веб-сайта, если поисковый запрос является URL</string>
     <string name="preference_search_localfiles">Локальные файлы</string>
@@ -288,7 +286,6 @@
     <string name="preference_dim_wallpaper">Тусклые обои</string>
     <string name="preference_dim_wallpaper_summary">В темных темах, затемнить обои</string>
     <string name="preference_wallpaper_summary">Выберите обои</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_about_telegram">Telegram группа</string>
     <string name="preference_about_fdroid">F-Droid репозиторий</string>
@@ -496,7 +493,6 @@
     <string name="preference_favorites_frequently_used_summary">Показывать часто используемые в избранном</string>
     <string name="preference_edit_button">Кнопка для редактирования</string>
     <string name="no_account_owncloud">Вы еще не подключили учетную запись Owncloud</string>
-    <string name="no_account_microsoft">Вы еще не подключили учетную запись Microsoft</string>
     <string name="backup_select_components">Выберите, что включить в копию:</string>
     <string name="backup_component_favorites">Избранные и скрытые приложения</string>
     <string name="backup_component_settings">Настройки</string>

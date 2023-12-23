@@ -99,7 +99,6 @@
     <string name="date_today">Σήμερα</string>
     <string name="calendar_widget_pinned_events">Επερχόμενα</string>
     <string name="calendar_widget_new_event">Νέα εκδήλωση</string>
-    <string name="no_account_microsoft">Δεν έχει συνδεθεί ακόμη λογαριασμός Microsoft</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Πλήρες σε %1$s λεπτό</item>
         <item quantity="other">Πλήρες σε %1$s λεπτά</item>
@@ -218,7 +217,6 @@
     <string name="preference_suspended_badges">Εφαρμογές σε αναστολή</string>
     <string name="preference_cloud_badges_summary">Εμφάνιση σήματος για αρχεία που είναι αποθηκευμένα στο cloud</string>
     <string name="preference_shortcut_badges">Σήματα συντομεύσεων</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud_signin">Σύνδεση σε Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Σύνδεση για αναζήτηση σε Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -410,9 +408,7 @@
     <string name="preference_automatic_location_summary">Χρησιμοποιήστε τις υπηρεσίες GPS και τοποθεσίας για να προσδιορίσετε αυτόματα την τοποθεσία</string>
     <string name="preference_imperial_units">Αγγλικό σύστημα μέτρησης</string>
     <string name="preference_shortcut_badges_summary">Εμφάνιση ενός σήματος που υποδεικνύει σε ποια εφαρμογή ανήκει μια συντόμευση</string>
-    <string name="preference_ms_signin">Σύνδεση με Microsoft</string>
     <string name="preference_category_debug_tools">Εργαλεία</string>
-    <string name="preference_ms_signin_summary">Σύνδεση για αναζήτηση σε OneDrive</string>
     <string name="preference_debug_cleanup_database_summary">Καταργήστε κατεστραμμένες και αχρησιμοποίητες εγγραφές από τη βάση δεδομένων της εφαρμογής</string>
     <string name="preference_owncloud_signin_summary">Σύνδεση για αναζήτηση σε Owncloud server</string>
     <string name="preference_category_icons">Εικονίδια</string>

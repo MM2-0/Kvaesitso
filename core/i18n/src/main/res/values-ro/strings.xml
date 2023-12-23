@@ -135,7 +135,7 @@
     <plurals name="calendar_widget_running_events">
         <item quantity="one">+%1$d eveniment în desfășurare din zilele trecute</item>
         <item quantity="few">+%1$d evenimente în desfășurare din zilele trecute</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="calendar_event_allday">Toată ziua</string>
     <string name="weather_condition_sleetshowers">Lapoviță</string>
@@ -261,11 +261,9 @@
     <string name="preference_cloud_badges">Insigne cloud</string>
     <string name="preference_shortcut_badges">Insigne de scurtătură</string>
     <string name="preference_shortcut_badges_summary">Afișarea unei insigne care indică aplicația căreia îi aparține o scurtătură</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_dim_wallpaper">Întunecă tapetul</string>
     <string name="preference_notification_badges">Insigne de notificare</string>
     <string name="preference_suspended_badges_summary">Afișează o insignă pentru aplicațiile suspendate</string>
-    <string name="preference_ms_signin">Conectează-te cu Microsoft</string>
     <string name="preference_nextcloud_signin">Conectează-te la Nextcloud</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
@@ -340,14 +338,13 @@
     <string name="preference_hidden_items_summary">Gestionarea aplicațiilor ascunse și a rezultatelor căutării</string>
     <string name="preference_wikipedia_customurl">Url-ul Wikipedia</string>
     <string name="no_account_owncloud">Nu ați conectat încă un cont Owncloud</string>
-    <string name="no_account_microsoft">Nu ați conectat încă un cont Microsoft</string>
     <string name="no_account_google">Nu ați conectat încă un cont Google</string>
     <string name="connect_account">Conectați contul</string>
     <string name="battery_part_charging">Încărcare</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Încărcat în %1$s minute</item>
         <item quantity="few">Încărcat în %1$s minute</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="websearch_dialog_url_error">Substituentul \'${1}\' lipsește din această adresă URL</string>
     <string name="weather_condition_heavysnowshowersandthunder">Averse abundente de zăpadă și tunete</string>
@@ -381,7 +378,6 @@
     <string name="preference_notification_badges_summary">Afișează insigne pentru aplicații cu notificări necitite</string>
     <string name="weather_condition_clearsky">Cer senin</string>
     <string name="missing_permission_calendar_search">Acorda permisiunea de calendar pentru a căuta în calendarul tău.</string>
-    <string name="preference_ms_signin_summary">Conectează-te pentru a căuta în OneDrive</string>
     <string name="weather_condition_sleetandthunder">Lapoviță și tunete</string>
     <string name="preference_nextcloud_signin_summary">Conectează-te pentru a căuta în serverul tău Nextcloud</string>
     <string name="preference_about_license_summary">Licențiat sub Licența Publică Generală GNU 3.0</string>
@@ -390,7 +386,7 @@
     <plurals name="preference_calendar_calendars_summary">
         <item quantity="one">%1$d calendar selectat</item>
         <item quantity="few">%1$d calendare selectate</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="preference_clock_widget_style_summary">Alege un ceas</string>
     <string name="preference_search_contacts_summary">Caută contactele de pe acest dispozitiv</string>

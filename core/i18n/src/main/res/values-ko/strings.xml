@@ -218,7 +218,6 @@
     <string name="preference_category_searchbar">검색 표시줄</string>
     <string name="preference_icon_pack">아이콘 팩</string>
     <string name="preference_force_themed_icons_summary">지원하지 않는 아이콘을 포함한 모든 아이콘에 애플리케이션의 색상 적용 (권장 안 함)</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_about_fdroid">F-Droid 리포지터리</string>
     <string name="preference_category_license">라이선스</string>
     <string name="preference_grid_labels">라벨 표시</string>
@@ -278,8 +277,6 @@
     <string name="preference_theme_dark">어두운 테마</string>
     <string name="preference_theme">테마</string>
     <string name="preference_screen_colors">색상 구성</string>
-    <string name="preference_ms_signin">Microsoft에 로그인</string>
-    <string name="preference_ms_signin_summary">로그인하여 OneDrive 항목 검색</string>
     <string name="preference_nextcloud_signin">Nextcloud에 로그인</string>
     <string name="preference_custom_colors_advanced_mode">고급 모드</string>
     <string name="preference_custom_colors_simple_mode">간단 모드</string>
@@ -356,7 +353,6 @@
     <string name="preference_screen_about_summary">앱 및 라이선스 정보</string>
     <string name="preference_screen_icons">격자 및 아이콘</string>
     <string name="preference_search_gdrive">Google 드라이브</string>
-    <string name="no_account_microsoft">아직 Microsoft 계정을 연결하지 않았습니다.</string>
     <string name="no_account_google">아직 Google 계정을 연결하지 않았습니다.</string>
     <string name="no_account_owncloud">아직 Owncloud 계정을 연결하지 않았습니다.</string>
     <string name="backup_component_favorites">즐겨찾기 및 숨긴 앱</string>

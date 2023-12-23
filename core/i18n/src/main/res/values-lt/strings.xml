@@ -244,9 +244,6 @@
     <string name="preference_suspended_badges">Sustabdytos programos</string>
     <string name="preference_shortcut_badges">Nuorodų ženkleliai</string>
     <string name="preference_shortcut_badges_summary">Rodyti ženklelį kuris rodo kuriai programai priklauso ženkleliai</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Prisijungti su microsoft</string>
-    <string name="preference_ms_signin_summary">Prisijunkite ,kad naudoti OneDrive paieška</string>
     <string name="preference_nextcloud_signin">Prisijungti su Nextcloud</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
@@ -434,7 +431,6 @@
     <string name="preference_clock_widget_alignment_top">Viršus</string>
     <string name="preference_clockwidget_date_part">Data</string>
     <string name="preference_search_calendar_summary">Ieškoti sekančių susitikimū ir įvykių</string>
-    <string name="no_account_microsoft">Jūs dar neprijungėtė Microsoft paskyros</string>
     <string name="preference_screen_plugins_summary">Tvarkyti instaliuotus priedus</string>
     <string name="restore_invalid_file">Pasirinktas failas atrodo ,kad nėra atsarginė kopija. Ar esate tikri ,kad čia teisingas failas\?</string>
     <string name="preference_search_localfiles_summary">Ieškoti dokumentus ,nuotraukas ir kitus failus šiame prietaise</string>

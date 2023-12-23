@@ -234,9 +234,7 @@
     <string name="battery_part_charging">Cargando</string>
     <string name="preference_icon_pack">Paquete de iconos</string>
     <string name="preference_category_badges">Insignias</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud_signin">Registrarse a NextCloud</string>
-    <string name="preference_ms_signin_summary">Registrate para buscar en OneDrive</string>
     <string name="preference_logs_summary">Visualizar y exportar registros de aplicación</string>
     <string name="preference_search_files_summary">Buscar archivos locales y archivos en la nube</string>
     <string name="preference_search_calendar">Calendario</string>
@@ -358,7 +356,6 @@
     <string name="preference_hidden_items">Resultados de búsqueda ocultos</string>
     <string name="preference_wikipedia_customurl">URL de Wikipedia</string>
     <string name="no_account_nextcloud">Aun no te has conectado a una cuenta de Nextcloud</string>
-    <string name="no_account_microsoft">Aun no te has conectado a una cuenta de Microsoft</string>
     <string name="connect_account">Conectar cuenta</string>
     <string name="backup_component_favorites">Favoritos y aplicaciones ocultas</string>
     <string name="backup_component_settings">Ajustes</string>
@@ -410,7 +407,6 @@
     </plurals>
     <string name="preference_cloud_badges_summary">Mostrar insignia para archivos almacenados en la nube</string>
     <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la búsqueda</string>
-    <string name="preference_ms_signin">Registrarse con Microsoft</string>
     <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda ocultos</string>
     <string name="preference_nextcloud">NextCloud</string>
     <string name="preference_nextcloud_signin_summary">Registrate para buscar en tu servidor NextCloud</string>
