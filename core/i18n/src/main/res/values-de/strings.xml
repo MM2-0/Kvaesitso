@@ -217,9 +217,6 @@
     <string name="preference_cloud_badges_summary">Eine Plakette für Dateien, die in einer Cloud gespeichert sind anzeigen</string>
     <string name="preference_shortcut_badges_summary">Für Shortcuts anzeigen, zu welcher App diese gehören</string>
     <string name="preference_icon_shape_platform">Systemstandard</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Bei Microsoft anmelden</string>
-    <string name="preference_ms_signin_summary">Anmelden, um OneDrive durchsuchen zu können</string>
     <string name="preference_nextcloud_signin">Bei Nextcloud anmelden</string>
     <string name="preference_nextcloud_signin_summary">Anmelden, um Ihren Nextcloud-Server durchsuchen zu können</string>
     <string name="preference_about_telegram">Telegram-Gruppe</string>
@@ -360,7 +357,6 @@
     <string name="websearch_dialog_edit_title">Websuche bearbeiten</string>
     <string name="no_account_nextcloud">Sie haben noch kein Nextcloud-Konto verbunden</string>
     <string name="no_account_owncloud">Sie haben noch kein Owncloud-Konto verbunden</string>
-    <string name="no_account_microsoft">Sie haben noch kein Microsoft-Konto verbunden</string>
     <string name="no_account_google">Sie haben noch kein Google-Konto verbunden</string>
     <string name="connect_account">Konto verbinden</string>
     <string name="turn_off">Deaktivieren</string>

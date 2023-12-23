@@ -216,8 +216,6 @@
     <string name="preference_suspended_badges">แอปที่ถูกพักการใช้งาน</string>
     <string name="preference_cloud_badges">แบดจ์คลาวด์</string>
     <string name="preference_cloud_badges_summary">แสดงแบดจ์สำหรับไฟล์ที่เก็บไว้บนคลาวด์</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาใน OneDrive</string>
     <string name="preference_nextcloud_signin">ลงชื่อเข้าใช้ Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">ลงชื่อเข้าใช้เพื่อค้นหาในเซิร์ฟเวอร์ Nextcloud</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -303,7 +301,6 @@
     <string name="preference_edit_button">แก้ไขปุ่ม</string>
     <string name="preference_category_accounts">บัญชี</string>
     <string name="no_account_nextcloud">คุณยังไม่ได้เชื่อมต่อกับบัญชี Nextcloud</string>
-    <string name="no_account_microsoft">คุณยังไม่ได้เชื่อมต่อกับบัญชี Microsoft</string>
     <string name="connect_account">เชื่อมต่อบัญชี</string>
     <string name="battery_part_charging">กำลังชาร์จ</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -530,7 +527,6 @@
     <string name="weather_condition_lightsnowandthunder">หิมะตกปรอยๆเป็นหย่อมๆและท้องฟ้าคำราม</string>
     <string name="preference_shortcut_badges_summary">แสดงแบดจ์ที่แสดงให้เห็นว่าทางลัดเป็นของแอปใด</string>
     <string name="weather_condition_lightssleetshowersandthunder">ฝนน้ำแข็งตกปรอยๆเป็นหย่อมๆและท้องฟ้าคำราม</string>
-    <string name="preference_ms_signin">ลงชื่อเข้าใช้ Microsoft</string>
     <string name="weather_condition_rainshowersandthunder">ฝนตกเป็นหย่อมๆและท้องฟ้าคำราม</string>
     <string name="preference_owncloud_signin">ลงชื่อเข้าใช้ Owncloud</string>
     <string name="weather_condition_sleetshowersandthunder">ฝนน้ำแข็งตกเป็นหย่อมๆและท้องฟ้าคำราม</string>

@@ -275,9 +275,6 @@
     <string name="preference_cloud_badges">Hodei-biribiltxoak</string>
     <string name="preference_cloud_badges_summary">Hodeian gordetako fitxategietan biribiltxoa erakutsi</string>
     <string name="preference_shortcut_badges">Lasterbide-biribiltxoak</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Microsoft-en izena eman</string>
-    <string name="preference_ms_signin_summary">OneDrive-n bilatzeko izena eman</string>
     <string name="preference_nextcloud_signin">Nextcloud-en izena eman</string>
     <string name="preference_nextcloud_signin_summary">Nextcloud-en bilatzeko izena eman</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -453,7 +450,6 @@
     <string name="preference_media_integration">Multimedia kontrola</string>
     <string name="no_account_nextcloud">Oraindik ez duzu Nextcloud konturik konektatu</string>
     <string name="no_account_owncloud">Oraindik ez duzu Owncloud konturik konektatu</string>
-    <string name="no_account_microsoft">Oraindik ez duzu Microsoft konturik konektatu</string>
     <string name="no_account_google">Oraindik ez duzu Google konturik konektatu</string>
     <string name="battery_part_charging">Kargatzen</string>
     <plurals name="battery_part_remaining_charge_time">

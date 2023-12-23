@@ -352,9 +352,6 @@
     <string name="preference_screen_badges_summary">組態圖示角標</string>
     <string name="preference_notification_badges">通知角標</string>
     <string name="preference_notification_badges_summary">為帶有未讀通知的應用程式顯示角標</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">使用Microsoft登陸</string>
-    <string name="preference_ms_signin_summary">登陸以查詢OneDrive</string>
     <string name="preference_nextcloud_signin">登陸到Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">登陸以查詢你的Nextcloud服務</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -467,7 +464,6 @@
     <string name="preference_favorites_edit_button_summary">顯示一個按鈕以重新排列我的最愛</string>
     <string name="preference_widgets_edit_button_summary">顯示一個按鈕以新增、移除和重新排列元件</string>
     <string name="no_account_nextcloud">您尚未連線Nextcloud帳戶</string>
-    <string name="no_account_microsoft">您尚未連線Microsoft帳戶</string>
     <string name="no_account_google">您尚未連線Google帳戶</string>
     <string name="connect_account">連線帳戶</string>
     <string name="battery_part_charging">充電中</string>
