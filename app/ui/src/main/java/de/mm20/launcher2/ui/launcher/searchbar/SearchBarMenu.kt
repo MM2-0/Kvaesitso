@@ -9,6 +9,7 @@ import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Wallpaper
@@ -20,6 +21,7 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +29,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.launcher.LauncherScaffoldVM
+import de.mm20.launcher2.ui.launcher.widgets.WidgetsVM
 import de.mm20.launcher2.ui.settings.SettingsActivity
 
 @Composable
@@ -38,6 +43,8 @@ fun RowScope.SearchBarMenu(
     val context = LocalContext.current
     var showOverflowMenu by remember { mutableStateOf(false) }
     val rightIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_menu_clear)
+    val launcherVM: LauncherScaffoldVM = viewModel()
+    val widgetsVM: WidgetsVM = viewModel()
 
     IconButton(onClick = {
         if (searchBarValue.isNotBlank()) onSearchBarValueChange("")
@@ -70,6 +77,21 @@ fun RowScope.SearchBarMenu(
                 Icon(imageVector = Icons.Rounded.Wallpaper, contentDescription = null)
             }
         )
+        val editButton by widgetsVM.editButton.collectAsState()
+        if (editButton == false) {
+            DropdownMenuItem(
+                onClick = {
+                    launcherVM.setWidgetEditMode(editMode = true)
+                    showOverflowMenu = false
+                },
+                text = {
+                    Text(stringResource(R.string.menu_edit_widgets))
+                },
+                leadingIcon = {
+                    Icon(imageVector = Icons.Rounded.Edit, contentDescription = null)
+                }
+            )
+        }
         DropdownMenuItem(
             onClick = {
                 context.startActivity(Intent(context, SettingsActivity::class.java))
