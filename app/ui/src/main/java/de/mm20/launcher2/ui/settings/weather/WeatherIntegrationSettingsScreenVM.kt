@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherProviderInfo
@@ -15,9 +16,11 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMap
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -25,6 +28,7 @@ import org.koin.core.component.inject
 class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val repository: WeatherRepository by inject()
     private val weatherSettings: WeatherSettings by inject()
+    private val pluginService: PluginService by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
 
@@ -35,6 +39,10 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     fun setWeatherProvider(provider: String) {
         weatherSettings.setProviderId(provider)
     }
+
+    val weatherProviderPluginState = weatherProvider.flatMapLatest {
+        it?.let { pluginService.getPluginWithState(it) } ?: flowOf(null)
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val imperialUnits = dataStore.data.map { it.weather.imperialUnits }
     fun setImperialUnits(imperialUnits: Boolean) {

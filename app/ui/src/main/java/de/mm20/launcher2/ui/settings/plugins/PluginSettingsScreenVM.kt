@@ -14,6 +14,7 @@ import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.plugins.PluginWithState
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -30,6 +31,7 @@ import org.koin.core.component.inject
 class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService by inject<PluginService>()
     private val fileSearchSettings: FileSearchSettings by inject()
+    private val weatherSettings: WeatherSettings by inject()
 
     private var pluginPackageName = MutableStateFlow<String?>(null)
 
@@ -70,6 +72,11 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
             it.filter { it.plugin.type == PluginType.FileSearch }
         }
 
+    val weatherPlugins = states
+        .map {
+            it.filter { it.plugin.type == PluginType.Weather }
+        }
+
 
     fun init(pluginId: String) {
         this.pluginPackageName.value = pluginId
@@ -100,5 +107,10 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     val enabledFileSearchPlugins = fileSearchSettings.enabledPlugins
     fun setFileSearchPluginEnabled(authority: String, enabled: Boolean) {
         fileSearchSettings.setPluginEnabled(authority, enabled)
+    }
+
+    val weatherProvider = weatherSettings.providerId
+    fun setWeatherProvider(providerId: String) {
+        weatherSettings.setProviderId(providerId)
     }
 }

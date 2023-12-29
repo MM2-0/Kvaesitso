@@ -46,6 +46,10 @@ interface PluginService {
         enabled: Boolean? = null,
     ): Flow<List<PluginWithState>>
 
+    fun getPluginWithState(
+        authority: String,
+    ): Flow<PluginWithState?>
+
     fun getPluginPackages(): Flow<List<PluginPackage>>
     fun getPluginPackage(packageName: String): Flow<PluginPackage?>
     suspend fun getPluginState(plugin: Plugin): PluginState?
@@ -124,6 +128,17 @@ internal class PluginServiceImpl(
             enabled = enabled,
         ).map {
             it.map {
+                PluginWithState(
+                    plugin = it,
+                    state = getPluginState(it),
+                )
+            }
+        }
+    }
+
+    override fun getPluginWithState(authority: String): Flow<PluginWithState?> {
+        return repository.get(authority).map {
+            it?.let {
                 PluginWithState(
                     plugin = it,
                     state = getPluginState(it),

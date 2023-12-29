@@ -25,7 +25,7 @@ interface PluginDao {
     ): Flow<List<PluginEntity>>
 
     @Query("SELECT * FROM Plugins WHERE authority = :authority")
-    fun get(authority: String): Flow<PluginEntity>
+    fun get(authority: String): Flow<PluginEntity?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMany(plugins: List<PluginEntity>)

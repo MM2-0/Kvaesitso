@@ -852,4 +852,11 @@
     <string name="shortcut_label_unavailable">Unavailable</string>
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
+    <string name="plugin_state_error">This plugin isn\'t working correctly</string>
+    <string name="plugin_state_setup_required">You need to setup this plugin first</string>
+    <string name="plugin_action_setup">Set up</string>
+    <string name="plugin_type_filesearch">File search</string>
+    <string name="plugin_type_weather">Weather provider</string>
+    <string name="plugin_weather_provider_enable">Set as weather provider</string>
+    <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
 </resources>

@@ -1,18 +1,27 @@
 package de.mm20.launcher2.ui.settings.weather
 
+import android.app.PendingIntent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
+import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.weather.WeatherLocation
@@ -25,12 +34,36 @@ fun WeatherIntegrationSettingsScreen() {
 
     val availableProviders by viewModel.availableProviders.collectAsState(emptyList())
 
+    val pluginState by viewModel.weatherProviderPluginState.collectAsStateWithLifecycle(
+        null,
+        minActiveState = Lifecycle.State.RESUMED
+    )
+
     PreferenceScreen(
         title = stringResource(R.string.preference_screen_weatherwidget),
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/integrations/weather"
     ) {
         item {
             PreferenceCategory {
+                val state = pluginState?.state
+                if (state is PluginState.SetupRequired) {
+                    Banner(
+                        modifier = Modifier.padding(16.dp),
+                        text = state.message ?: stringResource(R.string.plugin_state_setup_required),
+                        icon = Icons.Rounded.Info,
+                        primaryAction = {
+                            TextButton(onClick = {
+                                try {
+                                    state.setupActivity.send()
+                                } catch (e: PendingIntent.CanceledException) {
+                                    CrashReporter.logException(e)
+                                }
+                            }) {
+                                Text(stringResource(R.string.plugin_action_setup))
+                            }
+                        }
+                    )
+                }
                 val weatherProvider by viewModel.weatherProvider.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_weather_provider),
