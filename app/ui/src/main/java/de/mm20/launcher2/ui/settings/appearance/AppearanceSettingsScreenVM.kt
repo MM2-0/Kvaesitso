@@ -47,6 +47,19 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val compatMode = dataStore.data.map {
+        it.appearance.forceCompatModeSystemColors
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setCompatMode(enabled: Boolean) {
+        viewModelScope.launch {
+            dataStore.updateData {
+                it.toBuilder()
+                    .setAppearance(it.appearance.toBuilder().setForceCompatModeSystemColors(enabled))
+                    .build()
+            }
+        }
+    }
 
     val font = dataStore.data.map { it.appearance.font }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)

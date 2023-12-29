@@ -3,11 +3,14 @@ package de.mm20.launcher2.ui.theme.colorscheme
 import android.os.Build
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.datastore.core.DataStore
 import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.themes.CorePalette
 import de.mm20.launcher2.themes.DefaultDarkColorScheme
@@ -18,6 +21,8 @@ import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.get
 import de.mm20.launcher2.themes.merge
 import de.mm20.launcher2.ui.locals.LocalWallpaperColors
+import kotlinx.coroutines.flow.map
+import org.koin.androidx.compose.inject
 
 @Composable
 fun lightColorSchemeOf(theme: Theme): ColorScheme {
@@ -77,8 +82,13 @@ fun colorSchemeOf(colorScheme: FullColorScheme, corePalette: PartialCorePalette)
 
 @Composable
 fun systemCorePalette(): CorePalette<Int> {
-    val context = LocalContext.current
-    if (Build.VERSION.SDK_INT >= 31) {
+    val dataStore: DataStore<Settings> by inject()
+    val compatMode by remember {
+        dataStore.data.map { it.appearance.forceCompatModeSystemColors }
+    }.collectAsState(false)
+
+    if (Build.VERSION.SDK_INT >= 31 && !compatMode) {
+        val context = LocalContext.current
         return CorePalette(
             primary = ContextCompat.getColor(context, android.R.color.system_accent1_500),
             secondary = ContextCompat.getColor(context, android.R.color.system_accent2_500),

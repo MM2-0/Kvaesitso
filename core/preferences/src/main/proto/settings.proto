@@ -90,6 +90,8 @@ message Settings {
     // UUID of the selected theme
     string theme_id = 12;
     uint32 blur_wallpaper_radius = 13;
+
+    bool force_compat_mode_system_colors = 14;
   }
   AppearanceSettings appearance = 2;
 

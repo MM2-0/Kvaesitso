@@ -17,6 +17,7 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.getTypography
@@ -49,6 +50,15 @@ fun AppearanceSettingsScreen() {
                     summary = themeName,
                     onClick = {
                         navController?.navigate("settings/appearance/themes")
+                    }
+                )
+                val compatMode by viewModel.compatMode.collectAsState()
+                SwitchPreference(
+                    title = stringResource(id = R.string.preference_force_compat_system_colors),
+                    summary = stringResource(id = R.string.preference_force_compat_system_colors_summary),
+                    value = compatMode,
+                    onValueChanged = {
+                        viewModel.setCompatMode(it)
                     }
                 )
                 val font by viewModel.font.collectAsState()

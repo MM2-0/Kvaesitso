@@ -18,6 +18,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setBlurWallpaperRadius(32)
                 .setThemeId(UUID(0L, 0L).toString())
                 .setFont(Settings.AppearanceSettings.Font.Outfit)
+                .setForceCompatModeSystemColors(false)
                 .build()
         )
         .setWeather(
