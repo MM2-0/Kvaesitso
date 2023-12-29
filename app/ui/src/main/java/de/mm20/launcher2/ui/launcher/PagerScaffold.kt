@@ -407,7 +407,6 @@ fun PagerScaffold(
                         lowVelocityAnimationSpec = spring(
                             stiffness = Spring.StiffnessMediumLow,
                         ),
-                        snapVelocityThreshold = 1000.dp,
                         pagerSnapDistance = remember {
                             object : PagerSnapDistance {
                                 override fun calculateTargetPage(
