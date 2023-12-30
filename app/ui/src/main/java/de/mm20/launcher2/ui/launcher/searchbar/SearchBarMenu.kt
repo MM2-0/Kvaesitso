@@ -78,7 +78,8 @@ fun RowScope.SearchBarMenu(
             }
         )
         val editButton by widgetsVM.editButton.collectAsState()
-        if (editButton == false) {
+        val searchOpen by launcherVM.isSearchOpen
+        if (!searchOpen && editButton == false) {
             DropdownMenuItem(
                 onClick = {
                     launcherVM.setWidgetEditMode(editMode = true)
