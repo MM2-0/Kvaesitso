@@ -325,9 +325,6 @@
     <string name="preference_cloud_badges_summary">Toon een badge voor bestanden in de cloud</string>
     <string name="preference_shortcut_badges">Snelkoppelingbadges</string>
     <string name="preference_shortcut_badges_summary">Toon een badge om te tonen tot welke applicatie een snelkoppeling behoort</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Inloggen met Microsoft</string>
-    <string name="preference_ms_signin_summary">Log in om OneDrive te doorzoeken</string>
     <string name="preference_nextcloud_signin">Inloggen bij Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Log in om jouw Nextcloudserver te doorzoeken</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -463,7 +460,6 @@
     <string name="restore_select_components">Kies wat je wil terugzetten. Bestaande gegevens worden overschreven!</string>
     <string name="restore_complete">De back-up is teruggezet.</string>
     <string name="preference_search_unitconverter_summary">Gebruik: 1.5 kg of 4cm &gt;&gt; in</string>
-    <string name="no_account_microsoft">Je bent nog niet ingelogd bij Microsoft</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">Volledig opgeladen binnen %1$s minuut</item>
         <item quantity="other">Volledig opgeladen binnen %1$s minuten</item>
@@ -667,4 +663,6 @@
     <string name="no_plugins_installed">Geen plug-ins geïnstalleerd</string>
     <string name="plugin_host_not_installed">Plug-inhost niet geïnstalleerd</string>
     <string name="preference_screen_plugins">Plug-ins</string>
+    <string name="preference_plugin_badges">Pluginbadges</string>
+    <string name="preference_plugin_badges_summary">Aangeven welke plugin een zoekresultaat heeft teruggegeven</string>
 </resources>

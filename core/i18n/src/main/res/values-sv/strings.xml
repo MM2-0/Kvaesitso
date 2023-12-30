@@ -246,9 +246,6 @@
     <string name="preference_cloud_badges">Molnprickar</string>
     <string name="preference_shortcut_badges">Genvägsprickar</string>
     <string name="preference_shortcut_badges_summary">Prick som visar vilken app en genväg hör till</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Logga in med Microsoft</string>
-    <string name="preference_ms_signin_summary">Logga in för att söka i OneDrive</string>
     <string name="preference_nextcloud_signin">Logga in på Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Logga in för att söka i din Nextcloud-server</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -335,7 +332,6 @@
     <string name="preference_wikipedia_customurl">Wikipedia-länk</string>
     <string name="no_account_nextcloud">Du har inte anslutit ett Nextcloud-konto ännu</string>
     <string name="no_account_owncloud">Du har inte anslutit ett Owncloud-konto ännu</string>
-    <string name="no_account_microsoft">Du har inte anslutit ett Microsoft-konto ännu</string>
     <string name="no_account_google">Du har inte anslutit ett Google-konto ännu</string>
     <string name="connect_account">Anslut konto</string>
     <string name="battery_part_charging">Laddar</string>

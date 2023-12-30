@@ -189,7 +189,6 @@
     <string name="preference_dim_wallpaper">Przyciemniona tapeta</string>
     <string name="preference_dim_wallpaper_summary">W ciemnych motywach, przyciemnij tapetę</string>
     <string name="preference_wallpaper_summary">Wybierz tapetę</string>
-    <string name="preference_ms_signin">Zaloguj się z Microsoft</string>
     <string name="preference_nextcloud_signin">Zaloguj się do Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Zaloguj się do Owncloud</string>
@@ -242,7 +241,6 @@
     <string name="preference_calendar_hide_allday">Ukryj wydarzenia trwające cały dzień</string>
     <string name="preference_search_bar_style">Styl</string>
     <string name="preference_search_bar_auto_focus">Pokaż klawiaturę</string>
-    <string name="no_account_microsoft">Konto Microsoft nie zostało jeszcze połączone</string>
     <string name="battery_part_charging">Ładowanie</string>
     <string name="connect_account">Połącz konto</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -302,7 +300,6 @@
     <string name="no_account_owncloud">Konto Owncloud nie zostało jeszcze połączone</string>
     <string name="weather_details_precipitation">Opad atmosferyczny: %1$s</string>
     <string name="shortcut_summary">Z %1$s</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="weather_no_data">Brak dostępnych informacji o pogodzie.</string>
     <string name="nextcloud_server_url">Adres URL serwera Nextcloud</string>
     <string name="weather_widget_set_location">Ustaw lokalizację</string>
@@ -325,7 +322,6 @@
     <string name="preference_imperial_units_summary">Użyj stopni Fahrenheit\'a oraz mil na godzinę</string>
     <string name="preference_category_searchbar">Pasek wyszukiwania</string>
     <string name="preference_screen_integrations_summary">Zarządzaj połączonymi kontami i usługami</string>
-    <string name="preference_ms_signin_summary">Zaloguj się, aby móc przeszukiwać OneDrive</string>
     <string name="preference_nextcloud_signin_summary">Zaloguj się, aby móc przeszukiwać twój serwer Nextcloud</string>
     <string name="preference_search_currencyconverter_summary">Cyklicznie pobieraj kurs walut do konwersji walut</string>
     <string name="preference_search_websites_summary">Pokazuj podgląd strony internetowej gdy wyszukiwaną frazą jest adres URL</string>

@@ -27,8 +27,6 @@
 
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="de.mm20.launcher2.permission.USE_PLUGINS" />
-
     <application
         android:name=".LauncherApplication"
         android:allowBackup="true"

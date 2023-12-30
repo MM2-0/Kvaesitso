@@ -86,3 +86,5 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
+
+The plugin SDK modules (`plugins/sdk` and `core/shared`) are licensed under the Apache License 2.0.

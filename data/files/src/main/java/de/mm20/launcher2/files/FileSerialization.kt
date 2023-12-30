@@ -361,7 +361,7 @@ internal class PluginFileDeserializer(
             val id = obj.getString("id")
             val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
             if (!plugin.enabled) return null
-            val provider = PluginFileProvider(context, plugin)
+            val provider = PluginFileProvider(context, authority)
             return provider.getFile(id)
         } catch (e: Exception) {
             CrashReporter.logException(e)

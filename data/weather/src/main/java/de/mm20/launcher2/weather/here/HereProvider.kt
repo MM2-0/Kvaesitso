@@ -1,17 +1,22 @@
 package de.mm20.launcher2.weather.here
 
 import android.content.Context
-import android.content.SharedPreferences
+import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.weather.*
+import de.mm20.launcher2.weather.Forecast
+import de.mm20.launcher2.weather.R
+import de.mm20.launcher2.weather.WeatherLocation
+import de.mm20.launcher2.weather.WeatherProvider
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
-class HereProvider(override val context: Context) : LatLonWeatherProvider() {
+internal class HereProvider(
+    private val context: Context,
+) : WeatherProvider {
 
     private val retrofit by lazy {
         Retrofit.Builder()
@@ -24,18 +29,25 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
         retrofit.create<HereWeatherApi>()
     }
 
-    override val preferences: SharedPreferences
-        get() = context.getSharedPreferences(PREFERENCES, Context.MODE_PRIVATE)
-
-
-    override suspend fun loadWeatherData(location: LatLonWeatherLocation): WeatherUpdateResult<LatLonWeatherLocation>? {
-        return loadWeatherData(location.lat, location.lon)
+    override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
+        return when (location) {
+            is WeatherLocation.LatLon -> getWeatherData(location.lat, location.lon, location.name)
+            else -> {
+                Log.e("HereProvider", "Unsupported location type: $location")
+                null
+            }
+        }
     }
 
-    override suspend fun loadWeatherData(
+    override suspend fun getWeatherData(lat: Double, lon: Double): List<Forecast>? {
+        return getWeatherData(lat, lon, null)
+    }
+
+    private suspend fun getWeatherData(
         lat: Double,
-        lon: Double
-    ): WeatherUpdateResult<LatLonWeatherLocation>? {
+        lon: Double,
+        locationName: String?
+    ): List<Forecast>? {
         val updateTime = System.currentTimeMillis()
 
         val lang = Locale.getDefault().language
@@ -44,7 +56,7 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
         val forecastList = mutableListOf<Forecast>()
 
         try {
-            val apiKey = getApiKey() ?: return null
+            val apiKey = getApiKey(context) ?: return null
 
             val response = hereWeatherService.report(
                 apiKey = apiKey,
@@ -56,7 +68,7 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
             val forecastLocation = response.hourlyForecasts?.forecastLocation ?: return null
             val forecasts = forecastLocation.forecast ?: return null
 
-            val location = forecastLocation.city ?: return null
+            val location = locationName ?: forecastLocation.city ?: return null
 
 
             for (forecast in forecasts) {
@@ -109,21 +121,36 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
                 )
             }
 
-            return WeatherUpdateResult(
-                forecasts = forecastList,
-                location = LatLonWeatherLocation(
-                    name = location,
-                    lat = lat,
-                    lon = lon
-                )
-            )
-
-
+            return forecastList
         } catch (e: Exception) {
             CrashReporter.logException(e)
             return null
         }
     }
+
+    override suspend fun findLocation(query: String): List<WeatherLocation> {
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://geocoder.ls.hereapi.com/6.2/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val geocodeService = retrofit.create<HereGeocodeApi>()
+        try {
+            val apiKey = getApiKey(context) ?: return emptyList()
+            val response = geocodeService.geocode(apiKey, query)
+
+            return response.Response.View?.getOrNull(0)?.Result?.mapNotNull {
+                WeatherLocation.LatLon(
+                    name = it.Location?.Address?.Label ?: return@mapNotNull null,
+                    lat = it.Location.DisplayPosition?.Latitude ?: return@mapNotNull null,
+                    lon = it.Location.DisplayPosition.Longitude ?: return@mapNotNull null,
+                )
+            } ?: emptyList()
+        } catch (e: Exception) {
+            CrashReporter.logException(e)
+        }
+        return emptyList()
+    }
+
 
 
     private fun getIcon(iconName: String): Int {
@@ -280,53 +307,21 @@ class HereProvider(override val context: Context) : LatLonWeatherProvider() {
         }
     }
 
-
-    override fun isUpdateRequired(): Boolean {
-        return getLastUpdate() + (1000 * 60 * 60) <= System.currentTimeMillis()
-    }
-
-    override suspend fun lookupLocation(query: String): List<LatLonWeatherLocation> {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://geocoder.ls.hereapi.com/6.2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val geocodeService = retrofit.create<HereGeocodeApi>()
-        try {
-            val apiKey = getApiKey() ?: return emptyList()
-            val response = geocodeService.geocode(apiKey, query)
-
-            return response.Response.View?.getOrNull(0)?.Result?.mapNotNull {
-                LatLonWeatherLocation(
-                    name = it.Location?.Address?.Label ?: return@mapNotNull null,
-                    lat = it.Location.DisplayPosition?.Latitude ?: return@mapNotNull null,
-                    lon = it.Location.DisplayPosition.Longitude ?: return@mapNotNull null,
-                )
-            } ?: emptyList()
-        } catch (e: Exception) {
-            CrashReporter.logException(e)
-        }
-        return emptyList()
-    }
-
-    private fun getApiKey(): String? {
-        val resId = getApiKeyResId()
-        if (resId != 0) return context.getString(resId)
-        return null
-    }
-
-    override fun isAvailable(): Boolean {
-        return getApiKeyResId() != 0
-    }
-
-
-    override val name: String
-        get() = context.getString(R.string.provider_here)
-
-    private fun getApiKeyResId(): Int {
-        return context.resources.getIdentifier("here_key", "string", context.packageName)
-    }
-
     companion object {
-        private const val PREFERENCES = "here"
+        fun isAvailable(context: Context): Boolean {
+            return getApiKeyResId(context) != 0
+        }
+
+        private fun getApiKey(context: Context): String? {
+            val resId = getApiKeyResId(context)
+            if (resId != 0) return context.getString(resId)
+            return null
+        }
+
+        private fun getApiKeyResId(context: Context): Int {
+            return context.resources.getIdentifier("here_key", "string", context.packageName)
+        }
+
+        internal const val Id = "here"
     }
 }

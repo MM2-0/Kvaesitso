@@ -12,7 +12,6 @@ import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.util.Log
-import androidx.core.content.ContextCompat
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginPackage
@@ -24,7 +23,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
@@ -43,9 +41,14 @@ data class PluginWithState(
 interface PluginService {
     fun enablePluginPackage(plugin: PluginPackage)
     fun disablePluginPackage(plugin: PluginPackage)
-    fun getPluginsWithState(type: PluginType? = null): Flow<List<PluginWithState>>
+    fun getPluginsWithState(
+        type: PluginType? = null,
+        enabled: Boolean? = null,
+    ): Flow<List<PluginWithState>>
 
-    fun isPluginHostInstalled(): Flow<Boolean>
+    fun getPluginWithState(
+        authority: String,
+    ): Flow<PluginWithState?>
 
     fun getPluginPackages(): Flow<List<PluginPackage>>
     fun getPluginPackage(packageName: String): Flow<PluginPackage?>
@@ -63,8 +66,6 @@ internal class PluginServiceImpl(
 ) : PluginService {
 
     private val scope: CoroutineScope = CoroutineScope(Job() + Dispatchers.Default)
-
-    private val pluginHostInstalled = MutableStateFlow(false)
 
     private val mutex = Mutex()
 
@@ -99,14 +100,6 @@ internal class PluginServiceImpl(
     private fun refreshPlugins() {
         Log.d("PluginService", "Refreshing plugins")
         scope.launch {
-            try {
-                val permission =
-                    context.packageManager.getPermissionInfo(PluginContract.Permission, 0)
-                pluginHostInstalled.value = permission != null
-            } catch (e: PackageManager.NameNotFoundException) {
-                pluginHostInstalled.value = false
-                return@launch
-            }
             mutex.withLock {
                 val enabledPluginPackages =
                     repository.findMany(enabled = true).first().map { it.packageName }.distinct()
@@ -120,6 +113,7 @@ internal class PluginServiceImpl(
                 }
                 repository.deleteMany().join()
                 repository.insertMany(plugins).join()
+                Log.d("PluginService", "${plugins.size} plugins found.")
             }
             Log.d("PluginService", "done.")
         }
@@ -127,9 +121,11 @@ internal class PluginServiceImpl(
 
     override fun getPluginsWithState(
         type: PluginType?,
+        enabled: Boolean?,
     ): Flow<List<PluginWithState>> {
         return repository.findMany(
             type = type,
+            enabled = enabled,
         ).map {
             it.map {
                 PluginWithState(
@@ -140,23 +136,35 @@ internal class PluginServiceImpl(
         }
     }
 
-    override suspend fun getPluginState(plugin: Plugin): PluginState? {
-        val bundle = withContext(Dispatchers.IO) {
-            context.contentResolver.call(
-                Uri.Builder()
-                    .scheme("content")
-                    .authority(plugin.authority)
-                    .build(),
-                PluginContract.Methods.GetState,
-                null,
-                null
-            )
-        } ?: return null
-        return PluginState.fromBundle(bundle)
+    override fun getPluginWithState(authority: String): Flow<PluginWithState?> {
+        return repository.get(authority).map {
+            it?.let {
+                PluginWithState(
+                    plugin = it,
+                    state = getPluginState(it),
+                )
+            }
+        }
     }
 
-    override fun isPluginHostInstalled(): Flow<Boolean> {
-        return pluginHostInstalled
+    override suspend fun getPluginState(plugin: Plugin): PluginState {
+        val bundle =
+            try {
+                withContext(Dispatchers.IO) {
+                    context.contentResolver.call(
+                        Uri.Builder()
+                            .scheme("content")
+                            .authority(plugin.authority)
+                            .build(),
+                        PluginContract.Methods.GetState,
+                        null,
+                        null
+                    )
+                } ?: return PluginState.Error
+            } catch (e: SecurityException) {
+                return PluginState.NoPermission
+            }
+        return PluginState.fromBundle(bundle) ?: PluginState.Error
     }
 
     override suspend fun getPluginIcon(plugin: Plugin): Drawable? {
@@ -210,7 +218,8 @@ internal class PluginServiceImpl(
                 val signature = getSignature(packageName)
                 PluginPackage(
                     packageName = packageName,
-                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
+                        ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
                     author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
                     plugins = plugins,
@@ -244,7 +253,8 @@ internal class PluginServiceImpl(
             .map {
                 PluginPackage(
                     packageName = packageName,
-                    label = appInfo.loadLabel(context.packageManager).toString(),
+                    label = appInfo.metaData?.getString("de.mm20.launcher2.plugin.label")
+                        ?: appInfo.loadLabel(context.packageManager).toString(),
                     description = appInfo.metaData?.getString("de.mm20.launcher2.plugin.description"),
                     author = appInfo.metaData?.getString("de.mm20.launcher2.plugin.author"),
                     plugins = it,

@@ -4,7 +4,7 @@ compileSdk = "34"
 targetSdk = "34"
 
 gradle = "8.1.2"
-android-gradle-plugin = "8.1.4"
+android-gradle-plugin = "8.2.0"
 protobuf-gradle-plugin = "0.9.4"
 ksp-gradle-plugin = "1.9.0-1.0.13"
 
@@ -117,12 +117,6 @@ google-apiclient = { group = "com.google.api-client", name = "google-api-client"
 google-drive = { group = "com.google.apis", name = "google-api-services-drive", version = "v3-rev20221219-2.0.0" }
 google-oauth2 = { group = "com.google.apis", name = "google-api-services-oauth2", version = "v2-rev20200213-2.0.0" }
 
-gson = { group = "com.google.code.gson", name = "gson", version = "2.10.1" }
-guava = { group = "com.google.guava", name = "guava", version = "31.1-android" }
-
-microsoft-graph = { group = "com.microsoft.graph", name = "microsoft-graph", version = "5.53.0" }
-microsoft-identity = { group = "com.microsoft.identity.client", name = "msal", version = "4.2.0" }
-
 protobuf-protoc = { group = "com.google.protobuf", name = "protoc", version.ref = "protobuf" }
 protobuf-javalite = { group = "com.google.protobuf", name = "protobuf-javalite", version.ref = "protobuf" }
 
@@ -139,7 +133,7 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 
 
 [bundles]
-kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable"]
+kotlin = ["kotlin-stdlib", "kotlinx-coroutines-core", "kotlinx-coroutines-android", "kotlinx-collections-immutable", "kotlinx-serialization-json"]
 androidx-lifecycle = ["androidx-lifecycle-viewmodel", "androidx-lifecycle-common", "androidx-lifecycle-runtime", "androidx-lifecycle-viewmodelcompose", "androidx-lifecycle-runtimecompose"]
 retrofit = ["retrofit-core", "retrofit-gson"]
 tests = ["junit"]

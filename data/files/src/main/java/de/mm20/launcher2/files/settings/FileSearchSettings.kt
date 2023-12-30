@@ -6,6 +6,7 @@ import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.files.settings.migrations.Migration1
 import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.settings.BaseSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -19,26 +20,15 @@ import java.io.File
 
 class FileSearchSettings(
     private val context: Context,
-    private val dataStore: LauncherDataStore,
-) : Backupable {
-
-    private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
-    private val Context.dataStore by dataStore(
-        fileName = "file_search.json",
-        serializer = FileSearchSettingsDataSerializer,
-        produceMigrations = {
-            listOf(
-                Migration1(dataStore),
-            )
-        },
+    dataStore: LauncherDataStore,
+) : BaseSettings<FileSearchSettingsData>(
+    context = context,
+    fileName = "file_search.json",
+    serializer = FileSearchSettingsDataSerializer,
+    migrations = listOf(
+        Migration1(dataStore),
     )
-
-    private fun updateData(block: suspend (FileSearchSettingsData) -> FileSearchSettingsData) {
-        scope.launch {
-            context.dataStore.updateData(block)
-        }
-    }
+) {
 
     internal val data
         get() = context.dataStore.data
@@ -87,26 +77,24 @@ class FileSearchSettings(
         }
     }
 
-    override suspend fun backup(toDir: File) {
-        val data = context.dataStore.data.first()
-        val file = File(toDir, "file_search.json")
-        file.writeText(FileSearchSettingsDataSerializer.json.encodeToString(FileSearchSettingsData.serializer(), data))
+    val enabledPlugins: Flow<Set<String>>
+        get(): Flow<Set<String>> {
+            return context.dataStore.data.map { it.plugins }
+        }
+
+    fun setEnabledPlugins(enabledPlugins: Set<String>) {
+        updateData {
+            it.copy(plugins = enabledPlugins)
+        }
     }
 
-    override suspend fun restore(fromDir: File) {
-        val file = File(fromDir, "file_search.json")
-        if (!file.exists()) {
-            return
-        }
-        try {
-            val data = FileSearchSettingsDataSerializer.json.decodeFromString(FileSearchSettingsData.serializer(), file.readText())
-            context.dataStore.updateData {
-                data
+    fun setPluginEnabled(authority: String, enabled: Boolean) {
+        updateData {
+            if (enabled) {
+                it.copy(plugins = it.plugins + authority)
+            } else {
+                it.copy(plugins = it.plugins - authority)
             }
-        } catch (e: SerializationException) {
-            CrashReporter.logException(e)
-        } catch (e: IllegalArgumentException) {
-            CrashReporter.logException(e)
         }
     }
 }

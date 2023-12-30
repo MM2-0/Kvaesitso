@@ -305,14 +305,11 @@
     <string name="preference_notification_badges_summary">Tampilkan lencana untuk aplikasi dengan notifikasi tak terbaca</string>
     <string name="preference_cloud_badges">Lencana cloud</string>
     <string name="preference_shortcut_badges_summary">Tampilkan lencana yang mengindikasikan aplikasi asal dari pintasan</string>
-    <string name="preference_ms_signin">Masuk ke akun Microsoft</string>
-    <string name="preference_ms_signin_summary">Masuk untuk mencari di OneDrive</string>
     <string name="preference_nextcloud_signin">Masuk ke Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Masuk untuk mencari di server Nextcloud anda</string>
     <string name="preference_owncloud_signin">Masuk ke Owncloud</string>
     <string name="preference_about_telegram">Grup Telegram</string>
     <string name="preference_about_fdroid">Repositories F-Droid</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
     <string name="preference_category_license">Lisensi</string>

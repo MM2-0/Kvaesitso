@@ -12,7 +12,6 @@ import androidx.compose.ui.hapticfeedback.HapticFeedback
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.ui.ktx.animateTo
@@ -178,7 +177,6 @@ fun LazyVerticalDragAndDropGrid(
         columns,
         modifier.dragAndDrop(
             state,
-            LocalLayoutDirection.current == LayoutDirection.Rtl,
             LocalHapticFeedback.current
         ),
         state.gridState,
@@ -208,7 +206,6 @@ fun LazyHorizontalDragAndDropGrid(
         rows,
         modifier.dragAndDrop(
             state,
-            LocalLayoutDirection.current == LayoutDirection.Rtl,
             LocalHapticFeedback.current
         ),
         state.gridState,
@@ -224,7 +221,6 @@ fun LazyHorizontalDragAndDropGrid(
 
 fun Modifier.dragAndDrop(
     state: LazyDragAndDropGridState,
-    isRtl: Boolean,
     hapticFeedback: HapticFeedback
 ) =
     this then pointerInput(null) {
@@ -235,10 +231,7 @@ fun Modifier.dragAndDrop(
             onDragStart = { offset ->
                 val draggedItem = state.gridState.layoutInfo.visibleItemsInfo.find {
                     Rect(
-                        it.offset.toOffset().let {off ->
-                            if (isRtl) off.copy(x = state.gridState.layoutInfo.viewportSize.width - off.x - it.size.width)
-                            else off
-                        },
+                        it.offset.toOffset(),
                         it.size.toSize()
                     ).contains(offset)
                 }
@@ -250,10 +243,7 @@ fun Modifier.dragAndDrop(
                 val absPosition = state.draggedItemAbsolutePosition
                 val draggedItem = state.draggedItem
                 if (absPosition != null && draggedItem != null) {
-                    state.draggedItemAbsolutePosition = absPosition + dragAmount.let {
-                        if (isRtl) it.copy(x = -it.x)
-                        else it
-                    }
+                    state.draggedItemAbsolutePosition = absPosition + dragAmount
                     val draggedCenter = Rect(absPosition, draggedItem.size.toSize()).center
                     val dragOver = state.gridState.layoutInfo.visibleItemsInfo.find {
                         Rect(
@@ -308,7 +298,7 @@ fun LazyGridItemScope.DraggableItem(
         modifier = modifier
             .then(if (isDragged) Modifier else Modifier.animateItemPlacement())
             .zIndex(if (isDragged) 1f else 0f)
-            .offset {
+            .absoluteOffset {
                 if (state.draggedItem?.key == key) {
                     state.draggedItemOffset?.toIntOffset() ?: IntOffset.Zero
                 } else if (state.droppedItemKey == key) {

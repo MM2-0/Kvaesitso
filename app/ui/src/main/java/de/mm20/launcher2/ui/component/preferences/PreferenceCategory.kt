@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PreferenceCategory(
     title: String? = null,
+    iconPadding: Boolean = true,
     content: @Composable ColumnScope.() -> Unit
 ) {
     Column {
@@ -21,7 +22,7 @@ fun PreferenceCategory(
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp)
             ) {
                 Text(
-                    modifier = Modifier.padding(start = 56.dp),
+                    modifier = Modifier.padding(start = if (iconPadding) 56.dp else 0.dp),
                     text = title,
                     style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary

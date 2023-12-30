@@ -199,9 +199,6 @@
     <string name="preference_shortcut_badges">Badges de raccourcis</string>
     <string name="preference_shortcut_badges_summary">Afficher un badge qui indique à quelle application le raccourci appartient</string>
     <string name="preference_icon_shape_platform">Suivre le système</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Se connecter avec Microsoft</string>
-    <string name="preference_ms_signin_summary">Se connecter pour rechercher dans OneDrive</string>
     <string name="preference_nextcloud_signin">Se connecter avec Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Se connecter pour rechercher dans votre serveur Nextcloud</string>
     <string name="preference_about_telegram">Groupe Telegram</string>
@@ -379,7 +376,6 @@
     <string name="websearch_dialog_edit_title">Modifier un moteur de recherche</string>
     <string name="no_account_nextcloud">Vous n\'avez pas connecté de compte Nextcloud pour le moment</string>
     <string name="no_account_owncloud">Vous n\'avez pas connecté de compte Owncloud pour le moment</string>
-    <string name="no_account_microsoft">Vous n\'avez pas connecté de compte Microsoft pour le moment</string>
     <string name="no_account_google">Vous n\'avez pas connecté de compte Google pour le moment</string>
     <string name="connect_account">Connecter un compte</string>
     <string name="turn_off">Désactiver</string>
@@ -438,7 +434,7 @@
     <string name="preference_layout">Disposition</string>
     <string name="preference_layout_summary">Organisation générale de la barre de recherche, des widgets et des résultats de recherches</string>
     <string name="preference_grid_icon_size">Taille d\'icône</string>
-    <string name="preference_clockwidget_favorites_part">Favoris</string>
+    <string name="preference_clockwidget_favorites_part">Dock</string>
     <string name="widget_name_favorites">Favoris</string>
     <string name="msg_item_hidden">%1$s a été caché.</string>
     <string name="action_undo">Annuler</string>
@@ -700,4 +696,6 @@
     <string name="preference_screen_plugins_summary">Gérer les extensions installées</string>
     <string name="no_plugins_installed">Aucun plugins installés</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
+    <string name="plugin_host_not_installed">Hôte du plugin non installé</string>
+    <string name="preference_blur_wallpaper_radius">Rayon de flou</string>
 </resources>

@@ -1,6 +1,7 @@
 package de.mm20.launcher2.search
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticLauncherIcon
@@ -31,6 +32,7 @@ interface SavableSearchable : Searchable, Comparable<SavableSearchable>  {
         themed: Boolean
     ): LauncherIcon? = null
 
+    suspend fun getProviderIcon(context: Context): Drawable? = null
 
     override fun compareTo(other: SavableSearchable): Int {
         val label1 = labelOverride ?: label

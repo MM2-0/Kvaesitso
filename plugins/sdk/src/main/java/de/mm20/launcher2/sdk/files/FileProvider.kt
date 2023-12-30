@@ -7,7 +7,7 @@ import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.sdk.base.SearchPluginProvider
 
 abstract class FileProvider(
-    config: SearchPluginConfig = SearchPluginConfig(),
+    config: SearchPluginConfig,
 ) : SearchPluginProvider<File>(config) {
     abstract override suspend fun search(query: String): List<File>
 
@@ -26,6 +26,17 @@ abstract class FileProvider(
                 FilePluginContract.FileColumns.ContentUri,
                 FilePluginContract.FileColumns.ThumbnailUri,
                 FilePluginContract.FileColumns.IsDirectory,
+                FilePluginContract.FileColumns.Owner,
+                FilePluginContract.FileColumns.MetaTitle,
+                FilePluginContract.FileColumns.MetaArtist,
+                FilePluginContract.FileColumns.MetaAlbum,
+                FilePluginContract.FileColumns.MetaDuration,
+                FilePluginContract.FileColumns.MetaYear,
+                FilePluginContract.FileColumns.MetaWidth,
+                FilePluginContract.FileColumns.MetaHeight,
+                FilePluginContract.FileColumns.MetaLocation,
+                FilePluginContract.FileColumns.MetaAppName,
+                FilePluginContract.FileColumns.MetaAppPackageName,
             ),
             capacity,
         )
@@ -42,6 +53,17 @@ abstract class FileProvider(
                 item.uri.toString(),
                 item.thumbnailUri?.toString(),
                 if (item.isDirectory) 1 else 0,
+                item.owner,
+                item.metadata.title,
+                item.metadata.artist,
+                item.metadata.album,
+                item.metadata.duration,
+                item.metadata.year,
+                item.metadata.dimensions?.width,
+                item.metadata.dimensions?.height,
+                item.metadata.location,
+                item.metadata.appName,
+                item.metadata.appPackageName,
             )
         )
     }

@@ -27,7 +27,6 @@ import coil.compose.AsyncImage
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LargeMessage
-import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
@@ -36,50 +35,11 @@ import de.mm20.launcher2.ui.locals.LocalNavController
 @Composable
 fun PluginsSettingsScreen() {
     val viewModel: PluginsSettingsScreenVM = viewModel()
-    val navController = LocalNavController.current
-    val hostInstalled by viewModel.hostInstalled.collectAsState(null)
-    val hasPermission by viewModel.hasPermission.collectAsState(null)
-    val context = LocalContext.current
     val pluginPackages by viewModel.pluginPackages.collectAsState(null)
     val enabledPackages by viewModel.enabledPluginPackages.collectAsState(emptyList())
     val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())
     PreferenceScreen(title = stringResource(R.string.preference_screen_plugins)) {
         when {
-            hostInstalled == false -> {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .fillParentMaxHeight()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.Center,
-                    ) {
-                        LargeMessage(
-                            icon = Icons.Rounded.ExtensionOff,
-                            text = stringResource(R.string.plugin_host_not_installed),
-                            color = MaterialTheme.colorScheme.secondary
-                        )
-                    }
-                }
-            }
-
-            hasPermission == false -> {
-                item {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                    ) {
-                        MissingPermissionBanner(
-                            text = stringResource(R.string.missing_permission_plugins),
-                            onClick = { viewModel.requestPermission(context) }
-                        )
-                    }
-                }
-            }
-
             pluginPackages?.isEmpty() == true -> {
                 item {
                     Column(

@@ -1,5 +1,10 @@
 package de.mm20.launcher2.ui.settings.plugins
 
+import android.app.Activity
+import android.app.PendingIntent
+import android.content.Intent
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
@@ -15,8 +20,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Verified
 import androidx.compose.material3.Icon
@@ -25,6 +33,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -32,12 +41,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.Banner
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -55,9 +70,34 @@ fun PluginSettingsScreen(pluginId: String) {
     val pluginPackage by viewModel.pluginPackage.collectAsStateWithLifecycle(null)
     val icon by viewModel.icon.collectAsStateWithLifecycle(null)
     val types by viewModel.types.collectAsStateWithLifecycle(emptyList())
-    val states by viewModel.states.collectAsStateWithLifecycle(
+
+    val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(
+        null,
+        minActiveState = Lifecycle.State.RESUMED
+    )
+    val filePlugins by viewModel.filePlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
+    )
+
+    val weatherPlugins by viewModel.weatherPlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED
+    )
+
+    val requestPermissionStarter =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                viewModel.setPluginEnabled(true)
+            }
+        }
+
+    val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(
+        null
+    )
+
+    val weatherProviderId by viewModel.weatherProvider.collectAsStateWithLifecycle(
+        null
     )
 
     Scaffold(
@@ -181,7 +221,6 @@ fun PluginSettingsScreen(pluginId: String) {
                                     start = 12.dp,
                                     end = 12.dp,
                                     top = 16.dp,
-                                    bottom = 24.dp
                                 ),
                             style = MaterialTheme.typography.bodyMedium,
                         )
@@ -189,7 +228,7 @@ fun PluginSettingsScreen(pluginId: String) {
                     Row(
                         modifier = Modifier
                             .horizontalScroll(rememberScrollState())
-                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp)
+                            .padding(bottom = 24.dp, start = 12.dp, end = 12.dp, top = 24.dp)
                     ) {
                         for (type in types) {
                             Row(
@@ -205,6 +244,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 Icon(
                                     when (type) {
                                         PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
+                                        PluginType.Weather -> Icons.Rounded.LightMode
                                     },
                                     null,
                                     modifier = Modifier.size(16.dp),
@@ -213,6 +253,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 Text(
                                     when (type) {
                                         PluginType.FileSearch -> "File search"
+                                        PluginType.Weather -> "Weather provider"
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,
@@ -237,18 +278,126 @@ fun PluginSettingsScreen(pluginId: String) {
                 color = surfaceColor,
             ) {
                 SwitchPreference(
-                    enabled = pluginPackage != null,
+                    enabled = pluginPackage != null && hasPermission != null,
                     iconPadding = false,
                     title = "Enable plugin",
-                    value = pluginPackage?.enabled == true,
+                    value = pluginPackage?.enabled == true && hasPermission == true,
                     onValueChanged = {
-                        viewModel.setPluginEnabled(it)
+                        if (hasPermission == true) {
+                            viewModel.setPluginEnabled(it)
+                        } else {
+                            requestPermissionStarter.launch(
+                                Intent().apply {
+                                    `package` = pluginPackage?.packageName
+                                    action = "de.mm20.launcher2.plugin.REQUEST_PERMISSION"
+                                }
+                            )
+                        }
                     }
                 )
             }
-            AnimatedVisibility(pluginPackage?.enabled == true) {
-                PreferenceCategory {
-
+            AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
+                if (filePlugins.isNotEmpty()) {
+                    PreferenceCategory(
+                        stringResource(R.string.plugin_type_filesearch),
+                        iconPadding = false,
+                    ) {
+                        for (plugin in filePlugins) {
+                            val state = plugin.state
+                            if (state is PluginState.SetupRequired) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
+                                    icon = Icons.Rounded.Info,
+                                    primaryAction = {
+                                        TextButton(onClick = {
+                                            try {
+                                                state.setupActivity.send()
+                                            } catch (e: PendingIntent.CanceledException) {
+                                                CrashReporter.logException(e)
+                                            }
+                                        }) {
+                                            Text("Set up")
+                                        }
+                                    }
+                                )
+                            } else if (state is PluginState.Error) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = stringResource(R.string.plugin_state_error),
+                                    icon = Icons.Rounded.Error,
+                                    color = MaterialTheme.colorScheme.errorContainer,
+                                )
+                            }
+                            SwitchPreference(
+                                title = plugin.plugin.label,
+                                enabled = enabledFileSearchPlugins != null && state is PluginState.Ready,
+                                summary = (state as? PluginState.Ready)?.text
+                                    ?: (state as? PluginState.SetupRequired)?.message
+                                    ?: plugin.plugin.description,
+                                value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                onValueChanged = {
+                                    viewModel.setFileSearchPluginEnabled(
+                                        plugin.plugin.authority,
+                                        it
+                                    )
+                                },
+                                iconPadding = false,
+                            )
+                        }
+                    }
+                }
+                if (weatherPlugins.isNotEmpty()) {
+                    PreferenceCategory(
+                        stringResource(R.string.plugin_type_weather),
+                        iconPadding = false,
+                    ) {
+                        for (plugin in weatherPlugins) {
+                            val state = plugin.state
+                            if (state is PluginState.SetupRequired) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
+                                    icon = Icons.Rounded.Info,
+                                    primaryAction = {
+                                        TextButton(onClick = {
+                                            try {
+                                                state.setupActivity.send()
+                                            } catch (e: PendingIntent.CanceledException) {
+                                                CrashReporter.logException(e)
+                                            }
+                                        }) {
+                                            Text(stringResource(R.string.plugin_action_setup))
+                                        }
+                                    }
+                                )
+                            } else if (state is PluginState.Error) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = stringResource(R.string.plugin_state_error),
+                                    icon = Icons.Rounded.Error,
+                                    color = MaterialTheme.colorScheme.errorContainer,
+                                )
+                            }
+                            Preference(
+                                title = plugin.plugin.label,
+                                enabled = state is PluginState.Ready && weatherProviderId != plugin.plugin.authority,
+                                iconPadding = false,
+                                summary = if (weatherProviderId != plugin.plugin.authority) {
+                                    stringResource(R.string.plugin_weather_provider_enable)
+                                } else {
+                                    stringResource(R.string.plugin_weather_provider_enabled)
+                                }
+                            )
+                        }
+                        Preference(
+                            title = stringResource(R.string.widget_config_weather_integration_settings),
+                            icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                            onClick = {
+                                navController?.navigate("settings/integrations/weather")
+                            }
+                        )
+                    }
                 }
             }
         }

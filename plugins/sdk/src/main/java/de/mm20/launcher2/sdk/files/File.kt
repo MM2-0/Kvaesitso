@@ -1,7 +1,50 @@
 package de.mm20.launcher2.sdk.files
 
 import android.net.Uri
-import de.mm20.launcher2.plugin.config.StorageStrategy
+
+data class FileDimensions(
+    val width: Int,
+    val height: Int,
+)
+
+data class FileMetadata(
+    /**
+     * Song title, for audio files.
+     */
+    val title: String? = null,
+    /**
+     * Artist name, for audio files.
+     */
+    val artist: String? = null,
+    /**
+     * Album name, for audio files.
+     */
+    val album: String? = null,
+    /**
+     * Duration in milliseconds, for audio and video files.
+     */
+    val duration: Long? = null,
+    /**
+     * Year, for media files.
+     */
+    val year: Int? = null,
+    /**
+     * Dimensions in pixels, for image and video files.
+     */
+    val dimensions: FileDimensions? = null,
+    /**
+     * Geo location, for image and video files.
+     */
+    val location: String? = null,
+    /**
+     * App name, for APK files.
+     */
+    val appName: String? = null,
+    /**
+     * App package name, for APK files.
+     */
+    val appPackageName: String? = null,
+)
 
 data class File(
     /**
@@ -50,4 +93,14 @@ data class File(
      *  If null, a default icon will be shown, depending on the file type.
      */
     val thumbnailUri: Uri? = null,
+
+    /**
+     * Name of the owner of this file (i.e. when this file was shared with the user by another person).
+     */
+    val owner: String? = null,
+
+    /**
+     * Additional metadata for this file.
+     */
+    val metadata: FileMetadata = FileMetadata(),
 )

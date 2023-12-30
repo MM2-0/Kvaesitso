@@ -277,9 +277,6 @@
     <string name="preference_cloud_badges">Indicatori cloud</string>
     <string name="preference_cloud_badges_summary">Mostra un indicatore per i file archiviati in un cloud</string>
     <string name="preference_shortcut_badges">Indicatori scorciatoie</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Accedi a Microsoft</string>
-    <string name="preference_ms_signin_summary">Accedi per cercare su OneDrive</string>
     <string name="preference_nextcloud_signin">Accedi a Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Accedi per cercare sul tuo server Nextcloud</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -361,7 +358,6 @@
     </plurals>
     <string name="no_account_nextcloud">Non hai ancora collegato un account Nextcloud</string>
     <string name="no_account_owncloud">Non hai ancora collegato un account Owncloud</string>
-    <string name="no_account_microsoft">Non hai ancora collegato un account Microsoft</string>
     <string name="no_account_google">Non hai ancora collegato un account Google</string>
     <string name="widget_name_favorites">Preferiti</string>
     <string name="preference_restore_summary">Importa un backup creato in precedenza</string>
@@ -672,4 +668,6 @@
     <string name="preference_screen_plugins_summary">Gestisci estensioni installate</string>
     <string name="no_plugins_installed">Nessun plugin installato</string>
     <string name="plugin_host_not_installed">Host del plugin non installato</string>
+    <string name="preference_plugin_badges">Plugin indicatori</string>
+    <string name="preference_plugin_badges_summary">Indica con quale plugin è stato creato un risultato di ricerca</string>
 </resources>

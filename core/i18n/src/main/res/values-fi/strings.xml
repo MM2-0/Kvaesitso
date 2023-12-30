@@ -440,7 +440,6 @@
     <string name="preference_cloud_badges">Pilvimerkit</string>
     <string name="preference_cloud_badges_summary">Näytä merkki pilvessä oleville tiedostoille</string>
     <string name="preference_shortcut_badges_summary">Näytä oikotien merkkinä sovellus, johon oikotie viittaa</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud_signin">Kirjaudu Nextcloud-tilille</string>
     <string name="preference_nextcloud_signin_summary">Kirjaudu hakeaksesi Nextcloud-palvelimeltasi</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -490,7 +489,6 @@
     <string name="preference_screen_homescreen_summary">Kello, hakupalkki, taustakuva, järjestelmän palkit</string>
     <string name="preference_screen_icons">Ruudukko ja kuvakkeet</string>
     <string name="preference_screen_icons_summary">Ruudukko, kuvakkeiden koko, kuvakepaketit, pistemerkit</string>
-    <string name="no_account_microsoft">Et ole liittänyt Microsoft-tiliä vielä</string>
     <string name="no_account_google">Et ole liittänyt Google-tiliä vielä</string>
     <string name="connect_account">Liitä tili</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -538,8 +536,6 @@
     <string name="preference_search_currencyconverter_summary">Lataa säännöllisesti valuuttojen vaihtokurssit</string>
     <string name="preference_layout_fixed_rotation">Lukittu näytön kierto</string>
     <string name="preference_shortcut_badges">Oikoteiden merkit</string>
-    <string name="preference_ms_signin">Kirjaudu Microsoft-tilillä</string>
-    <string name="preference_ms_signin_summary">Kirjaudu hakeaksesi OneDrivestä</string>
     <string name="preference_search_wikipedia_summary">Hae vapaasta tietosanakirjasta</string>
     <string name="preference_search_gdrive">Google Drive</string>
     <string name="backup_component_customizations">Mukautukset</string>

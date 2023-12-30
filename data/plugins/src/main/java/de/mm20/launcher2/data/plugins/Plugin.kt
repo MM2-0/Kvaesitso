@@ -9,7 +9,6 @@ internal fun Plugin(entity: PluginEntity): Plugin? {
         enabled = entity.enabled,
         label = entity.label,
         description = entity.description,
-        settingsActivity = entity.settingsActivity,
         packageName = entity.packageName,
         className = entity.className,
         type = try {
@@ -26,7 +25,7 @@ internal fun PluginEntity(plugin: Plugin): PluginEntity {
         enabled = plugin.enabled,
         label = plugin.label,
         description = plugin.description,
-        settingsActivity = plugin.settingsActivity,
+        settingsActivity = null,
         packageName = plugin.packageName,
         className = plugin.className,
         type = plugin.type.name,

@@ -1,8 +1,6 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
-import android.content.Context
-import android.content.pm.LauncherApps
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.IntentSenderRequest
@@ -33,7 +31,6 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilledTonalIconButton
@@ -65,12 +62,13 @@ import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
 import androidx.compose.ui.unit.toSize
@@ -173,6 +171,7 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
     val tagsListState = rememberLazyListState()
     val tagsTitleSize = 48.dp.toPixels()
     val tagsSpacing = 12.dp.toPixels()
+    val isRtl = LocalLayoutDirection.current == LayoutDirection.Rtl
     val state = rememberLazyDragAndDropGridState(
         gridState = gridState,
         onDragStart = {
@@ -200,8 +199,11 @@ fun ReorderFavoritesGrid(viewModel: EditFavoritesSheetVM, paddingValues: Padding
                 && hoveredItem.offset.y + tagsTitleSize < position.y
             ) {
                 val scroll = tagsListState.layoutInfo.viewportStartOffset
+                val relCenter =
+                    if (isRtl) draggedCenter.copy(x = tagsListState.layoutInfo.viewportSize.width - draggedCenter.x)
+                    else draggedCenter
                 val tag = tagsListState.layoutInfo.visibleItemsInfo.find {
-                    draggedCenter.x + scroll > it.offset && draggedCenter.x + scroll < it.offset + it.size - tagsSpacing
+                    relCenter.x + scroll > it.offset && relCenter.x + scroll < it.offset + it.size - tagsSpacing
                 }
                 hoveredTag = tag?.index?.let { pinnedTags[it].tag }
             } else {

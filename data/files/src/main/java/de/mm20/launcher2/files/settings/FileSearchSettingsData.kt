@@ -12,7 +12,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 @Serializable
-internal data class FileSearchSettingsData(
+data class FileSearchSettingsData(
     val localFiles: Boolean = true,
     val gdriveFiles: Boolean = false,
     val nextcloudFiles: Boolean = false,

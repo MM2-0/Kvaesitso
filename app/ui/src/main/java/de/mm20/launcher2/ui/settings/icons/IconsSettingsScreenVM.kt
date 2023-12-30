@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import de.mm20.launcher2.badges.settings.BadgeSettings
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
@@ -24,6 +25,7 @@ import org.koin.core.component.get
 
 class IconsSettingsScreenVM(
     private val dataStore: LauncherDataStore,
+    private val badgeSettings: BadgeSettings,
     private val iconService: IconService,
     private val favoritesService: FavoritesService,
     private val permissionsManager: PermissionsManager,
@@ -161,64 +163,33 @@ class IconsSettingsScreenVM(
 
     val hasNotificationsPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
 
-    val notificationBadges = dataStore.data.map { it.badges.notifications }
+    val notificationBadges = badgeSettings.notifications
     fun setNotifications(notifications: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBadges(
-                        it.badges.toBuilder()
-                            .setNotifications(notifications)
-                    )
-                    .build()
-            }
-        }
+        badgeSettings.setNotifications(notifications)
     }
 
     fun requestNotificationsPermission(context: AppCompatActivity) {
         permissionsManager.requestPermission(context, PermissionGroup.Notifications)
     }
 
-    val cloudFileBadges = dataStore.data.map { it.badges.cloudFiles }
+    val cloudFileBadges = badgeSettings.cloudFiles
     fun setCloudFiles(cloudFiles: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBadges(
-                        it.badges.toBuilder()
-                            .setCloudFiles(cloudFiles)
-                    )
-                    .build()
-            }
-        }
+        badgeSettings.setCloudFiles(cloudFiles)
     }
 
-    val shortcutBadges = dataStore.data.map { it.badges.shortcuts }
+    val shortcutBadges = badgeSettings.shortcuts
     fun setShortcuts(shortcuts: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBadges(
-                        it.badges.toBuilder()
-                            .setShortcuts(shortcuts)
-                    )
-                    .build()
-            }
-        }
+        badgeSettings.setShortcuts(shortcuts)
     }
 
-    val suspendedAppBadges = dataStore.data.map { it.badges.suspendedApps }
+    val suspendedAppBadges = badgeSettings.suspendedApps
     fun setSuspendedApps(suspendedApps: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setBadges(
-                        it.badges.toBuilder()
-                            .setSuspendedApps(suspendedApps)
-                    )
-                    .build()
-            }
-        }
+        badgeSettings.setSuspendedApps(suspendedApps)
+    }
+
+    val pluginBadges = badgeSettings.plugins
+    fun setPluginBadges(plugins: Boolean) {
+        badgeSettings.setPlugins(plugins)
     }
 
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
@@ -247,6 +218,7 @@ class IconsSettingsScreenVM(
                     iconService = get(),
                     permissionsManager = get(),
                     favoritesService = get(),
+                    badgeSettings = get(),
                 )
             }
         }

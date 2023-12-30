@@ -2,7 +2,6 @@
 <resources>
     <string name="preference_dim_wallpaper_summary">在深色主题中，使壁纸变暗</string>
     <string name="preference_screen_badges_summary">配置图标角标</string>
-    <string name="preference_ms_signin_summary">登陆以查找OneDrive</string>
     <string name="preference_nextcloud">Nextcloud</string>
     <string name="preference_owncloud_signin">登陆到Owncloud</string>
     <string name="preference_about_license">此应用是自由软件。</string>
@@ -282,8 +281,6 @@
     <string name="preference_cloud_badges_summary">为储存在云服务器上的文件显示角标</string>
     <string name="preference_shortcut_badges">快捷方式角标</string>
     <string name="preference_shortcut_badges_summary">显示指示快捷方式所属应用的角标</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">使用Microsoft登陆</string>
     <string name="preference_nextcloud_signin_summary">登陆以查找你的Nextcloud服务</string>
     <string name="preference_nextcloud_signin">登陆到Nextcloud</string>
     <string name="preference_owncloud">Owncloud</string>
@@ -357,7 +354,6 @@
     <string name="preference_search_bar_auto_focus_summary">打开搜索时自动显示键盘</string>
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="no_account_nextcloud">您尚未连接Nextcloud帐户</string>
-    <string name="no_account_microsoft">您尚未连接Microsoft帐户</string>
     <string name="no_account_google">您尚未连接Google帐户</string>
     <string name="connect_account">连接帐户</string>
     <string name="battery_part_charging">充电中</string>

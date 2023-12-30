@@ -17,6 +17,10 @@ sealed class PluginState {
         val message: String? = null,
     ) : PluginState()
 
+    data object Error: PluginState()
+
+    data object NoPermission: PluginState()
+
     companion object {
         fun fromBundle(bundle: Bundle): PluginState? {
             val type = bundle.getString("type") ?: return null

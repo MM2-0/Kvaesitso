@@ -7,11 +7,14 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
+import de.mm20.launcher2.plugins.PluginWithState
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -20,12 +23,15 @@ import kotlinx.coroutines.flow.distinctUntilChangedBy
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     private val pluginService by inject<PluginService>()
+    private val fileSearchSettings: FileSearchSettings by inject()
+    private val weatherSettings: WeatherSettings by inject()
 
     private var pluginPackageName = MutableStateFlow<String?>(null)
 
@@ -47,11 +53,29 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
         it?.plugins?.map { it.type }?.distinct() ?: emptyList()
     }
 
-    val states: Flow<List<PluginState?>> = pluginPackage.map {
-        it?.plugins?.map {
-            pluginService.getPluginState(it)
-        } ?: emptyList()
-    }
+    val states = pluginPackage
+        .map {
+            it?.plugins?.map {
+                val state = pluginService.getPluginState(it)
+                PluginWithState(it, state)
+            } ?: emptyList()
+        }
+        .shareIn(viewModelScope, SharingStarted.WhileSubscribed())
+
+    val hasPermission = states
+        .map {
+            it.none { it.state is PluginState.NoPermission }
+        }
+
+    val filePlugins = states
+        .map {
+            it.filter { it.plugin.type == PluginType.FileSearch }
+        }
+
+    val weatherPlugins = states
+        .map {
+            it.filter { it.plugin.type == PluginType.Weather }
+        }
 
 
     fun init(pluginId: String) {
@@ -77,5 +101,16 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
     fun uninstall(context: Context) {
         val plugin = pluginPackage.value ?: return
         pluginService.uninstallPluginPackage(context, plugin)
+    }
+
+
+    val enabledFileSearchPlugins = fileSearchSettings.enabledPlugins
+    fun setFileSearchPluginEnabled(authority: String, enabled: Boolean) {
+        fileSearchSettings.setPluginEnabled(authority, enabled)
+    }
+
+    val weatherProvider = weatherSettings.providerId
+    fun setWeatherProvider(providerId: String) {
+        weatherSettings.setProviderId(providerId)
     }
 }

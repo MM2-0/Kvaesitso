@@ -1,107 +1,73 @@
 package de.mm20.launcher2.weather
 
+import android.Manifest
 import android.content.Context
+import android.location.Location
+import android.location.LocationManager
 import android.util.Log
+import androidx.core.content.getSystemService
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.ktx.checkPermission
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.WeatherSettings
-import de.mm20.launcher2.weather.brightsky.BrightskyProvider
+import de.mm20.launcher2.plugin.PluginRepository
+import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
+import de.mm20.launcher2.weather.settings.LatLon
+import de.mm20.launcher2.weather.settings.ProviderSettings
+import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.get
 import org.koin.core.component.inject
-import org.koin.core.parameter.parametersOf
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 interface WeatherRepository {
-    val forecasts: Flow<List<DailyForecast>>
+    fun getProviders(): Flow<List<WeatherProviderInfo>>
+    fun searchLocations(query: String): Flow<List<WeatherLocation>>
 
-    suspend fun lookupLocation(query: String): List<WeatherLocation>
+    fun getForecasts(limit: Int? = null): Flow<List<Forecast>>
+    fun getDailyForecasts(): Flow<List<DailyForecast>>
 
-    val lastLocation: Flow<WeatherLocation?>
-    val location: Flow<WeatherLocation?>
-    val autoLocation: Flow<Boolean>
-
-    fun setLocation(location: WeatherLocation)
-    fun setAutoLocation(autoLocation: Boolean)
-    fun setLastLocation(lastLocation: WeatherLocation?)
-
-    fun getAvailableProviders(): List<WeatherSettings.WeatherProvider>
-
-    fun selectProvider(provider: WeatherSettings.WeatherProvider)
-
-    val selectedProvider: Flow<WeatherSettings.WeatherProvider>
-
-    fun clearForecasts()
+    fun deleteForecasts()
 }
 
 internal class WeatherRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
-    private val dataStore: LauncherDataStore,
+    private val settings: WeatherSettings,
+    private val pluginRepository: PluginRepository,
 ) : WeatherRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
 
-    private var provider: WeatherProvider<out WeatherLocation>
 
     private val permissionsManager: PermissionsManager by inject()
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-    override val selectedProvider = dataStore.data.map { it.weather.provider }
 
-    override val forecasts: Flow<List<DailyForecast>>
-        get() = database.weatherDao().getForecasts()
+    override fun getForecasts(limit: Int?): Flow<List<Forecast>> {
+        return database.weatherDao().getForecasts(limit ?: 99999)
+            .map { it.map { Forecast(it) } }
+    }
+    override fun getDailyForecasts(): Flow<List<DailyForecast>> {
+        return database.weatherDao().getForecasts()
             .map { it.map { Forecast(it) } }
             .map {
                 groupForecastsPerDay(it)
             }
-
-    override val lastLocation = MutableStateFlow<WeatherLocation?>(null)
-    override val location = MutableStateFlow<WeatherLocation?>(null)
-    override val autoLocation = MutableStateFlow(false)
-
-    override fun setLocation(location: WeatherLocation) {
-        provider.setLocation(location)
-        this.location.value = location
-        provider.resetLastUpdate()
-        requestUpdate()
     }
 
-    override fun setAutoLocation(autoLocation: Boolean) {
-        provider.autoLocation = autoLocation
-        this.autoLocation.value = autoLocation
-        provider.resetLastUpdate()
-        requestUpdate()
-    }
-
-    override fun setLastLocation(lastLocation: WeatherLocation?) {
-        this.lastLocation.value = lastLocation
-    }
-
-    override suspend fun lookupLocation(query: String): List<WeatherLocation> {
-        return provider.lookupLocation(query)
-    }
-
-    override fun selectProvider(provider: WeatherSettings.WeatherProvider) {
-        scope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setWeather(
-                        it.weather.toBuilder()
-                            .setProvider(provider)
-                    )
-                    .build()
-            }
+    override fun searchLocations(query: String): Flow<List<WeatherLocation>> {
+        return settings.data.map {
+            val provider = WeatherProvider.getInstance(it.provider)
+            provider.findLocation(query)
         }
     }
 
@@ -114,33 +80,14 @@ internal class WeatherRepositoryImpl(
             ExistingPeriodicWorkPolicy.KEEP, weatherRequest
         )
 
-        provider = runBlocking {
-            val selectedProvider = selectedProvider.first()
-            get { parametersOf(selectedProvider) }
-        }
-
-        scope.launch {
-            var providerSetting: WeatherSettings.WeatherProvider? = null
-            selectedProvider.collectLatest {
-                if (it != providerSetting) {
-                    provider = get { parametersOf(it) }
-                    location.value = provider.getLocation()
-                    lastLocation.value = provider.getLastLocation()
-                    autoLocation.value = provider.autoLocation
-
-                    // Force weather data update but only if provider has changed; not during
-                    // initialization
-                    if (providerSetting != null) {
-                        provider.resetLastUpdate()
-                        requestUpdate()
-                    }
-                    providerSetting = it
-                }
-            }
-        }
         scope.launch {
             hasLocationPermission.collectLatest {
                 if (it) requestUpdate()
+            }
+        }
+        scope.launch {
+            settings.data.collectLatest {
+                requestUpdate()
             }
         }
     }
@@ -193,59 +140,93 @@ internal class WeatherRepositoryImpl(
         WorkManager.getInstance(context).enqueue(weatherRequest)
     }
 
-    override fun clearForecasts() {
+    override fun deleteForecasts() {
         scope.launch {
             withContext(Dispatchers.IO) {
                 database.weatherDao().deleteAll()
-                provider.resetLastUpdate()
+                settings.setLastUpdate(0L)
             }
         }
     }
 
-    override fun getAvailableProviders(): List<WeatherSettings.WeatherProvider> {
-        val providers = mutableListOf<WeatherSettings.WeatherProvider>()
-        if (BrightskyProvider(context).isAvailable()) {
-            providers.add(WeatherSettings.WeatherProvider.BrightSky)
+    override fun getProviders(): Flow<List<WeatherProviderInfo>> {
+        val providers = mutableListOf<WeatherProviderInfo>()
+        providers.add(WeatherProviderInfo(BrightSkyProvider.Id, context.getString(R.string.provider_brightsky)))
+        if (OpenWeatherMapProvider.isAvailable(context)) {
+            providers.add(WeatherProviderInfo(OpenWeatherMapProvider.Id, context.getString(R.string.provider_openweathermap)))
         }
-        if (OpenWeatherMapProvider(context).isAvailable()) {
-            providers.add(WeatherSettings.WeatherProvider.OpenWeatherMap)
+        if (MetNoProvider.isAvailable(context)) {
+            providers.add(WeatherProviderInfo(MetNoProvider.Id, context.getString(R.string.provider_metno)))
         }
-        if (MetNoProvider(context).isAvailable()) {
-            providers.add(WeatherSettings.WeatherProvider.MetNo)
+        if (HereProvider.isAvailable(context)) {
+            providers.add(WeatherProviderInfo(HereProvider.Id, context.getString(R.string.provider_here)))
         }
-        if (HereProvider(context).isAvailable()) {
-            providers.add(WeatherSettings.WeatherProvider.Here)
+        val pluginProviders = pluginRepository.findMany(type = PluginType.Weather, enabled = true)
+        return pluginProviders.map {
+            providers + it.map {
+                WeatherProviderInfo(it.authority, it.label)
+            }
         }
-        return providers
     }
 }
 
 class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
     CoroutineWorker(context, params), KoinComponent {
-    val repository: WeatherRepository by inject()
+
+    private val appDatabase: AppDatabase by inject()
+    private val settings: WeatherSettings by inject()
 
     override suspend fun doWork(): Result {
-        Log.d("MM20", "Requesting weather data")
-        val providerPref = repository.selectedProvider.first()
-        val provider: WeatherProvider<out WeatherLocation> = get { parametersOf(providerPref) }
-        if (!provider.isAvailable()) {
-            Log.d("MM20", "Weather provider is not available")
-            return Result.failure()
-        }
-        if (!provider.isUpdateRequired()) {
+        Log.d("WeatherUpdateWorker", "Requesting weather data")
+        val settingsData = settings.data.first()
+        val provider = WeatherProvider.getInstance(settingsData.provider)
+
+        val updateInterval = provider.getUpdateInterval()
+        val lastUpdate = settingsData.lastUpdate
+
+        if (lastUpdate + updateInterval > System.currentTimeMillis()) {
             Log.d("MM20", "No weather update required")
             return Result.failure()
         }
-        val weatherData = provider.fetchNewWeatherData()
+
+        val weatherData = if (settingsData.autoLocation) {
+            val latLon = getLastKnownLocation() ?: settingsData.lastLocation
+            if (latLon == null) {
+                Log.e("WeatherUpdateWorker", "Could not get location")
+                return Result.failure()
+            }
+            settings.setLastLocation(latLon)
+            provider.getWeatherData(latLon.lat, latLon.lon)
+        } else {
+            val location = settings.location.first()
+            if (location == null) {
+                Log.e("WeatherUpdateWorker", "Location not set")
+                return Result.failure()
+            }
+            provider.getWeatherData(location)
+        }
+
         return if (weatherData == null) {
-            Log.d("MM20", "Weather update failed")
+            Log.w("WeatherUpdateWorker", "Weather update failed")
             Result.retry()
         } else {
-            repository.setLastLocation(provider.getLastLocation())
-            Log.d("MM20", "Weather update succeeded")
-            AppDatabase.getInstance(applicationContext).weatherDao()
+            Log.i("WeatherUpdateWorker", "Weather update succeeded")
+            appDatabase.weatherDao()
                 .replaceAll(weatherData.map { it.toDatabaseEntity() })
+            settings.setLastUpdate(System.currentTimeMillis())
             Result.success()
         }
+    }
+
+    private fun getLastKnownLocation(): LatLon? {
+        val lm = context.getSystemService<LocationManager>()!!
+        var location: Location? = null
+        if (context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        }
+        if (location == null && context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+        }
+        return location?.let { LatLon(it.latitude, it.longitude) }
     }
 }

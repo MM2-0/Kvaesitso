@@ -19,6 +19,8 @@ import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.ImmutableMap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 data class PluginFile(
     val id: String,
@@ -52,6 +54,12 @@ data class PluginFile(
 
     override fun getSerializer(): SearchableSerializer {
         return PluginFileSerializer()
+    }
+
+    override suspend fun getProviderIcon(context: Context): Drawable? {
+        return withContext(Dispatchers.IO) {
+            context.packageManager.resolveContentProvider(authority, 0)?.loadIcon(context.packageManager)
+        }
     }
 
     override suspend fun loadIcon(context: Context, size: Int, themed: Boolean): LauncherIcon? {

@@ -42,7 +42,7 @@
     <string name="file_meta_artist">Artista: %1$s</string>
     <string name="file_meta_album">Álbum: %1$s</string>
     <string name="file_meta_duration">Duración: %1$s</string>
-    <string name="menu_share_store_link">%1$s link</string>
+    <string name="menu_share_store_link">Enlace de %1$s</string>
     <string name="file_meta_year">Año: %1$s</string>
     <string name="file_meta_size">Tamaño: %1$s</string>
     <string name="file_meta_path">Ruta: %1$s</string>
@@ -151,7 +151,7 @@
     <string name="open_webpage">Abrir sitio web</string>
     <string name="preference_screen_about_summary">Información de la aplicación y la licencia</string>
     <string name="preference_weather_provider">Proveedor</string>
-    <string name="provider_here">AQUÍ</string>
+    <string name="provider_here">HERE</string>
     <string name="preference_category_location">Ubicación</string>
     <string name="preference_automatic_location">Ubicación automática</string>
     <string name="preference_location">Ubicación</string>
@@ -234,9 +234,7 @@
     <string name="battery_part_charging">Cargando</string>
     <string name="preference_icon_pack">Paquete de iconos</string>
     <string name="preference_category_badges">Insignias</string>
-    <string name="preference_microsoft">Microsoft</string>
     <string name="preference_nextcloud_signin">Registrarse a NextCloud</string>
-    <string name="preference_ms_signin_summary">Registrate para buscar en OneDrive</string>
     <string name="preference_logs_summary">Visualizar y exportar registros de aplicación</string>
     <string name="preference_search_files_summary">Buscar archivos locales y archivos en la nube</string>
     <string name="preference_search_calendar">Calendario</string>
@@ -358,7 +356,6 @@
     <string name="preference_hidden_items">Resultados de búsqueda ocultos</string>
     <string name="preference_wikipedia_customurl">URL de Wikipedia</string>
     <string name="no_account_nextcloud">Aun no te has conectado a una cuenta de Nextcloud</string>
-    <string name="no_account_microsoft">Aun no te has conectado a una cuenta de Microsoft</string>
     <string name="connect_account">Conectar cuenta</string>
     <string name="backup_component_favorites">Favoritos y aplicaciones ocultas</string>
     <string name="backup_component_settings">Ajustes</string>
@@ -372,7 +369,7 @@
     <string name="restore_meta">Creado %1$s en %2$s con %3$s.</string>
     <string name="restore_select_components">Seleccione que restaurar. ¡Los datos existentes van a ser sobrescritos!</string>
     <string name="icon_picker_default_icon">Por defecto</string>
-    <string name="icon_picker_search_icon">Buscar icono</string>
+    <string name="icon_picker_search_icon">Buscar en paquetes de iconos</string>
     <string name="apps_profile_main">Personal</string>
     <string name="apps_profile_work">Trabajo</string>
     <string name="favorites_empty">Los elementos fijados y frecuentemente usados aparecerán aquí</string>
@@ -409,8 +406,7 @@
         <item quantity="other">%1$d elementos seleccionados</item>
     </plurals>
     <string name="preference_cloud_badges_summary">Mostrar insignia para archivos almacenados en la nube</string>
-    <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la búsqueda</string>
-    <string name="preference_ms_signin">Registrarse con Microsoft</string>
+    <string name="preference_search_bar_auto_focus_summary">Mostrar el teclado automáticamente al abrir la lista de aplicaciones</string>
     <string name="preference_hidden_items_summary">Administrar aplicaciones y resultados de búsqueda ocultos</string>
     <string name="preference_nextcloud">NextCloud</string>
     <string name="preference_nextcloud_signin_summary">Registrate para buscar en tu servidor NextCloud</string>
@@ -420,7 +416,7 @@
     <string name="preference_screen_debug_summary">Herramientas de solución de problemas</string>
     <string name="backup_select_components">Selecciona componentes para hacer copia de seguridad:</string>
     <string name="preference_clockwidget_layout">Diseño</string>
-    <string name="backup_not_included">Las cuentas conectadas y aplicaciones de terceros no serán incluidas en la copia de seguridad.</string>
+    <string name="backup_not_included">Las cuentas conectadas no serán incluidas en la copia de seguridad. Los widgets de apps de terceros solo pueden ser restaurados en este dispositivo.</string>
     <string name="preference_clockwidget_layout_vertical">Por defecto</string>
     <string name="restore_incompatible_file">Esta copia de seguridad se ha creado con una diferente versión de %1$s y no se puede restaurar con esta versión.</string>
     <string name="preference_clock_widget_fill_height">Rellenar altura de pantalla</string>
@@ -436,7 +432,7 @@
     <string name="preference_gesture_swipe_right">Deslizar hacia la derecha</string>
     <string name="preference_gesture_double_tap">Doble toque</string>
     <string name="preference_gesture_long_press">Pulsación larga</string>
-    <string name="gesture_action_none">Nada</string>
+    <string name="gesture_action_none">No hacer nada</string>
     <string name="gesture_action_open_search">Abrir búsqueda</string>
     <string name="gesture_action_notifications">Abrir barra de notificaciones</string>
     <string name="gesture_action_lock_screen">Apagar pantalla</string>
@@ -612,7 +608,7 @@
     <string name="preference_hidden_items_reveal_button_summary">Mostrar un botón para revelar los resultados de búsqueda ocultos</string>
     <string name="widget_config_calendar_no_calendars">Calendarios no encontrados</string>
     <string name="preference_search_result_ordering">Orden de resultados de búsqueda</string>
-    <string name="app_widget_loading_failed">El widget de la aplicación a fallado en cargar.</string>
+    <string name="app_widget_loading_failed">El widget de la aplicación ha fallado en cargar.</string>
     <string name="note_widget_conflict_description">El archivo vinculado no está vacío y su contenido no coincide con la última versión guardada de esta nota. ¿Qué versión desea conservar\?</string>
     <string name="note_widget_file_read_error_description">No se ha podido leer el archivo vinculado. Posiblemente, haya sido movido o borrado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado.</string>
     <string name="preference_category_accounts">Cuentas</string>
@@ -638,4 +634,40 @@
     <string name="note_widget_file_read_error">Error al leer la nota</string>
     <string name="note_widget_file_write_error">Error al guardar la nota</string>
     <string name="note_widget_file_write_error_description">No se ha podido leer el archivo vinculado. Posiblemente, haya sido movido o borrado. Se ha restaurado una copia desde el almacenamiento interno del lanzador. Si editas la nota, posiblemente se sobrescribirá el archivo vinculado.</string>
+    <string name="file_type_launchertheme">Tema de %1$s</string>
+    <string name="preference_debug_dump_heap_summary">Captura una instantánea para analizar el uso de memoria. La app se congelará hasta que el proceso se complete.</string>
+    <string name="theme_color_scheme_system_default">Usar el predeterminado del sistema</string>
+    <string name="preference_clock_widget_alignment">Alineación</string>
+    <string name="preference_restore_default">Restaurar predeterminado</string>
+    <string name="search_action_websearch">Búsqueda web</string>
+    <string name="confirmation_delete_color_scheme">¿Realmente deseas eliminar el esquema de colores %1$s?</string>
+    <string name="import_theme_error">El archivo seleccionado no pudo ser leído. Asegúrate de que has seleccionado un archivo de tema válido (*.kvtheme), y que el archivo no esté dañado.</string>
+    <string name="preference_clock_widget_alignment_bottom">Inferior</string>
+    <string name="preference_plugin_badges">Insignias de plugin</string>
+    <string name="preference_plugin_badges_summary">Indica con qué plugin se creó un resultado de búsqueda</string>
+    <string name="preference_clock_widget_alignment_center">Centro</string>
+    <string name="backup_component_themes">Esquemas de color</string>
+    <string name="edit">Editar</string>
+    <string name="missing_permission_plugins">El permiso de plugin es requerido para usar plugins.</string>
+    <string name="preference_screen_plugins">Plugins</string>
+    <string name="preference_screen_plugins_summary">Administrar extensiones instaladas</string>
+    <string name="no_plugins_installed">Sin plugins instalados</string>
+    <string name="plugin_host_not_installed">Host de plugins no instalado</string>
+    <string name="preference_category_animations">Animaciones</string>
+    <string name="preference_charging_animation">Animación de carga</string>
+    <string name="preference_charging_animation_summary">Reproduce una animación de burbujas mientras el dispositivo está cargando</string>
+    <string name="preference_debug_dump_heap">Instantánea de memoria</string>
+    <string name="preference_debug_dump_heap_in_progress">Capturando instantánea…</string>
+    <string name="preference_clockwidget_dynamic_zone">Zona dinámica</string>
+    <string name="preference_blur_wallpaper_radius">Radio de desenfoque</string>
+    <string name="preference_custom_colors_corepalette">Paleta de colores</string>
+    <string name="theme_color_scheme_custom_color">Personalizado</string>
+    <string name="action_import">Importar</string>
+    <string name="preference_clock_widget_alignment_top">Superior</string>
+    <string name="new_color_scheme_name">Nuevo esquema de colores</string>
+    <string name="theme_color_scheme_autogenerate">A partir de color primario</string>
+    <string name="theme_color_scheme_palette_color">Paleta</string>
+    <string name="import_theme_apply">Aplicar tema</string>
+    <string name="shortcut_label_unavailable">No disponible</string>
+    <string name="shortcut_unavailable_description">Este acceso directo no está disponible porque %1$s no es el lanzador predeterminado</string>
 </resources>

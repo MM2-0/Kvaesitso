@@ -41,7 +41,6 @@
     <string name="preference_summary_not_logged_in">Momentálně nejste přihlášeni</string>
     <string name="preference_blur_wallpaper_unsupported">Není podporováno na tomto zařízení</string>
     <string name="preference_suspended_badges_summary">Zobrazit puntík u pozastavených aplikací</string>
-    <string name="preference_ms_signin_summary">Přihlaste se pro prohledání OneDrive</string>
     <string name="preference_owncloud_signin_summary">Přihlaste se pro prohledání vašeho Owncloud serveru</string>
     <string name="preference_about_license_summary">Licencováno pod GNU General Public License 3.0</string>
     <string name="preference_screen_debug_summary">Nástroje pro řešení potíží</string>
@@ -329,8 +328,6 @@
     <string name="preference_cloud_badges">Ikony cloudu</string>
     <string name="preference_shortcut_badges">Ikony záložek</string>
     <string name="preference_shortcut_badges_summary">Zobrazit ikonu značící aplikaci, ke které patří záložka</string>
-    <string name="preference_microsoft">Microsoft</string>
-    <string name="preference_ms_signin">Přihlásit se pomocí Microsoftu</string>
     <string name="preference_nextcloud_signin">Přihlásit se k Nextcloudu</string>
     <string name="preference_nextcloud_signin_summary">Přihlaste se pro prohledání vašeho Nextcloud serveru</string>
     <string name="preference_nextcloud">Nextcloud</string>
@@ -423,7 +420,6 @@
     <string name="preference_wikipedia_customurl">URL Wikipedie</string>
     <string name="no_account_nextcloud">Zatím jste nepřipojili svůj účet Nextcloud</string>
     <string name="no_account_owncloud">Zatím jste nepřipojili svůj účet Owncloud</string>
-    <string name="no_account_microsoft">Zatím jste nepřipojili svůj účet Microsoft</string>
     <string name="no_account_google">Zatím jste nepřipojili svůj účet Google</string>
     <string name="connect_account">Připojit účet</string>
     <string name="battery_part_charging">Nabíjení</string>
@@ -672,4 +668,6 @@
     <string name="preference_screen_plugins_summary">Spravovat nainstalované doplňky</string>
     <string name="no_plugins_installed">Nejsou nainstalovány žádné doplňky</string>
     <string name="plugin_host_not_installed">Hostitel doplňků není nainstalován</string>
+    <string name="preference_plugin_badges">Odznaky doplňků</string>
+    <string name="preference_plugin_badges_summary">Zobrazit, který doplněk vytvořil výsledek vyhledávání</string>
 </resources>
