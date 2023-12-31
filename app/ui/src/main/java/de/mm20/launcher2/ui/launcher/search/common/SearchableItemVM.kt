@@ -11,6 +11,7 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -43,6 +44,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
 
     val devicePoseProvider: DevicePoseProvider by inject()
 
@@ -172,18 +174,18 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val useInsaneUnits = dataStore.data.map { it.locationsSearch.useInsaneUnits }
+    val useInsaneUnits = locationSearchSettings.imperialUnits
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val showMap = dataStore.data.map { it.locationsSearch.showMap }
+    val showMap = locationSearchSettings.showMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val applyMapTheming = dataStore.data.map { it.locationsSearch.themeMap }
+    val applyMapTheming = locationSearchSettings.themeMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val showPositionOnMap = dataStore.data.map { it.locationsSearch.showPositionOnMap }
+    val showPositionOnMap = locationSearchSettings.showPositionOnMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val mapTileServerUrl = dataStore.data.map { it.locationsSearch.customTileServerUrl }
+    val mapTileServerUrl = locationSearchSettings.tileServer
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 }

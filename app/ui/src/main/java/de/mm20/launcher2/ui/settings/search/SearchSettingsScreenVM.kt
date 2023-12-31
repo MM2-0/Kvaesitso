@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.search
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -18,6 +19,7 @@ import org.koin.core.component.inject
 class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
 
     val favorites = dataStore.data.map { it.favorites.enabled }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -123,17 +125,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         }
     }
 
-    val locations = dataStore.data.map { it.locationsSearch.enabled }
+    val locations = locationSearchSettings.enabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setLocations(locations: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setLocationsSearch(
-                    it.locationsSearch.toBuilder().setEnabled(locations)
-                ).build()
-            }
-        }
+        locationSearchSettings.setEnabled(locations)
     }
 
     val autoFocus = dataStore.data.map { it.searchBar.autoFocus }

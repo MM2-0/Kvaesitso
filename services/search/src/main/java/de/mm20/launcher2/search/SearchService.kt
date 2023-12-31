@@ -3,7 +3,6 @@ package de.mm20.launcher2.search
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
-import de.mm20.launcher2.preferences.Settings.LocationsSearchSettings
 import de.mm20.launcher2.preferences.Settings.AppShortcutSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
@@ -53,10 +52,6 @@ interface SearchService {
         wikipedia: WikipediaSearchSettings = WikipediaSearchSettings.newBuilder()
             .setEnabled(false)
             .build(),
-        locations: LocationsSearchSettings = LocationsSearchSettings.newBuilder()
-            .setEnabled(false)
-            .setSearchRadius(1000)
-            .build(),
     ): Flow<SearchResults>
 }
 
@@ -84,7 +79,6 @@ internal class SearchServiceImpl(
         unitConverter: UnitConverterSearchSettings,
         websites: WebsiteSearchSettings,
         wikipedia: WikipediaSearchSettings,
-        locations: LocationsSearchSettings
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -182,16 +176,14 @@ internal class SearchServiceImpl(
                         }
                 }
             }
-            if (locations.enabled) {
-                launch {
-                    locationRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(locations = r.toImmutableList())
-                            }
+            launch {
+                locationRepository.search(query)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(locations = r.toImmutableList())
                         }
-                }
+                    }
             }
             launch {
                 fileRepository.search(

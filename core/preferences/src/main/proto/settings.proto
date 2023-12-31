@@ -383,17 +383,4 @@ message Settings {
     bool charging = 1;
   }
   AnimationSettings animations = 31;
-
-  message LocationsSearchSettings {
-    bool enabled = 1;
-    uint32 search_radius = 2;
-    bool use_insane_units = 3;
-    string custom_overpass_url = 4;
-    bool show_map = 5;
-    bool show_position_on_map = 6;
-    string custom_tile_server_url = 7;
-    bool hide_uncategorized = 8;
-    bool theme_map = 9;
-  }
-  LocationsSearchSettings locations_search = 32;
 }

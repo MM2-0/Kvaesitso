@@ -1,8 +1,8 @@
 package de.mm20.launcher2.ui.settings.locations
 
-import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -14,145 +14,67 @@ import org.koin.core.component.inject
 class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
 
-    val locations = dataStore.data.map { it.locationsSearch.enabled }
+    private val settings: LocationSearchSettings by inject()
+
+    val locations = settings.enabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLocations(openStreetMaps: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setEnabled(openStreetMaps)
-                    )
-                    .build()
-            }
-        }
+        settings.setEnabled(openStreetMaps)
     }
 
-    val insaneUnits = dataStore.data.map { it.locationsSearch.useInsaneUnits }
+    val imperialUnits = settings.imperialUnits
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    fun setInsaneUnits(insaneUnits: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setUseInsaneUnits(insaneUnits)
-                    )
-                    .build()
-            }
-        }
+    fun setImperialUnits(imperialUnits: Boolean) {
+        settings.setImperialUnits(imperialUnits)
     }
 
-    val radius = dataStore.data.map { it.locationsSearch.searchRadius }
+    val radius = settings.searchRadius
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1500)
     fun setRadius(radius: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setSearchRadius(radius)
-                    )
-                    .build()
-            }
-        }
+        settings.setSearchRadius(radius)
     }
 
-    val customOverpassUrl = dataStore.data.map { it.locationsSearch.customOverpassUrl }
+    val customOverpassUrl = settings.overpassUrl
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
     fun setCustomOverpassUrl(customUrl: String) {
-        var customUrl = customUrl
-        if (customUrl.endsWith('/'))
-            customUrl = customUrl.substring(0, customUrl.length - 1)
-        if (customUrl.endsWith("/api/interpreter"))
-            customUrl = customUrl.substring(0, customUrl.length - "/api/interpreter".length)
-
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setCustomOverpassUrl(customUrl)
-                    )
-                    .build()
-            }
+        var url = customUrl
+        if (url.endsWith('/')){
+            url = url.substringBeforeLast('/')
         }
+        if (url.endsWith("/api/interpreter")) {
+            url = url.substringBeforeLast("/api/interpreter")
+        }
+
+        settings.setOverpassUrl(url)
     }
 
-    val showMap = dataStore.data.map { it.locationsSearch.showMap }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val showMap = settings.showMap
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setShowMap(showMap: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setShowMap(showMap)
-                    )
-                    .build()
-            }
-        }
+        settings.setShowMap(showMap)
     }
 
-    val showPositionOnMap = dataStore.data.map { it.locationsSearch.showPositionOnMap }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val showPositionOnMap = settings.showPositionOnMap
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setShowPositionOnMap(showPositionOnMap: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setShowPositionOnMap(showPositionOnMap)
-                    )
-                    .build()
-            }
-        }
+        settings.setShowPositionOnMap(showPositionOnMap)
     }
 
-    val customTileServerUrl = dataStore.data.map { it.locationsSearch.customTileServerUrl }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), "")
+    val customTileServerUrl = settings.tileServer
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setCustomTileServerUrl(customTileServerUrl: String) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setCustomTileServerUrl(customTileServerUrl)
-                    )
-                    .build()
-            }
-        }
+        settings.setTileServer(customTileServerUrl)
     }
 
-    val hideUncategorized = dataStore.data.map { it.locationsSearch.hideUncategorized }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val hideUncategorized = settings.hideUncategorized
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setHideUncategorized(hideUncategorized: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setHideUncategorized(hideUncategorized)
-                    )
-                    .build()
-            }
-        }
+        settings.setHideUncategorized(hideUncategorized)
     }
 
-    val themeMap = dataStore.data.map { it.locationsSearch.themeMap }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+    val themeMap = settings.themeMap
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setThemeMap(themeMap: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(
-                        it.locationsSearch.toBuilder()
-                            .setThemeMap(themeMap)
-                    )
-                    .build()
-            }
-        }
+        settings.setThemeMap(themeMap)
     }
-
 }

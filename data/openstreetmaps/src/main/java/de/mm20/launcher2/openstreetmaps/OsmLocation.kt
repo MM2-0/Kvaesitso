@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.net.Uri
 import android.util.Log
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
@@ -121,9 +121,8 @@ internal data class OsmLocation(
         const val DOMAIN = "OpenStreetMaps"
         const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
 
-        private val dataStore: LauncherDataStore by inject()
-        private val idRepository =
-            BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl })
+        private val settings: LocationSearchSettings by inject()
+        private val idRepository = BaseOsmRepository(settings.overpassUrl)
 
         private val categoryTags = setOf(
             "amenity",

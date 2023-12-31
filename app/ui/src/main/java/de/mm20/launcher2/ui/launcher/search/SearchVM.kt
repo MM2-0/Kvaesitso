@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.files.settings.FileSearchSettings
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -50,6 +51,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val permissionsManager: PermissionsManager by inject()
     private val dataStore: LauncherDataStore by inject()
     private val fileSearchSettings: FileSearchSettings by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -129,7 +131,6 @@ class SearchVM : ViewModel(), KoinComponent {
                     shortcuts = settings.appShortcutSearch,
                     websites = settings.websiteSearch,
                     wikipedia = settings.wikipediaSearch,
-                    locations = settings.locationsSearch,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
@@ -301,7 +302,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingLocationPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Location),
-        dataStore.data.map { it.locationsSearch.enabled }.distinctUntilChanged()
+        locationSearchSettings.enabled.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestLocationPermission(context: AppCompatActivity) {
@@ -309,13 +310,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableLocationSearch() {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLocationsSearch(it.locationsSearch.toBuilder().setEnabled(false))
-                    .build()
-            }
-        }
+        locationSearchSettings.setEnabled(false)
     }
 
     val missingFilesPermission = combine(

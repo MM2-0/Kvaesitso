@@ -2,6 +2,7 @@ package de.mm20.launcher2.openstreetmaps
 
 import android.util.Log
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.LauncherDataStore
@@ -79,10 +80,10 @@ internal open class BaseOsmRepository(
 }
 
 internal class OsmRepository(
-    private val dataStore: LauncherDataStore,
+    private val settings: LocationSearchSettings,
     private val poseProvider: DevicePoseProvider,
     permissionsManager: PermissionsManager,
-) : BaseOsmRepository(dataStore.data.map { it.locationsSearch.customOverpassUrl }),
+) : BaseOsmRepository(settings.overpassUrl),
     SearchableRepository<OsmLocation> {
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
@@ -97,7 +98,7 @@ internal class OsmRepository(
         hasLocationPermission.collectLatest { locationPermission ->
             if (!locationPermission) return@collectLatest
 
-            dataStore.data.map { it.locationsSearch }.collectLatest dataStore@{ settings ->
+            settings.data.collectLatest dataStore@{ settings ->
                 if (!settings.enabled) return@dataStore
 
                 val userLocation = poseProvider.getLocation().firstOrNull() ?: return@dataStore

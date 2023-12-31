@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
@@ -38,7 +39,7 @@ fun LocationsSettingsScreen() {
                 }
             )
             PreferenceCategory {
-                val insaneUnits by viewModel.insaneUnits.collectAsState()
+                val imperialUnits by viewModel.imperialUnits.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.length_unit),
                     items = listOf(
@@ -46,9 +47,9 @@ fun LocationsSettingsScreen() {
                         stringResource(R.string.metric) to false
                     ),
                     enabled = locations == true,
-                    value = insaneUnits,
+                    value = imperialUnits,
                     onValueChanged = {
-                        viewModel.setInsaneUnits(it)
+                        if (it != null) viewModel.setImperialUnits(it)
                     }
                 )
                 val radius by viewModel.radius.collectAsState()
@@ -68,17 +69,17 @@ fun LocationsSettingsScreen() {
                             modifier = Modifier
                                 .width(64.dp)
                                 .padding(start = 16.dp),
-                            text = it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits),
+                            text = it.toFloat().metersToLocalizedString(LocalContext.current, imperialUnits),
                             style = MaterialTheme.typography.titleSmall
                         )
-                        it.toFloat().metersToLocalizedString(LocalContext.current, insaneUnits)
+                        it.toFloat().metersToLocalizedString(LocalContext.current, imperialUnits)
                     }
                 )
                 val hideUncategorized by viewModel.hideUncategorized.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_locations_hide_uncategorized),
                     summary = stringResource(R.string.preference_search_locations_hide_uncategorized_summary),
-                    value = hideUncategorized,
+                    value = hideUncategorized == true,
                     enabled = locations == true,
                     onValueChanged = {
                         viewModel.setHideUncategorized(it)
@@ -102,7 +103,7 @@ fun LocationsSettingsScreen() {
                     title = stringResource(R.string.preference_search_locations_show_map),
                     summary = stringResource(R.string.preference_search_locations_show_map_summary),
                     enabled = locations == true,
-                    value = showMap,
+                    value = showMap == true,
                     onValueChanged = {
                         viewModel.setShowMap(it)
                     }
@@ -111,8 +112,8 @@ fun LocationsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_locations_theme_map),
                     summary = stringResource(R.string.preference_search_locations_theme_map_summary),
-                    value = themeMap,
-                    enabled = locations == true && showMap,
+                    value = themeMap == true,
+                    enabled = locations == true && showMap == true,
                     onValueChanged = {
                         viewModel.setThemeMap(it)
                     }
@@ -121,8 +122,8 @@ fun LocationsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_locations_show_position_on_map),
                     summary = stringResource(R.string.preference_search_locations_show_position_on_map_summary),
-                    value = showPositionOnMap,
-                    enabled = locations == true && showMap,
+                    value = showPositionOnMap == true,
+                    enabled = locations == true && showMap == true,
                     onValueChanged = {
                         viewModel.setShowPositionOnMap(it)
                     }
@@ -130,10 +131,10 @@ fun LocationsSettingsScreen() {
                 val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
                 TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_tile_server_url),
-                    value = customTileServerUrl,
-                    placeholder = stringResource(id = R.string.tile_server_url),
+                    value = customTileServerUrl ?: "",
+                    placeholder = LocationSearchSettings.DefaultTileServerUrl,
                     summary = customTileServerUrl.takeIf { !it.isNullOrBlank() }
-                        ?: stringResource(id = R.string.tile_server_url),
+                        ?: LocationSearchSettings.DefaultTileServerUrl,
                     onValueChanged = {
                         viewModel.setCustomTileServerUrl(it)
                     }
