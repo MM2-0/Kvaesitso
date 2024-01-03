@@ -17,22 +17,22 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Phone
+import androidx.compose.material.icons.rounded.Star
+import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TravelExplore
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,20 +52,21 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.OpeningSchedule
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
+import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.flow.emptyFlow
@@ -78,7 +79,6 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import kotlin.math.pow
-import kotlin.math.roundToInt
 
 @Composable
 fun LocationItem(
@@ -162,14 +162,18 @@ fun LocationItem(
                 ) {
                     val targetHeading by remember(userLocation, location) {
                         if (userLocation != null)
-                            viewModel.devicePoseProvider.getHeadingToDegrees(userLocation!!.bearingTo(location.toAndroidLocation()))
+                            viewModel.devicePoseProvider.getHeadingToDegrees(
+                                userLocation!!.bearingTo(
+                                    location.toAndroidLocation()
+                                )
+                            )
                         else
                             emptyFlow()
                     }.collectAsStateWithLifecycle(null)
 
                     if (targetHeading != null) {
                         val directionArrowAngle by animateValueAsState(
-                            targetValue =  targetHeading!!,
+                            targetValue = targetHeading!!,
                             typeConverter = Float.DegreesConverter
                         )
                         Icon(
@@ -257,7 +261,12 @@ fun LocationItem(
                             initialZoomLevel = zoomLevel,
                             numberOfTiles = nTiles,
                             applyTheming = applyTheming,
-                            userLocation = if (showPositionOnMap) userLocation?.let { UserLocation(it.latitude, it.longitude) } else null,
+                            userLocation = if (showPositionOnMap) userLocation?.let {
+                                UserLocation(
+                                    it.latitude,
+                                    it.longitude
+                                )
+                            } else null,
                         )
 
                         val address = buildAddress(location.street, location.houseNumber)
@@ -317,6 +326,78 @@ fun LocationItem(
                         )
                     }
 
+                    val toolbarActions = mutableListOf<ToolbarAction>()
+
+                    if (LocalFavoritesEnabled.current) {
+                        val isPinned by viewModel.isPinned.collectAsState(false)
+                        val favAction = if (isPinned) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_unpin),
+                                icon = Icons.Rounded.Star,
+                                action = {
+                                    viewModel.unpin()
+                                }
+                            )
+                        } else {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_pin),
+                                icon = Icons.Rounded.StarOutline,
+                                action = {
+                                    viewModel.pin()
+                                })
+                        }
+                        toolbarActions.add(favAction)
+                    }
+
+                    if (!showMap) {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_map),
+                            icon = Icons.Rounded.Map
+                        ) {
+                            viewModel.launch(context)
+                        }
+
+                    }
+
+                    location.phoneNumber?.let {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_dial),
+                            icon = Icons.Rounded.Phone
+                        ) {
+                            viewModel.viewModelScope.launch {
+                                context.tryStartActivity(
+                                    Intent(
+                                        Intent.ACTION_DIAL, Uri.parse("tel:$it")
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                    location.websiteUrl?.let {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_website),
+                            icon = Icons.Rounded.TravelExplore
+                        ) {
+                            viewModel.viewModelScope.launch {
+                                context.tryStartActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW, Uri.parse(it)
+                                    )
+                                )
+                            }
+                        }
+                    }
+
+                    location.fixMeUrl?.let {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_bugreport),
+                            icon = Icons.Rounded.BugReport,
+                        ) {
+                            showBugreportDialog = true
+                        }
+                    }
+
                     Toolbar(
                         modifier = Modifier.fillMaxWidth(),
                         leftActions = listOf(DefaultToolbarAction(
@@ -325,53 +406,7 @@ fun LocationItem(
                         ) {
                             onBack()
                         }),
-                        rightActions = listOfNotNull(
-
-                            if (!showMap) {
-                                DefaultToolbarAction(
-                                    label = stringResource(id = R.string.menu_map),
-                                    icon = Icons.Rounded.Map
-                                ) {
-                                    viewModel.launch(context)
-                                }
-                            } else null,
-                            location.phoneNumber?.let {
-                                DefaultToolbarAction(
-                                    label = stringResource(id = R.string.menu_dial),
-                                    icon = Icons.Rounded.Phone
-                                ) {
-                                    viewModel.viewModelScope.launch {
-                                        context.tryStartActivity(
-                                            Intent(
-                                                Intent.ACTION_DIAL, Uri.parse("tel:$it")
-                                            )
-                                        )
-                                    }
-                                }
-                            },
-                            location.websiteUrl?.let {
-                                DefaultToolbarAction(
-                                    label = stringResource(id = R.string.menu_website),
-                                    icon = Icons.Rounded.TravelExplore
-                                ) {
-                                    viewModel.viewModelScope.launch {
-                                        context.tryStartActivity(
-                                            Intent(
-                                                Intent.ACTION_VIEW, Uri.parse(it)
-                                            )
-                                        )
-                                    }
-                                }
-                            },
-                            location.fixMeUrl?.let {
-                                DefaultToolbarAction(
-                                    label = stringResource(id = R.string.menu_bugreport),
-                                    icon = Icons.Rounded.BugReport,
-                                ) {
-                                    showBugreportDialog = true
-                                }
-                            }
-                        )
+                        rightActions = toolbarActions,
                     )
                 }
             }
