@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.BugReport
@@ -97,21 +98,7 @@ fun LocationItem(
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
-    var openingSchedule by remember { mutableStateOf<OpeningSchedule?>(null) }
-    var phoneNumber by remember { mutableStateOf<String?>(null) }
-    var websiteUrl by remember { mutableStateOf<String?>(null) }
-    var street by remember { mutableStateOf<String?>(null) }
-    var houseNumber by remember { mutableStateOf<String?>(null) }
     var showBugreportDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(location) {
-        viewModel.init(location, iconSize.toInt())
-        openingSchedule = location.getOpeningSchedule()
-        websiteUrl = location.getWebsiteUrl()
-        street = location.getStreet()
-        houseNumber = location.getHouseNumber()
-        phoneNumber = location.getPhoneNumber()
-    }
 
     Row(modifier = modifier) {
         Column {
@@ -153,8 +140,8 @@ fun LocationItem(
                         overflow = TextOverflow.Ellipsis,
                         softWrap = true,
                     )
-                    if (!openingSchedule?.openingHours.isNullOrEmpty()) {
-                        val isOpen = openingSchedule!!.isOpen
+                    if (!location.openingSchedule?.openingHours.isNullOrEmpty()) {
+                        val isOpen = location.openingSchedule!!.isOpen
                         AnimatedVisibility(!showDetails) {
                             Text(
                                 modifier = Modifier
@@ -202,8 +189,8 @@ fun LocationItem(
             }
             AnimatedVisibility(showDetails) {
                 Column {
-                    val isTwentyFourSeven = openingSchedule?.isTwentyFourSeven ?: false
-                    val hasOpeningHours = !openingSchedule?.openingHours.isNullOrEmpty()
+                    val isTwentyFourSeven = location.openingSchedule?.isTwentyFourSeven ?: false
+                    val hasOpeningHours = !location.openingSchedule?.openingHours.isNullOrEmpty()
                     val daysOfWeek = enumValues<DayOfWeek>()
 
                     val javaLocale = java.util.Locale.forLanguageTag(Locale.current.toLanguageTag())
@@ -221,7 +208,7 @@ fun LocationItem(
                             color = MaterialTheme.colorScheme.tertiary,
                         )
                     } else if (hasOpeningHours) {
-                        val oh = openingSchedule!!.openingHours
+                        val oh = location.openingSchedule!!.openingHours
                         val openIndex = oh.indexOfFirst { it.isOpen }
                         if (openIndex != -1) {
                             val todaySchedule = oh[openIndex]
@@ -273,7 +260,7 @@ fun LocationItem(
                             userLocation = if (showPositionOnMap) userLocation?.let { UserLocation(it.latitude, it.longitude) } else null,
                         )
 
-                        val address = buildAddress(street, houseNumber)
+                        val address = buildAddress(location.street, location.houseNumber)
                         if (address != null) {
                             Text(
                                 modifier = Modifier
@@ -290,7 +277,7 @@ fun LocationItem(
 
                     if (!isTwentyFourSeven && hasOpeningHours) {
                         val today = LocalDateTime.now().dayOfWeek
-                        val oh = openingSchedule!!.openingHours
+                        val oh = location.openingSchedule!!.openingHours
                         val nextOpeningTime =
                             (0..DayOfWeek.SUNDAY.ordinal)
                                 .firstNotNullOfOrNull {
@@ -334,7 +321,7 @@ fun LocationItem(
                         modifier = Modifier.fillMaxWidth(),
                         leftActions = listOf(DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_back),
-                            icon = Icons.Rounded.ArrowBack
+                            icon = Icons.AutoMirrored.Rounded.ArrowBack
                         ) {
                             onBack()
                         }),
@@ -348,7 +335,7 @@ fun LocationItem(
                                     viewModel.launch(context)
                                 }
                             } else null,
-                            phoneNumber?.let {
+                            location.phoneNumber?.let {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_dial),
                                     icon = Icons.Rounded.Phone
@@ -362,7 +349,7 @@ fun LocationItem(
                                     }
                                 }
                             },
-                            websiteUrl?.let {
+                            location.websiteUrl?.let {
                                 DefaultToolbarAction(
                                     label = stringResource(id = R.string.menu_website),
                                     icon = Icons.Rounded.TravelExplore

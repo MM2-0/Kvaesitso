@@ -6,19 +6,19 @@ import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.DeferredSearchable
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
@@ -43,12 +43,11 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val dataStore: LauncherDataStore by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
 
     val devicePoseProvider: DevicePoseProvider by inject()
 
-    private val searchable = MutableStateFlow<SavableSearchable?>(null)
+    val searchable = MutableStateFlow<SavableSearchable?>(null)
     private val iconSize = MutableStateFlow(0)
     fun init(searchable: SavableSearchable, iconSize: Int) {
         this.searchable.value = searchable
@@ -168,6 +167,16 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             }
         }
         favoritesService.reset(searchable)
+    }
+
+    fun requestUpdatedDeferredSearchable() {
+        val searchable = searchable.value ?: return
+        if (searchable is DeferredSearchable<*>) {
+            val updated = searchable.updatedSelf ?: return
+            viewModelScope.launch {
+                this@SearchableItemVM.searchable.value = updated.await() ?: return@launch
+            }
+        }
     }
 
     fun requestShortcutPermission(activity: AppCompatActivity) {

@@ -492,7 +492,7 @@ private fun MapTilesPreview() {
     )
 }
 
-internal object MockLocation : Location() {
+internal object MockLocation : Location {
 
     override val domain: String = "MOCKLOCATION"
     override val key: String = "MOCKLOCATION"
@@ -504,16 +504,16 @@ internal object MockLocation : Location() {
 
     override var category: LocationCategory? = LocationCategory.OTHER
 
-    override suspend fun getStreet(): String = "Pariser Platz"
+    override val street: String = "Pariser Platz"
 
-    override suspend fun getHouseNumber(): String = "1"
+    override val houseNumber: String = "1"
 
-    override suspend fun getOpeningSchedule(): OpeningSchedule =
+    override val openingSchedule: OpeningSchedule =
         OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
 
-    override suspend fun getWebsiteUrl(): String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
+    override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 
-    override suspend fun getPhoneNumber(): String = "+49 1234567"
+    override val phoneNumber: String = "+49 1234567"
 
     override fun overrideLabel(label: String): SavableSearchable = TODO()
 

@@ -5,14 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.net.Uri
 import android.util.Log
+import de.mm20.launcher2.coroutines.deferred
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
+import de.mm20.launcher2.search.DeferredSearchable
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -26,18 +30,18 @@ import java.util.Locale
 
 internal data class OsmLocation(
     internal val id: Long,
-    override var label: String,
-    override var category: LocationCategory?,
+    override val label: String,
+    override val category: LocationCategory?,
     override val latitude: Double,
     override val longitude: Double,
-    private var street: String?,
-    private var houseNumber: String?,
-    private var openingSchedule: OpeningSchedule?,
-    private var websiteUrl: String?,
-    private var phoneNumber: String?,
-    private var isCacheUpToDate: Boolean,
+    override val street: String?,
+    override val houseNumber: String?,
+    override val openingSchedule: OpeningSchedule?,
+    override val websiteUrl: String?,
+    override val phoneNumber: String?,
     override val labelOverride: String? = null,
-) : Location() {
+    override val updatedSelf: Deferred<Location?>? = null,
+) : Location, DeferredSearchable<Location> {
 
     override val domain: String
         get() = DOMAIN
@@ -59,70 +63,14 @@ internal data class OsmLocation(
         )
     }
 
-    override suspend fun getStreet(): String? {
-        if (isCacheUpToDate)
-            return street
-        if (street == null)
-            updateCache()
-        return street
-    }
-
-    override suspend fun getHouseNumber(): String? {
-        if (isCacheUpToDate)
-            return houseNumber
-        if (houseNumber == null)
-            updateCache()
-        return houseNumber
-    }
-
-    override suspend fun getOpeningSchedule(): OpeningSchedule? {
-        if (isCacheUpToDate)
-            return openingSchedule
-        if (openingSchedule == null)
-            updateCache()
-        return openingSchedule
-    }
-
-    override suspend fun getWebsiteUrl(): String? {
-        if (isCacheUpToDate)
-            return websiteUrl
-        if (websiteUrl == null)
-            updateCache()
-        return websiteUrl
-    }
-
-    override suspend fun getPhoneNumber(): String? {
-        if (isCacheUpToDate)
-            return phoneNumber
-        if (phoneNumber == null)
-            updateCache()
-        return phoneNumber
-    }
-
     override fun getSerializer(): SearchableSerializer {
         return OsmLocationSerializer()
     }
 
-    private suspend fun updateCache() {
-        val upToDateEntry = idRepository.searchForId(id) ?: return
+    companion object {
 
-        label = upToDateEntry.label
-        category = upToDateEntry.category
-        street = upToDateEntry.street
-        houseNumber = upToDateEntry.houseNumber
-        openingSchedule = upToDateEntry.openingSchedule
-        websiteUrl = upToDateEntry.websiteUrl
-
-        isCacheUpToDate = true
-    }
-
-    companion object : KoinComponent {
-
-        const val DOMAIN = "OpenStreetMaps"
-        const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
-
-        private val settings: LocationSearchSettings by inject()
-        private val idRepository = BaseOsmRepository(settings.overpassUrl)
+        internal const val DOMAIN = "osm"
+        internal const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
 
         private val categoryTags = setOf(
             "amenity",
@@ -167,7 +115,6 @@ internal data class OsmLocation(
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"],
                 phoneNumber = it.tags["phone"],
-                isCacheUpToDate = true,
             )
         }
     }

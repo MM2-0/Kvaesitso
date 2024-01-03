@@ -23,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -88,6 +89,8 @@ fun GridItem(
         viewModel.init(item, iconSize.toInt())
     }
 
+    val item = viewModel.searchable.collectAsState().value ?: item
+
     val context = LocalContext.current
 
     var showPopup by remember(item.key) { mutableStateOf(false) }
@@ -95,6 +98,10 @@ fun GridItem(
 
     val launchOnPress = !item.preferDetailsOverLaunch
     val hapticFeedback = LocalHapticFeedback.current
+
+    LaunchedEffect(showPopup) {
+        if (showPopup) viewModel.requestUpdatedDeferredSearchable()
+    }
 
     Column(
         modifier = modifier
@@ -214,7 +221,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 .imePadding()
                 .padding(horizontal = 16.dp)
                 .then(
-                    if (show.targetState ) {
+                    if (show.targetState) {
                         Modifier.pointerInput(Unit) {
                             detectTapGestures(onPress = {
                                 show.targetState = false

@@ -11,21 +11,21 @@ import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalTime
+import android.location.Location as AndroidLocation
 
-abstract class Location : SavableSearchable {
+interface Location : SavableSearchable {
 
-    private var lastDistance: Float? = null
+    val latitude: Double
+    val longitude: Double
+    val fixMeUrl: String?
 
-    abstract val latitude: Double
-    abstract val longitude: Double
-    abstract val fixMeUrl: String?
+    val category: LocationCategory?
 
-    abstract var category: LocationCategory? protected set
-    abstract suspend fun getStreet(): String?
-    abstract suspend fun getHouseNumber(): String?
-    abstract suspend fun getOpeningSchedule(): OpeningSchedule?
-    abstract suspend fun getWebsiteUrl(): String?
-    abstract suspend fun getPhoneNumber(): String?
+    val street: String?
+    val houseNumber: String?
+    val openingSchedule: OpeningSchedule?
+    val websiteUrl: String?
+    val phoneNumber: String?
 
     override val preferDetailsOverLaunch: Boolean
         get() = true
@@ -133,8 +133,8 @@ abstract class Location : SavableSearchable {
         )
     }
 
-    fun toAndroidLocation(): android.location.Location {
-        val location = android.location.Location("KvaesitsoLocationProvider")
+    fun toAndroidLocation(): AndroidLocation {
+        val location = AndroidLocation("KvaesitsoLocationProvider")
 
         location.latitude = latitude
         location.longitude = longitude
@@ -142,20 +142,12 @@ abstract class Location : SavableSearchable {
         return location
     }
 
-    fun distanceTo(androidLocation: android.location.Location): Float {
-        lastDistance = androidLocation.distanceTo(this.toAndroidLocation())
-        return lastDistance!!
+    fun distanceTo(androidLocation: AndroidLocation): Float {
+        return androidLocation.distanceTo(this.toAndroidLocation())
     }
 
     fun distanceTo(otherLocation: Location): Float =
         this.distanceTo(otherLocation.toAndroidLocation())
-
-    override fun compareTo(other: SavableSearchable): Int {
-        if (other !is Location || other.lastDistance == null || this.lastDistance == null)
-            return super.compareTo(other)
-
-        return lastDistance!!.compareTo(other.lastDistance!!)
-    }
 }
 
 // https://taginfo.openstreetmap.org/tags

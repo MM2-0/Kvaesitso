@@ -10,8 +10,9 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val openStreetMapsModule = module {
-    single<SearchableRepository<OsmLocation>>(named<Location>()) { OsmRepository(get(), get(), get()) }
-    factory<SearchableDeserializer>(named(OsmLocation.DOMAIN)) { OsmLocationDeserializer() }
+    single<OsmRepository> { OsmRepository(get(), get(), get()) }
+    factory<SearchableRepository<Location>>(named<Location>()) { get<OsmRepository>() }
+    factory<SearchableDeserializer>(named(OsmLocation.DOMAIN)) { OsmLocationDeserializer(get()) }
     single<LocationSearchSettings> { LocationSearchSettings(androidContext()) }
     factory<Backupable>(named<LocationSearchSettings>()) { get<LocationSearchSettings>() }
 }

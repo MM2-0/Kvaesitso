@@ -1,10 +1,16 @@
 package de.mm20.launcher2.openstreetmaps
 
+import de.mm20.launcher2.coroutines.deferred
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
 
 class OsmLocationSerializer : SearchableSerializer {
@@ -23,11 +29,14 @@ class OsmLocationSerializer : SearchableSerializer {
         get() = "osmlocation"
 }
 
-class OsmLocationDeserializer : SearchableDeserializer {
+internal class OsmLocationDeserializer(
+    private val osmRepository: OsmRepository,
+) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)
+        val id = json.getLong("id")
         return OsmLocation(
-            id = json.getLong("id"),
+            id = id,
             latitude = json.getDouble("lat"),
             longitude = json.getDouble("lon"),
             category = json.getString("category").runCatching { LocationCategory.valueOf(this) }.getOrNull(),
@@ -37,7 +46,9 @@ class OsmLocationDeserializer : SearchableDeserializer {
             openingSchedule = null,
             websiteUrl = null,
             phoneNumber = null,
-            isCacheUpToDate = false,
+            updatedSelf = deferred {
+                osmRepository.get(id).firstOrNull()
+            }
         )
     }
 }
