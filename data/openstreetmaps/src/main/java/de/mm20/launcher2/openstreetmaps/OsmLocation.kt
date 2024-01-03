@@ -39,6 +39,7 @@ internal data class OsmLocation(
     override val openingSchedule: OpeningSchedule?,
     override val websiteUrl: String?,
     override val phoneNumber: String?,
+    internal val updatedAt: Long,
     override val labelOverride: String? = null,
     override val updatedSelf: Deferred<Location?>? = null,
 ) : Location, DeferredSearchable<Location> {
@@ -115,6 +116,7 @@ internal data class OsmLocation(
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"],
                 phoneNumber = it.tags["phone"],
+                updatedAt = System.currentTimeMillis(),
             )
         }
     }
