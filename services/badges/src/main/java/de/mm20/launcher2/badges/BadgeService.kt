@@ -1,14 +1,29 @@
 package de.mm20.launcher2.badges
 
 import android.content.Context
-import de.mm20.launcher2.badges.providers.*
+import de.mm20.launcher2.badges.providers.AppShortcutBadgeProvider
+import de.mm20.launcher2.badges.providers.BadgeProvider
+import de.mm20.launcher2.badges.providers.CloudBadgeProvider
+import de.mm20.launcher2.badges.providers.NotificationBadgeProvider
+import de.mm20.launcher2.badges.providers.PluginBadgeProvider
+import de.mm20.launcher2.badges.providers.SuspendedAppsBadgeProvider
+import de.mm20.launcher2.badges.providers.WorkProfileBadgeProvider
 import de.mm20.launcher2.badges.settings.BadgeSettings
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.Searchable
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
 interface BadgeService {
     fun getBadge(searchable: Searchable): Flow<Badge?>
@@ -47,44 +62,12 @@ internal class BadgeServiceImpl(
         }
     }
 
-    override fun getBadge(searchable: Searchable): Flow<Badge?> = channelFlow {
-        withContext(Dispatchers.Default) {
-            badgeProviders.collectLatest { providers ->
-                if (providers.isEmpty()) {
-                    send(null)
-                    return@collectLatest
-                }
-                combine(providers.map { it.getBadge(searchable) }) { badges ->
-                    if (badges.all { it == null }) {
-                        return@combine null
-                    }
-                    val badge = Badge()
-                    var progresses = 0
-                    badges.filterNotNull().forEach {
-                        if (it.icon != null && badge.icon == null) badge.icon = it.icon
-                        if (it.iconRes != null && badge.iconRes == null) badge.iconRes = it.iconRes
-                        it.number?.let { a ->
-                            badge.number?.let { b -> badge.number = a + b } ?: run {
-                                badge.number = a
-                            }
-                        }
-                        it.progress?.let { a ->
-                            badge.progress?.let { b ->
-                                badge.progress = a + b
-                            } ?: run {
-                                badge.progress = a
-                            }
-                            progresses++
-                        }
-                    }
-                    if (progresses > 0) {
-                        badge.progress?.let { badge.progress = it / progresses }
-                    }
-                    return@combine badge
-                }.collectLatest {
-                    send(it)
-                }
-            }
+    override fun getBadge(searchable: Searchable): Flow<Badge?> {
+        return badgeProviders.flatMapLatest { providers ->
+            if (providers.isEmpty()) return@flatMapLatest flowOf(null)
+            combine(providers.map { it.getBadge(searchable) }) { it.filterNotNull() }
+                .map { it.combine() }
+                .flowOn(Dispatchers.Default)
         }
     }
 
