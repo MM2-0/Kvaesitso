@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
 import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
@@ -52,15 +53,17 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/themes")
                     }
                 )
-                val compatMode by viewModel.compatMode.collectAsState()
-                SwitchPreference(
-                    title = stringResource(id = R.string.preference_force_compat_system_colors),
-                    summary = stringResource(id = R.string.preference_force_compat_system_colors_summary),
-                    value = compatMode,
-                    onValueChanged = {
-                        viewModel.setCompatMode(it)
-                    }
-                )
+                if (isAtLeastApiLevel(31)) {
+                    val compatMode by viewModel.compatMode.collectAsState()
+                    SwitchPreference(
+                        title = stringResource(id = R.string.preference_force_compat_system_colors),
+                        summary = stringResource(id = R.string.preference_force_compat_system_colors_summary),
+                        value = compatMode,
+                        onValueChanged = {
+                            viewModel.setCompatMode(it)
+                        }
+                    )
+                }
                 val font by viewModel.font.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_font),
