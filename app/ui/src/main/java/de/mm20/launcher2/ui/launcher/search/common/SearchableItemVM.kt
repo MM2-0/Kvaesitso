@@ -1,7 +1,9 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
+import android.os.Debug
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
@@ -19,6 +21,7 @@ import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.DeferredSearchable
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
@@ -44,6 +47,8 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
+
+    val isUpToDate = MutableStateFlow(true)
 
     val devicePoseProvider: DevicePoseProvider by inject()
 
@@ -174,7 +179,24 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         if (searchable is DeferredSearchable<*>) {
             val updated = searchable.updatedSelf ?: return
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = updated.await() ?: return@launch
+                this@SearchableItemVM.searchable.value = with (updated.await()) {
+                    when (this) {
+                        is UpdateResult.Success -> {
+                            isUpToDate.value = true
+                            this.result
+                        }
+                        is UpdateResult.TemporarilyUnavailable -> {
+                            isUpToDate.value = false
+                            return@launch
+                        }
+                        is UpdateResult.PermanentlyUnavailable -> {
+                            isUpToDate.value = false
+                            favoritesService.delete(searchable)
+                            // maybeNotifyUserOfInvalidation()
+                            null
+                        }
+                    }
+                }
             }
         }
     }

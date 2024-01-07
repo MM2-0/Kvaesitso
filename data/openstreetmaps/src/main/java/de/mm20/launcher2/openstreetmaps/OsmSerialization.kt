@@ -9,20 +9,19 @@ import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
-import okhttp3.internal.toImmutableList
+import kotlinx.coroutines.flow.first
 import org.json.JSONArray
 import org.json.JSONObject
+import retrofit2.HttpException
+import java.lang.IllegalStateException
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
+import kotlin.coroutines.cancellation.CancellationException
 
 class OsmLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
@@ -72,7 +71,8 @@ internal class OsmLocationDeserializer(
             id = id,
             latitude = json.getDouble("lat"),
             longitude = json.getDouble("lon"),
-            category = json.getString("category").runCatching { LocationCategory.valueOf(this) }.getOrNull(),
+            category = json.getString("category").runCatching { LocationCategory.valueOf(this) }
+                .getOrNull(),
             label = json.getString("label"),
             street = json.optString("street"),
             houseNumber = json.optString("houseNumber"),
@@ -81,7 +81,23 @@ internal class OsmLocationDeserializer(
             phoneNumber = json.optString("phoneNumber"),
             updatedAt = json.optLong("updatedAt"),
             updatedSelf = if (isOutdated) deferred {
-                osmRepository.get(id).firstOrNull()
+                try {
+                    UpdateResult.Success(osmRepository.get(id).first())
+                } catch (ce: CancellationException) {
+                    // network
+                    UpdateResult.TemporarilyUnavailable(ce)
+                } catch (e: NoSuchElementException) {
+                    // empty response
+                    UpdateResult.PermanentlyUnavailable(e)
+                } catch (he: HttpException) {
+                    when (he.code()) {
+                        in 400..499 -> UpdateResult.PermanentlyUnavailable(he)
+                        else -> UpdateResult.TemporarilyUnavailable(he)
+                    }
+                } catch (ise: IllegalStateException) {
+                    Log.e("OsmLocationDeserializer", "Deferred update unexpected failure", ise)
+                    UpdateResult.TemporarilyUnavailable(ise)
+                }
             } else null
         )
     }
@@ -94,6 +110,7 @@ internal class OsmLocationDeserializer(
             } ?: persistentListOf()
         )
     }
+
     private fun getOpeningHours(array: JSONArray): ImmutableList<OpeningHours> {
         val hours = mutableListOf<OpeningHours>()
 

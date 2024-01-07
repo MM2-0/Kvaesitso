@@ -12,6 +12,7 @@ import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -21,19 +22,16 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class OsmRepository(
     private val settings: LocationSearchSettings,
@@ -62,26 +60,22 @@ internal class OsmRepository(
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-    fun get(id: Long): Flow<Location?> = flow {
+    fun get(id: Long): Flow<Location> = flow {
         emit(searchForId(id))
     }
 
-    private suspend fun searchForId(id: Long): OsmLocation? = try {
-        overpassService.first()?.search(
+    private suspend fun searchForId(id: Long): OsmLocation {
+        val overpassService =
+            overpassService.first() ?: throw IllegalStateException("Overpass-service not available")
+
+        return overpassService.search(
             OverpassIdQuery(
                 id = id
             )
-        )
-    } catch (_: HttpException) {
-        null
-    } catch (_: CancellationException) {
-        null
-    } catch (e: Exception) {
-        Log.e("OsmRepository", "Failed to search for $id", e)
-        null
-    }?.let {
-        OsmLocation.fromOverpassResponse(it)
-    }?.firstOrNull()
+        ).let {
+            OsmLocation.fromOverpassResponse(it)
+        }.first()
+    }
 
     override fun search(query: String): Flow<ImmutableList<OsmLocation>> = channelFlow {
         send(persistentListOf())

@@ -5,21 +5,16 @@ import android.content.Intent
 import android.os.Bundle
 import android.net.Uri
 import android.util.Log
-import de.mm20.launcher2.coroutines.deferred
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.search.DeferredSearchable
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.map
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
@@ -41,7 +36,7 @@ internal data class OsmLocation(
     override val phoneNumber: String?,
     internal val updatedAt: Long,
     override val labelOverride: String? = null,
-    override val updatedSelf: Deferred<Location?>? = null,
+    override val updatedSelf: Deferred<UpdateResult<Location>>? = null,
 ) : Location, DeferredSearchable<Location> {
 
     override val domain: String

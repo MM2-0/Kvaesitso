@@ -5,10 +5,8 @@ import de.mm20.launcher2.searchable.SavableSearchableRepository
 import kotlinx.coroutines.flow.Flow
 
 class FavoritesService(
-    val searchableRepository: SavableSearchableRepository,
+    private val searchableRepository: SavableSearchableRepository,
 ) {
-
-
     fun getFavorites(
         includeTypes: List<String>? = null,
         excludeTypes: List<String>? = null,
@@ -27,6 +25,7 @@ class FavoritesService(
             limit = limit,
         )
     }
+
     fun isPinned(searchable: SavableSearchable): Flow<Boolean> {
         return searchableRepository.isPinned(searchable)
     }
@@ -87,5 +86,9 @@ class FavoritesService(
             manuallySorted = manuallySorted,
             automaticallySorted = automaticallySorted
         )
+    }
+
+    fun delete(searchable: SavableSearchable) {
+        searchableRepository.delete(searchable)
     }
 }
