@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
 import de.mm20.launcher2.searchable.SavableSearchableRepository
@@ -52,6 +53,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val dataStore: LauncherDataStore by inject()
     private val fileSearchSettings: FileSearchSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
+    private val devicePoseProvider: DevicePoseProvider by inject()
 
     val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -172,6 +174,11 @@ class SearchVM : ViewModel(), KoinComponent {
 
                     resultsList = resultsList.sortedWith { a, b ->
                         when {
+                            a is Location && b is Location && devicePoseProvider.lastLocation != null -> {
+                                a.distanceTo(devicePoseProvider.lastLocation!!)
+                                    .compareTo(b.distanceTo(devicePoseProvider.lastLocation!!))
+                            }
+
                             a is SavableSearchable && b !is SavableSearchable -> -1
                             a !is SavableSearchable && b is SavableSearchable -> 1
                             a is SavableSearchable && b is SavableSearchable -> {
@@ -186,6 +193,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                     else -> a.compareTo(b)
                                 }
                             }
+
                             else -> 0
                         }
                     }

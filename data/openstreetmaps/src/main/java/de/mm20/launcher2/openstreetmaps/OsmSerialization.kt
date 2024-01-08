@@ -86,9 +86,9 @@ internal class OsmLocationDeserializer(
                 } catch (ce: CancellationException) {
                     // network
                     UpdateResult.TemporarilyUnavailable(ce)
-                } catch (e: NoSuchElementException) {
+                } catch (nse: NoSuchElementException) {
                     // empty response
-                    UpdateResult.PermanentlyUnavailable(e)
+                    UpdateResult.PermanentlyUnavailable(nse)
                 } catch (he: HttpException) {
                     when (he.code()) {
                         in 400..499 -> UpdateResult.PermanentlyUnavailable(he)

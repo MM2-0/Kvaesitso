@@ -23,6 +23,9 @@ import kotlinx.coroutines.flow.combine
 class DevicePoseProvider internal constructor(
     private val context: Context
 ) {
+    var lastLocation: Location? = null
+        private set
+
     private var declination: Float? = null
     private fun updateDeclination(location: Location) {
         declination = GeomagneticField(
@@ -35,6 +38,7 @@ class DevicePoseProvider internal constructor(
 
     fun getLocation() = channelFlow {
         val locationCallback = LocationListener {
+            lastLocation = it
             updateDeclination(it)
             trySend(it)
         }
@@ -51,6 +55,7 @@ class DevicePoseProvider internal constructor(
                         ?: if (hasCoarseAccess) this@runCatching.getLastKnownLocation(LocationManager.NETWORK_PROVIDER) else null
 
                 if (location != null) {
+                    lastLocation = location
                     updateDeclination(location)
                     trySend(location)
                 }

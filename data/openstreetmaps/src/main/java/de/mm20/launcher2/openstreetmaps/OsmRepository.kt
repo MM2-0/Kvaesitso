@@ -148,9 +148,8 @@ internal class OsmRepository(
                                                     it.distanceTo(luckyFirst) > 100.0
                                         } + luckyFirst
                                 }
-                            }.sortedBy {
-                                it.distanceTo(userLocation)
-                            }.toImmutableList()
+                            }
+                            .toImmutableList()
                     )
                 }
             }
