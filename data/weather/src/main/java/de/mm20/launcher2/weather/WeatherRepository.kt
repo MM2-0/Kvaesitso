@@ -239,7 +239,7 @@ class WeatherUpdateWorker(
 
     @OptIn(FlowPreview::class)
     private suspend fun getLastKnownLocation(): LatLon? =
-        locationProvider.lastLocation.or {
-            locationProvider.getLocation().timeout(10.minutes).firstOrNull()
+        locationProvider.getLocation().timeout(10.minutes).firstOrNull().or {
+            locationProvider.lastLocation
         }?.let { LatLon(it.latitude, it.longitude) }
 }
