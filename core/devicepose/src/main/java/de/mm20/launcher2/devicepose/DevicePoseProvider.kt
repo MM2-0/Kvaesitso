@@ -36,7 +36,7 @@ class DevicePoseProvider internal constructor(
         ).declination
     }
 
-    fun getLocation() = channelFlow {
+    fun getLocation(minTimeMs: Long = 1000, minDistanceM: Float = 1f) = channelFlow {
         val locationCallback = LocationListener {
             lastLocation = it
             updateDeclination(it)
@@ -63,16 +63,16 @@ class DevicePoseProvider internal constructor(
                 if (hasFineAccess) {
                     this@runCatching.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
-                        1000,
-                        1f,
+                        minTimeMs,
+                        minDistanceM,
                         locationCallback
                     )
                 }
                 if (hasCoarseAccess) {
                     this@runCatching.requestLocationUpdates(
                         LocationManager.NETWORK_PROVIDER,
-                        1000,
-                        1f,
+                        minTimeMs,
+                        minDistanceM,
                         locationCallback
                     )
                 }

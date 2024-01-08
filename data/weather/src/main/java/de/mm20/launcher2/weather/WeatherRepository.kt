@@ -1,14 +1,11 @@
 package de.mm20.launcher2.weather
 
-import android.Manifest
 import android.content.Context
-import android.location.Location
-import android.location.LocationManager
 import android.util.Log
-import androidx.core.content.getSystemService
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
-import de.mm20.launcher2.ktx.checkPermission
+import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
@@ -18,14 +15,14 @@ import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
 import de.mm20.launcher2.weather.settings.LatLon
-import de.mm20.launcher2.weather.settings.ProviderSettings
 import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import java.time.Duration
 import java.util.*
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 interface WeatherRepository {
     fun getProviders(): Flow<List<WeatherProviderInfo>>
@@ -42,20 +39,20 @@ internal class WeatherRepositoryImpl(
     private val database: AppDatabase,
     private val settings: WeatherSettings,
     private val pluginRepository: PluginRepository,
+    private val locationProvider: DevicePoseProvider
 ) : WeatherRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-
 
     private val permissionsManager: PermissionsManager by inject()
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-
     override fun getForecasts(limit: Int?): Flow<List<Forecast>> {
         return database.weatherDao().getForecasts(limit ?: 99999)
             .map { it.map { Forecast(it) } }
     }
+
     override fun getDailyForecasts(): Flow<List<DailyForecast>> {
         return database.weatherDao().getForecasts()
             .map { it.map { Forecast(it) } }
@@ -73,8 +70,12 @@ internal class WeatherRepositoryImpl(
 
     init {
         val weatherRequest =
-            PeriodicWorkRequest.Builder(WeatherUpdateWorker::class.java, 60, TimeUnit.MINUTES)
-                .build()
+            PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMinutes(60))
+                .setInputData(
+                    workDataOf(
+                        "PROVIDER" to locationProvider
+                    )
+                ).build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "weather",
             ExistingPeriodicWorkPolicy.KEEP, weatherRequest
@@ -134,8 +135,13 @@ internal class WeatherRepositoryImpl(
 
 
     private fun requestUpdate() {
-        val weatherRequest = OneTimeWorkRequest.Builder(WeatherUpdateWorker::class.java)
+        val weatherRequest = OneTimeWorkRequestBuilder<WeatherUpdateWorker>()
             .addTag("weather")
+            .setInputData(
+                workDataOf(
+                    "PROVIDER" to locationProvider
+                )
+            )
             .build()
         WorkManager.getInstance(context).enqueue(weatherRequest)
     }
@@ -151,15 +157,35 @@ internal class WeatherRepositoryImpl(
 
     override fun getProviders(): Flow<List<WeatherProviderInfo>> {
         val providers = mutableListOf<WeatherProviderInfo>()
-        providers.add(WeatherProviderInfo(BrightSkyProvider.Id, context.getString(R.string.provider_brightsky)))
+        providers.add(
+            WeatherProviderInfo(
+                BrightSkyProvider.Id,
+                context.getString(R.string.provider_brightsky)
+            )
+        )
         if (OpenWeatherMapProvider.isAvailable(context)) {
-            providers.add(WeatherProviderInfo(OpenWeatherMapProvider.Id, context.getString(R.string.provider_openweathermap)))
+            providers.add(
+                WeatherProviderInfo(
+                    OpenWeatherMapProvider.Id,
+                    context.getString(R.string.provider_openweathermap)
+                )
+            )
         }
         if (MetNoProvider.isAvailable(context)) {
-            providers.add(WeatherProviderInfo(MetNoProvider.Id, context.getString(R.string.provider_metno)))
+            providers.add(
+                WeatherProviderInfo(
+                    MetNoProvider.Id,
+                    context.getString(R.string.provider_metno)
+                )
+            )
         }
         if (HereProvider.isAvailable(context)) {
-            providers.add(WeatherProviderInfo(HereProvider.Id, context.getString(R.string.provider_here)))
+            providers.add(
+                WeatherProviderInfo(
+                    HereProvider.Id,
+                    context.getString(R.string.provider_here)
+                )
+            )
         }
         val pluginProviders = pluginRepository.findMany(type = PluginType.Weather, enabled = true)
         return pluginProviders.map {
@@ -170,7 +196,10 @@ internal class WeatherRepositoryImpl(
     }
 }
 
-class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
+class WeatherUpdateWorker(
+    val context: Context,
+    params: WorkerParameters
+) :
     CoroutineWorker(context, params), KoinComponent {
 
     private val appDatabase: AppDatabase by inject()
@@ -189,8 +218,14 @@ class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
             return Result.failure()
         }
 
+        val locationProvider = inputData.keyValueMap["PROVIDER"] as DevicePoseProvider?
+        if (locationProvider == null) {
+            Log.d("WeatherUpdateWorker", "No locationProvider in inputData")
+            return Result.failure()
+        }
+
         val weatherData = if (settingsData.autoLocation) {
-            val latLon = getLastKnownLocation() ?: settingsData.lastLocation
+            val latLon = getLastKnownLocation(locationProvider) ?: settingsData.lastLocation
             if (latLon == null) {
                 Log.e("WeatherUpdateWorker", "Could not get location")
                 return Result.failure()
@@ -218,15 +253,9 @@ class WeatherUpdateWorker(val context: Context, params: WorkerParameters) :
         }
     }
 
-    private fun getLastKnownLocation(): LatLon? {
-        val lm = context.getSystemService<LocationManager>()!!
-        var location: Location? = null
-        if (context.checkPermission(Manifest.permission.ACCESS_FINE_LOCATION)) {
-            location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
-        }
-        if (location == null && context.checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
-        }
-        return location?.let { LatLon(it.latitude, it.longitude) }
-    }
+    @OptIn(FlowPreview::class)
+    private suspend fun getLastKnownLocation(provider: DevicePoseProvider): LatLon? =
+        provider.lastLocation.or {
+            provider.getLocation().timeout(5.seconds).firstOrNull()
+        }?.let { LatLon(it.latitude, it.longitude) }
 }
