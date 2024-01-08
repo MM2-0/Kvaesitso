@@ -12,7 +12,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val weatherModule = module {
-    single<WeatherRepository> { WeatherRepositoryImpl(androidContext(), get(), get(), get(), get()) }
+    single<WeatherRepository> { WeatherRepositoryImpl(androidContext(), get(), get(), get()) }
     single<WeatherSettings> { WeatherSettings(androidContext()) }
     factory<Backupable>(named<WeatherSettings>()) { get<WeatherSettings>() }
     factory<WeatherProvider> { (providerId: String) ->

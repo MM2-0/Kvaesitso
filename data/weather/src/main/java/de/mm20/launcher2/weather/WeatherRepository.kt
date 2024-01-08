@@ -38,8 +38,7 @@ internal class WeatherRepositoryImpl(
     private val context: Context,
     private val database: AppDatabase,
     private val settings: WeatherSettings,
-    private val pluginRepository: PluginRepository,
-    private val locationProvider: DevicePoseProvider
+    private val pluginRepository: PluginRepository
 ) : WeatherRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -71,11 +70,7 @@ internal class WeatherRepositoryImpl(
     init {
         val weatherRequest =
             PeriodicWorkRequestBuilder<WeatherUpdateWorker>(Duration.ofMinutes(60))
-                .setInputData(
-                    workDataOf(
-                        "PROVIDER" to locationProvider
-                    )
-                ).build()
+                .build()
         WorkManager.getInstance(context).enqueueUniquePeriodicWork(
             "weather",
             ExistingPeriodicWorkPolicy.KEEP, weatherRequest
@@ -137,11 +132,6 @@ internal class WeatherRepositoryImpl(
     private fun requestUpdate() {
         val weatherRequest = OneTimeWorkRequestBuilder<WeatherUpdateWorker>()
             .addTag("weather")
-            .setInputData(
-                workDataOf(
-                    "PROVIDER" to locationProvider
-                )
-            )
             .build()
         WorkManager.getInstance(context).enqueue(weatherRequest)
     }
@@ -199,11 +189,11 @@ internal class WeatherRepositoryImpl(
 class WeatherUpdateWorker(
     val context: Context,
     params: WorkerParameters
-) :
-    CoroutineWorker(context, params), KoinComponent {
+) : CoroutineWorker(context, params), KoinComponent {
 
     private val appDatabase: AppDatabase by inject()
     private val settings: WeatherSettings by inject()
+    private val locationProvider: DevicePoseProvider by inject()
 
     override suspend fun doWork(): Result {
         Log.d("WeatherUpdateWorker", "Requesting weather data")
@@ -218,14 +208,8 @@ class WeatherUpdateWorker(
             return Result.failure()
         }
 
-        val locationProvider = inputData.keyValueMap["PROVIDER"] as DevicePoseProvider?
-        if (locationProvider == null) {
-            Log.d("WeatherUpdateWorker", "No locationProvider in inputData")
-            return Result.failure()
-        }
-
         val weatherData = if (settingsData.autoLocation) {
-            val latLon = getLastKnownLocation(locationProvider) ?: settingsData.lastLocation
+            val latLon = getLastKnownLocation() ?: settingsData.lastLocation
             if (latLon == null) {
                 Log.e("WeatherUpdateWorker", "Could not get location")
                 return Result.failure()
@@ -254,8 +238,8 @@ class WeatherUpdateWorker(
     }
 
     @OptIn(FlowPreview::class)
-    private suspend fun getLastKnownLocation(provider: DevicePoseProvider): LatLon? =
-        provider.lastLocation.or {
-            provider.getLocation().timeout(5.seconds).firstOrNull()
+    private suspend fun getLastKnownLocation(): LatLon? =
+        locationProvider.lastLocation.or {
+            locationProvider.getLocation().timeout(5.seconds).firstOrNull()
         }?.let { LatLon(it.latitude, it.longitude) }
 }
