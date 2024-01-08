@@ -90,7 +90,9 @@ internal class OsmRepository(
             settings.data.collectLatest dataStore@{ settings ->
                 if (!settings.enabled) return@dataStore
 
-                val userLocation = poseProvider.getLocation().firstOrNull() ?: return@dataStore
+                val userLocation =
+                    poseProvider.getLocation().firstOrNull() ?: poseProvider.lastLocation
+                    ?: return@dataStore
 
                 withContext(Dispatchers.IO) {
                     httpClient.dispatcher.cancelAll()

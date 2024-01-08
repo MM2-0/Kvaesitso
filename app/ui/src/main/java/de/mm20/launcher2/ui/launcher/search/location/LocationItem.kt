@@ -93,7 +93,7 @@ fun LocationItem(
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
-    }.collectAsStateWithLifecycle(null)
+    }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
