@@ -56,7 +56,7 @@ internal class OsmRepository(
             CrashReporter.logException(e)
             null
         }
-    }.stateIn(scope, SharingStarted.Lazily, null)
+    }.stateIn(scope, SharingStarted.Eagerly, null)
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 

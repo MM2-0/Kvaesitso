@@ -1,7 +1,6 @@
 package de.mm20.launcher2.search
 
 import kotlinx.coroutines.Deferred
-import java.lang.Exception
 
 /**
  * Interface that can be implemented by [SavableSearchable]s to provide a way to update itself.

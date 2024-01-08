@@ -1,6 +1,5 @@
 package de.mm20.launcher2.coroutines
 
-import android.util.Log
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.sync.Mutex

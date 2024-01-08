@@ -7,16 +7,19 @@ import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -26,6 +29,7 @@ import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TravelExplore
+import androidx.compose.material.icons.twotone.CloudOff
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -96,6 +100,8 @@ fun LocationItem(
     }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
     val insaneUnits by viewModel.useInsaneUnits.collectAsState()
 
+    val isUpToDate by viewModel.isUpToDate.collectAsState()
+
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
     var showBugreportDialog by remember { mutableStateOf(false) }
@@ -115,11 +121,33 @@ fun LocationItem(
                 ) {
                     val icon by viewModel.icon.collectAsStateWithLifecycle()
                     val badge by viewModel.badge.collectAsState(null)
-                    ShapedLauncherIcon(
-                        size = 48.dp,
-                        icon = { icon },
-                        badge = { badge },
-                    )
+                    Box(
+                        modifier = Modifier
+                            .size(52.dp)
+                            .aspectRatio(1f)
+                    ) {
+                        ShapedLauncherIcon(
+                            size = 48.dp,
+                            icon = { icon },
+                            badge = { badge },
+                        )
+                        androidx.compose.animation.AnimatedVisibility(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .size(20.dp),
+                            visible = !isUpToDate,
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .matchParentSize()
+                                    .clickable {
+                                        viewModel.requestUpdatedDeferredSearchable()
+                                    },
+                                imageVector = Icons.TwoTone.CloudOff,
+                                contentDescription = stringResource(id = R.string.cached_searchable)
+                            )
+                        }
+                    }
                 }
                 Column(
                     modifier = Modifier.fillMaxWidth(.75f),

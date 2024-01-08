@@ -892,4 +892,5 @@
     <string name="plugin_type_weather">Weather provider</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
+    <string name="cached_searchable">This value could be outdated because of connectivity issues.</string>
 </resources>

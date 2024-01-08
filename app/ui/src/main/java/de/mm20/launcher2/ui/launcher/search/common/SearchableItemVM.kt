@@ -183,6 +183,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true
+                            favoritesService.upsert(this.result)
                             this.result
                         }
                         is UpdateResult.TemporarilyUnavailable -> {
@@ -192,7 +193,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                         is UpdateResult.PermanentlyUnavailable -> {
                             isUpToDate.value = false
                             favoritesService.delete(searchable)
-                            // maybeNotifyUserOfInvalidation()
+                            // notifyUserOfInvalidation()
                             null
                         }
                     }

@@ -91,4 +91,8 @@ class FavoritesService(
     fun delete(searchable: SavableSearchable) {
         searchableRepository.delete(searchable)
     }
+
+    fun upsert(searchable: SavableSearchable) {
+        searchableRepository.upsert(searchable)
+    }
 }
