@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
@@ -209,6 +210,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                                 R.string.unavailable_searchable,
                                 Toast.LENGTH_LONG
                             ).show()
+                            Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
                             null
                         }
                     }
