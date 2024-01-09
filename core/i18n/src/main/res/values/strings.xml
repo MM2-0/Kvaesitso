@@ -892,5 +892,7 @@
     <string name="plugin_type_weather">Weather provider</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
-    <string name="cached_searchable">This value could be outdated because of connectivity issues.</string>
+    <!-- the request to update the location item failed due to internet connectivity issues (keep it short, it is displayed as a toast) -->
+    <string name="cached_searchable">This value is possibly outdated because of connectivity issues.</string>
+    <string name="unavailable_searchable">This item does not exist anymore.</string>
 </resources>

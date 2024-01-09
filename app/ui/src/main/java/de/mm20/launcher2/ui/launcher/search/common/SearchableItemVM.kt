@@ -1,9 +1,8 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
-import android.os.Debug
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
@@ -18,13 +17,15 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.DeferredSearchable
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -37,7 +38,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration.Companion.hours
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val badgeService: BadgeService by inject()
@@ -174,26 +177,38 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         favoritesService.reset(searchable)
     }
 
-    fun requestUpdatedDeferredSearchable() {
+    private var shouldRetryUpdate = false
+
+    fun requestUpdatedSearchable(context: Context) {
         val searchable = searchable.value ?: return
-        if (searchable is DeferredSearchable<*>) {
-            val updated = searchable.updatedSelf ?: return
+        if (searchable is UpdatableSearchable<*>) {
+            val updatedSelf = searchable.updatedSelf ?: return
+            if (!shouldRetryUpdate && System.currentTimeMillis() < searchable.timestamp + 1.hours.inWholeMilliseconds) return
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = with (updated.await()) {
+                this@SearchableItemVM.searchable.value = with(updatedSelf()) {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true
+                            shouldRetryUpdate = false
                             favoritesService.upsert(this.result)
                             this.result
                         }
+
                         is UpdateResult.TemporarilyUnavailable -> {
                             isUpToDate.value = false
+                            shouldRetryUpdate = true
                             return@launch
                         }
+
                         is UpdateResult.PermanentlyUnavailable -> {
                             isUpToDate.value = false
+                            shouldRetryUpdate = false
                             favoritesService.delete(searchable)
-                            // notifyUserOfInvalidation()
+                            Toast.makeText(
+                                context,
+                                R.string.unavailable_searchable,
+                                Toast.LENGTH_LONG
+                            ).show()
                             null
                         }
                     }

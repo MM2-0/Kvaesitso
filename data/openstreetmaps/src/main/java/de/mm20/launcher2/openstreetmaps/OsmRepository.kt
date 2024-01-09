@@ -9,6 +9,7 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.SearchableRepository
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -32,6 +33,7 @@ import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.UnknownHostException
 
 internal class OsmRepository(
     private val settings: LocationSearchSettings,
@@ -60,24 +62,42 @@ internal class OsmRepository(
 
     private val hasLocationPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-    fun get(id: Long): Flow<Location> = flow {
-        emit(searchForId(id))
-    }
-
-    private suspend fun searchForId(id: Long): OsmLocation {
+    internal suspend fun update(
+        id: Long
+    ): UpdateResult<Location> = try {
         val overpassService =
             overpassService.first() ?: throw IllegalStateException("Overpass-service not available")
 
-        return overpassService.search(
+        val loc = overpassService.search(
             OverpassIdQuery(
                 id = id
             )
         ).let {
             OsmLocation.fromOverpassResponse(it)
-        }.first()
+        }.first().apply { updatedSelf = { update(id) } }
+
+        UpdateResult.Success(loc)
+    } catch (ce: CancellationException) {
+        UpdateResult.TemporarilyUnavailable(ce)
+    } catch (ue: UnknownHostException) {
+        UpdateResult.TemporarilyUnavailable(ue)
+    } catch (nse: NoSuchElementException) {
+        // empty response
+        UpdateResult.PermanentlyUnavailable(nse)
+    } catch (he: HttpException) {
+        when (he.code()) {
+            in 400..499 -> UpdateResult.PermanentlyUnavailable(he)
+            else -> UpdateResult.TemporarilyUnavailable(he)
+        }
+    } catch (ise: java.lang.IllegalStateException) {
+        Log.e("OsmLocationDeserializer", "Deferred update unexpected failure", ise)
+        UpdateResult.TemporarilyUnavailable(ise)
+    } catch (e: Exception) {
+        CrashReporter.logException(e)
+        UpdateResult.TemporarilyUnavailable(e)
     }
 
-    override fun search(query: String): Flow<ImmutableList<OsmLocation>> = channelFlow {
+    override fun search(query: String): Flow<ImmutableList<Location>> = channelFlow {
         send(persistentListOf())
 
         // values higher than 2 might block searches for "dm"

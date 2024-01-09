@@ -2,9 +2,19 @@ package de.mm20.launcher2.ui.launcher.search.location
 
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.AnimationSpec
+import androidx.compose.animation.core.EaseInBack
+import androidx.compose.animation.core.EaseInOutBounce
+import androidx.compose.animation.core.EaseInOutElastic
+import androidx.compose.animation.core.EaseOutBack
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.fadeIn
@@ -16,6 +26,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -37,13 +48,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Rect
@@ -53,8 +70,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
+import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -73,6 +92,7 @@ import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -89,7 +109,7 @@ fun LocationItem(
     modifier: Modifier = Modifier,
     location: Location,
     showDetails: Boolean,
-    onBack: () -> Unit
+    onBack: () -> Unit,
 ) {
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
@@ -131,20 +151,39 @@ fun LocationItem(
                             icon = { icon },
                             badge = { badge },
                         )
-                        androidx.compose.animation.AnimatedVisibility(
-                            modifier = Modifier
+                        var targetIconAnimationValue by remember { mutableFloatStateOf(0f) }
+                        LaunchedEffect(isUpToDate) {
+                            targetIconAnimationValue = if (isUpToDate) 0f else 1f
+                        }
+                        val animatedIconAlpha by animateFloatAsState(
+                            targetValue = targetIconAnimationValue,
+                            animationSpec = tween(delayMillis = 275)
+                        )
+                        val animatedIconSize by animateDpAsState(
+                            targetValue = targetIconAnimationValue * 20.dp,
+                            animationSpec = tween(delayMillis = 275, easing = EaseOutBack)
+                        )
+                        Box(
+                            Modifier
+                                .size(22.dp)
                                 .align(Alignment.BottomEnd)
-                                .size(20.dp),
-                            visible = !isUpToDate,
                         ) {
                             Icon(
                                 modifier = Modifier
-                                    .matchParentSize()
+                                    .size(animatedIconSize)
+                                    .alpha(animatedIconAlpha)
+                                    .align(Alignment.Center)
                                     .clickable {
-                                        viewModel.requestUpdatedDeferredSearchable()
+                                        Toast
+                                            .makeText(
+                                                context,
+                                                R.string.cached_searchable,
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
                                     },
                                 imageVector = Icons.TwoTone.CloudOff,
-                                contentDescription = stringResource(id = R.string.cached_searchable)
+                                contentDescription = null
                             )
                         }
                     }

@@ -12,12 +12,10 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.DeferredSearchable
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.InnerCard
-import de.mm20.launcher2.ui.ktx.asState
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarItem
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -45,7 +43,7 @@ fun ListItem(
     }
     
     LaunchedEffect(showDetails) {
-        if (showDetails) viewModel.requestUpdatedDeferredSearchable()
+        if (showDetails) viewModel.requestUpdatedSearchable(context)
     }
 
     val item = viewModel.searchable.collectAsState().value ?: item

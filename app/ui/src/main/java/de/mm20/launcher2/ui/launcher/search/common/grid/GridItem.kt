@@ -100,7 +100,7 @@ fun GridItem(
     val hapticFeedback = LocalHapticFeedback.current
 
     LaunchedEffect(showPopup) {
-        if (showPopup) viewModel.requestUpdatedDeferredSearchable()
+        if (showPopup) viewModel.requestUpdatedSearchable(context)
     }
 
     Column(
