@@ -64,37 +64,46 @@ internal class OsmRepository(
 
     internal suspend fun update(
         id: Long
-    ): UpdateResult<Location> = try {
-        val overpassService =
-            overpassService.first() ?: throw IllegalStateException("Overpass-service not available")
-
-        val loc = overpassService.search(
+    ): UpdateResult<Location> = overpassService.first()?.runCatching {
+        this.search(
             OverpassIdQuery(
                 id = id
             )
         ).let {
             OsmLocation.fromOverpassResponse(it)
-        }.first().apply { updatedSelf = { update(id) } }
-
-        UpdateResult.Success(loc)
-    } catch (ce: CancellationException) {
-        UpdateResult.TemporarilyUnavailable(ce)
-    } catch (ue: UnknownHostException) {
-        UpdateResult.TemporarilyUnavailable(ue)
-    } catch (nse: NoSuchElementException) {
-        // empty response
-        UpdateResult.PermanentlyUnavailable(nse)
-    } catch (he: HttpException) {
-        when (he.code()) {
-            in 400..499 -> UpdateResult.PermanentlyUnavailable(he)
-            else -> UpdateResult.TemporarilyUnavailable(he)
+        }.first().apply {
+            updatedSelf = { update(id) }
         }
-    } catch (ise: java.lang.IllegalStateException) {
-        Log.e("OsmLocationDeserializer", "Deferred update unexpected failure", ise)
-        UpdateResult.TemporarilyUnavailable(ise)
-    } catch (e: Exception) {
-        CrashReporter.logException(e)
-        UpdateResult.TemporarilyUnavailable(e)
+    }?.fold(
+        onSuccess = { UpdateResult.Success(it) },
+        onFailure = {
+            when (it) {
+                is CancellationException, is UnknownHostException -> {
+                    // network
+                    UpdateResult.TemporarilyUnavailable(it)
+                }
+
+                is HttpException -> when (it.code()) {
+                    in 400..499 -> UpdateResult.PermanentlyUnavailable(it)
+                    else -> UpdateResult.TemporarilyUnavailable(it)
+                }
+
+                is NoSuchElementException -> {
+                    // empty response
+                    UpdateResult.PermanentlyUnavailable(it)
+                }
+
+                else -> {
+                    if (it is Exception) {
+                        CrashReporter.logException(it)
+                    }
+                    UpdateResult.TemporarilyUnavailable(it)
+                }
+            }
+        }
+    ) ?: let {
+        Log.e("OsmLocationDeserializer", "overpassService was not initialized")
+        UpdateResult.TemporarilyUnavailable()
     }
 
     override fun search(query: String): Flow<ImmutableList<Location>> = channelFlow {
