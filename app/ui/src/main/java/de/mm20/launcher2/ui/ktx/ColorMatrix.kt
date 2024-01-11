@@ -5,9 +5,6 @@ import de.mm20.launcher2.ktx.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
-// inspiration from darkreader
-// https://github.com/darkreader/darkreader/blob/main/src/generators/utils/matrix.ts
-
 fun ColorMatrix.invert(fraction: Float, withAlpha: Boolean = false): ColorMatrix {
     assert(fraction in 0f..1f)
     val scale = -2f * fraction + 1f
