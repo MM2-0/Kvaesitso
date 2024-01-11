@@ -34,8 +34,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
@@ -51,6 +51,7 @@ import coil.disk.DiskCache
 import coil.memory.MemoryCache
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
@@ -58,6 +59,11 @@ import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.ui.ktx.contrast
+import de.mm20.launcher2.ui.ktx.hue
+import de.mm20.launcher2.ui.ktx.invert
+import de.mm20.launcher2.ui.ktx.hueRotate
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
@@ -87,7 +93,8 @@ fun MapTiles(
     osmAttribution: String? = "© OpenStreetMap",
 ) {
     val context = LocalContext.current
-    val tintColor = MaterialTheme.colorScheme.surfaceContainerHigh
+    val tintColor = MaterialTheme.colorScheme.primary
+    val darkMode = LocalDarkTheme.current
 
     val previousZoomLevel = remember { mutableIntStateOf(-1) }
     val (start, stop, zoom) = remember(userLocation) {
@@ -110,6 +117,23 @@ fun MapTiles(
     val sideLength = stop.x - start.x + 1
 
     val imageStates = remember { (0 until numberOfTiles).map { false }.toMutableStateList() }
+
+    val colorMatrix = remember(applyTheming, darkMode, tintColor) {
+        // darkreader css for openstreetmap tiles
+        // invert(93.7%) hue-rotate(180deg) contrast(90.6%)
+        val tintHueDeg = tintColor.hue * 180f / Float.PI
+        if (!darkMode && !applyTheming) {
+            null
+        } else if (darkMode) {
+            ColorMatrix()
+                .invert(0.937f)
+                .hueRotate(180f + if (applyTheming) tintHueDeg else 0f)
+                .contrast(0.906f)
+        } else {
+            ColorMatrix()
+                .hueRotate(tintHueDeg)
+        }
+    }
 
     Box(
         modifier = modifier,
@@ -136,16 +160,17 @@ fun MapTiles(
                                 )
                                 .build(),
                             contentDescription = null,
-                            colorFilter = if (applyTheming) ColorFilter.tint(
-                                tintColor,
-                                BlendMode.Saturation
-                            ) else null,
+                            colorFilter = colorMatrix?.let { ColorFilter.colorMatrix(it) },
                             onState = {
                                 val stateIndex =
                                     (y - start.y) * (stop.y - start.y + 1) + (x - start.x)
                                 when (it) {
-                                    is AsyncImagePainter.State.Loading -> imageStates[stateIndex] = false
-                                    is AsyncImagePainter.State.Success -> imageStates[stateIndex] = true
+                                    is AsyncImagePainter.State.Loading -> imageStates[stateIndex] =
+                                        false
+
+                                    is AsyncImagePainter.State.Success -> imageStates[stateIndex] =
+                                        true
+
                                     is AsyncImagePainter.State.Error -> {
                                         imageStates[stateIndex] = false
                                         Log.e(
@@ -154,6 +179,7 @@ fun MapTiles(
                                             it.result.throwable
                                         )
                                     }
+
                                     else -> {}
                                 }
                             }
@@ -483,7 +509,7 @@ private fun MapTilesPreview() {
                 borderShape
             )
             .clip(borderShape),
-        tileServerUrl = "https://tile.openstreetmap.org",
+        tileServerUrl = "http://tile.openstreetmap.org",
         location = MockLocation,
         initialZoomLevel = 19,
         numberOfTiles = 9,
