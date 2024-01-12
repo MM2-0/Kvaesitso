@@ -157,7 +157,7 @@ fun LocationItem(
                                     .size(animatedIconSize)
                                     .alpha(animatedIconAlpha)
                                     .align(Alignment.Center)
-                                    .clickable {
+                                    .clickable(!isUpToDate) {
                                         Toast
                                             .makeText(
                                                 context,
