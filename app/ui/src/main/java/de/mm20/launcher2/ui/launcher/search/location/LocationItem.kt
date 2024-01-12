@@ -138,10 +138,7 @@ fun LocationItem(
                             icon = { icon },
                             badge = { badge },
                         )
-                        var targetIconAnimationValue by remember { mutableFloatStateOf(0f) }
-                        LaunchedEffect(isUpToDate) {
-                            targetIconAnimationValue = if (isUpToDate) 0f else 1f
-                        }
+                        val targetIconAnimationValue = if (isUpToDate) 0f else 1f
                         val animatedIconAlpha by animateFloatAsState(
                             targetValue = targetIconAnimationValue,
                             animationSpec = tween(delayMillis = 275)
