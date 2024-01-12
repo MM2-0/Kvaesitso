@@ -47,12 +47,3 @@ fun ColorMatrix.contrast(contrast: Float): ColorMatrix {
     )
     return this
 }
-
-val NHueInvertColorMatrix = ColorMatrix(
-    floatArrayOf(
-        0.333f, -0.667f, -0.667f, 0f, 1f,
-        -0.667f, 0.333f, -0.667f, 0f, 1f,
-        -0.667f, -0.667f, 0.333f, 0f, 1f,
-        0f, 0f, 0f, 1f, 0f,
-    )
-)

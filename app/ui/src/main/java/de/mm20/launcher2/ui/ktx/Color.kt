@@ -2,10 +2,8 @@ package de.mm20.launcher2.ui.ktx
 
 import androidx.compose.ui.graphics.Color
 import hct.Hct
-import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.roundToInt
-import kotlin.math.sqrt
 
 fun Color.toHexString(): String {
     val red = (this.red * 255).roundToInt()
@@ -24,8 +22,9 @@ fun Color.Companion.hct(hue: Float, chroma: Float, tone: Float): Color {
 
 val Color.hue: Float
     get() {
-        val R = this.red / 255f
-        val G = this.green / 255f
-        val B = this.blue / 255f
-        return atan2(sqrt(3f) * (G - B), 2 * R - G - B)
+        val r = this.red / 255f
+        val g = this.green / 255f
+        val b = this.blue / 255f
+        // sqrt(3)
+        return atan2(1.7320508f * (g - b), 2f * r - g - b)
     }
