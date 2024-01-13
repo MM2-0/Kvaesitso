@@ -64,7 +64,6 @@ internal class OsmLocationDeserializer(
         val json = JSONObject(serialized)
         val id = json.getLong("id")
 
-        // empty response
         return OsmLocation(
             id = id,
             latitude = json.getDouble("lat"),
@@ -74,7 +73,7 @@ internal class OsmLocationDeserializer(
             label = json.getString("label"),
             street = json.optString("street"),
             houseNumber = json.optString("houseNumber"),
-            openingSchedule = null,
+            openingSchedule = json.optJSONObject("openingSchedule")?.let { getOpeningSchedule(it) },
             websiteUrl = json.optString("websiteUrl"),
             phoneNumber = json.optString("phoneNumber"),
             timestamp = json.optLong("timestamp"),
