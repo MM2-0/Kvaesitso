@@ -36,6 +36,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
@@ -161,6 +162,7 @@ fun MapTiles(
                                 .build(),
                             contentDescription = null,
                             colorFilter = colorMatrix?.let { ColorFilter.colorMatrix(it) },
+                            filterQuality = FilterQuality.High,
                             onState = {
                                 val stateIndex =
                                     (y - start.y) * (stop.y - start.y + 1) + (x - start.x)

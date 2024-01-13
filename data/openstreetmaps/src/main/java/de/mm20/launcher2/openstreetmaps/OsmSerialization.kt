@@ -1,7 +1,5 @@
 package de.mm20.launcher2.openstreetmaps
 
-import android.util.Log
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
@@ -9,20 +7,14 @@ import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
-import kotlinx.coroutines.flow.first
 import org.json.JSONArray
 import org.json.JSONObject
-import retrofit2.HttpException
-import java.lang.IllegalStateException
-import java.net.UnknownHostException
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
-import kotlin.coroutines.cancellation.CancellationException
 
 class OsmLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
@@ -71,11 +63,11 @@ internal class OsmLocationDeserializer(
             category = json.getString("category").runCatching { LocationCategory.valueOf(this) }
                 .getOrNull(),
             label = json.getString("label"),
-            street = json.optString("street"),
-            houseNumber = json.optString("houseNumber"),
+            street = json.optString("street").takeIf { it.isNotBlank() },
+            houseNumber = json.optString("houseNumber").takeIf { it.isNotBlank() },
             openingSchedule = json.optJSONObject("openingSchedule")?.let { getOpeningSchedule(it) },
-            websiteUrl = json.optString("websiteUrl"),
-            phoneNumber = json.optString("phoneNumber"),
+            websiteUrl = json.optString("websiteUrl").takeIf { it.isNotBlank() },
+            phoneNumber = json.optString("phoneNumber").takeIf { it.isNotBlank() },
             timestamp = json.optLong("timestamp"),
             updatedSelf = { osmRepository.update(id) }
         )
