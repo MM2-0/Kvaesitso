@@ -108,8 +108,8 @@ internal data class OsmLocation(
                 street = it.tags["addr:street"],
                 houseNumber = it.tags["addr:housenumber"],
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
-                websiteUrl = it.tags["website"],
-                phoneNumber = it.tags["phone"],
+                websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
+                phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
                 timestamp = System.currentTimeMillis(),
             )
         }
