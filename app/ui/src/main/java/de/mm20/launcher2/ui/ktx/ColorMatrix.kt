@@ -10,9 +10,9 @@ fun ColorMatrix.invert(fraction: Float, withAlpha: Boolean = false): ColorMatrix
     val scale = -2f * fraction + 1f
     this *= ColorMatrix().apply {
         setToScale(scale, scale, scale, if (withAlpha) scale else 1f)
-        this[0,4] = 255f
-        this[1,4] = 255f
-        this[2,4] = 255f
+        this[0, 4] = 255f
+        this[1, 4] = 255f
+        this[2, 4] = 255f
     }
     return this
 }
@@ -43,6 +43,35 @@ fun ColorMatrix.contrast(contrast: Float): ColorMatrix {
             0f, contrast, 0f, 0f, 0f,
             0f, 0f, contrast, 0f, 0f,
             0f, 0f, 0f, 1f, 0f
+        )
+    )
+    return this
+}
+
+// https://github.com/darkreader/darkreader/blob/b1bbaa74b6bd460556ab0c2a8d8e20c562e05e9b/src/generators/utils/matrix.ts#L75
+fun ColorMatrix.sepia(amount: Float): ColorMatrix {
+    this *= ColorMatrix(
+        floatArrayOf(
+            0.393f + 0.607f * (1f - amount),
+            0.769f - 0.769f * (1f - amount),
+            0.189f - 0.189f * (1f - amount),
+            0f,
+            0f,
+            0.349f - 0.349f * (1f - amount),
+            0.686f + 0.314f * (1 - amount),
+            0.168f - 0.168f * (1f - amount),
+            0f,
+            0f,
+            0.272f - 0.272f * (1f - amount),
+            0.534f - 0.534f * (1 - amount),
+            0.131f + 0.869f * (1f - amount),
+            0f,
+            0f,
+            0f,
+            0f,
+            0f,
+            1f,
+            0f,
         )
     )
     return this

@@ -5,7 +5,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.compose.animation.core.EaseInOutBounce
+import androidx.compose.animation.core.EaseInOutCirc
+import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateOffsetAsState
@@ -34,10 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
@@ -94,7 +97,7 @@ fun MapTiles(
     osmAttribution: String? = "© OpenStreetMap",
 ) {
     val context = LocalContext.current
-    val tintColor = MaterialTheme.colorScheme.primary
+    val tintColor = MaterialTheme.colorScheme.surface
     val darkMode = LocalDarkTheme.current
 
     val previousZoomLevel = remember { mutableIntStateOf(-1) }
@@ -123,17 +126,16 @@ fun MapTiles(
         // darkreader css for openstreetmap tiles
         // invert(93.7%) hue-rotate(180deg) contrast(90.6%)
         val tintHueDeg = tintColor.hue * 180f / Float.PI
-        if (!darkMode && !applyTheming) {
-            null
+
+        if (!darkMode && applyTheming) {
+            ColorMatrix()
+                .hueRotate(tintHueDeg)
         } else if (darkMode) {
             ColorMatrix()
                 .invert(0.937f)
                 .hueRotate(180f + if (applyTheming) tintHueDeg else 0f)
                 .contrast(0.906f)
-        } else {
-            ColorMatrix()
-                .hueRotate(tintHueDeg)
-        }
+        } else null
     }
 
     Box(
@@ -192,19 +194,37 @@ fun MapTiles(
         }
 
         if (imageStates.all { it }) {
-            val locationBorderColor = MaterialTheme.colorScheme.onPrimaryContainer
-            val userLocationColor = MaterialTheme.colorScheme.primary
-            val userLocationBorderColor = MaterialTheme.colorScheme.outline
+            val locationBorderColor =
+                if (applyTheming) MaterialTheme.colorScheme.error else Color(0xFFEFA521) // orange-ish
+            val userLocationColor =
+                if (applyTheming) MaterialTheme.colorScheme.onErrorContainer else Color(0xFF35A82C) // darkish green
+            val userLocationBorderColor =
+                if (applyTheming) {
+                    MaterialTheme.colorScheme.errorContainer
+                } else if (darkMode) {
+                    Color(0xFF777777)
+                } else {
+                    Color(0xFFE5E5E5)
+                }
 
             val infiniteTransition = rememberInfiniteTransition("infiniteTransition")
-            val locationIndicatorAnimation by infiniteTransition.animateFloat(
+            val userLocAnimation by infiniteTransition.animateFloat(
                 initialValue = 0.8f,
                 targetValue = 1f,
                 animationSpec = infiniteRepeatable(
-                    animation = tween(1000, easing = EaseInOutBounce),
+                    animation = tween(2000, easing = EaseInOutSine),
                     repeatMode = RepeatMode.Reverse
                 ),
-                label = "locationIndicatorAnimation"
+                label = "userLocAnimation"
+            )
+            val poiLocAnimation by infiniteTransition.animateFloat(
+                initialValue = 30f,
+                targetValue = 20f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(750, easing = EaseInOutCirc),
+                    repeatMode = RepeatMode.Reverse
+                ),
+                label = "poiLocAnimation"
             )
 
             val textMeasurer = rememberTextMeasurer()
@@ -242,6 +262,7 @@ fun MapTiles(
                 )
             )
 
+
             Canvas(modifier = Modifier.matchParentSize()) {
                 assert(size.width == size.height)
 
@@ -252,13 +273,14 @@ fun MapTiles(
                         val userIndicatorOffset = animatedUserIndicatorOffset * size.width
                         drawCircle(
                             color = userLocationBorderColor,
-                            radius = 18.5f * locationIndicatorAnimation,
-                            center = userIndicatorOffset
+                            radius = 18.5f * userLocAnimation,
+                            center = userIndicatorOffset,
+                            alpha = (userLocAnimation - 0.8f) * 5f
                         )
                         drawCircle(
                             color = userLocationColor,
-                            radius = 13.5f * locationIndicatorAnimation,
-                            center = userIndicatorOffset
+                            radius = 13.5f * userLocAnimation,
+                            center = userIndicatorOffset,
                         )
                     }
                 }
@@ -270,9 +292,9 @@ fun MapTiles(
                     ) - start) / sideLength.toFloat() * size.width
                 drawCircle(
                     color = locationBorderColor,
-                    radius = 32f,
+                    radius = poiLocAnimation,
                     center = locationIndicatorOffset,
-                    alpha = locationIndicatorAnimation * 0.5f
+                    style = Stroke(width = 4f)
                 )
                 if (osmAttribution != null) {
                     val measureResult = textMeasurer.measure(

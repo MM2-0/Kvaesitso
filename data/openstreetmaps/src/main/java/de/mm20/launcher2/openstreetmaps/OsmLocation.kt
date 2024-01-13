@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.net.Uri
 import android.util.Log
+import de.mm20.launcher2.ktx.orRunCatching
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
@@ -86,20 +87,18 @@ internal data class OsmLocation(
                 category = it.tags.firstNotNullOfOrNull { (tag, value) ->
                     if (tag.lowercase() in categoryTags) {
                         value
-                            .split(' ', ',', '.') // in case there are multiple
+                            .split(' ', ',', '.', ';') // in case there are multiple
                             .firstNotNullOfOrNull { value ->
                                 runCatching {
                                     LocationCategory.valueOf(value.uppercase(Locale.ROOT))
-                                }.getOrElse {
-                                    runCatching {
-                                        LocationCategory.valueOf(
-                                            // e.g. "railway:stop" -> "RAILWAY_STOP"
-                                            "${tag}_$value".uppercase(
-                                                Locale.ROOT
-                                            )
+                                }.orRunCatching {
+                                    LocationCategory.valueOf(
+                                        // e.g. "railway:stop" -> "RAILWAY_STOP"
+                                        "${tag}_${value}".uppercase(
+                                            Locale.ROOT
                                         )
-                                    }.getOrNull()
-                                }
+                                    )
+                                }.getOrNull()
                             }
                     } else null
                 } ?: LocationCategory.OTHER,
