@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="menu_share">Kongsi</string>
+    <string name="menu_share_apk_file">Fail pakej</string>
+    <string name="menu_uninstall">Nyahpasang</string>
+    <string name="menu_favorites_pin">Sematkan pada kegemaran</string>
+    <string name="menu_favorites_unpin">Nyahpin</string>
+    <string name="menu_back">Balik</string>
+    <string name="menu_app_info">Maklumat Applikasi</string>
+    <string name="menu_share_store_link">%1$s pautan</string>
+    <string name="menu_launch">Buka</string>
+    <string name="menu_customize">Ubahsuai</string>
+    <string name="menu_open_file">Buka</string>
+    <string name="menu_hide">Sorok</string>
+    <string name="menu_unhide">Paparkan</string>
+    <string name="msg_item_hidden">%1$s telah disorokkan.</string>
+    <string name="action_undo">Kembali</string>
+    <string name="action_import">Import</string>
+    <string name="menu_delete">Padam</string>
+    <string name="menu_remove">Buang</string>
+    <string name="search_bar_placeholder">Carian</string>
+    <string name="app_info_version">Versi %1$s</string>
+    <string name="menu_calendar_open_externally">Buka dalam apl kalender</string>
+    <string name="menu_contacts_open_externally">Buka dalam apl kenalan</string>
+    <string name="settings">Tetapan</string>
+    <string name="help">Bantuan</string>
+    <string name="wallpaper">Kertas Dinding</string>
+    <string name="wind_north_east">Timur Laut</string>
+    <string name="wind_east_north_east">Timur utara timur</string>
+    <string name="wind_north">Utara</string>
+    <string name="wind_east">Timur</string>
+    <string name="wind_north_north_east">Utara utara timur</string>
+</resources>
