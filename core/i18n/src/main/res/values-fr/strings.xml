@@ -698,4 +698,13 @@
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
     <string name="plugin_host_not_installed">Hôte du plugin non installé</string>
     <string name="preference_blur_wallpaper_radius">Rayon de flou</string>
+    <string name="plugin_state_setup_required">Vous devez d\'abord configurer ce plugin</string>
+    <string name="plugin_action_setup">Configuration</string>
+    <string name="plugin_type_filesearch">Recherche de fichier</string>
+    <string name="plugin_type_weather">Provisionneur de météo</string>
+    <string name="plugin_weather_provider_enable">Définir en tant que provisionneur météo</string>
+    <string name="plugin_weather_provider_enabled">Actuellement défini en tant que provisionneur météo</string>
+    <string name="plugin_state_error">Ce plugin ne fonctionne pas correctement</string>
+    <string name="preference_plugin_badges">Insignes de plugin</string>
+    <string name="preference_plugin_badges_summary">Indique par quel plugin un résultat de recherche a été créé</string>
 </resources>
