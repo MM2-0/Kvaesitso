@@ -14,6 +14,11 @@
         <item quantity="one">kilometer</item>
         <item quantity="other">kilometers</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimeter</item>
+        <item quantity="other">decimeters</item>
+    </plurals>
     <string name="unit_centimeter_symbol">cm</string>
     <plurals name="unit_centimeter">
         <item quantity="one">centimeter</item>

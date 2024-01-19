@@ -19,6 +19,11 @@ class LengthConverter(context: Context) : SimpleFactorConverter() {
                     R.plurals.unit_kilometer
             ),
             MeasureUnitWithFactor(
+                    10.0,
+                    context.getString(R.string.unit_decimeter_symbol),
+                    R.plurals.unit_decimeter
+            ),
+            MeasureUnitWithFactor(
                     100.0,
                     context.getString(R.string.unit_centimeter_symbol),
                     R.plurals.unit_centimeter
