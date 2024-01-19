@@ -1,6 +1,5 @@
 package de.mm20.launcher2.searchable
 
-import android.content.Context
 import android.util.Log
 import androidx.room.withTransaction
 import de.mm20.launcher2.backup.Backupable
@@ -9,8 +8,8 @@ import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
 import de.mm20.launcher2.database.entities.SavedSearchableUpdatePinEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
+import de.mm20.launcher2.preferences.WeightFactor
+import de.mm20.launcher2.preferences.search.RankingSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import kotlinx.coroutines.CoroutineScope
@@ -117,9 +116,8 @@ interface SavableSearchableRepository: Backupable {
 }
 
 internal class SavableSearchableRepositoryImpl(
-    private val context: Context,
     private val database: AppDatabase,
-    private val dataStore: LauncherDataStore
+    private val settings: RankingSettings,
 ) : SavableSearchableRepository, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -193,7 +191,7 @@ internal class SavableSearchableRepositoryImpl(
     override fun touch(searchable: SavableSearchable) {
         scope.launch {
             val weightFactor =
-                when (dataStore.data.map { it.resultOrdering.weightFactor }.firstOrNull()) {
+                when (settings.weightFactor.firstOrNull()) {
                     WeightFactor.Low -> WEIGHT_FACTOR_LOW
                     WeightFactor.High -> WEIGHT_FACTOR_HIGH
                     else -> WEIGHT_FACTOR_MEDIUM

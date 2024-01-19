@@ -15,7 +15,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -57,7 +56,6 @@ import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toAndroidRect
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
@@ -80,7 +78,7 @@ import de.mm20.launcher2.icons.TintedClockLayer
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
-import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
+import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -495,7 +493,6 @@ fun getShape(iconShape: IconShape): Shape {
         IconShape.Teardrop -> TeardropShape
         IconShape.Pebble -> PebbleShape
         IconShape.EasterEgg -> EasterEggShape
-        IconShape.UNRECOGNIZED -> CircleShape
     }
 }
 

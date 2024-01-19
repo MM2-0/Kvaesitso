@@ -5,25 +5,30 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.files.settings.FileSearchSettings
-import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.Ordering
+import de.mm20.launcher2.preferences.LegacySettings.SearchResultOrderingSettings.Ordering
+import de.mm20.launcher2.preferences.SearchResultOrder
+import de.mm20.launcher2.preferences.search.CalendarSearchSettings
+import de.mm20.launcher2.preferences.search.ContactSearchSettings
+import de.mm20.launcher2.preferences.search.FavoritesSettings
+import de.mm20.launcher2.preferences.search.FileSearchSettings
+import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
+import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.AppProfile
+import de.mm20.launcher2.search.AppShortcut
+import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.Article
+import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.AppShortcut
-import de.mm20.launcher2.search.Application
-import de.mm20.launcher2.search.Article
-import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.CancellationException
@@ -32,7 +37,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
@@ -47,10 +51,14 @@ class SearchVM : ViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val dataStore: LauncherDataStore by inject()
-    private val fileSearchSettings: FileSearchSettings by inject()
 
-    val launchOnEnter = dataStore.data.map { it.searchBar.launchOnEnter }
+    private val fileSearchSettings: FileSearchSettings by inject()
+    private val contactSearchSettings: ContactSearchSettings by inject()
+    private val calendarSearchSettings: CalendarSearchSettings by inject()
+    private val shortcutSearchSettings: ShortcutSearchSettings by inject()
+    private val searchUiSettings: SearchUiSettings by inject()
+
+    val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     private val searchService: SearchService by inject()
@@ -70,10 +78,10 @@ class SearchVM : ViewModel(), KoinComponent {
     val unitConverterResults = mutableStateOf<List<UnitConverter>>(emptyList())
     val searchActionResults = mutableStateOf<List<SearchAction>>(emptyList())
 
-    val hiddenResultsButton = dataStore.data.map { it.searchBar.hiddenItemsButton }
+    val hiddenResultsButton = searchUiSettings.hiddenItemsButton
     val hiddenResults = mutableStateOf<List<SavableSearchable>>(emptyList())
 
-    val favoritesEnabled = dataStore.data.map { it.favorites.enabled }
+    val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
     private val hiddenItemKeys = searchableRepository
@@ -117,16 +125,9 @@ class SearchVM : ViewModel(), KoinComponent {
         }
         hideFavorites.value = query.isNotEmpty()
         searchJob = viewModelScope.launch {
-            dataStore.data.collectLatest { settings ->
+            searchUiSettings.resultOrder.collectLatest { resultOrder ->
                 searchService.search(
-                    query,
-                    calculator = settings.calculatorSearch,
-                    unitConverter = settings.unitConverterSearch,
-                    calendars = settings.calendarSearch,
-                    contacts = settings.contactsSearch,
-                    shortcuts = settings.appShortcutSearch,
-                    websites = settings.websiteSearch,
-                    wikipedia = settings.wikipediaSearch,
+                    query
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
@@ -151,13 +152,13 @@ class SearchVM : ViewModel(), KoinComponent {
                             emptyList()
                         } else {
                             val keys = resultsList.mapNotNull { (it as? SavableSearchable)?.key }
-                            when (settings.resultOrdering.ordering) {
+                            when (resultOrder) {
 
-                                Ordering.LaunchCount -> searchableRepository.sortByRelevance(
+                                SearchResultOrder.LaunchCount -> searchableRepository.sortByRelevance(
                                     keys
                                 ).first()
 
-                                Ordering.Weighted -> searchableRepository.sortByWeight(
+                                SearchResultOrder.Weighted -> searchableRepository.sortByWeight(
                                     keys
                                 ).first()
 
@@ -256,7 +257,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingCalendarPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Calendar),
-        dataStore.data.map { it.calendarSearch.enabled }.distinctUntilChanged()
+        calendarSearchSettings.enabled,
     ) { perm, enabled -> !perm && enabled }
 
     fun requestCalendarPermission(context: AppCompatActivity) {
@@ -264,18 +265,12 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableCalendarSearch() {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setCalendarSearch(it.calendarSearch.toBuilder().setEnabled(false))
-                    .build()
-            }
-        }
+        calendarSearchSettings.setEnabled(false)
     }
 
     val missingContactsPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Contacts),
-        dataStore.data.map { it.contactsSearch.enabled }.distinctUntilChanged()
+        contactSearchSettings.enabled
     ) { perm, enabled -> !perm && enabled }
 
     fun requestContactsPermission(context: AppCompatActivity) {
@@ -283,18 +278,12 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableContactsSearch() {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setContactsSearch(it.contactsSearch.toBuilder().setEnabled(false))
-                    .build()
-            }
-        }
+        contactSearchSettings.setEnabled(false)
     }
 
     val missingFilesPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.ExternalStorage),
-        fileSearchSettings.localFiles.distinctUntilChanged()
+        fileSearchSettings.localFiles
     ) { perm, enabled -> !perm && enabled }
 
     fun requestFilesPermission(context: AppCompatActivity) {
@@ -302,18 +291,12 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableFilesSearch() {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFileSearch(it.fileSearch.toBuilder().setLocalFiles(false))
-                    .build()
-            }
-        }
+        fileSearchSettings.setLocalFiles(false)
     }
 
     val missingAppShortcutPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.AppShortcuts),
-        dataStore.data.map { it.appShortcutSearch.enabled }.distinctUntilChanged()
+        shortcutSearchSettings.enabled,
     ) { perm, enabled -> !perm && enabled }
 
     fun requestAppShortcutPermission(context: AppCompatActivity) {
@@ -321,12 +304,6 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableAppShortcutSearch() {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppShortcutSearch(it.appShortcutSearch.toBuilder().setEnabled(false))
-                    .build()
-            }
-        }
+        shortcutSearchSettings.setEnabled(false)
     }
 }

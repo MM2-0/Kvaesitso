@@ -264,4 +264,5 @@
         <item quantity="other">kilóméter per óra</item>
     </plurals>
     <string name="unit_degree_celsius_symbol">°C</string>
+    <string name="unit_sqinch_symbol">négyzetinch</string>
 </resources>

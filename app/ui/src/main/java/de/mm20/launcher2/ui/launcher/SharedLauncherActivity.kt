@@ -34,8 +34,8 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.SystemBarsSettings.SystemBarColors
+import de.mm20.launcher2.preferences.BaseLayout
+import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
 import de.mm20.launcher2.ui.base.BaseActivity
 import de.mm20.launcher2.ui.base.ProvideCurrentTime
@@ -184,7 +184,7 @@ abstract class SharedLauncherActivity(
                                     }
                                 } else {
                                     when (layout) {
-                                        Settings.LayoutSettings.Layout.PullDown -> {
+                                        BaseLayout.PullDown -> {
                                             key(bottomSearchBar, reverseSearchResults) {
                                                 PullDownScaffold(
                                                     modifier = Modifier
@@ -205,8 +205,8 @@ abstract class SharedLauncherActivity(
                                             }
                                         }
 
-                                        Settings.LayoutSettings.Layout.Pager,
-                                        Settings.LayoutSettings.Layout.PagerReversed -> {
+                                        BaseLayout.Pager,
+                                        BaseLayout.PagerReversed -> {
                                             key(bottomSearchBar, reverseSearchResults) {
                                                 PagerScaffold(
                                                     modifier = Modifier
@@ -220,7 +220,7 @@ abstract class SharedLauncherActivity(
                                                         },
                                                     darkStatusBarIcons = lightStatus,
                                                     darkNavBarIcons = lightNav,
-                                                    reverse = layout == Settings.LayoutSettings.Layout.PagerReversed,
+                                                    reverse = layout == BaseLayout.PagerReversed,
                                                     bottomSearchBar = bottomSearchBar,
                                                     reverseSearchResults = reverseSearchResults,
                                                     fixedSearchBar = fixedSearchBar,

@@ -3,15 +3,16 @@ package de.mm20.launcher2.ui.settings.gestures
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
+import de.mm20.launcher2.preferences.BaseLayout
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.ui.GestureSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.searchable.SavableSearchableRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.emptyFlow
@@ -22,7 +23,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GestureSettingsScreenVM : ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
+    private val gestureSettings: GestureSettings by inject()
+    private val uiSettings: UiSettings by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val iconService: IconService by inject()
@@ -30,206 +32,122 @@ class GestureSettingsScreenVM : ViewModel(), KoinComponent {
     val hasPermission = permissionsManager.hasPermission(PermissionGroup.Accessibility)
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val baseLayout = dataStore.data.map { it.layout.baseLayout }
+    val baseLayout = uiSettings.baseLayout
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    fun setBaseLayout(baseLayout: Settings.LayoutSettings.Layout) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLayout(it.layout.toBuilder().setBaseLayout(baseLayout))
-                    .build()
-            }
-        }
+    fun setBaseLayout(baseLayout: BaseLayout) {
+        uiSettings.setBaseLayout(baseLayout)
     }
 
-    val swipeDown = dataStore.data.map { it.gestures.swipeDown }
+
+    val swipeDown = gestureSettings.swipeDown
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val swipeLeft = dataStore.data.map { it.gestures.swipeLeft }
+    val swipeLeft = gestureSettings.swipeLeft
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val swipeRight = dataStore.data.map { it.gestures.swipeRight }
+    val swipeRight = gestureSettings.swipeRight
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val doubleTap = dataStore.data.map { it.gestures.doubleTap }
+    val doubleTap = gestureSettings.doubleTap
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val longPress = dataStore.data.map { it.gestures.longPress }
+    val longPress = gestureSettings.longPress
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val homeButton = dataStore.data.map { it.gestures.homeButton }
+    val homeButton = gestureSettings.homeButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setSwipeDown(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setSwipeDown(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setSwipeDown(action)
     }
 
     fun setSwipeLeft(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setSwipeLeft(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setSwipeLeft(action)
     }
 
     fun setSwipeRight(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setSwipeRight(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setSwipeRight(action)
     }
 
     fun setDoubleTap(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setDoubleTap(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setDoubleTap(action)
     }
 
     fun setLongPress(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setLongPress(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setLongPress(action)
     }
 
     fun setHomeButton(action: GestureAction) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder().setGestures(it.gestures.toBuilder().setHomeButton(action).build())
-                    .build()
-            }
-        }
+        gestureSettings.setHomeButton(action)
     }
 
-    val swipeLeftApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.swipeLeftApp }
+    val swipeLeftApp: Flow<SavableSearchable?> = swipeLeft
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setSwipeLeftApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setSwipeLeftApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setSwipeLeft(GestureAction.Launch(searchable.key))
     }
 
-    val swipeRightApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.swipeRightApp }
+    val swipeRightApp: Flow<SavableSearchable?> = swipeRight
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setSwipeRightApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setSwipeRightApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setSwipeRight(GestureAction.Launch(searchable.key))
     }
 
-    val swipeDownApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.swipeDownApp }
+    val swipeDownApp: Flow<SavableSearchable?> = swipeDown
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setSwipeDownApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setSwipeDownApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setSwipeDown(GestureAction.Launch(searchable.key))
     }
 
-    val longPressApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.longPressApp }
+    val longPressApp: Flow<SavableSearchable?> = longPress
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setLongPressApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setLongPressApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setLongPress(GestureAction.Launch(searchable.key))
     }
 
-    val doubleTapApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.doubleTapApp }
+    val doubleTapApp: Flow<SavableSearchable?> = doubleTap
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setDoubleTapApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setDoubleTapApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setDoubleTap(GestureAction.Launch(searchable.key))
     }
 
-    val homeButtonApp: Flow<SavableSearchable?> = dataStore.data.map { it.gestures.homeButtonApp }
+    val homeButtonApp: Flow<SavableSearchable?> = homeButton
         .map {
-            if (it.isEmpty()) null else searchableRepository.getByKeys(listOf(it)).firstOrNull()
+            if (it !is GestureAction.Launch || it.key == null) null
+            else searchableRepository.getByKeys(listOf(it.key!!)).firstOrNull()
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis = 10000), null)
 
     fun setHomeButtonApp(searchable: SavableSearchable?) {
-        viewModelScope.launch {
-            searchable?.let { searchableRepository.insert(it) }
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGestures(it.gestures.toBuilder()
-                        .setHomeButtonApp(searchable?.key ?: "")
-                        .build()
-                    )
-                    .build()
-            }
-        }
+        searchable?.let { searchableRepository.insert(it) } ?: return
+        setHomeButton(GestureAction.Launch(searchable.key))
     }
-
 
 
     fun requestPermission(context: AppCompatActivity) {

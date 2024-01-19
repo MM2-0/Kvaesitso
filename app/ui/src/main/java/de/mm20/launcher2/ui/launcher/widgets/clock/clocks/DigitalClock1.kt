@@ -8,7 +8,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.DrawStyle
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalContext
@@ -20,8 +19,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
+import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import java.text.SimpleDateFormat
@@ -30,10 +28,10 @@ import java.util.*
 @Composable
 fun DigitalClock1(
     time: Long,
-    layout: Settings.ClockWidgetSettings.ClockWidgetLayout,
-    variant: ClockStyle = ClockStyle.DigitalClock1,
+    compact: Boolean,
+    style: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
 ) {
-    val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
+    val verticalLayout = !compact
     val format = SimpleDateFormat(
         if (verticalLayout) {
             if (DateFormat.is24HourFormat(LocalContext.current)) "HH\nmm" else "hh\nmm"
@@ -50,8 +48,8 @@ fun DigitalClock1(
         fontWeight = FontWeight.Black,
         textAlign = TextAlign.Center,
         lineHeight = 0.8.em,
-        drawStyle = if (variant == ClockStyle.DigitalClock1_Outlined) Stroke(width = 2.dp.toPixels()) else Fill,
-        color = if (variant == ClockStyle.DigitalClock1_MDY) {
+        drawStyle = if (style.outlined) Stroke(width = 2.dp.toPixels()) else Fill,
+        color = if (style.variant == ClockWidgetStyle.Digital1.Variant.MDY) {
             if (LocalContentColor.current == Color.White) {
                 if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
                 else MaterialTheme.colorScheme.primaryContainer
@@ -64,7 +62,7 @@ fun DigitalClock1(
 
     val modifier = Modifier.offset(0.dp, if (verticalLayout) 16.dp else 0.dp)
 
-    if (variant == ClockStyle.DigitalClock1_OnePlus) {
+    if (style.variant == ClockWidgetStyle.Digital1.Variant.OnePlus) {
         val hour = formattedString.substring(0, 2)
         Text(
             modifier = modifier,

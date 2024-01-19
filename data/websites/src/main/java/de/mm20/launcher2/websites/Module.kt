@@ -8,6 +8,6 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val websitesModule = module {
-    single<SearchableRepository<Website>>(named<Website>()) { WebsiteRepository(androidContext()) }
+    single<SearchableRepository<Website>>(named<Website>()) { WebsiteRepository(androidContext(), get()) }
     factory<SearchableDeserializer>(named(WebsiteImpl.Domain)) { WebsiteDeserializer() }
 }

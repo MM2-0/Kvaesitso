@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
+import de.mm20.launcher2.preferences.GestureAction
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.FakeSplashScreen
 import de.mm20.launcher2.ui.gestures.Gesture
@@ -52,7 +52,7 @@ fun LauncherGestureHandler(
 
     val gestureState by viewModel.gestureState.collectAsState(GestureState())
 
-    val shouldDetectDoubleTapGesture = gestureState.doubleTapAction != GestureAction.None
+    val shouldDetectDoubleTapGesture = gestureState.doubleTapAction !is GestureAction.NoAction
 
     LaunchedEffect(shouldDetectDoubleTapGesture) {
         gestureDetector.shouldDetectDoubleTaps = shouldDetectDoubleTapGesture

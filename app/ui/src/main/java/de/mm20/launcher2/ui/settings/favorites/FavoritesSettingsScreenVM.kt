@@ -2,8 +2,9 @@ package de.mm20.launcher2.ui.settings.favorites
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.SearchResultOrderingSettings.WeightFactor
+import de.mm20.launcher2.preferences.WeightFactor
+import de.mm20.launcher2.preferences.search.FavoritesSettings
+import de.mm20.launcher2.preferences.search.RankingSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -12,65 +13,30 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class FavoritesSettingsScreenVM: ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
+    private val favoritesSettings: FavoritesSettings by inject()
+    private val rankingSettings: RankingSettings by inject()
 
-    val frequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }
+    val frequentlyUsed = favoritesSettings.frequentlyUsed
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFavorites(
-                        it.favorites.toBuilder()
-                            .setFrequentlyUsed(frequentlyUsed)
-                    )
-                    .build()
-            }
-        }
+        favoritesSettings.setFrequentlyUsed(frequentlyUsed)
     }
 
-    val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }
+    val frequentlyUsedRows = favoritesSettings.frequentlyUsedRows
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 1)
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFavorites(
-                        it.favorites.toBuilder()
-                            .setFrequentlyUsedRows(frequentlyUsedRows)
-                    )
-                    .build()
-            }
-        }
+        favoritesSettings.setFrequentlyUsedRows(frequentlyUsedRows)
     }
 
-    val editButton = dataStore.data.map { it.favorites.editButton }
+    val editButton = favoritesSettings.showEditButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setEditButton(editButton: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFavorites(
-                        it.favorites.toBuilder()
-                            .setEditButton(editButton)
-                    )
-                    .build()
-            }
-        }
+        favoritesSettings.setShowEditButton(editButton)
     }
 
-    val searchResultWeightFactor = dataStore.data.map { it.resultOrdering.weightFactor }
+    val searchResultWeightFactor = rankingSettings.weightFactor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), WeightFactor.Default)
     fun setSearchResultWeightFactor(searchResultWeightFactor: WeightFactor) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setResultOrdering(
-                        it.resultOrdering.toBuilder()
-                            .setWeightFactor(searchResultWeightFactor)
-                    )
-                    .build()
-            }
-        }
+        rankingSettings.setWeightFactor(searchResultWeightFactor)
     }
 }

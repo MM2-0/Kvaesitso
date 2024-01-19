@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.kotlin.plugin.serialization)
 }
 
 android {
@@ -57,6 +58,7 @@ protobuf {
 
 dependencies {
     implementation(libs.kotlin.stdlib)
+    implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core)
     implementation(libs.androidx.appcompat)
     api(libs.androidx.datastore)

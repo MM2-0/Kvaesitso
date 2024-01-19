@@ -2,9 +2,9 @@ package de.mm20.launcher2.ui.common
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import de.mm20.launcher2.weather.WeatherLocation
+import de.mm20.launcher2.preferences.weather.WeatherLocation
+import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.WeatherRepository
-import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.first
 import org.koin.core.component.KoinComponent

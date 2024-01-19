@@ -1,9 +1,11 @@
 package de.mm20.launcher2.ui.base
 
 import androidx.compose.runtime.*
-import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.IconShape
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.ui.CardStyle
+import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.ui.component.ProvideIconShape
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
@@ -19,32 +21,28 @@ import org.koin.androidx.compose.inject
 fun ProvideSettings(
     content: @Composable () -> Unit
 ) {
-    val dataStore: LauncherDataStore by inject()
+    val settings: UiSettings by inject()
     val widgetRepository: WidgetRepository by inject()
 
     val cardStyle by remember {
-        dataStore.data.map { it.cards }.distinctUntilChanged()
+        settings.cardStyle.distinctUntilChanged()
     }.collectAsState(
-        Settings.CardSettings.getDefaultInstance()
+        CardStyle()
     )
     val iconShape by remember {
-        dataStore.data.map {
-            if (it.easterEgg) Settings.IconSettings.IconShape.EasterEgg
-            else it.icons.shape
-        }.distinctUntilChanged()
-    }.collectAsState(Settings.IconSettings.IconShape.Circle)
+        settings.iconShape.distinctUntilChanged()
+    }.collectAsState(IconShape.Circle)
 
     val favoritesEnabled by remember {
         combine(
             widgetRepository.exists(FavoritesWidget.Type),
-            dataStore.data.map { it.favorites.enabled },
-            dataStore.data.map { it.clockWidget.favoritesPart },
-        ) { a, b, c -> a || b || c }.distinctUntilChanged()
+            settings.favoritesEnabled,
+        ) { a, b -> a || b }.distinctUntilChanged()
     }.collectAsState(true)
 
     val gridSettings by remember {
-        dataStore.data.map { it.grid }.distinctUntilChanged()
-    }.collectAsState(Settings.GridSettings.newBuilder().setColumnCount(5).setShowLabels(true).setIconSize(48).build())
+        settings.gridSettings.distinctUntilChanged()
+    }.collectAsState(GridSettings())
 
     CompositionLocalProvider(
         LocalCardStyle provides cardStyle,

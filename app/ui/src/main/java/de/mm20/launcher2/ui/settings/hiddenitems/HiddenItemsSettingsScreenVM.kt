@@ -9,7 +9,7 @@ import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Application
 import kotlinx.coroutines.Dispatchers
@@ -29,7 +29,7 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
     private val appRepository: AppRepository by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
     private val iconService: IconService by inject()
-    private val dataStore: LauncherDataStore by inject()
+    private val searchUiSettings: SearchUiSettings by inject()
 
     val allApps = appRepository.findMany().map {
         withContext(Dispatchers.Default) { it.sorted() }
@@ -68,16 +68,10 @@ class HiddenItemsSettingsScreenVM : ViewModel(), KoinComponent {
         app.openAppDetails(context)
     }
 
-    val hiddenItemsButton = dataStore.data.map { it.searchBar.hiddenItemsButton }
+    val hiddenItemsButton = searchUiSettings.hiddenItemsButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun setHiddenItemsButton(hidden: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSearchBar(it.searchBar.toBuilder().setHiddenItemsButton(hidden)).build()
-
-            }
-        }
+        searchUiSettings.setHiddenItemsButton(hidden)
     }
 }

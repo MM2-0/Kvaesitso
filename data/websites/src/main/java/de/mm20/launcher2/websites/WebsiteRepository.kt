@@ -4,6 +4,7 @@ import android.content.Context
 import android.webkit.URLUtil
 import androidx.compose.runtime.Immutable
 import androidx.core.graphics.toColorInt
+import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.Website
 import kotlinx.collections.immutable.ImmutableList
@@ -11,6 +12,8 @@ import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
 import okhttp3.OkHttpClient
@@ -25,7 +28,10 @@ import java.net.URL
 import java.util.concurrent.TimeUnit
 
 
-internal class WebsiteRepository(val context: Context) : SearchableRepository<Website> {
+internal class WebsiteRepository(
+    val context: Context,
+    val settings: WebsiteSearchSettings,
+) : SearchableRepository<Website> {
 
     private val httpClient = OkHttpClient
         .Builder()
@@ -34,16 +40,18 @@ internal class WebsiteRepository(val context: Context) : SearchableRepository<We
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
         .build()
 
-    override fun search(query: String): Flow<ImmutableList<Website>> = channelFlow {
-        send(persistentListOf())
-        withContext(Dispatchers.IO) {
-            httpClient.dispatcher.cancelAll()
-        }
-        if (query.isBlank()) return@channelFlow
+    override fun search(query: String): Flow<ImmutableList<Website>> {
+        return settings.enabled.transformLatest {enabled ->
+            emit(persistentListOf())
+            withContext(Dispatchers.IO) {
+                httpClient.dispatcher.cancelAll()
+            }
+            if (!enabled || query.isBlank()) return@transformLatest
 
-        val website = queryWebsite(query)
-        website?.let {
-            send(persistentListOf(it))
+            val website = queryWebsite(query)
+            website?.let {
+                emit(persistentListOf(it))
+            }
         }
     }
 

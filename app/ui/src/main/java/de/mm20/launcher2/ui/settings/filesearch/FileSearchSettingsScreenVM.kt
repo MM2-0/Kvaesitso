@@ -7,11 +7,11 @@ import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.accounts.Account
 import de.mm20.launcher2.accounts.AccountType
 import de.mm20.launcher2.accounts.AccountsRepository
-import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
+import de.mm20.launcher2.preferences.search.FileSearchSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

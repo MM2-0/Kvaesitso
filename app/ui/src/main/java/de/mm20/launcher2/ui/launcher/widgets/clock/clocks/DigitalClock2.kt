@@ -6,13 +6,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
-import de.mm20.launcher2.preferences.Settings
 
 
 @Composable
 fun DigitalClock2(
     time: Long,
-    layout: Settings.ClockWidgetSettings.ClockWidgetLayout
+    compact: Boolean,
 ) {
     Text(
         text = DateUtils.formatDateTime(LocalContext.current, time, DateUtils.FORMAT_SHOW_TIME),

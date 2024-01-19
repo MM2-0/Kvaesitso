@@ -31,7 +31,7 @@ internal class PluginRepositoryImpl(
     }
 
     override fun get(authority: String): Flow<Plugin?> {
-        return dao.get(authority).map { Plugin(it) }
+        return dao.get(authority).map { it?.let { Plugin(it) } }
     }
 
     override fun insertMany(plugins: List<Plugin>): Job {

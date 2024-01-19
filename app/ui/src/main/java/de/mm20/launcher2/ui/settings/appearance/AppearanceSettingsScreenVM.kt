@@ -3,74 +3,47 @@ package de.mm20.launcher2.ui.settings.appearance
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.icons.IconService
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Font
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.ColorScheme
+import de.mm20.launcher2.preferences.Font
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.ThemeRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import java.util.UUID
 
 class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
+    private val uiSettings: UiSettings by inject()
 
-    private val iconService: IconService by inject()
     private val themeRepository: ThemeRepository by inject()
 
-    val theme = dataStore.data.map { it.appearance.theme }
+    val colorScheme = uiSettings.colorScheme
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    fun setTheme(theme: Theme) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(it.appearance.toBuilder().setTheme(theme))
-                    .build()
-            }
-        }
+    fun setColorScheme(colorScheme: ColorScheme) {
+        uiSettings.setColorScheme(colorScheme)
     }
 
-    val colorSchemeName = dataStore.data.map {
-        it.appearance.themeId?.takeIf { it.isNotEmpty() }?.let {
-            UUID.fromString(it)
-        }
-    }
-        .flatMapLatest {
+    val themeName = uiSettings.theme.flatMapLatest {
             themeRepository.getThemeOrDefault(it)
         }.map {
             it.name
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val compatMode = dataStore.data.map {
-        it.appearance.forceCompatModeSystemColors
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+    val compatModeColors = uiSettings.compatModeColors
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-    fun setCompatMode(enabled: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(it.appearance.toBuilder().setForceCompatModeSystemColors(enabled))
-                    .build()
-            }
-        }
+    fun setCompatModeColors(enabled: Boolean) {
+        uiSettings.setCompatModeColors(enabled)
     }
 
-    val font = dataStore.data.map { it.appearance.font }
+    val font = uiSettings.font
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setFont(font: Font) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(it.appearance.toBuilder().setFont(font))
-                    .build()
-            }
-        }
+        uiSettings.setFont(font)
     }
 }

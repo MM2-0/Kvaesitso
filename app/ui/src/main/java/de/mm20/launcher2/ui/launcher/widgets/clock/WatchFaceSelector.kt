@@ -43,19 +43,18 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
+import de.mm20.launcher2.preferences.ClockWidgetColors
+import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 
 @Composable
 fun WatchFaceSelector(
-    layout: ClockWidgetLayout,
+    compact: Boolean,
     colors: ClockWidgetColors,
-    selected: ClockStyle?,
-    onSelect: (ClockStyle) -> Unit,
+    selected: ClockWidgetStyle?,
+    onSelect: (ClockWidgetStyle) -> Unit,
 ) {
     val context = LocalContext.current
     Surface(
@@ -73,7 +72,7 @@ fun WatchFaceSelector(
             modifier = Modifier,
         ) {
             val styles = remember {
-                sortedMapOf(
+                mapOf(
                     ClockStyle.DigitalClock1 to 0,
                     ClockStyle.DigitalClock1_Outlined to 0,
                     ClockStyle.DigitalClock1_MDY to 0,
@@ -159,9 +158,9 @@ fun WatchFaceSelector(
                                 styles.filter { it.value == pageIndex }
                             }
                             if (currentPageStyles.containsKey(selected)) {
-                                Clock(selected, layout)
+                                Clock(selected, compact)
                             } else {
-                                Clock(currentPageStyles.keys.first(), layout)
+                                Clock(currentPageStyles.keys.first(), compact)
                             }
                         }
                     }
@@ -253,7 +252,7 @@ fun WatchFaceSelector(
     }
 }
 
-fun getClockstyleName(context: Context, style: ClockStyle): String {
+fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
         ClockStyle.DigitalClock1,
         ClockStyle.DigitalClock1_Outlined,
@@ -264,11 +263,11 @@ fun getClockstyleName(context: Context, style: ClockStyle): String {
         ClockStyle.BinaryClock -> "Binary"
         ClockStyle.AnalogClock -> "Hands"
         ClockStyle.EmptyClock -> "Empty"
-        ClockStyle.UNRECOGNIZED -> ""
+        else -> ""
     }
 }
 
-fun getVariantName(context: Context, style: ClockStyle): String {
+fun getVariantName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
         ClockStyle.DigitalClock1,
         ClockStyle.DigitalClock2,
@@ -279,7 +278,20 @@ fun getVariantName(context: Context, style: ClockStyle): String {
         ClockStyle.DigitalClock1_Outlined -> "Outlined"
         ClockStyle.DigitalClock1_MDY -> "Material You"
         ClockStyle.DigitalClock1_OnePlus -> "OnePlus"
+        else -> ""
 
-        ClockStyle.UNRECOGNIZED -> ""
     }
+}
+
+// Compat for old enum names, TODO refactor this screen
+object ClockStyle {
+    val DigitalClock1 = ClockWidgetStyle.Digital1()
+    val DigitalClock1_Outlined = ClockWidgetStyle.Digital1(outlined = true)
+    val DigitalClock1_MDY = ClockWidgetStyle.Digital1(variant = ClockWidgetStyle.Digital1.Variant.MDY)
+    val DigitalClock1_OnePlus = ClockWidgetStyle.Digital1(variant = ClockWidgetStyle.Digital1.Variant.OnePlus)
+    val DigitalClock2 = ClockWidgetStyle.Digital2
+    val OrbitClock = ClockWidgetStyle.Orbit
+    val AnalogClock = ClockWidgetStyle.Analog
+    val BinaryClock = ClockWidgetStyle.Binary
+    val EmptyClock = ClockWidgetStyle.Empty
 }

@@ -149,7 +149,7 @@ fun WidgetColumn(
         }
 
         val editButton by viewModel.editButton.collectAsState()
-        if (editButton == true) {
+        if (editMode || editButton == true) {
             val icon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_edit_add)
             ExtendedFloatingActionButton(

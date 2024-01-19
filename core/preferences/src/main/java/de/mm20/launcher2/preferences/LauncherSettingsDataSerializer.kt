@@ -1,8 +1,7 @@
-package de.mm20.launcher2.files.settings
+package de.mm20.launcher2.preferences
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.decodeFromStream
@@ -11,27 +10,17 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 
-@Serializable
-data class FileSearchSettingsData(
-    val localFiles: Boolean = true,
-    val gdriveFiles: Boolean = false,
-    val nextcloudFiles: Boolean = false,
-    val owncloudFiles: Boolean = false,
-    val plugins: Set<String> = emptySet(),
-    val schemaVersion: Int = 1,
-)
-
-internal object FileSearchSettingsDataSerializer : Serializer<FileSearchSettingsData> {
+internal object LauncherSettingsDataSerializer : Serializer<LauncherSettingsData> {
 
     internal val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
     }
 
-    override val defaultValue: FileSearchSettingsData
-        get() = FileSearchSettingsData(schemaVersion = 0)
+    override val defaultValue: LauncherSettingsData
+        get() = LauncherSettingsData(schemaVersion = 0)
 
-    override suspend fun readFrom(input: InputStream): FileSearchSettingsData {
+    override suspend fun readFrom(input: InputStream): LauncherSettingsData {
         try {
             return json.decodeFromStream(input)
         } catch (e: IllegalArgumentException) {
@@ -43,7 +32,7 @@ internal object FileSearchSettingsDataSerializer : Serializer<FileSearchSettings
         }
     }
 
-    override suspend fun writeTo(t: FileSearchSettingsData, output: OutputStream) {
+    override suspend fun writeTo(t: LauncherSettingsData, output: OutputStream) {
         json.encodeToStream(t, output)
     }
 }

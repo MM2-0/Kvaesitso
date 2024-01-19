@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -29,6 +30,10 @@ fun FavoritesWidget(widget: FavoritesWidget) {
     val favoritesEditButton = widget.config.editButton
 
     val tagsExpanded by viewModel.tagsExpanded.collectAsState(false)
+
+    LaunchedEffect(widget) {
+        viewModel.updateWidget(widget)
+    }
 
     Column {
         if (favorites.isNotEmpty()) {

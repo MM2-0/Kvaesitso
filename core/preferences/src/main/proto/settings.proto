@@ -3,7 +3,7 @@ syntax = "proto3";
 option java_package = "de.mm20.launcher2.preferences";
 option java_multiple_files = true;
 
-message Settings {
+message LegacySettings {
   uint32 version = 1;
   message AppearanceSettings {
     enum Theme {
@@ -90,8 +90,6 @@ message Settings {
     // UUID of the selected theme
     string theme_id = 12;
     uint32 blur_wallpaper_radius = 13;
-
-    bool force_compat_mode_system_colors = 14;
   }
   AppearanceSettings appearance = 2;
 

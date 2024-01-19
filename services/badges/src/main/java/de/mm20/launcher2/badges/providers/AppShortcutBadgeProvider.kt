@@ -3,6 +3,7 @@ package de.mm20.launcher2.badges.providers
 import android.content.Context
 import android.content.pm.PackageManager
 import de.mm20.launcher2.badges.Badge
+import de.mm20.launcher2.badges.MutableBadge
 import de.mm20.launcher2.graphics.BadgeDrawable
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Searchable
@@ -27,7 +28,7 @@ class AppShortcutBadgeProvider(
                     } catch (e: PackageManager.NameNotFoundException) {
                         return@withContext
                     }
-                    val badge = Badge(icon = BadgeDrawable(context, icon))
+                    val badge = MutableBadge(icon = BadgeDrawable(context, icon))
                     send(badge)
                 }
             } else if (packageName != null) {
@@ -39,7 +40,7 @@ class AppShortcutBadgeProvider(
                     } catch (e: PackageManager.NameNotFoundException) {
                         return@withContext
                     }
-                    val badge = Badge(icon = BadgeDrawable(context, icon))
+                    val badge = MutableBadge(icon = BadgeDrawable(context, icon))
                     send(badge)
                 }
             } else {

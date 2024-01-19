@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
 import de.mm20.launcher2.ktx.TWO_PI
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -46,9 +46,9 @@ private val currentTime
 @Composable
 fun OrbitClock(
     _time: Long,
-    layout: Settings.ClockWidgetSettings.ClockWidgetLayout
+    compact: Boolean,
 ) {
-    val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
+    val verticalLayout = !compact
 
     val timeState = remember { mutableStateOf<ZonedDateTime>(currentTime) }
 

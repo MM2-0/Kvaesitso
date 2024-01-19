@@ -81,11 +81,12 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalViewConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -398,7 +399,7 @@ fun PagerScaffold(
                         .fillMaxSize()
                         .nestedScroll(pagerNestedScrollConnection),
                     beyondBoundsPageCount = 1,
-                    reverseLayout = reverse,
+                    reverseLayout = reverse == (LocalLayoutDirection.current == LayoutDirection.Ltr),
                     state = pagerState,
                     userScrollEnabled = false,//!isWidgetEditMode,
                     flingBehavior = PagerDefaults.flingBehavior(
@@ -406,7 +407,6 @@ fun PagerScaffold(
                         lowVelocityAnimationSpec = spring(
                             stiffness = Spring.StiffnessMediumLow,
                         ),
-                        snapVelocityThreshold = 1000.dp,
                         pagerSnapDistance = remember {
                             object : PagerSnapDistance {
                                 override fun calculateTargetPage(

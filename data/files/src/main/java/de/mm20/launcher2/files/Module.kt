@@ -1,13 +1,11 @@
 package de.mm20.launcher2.files
 
-import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.files.providers.GDriveFile
 import de.mm20.launcher2.files.providers.LocalFile
 import de.mm20.launcher2.files.providers.NextcloudFile
 import de.mm20.launcher2.files.providers.OneDriveFile
 import de.mm20.launcher2.files.providers.OwncloudFile
 import de.mm20.launcher2.files.providers.PluginFile
-import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableRepository
@@ -19,7 +17,6 @@ val filesModule = module {
     factory<SearchableRepository<File>>(named<File>()) {
         FileRepository(
             androidContext(),
-            get(),
             get(),
             get()
         )
@@ -35,6 +32,4 @@ val filesModule = module {
             get()
         )
     }
-    single<FileSearchSettings> { FileSearchSettings(androidContext(), get()) }
-    factory<Backupable>(named<FileSearchSettings>()) { get<FileSearchSettings>() }
 }

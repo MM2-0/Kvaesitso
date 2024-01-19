@@ -7,7 +7,7 @@ import de.mm20.launcher2.unitconverter.MeasureUnit
 import de.mm20.launcher2.unitconverter.UnitValue
 
 /**
- * A converter for units that can converted into each other by simply multiplicating with a constant factor
+ * A converter for units that can converted into each other by simple multiplication with a constant factor
  */
 abstract class SimpleFactorConverter: Converter {
     open val standardUnits: List<MeasureUnitWithFactor> = emptyList()

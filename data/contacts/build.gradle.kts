@@ -44,5 +44,6 @@ dependencies {
     implementation(project(":core:ktx"))
     implementation(project(":core:base"))
     implementation(project(":core:permissions"))
+    implementation(project(":core:preferences"))
 
 }

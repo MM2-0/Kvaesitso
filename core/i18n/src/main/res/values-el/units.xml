@@ -261,4 +261,8 @@
         <item quantity="other">κοντοί τόνοι</item>
     </plurals>
     <string name="unit_stone_symbol">st.</string>
+    <plurals name="unit_stone">
+        <item quantity="one">πέτρα</item>
+        <item quantity="other">πέτρες</item>
+    </plurals>
 </resources>
