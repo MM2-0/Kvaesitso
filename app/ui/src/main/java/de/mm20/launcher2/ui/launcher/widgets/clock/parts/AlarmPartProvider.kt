@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.*
@@ -71,7 +70,7 @@ class AlarmPartProvider : PartProvider {
     }
 
     @Composable
-    override fun Component(layout: ClockWidgetLayout) {
+    override fun Component(compactLayout: Boolean) {
         val context = LocalContext.current
 
         val alarmTime by nextAlarmTime
@@ -79,7 +78,7 @@ class AlarmPartProvider : PartProvider {
 
         alarmTime?.let {
 
-            if (layout == ClockWidgetLayout.Vertical) {
+            if (!compactLayout) {
 
                 TextButton(
                     onClick = {

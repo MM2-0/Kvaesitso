@@ -8,7 +8,7 @@ import de.mm20.launcher2.badges.providers.NotificationBadgeProvider
 import de.mm20.launcher2.badges.providers.PluginBadgeProvider
 import de.mm20.launcher2.badges.providers.SuspendedAppsBadgeProvider
 import de.mm20.launcher2.badges.providers.WorkProfileBadgeProvider
-import de.mm20.launcher2.badges.settings.BadgeSettings
+import de.mm20.launcher2.preferences.ui.BadgeSettings
 import de.mm20.launcher2.search.Searchable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -39,7 +39,7 @@ internal class BadgeServiceImpl(
 
     init {
         scope.launch {
-            settings.data.distinctUntilChanged().collectLatest {
+            settings.distinctUntilChanged().collectLatest {
                 val providers = mutableListOf<BadgeProvider>()
                 providers += WorkProfileBadgeProvider()
                 if (it.notifications) {

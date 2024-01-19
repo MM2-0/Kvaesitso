@@ -27,8 +27,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
-import de.mm20.launcher2.preferences.Settings.LayoutSettings.Layout
+import de.mm20.launcher2.preferences.BaseLayout
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.LegacySettings.LayoutSettings.Layout
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.SearchablePicker
@@ -47,14 +48,14 @@ fun GestureSettingsScreen() {
     val hasPermission by viewModel.hasPermission.collectAsStateWithLifecycle(null)
 
     val options = buildList {
-        add(stringResource(R.string.gesture_action_none) to GestureAction.None)
-        add(stringResource(R.string.gesture_action_notifications) to GestureAction.OpenNotificationDrawer)
-        add(stringResource(R.string.gesture_action_quick_settings) to GestureAction.OpenQuickSettings)
-        if (isAtLeastApiLevel(28)) add(stringResource(R.string.gesture_action_lock_screen) to GestureAction.LockScreen)
-        add(stringResource(R.string.gesture_action_recents) to GestureAction.OpenRecents)
-        add(stringResource(R.string.gesture_action_power_menu) to GestureAction.OpenPowerDialog)
-        add(stringResource(R.string.gesture_action_open_search) to GestureAction.OpenSearch)
-        add(stringResource(R.string.gesture_action_launch_app) to GestureAction.LaunchApp)
+        add(stringResource(R.string.gesture_action_none) to GestureAction.NoAction)
+        add(stringResource(R.string.gesture_action_notifications) to GestureAction.Notifications)
+        add(stringResource(R.string.gesture_action_quick_settings) to GestureAction.QuickSettings)
+        if (isAtLeastApiLevel(28)) add(stringResource(R.string.gesture_action_lock_screen) to GestureAction.ScreenLock)
+        add(stringResource(R.string.gesture_action_recents) to GestureAction.Recents)
+        add(stringResource(R.string.gesture_action_power_menu) to GestureAction.PowerMenu)
+        add(stringResource(R.string.gesture_action_open_search) to GestureAction.Search)
+        add(stringResource(R.string.gesture_action_launch_app) to GestureAction.Launch(null))
     }
 
     val context = LocalContext.current
@@ -64,9 +65,9 @@ fun GestureSettingsScreen() {
                 val baseLayout by viewModel.baseLayout.collectAsStateWithLifecycle(null)
                 ListPreference(title = stringResource(R.string.preference_layout_open_search),
                     items = listOf(
-                        stringResource(R.string.open_search_pull_down) to Layout.PullDown,
-                        stringResource(R.string.open_search_swipe_left) to Layout.Pager,
-                        stringResource(R.string.open_search_swipe_right) to Layout.PagerReversed,
+                        stringResource(R.string.open_search_pull_down) to BaseLayout.PullDown,
+                        stringResource(R.string.open_search_swipe_left) to BaseLayout.Pager,
+                        stringResource(R.string.open_search_swipe_right) to BaseLayout.PagerReversed,
                     ),
                     value = baseLayout,
                     onValueChanged = {
@@ -125,7 +126,7 @@ fun GestureSettingsScreen() {
                 )
 
                 val swipeDown by viewModel.swipeDown.collectAsStateWithLifecycle(null)
-                val swipeDownIsSearch = layout == Layout.PullDown
+                val swipeDownIsSearch = layout == BaseLayout.PullDown
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeDown) && !swipeDownIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
@@ -149,7 +150,7 @@ fun GestureSettingsScreen() {
                 )
 
                 val swipeLeft by viewModel.swipeLeft.collectAsStateWithLifecycle(null)
-                val swipeLeftIsSearch = layout == Layout.Pager
+                val swipeLeftIsSearch = layout == BaseLayout.Pager
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeLeft) && !swipeLeftIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
@@ -173,7 +174,7 @@ fun GestureSettingsScreen() {
                 )
 
                 val swipeRight by viewModel.swipeRight.collectAsStateWithLifecycle(null)
-                val swipeRightIsSearch = layout == Layout.PagerReversed
+                val swipeRightIsSearch = layout == BaseLayout.PagerReversed
                 AnimatedVisibility(hasPermission == false && requiresAccessibilityService(swipeRight) && !swipeRightIsSearch) {
                     MissingPermissionBanner(
                         modifier = Modifier.padding(16.dp),
@@ -225,11 +226,11 @@ fun GestureSettingsScreen() {
 
 fun requiresAccessibilityService(action: GestureAction?): Boolean {
     return when (action) {
-        GestureAction.OpenNotificationDrawer,
-        GestureAction.LockScreen,
-        GestureAction.OpenQuickSettings,
-        GestureAction.OpenRecents,
-        GestureAction.OpenPowerDialog -> true
+        is GestureAction.Notifications,
+        is GestureAction.ScreenLock,
+        is GestureAction.QuickSettings,
+        is GestureAction.Recents,
+        is GestureAction.PowerMenu -> true
         else -> false
     }
 }
@@ -256,12 +257,12 @@ fun GesturePreference(
                 title = title,
                 enabled = !isOpenSearch,
                 items = options,
-                value = if (isOpenSearch) GestureAction.OpenSearch else value,
+                value = if (isOpenSearch) GestureAction.Search else value,
                 onValueChanged = { if (it != null) onValueChanged(it) }
             )
         }
 
-        if (value == GestureAction.LaunchApp && !isOpenSearch) {
+        if (value is GestureAction.Launch && !isOpenSearch) {
             Box(
                 modifier = Modifier
                     .height(36.dp)
@@ -277,12 +278,12 @@ fun GesturePreference(
         }
     }
 
-    if (!isOpenSearch && value == GestureAction.LaunchApp && (showAppPicker || app == null)) {
+    if (!isOpenSearch && value is GestureAction.Launch && (showAppPicker || app == null)) {
         SearchablePicker(
             title = { Text(title) },
             onDismissRequest = {
                 showAppPicker = false
-                if (app == null) onValueChanged(GestureAction.None)
+                if (app == null) onValueChanged(GestureAction.NoAction)
             },
             value = app,
             onValueChanged = {

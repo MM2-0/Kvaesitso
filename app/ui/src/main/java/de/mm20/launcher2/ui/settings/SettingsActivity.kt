@@ -34,7 +34,6 @@ import de.mm20.launcher2.ui.settings.appearance.AppearanceSettingsScreen
 import de.mm20.launcher2.ui.settings.backup.BackupSettingsScreen
 import de.mm20.launcher2.ui.settings.buildinfo.BuildInfoSettingsScreen
 import de.mm20.launcher2.ui.settings.cards.CardsSettingsScreen
-import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemeSettingsScreen
 import de.mm20.launcher2.ui.settings.colorscheme.ThemesSettingsScreen
 import de.mm20.launcher2.ui.settings.crashreporter.CrashReportScreen
@@ -169,9 +168,6 @@ class SettingsActivity : BaseActivity() {
                                 }
                                 composable(ROUTE_MEDIA_INTEGRATION) {
                                     MediaIntegrationSettingsScreen()
-                                }
-                                composable("settings/homescreen/clock") {
-                                    ClockWidgetSettingsScreen()
                                 }
                                 composable("settings/favorites") {
                                     FavoritesSettingsScreen()

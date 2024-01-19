@@ -9,9 +9,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.ColorScheme
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.Theme
+import de.mm20.launcher2.preferences.ColorScheme
+import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
@@ -26,22 +25,22 @@ fun AppearanceSettingsScreen() {
     val viewModel: AppearanceSettingsScreenVM = viewModel()
     val context = LocalContext.current
     val navController = LocalNavController.current
-    val themeName by viewModel.colorSchemeName.collectAsStateWithLifecycle(null)
+    val themeName by viewModel.themeName.collectAsStateWithLifecycle(null)
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
-                val theme by viewModel.theme.collectAsState()
+                val theme by viewModel.colorScheme.collectAsState()
                 ListPreference(
                     title = stringResource(id = R.string.preference_theme),
                     items = listOf(
-                        stringResource(id = R.string.preference_theme_system) to Theme.System,
-                        stringResource(id = R.string.preference_theme_light) to Theme.Light,
-                        stringResource(id = R.string.preference_theme_dark) to Theme.Dark,
+                        stringResource(id = R.string.preference_theme_system) to ColorScheme.System,
+                        stringResource(id = R.string.preference_theme_light) to ColorScheme.Light,
+                        stringResource(id = R.string.preference_theme_dark) to ColorScheme.Dark,
                     ),
                     value = theme,
                     onValueChanged = { newValue ->
                         if (newValue == null) return@ListPreference
-                        viewModel.setTheme(newValue)
+                        viewModel.setColorScheme(newValue)
                     }
                 )
                 Preference(
@@ -55,8 +54,8 @@ fun AppearanceSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.preference_font),
                     items = listOf(
-                        "Outfit" to AppearanceSettings.Font.Outfit,
-                        stringResource(R.string.preference_font_system) to AppearanceSettings.Font.SystemDefault,
+                        "Outfit" to Font.Outfit,
+                        stringResource(R.string.preference_font_system) to Font.System,
                     ),
                     value = font,
                     onValueChanged = {

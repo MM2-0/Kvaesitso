@@ -5,7 +5,8 @@ import android.net.Uri
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ThemeDescriptor
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.ThemeRepository
 import de.mm20.launcher2.themes.fromJson
@@ -17,7 +18,7 @@ import org.koin.core.component.inject
 class ImportThemeSheetVM : ViewModel(), KoinComponent {
 
     private val themeRepository: ThemeRepository by inject()
-    private val dataStore: LauncherDataStore by inject()
+    private val uiSettings: UiSettings by inject()
 
     val theme = mutableStateOf<Theme?>(null)
     val error = mutableStateOf<Boolean>(false)
@@ -56,16 +57,10 @@ class ImportThemeSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    private suspend fun importTheme(theme: Theme, apply: Boolean) {
+    private fun importTheme(theme: Theme, apply: Boolean) {
         themeRepository.createTheme(theme)
         if (apply) {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setThemeId(theme.id.toString())
-                    ).build()
-            }
+            uiSettings.setTheme(ThemeDescriptor.Custom(theme.id.toString()))
         }
     }
 }

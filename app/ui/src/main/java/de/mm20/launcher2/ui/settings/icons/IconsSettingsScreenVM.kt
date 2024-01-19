@@ -2,124 +2,64 @@ package de.mm20.launcher2.ui.settings.icons
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import de.mm20.launcher2.badges.settings.BadgeSettings
 import de.mm20.launcher2.icons.IconPack
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.preferences.IconShape
+import de.mm20.launcher2.preferences.ui.BadgeSettings
+import de.mm20.launcher2.preferences.ui.IconSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class IconsSettingsScreenVM(
-    private val dataStore: LauncherDataStore,
+    private val uiSettings: UiSettings,
+    private val iconSettings: IconSettings,
     private val badgeSettings: BadgeSettings,
     private val iconService: IconService,
     private val favoritesService: FavoritesService,
     private val permissionsManager: PermissionsManager,
 ) : ViewModel() {
 
+    val grid = uiSettings.gridSettings
 
-    val columnCount = dataStore.data.map { it.grid.columnCount }
     fun setColumnCount(columnCount: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGrid(it.grid.toBuilder().setColumnCount(columnCount))
-                    .build()
-            }
-        }
+        uiSettings.setGridColumnCount(columnCount)
     }
 
-    val iconSize = dataStore.data.map { it.grid.iconSize }
     fun setIconSize(iconSize: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGrid(it.grid.toBuilder().setIconSize(iconSize))
-                    .build()
-            }
-        }
+        uiSettings.setGridIconSize(iconSize)
     }
 
-
-    val showLabels = dataStore.data.map { it.grid.showLabels }
     fun setShowLabels(showLabels: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setGrid(it.grid.toBuilder().setShowLabels(showLabels))
-                    .build()
-            }
-        }
+        uiSettings.setGridShowLabels(showLabels)
     }
 
-    val iconShape = dataStore.data.map { it.icons.shape }
-    fun setIconShape(iconShape: Settings.IconSettings.IconShape) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons.toBuilder()
-                            .setShape(iconShape)
-                    )
-                    .build()
-            }
-        }
+    val iconShape = uiSettings.iconShape
+    fun setIconShape(iconShape: IconShape) {
+        uiSettings.setIconShape(iconShape)
     }
 
-    val adaptifyLegacyIcons = dataStore.data.map { it.icons.adaptify }
+    val icons = iconSettings
     fun setAdaptifyLegacyIcons(adaptify: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons.toBuilder()
-                            .setAdaptify(adaptify)
-                    )
-                    .build()
-            }
-        }
+        iconSettings.setAdaptifyLegacyIcons(adaptify)
     }
 
-    val themedIcons = dataStore.data.map { it.icons.themedIcons }
     fun setThemedIcons(themedIcons: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons.toBuilder()
-                            .setThemedIcons(themedIcons)
-                    )
-                    .build()
-            }
-        }
+        iconSettings.setThemedIcons(themedIcons)
     }
 
-    val forceThemedIcons = dataStore.data.map { it.icons.forceThemed }
     fun setForceThemedIcons(forceThemedIcons: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons.toBuilder()
-                            .setForceThemed(forceThemedIcons)
-                    )
-                    .build()
-            }
-        }
+        iconSettings.setForceThemedIcons(forceThemedIcons)
     }
 
     val installedIconPacks: Flow<List<IconPack>> = iconService.getInstalledIconPacks().map {
@@ -132,33 +72,12 @@ class IconsSettingsScreenVM(
         ) + it
     }
 
-    val iconPackThemed = dataStore.data.map { it.icons.iconPackThemed }
     fun setIconPackThemed(iconPackThemed: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons
-                            .toBuilder()
-                            .setIconPackThemed(iconPackThemed)
-                    )
-                    .build()
-            }
-        }
+        iconSettings.setIconPackThemed(iconPackThemed)
     }
 
-    val iconPack = dataStore.data.map { it.icons.iconPack }
-    fun setIconPack(iconPack: String) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setIcons(
-                        it.icons.toBuilder()
-                            .setIconPack(iconPack)
-                    )
-                    .build()
-            }
-        }
+    fun setIconPack(iconPack: String?) {
+        iconSettings.setIconPack(iconPack?.takeIf { it.isNotBlank() })
     }
 
     val hasNotificationsPermission = permissionsManager.hasPermission(PermissionGroup.Notifications)
@@ -193,10 +112,10 @@ class IconsSettingsScreenVM(
     }
 
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
-        return columnCount.flatMapLatest { cols ->
+        return grid.flatMapLatest { grid ->
             favoritesService.getFavorites(
                 includeTypes = listOf("app"),
-                limit = cols,
+                limit = grid.columnCount,
                 manuallySorted = true,
                 automaticallySorted = true,
                 frequentlyUsed = true,
@@ -214,11 +133,12 @@ class IconsSettingsScreenVM(
         val Factory = viewModelFactory {
             initializer {
                 IconsSettingsScreenVM(
-                    dataStore = get(),
+                    uiSettings = get(),
                     iconService = get(),
                     permissionsManager = get(),
                     favoritesService = get(),
                     badgeSettings = get(),
+                    iconSettings = get(),
                 )
             }
         }

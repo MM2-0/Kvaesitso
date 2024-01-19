@@ -4,21 +4,17 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.AudioManager
 import android.media.MediaMetadata
 import android.media.session.MediaController
-import android.media.session.MediaSession
 import android.media.session.PlaybackState.CustomAction
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import android.service.notification.StatusBarNotification
 import android.view.KeyEvent
-import androidx.core.app.NotificationCompat
 import androidx.core.content.edit
 import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
@@ -27,7 +23,7 @@ import coil.size.Scale
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.media.MediaSettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,7 +43,6 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 import java.io.IOException
 
 interface MusicService {
@@ -81,11 +76,11 @@ interface MusicService {
 
 internal class MusicServiceImpl(
     private val context: Context,
-    notificationRepository: NotificationRepository
+    notificationRepository: NotificationRepository,
+    private val settings: MediaSettings,
 ) : MusicService, KoinComponent {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
-    private val dataStore: LauncherDataStore by inject()
 
     private val preferences: SharedPreferences by lazy {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
@@ -108,12 +103,12 @@ internal class MusicServiceImpl(
     private val currentMediaController: SharedFlow<MediaController?> =
         combine(
             notificationRepository.notifications,
-            dataStore.data.map { it.musicWidget }
+            settings,
         ) { notifications, settings ->
             withContext(Dispatchers.Default) {
                 val musicApps = getEnabledPlayerPackages(
-                    settings.allowListList.toSet(),
-                    settings.denyListList.toSet()
+                    settings.allowList,
+                    settings.denyList,
                 )
                 val sbn: Notification? = notifications.filter {
                     it.mediaSessionToken != null && musicApps.contains(it.packageName)

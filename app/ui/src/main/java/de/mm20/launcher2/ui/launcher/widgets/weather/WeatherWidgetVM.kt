@@ -5,11 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.*
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.DailyForecast
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherRepository
-import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
@@ -25,8 +24,6 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     private val weatherSettings: WeatherSettings by inject()
 
     private val permissionsManager: PermissionsManager by inject()
-
-    private val dataStore: LauncherDataStore by inject()
 
     /**
      * Index of the currently selected day in [dailyForecasts]
@@ -111,7 +108,8 @@ class WeatherWidgetVM : ViewModel(), KoinComponent {
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val imperialUnits = dataStore.data.map { it.weather.imperialUnits }
+    val imperialUnits = weatherSettings.imperialUnits
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun selectDay(index: Int) {
         selectedDayIndex = min(index, forecasts.lastIndex)

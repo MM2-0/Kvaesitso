@@ -13,8 +13,8 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
+import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
-import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherProvider
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine

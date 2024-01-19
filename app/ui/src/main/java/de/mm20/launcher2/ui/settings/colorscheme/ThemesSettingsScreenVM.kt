@@ -2,24 +2,20 @@ package de.mm20.launcher2.ui.settings.colorscheme
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.protobuf.ByteString
-import de.mm20.launcher2.ktx.toBytes
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ThemeDescriptor
+import de.mm20.launcher2.preferences.ui.UiSettings
+import de.mm20.launcher2.themes.BlackAndWhiteThemeId
 import de.mm20.launcher2.themes.DefaultThemeId
 import de.mm20.launcher2.themes.Theme
 import de.mm20.launcher2.themes.ThemeRepository
-import de.mm20.launcher2.themes.fromJson
 import de.mm20.launcher2.themes.toJson
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -31,12 +27,14 @@ import java.util.UUID
 class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
 
     private val themeRepository: ThemeRepository by inject()
-    private val dataStore: LauncherDataStore by inject()
+    private val uiSettings: UiSettings by inject()
 
-    val selectedTheme: Flow<UUID?> = dataStore.data.map {
-        it.appearance.themeId?.takeIf { it.isNotEmpty() }?.let {
-            UUID.fromString(it)
-        } ?: DefaultThemeId
+    val selectedTheme = uiSettings.theme.map {
+        when(it) {
+            ThemeDescriptor.Default -> DefaultThemeId
+            ThemeDescriptor.BlackAndWhite -> BlackAndWhiteThemeId
+            is ThemeDescriptor.Custom -> UUID.fromString(it.id)
+        }
     }
     val themes: Flow<List<Theme>> = themeRepository.getThemes()
 
@@ -49,15 +47,10 @@ class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun selectTheme(theme: Theme) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setThemeId(theme.id.toString())
-                    )
-                    .build()
-            }
+        when(theme.id) {
+            DefaultThemeId -> ThemeDescriptor.Default
+            BlackAndWhiteThemeId -> ThemeDescriptor.BlackAndWhite
+            else -> ThemeDescriptor.Custom(theme.id.toString())
         }
     }
 

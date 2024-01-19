@@ -12,17 +12,20 @@ import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.globalactions.GlobalActionsService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.GestureSettings.GestureAction
-import de.mm20.launcher2.preferences.Settings.LayoutSettings.Layout
+import de.mm20.launcher2.preferences.BaseLayout
+import de.mm20.launcher2.preferences.ColorScheme
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.ScreenOrientation
+import de.mm20.launcher2.preferences.SearchBarColors
+import de.mm20.launcher2.preferences.SearchBarStyle
+import de.mm20.launcher2.preferences.ui.GestureSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.gestures.Gesture
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -32,7 +35,8 @@ import org.koin.core.component.inject
 
 class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
-    private val dataStore: LauncherDataStore by inject()
+    private val uiSettings: UiSettings by inject()
+    private val gestureSettings: GestureSettings by inject()
     private val globalActionsService: GlobalActionsService by inject()
     private val permissionsManager: PermissionsManager by inject()
     private val searchableRepository: SavableSearchableRepository by inject()
@@ -40,40 +44,41 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
     private var isSystemInDarkMode = MutableStateFlow(false)
 
     private val dimBackgroundState = combine(
-        dataStore.data.map { it.appearance.dimWallpaper },
-        dataStore.data.map { it.appearance.theme },
+        uiSettings.dimWallpaper,
+        uiSettings.colorScheme,
         isSystemInDarkMode
     ) { dim, theme, systemDarkMode ->
-        dim && (theme == Settings.AppearanceSettings.Theme.Dark || theme == Settings.AppearanceSettings.Theme.System && systemDarkMode)
+        dim && (theme == ColorScheme.Dark || theme == ColorScheme.System && systemDarkMode)
     }
     val dimBackground = dimBackgroundState.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
-    val statusBarColor = dataStore.data.map { it.systemBars.statusBarColor }
+    val statusBarColor = uiSettings.statusBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val navBarColor = dataStore.data.map { it.systemBars.statusBarColor }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    val chargingAnimation = dataStore.data.map { it.animations.charging }
+    val navBarColor = uiSettings.navigationBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }
+    val chargingAnimation = uiSettings.chargingAnimation
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val hideNavBar = uiSettings.hideNavigationBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }
+    val hideStatusBar = uiSettings.hideStatusBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun setSystemInDarkMode(darkMode: Boolean) {
         isSystemInDarkMode.value = darkMode
     }
 
-    val baseLayout = dataStore.data.map { it.layout.baseLayout }
+    val baseLayout = uiSettings.baseLayout
         .stateIn(viewModelScope, SharingStarted.Eagerly, null)
-    val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }
+    val bottomSearchBar = uiSettings.bottomSearchBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    val reverseSearchResults = dataStore.data.map { it.layout.reverseSearchResults }
+    val reverseSearchResults = uiSettings.reverseSearchResults
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }
+    val fixedSearchBar = uiSettings.fixedSearchBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
-    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }
+    val fixedRotation = uiSettings.orientation
+        .map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     val isSearchOpen = mutableStateOf(false)
@@ -81,8 +86,7 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
     val searchBarFocused = mutableStateOf(false)
 
-
-    val autoFocusSearch = dataStore.data.map { it.searchBar.autoFocus }
+    val autoFocusSearch = uiSettings.openKeyboardOnSearch
 
     fun setSearchbarFocus(focused: Boolean) {
         if (searchBarFocused.value != focused) searchBarFocused.value = focused
@@ -120,45 +124,43 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         isWidgetEditMode.value = editMode
     }
 
-    val wallpaperBlur = dataStore.data.map { it.appearance.blurWallpaper }
+    val wallpaperBlur = uiSettings.blurWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
-    val wallpaperBlurRadius = dataStore.data.map { it.appearance.blurWallpaperRadius }
+    val wallpaperBlurRadius = uiSettings.wallpaperBlurRadius
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
 
 
-    val fillClockHeight = dataStore.data.map { it.clockWidget.fillHeight }
+    val fillClockHeight = uiSettings.clockFillScreen
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
-    val searchBarColor = dataStore.data.map { it.searchBar.color }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Settings.SearchBarSettings.SearchBarColors.Auto)
-    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), Settings.SearchBarSettings.SearchBarStyle.Transparent)
+    val searchBarColor = uiSettings.searchBarColor
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarColors.Auto)
+    val searchBarStyle = uiSettings.searchBarStyle
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), SearchBarStyle.Transparent)
 
-    val gestureState: StateFlow<GestureState> = dataStore
-        .data.map { it.gestures }
-        .distinctUntilChanged()
+    val gestureState: StateFlow<GestureState> = gestureSettings
         .combine(baseLayout) { settings, layout ->
             val swipeLeftAction =
-                settings?.swipeLeft?.takeIf { layout != Layout.Pager } ?: GestureAction.None
-            val swipeRightAction = settings?.swipeRight?.takeIf { layout != Layout.PagerReversed }
-                ?: GestureAction.None
+                settings.swipeLeft.takeIf { layout != BaseLayout.Pager } ?: GestureAction.NoAction
+            val swipeRightAction = settings.swipeRight.takeIf { layout != BaseLayout.PagerReversed }
+                ?: GestureAction.NoAction
             val swipeDownAction =
-                settings?.swipeDown?.takeIf { layout != Layout.PullDown } ?: GestureAction.None
-            val longPressAction = settings?.longPress ?: GestureAction.None
-            val doubleTapAction = settings?.doubleTap ?: GestureAction.None
-            val homeButtonAction = settings?.homeButton ?: GestureAction.None
+                settings.swipeDown.takeIf { layout != BaseLayout.PullDown } ?: GestureAction.NoAction
+            val longPressAction = settings.longPress
+            val doubleTapAction = settings.doubleTap
+            val homeButtonAction = settings.homeButton
 
             val swipeLeftAppKey =
-                if (swipeLeftAction == GestureAction.LaunchApp) settings.swipeLeftApp else null
+                if (swipeLeftAction is GestureAction.Launch) swipeLeftAction.key else null
             val swipeRightAppKey =
-                if (swipeRightAction == GestureAction.LaunchApp) settings.swipeRightApp else null
+                if (swipeRightAction is GestureAction.Launch) swipeRightAction.key else null
             val swipeDownAppKey =
-                if (swipeDownAction == GestureAction.LaunchApp) settings.swipeDownApp else null
+                if (swipeDownAction is GestureAction.Launch) swipeDownAction.key else null
             val longPressAppKey =
-                if (longPressAction == GestureAction.LaunchApp) settings.longPressApp else null
+                if (longPressAction is GestureAction.Launch) longPressAction.key else null
             val doubleTapAppKey =
-                if (doubleTapAction == GestureAction.LaunchApp) settings.doubleTapApp else null
+                if (doubleTapAction is GestureAction.Launch) doubleTapAction.key else null
             val homeButtonAppKey =
-                if (homeButtonAction == GestureAction.LaunchApp) settings.homeButtonApp else null
+                if (homeButtonAction is GestureAction.Launch) homeButtonAction.key else null
             val apps = listOfNotNull(
                 swipeLeftAppKey,
                 swipeRightAppKey,
@@ -189,17 +191,17 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
         val action = when (gesture) {
             Gesture.DoubleTap -> gestureState.value.doubleTapAction
             Gesture.LongPress -> gestureState.value.longPressAction
-            Gesture.SwipeDown -> gestureState.value.swipeDownAction.takeIf { baseLayout.value != Layout.PullDown }
-            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction.takeIf { baseLayout.value != Layout.Pager }
-            Gesture.SwipeRight -> gestureState.value.swipeRightAction.takeIf { baseLayout.value != Layout.PagerReversed }
+            Gesture.SwipeDown -> gestureState.value.swipeDownAction.takeIf { baseLayout.value != BaseLayout.PullDown }
+            Gesture.SwipeLeft -> gestureState.value.swipeLeftAction.takeIf { baseLayout.value != BaseLayout.Pager }
+            Gesture.SwipeRight -> gestureState.value.swipeRightAction.takeIf { baseLayout.value != BaseLayout.PagerReversed }
             Gesture.HomeButton -> gestureState.value.homeButtonAction
         }
         val requiresAccessibilityService =
-            action == GestureAction.OpenRecents
-                    || action == GestureAction.OpenPowerDialog
-                    || action == GestureAction.OpenQuickSettings
-                    || action == GestureAction.OpenNotificationDrawer
-                    || action == GestureAction.LockScreen
+            action is GestureAction.Recents
+                    || action is GestureAction.PowerMenu
+                    || action is GestureAction.QuickSettings
+                    || action is GestureAction.Notifications
+                    || action is GestureAction.ScreenLock
 
         if (action != null && requiresAccessibilityService && !permissionsManager.checkPermissionOnce(
                 PermissionGroup.Accessibility
@@ -211,37 +213,37 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 
 
         return when (action) {
-            GestureAction.OpenSearch -> {
+            is GestureAction.Search -> {
                 openSearch()
                 true
             }
 
-            GestureAction.OpenNotificationDrawer -> {
+            is GestureAction.Notifications -> {
                 globalActionsService.openNotificationDrawer()
                 true
             }
 
-            GestureAction.OpenQuickSettings -> {
+            is GestureAction.QuickSettings -> {
                 globalActionsService.openQuickSettings()
                 true
             }
 
-            GestureAction.LockScreen -> {
+            is GestureAction.ScreenLock -> {
                 globalActionsService.lockScreen()
                 true
             }
 
-            GestureAction.OpenPowerDialog -> {
+            is GestureAction.PowerMenu -> {
                 globalActionsService.openPowerDialog()
                 true
             }
 
-            GestureAction.OpenRecents -> {
+            is GestureAction.Recents -> {
                 globalActionsService.openRecents()
                 true
             }
 
-            GestureAction.LaunchApp -> {
+            is GestureAction.Launch -> {
                 val view = (context as Activity).window.decorView
                 val options = ActivityOptionsCompat.makeScaleUpAnimation(
                     view,
@@ -271,12 +273,12 @@ class LauncherScaffoldVM : ViewModel(), KoinComponent {
 }
 
 data class GestureState(
-    val swipeLeftAction: GestureAction = GestureAction.None,
-    val swipeRightAction: GestureAction = GestureAction.None,
-    val swipeDownAction: GestureAction = GestureAction.None,
-    val longPressAction: GestureAction = GestureAction.None,
-    val doubleTapAction: GestureAction = GestureAction.None,
-    val homeButtonAction: GestureAction = GestureAction.None,
+    val swipeLeftAction: GestureAction = GestureAction.NoAction,
+    val swipeRightAction: GestureAction = GestureAction.NoAction,
+    val swipeDownAction: GestureAction = GestureAction.NoAction,
+    val longPressAction: GestureAction = GestureAction.NoAction,
+    val doubleTapAction: GestureAction = GestureAction.NoAction,
+    val homeButtonAction: GestureAction = GestureAction.NoAction,
     val swipeLeftApp: SavableSearchable? = null,
     val swipeRightApp: SavableSearchable? = null,
     val swipeDownApp: SavableSearchable? = null,

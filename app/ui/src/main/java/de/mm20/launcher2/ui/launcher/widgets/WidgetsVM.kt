@@ -1,9 +1,8 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.widgets.Widget
 import de.mm20.launcher2.widgets.WidgetRepository
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,9 +14,9 @@ import org.koin.core.component.inject
 class WidgetsVM : ViewModel(), KoinComponent {
     private val widgetRepository: WidgetRepository by inject()
 
-    private val dataStore: LauncherDataStore by inject()
+    private val uiSettings: UiSettings by inject()
 
-    val editButton = dataStore.data.map { it.widgets.editButton }
+    val editButton = uiSettings.widgetEditButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     val widgets = widgetRepository.get()

@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.music.PlaybackState
 import de.mm20.launcher2.music.SupportedActions
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
@@ -48,7 +47,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
     }
 
     @Composable
-    override fun Component(layout: ClockWidgetLayout) {
+    override fun Component(compactLayout: Boolean) {
         val context = LocalContext.current
 
         val title by musicService.title.collectAsState(null)
@@ -58,7 +57,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
 
         val playIcon = AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
 
-        if (layout === ClockWidgetLayout.Horizontal) {
+        if (compactLayout) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -113,7 +112,7 @@ class MusicPartProvider : PartProvider, KoinComponent {
                 }
             }
         }
-        if (layout === ClockWidgetLayout.Vertical) {
+        if (!compactLayout) {
             Column(
                 modifier = Modifier.padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally

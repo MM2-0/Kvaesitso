@@ -1,11 +1,11 @@
 package de.mm20.launcher2.preferences.migrations
 
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.AppearanceSettings.CustomColors.Scheme
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.LegacySettings.AppearanceSettings.CustomColors.Scheme
 import palettes.TonalPalette
 
 class Migration_15_16 : VersionedMigration(15, 16) {
-    override suspend fun applyMigrations(builder: Settings.Builder): Settings.Builder {
+    override suspend fun applyMigrations(builder: LegacySettings.Builder): LegacySettings.Builder {
         return builder.setAppearance(
             builder.appearance.toBuilder()
                 .setCustomColors(

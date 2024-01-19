@@ -31,7 +31,7 @@ import de.mm20.launcher2.icons.transformations.LauncherIconTransformation
 import de.mm20.launcher2.icons.transformations.LegacyToAdaptiveTransformation
 import de.mm20.launcher2.icons.transformations.transform
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ui.IconSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.SavableSearchable
 import kotlinx.coroutines.CoroutineScope
@@ -50,7 +50,7 @@ import kotlinx.coroutines.launch
 class IconService(
     val context: Context,
     private val iconPackManager: IconPackManager,
-    private val dataStore: LauncherDataStore,
+    private val settings: IconSettings,
     private val customAttributesRepository: CustomAttributesRepository,
 ) {
 
@@ -90,7 +90,7 @@ class IconService(
         iconPacksUpdated.tryEmit(Unit)
 
         scope.launch {
-            dataStore.data.map { it.icons }.distinctUntilChanged().collectLatest { settings ->
+            settings.distinctUntilChanged().collectLatest { settings ->
                 iconPacksUpdated.collectLatest {
                     val fallbackProvider = if (settings.themedIcons) {
                         ThemedPlaceholderIconProvider(context)
@@ -99,8 +99,8 @@ class IconService(
                     }
                     val providers = mutableListOf<IconProvider>()
 
-                    if (settings.iconPack.isNotBlank()) {
-                        val pack = iconPackManager.getIconPack(settings.iconPack)
+                    if (!settings.iconPack.isNullOrBlank()) {
+                        val pack = iconPackManager.getIconPack(settings.iconPack!!)
                         if (pack != null) {
                             providers.add(
                                 IconPackIconProvider(

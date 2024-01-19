@@ -26,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.pager.HorizontalPagerIndicator
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.SearchBarColors
+import de.mm20.launcher2.preferences.SearchBarStyle
+import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -109,14 +112,14 @@ fun HomescreenSettingsScreen() {
                         viewModel.setSearchBarStyle(it)
                     }
                 )
-                AnimatedVisibility(searchBarStyle == Settings.SearchBarSettings.SearchBarStyle.Transparent) {
+                AnimatedVisibility(searchBarStyle == SearchBarStyle.Transparent) {
                     ListPreference(
                         title = stringResource(R.string.preference_search_bar_color),
                         value = searchBarColor,
                         items = listOf(
-                            stringResource(R.string.preference_system_bar_icons_auto) to Settings.SearchBarSettings.SearchBarColors.Auto,
-                            stringResource(R.string.preference_system_bar_icons_light) to Settings.SearchBarSettings.SearchBarColors.Light,
-                            stringResource(R.string.preference_system_bar_icons_dark) to Settings.SearchBarSettings.SearchBarColors.Dark,
+                            stringResource(R.string.preference_system_bar_icons_auto) to SearchBarColors.Auto,
+                            stringResource(R.string.preference_system_bar_icons_light) to SearchBarColors.Light,
+                            stringResource(R.string.preference_system_bar_icons_dark) to SearchBarColors.Dark,
                         ),
                         onValueChanged = {
                             if (it != null) viewModel.setSearchBarColor(it)
@@ -208,9 +211,9 @@ fun HomescreenSettingsScreen() {
                     title = stringResource(R.string.preference_status_bar_icons),
                     value = lightStatusBar,
                     items = listOf(
-                        stringResource(R.string.preference_system_bar_icons_auto) to Settings.SystemBarsSettings.SystemBarColors.Auto,
-                        stringResource(R.string.preference_system_bar_icons_light) to Settings.SystemBarsSettings.SystemBarColors.Light,
-                        stringResource(R.string.preference_system_bar_icons_dark) to Settings.SystemBarsSettings.SystemBarColors.Dark,
+                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLightStatusBar(it)
@@ -220,9 +223,9 @@ fun HomescreenSettingsScreen() {
                     title = stringResource(R.string.preference_nav_bar_icons),
                     value = lightNavBar,
                     items = listOf(
-                        stringResource(R.string.preference_system_bar_icons_auto) to Settings.SystemBarsSettings.SystemBarColors.Auto,
-                        stringResource(R.string.preference_system_bar_icons_light) to Settings.SystemBarsSettings.SystemBarColors.Light,
-                        stringResource(R.string.preference_system_bar_icons_dark) to Settings.SystemBarsSettings.SystemBarColors.Dark,
+                        stringResource(R.string.preference_system_bar_icons_auto) to SystemBarColors.Auto,
+                        stringResource(R.string.preference_system_bar_icons_light) to SystemBarColors.Light,
+                        stringResource(R.string.preference_system_bar_icons_dark) to SystemBarColors.Dark,
                     ),
                     onValueChanged = {
                         if (it != null) viewModel.setLightNavBar(it)
@@ -255,15 +258,14 @@ fun HomescreenSettingsScreen() {
 fun SearchBarStylePreference(
     title: String,
     summary: String? = null,
-    value: Settings.SearchBarSettings.SearchBarStyle?,
-    onValueChanged: (Settings.SearchBarSettings.SearchBarStyle) -> Unit
+    value: SearchBarStyle?,
+    onValueChanged: (SearchBarStyle) -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
     Preference(title = title, summary = summary, onClick = { showDialog = true })
     if (showDialog && value != null) {
         val styles = remember {
-            Settings.SearchBarSettings.SearchBarStyle.values()
-                .filter { it != Settings.SearchBarSettings.SearchBarStyle.UNRECOGNIZED }
+            SearchBarStyle.entries
         }
         val pagerState = rememberPagerState(initialPage = styles.indexOf(value)) { styles.size }
 

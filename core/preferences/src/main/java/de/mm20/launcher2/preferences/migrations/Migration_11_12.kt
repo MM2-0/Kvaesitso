@@ -1,12 +1,12 @@
 package de.mm20.launcher2.preferences.migrations
 
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.GestureSettings
-import de.mm20.launcher2.preferences.Settings.LayoutSettings
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.LegacySettings.GestureSettings
+import de.mm20.launcher2.preferences.LegacySettings.LayoutSettings
 
 class Migration_11_12: VersionedMigration(11, 12) {
-    override suspend fun applyMigrations(builder: Settings.Builder): Settings.Builder {
+    override suspend fun applyMigrations(builder: LegacySettings.Builder): LegacySettings.Builder {
         val oldLayout = builder.appearance.layout
         when(oldLayout) {
             LayoutSettings.Layout.Pager -> {

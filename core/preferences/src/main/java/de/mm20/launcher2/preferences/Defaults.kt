@@ -2,58 +2,58 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.LegacySettings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme
 import scheme.Scheme
 import java.util.UUID
 
-fun createFactorySettings(context: Context): Settings {
-    return Settings.newBuilder()
+fun createFactorySettings(context: Context): LegacySettings {
+    return LegacySettings.newBuilder()
         .setAppearance(
-            Settings.AppearanceSettings
+            LegacySettings.AppearanceSettings
                 .newBuilder()
-                .setTheme(Settings.AppearanceSettings.Theme.System)
+                .setTheme(LegacySettings.AppearanceSettings.Theme.System)
                 .setDimWallpaper(false)
                 .setBlurWallpaper(true)
                 .setBlurWallpaperRadius(32)
                 .setThemeId(UUID(0L, 0L).toString())
-                .setFont(Settings.AppearanceSettings.Font.Outfit)
+                .setFont(LegacySettings.AppearanceSettings.Font.Outfit)
                 .build()
         )
         .setWeather(
-            Settings.WeatherSettings
+            LegacySettings.WeatherSettings
                 .newBuilder()
-                .setProvider(Settings.WeatherSettings.WeatherProvider.MetNo)
+                .setProvider(LegacySettings.WeatherSettings.WeatherProvider.MetNo)
                 .setImperialUnits(context.resources.getBoolean(R.bool.default_imperialUnits))
                 .build()
         )
         .setMusicWidget(
-            Settings.MusicWidgetSettings
+            LegacySettings.MusicWidgetSettings
                 .newBuilder()
                 .build()
         )
         .setCalendarWidget(
-            Settings.CalendarWidgetSettings
+            LegacySettings.CalendarWidgetSettings
                 .newBuilder()
                 .setHideAlldayEvents(false)
         )
         .setClockWidget(
-            Settings.ClockWidgetSettings
+            LegacySettings.ClockWidgetSettings
                 .newBuilder()
-                .setLayout(Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical)
-                .setClockStyle(Settings.ClockWidgetSettings.ClockStyle.DigitalClock1)
-                .setColor(Settings.ClockWidgetSettings.ClockWidgetColors.Auto)
+                .setLayout(LegacySettings.ClockWidgetSettings.ClockWidgetLayout.Vertical)
+                .setClockStyle(LegacySettings.ClockWidgetSettings.ClockStyle.DigitalClock1)
+                .setColor(LegacySettings.ClockWidgetSettings.ClockWidgetColors.Auto)
                 .setAlarmPart(true)
                 .setBatteryPart(true)
                 .setMusicPart(true)
                 .setDatePart(true)
                 .setFavoritesPart(false)
                 .setFillHeight(true)
-                .setAlignment(Settings.ClockWidgetSettings.ClockWidgetAlignment.Bottom)
+                .setAlignment(LegacySettings.ClockWidgetSettings.ClockWidgetAlignment.Bottom)
                 .build()
         )
         .setFavorites(
-            Settings.FavoritesSettings
+            LegacySettings.FavoritesSettings
                 .newBuilder()
                 .setEnabled(true)
                 .setFrequentlyUsed(true)
@@ -61,7 +61,7 @@ fun createFactorySettings(context: Context): Settings {
                 .setEditButton(true)
         )
         .setFileSearch(
-            Settings.FilesSearchSettings
+            LegacySettings.FilesSearchSettings
                 .newBuilder()
                 .setLocalFiles(true)
                 .setNextcloud(false)
@@ -70,50 +70,50 @@ fun createFactorySettings(context: Context): Settings {
                 .setNextcloud(false)
         )
         .setContactsSearch(
-            Settings.ContactsSearchSettings
+            LegacySettings.ContactsSearchSettings
                 .newBuilder()
                 .setEnabled(true)
         )
         .setCalendarSearch(
-            Settings.CalendarSearchSettings
+            LegacySettings.CalendarSearchSettings
                 .newBuilder()
                 .setEnabled(true)
         )
         .setAppShortcutSearch(
-            Settings.AppShortcutSearchSettings
+            LegacySettings.AppShortcutSearchSettings
                 .newBuilder()
                 .setEnabled(true)
         )
         .setCalculatorSearch(
-            Settings.CalculatorSearchSettings
+            LegacySettings.CalculatorSearchSettings
                 .newBuilder()
                 .setEnabled(true)
         )
         .setUnitConverterSearch(
-            Settings.UnitConverterSearchSettings
+            LegacySettings.UnitConverterSearchSettings
                 .newBuilder()
                 .setEnabled(true)
                 .setCurrencies(true)
         )
         .setWikipediaSearch(
-            Settings.WikipediaSearchSettings
+            LegacySettings.WikipediaSearchSettings
                 .newBuilder()
                 .setEnabled(false)
                 .setImages(false)
                 .setCustomUrl("")
         )
         .setWebsiteSearch(
-            Settings.WebsiteSearchSettings
+            LegacySettings.WebsiteSearchSettings
                 .newBuilder()
                 .setEnabled(false)
         )
         .setWebSearch(
-            Settings.WebSearchSettings
+            LegacySettings.WebSearchSettings
                 .newBuilder()
                 .setEnabled(true)
         )
         .setBadges(
-            Settings.BadgeSettings
+            LegacySettings.BadgeSettings
                 .newBuilder()
                 .setNotifications(true)
                 .setCloudFiles(true)
@@ -121,15 +121,15 @@ fun createFactorySettings(context: Context): Settings {
                 .setSuspendedApps(true)
         )
         .setGrid(
-            Settings.GridSettings.newBuilder()
+            LegacySettings.GridSettings.newBuilder()
                 .setColumnCount(context.resources.getInteger(R.integer.config_columnCount))
                 .setIconSize(48)
                 .setShowLabels(true)
                 .build()
         )
         .setSearchBar(
-            Settings.SearchBarSettings.newBuilder()
-                .setSearchBarStyle(Settings.SearchBarSettings.SearchBarStyle.Transparent)
+            LegacySettings.SearchBarSettings.newBuilder()
+                .setSearchBarStyle(LegacySettings.SearchBarSettings.SearchBarStyle.Transparent)
                 .setAutoFocus(true)
                 .setLaunchOnEnter(true)
                 .setColor(SearchBarColors.Auto)
@@ -137,67 +137,67 @@ fun createFactorySettings(context: Context): Settings {
                 .build()
         )
         .setIcons(
-            Settings.IconSettings.newBuilder()
+            LegacySettings.IconSettings.newBuilder()
                 .setAdaptify(true)
-                .setShape(Settings.IconSettings.IconShape.PlatformDefault)
+                .setShape(LegacySettings.IconSettings.IconShape.PlatformDefault)
                 .setThemedIcons(false)
                 .setIconPack("")
                 .setIconPackThemed(true)
         )
         .setEasterEgg(false)
         .setSystemBars(
-            Settings.SystemBarsSettings.newBuilder()
-                .setNavBarColor(Settings.SystemBarsSettings.SystemBarColors.Auto)
-                .setStatusBarColor(Settings.SystemBarsSettings.SystemBarColors.Auto)
+            LegacySettings.SystemBarsSettings.newBuilder()
+                .setNavBarColor(LegacySettings.SystemBarsSettings.SystemBarColors.Auto)
+                .setStatusBarColor(LegacySettings.SystemBarsSettings.SystemBarColors.Auto)
                 .setHideStatusBar(false)
                 .setHideNavBar(false)
         )
         .setCards(
-            Settings.CardSettings.newBuilder()
+            LegacySettings.CardSettings.newBuilder()
                 .setBorderWidth(0)
                 .setRadius(12)
                 .setOpacity(1f)
         )
         .setWidgets(
-            Settings.WidgetSettings.newBuilder()
+            LegacySettings.WidgetSettings.newBuilder()
                 .setEditButton(true)
         )
         .setLayout(
-            Settings.LayoutSettings.newBuilder()
-                .setBaseLayout(Settings.LayoutSettings.Layout.PullDown)
+            LegacySettings.LayoutSettings.newBuilder()
+                .setBaseLayout(LegacySettings.LayoutSettings.Layout.PullDown)
                 .setBottomSearchBar(false)
                 .setReverseSearchResults(false)
                 .setFixedRotation(false)
         )
         .setGestures(
-            Settings.GestureSettings.newBuilder()
+            LegacySettings.GestureSettings.newBuilder()
                 .setDoubleTap(
                     if (isAtLeastApiLevel(28)) {
-                        Settings.GestureSettings.GestureAction.LockScreen
+                        LegacySettings.GestureSettings.GestureAction.LockScreen
                     } else {
-                        Settings.GestureSettings.GestureAction.None
+                        LegacySettings.GestureSettings.GestureAction.None
                     })
-                .setLongPress(Settings.GestureSettings.GestureAction.None)
-                .setSwipeDown(Settings.GestureSettings.GestureAction.OpenNotificationDrawer)
-                .setSwipeLeft(Settings.GestureSettings.GestureAction.None)
-                .setSwipeRight(Settings.GestureSettings.GestureAction.None)
+                .setLongPress(LegacySettings.GestureSettings.GestureAction.None)
+                .setSwipeDown(LegacySettings.GestureSettings.GestureAction.OpenNotificationDrawer)
+                .setSwipeLeft(LegacySettings.GestureSettings.GestureAction.None)
+                .setSwipeRight(LegacySettings.GestureSettings.GestureAction.None)
         )
         .setResultOrdering(
-            Settings.SearchResultOrderingSettings.newBuilder()
-                .setOrdering(Settings.SearchResultOrderingSettings.Ordering.Weighted)
-                .setWeightFactor(Settings.SearchResultOrderingSettings.WeightFactor.Default)
+            LegacySettings.SearchResultOrderingSettings.newBuilder()
+                .setOrdering(LegacySettings.SearchResultOrderingSettings.Ordering.Weighted)
+                .setWeightFactor(LegacySettings.SearchResultOrderingSettings.WeightFactor.Default)
         )
         .setAnimations(
-            Settings.AnimationSettings.newBuilder()
+            LegacySettings.AnimationSettings.newBuilder()
                 .setCharging(true)
         )
         .build()
 }
 
-internal val DefaultCustomColorsBase: Settings.AppearanceSettings.CustomColors.BaseColors
+internal val DefaultCustomColorsBase: LegacySettings.AppearanceSettings.CustomColors.BaseColors
     get() {
         val scheme = Scheme.light(0xFFACE330.toInt())
-        return Settings.AppearanceSettings.CustomColors.BaseColors.newBuilder()
+        return LegacySettings.AppearanceSettings.CustomColors.BaseColors.newBuilder()
             .setAccent1(scheme.primary)
             .setAccent2(scheme.secondary)
             .setAccent3(scheme.tertiary)
@@ -207,13 +207,13 @@ internal val DefaultCustomColorsBase: Settings.AppearanceSettings.CustomColors.B
             .build()
     }
 
-internal val DefaultLightCustomColorScheme: Settings.AppearanceSettings.CustomColors.Scheme
+internal val DefaultLightCustomColorScheme: LegacySettings.AppearanceSettings.CustomColors.Scheme
     get() {
         val scheme = Scheme.light(0xFFACE330.toInt())
         return scheme.toSettingsColorsScheme()
     }
 
-internal val DefaultDarkCustomColorScheme: Settings.AppearanceSettings.CustomColors.Scheme
+internal val DefaultDarkCustomColorScheme: LegacySettings.AppearanceSettings.CustomColors.Scheme
     get() {
         val scheme = Scheme.dark(0xFFACE330.toInt())
         return scheme.toSettingsColorsScheme()

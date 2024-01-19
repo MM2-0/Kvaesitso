@@ -6,6 +6,7 @@ import android.provider.CalendarContract
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
@@ -15,12 +16,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import java.util.Calendar
 
-interface CalendarRepository: SearchableRepository<CalendarEvent> {
+interface CalendarRepository : SearchableRepository<CalendarEvent> {
     fun findMany(
         from: Long = System.currentTimeMillis(),
         to: Long = from + 14 * 24 * 60 * 60 * 1000L,
@@ -35,6 +37,7 @@ interface CalendarRepository: SearchableRepository<CalendarEvent> {
 internal class CalendarRepositoryImpl(
     private val context: Context,
     private val permissionsManager: PermissionsManager,
+    private val settings: CalendarSearchSettings,
 ) : CalendarRepository {
 
     override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
@@ -45,18 +48,21 @@ internal class CalendarRepositoryImpl(
         }
 
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Calendar)
-        return hasPermission.map {
-            if (it) {
-                val now = System.currentTimeMillis()
-                queryCalendarEvents(
-                    query,
-                    intervalStart = now,
-                    intervalEnd = now + 14 * 24 * 60 * 60 * 1000L,
-                ).toImmutableList()
-            } else {
-                persistentListOf()
+        val enabled = settings.enabled
+
+        return hasPermission.combine(enabled) { a, b -> a && b }
+            .map {
+                if (it) {
+                    val now = System.currentTimeMillis()
+                    queryCalendarEvents(
+                        query,
+                        intervalStart = now,
+                        intervalEnd = now + 14 * 24 * 60 * 60 * 1000L,
+                    ).toImmutableList()
+                } else {
+                    persistentListOf()
+                }
             }
-        }
 
     }
 

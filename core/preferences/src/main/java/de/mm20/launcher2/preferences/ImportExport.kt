@@ -14,7 +14,7 @@ import java.io.File
 
 internal class LauncherStoreBackupComponent(
     private val context: Context,
-    private val dataStore: LauncherDataStore
+    private val dataStore: LegacyDataStore
 ): Backupable {
     override suspend fun backup(toDir: File) {
         dataStore.export(toDir)
@@ -25,10 +25,10 @@ internal class LauncherStoreBackupComponent(
     }
 }
 
-suspend fun LauncherDataStore.export(toDir: File) {
+suspend fun LegacyDataStore.export(toDir: File) {
     val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     val backupDataStore = DataStoreFactory.create(
-        serializer = SettingsSerializer,
+        serializer = LegacySettingsSerializer,
         produceFile = {
             File(toDir, "settings")
         },
@@ -42,14 +42,14 @@ suspend fun LauncherDataStore.export(toDir: File) {
 }
 
 
-suspend fun LauncherDataStore.import(context: Context, fromDir: File) {
+suspend fun LegacyDataStore.import(context: Context, fromDir: File) {
     val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     val backupDataStore = DataStoreFactory.create(
-        serializer = SettingsSerializer,
+        serializer = LegacySettingsSerializer,
         migrations = getMigrations(context),
         corruptionHandler = ReplaceFileCorruptionHandler {
             CrashReporter.logException(it)
-            Settings.getDefaultInstance()
+            LegacySettings.getDefaultInstance()
         },
         produceFile = {
             File(fromDir, "settings")

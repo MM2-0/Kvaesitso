@@ -15,7 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.SurfaceShape
+import de.mm20.launcher2.preferences.ui.CardStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.preferences.ListPreference
@@ -26,6 +28,9 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 @Composable
 fun CardsSettingsScreen() {
     val viewModel: CardsSettingsScreenVM = viewModel()
+
+    val cardStyle by viewModel.cardStyle.collectAsState(CardStyle())
+
     PreferenceScreen(title = stringResource(R.string.preference_cards)) {
         item {
             Box(
@@ -43,23 +48,21 @@ fun CardsSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val shape by viewModel.shape.collectAsState()
                 ListPreference(
                     icon = Icons.Rounded.Rectangle,
                     title = stringResource(R.string.preference_cards_shape),
                     items = listOf(
-                        stringResource(R.string.preference_cards_shape_rounded) to Settings.CardSettings.Shape.Rounded,
-                        stringResource(R.string.preference_cards_shape_cut) to Settings.CardSettings.Shape.Cut,
+                        stringResource(R.string.preference_cards_shape_rounded) to SurfaceShape.Rounded,
+                        stringResource(R.string.preference_cards_shape_cut) to SurfaceShape.Cut,
                     ),
-                    value = shape,
+                    value = cardStyle.shape,
                     onValueChanged = {
-                        if (it != null) viewModel.setShape(it)
+                        viewModel.setShape(it)
                     })
-                val radius by viewModel.radius.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_corner_radius),
                     icon = Icons.Rounded.RoundedCorner,
-                    value = radius,
+                    value = cardStyle.cornerRadius,
                     min = 0,
                     max = 24,
                     step = 1,
@@ -67,22 +70,20 @@ fun CardsSettingsScreen() {
                         viewModel.setRadius(it)
                     }
                 )
-                val opacity by viewModel.opacity.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_opacity),
                     icon = Icons.Rounded.Opacity,
-                    value = opacity,
+                    value = cardStyle.opacity,
                     min = 0f,
                     max = 1f,
                     onValueChanged = {
                         viewModel.setOpacity(it)
                     }
                 )
-                val borderWidth by viewModel.borderWidth.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_cards_stroke_width),
                     icon = Icons.Rounded.LineWeight,
-                    value = borderWidth,
+                    value = cardStyle.borderWidth,
                     min = 0,
                     max = 8,
                     step = 1,

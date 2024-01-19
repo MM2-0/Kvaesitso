@@ -6,7 +6,7 @@ import android.provider.AlarmClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.AlarmPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.BatteryPartProvider
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.DatePartProvider
@@ -18,21 +18,20 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class ClockWidgetVM : ViewModel(), KoinComponent {
-    private val dataStore: LauncherDataStore by inject()
+    private val settings: ClockWidgetSettings by inject()
 
-    private val partProviders = dataStore.data.map { it.clockWidget }.distinctUntilChanged().map {
+    private val partProviders = settings.parts.map {
         val providers = mutableListOf<PartProvider>()
-        if (it.datePart) providers += DatePartProvider()
-        if (it.musicPart) providers += MusicPartProvider()
-        if (it.batteryPart) providers += BatteryPartProvider()
-        if (it.alarmPart) providers += AlarmPartProvider()
+        if (it.date) providers += DatePartProvider()
+        if (it.music) providers += MusicPartProvider()
+        if (it.battery) providers += BatteryPartProvider()
+        if (it.alarm) providers += AlarmPartProvider()
         providers
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 
@@ -51,19 +50,19 @@ class ClockWidgetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val layout = dataStore.data.map { it.clockWidget.layout }
+    val compactLayout = settings.compact
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    val clockStyle = dataStore.data.map { it.clockWidget.clockStyle }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    val color = dataStore.data.map { it.clockWidget.color }
+    val clockStyle = settings.clockStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val alignment = dataStore.data.map { it.clockWidget.alignment }
+    val color = settings.color
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
-    val dockProvider = dataStore.data
-        .map { if (it.clockWidget.favoritesPart) FavoritesPartProvider() else null }
+    val alignment = settings.alignment
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    val dockProvider = settings.dock
+        .map { if (it) FavoritesPartProvider() else null }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun updateTime(time: Long) {

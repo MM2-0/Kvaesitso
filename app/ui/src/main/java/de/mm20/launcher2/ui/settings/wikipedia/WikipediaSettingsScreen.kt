@@ -24,20 +24,10 @@ fun WikipediaSettingsScreen() {
                     viewModel.setWikipedia(it)
                 }
             )
-            val images by viewModel.images.collectAsState()
-            SwitchPreference(
-                title = stringResource(R.string.preference_search_wikipedia_pictures),
-                summary = stringResource(R.string.preference_search_wikipedia_pictures_summary),
-                enabled = wikipedia == true,
-                value = images == true,
-                onValueChanged = {
-                    viewModel.setImages(it)
-                }
-            )
             val customUrl by viewModel.customUrl.collectAsState()
             TextPreference(
                 title = stringResource(R.string.preference_wikipedia_customurl),
-                value = customUrl,
+                value = customUrl ?: "",
                 placeholder = stringResource(id = R.string.wikipedia_url),
                 summary = customUrl.takeIf { !it.isNullOrBlank() }
                     ?: stringResource(id = R.string.wikipedia_url),

@@ -5,10 +5,10 @@ import android.icu.text.SimpleDateFormat
 import android.icu.util.Calendar
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
 import de.mm20.launcher2.weather.R
-import de.mm20.launcher2.weather.WeatherLocation
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create

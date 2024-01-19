@@ -7,13 +7,11 @@ import android.util.Base64
 import android.util.Log
 import androidx.annotation.WorkerThread
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.preferences.weather.WeatherLocation
+import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.GeocoderWeatherProvider
 import de.mm20.launcher2.weather.R
-import de.mm20.launcher2.weather.WeatherLocation
-import de.mm20.launcher2.weather.WeatherProvider
-import de.mm20.launcher2.weather.settings.ProviderSettings
-import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map

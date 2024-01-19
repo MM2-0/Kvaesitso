@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.themes.CorePalette
 import de.mm20.launcher2.themes.DefaultDarkColorScheme
 import de.mm20.launcher2.themes.DefaultLightColorScheme
@@ -102,7 +102,7 @@ fun systemCorePalette(): CorePalette<Int> {
     }
 }
 
-fun CustomColorScheme(colors: Settings.AppearanceSettings.CustomColors.Scheme): ColorScheme {
+fun CustomColorScheme(colors: LegacySettings.AppearanceSettings.CustomColors.Scheme): ColorScheme {
     return ColorScheme(
         primary = Color(colors.primary),
         onPrimary = Color(colors.onPrimary),

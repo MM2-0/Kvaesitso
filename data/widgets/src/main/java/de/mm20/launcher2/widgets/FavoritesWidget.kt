@@ -9,6 +9,7 @@ import java.util.UUID
 @Serializable
 data class FavoritesWidgetConfig(
     val editButton: Boolean = true,
+    val tagsMultiline: Boolean = false,
 )
 
 data class FavoritesWidget(

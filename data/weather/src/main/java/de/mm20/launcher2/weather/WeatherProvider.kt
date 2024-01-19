@@ -1,5 +1,6 @@
 package de.mm20.launcher2.weather
 
+import de.mm20.launcher2.preferences.weather.WeatherLocation
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 import org.koin.core.parameter.parametersOf
