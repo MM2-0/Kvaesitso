@@ -40,6 +40,7 @@ class FavoritesWidgetVM : FavoritesVM() {
     }
 
     override fun setTagsExpanded(expanded: Boolean) {
+        this.tagsExpanded.value = expanded
         val widget = this.widget.value ?: return
         widgetsService.updateWidget(
             widget.copy(
