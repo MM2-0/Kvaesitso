@@ -139,10 +139,11 @@ class BackupManager(
         /**
          * Format changelog:
          * - 1.5: added `weight` to favorites
+         * - 1.9: migrate from proto to json data store
          */
 
         private const val BackupFormatMajor = 1
-        private const val BackupFormatMinor = 8
+        private const val BackupFormatMinor = 9
         internal const val BackupFormat = "$BackupFormatMajor.$BackupFormatMinor"
     }
 }
