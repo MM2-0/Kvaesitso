@@ -14,7 +14,6 @@ class SearchFavoritesVM : FavoritesVM() {
     private val uiState: UiState by inject()
 
     override val tagsExpanded: Flow<Boolean> = uiState.favoritesTagsExpanded
-        .shareIn(viewModelScope, SharingStarted.Lazily)
 
     override fun setTagsExpanded(expanded: Boolean) {
         uiState.setFavoritesTagsExpanded(expanded)
