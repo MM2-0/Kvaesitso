@@ -26,7 +26,6 @@ import org.koin.dsl.module
 
 val preferencesModule = module {
     single { androidContext().legacyDataStore }
-    factory<Backupable>(named<LegacyDataStore>()) { LauncherStoreBackupComponent(androidContext(), get()) }
     single { LauncherDataStore(androidContext(), get()) }
     factory<Backupable>(named<LauncherDataStore>()) { get<LauncherDataStore>() }
     factory { MediaSettings(get()) }
