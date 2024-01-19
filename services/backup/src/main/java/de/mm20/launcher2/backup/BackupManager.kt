@@ -36,7 +36,7 @@ class BackupManager(
 
         withContext(Dispatchers.IO) {
             val outputStream = context.contentResolver.openOutputStream(uri) ?: return@withContext null
-            val backupDir = File(context.externalCacheDir, "backup")
+            val backupDir = File(context.cacheDir, "backup")
             if (backupDir.exists()) {
                 backupDir.deleteRecursively()
             }
