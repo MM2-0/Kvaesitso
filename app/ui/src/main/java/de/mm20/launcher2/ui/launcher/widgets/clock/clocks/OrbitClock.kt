@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
 import de.mm20.launcher2.ktx.TWO_PI
-import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -47,6 +47,8 @@ private val currentTime
 fun OrbitClock(
     _time: Long,
     compact: Boolean,
+    showSeconds: Boolean,
+    useThemeColor: Boolean
 ) {
     val verticalLayout = !compact
 
@@ -108,7 +110,33 @@ fun OrbitClock(
         label = "hoursAnimation"
     )
 
-    val color = LocalContentColor.current
+    val color = if (useThemeColor) {
+        if (LocalContentColor.current == Color.White) {
+            if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
+            else MaterialTheme.colorScheme.primaryContainer
+        } else {
+            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.primary
+        }
+    }
+    else {
+        LocalContentColor.current
+    }
+
+    val secondaryColor = if (useThemeColor) {
+        if (LocalContentColor.current == Color.White) {
+            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primaryContainer
+            else MaterialTheme.colorScheme.onPrimaryContainer
+        } else {
+            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primary
+            else MaterialTheme.colorScheme.primaryContainer
+        }
+    }
+    else {
+        LocalContentColor.current.invert()
+    }
+
+    val contentColor = LocalContentColor.current
 
     val textMeasurer = rememberTextMeasurer()
     val minuteStyle = MaterialTheme.typography.labelMedium
@@ -130,9 +158,9 @@ fun OrbitClock(
         val mSize = size.width * 0.08f
         val hSize = rh + sSize + rs - 2f * rm
 
-        if (verticalLayout) {
+        if (verticalLayout && showSeconds) {
             drawCircle(
-                color = color.copy(alpha = 0.5f),
+                color = contentColor.copy(alpha = 0.5f),
                 radius = rs,
                 style = Stroke(
                     width = strokeWidth.toPx(),
@@ -141,7 +169,7 @@ fun OrbitClock(
             )
         }
         drawCircle(
-            color = color.copy(alpha = 0.5f),
+            color = contentColor.copy(alpha = 0.5f),
             radius = rm,
             style = Stroke(
                 width = strokeWidth.toPx(),
@@ -154,7 +182,7 @@ fun OrbitClock(
             )
         )
         drawCircle(
-            color = color.copy(alpha = 0.5f),
+            color = contentColor.copy(alpha = 0.5f),
             radius = rh,
             style = Stroke(
                 width = strokeWidth.toPx(),
@@ -171,7 +199,7 @@ fun OrbitClock(
         val mPos = Offset(x = sin(animatedMins) * rm, y = -cos(animatedMins) * rm)
         val hPos = Offset(x = sin(animatedHrs) * rh, y = -cos(animatedHrs) * rh)
 
-        if (verticalLayout) {
+        if (verticalLayout && showSeconds) {
             drawCircle(
                 color = Color.Black,
                 radius = sSize,
@@ -208,19 +236,19 @@ fun OrbitClock(
 
             drawText(
                 textMResult,
-                color = color.invert(alpha = 0.65f),
+                color = secondaryColor.copy(alpha = 0.65f),
                 topLeft = size.center - textMResult.size.center.toOffset() + mPos,
                 blendMode = BlendMode.Overlay
             )
             drawText(
                 textHResult,
-                color = color.invert(alpha = 0.65f),
+                color = secondaryColor.copy(alpha = 0.65f),
                 topLeft = size.center - textHResult.size.center.toOffset() + hPos,
                 blendMode = BlendMode.Overlay
             )
         }
 
-        if (verticalLayout) {
+        if (verticalLayout && showSeconds) {
             drawCircle(
                 color = color,
                 radius = sSize,

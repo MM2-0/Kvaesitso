@@ -17,12 +17,14 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccessTime
 import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material.icons.rounded.AlignVerticalBottom
 import androidx.compose.material.icons.rounded.AlignVerticalCenter
 import androidx.compose.material.icons.rounded.AlignVerticalTop
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.BatteryFull
+import androidx.compose.material.icons.rounded.ColorLens
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.Height
 import androidx.compose.material.icons.rounded.HorizontalSplit
@@ -65,6 +67,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -75,9 +78,11 @@ import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.SegmentClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.parts.PartProvider
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
+import org.koin.androidx.compose.inject
 
 @Composable
 fun ClockWidget(
@@ -249,13 +254,17 @@ fun Clock(
     compact: Boolean,
 ) {
     val time = LocalTime.current
-    when (style) {
-        is ClockWidgetStyle.Digital1 -> DigitalClock1(time, compact, style)
+    val clockSettings: ClockWidgetSettings by inject()
+    val showSeconds by clockSettings.showSeconds.collectAsState(initial = true)
+    val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = true)
 
-        is ClockWidgetStyle.Digital2 -> DigitalClock2(time, compact)
-        is ClockWidgetStyle.Binary -> BinaryClock(time, compact)
-        is ClockWidgetStyle.Analog -> AnalogClock(time, compact)
-        is ClockWidgetStyle.Orbit -> OrbitClock(time, compact)
+    when (style) {
+        is ClockWidgetStyle.Digital1 -> DigitalClock1(time, style, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Digital2 -> DigitalClock2(time, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Binary -> BinaryClock(time, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Analog -> AnalogClock(time, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Orbit -> OrbitClock(time, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Segment -> SegmentClock(time,  compact, showSeconds, useThemeColor)
         is ClockWidgetStyle.Empty -> {}
         else -> {}
     }
@@ -284,6 +293,9 @@ fun ConfigureClockWidgetSheet(
     val style by viewModel.clockStyle.collectAsState()
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
+    val showSeconds by viewModel.showSeconds.collectAsState()
+    val useAccentColor by viewModel.useThemeColor.collectAsState()
+
     val dock by viewModel.dock.collectAsState()
     val parts by viewModel.parts.collectAsState()
 
@@ -389,6 +401,34 @@ fun ConfigureClockWidgetSheet(
                         imageVector = Icons.Rounded.DarkMode,
                         contentDescription = null,
                         modifier = Modifier.size(SegmentedButtonDefaults.IconSize)
+                    )
+                }
+            }
+            OutlinedCard(
+                modifier = Modifier.padding(top = 16.dp),
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (compact == false) {
+                        SwitchPreference(
+                            title = stringResource(R.string.preference_clock_widget_show_seconds),
+                            summary = stringResource(R.string.preference_clock_widget_show_seconds_summary),
+                            icon = Icons.Rounded.AccessTime,
+                            value = showSeconds,
+                            onValueChanged = {
+                                viewModel.setShowSeconds(it)
+                            }
+                        )
+                    }
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_clock_widget_use_theme_color),
+                        summary = stringResource(R.string.preference_clock_widget_use_theme_color_summary),
+                        icon = Icons.Rounded.ColorLens,
+                        value = useAccentColor,
+                        onValueChanged = {
+                            viewModel.setUseThemeColor(it)
+                        }
                     )
                 }
             }

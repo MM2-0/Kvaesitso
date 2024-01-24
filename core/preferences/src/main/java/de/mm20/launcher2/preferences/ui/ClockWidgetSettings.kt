@@ -96,12 +96,30 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
+    val color
+        get() = launcherDataStore.data.map { it.clockWidgetColors }
+
     fun setColor(color: ClockWidgetColors) {
         launcherDataStore.update {
             it.copy(clockWidgetColors = color)
         }
     }
 
-    val color
-        get() = launcherDataStore.data.map { it.clockWidgetColors }
+    val showSeconds
+        get() = launcherDataStore.data.map { it.clockWidgetShowSeconds }
+
+    fun setShowSeconds(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetShowSeconds = enabled)
+        }
+    }
+
+    val useThemeColor
+        get() = launcherDataStore.data.map { it.clockWidgetUseThemeColor }
+
+    fun setUseThemeColor(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(clockWidgetUseThemeColor = enabled)
+        }
+    }
 }
