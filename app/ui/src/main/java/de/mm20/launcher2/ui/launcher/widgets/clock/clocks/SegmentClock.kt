@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -24,9 +23,6 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.TextUnit
-import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import java.time.Instant
@@ -83,6 +79,10 @@ fun SegmentClock(
         vectors.toList()
     }
 
+    val separator = remember(compact, enabled) {
+        getVectorSeparator(compact, enabled)
+    }
+
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -92,7 +92,7 @@ fun SegmentClock(
         Image(allSegmentVectors[hour % 10], null)
 
         Separator(compact)
-        Box(Modifier.alpha(flicker)) { UnitSeparator(compact, enabled) }
+        Box(Modifier.alpha(flicker)) { Image(separator, null) }
         Separator(compact)
 
         Image(allSegmentVectors[minute / 10], null)
@@ -101,7 +101,7 @@ fun SegmentClock(
 
         if (!compact && showSeconds) {
             Separator(false)
-            Box(Modifier.alpha(flicker)) { UnitSeparator(false, enabled) }
+            Box(Modifier.alpha(flicker)) { Image(separator, null) }
             Separator(false)
 
             Image(allSegmentVectors[second / 10], null)
@@ -116,14 +116,6 @@ private fun Separator(compact: Boolean) {
     Box(Modifier.size(if (compact) 3.dp else 4.dp))
 }
 
-@Composable
-private fun UnitSeparator(compact: Boolean, enabled: Color) {
-    Text(":", style = MaterialTheme.typography.bodyMedium.copy(
-        color = enabled,
-        fontWeight = FontWeight.ExtraBold,
-        fontSize = TextUnit(if (compact) 5f else 10f, TextUnitType.Em)
-    ))
-}
 /*
    ┌─(A)─┐
   (F)   (B)  // Segments on byte: 0bGFEDBCA
@@ -241,4 +233,33 @@ private fun getVectorDigitForNumber(compact: Boolean, number: Int, enabled: Colo
     }
 
     .build()
+}
+
+private fun getVectorSeparator(compact: Boolean, enabled: Color) : ImageVector {
+
+    return ImageVector.Builder(
+        defaultWidth = if (compact) 3.6.dp else 6.dp,
+        defaultHeight = if (compact) 30.dp else 50.dp,
+        viewportWidth = 3.175f,
+        viewportHeight = 26.458f
+    ).apply {
+        path(
+            fill = SolidColor(enabled),
+            fillAlpha = 1.0f,
+            pathFillType = PathFillType.NonZero
+        ) {
+            moveTo(3f, 18.5f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.587f, 1.588f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.588f, -1.588f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.588f, -1.587f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.587f, 1.587f)
+            close()
+            moveToRelative(0f, -9.634f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.587f, 1.588f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.588f, -1.588f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.588f, -1.587f)
+            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.587f, 1.587f)
+            close()
+        }
+    }.build()
 }
