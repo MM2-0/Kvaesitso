@@ -9,6 +9,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -84,6 +86,9 @@ fun SegmentClock(
     }
 
     Row(
+        modifier = Modifier.padding(top = if (!compact) 16.dp else 0.dp,
+            bottom = if (!compact) 16.dp else 0.dp,
+            start = 0.dp, end = 0.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -248,7 +253,7 @@ private fun getVectorSeparator(compact: Boolean, enabled: Color) : ImageVector {
             fillAlpha = 1.0f,
             pathFillType = PathFillType.NonZero
         ) {
-            moveTo(3f, 18.5f)
+            moveTo(3.175f, 18.5f)
             arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.587f, 1.588f)
             arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.588f, -1.588f)
             arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.588f, -1.587f)

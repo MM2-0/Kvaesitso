@@ -1,13 +1,17 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.text.format.DateFormat
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -52,6 +56,10 @@ fun DigitalClock2(
     }
     val formatter = SimpleDateFormat(formatString, Locale.getDefault())
     Text(
+        modifier = Modifier.padding(top = if (verticalLayout) 12.dp else 0.dp,
+            bottom = if (verticalLayout) 12.dp else 0.dp,
+            start = 0.dp,
+            end = 0.dp),
         text = formatter.format(time),
         style = MaterialTheme.typography.displaySmall.copy(
             fontWeight = FontWeight.Normal,

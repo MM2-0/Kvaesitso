@@ -146,7 +146,8 @@ fun OrbitClock(
 
     Canvas(
         modifier = Modifier
-            .padding(bottom = if (verticalLayout) 8.dp else 0.dp)
+            .padding(bottom = if (verticalLayout) 8.dp else 0.dp,
+                top = if (verticalLayout) 8.dp else 0.dp)
             .size(if (verticalLayout) 192.dp else 56.dp)
     ) {
 

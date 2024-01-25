@@ -62,7 +62,8 @@ fun AnalogClock(
     val contentColor = LocalContentColor.current
 
     Canvas(modifier = Modifier
-        .padding(bottom = if (verticalLayout) 8.dp else 0.dp)
+        .padding(top = if (verticalLayout) 8.dp else 0.dp,
+            bottom = if (verticalLayout) 8.dp else 0.dp)
         .size(size)) {
         rotate(hour.toFloat() / 12f * 360f + ((minute.toFloat() / 60f) * 30f) + (second.toFloat() / 120f), this.size.center) {
             drawLine(
