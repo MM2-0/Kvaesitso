@@ -40,7 +40,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val useThemeColor = settings.useThemeColor
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun setUseThemeColor(boolean: Boolean) {
         settings.setUseThemeColor(boolean)

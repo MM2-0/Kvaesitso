@@ -256,7 +256,7 @@ fun Clock(
     val time = LocalTime.current
     val clockSettings: ClockWidgetSettings by inject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = true)
-    val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = true)
+    val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
 
     when (style) {
         is ClockWidgetStyle.Digital1 -> DigitalClock1(time, style, compact, showSeconds, useThemeColor)
