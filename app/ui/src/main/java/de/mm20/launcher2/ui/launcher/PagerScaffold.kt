@@ -495,6 +495,7 @@ fun PagerScaffold(
                                         .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
                                         .padding(bottom = clockPadding),
                                     editMode = isWidgetEditMode,
+                                    fillScreenHeight = fillClockHeight,
                                 )
 
                                 WidgetColumn(
