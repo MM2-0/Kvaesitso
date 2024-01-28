@@ -271,4 +271,9 @@
         <item quantity="one">Kelvin</item>
         <item quantity="other">Kelvin</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">Dezimeter</item>
+        <item quantity="other">Dezimeter</item>
+    </plurals>
 </resources>
