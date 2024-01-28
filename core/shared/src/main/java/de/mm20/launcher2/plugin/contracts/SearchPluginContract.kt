@@ -5,5 +5,6 @@ abstract class SearchPluginContract {
         const val Search = "search"
         const val Root = "root"
         const val QueryParam = "query"
+        const val AllowNetworkParam = "network"
     }
 }
