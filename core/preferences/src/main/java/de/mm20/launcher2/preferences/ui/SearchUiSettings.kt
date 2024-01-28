@@ -62,4 +62,13 @@ class SearchUiSettings internal constructor(
         }
     }
 
+    val separateWorkProfile
+        get() = launcherDataStore.data.map { it.separateWorkProfile }.distinctUntilChanged()
+
+    fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
+        launcherDataStore.update {
+            it.copy(separateWorkProfile = separateWorkProfile)
+        }
+    }
+
 }

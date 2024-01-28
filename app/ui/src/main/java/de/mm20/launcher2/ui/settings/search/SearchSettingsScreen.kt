@@ -202,6 +202,16 @@ fun SearchSettingsScreen() {
                         navController?.navigate("settings/search/tags")
                     }
                 )
+                val separateWorkProfile by viewModel.separateWorkProfile.collectAsStateWithLifecycle(null)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_bar_separate_work_profile),
+                    summary = stringResource(R.string.preference_search_bar_separate_work_profile_summary),
+                    icon = Icons.Rounded.Work,
+                    value = separateWorkProfile == true,
+                    onValueChanged = {
+                        viewModel.setSeparateWorkProfile(it)
+                    }
+                )
             }
         }
         item {

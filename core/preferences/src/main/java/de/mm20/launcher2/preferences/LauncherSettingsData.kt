@@ -77,6 +77,7 @@ data class LauncherSettingsData(
 
     val searchResultsReversed: Boolean = false,
     val searchResultOrder: SearchResultOrder = SearchResultOrder.Weighted,
+    val separateWorkProfile: Boolean = true,
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
 
