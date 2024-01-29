@@ -264,5 +264,10 @@
         <item quantity="other">kilóméter per óra</item>
     </plurals>
     <string name="unit_degree_celsius_symbol">°C</string>
-    <string name="unit_sqinch_symbol">négyzetinch</string>
+    <string name="unit_sqinch_symbol">sqin</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">deciméter</item>
+        <item quantity="other">deciméter</item>
+    </plurals>
 </resources>

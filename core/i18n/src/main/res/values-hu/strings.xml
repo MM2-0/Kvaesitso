@@ -412,7 +412,7 @@
     <string name="preference_screen_buildinfo">Összeállítási információk</string>
     <string name="preference_screen_debug">Hibakeresés</string>
     <string name="preference_screen_widgets_summary">Widgetek konfigurálása</string>
-    <string name="battery_part_charging">⚠⚡︎ Töltés ⚡︎⚠</string>
+    <string name="battery_part_charging">Töltés ⚡︎⚠</string>
     <string name="backup_component_websearches">Internetes keresési parancsikonok</string>
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Riasztás beállítása</string>

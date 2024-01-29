@@ -127,7 +127,8 @@ class SearchVM : ViewModel(), KoinComponent {
         searchJob = viewModelScope.launch {
             searchUiSettings.resultOrder.collectLatest { resultOrder ->
                 searchService.search(
-                    query
+                    query,
+                    allowNetwork = true,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(

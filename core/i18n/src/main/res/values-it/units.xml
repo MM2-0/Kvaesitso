@@ -318,4 +318,10 @@
         <item quantity="many">tonnellate lunghe</item>
         <item quantity="other">tonnellate lunghe</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimetro</item>
+        <item quantity="many">decimetri</item>
+        <item quantity="other">decimetri</item>
+    </plurals>
 </resources>

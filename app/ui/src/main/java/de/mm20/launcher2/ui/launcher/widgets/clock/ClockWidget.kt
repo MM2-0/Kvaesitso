@@ -87,6 +87,7 @@ import org.koin.androidx.compose.inject
 @Composable
 fun ClockWidget(
     modifier: Modifier = Modifier,
+    fillScreenHeight: Boolean,
     editMode: Boolean = false,
 ) {
     val viewModel: ClockWidgetVM = viewModel()
@@ -158,7 +159,7 @@ fun ClockWidget(
             Column(modifier = modifier) {
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .then(if(fillScreenHeight) Modifier.weight(1f) else Modifier)
                         .fillMaxWidth(),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center

@@ -164,7 +164,7 @@ internal class ContactRepository(
             )
         }
 
-    override fun search(query: String): Flow<ImmutableList<Contact>> {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Contact>> {
         val hasPermission = permissionsManager.hasPermission(PermissionGroup.Contacts)
 
         if (query.length < 2) {

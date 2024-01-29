@@ -2,7 +2,6 @@ package de.mm20.launcher2.websites
 
 import android.content.Context
 import android.webkit.URLUtil
-import androidx.compose.runtime.Immutable
 import androidx.core.graphics.toColorInt
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.search.SearchableRepository
@@ -11,8 +10,7 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.withContext
 import okhttp3.HttpUrl
@@ -20,7 +18,6 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
 import org.jsoup.UncheckedIOException
-import org.koin.core.component.KoinComponent
 import java.io.IOException
 import java.net.MalformedURLException
 import java.net.URISyntaxException
@@ -40,8 +37,9 @@ internal class WebsiteRepository(
         .writeTimeout(1000, TimeUnit.MILLISECONDS)
         .build()
 
-    override fun search(query: String): Flow<ImmutableList<Website>> {
-        return settings.enabled.transformLatest {enabled ->
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Website>> {
+        if (!allowNetwork) return flowOf(persistentListOf())
+        return settings.enabled.transformLatest { enabled ->
             emit(persistentListOf())
             withContext(Dispatchers.IO) {
                 httpClient.dispatcher.cancelAll()

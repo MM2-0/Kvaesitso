@@ -23,6 +23,7 @@ import kotlinx.coroutines.supervisorScope
 interface SearchService {
     fun search(
         query: String,
+        allowNetwork: Boolean = false,
     ): Flow<SearchResults>
 }
 
@@ -42,6 +43,7 @@ internal class SearchServiceImpl(
 
     override fun search(
         query: String,
+        allowNetwork: Boolean,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -54,7 +56,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                appRepository.search(query)
+                appRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -63,7 +65,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                appShortcutRepository.search(query)
+                appShortcutRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -72,7 +74,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                contactRepository.search(query)
+                contactRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -81,7 +83,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                calendarRepository.search(query)
+                calendarRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -107,7 +109,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                websiteRepository.search(query)
+                websiteRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -117,7 +119,7 @@ internal class SearchServiceImpl(
             }
             launch {
                 delay(750)
-                articleRepository.search(query)
+                articleRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -128,6 +130,7 @@ internal class SearchServiceImpl(
             launch {
                 fileRepository.search(
                     query,
+                    allowNetwork
                 )
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->

@@ -328,4 +328,10 @@
         <item quantity="many">Kelvins</item>
         <item quantity="other">Kelvins</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">décimètre</item>
+        <item quantity="many">décimètres</item>
+        <item quantity="other">décimètres</item>
+    </plurals>
 </resources>

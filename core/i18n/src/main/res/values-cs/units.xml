@@ -318,4 +318,10 @@
         <item quantity="few">kelviny</item>
         <item quantity="other">kelvinů</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimetr</item>
+        <item quantity="few">decimetry</item>
+        <item quantity="other">decimetrů</item>
+    </plurals>
 </resources>

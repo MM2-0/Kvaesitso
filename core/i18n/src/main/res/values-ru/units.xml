@@ -371,4 +371,11 @@
         <item quantity="many">кельвинов</item>
         <item quantity="other">кельвинов</item>
     </plurals>
+    <string name="unit_decimeter_symbol">дм</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">дециметр</item>
+        <item quantity="few">дециметра</item>
+        <item quantity="many">дециметров</item>
+        <item quantity="other">дециметров</item>
+    </plurals>
 </resources>
