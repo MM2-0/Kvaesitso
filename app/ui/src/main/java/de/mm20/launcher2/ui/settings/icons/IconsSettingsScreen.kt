@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,15 +25,19 @@ import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,6 +70,7 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.label
 import de.mm20.launcher2.ui.component.preferences.value
+import kotlinx.coroutines.launch
 
 @Composable
 fun IconsSettingsScreen() {
@@ -257,9 +263,26 @@ fun IconsSettingsScreen() {
                             modifier = Modifier
                                 .padding(12.dp)
                         ) {
-                            PlainTooltipBox(tooltip = { Text(stringResource(R.string.icon_pack_dynamic_colors)) }) {
+                            val tooltipState = rememberTooltipState()
+                            val scope = rememberCoroutineScope()
+                            TooltipBox(
+                                state = tooltipState,
+                                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                                tooltip = {
+                                    PlainTooltip {
+                                        Text(stringResource(R.string.icon_pack_dynamic_colors))
+                                    }
+                                },
+                            ) {
                                 FilledIconToggleButton(
-                                    modifier = Modifier.tooltipTrigger(),
+                                    modifier = Modifier.combinedClickable(
+                                        onClick = {},
+                                        onLongClick = {
+                                            scope.launch {
+                                                tooltipState.show()
+                                            }
+                                        }
+                                    ),
                                     checked = icons?.iconPackThemed == true,
                                     onCheckedChange = {
                                         viewModel.setIconPackThemed(it)

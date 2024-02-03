@@ -42,13 +42,17 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -78,6 +82,7 @@ import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.widgets.MusicWidget
+import kotlinx.coroutines.launch
 import kotlin.math.min
 
 @Composable
@@ -354,11 +359,29 @@ fun CustomActions(
     val usedSlots = 1 + (if (actions.skipToPrevious) 1 else 0) + (if (actions.skipToNext) 1 else 0)
     val slots = 5 - usedSlots
 
+    val scope = rememberCoroutineScope()
+
     for (i in 0 until min(actions.customActions.size, slots - 1)) {
         val action = actions.customActions[i]
-        PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
+        val tooltipState = rememberTooltipState()
+        TooltipBox(
+            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            state = tooltipState,
+            tooltip = {
+                PlainTooltip {
+                    Text(action.name.toString())
+                }
+            },
+        ) {
             IconButton(
-                modifier = Modifier.tooltipTrigger(),
+                modifier = Modifier.combinedClickable(
+                    onClick = {},
+                    onLongClick = {
+                        scope.launch {
+                            tooltipState.show()
+                        }
+                    }
+                ),
                 onClick = {
                     onActionSelected(action)
                 }
@@ -399,10 +422,26 @@ fun CustomActions(
             }
         }
     } else if (slots == actions.customActions.size) {
+        val tooltipState = rememberTooltipState()
         val action = actions.customActions.last()
-        PlainTooltipBox(tooltip = { Text(action.name.toString()) }) {
+        TooltipBox(
+            state = tooltipState,
+            positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+            tooltip = {
+                PlainTooltip {
+                    Text(action.name.toString())
+                }
+            }
+        ) {
             IconButton(
-                modifier = Modifier.tooltipTrigger(),
+                modifier = Modifier.combinedClickable(
+                    onClick = {},
+                    onLongClick = {
+                        scope.launch {
+                            tooltipState.show()
+                        }
+                    }
+                ),
                 onClick = {
                     onActionSelected(action)
                 }

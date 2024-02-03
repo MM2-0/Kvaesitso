@@ -44,10 +44,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberPlainTooltipState
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -366,10 +368,15 @@ fun ColumnScope.ConfigureAppWidget(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val scope = rememberCoroutineScope()
-            val tooltipState = rememberPlainTooltipState()
-            PlainTooltipBox(
-                tooltipState = tooltipState,
-                tooltip = { Text(stringResource(R.string.widget_config_appwidget_resize_hint)) }
+            val tooltipState = rememberTooltipState()
+            TooltipBox(
+                state = tooltipState,
+                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                tooltip = {
+                    PlainTooltip {
+                        Text(stringResource(R.string.widget_config_appwidget_resize_hint))
+                    }
+                }
             ) {
                 Box(
                     modifier = Modifier

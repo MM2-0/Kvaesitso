@@ -3,6 +3,8 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,17 +25,21 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.SegmentedButton
 import androidx.compose.material3.SegmentedButtonDefaults
 import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,6 +65,7 @@ import de.mm20.launcher2.ui.component.colorpicker.HctColorPicker
 import de.mm20.launcher2.ui.component.colorpicker.rememberHctColorPickerState
 import de.mm20.launcher2.ui.ktx.hct
 import hct.Hct
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import de.mm20.launcher2.themes.Color as ThemeColor
 
@@ -73,13 +80,26 @@ fun ThemeColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    PlainTooltipBox(tooltip = { Text(title) }) {
+    val scope = rememberCoroutineScope()
+    val tooltipState = rememberTooltipState()
+
+    TooltipBox(
+        state = tooltipState,
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        tooltip = { PlainTooltip { Text(title) } }
+    ) {
         ColorSwatch(
             color = Color((value ?: defaultValue).get(corePalette)),
             modifier = modifier
                 .size(48.dp)
-                .tooltipTrigger(),
-            onClick = { showDialog = true },
+                .combinedClickable(
+                    onClick = { showDialog = true },
+                    onLongClick = {
+                        scope.launch {
+                            tooltipState.show()
+                        }
+                    }
+                ),
         )
     }
 
@@ -180,14 +200,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Primary,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.Primary,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.Primary,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -198,14 +218,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Secondary,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.Secondary,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.Secondary,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -216,14 +236,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Tertiary,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.Tertiary,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.Tertiary,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                             }
                             Row(
@@ -237,14 +257,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Neutral,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.Neutral,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.Neutral,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -255,14 +275,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.NeutralVariant,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.NeutralVariant,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.NeutralVariant,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                                 Spacer(modifier = Modifier.weight(1f))
                                 ColorSwatch(
@@ -273,14 +293,14 @@ fun ThemeColorPreference(
                                     ),
                                     modifier = Modifier
                                         .padding(8.dp)
-                                        .size(64.dp),
+                                        .size(64.dp)
+                                        .clickable {
+                                            currentValue = ColorRef(
+                                                CorePaletteColor.Error,
+                                                tone.roundToInt()
+                                            )
+                                        },
                                     selected = themeColor.color == CorePaletteColor.Error,
-                                    onClick = {
-                                        currentValue = ColorRef(
-                                            CorePaletteColor.Error,
-                                            tone.roundToInt()
-                                        )
-                                    },
                                 )
                             }
                             Row(

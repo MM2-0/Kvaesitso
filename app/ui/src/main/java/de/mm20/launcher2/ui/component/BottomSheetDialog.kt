@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.component
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.exponentialDecay
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.AnchoredDraggableState
@@ -26,7 +27,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -55,7 +55,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -63,9 +62,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupPositionProvider
-import androidx.compose.ui.window.PopupProperties
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.overlays.LocalZIndex
 import de.mm20.launcher2.ui.overlays.Overlay
@@ -93,7 +90,8 @@ fun BottomSheetDialog(
             initialValue = SwipeState.Dismiss,
             positionalThreshold = { it * 0.5f },
             velocityThreshold = { 200f },
-            animationSpec = spring(),
+            snapAnimationSpec = spring(),
+            decayAnimationSpec = exponentialDecay(),
             confirmValueChange = {
                 it != SwipeState.Dismiss || dismissible()
             }
