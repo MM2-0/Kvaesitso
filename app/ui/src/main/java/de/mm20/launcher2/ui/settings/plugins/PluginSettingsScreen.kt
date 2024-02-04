@@ -187,7 +187,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         .padding(4.dp)
                                 ) {
                                     Text(
-                                        "Official",
+                                        stringResource(R.string.plugin_badge_official),
                                         modifier = Modifier.padding(horizontal = 4.dp),
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.onSecondary,
