@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import de.mm20.launcher2.ktx.getDrawableOrNull
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.Plugin
 import de.mm20.launcher2.plugin.PluginPackage
@@ -187,6 +188,14 @@ internal class PluginServiceImpl(
     override suspend fun getPluginPackageIcon(plugin: PluginPackage): Drawable? {
         return withContext(Dispatchers.IO) {
             try {
+                val appInfo = context.packageManager.getApplicationInfo(plugin.packageName, PackageManager.GET_META_DATA)
+                val iconRes = appInfo.metaData.getInt("de.mm20.launcher2.plugin.icon")
+                if (iconRes != 0) {
+                    val icon = context.packageManager.getResourcesForApplication(plugin.packageName).getDrawableOrNull(iconRes, null)
+                    if (icon != null) {
+                        return@withContext icon
+                    }
+                }
                 context.packageManager.getApplicationIcon(
                     plugin.packageName
                 )
