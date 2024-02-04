@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.runBlocking
 

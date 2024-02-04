@@ -5,7 +5,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-fun <T> launchWithCancellationSignal(
+internal fun <T> launchWithCancellationSignal(
     cancellationSignal: CancellationSignal?,
     block: suspend CoroutineScope.() -> T
 ): T {
