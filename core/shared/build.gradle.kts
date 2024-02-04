@@ -44,6 +44,15 @@ android {
     }
 }
 
+tasks.dokkaHtml {
+    outputDirectory.set(layout.buildDirectory.dir("dokka"))
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml)
+}
+
 publishing {
     publications {
         register<MavenPublication>("release") {
@@ -51,8 +60,11 @@ publishing {
             artifactId = "shared"
             version = "1.0.0-SNAPSHOT"
 
+            artifact(javadocJar)
+
             pom {
-                name = "Kvaesitso SDK"
+                name = "Kvaesitso shared library"
+                description = "Contains shared code between the launcher and its plugin SDK"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"

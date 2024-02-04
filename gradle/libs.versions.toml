@@ -145,3 +145,4 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+dokka = { id = "org.jetbrains.dokka", version = "1.9.10" }

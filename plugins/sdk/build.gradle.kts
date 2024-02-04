@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.plugin.serialization)
+    alias(libs.plugins.dokka)
     `maven-publish`
 }
 
@@ -56,6 +57,15 @@ dependencies {
     implementation(libs.bundles.kotlin)
 }
 
+tasks.dokkaHtml {
+    outputDirectory.set(layout.buildDirectory.dir("dokka"))
+}
+
+val javadocJar by tasks.registering(Jar::class) {
+    archiveClassifier.set("javadoc")
+    from(tasks.dokkaHtml)
+}
+
 publishing {
     publications {
         register<MavenPublication>("release") {
@@ -63,9 +73,11 @@ publishing {
             artifactId = "plugin-sdk"
             version = "1.0.0-SNAPSHOT"
 
+            artifact(javadocJar)
+
             pom {
-                name = "Kvaesitso shared library"
-                description = "Contains shared code between the launcher and its plugin SDK"
+                name = "Kvaesitso SDK"
+                description = "Plugin SDK for the Kvaesitso launcher"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"
