@@ -682,4 +682,5 @@
     <string name="preference_clockwidget_dynamic_zone">Динамическая зона</string>
     <string name="import_theme_apply">Применить тему</string>
     <string name="shortcut_label_unavailable">Недоступно</string>
+    <string name="plugin_badge_official">Официальный</string>
 </resources>
