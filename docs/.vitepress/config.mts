@@ -25,6 +25,9 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/MM2-0/Kvaesitso' },
     ],
+    search: {
+      provider: 'local',
+    },
   },
   head: [['link', { rel: 'icon', href: '/icon.png' }]],
 })
