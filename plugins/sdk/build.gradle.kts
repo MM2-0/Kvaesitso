@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.dokka)
     `maven-publish`
+    signing
 }
 
 android {
@@ -71,13 +72,14 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "de.mm20.launcher2"
             artifactId = "plugin-sdk"
-            version = "1.0.0-SNAPSHOT"
+            version = libs.versions.pluginSdk.get()
 
             artifact(javadocJar)
 
             pom {
                 name = "Kvaesitso SDK"
                 description = "Plugin SDK for the Kvaesitso launcher"
+                url = "https://kvaesitso.mm20.de"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"
@@ -87,8 +89,14 @@ publishing {
                 developers {
                     developer {
                         id = "MM2-0"
-                        name = "U.N.Owen"
+                        name = "MM2-0"
+                        url = "https://github.com/MM2-0"
                     }
+                }
+                scm {
+                    connection = "scm:git:git://github.com/MM2-0/Kvaesitso.git"
+                    developerConnection = "scm:git:ssh://github.com:MM2-0/Kvaesitso.git"
+                    url = "https://github.com/MM2-0/Kvaesitso/tree/main/plugins/sdk"
                 }
             }
 
@@ -108,4 +116,9 @@ publishing {
             }
         }
     }
+}
+
+signing {
+    useGpgCmd()
+    sign(publishing.publications["release"])
 }

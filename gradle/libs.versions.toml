@@ -3,6 +3,8 @@ minSdk = "26"
 compileSdk = "34"
 targetSdk = "34"
 
+pluginSdk = "1.0.0-alpha02"
+
 gradle = "8.1.2"
 android-gradle-plugin = "8.2.2"
 protobuf-gradle-plugin = "0.9.4"
