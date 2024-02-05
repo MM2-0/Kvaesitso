@@ -672,4 +672,5 @@
     <string name="preference_search_result_ordering_weighted">Használat</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabíl</string>
+    <string name="plugin_badge_official">Hivatalos</string>
 </resources>
