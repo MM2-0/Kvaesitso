@@ -43,6 +43,8 @@ Bright Sky is an API that converts data published by the Deutscher Wetterdienst 
 to work with JSON format. The API is free to use and requires no additional configuration, however
 it only provides weather data for locations in Germany.
 
+---
+
 [^1]:
     These weather providers do not provide any means of geocoding or location lookup. Instead, the
     Android Geocoder API is used to lookup locations (in fixed location mode) and location names (in
