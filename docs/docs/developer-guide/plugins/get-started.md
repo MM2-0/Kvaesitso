@@ -47,4 +47,5 @@ Under the hood, plugins are implemented using Android's content provider APIs. W
 
 Your next steps depend on the type of plugin that you want to develop:
 
-- Weather provider plugin: please refer to
+- Weather provider plugin: [Weather Provider](/docs/developer-guide/plugins/plugin-types/weather.html)
+- File search plugin: [File Search Provider](/docs/developer-guide/plugins/plugin-types/file-search.html)
