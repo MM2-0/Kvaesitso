@@ -2,3 +2,4 @@ node_modules
 dist
 .vitepress/cache
 .vitepress/build
+public/reference

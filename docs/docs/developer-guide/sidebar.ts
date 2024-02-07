@@ -53,4 +53,39 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
       },
     ],
   },
+  {
+    text: 'Plugin Development',
+    items: [
+      {
+        text: 'Get Started',
+        link: '/docs/developer-guide/plugins/get-started',
+      },
+      {
+        text: 'Plugin Types',
+        items: [
+          {
+            text: 'Weather Provider',
+            link: '/docs/developer-guide/plugins/plugin-types/weather',
+          },
+          {
+            text: 'File Search Provider',
+            link: '/docs/developer-guide/plugins/plugin-types/file-search',
+          },
+        ],
+      },
+      {
+        text: 'Metadata',
+        link: '/docs/developer-guide/plugins/metadata',
+      },
+      {
+        text: 'Access Control',
+        link: '/docs/developer-guide/plugins/access-control',
+      },
+      {
+        text: 'Reference',
+        link: '/reference/index.html',
+        target: '_blank',
+      },
+    ],
+  },
 ]
