@@ -677,4 +677,5 @@
     <string name="plugin_weather_provider_enable">Nastavit jako poskytovatele počasí</string>
     <string name="plugin_weather_provider_enabled">Momentálně nastaven jako poskytovatel počasí</string>
     <string name="plugin_state_error">Tento doplněk nefunguje tak, jak by měl</string>
+    <string name="plugin_badge_official">Oficiální</string>
 </resources>
