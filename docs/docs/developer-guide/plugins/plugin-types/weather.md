@@ -29,8 +29,8 @@ The default implementation uses the Android Geocoder, but this API has the limit
 
 There are two types of locations:
 
-- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-lat-lon/index.html" target="_blank">`WeatherLocation.LatLon`</a>: use this when your weather service identifies locations by their geo coordinates.
-- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-id/index.html" target="_blank">`WeatherLocation.Id`</a>: use this when your weather service has an internal ID system to identify locations.
+- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-lat-lon/index.html" target="_blank">`WeatherLocation.LatLon`</a>: use this if your weather service identifies locations by their geo coordinates.
+- <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-weather-location/-id/index.html" target="_blank">`WeatherLocation.Id`</a>: use this if your weather service has an internal ID system to identify locations.
 
 ## Featch weather data
 
@@ -44,11 +44,11 @@ suspend fun getWeatherData(lat: Double, lon: Double, lang: String?): List<Foreca
 suspend fun getWeatherData(location: WeatherLocation, lang: String?): List<Forecast>?
 ```
 
-The first method is called when the user has _Auto location_ enabled. Are the last known coordinates of the user.
+The first method is called when the user has _Auto location_ enabled. `lat` and `lon` the last known coordinates of the user.
 
 The second method is called when the user has set their location to a fixed location. `location` is guaranteed to be a value that has been returned by `findLocations` before. If you haven't overriden `findLocations`, this will always be a `WeatherLocation.LatLon`.
 
-Both methods return a list of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-forecast/index.html" target="_blank">`Forecast`</a>s. If an error occurs, you can throw an instruction or return `null`, in this case the launcher will keep the old data and start another attempt at a later time.
+Both methods return a list of <a href="/reference/plugins/sdk/de.mm20.launcher2.sdk.weather/-forecast/index.html" target="_blank">`Forecast`</a>s. If an error occurs, you can throw an exception or return `null`, in this case the launcher will keep the old data and start another attempt at a later time.
 
 `Forecast` objects need at least a `timestamp` (unix time in millis), a `temperature`, a `condition`, an `icon`, a `location` name, and a `provider` name.
 
