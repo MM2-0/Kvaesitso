@@ -43,7 +43,7 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
       - run: gradle dokkaHtmlMultiModule
         working-directory: .
-      - run: mv build/dokka/htmlMultiModule docs/plublic/reference
+      - run: mv build/dokka/htmlMultiModule docs/public/reference
         working-directory: .
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
