@@ -107,7 +107,7 @@ data class Forecast(
     /**
      * Unix timestamp of the time that this forecast was created, in milliseconds
      */
-    val createdAt: Long,
+    val createdAt: Long = System.currentTimeMillis(),
     /**
      * The temperature
      * @see [Double].[C]
@@ -188,5 +188,5 @@ data class Forecast(
     /**
      * Url to the provider and more weather information
      */
-    val providerUrl: String?,
+    val providerUrl: String? = null,
 )
