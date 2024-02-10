@@ -11,6 +11,12 @@ class MyWeatherProviderPlugin : WeatherProvider(
 
 In the super constructor call, pass a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-weather-plugin-config/index.html" target="_blank">`WeatherPluginConfig`</a> object.
 
+## Plugin config
+
+In the plugin config, you can set the following properties:
+
+- `minUpdateInterval`: Minimum time (in ms) that needs to pass before the provider can be queried again. The launcher respects this value as long as the user does not change the weather settings (provider or location).
+
 ## Location search
 
 If your weather provider service provides an API to lookup locations, you should override
