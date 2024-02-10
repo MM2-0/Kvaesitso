@@ -28,6 +28,9 @@ export default defineConfig({
     search: {
       provider: 'local',
     },
+    editLink: {
+      pattern: 'https://github.com/MM2-0/Kvaesitso/edit/main/docs/:path',
+    },
   },
   head: [['link', { rel: 'icon', href: '/icon.png' }]],
 })
