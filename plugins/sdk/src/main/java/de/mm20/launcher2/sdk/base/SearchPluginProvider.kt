@@ -21,7 +21,14 @@ abstract class SearchPluginProvider<T>(
      * @param query The query to search for
      */
     abstract suspend fun search(query: String, allowNetwork: Boolean): List<T>
-    abstract suspend fun get(id: String): T?
+
+    /**
+     * Get an item by its id.
+     * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference`
+     */
+    open suspend fun get(id: String): T? {
+        return null
+    }
 
     override fun onCreate(): Boolean {
         return true
