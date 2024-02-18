@@ -51,7 +51,7 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val musicApps = musicService.getInstalledPlayerPackages()
-            val allApps = appRepository.findMany().first().filter { it.profile == AppProfile.Personal }
+            val allApps = appRepository.findMany().first { it.isNotEmpty() }.filter { it.profile == AppProfile.Personal }
                 .distinctBy { it.componentName.packageName }
             val settings = mediaSettings.first()
             val allowList = settings.allowList
