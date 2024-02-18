@@ -665,11 +665,13 @@
     <string name="preference_clockwidget_dynamic_zone">Dynamische Zone</string>
     <string name="preference_plugin_badges">Plugin-Plaketten</string>
     <string name="preference_plugin_badges_summary">Anzeigen, von welchem Plugin ein Suchergebnis stammt</string>
-    <string name="plugin_action_setup">einrichten</string>
+    <string name="plugin_action_setup">Einrichten</string>
     <string name="plugin_type_filesearch">Dateisuche</string>
     <string name="plugin_type_weather">Wetterdienst</string>
     <string name="plugin_weather_provider_enabled">Als Wetterdienst gesetzt</string>
     <string name="plugin_state_error">Dieses Plugin funktioniert nicht wie erwartet</string>
     <string name="plugin_state_setup_required">Sie müssen das Plugin zuerst einrichten</string>
     <string name="plugin_weather_provider_enable">Als Wetterdienst nutzen</string>
+    <string name="plugin_badge_official">Offiziell</string>
+    <string name="preference_plugin_enable">Plugin aktivieren</string>
 </resources>
