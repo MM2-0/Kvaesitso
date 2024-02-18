@@ -387,6 +387,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                     stringResource(R.string.plugin_weather_provider_enable)
                                 } else {
                                     stringResource(R.string.plugin_weather_provider_enabled)
+                                },
+                                onClick = {
+                                    viewModel.setWeatherProvider(plugin.plugin.authority)
                                 }
                             )
                         }
