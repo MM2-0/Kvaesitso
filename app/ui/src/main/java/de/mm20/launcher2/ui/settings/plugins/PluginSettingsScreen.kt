@@ -252,8 +252,8 @@ fun PluginSettingsScreen(pluginId: String) {
                                 )
                                 Text(
                                     when (type) {
-                                        PluginType.FileSearch -> "File search"
-                                        PluginType.Weather -> "Weather provider"
+                                        PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
+                                        PluginType.Weather -> stringResource(R.string.plugin_type_weather)
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,
@@ -280,7 +280,7 @@ fun PluginSettingsScreen(pluginId: String) {
                 SwitchPreference(
                     enabled = pluginPackage != null && hasPermission != null,
                     iconPadding = false,
-                    title = "Enable plugin",
+                    title = stringResource(R.string.preference_plugin_enable),
                     value = pluginPackage?.enabled == true && hasPermission == true,
                     onValueChanged = {
                         if (hasPermission == true) {
@@ -317,7 +317,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                                 CrashReporter.logException(e)
                                             }
                                         }) {
-                                            Text("Set up")
+                                            Text(stringResource(R.string.plugin_action_setup))
                                         }
                                     }
                                 )
