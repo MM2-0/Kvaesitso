@@ -48,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.R
@@ -312,7 +313,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     primaryAction = {
                                         TextButton(onClick = {
                                             try {
-                                                state.setupActivity.send()
+                                                state.setupActivity.sendWithBackgroundPermission()
                                             } catch (e: PendingIntent.CanceledException) {
                                                 CrashReporter.logException(e)
                                             }
@@ -362,7 +363,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     primaryAction = {
                                         TextButton(onClick = {
                                             try {
-                                                state.setupActivity.send()
+                                                state.setupActivity.sendWithBackgroundPermission()
                                             } catch (e: PendingIntent.CanceledException) {
                                                 CrashReporter.logException(e)
                                             }
