@@ -78,6 +78,7 @@ import de.mm20.launcher2.ui.component.markdown.MarkdownEditor
 import de.mm20.launcher2.ui.component.markdown.MarkdownText
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.NotesWidgetConfig
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.launch
 import java.time.ZonedDateTime
@@ -365,15 +366,12 @@ fun NotesWidget(
                             },
                             onClick = {
                                 val wasLast = isLastWidget != false
-                                viewModel.dismissWidget(widget)
-                                val newWidget =
-                                    if (wasLast) {
-                                        NotesWidget(UUID.randomUUID()).also {
-                                            onWidgetAdd(it, 0)
-                                        }
-                                    } else {
-                                        null
-                                    }
+
+                                if (wasLast) {
+                                    viewModel.updateWidgetContent(NotesWidgetConfig())
+                                } else {
+                                    viewModel.dismissWidget(widget)
+                                }
 
                                 lifecycleOwner.lifecycleScope.launch {
                                     val result = snackbarHostState.showSnackbar(
@@ -382,9 +380,10 @@ fun NotesWidget(
                                         duration = SnackbarDuration.Short,
                                     )
                                     if (result == SnackbarResult.ActionPerformed) {
-                                        onWidgetAdd(widget, 0)
-                                        newWidget?.let {
-                                            viewModel.dismissWidget(it)
+                                        if (wasLast) {
+                                            viewModel.updateWidgetContent(widget.config)
+                                        } else {
+                                            onWidgetAdd(widget, 0)
                                         }
                                     }
                                 }
