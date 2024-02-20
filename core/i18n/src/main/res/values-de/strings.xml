@@ -674,4 +674,8 @@
     <string name="plugin_weather_provider_enable">Als Wetterdienst nutzen</string>
     <string name="plugin_badge_official">Offiziell</string>
     <string name="preference_plugin_enable">Plugin aktivieren</string>
+    <string name="preference_mdy_color_sorce_system">System</string>
+    <string name="preference_mdy_color_sorce_wallpaper">Hintergrundbild</string>
+    <string name="preference_category_advanced">Erweitert</string>
+    <string name="preference_mdy_color_sorce">Quelle für dynamische Farben</string>
 </resources>
