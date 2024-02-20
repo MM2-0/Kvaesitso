@@ -18,6 +18,7 @@ import de.mm20.launcher2.preferences.ScreenOrientation
 import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.preferences.SystemBarColors
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -28,6 +29,7 @@ import org.koin.core.component.get
 
 class HomescreenSettingsScreenVM(
     private val uiSettings: UiSettings,
+    private val clockWidgetSettings: ClockWidgetSettings,
 ) : ViewModel() {
 
     var showClockWidgetSheet by mutableStateOf(false)
@@ -119,6 +121,13 @@ class HomescreenSettingsScreenVM(
         uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
+    val dock = clockWidgetSettings.dock
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDock(dock: Boolean) {
+        clockWidgetSettings.setDock(dock)
+    }
+
     val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
@@ -144,7 +153,8 @@ class HomescreenSettingsScreenVM(
         val Factory = viewModelFactory {
             initializer {
                 HomescreenSettingsScreenVM(
-                    uiSettings = get()
+                    uiSettings = get(),
+                    clockWidgetSettings = get(),
                 )
             }
         }
