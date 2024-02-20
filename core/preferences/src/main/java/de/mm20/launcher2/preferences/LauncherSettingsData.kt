@@ -11,6 +11,7 @@ data class LauncherSettingsData(
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
+    val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,

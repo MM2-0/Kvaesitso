@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.ui.R
@@ -16,6 +17,7 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.getTypography
@@ -50,6 +52,17 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/themes")
                     }
                 )
+                if (isAtLeastApiLevel(31)) {
+                    val compatModeColors by viewModel.compatModeColors.collectAsState()
+                    SwitchPreference(
+                        title = stringResource(id = R.string.preference_force_compat_system_colors),
+                        summary = stringResource(id = R.string.preference_force_compat_system_colors_summary),
+                        value = compatModeColors,
+                        onValueChanged = {
+                            viewModel.setCompatModeColors(it)
+                        }
+                    )
+                }
                 val font by viewModel.font.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_font),
