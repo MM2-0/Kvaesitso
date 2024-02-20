@@ -447,14 +447,16 @@
     <string name="preference_colors_auto_generate">Generate from primary color</string>
     <string name="preference_category_custom_colors_light">Light color scheme</string>
     <string name="preference_category_custom_colors_dark">Dark color scheme</string>
-    <string name="preference_force_compat_system_colors">Ignore system colors</string>
-    <string name="preference_force_compat_system_colors_summary">Request color scheme via Material You Compat</string>
+    <string name="preference_mdy_color_sorce">Source for dynamic colors</string>
+    <string name="preference_mdy_color_sorce_system">System</string>
+    <string name="preference_mdy_color_sorce_wallpaper">Wallpaper</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
     <string name="preference_category_licenses">Open source licenses</string>
+    <string name="preference_category_advanced">Advanced</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
     <string name="preference_screen_about_summary">App and license information</string>

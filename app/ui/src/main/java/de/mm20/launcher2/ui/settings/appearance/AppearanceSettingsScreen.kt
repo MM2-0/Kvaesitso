@@ -28,6 +28,7 @@ fun AppearanceSettingsScreen() {
     val context = LocalContext.current
     val navController = LocalNavController.current
     val themeName by viewModel.themeName.collectAsStateWithLifecycle(null)
+    val compatModeColors by viewModel.compatModeColors.collectAsState()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -52,17 +53,6 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/themes")
                     }
                 )
-                if (isAtLeastApiLevel(31)) {
-                    val compatModeColors by viewModel.compatModeColors.collectAsState()
-                    SwitchPreference(
-                        title = stringResource(id = R.string.preference_force_compat_system_colors),
-                        summary = stringResource(id = R.string.preference_force_compat_system_colors_summary),
-                        value = compatModeColors,
-                        onValueChanged = {
-                            viewModel.setCompatModeColors(it)
-                        }
-                    )
-                }
                 val font by viewModel.font.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_font),
@@ -89,6 +79,24 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/cards")
                     }
                 )
+            }
+        }
+
+        if (isAtLeastApiLevel(31)) {
+            item {
+                PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_mdy_color_sorce),
+                        items = listOf(
+                            stringResource(R.string.preference_mdy_color_sorce_system) to false,
+                            stringResource(R.string.preference_mdy_color_sorce_wallpaper) to true,
+                        ),
+                        value = compatModeColors,
+                        onValueChanged = {
+                            viewModel.setCompatModeColors(it)
+                        }
+                    )
+                }
             }
         }
     }
