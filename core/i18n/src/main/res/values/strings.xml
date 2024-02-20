@@ -447,9 +447,9 @@
     <string name="preference_colors_auto_generate">Generate from primary color</string>
     <string name="preference_category_custom_colors_light">Light color scheme</string>
     <string name="preference_category_custom_colors_dark">Dark color scheme</string>
-    <string name="preference_mdy_color_sorce">Source for dynamic colors</string>
-    <string name="preference_mdy_color_sorce_system">System</string>
-    <string name="preference_mdy_color_sorce_wallpaper">Wallpaper</string>
+    <string name="preference_mdy_color_source">Source for dynamic colors</string>
+    <string name="preference_mdy_color_source_system">System</string>
+    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>

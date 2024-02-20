@@ -17,7 +17,6 @@ import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.value
 import de.mm20.launcher2.ui.locals.LocalNavController
 import de.mm20.launcher2.ui.theme.getTypography
@@ -86,10 +85,10 @@ fun AppearanceSettingsScreen() {
             item {
                 PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
                     ListPreference(
-                        title = stringResource(R.string.preference_mdy_color_sorce),
+                        title = stringResource(R.string.preference_mdy_color_source),
                         items = listOf(
-                            stringResource(R.string.preference_mdy_color_sorce_system) to false,
-                            stringResource(R.string.preference_mdy_color_sorce_wallpaper) to true,
+                            stringResource(R.string.preference_mdy_color_source_system) to false,
+                            stringResource(R.string.preference_mdy_color_source_wallpaper) to true,
                         ),
                         value = compatModeColors,
                         onValueChanged = {
