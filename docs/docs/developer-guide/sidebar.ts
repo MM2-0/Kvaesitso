@@ -78,6 +78,10 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/docs/developer-guide/plugins/metadata',
       },
       {
+        text: 'Plugin Settings',
+        link: '/docs/developer-guide/plugins/settings',
+      },
+      {
         text: 'Access Control',
         link: '/docs/developer-guide/plugins/access-control',
       },
