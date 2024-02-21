@@ -318,4 +318,10 @@
         <item quantity="many">metros por segundo</item>
         <item quantity="other">metros por segundo</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decímetro</item>
+        <item quantity="many">decímetros</item>
+        <item quantity="other">decímetros</item>
+    </plurals>
 </resources>
