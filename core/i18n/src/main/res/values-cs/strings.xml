@@ -679,4 +679,8 @@
     <string name="plugin_state_error">Tento doplněk nefunguje tak, jak by měl</string>
     <string name="plugin_badge_official">Oficiální</string>
     <string name="preference_plugin_enable">Povolit doplněk</string>
+    <string name="preference_category_advanced">Pokročilé</string>
+    <string name="preference_mdy_color_source">Zdroj dynamických barev</string>
+    <string name="preference_mdy_color_source_system">Systém</string>
+    <string name="preference_mdy_color_source_wallpaper">Tapeta</string>
 </resources>
