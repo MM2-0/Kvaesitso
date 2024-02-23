@@ -81,8 +81,9 @@ internal class WebsiteRepository(
 
                 query.contains('/') -> Triple(
                     null,
-                    query.substringBefore('/'),
-                    query.substringAfter('/')
+                    query.substringBefore('/').takeIf { it.isNotEmpty() }
+                        ?: return@withContext null,
+                    query.substringAfter('/').takeIf { it.isNotEmpty() }
                 )
 
                 else -> Triple(null, query, null)
