@@ -105,8 +105,10 @@ internal class OsmRepository(
         UpdateResult.TemporarilyUnavailable()
     }
 
-    override fun search(query: String): Flow<ImmutableList<Location>> = channelFlow {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Location>> = channelFlow {
         send(persistentListOf())
+
+        if (!allowNetwork) return@channelFlow
 
         // values higher than 2 might block searches for "dm"
         // (Drogerie Markt, a problem specific to germany, but probably also relevant for other countries)
