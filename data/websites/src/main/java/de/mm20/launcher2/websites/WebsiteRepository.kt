@@ -94,7 +94,7 @@ internal class WebsiteRepository(
 
             if (!DomainRegex.matches(aceDomain)) return@withContext null
 
-            var url = "${protocol ?: "https"}://$aceDomain${path?.let { "/$it" } ?: ""}"
+            var url = "${protocol ?: "https"}://$aceDomain${path?.let { "/$it" }.orEmpty()}"
 
             if (!URLUtil.isNetworkUrl(url)) return@withContext null
 
