@@ -70,11 +70,12 @@ internal class WebsiteRepository(
 
                     if (protocol !in listOf("http", "https")) return@withContext null
 
-                    val noProtocol = query.substringAfter("://")
+                    val noProtocol = query.substringAfter("://").takeIf { it.isNotEmpty() }
+                        ?: return@withContext null
                     Triple(
                         protocol,
                         noProtocol.substringBefore('/'),
-                        noProtocol.substringAfter('/')
+                        noProtocol.substringAfter('/', "").takeIf { it.isNotEmpty() }
                     )
                 }
 
