@@ -19,11 +19,19 @@ import okhttp3.Request
 import org.jsoup.Jsoup
 import org.jsoup.UncheckedIOException
 import java.io.IOException
+import java.net.IDN
 import java.net.MalformedURLException
 import java.net.URISyntaxException
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
+// https://code.whatever.social/questions/10306690/what-is-a-regular-expression-which-will-match-a-valid-domain-name-without-a-subd#26987741
+private val DomainRegex by lazy {
+    Regex(
+        """^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]?\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$""",
+        RegexOption.IGNORE_CASE
+    )
+}
 
 internal class WebsiteRepository(
     val context: Context,
@@ -55,11 +63,40 @@ internal class WebsiteRepository(
 
     private suspend fun queryWebsite(query: String): Website? {
         val result = withContext(Dispatchers.IO) {
-            var url = query
-            val protocol = "https://"
-            if (!query.startsWith("https://") && !query.startsWith("http://")) url =
-                "$protocol$query"
-            if (!URLUtil.isValidUrl(url)) return@withContext null
+
+            val (protocol, domain, path) = when {
+                query.contains("://") -> {
+                    val protocol = query.substringBefore("://")
+
+                    if (protocol !in listOf("http", "https")) return@withContext null
+
+                    val noProtocol = query.substringAfter("://")
+                    Triple(
+                        protocol,
+                        noProtocol.substringBefore('/'),
+                        noProtocol.substringAfter('/')
+                    )
+                }
+
+                query.contains('/') -> Triple(
+                    null,
+                    query.substringBefore('/'),
+                    query.substringAfter('/')
+                )
+
+                else -> Triple(null, query, null)
+            }
+
+            val aceDomain =
+                domain.runCatching { IDN.toASCII(this, IDN.ALLOW_UNASSIGNED) }.getOrNull()
+                    ?: return@withContext null
+
+            if (!DomainRegex.matches(aceDomain)) return@withContext null
+
+            var url = "${protocol ?: "https"}://$aceDomain${path?.let { "/$it" } ?: ""}"
+
+            if (!URLUtil.isNetworkUrl(url)) return@withContext null
+
             try {
                 val request = Request.Builder()
                     .url(URL(url))
