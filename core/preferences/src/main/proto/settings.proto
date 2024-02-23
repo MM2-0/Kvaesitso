@@ -3,7 +3,7 @@ syntax = "proto3";
 option java_package = "de.mm20.launcher2.preferences";
 option java_multiple_files = true;
 
-message Settings {
+message LegacySettings {
   uint32 version = 1;
   message AppearanceSettings {
     enum Theme {

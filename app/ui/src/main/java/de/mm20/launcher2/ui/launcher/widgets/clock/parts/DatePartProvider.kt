@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.em
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.base.LocalTime
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -25,9 +24,9 @@ class DatePartProvider : PartProvider {
     }
 
     @Composable
-    override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {
+    override fun Component(compactLayout: Boolean) {
         val time = LocalTime.current
-        val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
+        val verticalLayout = !compactLayout
         val context = LocalContext.current
         TextButton(
             colors = ButtonDefaults.textButtonColors(

@@ -7,14 +7,14 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.files.settings.FileSearchSettings
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.plugin.PluginPackage
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.plugins.PluginWithState
-import de.mm20.launcher2.weather.settings.WeatherSettings
+import de.mm20.launcher2.preferences.search.FileSearchSettings
+import de.mm20.launcher2.preferences.weather.WeatherSettings
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -111,6 +111,6 @@ class PluginSettingsScreenVM : ViewModel(), KoinComponent {
 
     val weatherProvider = weatherSettings.providerId
     fun setWeatherProvider(providerId: String) {
-        weatherSettings.setProviderId(providerId)
+        weatherSettings.setProvider(providerId)
     }
 }

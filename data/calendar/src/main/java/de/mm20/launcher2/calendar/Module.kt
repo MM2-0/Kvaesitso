@@ -8,7 +8,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val calendarModule = module {
-    factory<SearchableRepository<CalendarEvent>>(named<CalendarEvent>()) { CalendarRepositoryImpl(androidContext(), get()) }
-    factory<CalendarRepository> { CalendarRepositoryImpl(androidContext(), get()) }
+    factory<SearchableRepository<CalendarEvent>>(named<CalendarEvent>()) { get<CalendarRepository>() }
+    factory<CalendarRepository> { CalendarRepositoryImpl(androidContext(), get(), get()) }
     factory<SearchableDeserializer>(named(AndroidCalendarEvent.Domain)) { CalendarEventDeserializer(androidContext()) }
 }

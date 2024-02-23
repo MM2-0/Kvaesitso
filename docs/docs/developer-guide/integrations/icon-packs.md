@@ -107,10 +107,9 @@ To your `appfilter.xml` file, add the following:
 `prefix` is the prefix of the icon drawables. You need to provide one drawable for each day of the
 month (`calendar_1`, `calendar_2`, etc. up to `calendar_31`).
 
-:::note
-Single digit days must not be zero-padded (e.g. `calendar_1` is correct but `calendar_01` is not).
-Make sure that all 31 drawables are present, or the launcher will reject the icon.
-:::
+> [!NOTE]
+> Single digit days must not be zero-padded (e.g. `calendar_1` is correct but `calendar_01` is not).
+> Make sure that all 31 drawables are present, or the launcher will reject the icon.
 
 #### Clock icons
 
@@ -136,9 +135,8 @@ The icon itself must be either a `LayerDrawable`, or an `AdaptiveIconDrawable` w
 a `LayerDrawable`
 as its foreground layer.
 
-:::note
-Some launchers only support `AdaptiveIconDrawable`s, so you should prefer that if possible.
-:::
+> [!NOTE]
+> Some launchers only support `AdaptiveIconDrawable`s, so you should prefer that if possible.
 
 The entry in the `appfilter.xml` file tells the launcher which layer
 corresponds to which clock hand. If your icon does not have all three clock hands, you can omit the
@@ -188,41 +186,38 @@ must follow these rules:
   above, the hour hand is offset by 300°, the minute hand by 60° and the second hand by 180°. This
   means that the clock shows 10:10:30 in its default state.
 - To let the launcher know which time the clock shows in its default state, you can use
-  the `defaultHour`,  `defaultMinute` and `defaultSecond` attributes in the `appfilter.xml` entry.
+  the `defaultHour`, `defaultMinute` and `defaultSecond` attributes in the `appfilter.xml` entry.
 
-:::note
+> [!NOTE]
+>
+> `defaultHour`, `defaultMinute` and `defaultSecond` are independent from each other. If you
+> set `defaultHour` to 10, then it is expected that the hour hand drawable is rotated by exactly 300°,
+> regardless of the positions of the minute and second hands even if that means that the clock shows
+> an impossible time.
 
-`defaultHour`, `defaultMinute` and `defaultSecond` are independent from each other. If you
-set `defaultHour` to 10, then it is expected that the hour hand drawable is rotated by exactly 300°,
-regardless of the positions of the minute and second hands even if that means that the clock shows
-an impossible time.
-:::
-
-:::info
-
-**Why these numbers?**
-
-Launchers use the `android:level` attribute to
-animate the clock hands. A drawable's level is a number
-between 0 and 10000 that influences how the drawable is drawn. For `RotateDrawable`s, the level
-attribute is used to set the rotation angle. Each level corresponds
-to 1/10000 of the angle between `android:fromDegrees` and `android:toDegrees`.
-
-For the second hand, it is expected
-that [10 levels are equal to 1 second](https://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/libs/systemui/iconloaderlib/src/com/android/launcher3/icons/ClockDrawableWrapper.java;drc=7346c436e5a11ce08f6a80dcfeb8ef941ca30176;l=84).
-which means that 600 levels correspond to a full rotation. But since a drawable has 10000 levels,
-the total angle must be `360/600 * 10000 = 6000` degrees.
-
-For the minute layer, one level is equal to one minute so 60 levels are equal to a full rotation.
-This means that the total angle must be `360/60 * 10000 = 60000` degrees.
-
-For the hour layer, one level is also equal to one minute, so there are `12 * 60 = 720` levels in a
-full rotation. `360/720 * 10000 = 5000` degrees.
-
-Technically, you could also use other kinds of drawables that support the `android:level`
-attribute (such as a `LevelListDrawable`), as long as you follow the rules above.
-
-:::
+> [!INFO]
+>
+> **Why these numbers?**
+>
+> Launchers use the `android:level` attribute to
+> animate the clock hands. A drawable's level is a number
+> between 0 and 10000 that influences how the drawable is drawn. For `RotateDrawable`s, the level
+> attribute is used to set the rotation angle. Each level corresponds
+> to 1/10000 of the angle between `android:fromDegrees` and `android:toDegrees`.
+>
+> For the second hand, it is expected
+> that [10 levels are equal to 1 second](https://cs.android.com/android/platform/superproject/+/refs/heads/master:frameworks/libs/systemui/iconloaderlib/src/com/android/launcher3/icons/ClockDrawableWrapper.java;drc=7346c436e5a11ce08f6a80dcfeb8ef941ca30176;l=84).
+> which means that 600 levels correspond to a full rotation. But since a drawable has 10000 levels,
+> the total angle must be `360/600 * 10000 = 6000` degrees.
+>
+> For the minute layer, one level is equal to one minute so 60 levels are equal to a full rotation.
+> This means that the total angle must be `360/60 * 10000 = 60000` degrees.
+>
+> For the hour layer, one level is also equal to one minute, so there are `12 * 60 = 720` levels in a
+> full rotation. `360/720 * 10000 = 5000` degrees.
+>
+> Technically, you could also use other kinds of drawables that support the `android:level`
+> attribute (such as a `LevelListDrawable`), as long as you follow the rules above.
 
 ### Themed icons
 

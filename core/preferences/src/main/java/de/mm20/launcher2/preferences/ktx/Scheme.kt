@@ -1,11 +1,11 @@
 package de.mm20.launcher2.preferences.ktx
 
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
 import scheme.Scheme
 
-fun Scheme.toSettingsColorsScheme(): Settings.AppearanceSettings.CustomColors.Scheme {
+fun Scheme.toSettingsColorsScheme(): LegacySettings.AppearanceSettings.CustomColors.Scheme {
     val scheme = this
-    return Settings.AppearanceSettings.CustomColors.Scheme.newBuilder()
+    return LegacySettings.AppearanceSettings.CustomColors.Scheme.newBuilder()
         .setPrimary(scheme.primary)
         .setSurfaceTint(scheme.primary)
         .setOnPrimary(scheme.onPrimary)

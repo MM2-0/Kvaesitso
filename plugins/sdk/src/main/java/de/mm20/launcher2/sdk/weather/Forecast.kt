@@ -1,5 +1,14 @@
 package de.mm20.launcher2.sdk.weather
 
+/**
+ * Temperature value.
+ * Use [Double].[C], [Double].[F] or [Double].[K] to create a temperature value:
+ * ```kt
+ * val temp = 20.0.C
+ * val temp2 = 68.0.F
+ * val temp3 = 293.15.K
+ * ```
+ */
 @JvmInline
 value class Temperature internal constructor(internal val kelvin: Double)
 
@@ -21,6 +30,15 @@ val Double.F
 val Double.K
     get() = Temperature(this)
 
+/**
+ * Wind speed value.
+ * Use [Double].[m_s], [Double].[km_h] or [Double].[mph] to create a wind speed value:
+ * ```kt
+ * val wind = 5.0.m_s
+ * val wind2 = 18.0.km_h
+ * val wind3 = 11.1847.mph
+ * ```
+ */
 @JvmInline
 value class WindSpeed internal constructor(internal val metersPerSecond: Double)
 
@@ -42,6 +60,14 @@ val Double.km_h
 val Double.mph
     get() = WindSpeed(this * 0.44704)
 
+/**
+ * Pressure value.
+ * Use [Double].[hPa] or [Double].[mbar] to create a pressure value:
+ * ```kt
+ * val pressure = 1013.25.hPa
+ * val pressure2 = 1013.25.mbar
+ * ```
+ */
 @JvmInline
 value class Pressure internal constructor(internal val hPa: Double)
 
@@ -107,7 +133,7 @@ data class Forecast(
     /**
      * Unix timestamp of the time that this forecast was created, in milliseconds
      */
-    val createdAt: Long,
+    val createdAt: Long = System.currentTimeMillis(),
     /**
      * The temperature
      * @see [Double].[C]
@@ -188,5 +214,5 @@ data class Forecast(
     /**
      * Url to the provider and more weather information
      */
-    val providerUrl: String?,
+    val providerUrl: String? = null,
 )

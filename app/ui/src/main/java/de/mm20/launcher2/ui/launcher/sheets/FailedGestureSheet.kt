@@ -14,7 +14,8 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.GestureAction
+import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -29,12 +30,12 @@ fun FailedGestureSheet(
     val viewModel: FailedGestureSheetVM = viewModel()
 
     val actionName = stringResource(when(failedGesture.action) {
-        Settings.GestureSettings.GestureAction.OpenSearch -> R.string.gesture_action_open_search
-        Settings.GestureSettings.GestureAction.OpenNotificationDrawer -> R.string.gesture_action_notifications
-        Settings.GestureSettings.GestureAction.LockScreen -> R.string.gesture_action_lock_screen
-        Settings.GestureSettings.GestureAction.OpenQuickSettings -> R.string.gesture_action_quick_settings
-        Settings.GestureSettings.GestureAction.OpenRecents -> R.string.gesture_action_recents
-        Settings.GestureSettings.GestureAction.OpenPowerDialog -> R.string.gesture_action_power_menu
+        is GestureAction.Search -> R.string.gesture_action_open_search
+        is GestureAction.Notifications -> R.string.gesture_action_notifications
+        is GestureAction.ScreenLock -> R.string.gesture_action_lock_screen
+        is GestureAction.QuickSettings -> R.string.gesture_action_quick_settings
+        is GestureAction.Recents -> R.string.gesture_action_recents
+        is GestureAction.PowerMenu -> R.string.gesture_action_power_menu
         else -> R.string.gesture_action_none
     })
     val gestureName = stringResource(when(failedGesture.gesture) {

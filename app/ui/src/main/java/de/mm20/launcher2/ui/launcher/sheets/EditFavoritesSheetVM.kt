@@ -17,9 +17,9 @@ import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.appshortcuts.AppShortcut
+import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.services.favorites.FavoritesService
@@ -41,7 +41,7 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
     private val badgeService: BadgeService by inject()
     private val customAttributesRepository: CustomAttributesRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
-    private val dataStore: LauncherDataStore by inject()
+    private val favoritesSettings: FavoritesSettings by inject()
 
     val gridItems = mutableStateOf<List<FavoritesSheetGridItem>>(emptyList())
 
@@ -245,36 +245,16 @@ class EditFavoritesSheetVM : ViewModel(), KoinComponent {
         }
     }
 
-    val enableFrequentlyUsed = dataStore.data.map { it.favorites.frequentlyUsed }
+    val enableFrequentlyUsed = favoritesSettings.frequentlyUsed
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setFrequentlyUsed(frequentlyUsed: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFavorites(
-                        it.favorites
-                            .toBuilder()
-                            .setFrequentlyUsed(frequentlyUsed)
-                    )
-                    .build()
-            }
-        }
+        favoritesSettings.setFrequentlyUsed(frequentlyUsed)
     }
 
-    val frequentlyUsedRows = dataStore.data.map { it.favorites.frequentlyUsedRows }
+    val frequentlyUsedRows = favoritesSettings.frequentlyUsedRows
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 0)
     fun setFrequentlyUsedRows(frequentlyUsedRows: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setFavorites(
-                        it.favorites
-                            .toBuilder()
-                            .setFrequentlyUsedRows(frequentlyUsedRows)
-                    )
-                    .build()
-            }
-        }
+        favoritesSettings.setFrequentlyUsedRows(frequentlyUsedRows)
     }
 
     fun pinTag(tag: Tag) {

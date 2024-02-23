@@ -5,8 +5,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.ui.geometry.Size
 import androidx.navigation.NavController
-import de.mm20.launcher2.preferences.Settings
-import de.mm20.launcher2.preferences.Settings.GridSettings
+import de.mm20.launcher2.preferences.ui.CardStyle
+import de.mm20.launcher2.preferences.ui.GridSettings
 import de.mm20.launcher2.ui.theme.WallpaperColors
 
 val LocalWindowSize = compositionLocalOf { Size(0f, 0f) }
@@ -15,11 +15,11 @@ val LocalAppWidgetHost = compositionLocalOf<AppWidgetHost?>(defaultFactory = { n
 
 val LocalNavController = compositionLocalOf<NavController?> { null }
 
-val LocalCardStyle = compositionLocalOf<Settings.CardSettings> { Settings.CardSettings.getDefaultInstance() }
+val LocalCardStyle = compositionLocalOf { CardStyle() }
 
 val LocalFavoritesEnabled = compositionLocalOf { true }
 
-val LocalGridSettings = compositionLocalOf { GridSettings.newBuilder().setColumnCount(5).setShowLabels(true).setIconSize(48).build() }
+val LocalGridSettings = compositionLocalOf { GridSettings() }
 
 val LocalSnackbarHostState = compositionLocalOf { SnackbarHostState() }
 

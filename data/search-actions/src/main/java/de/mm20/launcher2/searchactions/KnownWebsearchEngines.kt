@@ -6,7 +6,7 @@ fun knownWebsearchByHostname(hostname: String): CustomWebsearchActionBuilder? {
     // List of popular web search engines that do not implement the OpenSearch standard
     return when(hostname) {
         "google.com" -> CustomWebsearchActionBuilder(label = "Google", urlTemplate = "https://google.com/search?q=\${1}")
-        "bing.com" -> CustomWebsearchActionBuilder(label = "Google", urlTemplate = "https://bing.com/search?q=\${1}")
+        "bing.com" -> CustomWebsearchActionBuilder(label = "Bing", urlTemplate = "https://bing.com/search?q=\${1}")
         "amazon.com" -> CustomWebsearchActionBuilder(label = "Amazon", urlTemplate = "https://www.amazon.com/s?k=\${1}")
         "amazon.de" -> CustomWebsearchActionBuilder(label = "Amazon DE", urlTemplate = "https://www.amazon.de/s?k=\${1}")
         "amazon.co.uk" -> CustomWebsearchActionBuilder(label = "Amazon UK", urlTemplate = "https://www.amazon.co.uk/s?k=\${1}")

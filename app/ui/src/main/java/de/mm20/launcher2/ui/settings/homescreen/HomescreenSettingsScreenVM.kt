@@ -13,8 +13,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
-import de.mm20.launcher2.preferences.LauncherDataStore
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.ScreenOrientation
+import de.mm20.launcher2.preferences.SearchBarColors
+import de.mm20.launcher2.preferences.SearchBarStyle
+import de.mm20.launcher2.preferences.SystemBarColors
+import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -23,52 +28,32 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
 
 class HomescreenSettingsScreenVM(
-    private val dataStore: LauncherDataStore,
+    private val uiSettings: UiSettings,
+    private val clockWidgetSettings: ClockWidgetSettings,
 ) : ViewModel() {
 
     var showClockWidgetSheet by mutableStateOf(false)
 
 
-    val dimWallpaper = dataStore.data.map { it.appearance.dimWallpaper }
+    val dimWallpaper = uiSettings.dimWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     fun setDimWallpaper(dimWallpaper: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setDimWallpaper(dimWallpaper)
-                    ).build()
-            }
-        }
+        uiSettings.setDimWallpaper(dimWallpaper)
     }
 
-    val blurWallpaper = dataStore.data.map { it.appearance.blurWallpaper }
+    val blurWallpaper = uiSettings.blurWallpaper
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     fun setBlurWallpaper(blurWallpaper: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setBlurWallpaper(blurWallpaper)
-                    ).build()
-            }
-        }
+        uiSettings.setBlurWallpaper(blurWallpaper)
     }
 
-    val blurWallpaperRadius = dataStore.data.map { it.appearance.blurWallpaperRadius }
+    val blurWallpaperRadius = uiSettings.wallpaperBlurRadius
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), 32)
+
     fun setBlurWallpaperRadius(blurWallpaperRadius: Int) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAppearance(
-                        it.appearance.toBuilder()
-                            .setBlurWallpaperRadius(blurWallpaperRadius)
-                    ).build()
-            }
-        }
+        uiSettings.setWallpaperBlurRadius(blurWallpaperRadius)
     }
 
     fun openWallpaperChooser(context: AppCompatActivity) {
@@ -80,168 +65,96 @@ class HomescreenSettingsScreenVM(
         return context.getSystemService<WindowManager>()?.isCrossWindowBlurEnabled == true
     }
 
-    val statusBarIcons = dataStore.data.map { it.systemBars.statusBarColor }
+    val statusBarIcons = uiSettings.statusBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setLightStatusBar(statusBarColor: Settings.SystemBarsSettings.SystemBarColors) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSystemBars(
-                        it.systemBars.toBuilder()
-                            .setStatusBarColor(statusBarColor)
-                    )
-                    .build()
-            }
-        }
+
+    fun setLightStatusBar(statusBarColor: SystemBarColors) {
+        uiSettings.setStatusBarColor(statusBarColor)
     }
 
-    val navBarIcons = dataStore.data.map { it.systemBars.navBarColor }
+    val navBarIcons = uiSettings.navigationBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setLightNavBar(navBarColors: Settings.SystemBarsSettings.SystemBarColors) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSystemBars(
-                        it.systemBars.toBuilder()
-                            .setNavBarColor(navBarColors)
-                    )
-                    .build()
-            }
-        }
+
+    fun setLightNavBar(navBarColors: SystemBarColors) {
+        uiSettings.setNavigationBarColor(navBarColors)
     }
 
-    val hideStatusBar = dataStore.data.map { it.systemBars.hideStatusBar }
+    val hideStatusBar = uiSettings.hideStatusBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setHideStatusBar(hideStatusBar: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSystemBars(
-                        it.systemBars.toBuilder()
-                            .setHideStatusBar(hideStatusBar)
-                    )
-                    .build()
-            }
-        }
+        uiSettings.setHideStatusBar(hideStatusBar)
     }
 
-    val hideNavBar = dataStore.data.map { it.systemBars.hideNavBar }
+    val hideNavBar = uiSettings.hideNavigationBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setHideNavBar(hideNavBar: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSystemBars(
-                        it.systemBars.toBuilder()
-                            .setHideNavBar(hideNavBar)
-                    )
-                    .build()
-            }
-        }
+        uiSettings.setHideNavigationBar(hideNavBar)
     }
 
-    val searchBarColor = dataStore.data.map { it.searchBar.color }
+    val searchBarColor = uiSettings.searchBarColor
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setSearchBarColor(color: Settings.SearchBarSettings.SearchBarColors) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSearchBar(
-                        it.searchBar.toBuilder()
-                            .setColor(color)
-                    )
-                    .build()
-            }
-        }
+
+    fun setSearchBarColor(color: SearchBarColors) {
+        uiSettings.setSearchBarColor(color)
     }
 
-    val searchBarStyle = dataStore.data.map { it.searchBar.searchBarStyle }
+    val searchBarStyle = uiSettings.searchBarStyle
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-    fun setSearchBarStyle(searchBarStyle: Settings.SearchBarSettings.SearchBarStyle) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setSearchBar(
-                        it.searchBar.toBuilder()
-                            .setSearchBarStyle(searchBarStyle)
-                    )
-                    .build()
-            }
-        }
+
+    fun setSearchBarStyle(searchBarStyle: SearchBarStyle) {
+        uiSettings.setSearchBarStyle(searchBarStyle)
     }
 
-    val fixedSearchBar = dataStore.data.map { it.layout.fixedSearchBar }
+    val fixedSearchBar = uiSettings.fixedSearchBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setFixedSearchBar(fixedSearchBar: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLayout(it.layout.toBuilder().setFixedSearchBar(fixedSearchBar))
-                    .build()
-            }
-        }
+        uiSettings.setFixedSearchBar(fixedSearchBar)
     }
 
-    val bottomSearchBar = dataStore.data.map { it.layout.bottomSearchBar }
+    val bottomSearchBar = uiSettings.bottomSearchBar
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setBottomSearchBar(bottomSearchBar: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLayout(it.layout.toBuilder().setBottomSearchBar(bottomSearchBar))
-                    .build()
-            }
-        }
+        uiSettings.setBottomSearchBar(bottomSearchBar)
     }
 
-    val fixedRotation = dataStore.data.map { it.layout.fixedRotation }
+    val dock = clockWidgetSettings.dock
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setDock(dock: Boolean) {
+        clockWidgetSettings.setDock(dock)
+    }
+
+    val fixedRotation = uiSettings.orientation.map { it != ScreenOrientation.Auto }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setFixedRotation(fixedRotation: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setLayout(it.layout.toBuilder().setFixedRotation(fixedRotation))
-                    .build()
-            }
-        }
+        uiSettings.setOrientation(if (fixedRotation) ScreenOrientation.Portrait else ScreenOrientation.Auto)
     }
 
-    val widgetEditButton = dataStore.data.map { it.widgets.editButton }
+    val widgetEditButton = uiSettings.widgetEditButton
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setWidgetEditButton(editButton: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setWidgets(
-                        it.widgets.toBuilder()
-                            .setEditButton(editButton)
-                    )
-                    .build()
-            }
-        }
+        uiSettings.setWidgetEditButton(editButton)
     }
 
-    val chargingAnimation = dataStore.data.map { it.animations.charging }
+    val chargingAnimation = uiSettings.chargingAnimation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setChargingAnimation(chargingAnimation: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setAnimations(
-                        it.animations.toBuilder()
-                            .setCharging(chargingAnimation)
-                    )
-                    .build()
-            }
-        }
+        uiSettings.setChargingAnimation(chargingAnimation)
     }
 
     companion object : KoinComponent {
         val Factory = viewModelFactory {
             initializer {
                 HomescreenSettingsScreenVM(
-                    dataStore = get()
+                    uiSettings = get(),
+                    clockWidgetSettings = get(),
                 )
             }
         }

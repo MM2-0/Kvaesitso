@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -29,7 +29,7 @@ import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 @Composable
 fun LauncherSearchBar(
     modifier: Modifier = Modifier,
-    style: Settings.SearchBarSettings.SearchBarStyle,
+    style: SearchBarStyle,
     level: () -> SearchBarLevel,
     value: () -> String,
     onValueChange: (String) -> Unit,

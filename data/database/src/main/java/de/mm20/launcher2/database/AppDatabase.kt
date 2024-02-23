@@ -152,7 +152,7 @@ abstract class AppDatabase : RoomDatabase() {
                         Migration_21_22(),
                         Migration_22_23(),
                         Migration_23_24(),
-                        Migration_24_25(context),
+                        Migration_24_25(),
                         Migration_25_26(),
                     ).build()
             if (_instance == null) _instance = instance

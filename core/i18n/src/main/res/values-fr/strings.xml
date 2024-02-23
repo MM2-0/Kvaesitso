@@ -423,7 +423,7 @@
     <string name="preference_hidden_items">Résultats de recherche cachés</string>
     <string name="preference_hidden_items_summary">Gérer les applications et recherches cachées</string>
     <string name="backup_select_components">Sélectionnez ce que vous voulez sauvegarder :</string>
-    <string name="backup_not_included">Les comptes connectés ne seront pas sauvegardés. Seuls les applications et les widgets externes peuvent être restaurés sur cet appareil</string>
+    <string name="backup_not_included">Les comptes connectés ne seront pas sauvegardés. Seuls les applications et les widgets externes peuvent être restaurés sur cet appareil.</string>
     <string name="backup_component_favorites">Favoris et applications cachées</string>
     <string name="backup_component_websearches">Raccourcis de recherches Internet</string>
     <string name="backup_component_widgets">Widgets intégrés</string>
@@ -691,11 +691,21 @@
     <string name="backup_component_themes">Thème de couleur</string>
     <string name="action_import">Importer</string>
     <string name="file_type_launchertheme">Thème %1$s</string>
-    <string name="missing_permission_plugins">La permission d\'accès aux plugins est nécessaire pour utiliser ces derniers</string>
+    <string name="missing_permission_plugins">La permission d\'accès aux plugins est nécessaire pour utiliser ces derniers.</string>
     <string name="preference_screen_plugins">Plugins</string>
     <string name="preference_screen_plugins_summary">Gérer les extensions installées</string>
     <string name="no_plugins_installed">Aucun plugins installés</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
     <string name="plugin_host_not_installed">Hôte du plugin non installé</string>
     <string name="preference_blur_wallpaper_radius">Rayon de flou</string>
+    <string name="plugin_state_setup_required">Vous devez d\'abord configurer ce plugin</string>
+    <string name="plugin_action_setup">Configuration</string>
+    <string name="plugin_type_filesearch">Recherche de fichier</string>
+    <string name="plugin_type_weather">Provisionneur de météo</string>
+    <string name="plugin_weather_provider_enable">Définir en tant que provisionneur météo</string>
+    <string name="plugin_weather_provider_enabled">Actuellement défini en tant que provisionneur météo</string>
+    <string name="plugin_state_error">Ce plugin ne fonctionne pas correctement</string>
+    <string name="preference_plugin_badges">Insignes de plugin</string>
+    <string name="preference_plugin_badges_summary">Indique par quel plugin un résultat de recherche a été créé</string>
+    <string name="plugin_badge_official">Officiel</string>
 </resources>

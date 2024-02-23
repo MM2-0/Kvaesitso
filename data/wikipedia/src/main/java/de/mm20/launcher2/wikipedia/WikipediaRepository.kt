@@ -2,7 +2,7 @@ package de.mm20.launcher2.wikipedia
 
 import android.content.Context
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 
 internal class WikipediaRepository(
     private val context: Context,
-    private val dataStore: LauncherDataStore
+    private val settings: WikipediaSearchSettings,
 ) : SearchableRepository<Article> {
 
     private val scope = CoroutineScope(Job() + Dispatchers.Default)
@@ -33,8 +33,7 @@ internal class WikipediaRepository(
 
     init {
         scope.launch {
-            dataStore.data
-                .map { it.wikipediaSearch.customUrl }
+            settings.customUrl
                 .distinctUntilChanged()
                 .collectLatest {
                     try { retrofit = Retrofit.Builder()
@@ -54,24 +53,27 @@ internal class WikipediaRepository(
     private lateinit var wikipediaService: WikipediaApi
 
 
-    override fun search(query: String): Flow<ImmutableList<Wikipedia>> = channelFlow {
-        send(persistentListOf())
-        withContext(Dispatchers.IO) {
-            httpClient.dispatcher.cancelAll()
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Wikipedia>> {
+        if (query.length < 4 || !allowNetwork) return flowOf(persistentListOf())
+
+        return settings.enabled.transformLatest {
+            emit(persistentListOf())
+            withContext(Dispatchers.IO) {
+                httpClient.dispatcher.cancelAll()
+            }
+
+            if (!it || !::wikipediaService.isInitialized) return@transformLatest
+            if (query.isBlank()) return@transformLatest
+
+            val results = queryWikipedia(query)
+            if (results != null) {
+                emit(persistentListOf(results))
+            }
         }
 
-        if (query.length < 4) return@channelFlow
-
-        if (!::wikipediaService.isInitialized) return@channelFlow
-        if (query.isBlank()) return@channelFlow
-
-        dataStore.data.map { it.wikipediaSearch.images }.collectLatest {
-            val wikipedia = queryWikipedia(query, false)
-            send(wikipedia?.let { persistentListOf(it) } ?: persistentListOf())
-        }
     }
 
-    private suspend fun queryWikipedia(query: String, loadImages: Boolean): Wikipedia? {
+    private suspend fun queryWikipedia(query: String): Wikipedia? {
 
         val wikipediaService = wikipediaService
         val wikipediaUrl = retrofit.baseUrl().toString()
@@ -86,9 +88,7 @@ internal class WikipediaRepository(
 
         val page = result.query?.pages?.values?.toList()?.getOrNull(0) ?: return null
 
-        val image = if (loadImages) {
-            result.query.pages.values.toList().getOrNull(0)?.thumbnail?.source
-        } else null
+        val image = result.query.pages.values.toList().getOrNull(0)?.thumbnail?.source
 
         return Wikipedia(
             label = page.title,

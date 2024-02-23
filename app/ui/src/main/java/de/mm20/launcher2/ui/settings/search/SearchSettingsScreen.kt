@@ -13,7 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
+import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
@@ -246,8 +247,8 @@ fun SearchSettingsScreen() {
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering),
                     items = listOf(
-                        stringResource(R.string.preference_search_result_ordering_alphabetic) to Settings.SearchResultOrderingSettings.Ordering.Alphabetic,
-                        stringResource(R.string.preference_search_result_ordering_weighted) to Settings.SearchResultOrderingSettings.Ordering.Weighted
+                        stringResource(R.string.preference_search_result_ordering_alphabetic) to SearchResultOrder.Alphabetical,
+                        stringResource(R.string.preference_search_result_ordering_weighted) to SearchResultOrder.Weighted
                     ),
                     value = searchResultOrdering,
                     onValueChanged = {

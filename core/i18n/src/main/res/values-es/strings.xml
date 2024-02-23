@@ -317,7 +317,7 @@
     <string name="preference_screen_weatherwidget">Tiempo</string>
     <string name="preference_screen_clockwidget">Reloj</string>
     <string name="preference_clock_widget_style_summary">Selecciona un reloj</string>
-    <string name="preference_clockwidget_favorites_part">Favoritos</string>
+    <string name="preference_clockwidget_favorites_part">Barra</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostrar la primera fila de items fijados</string>
     <string name="preference_clockwidget_music_part">Multimédia</string>
     <string name="preference_clockwidget_music_part_summary">Mostrar controles multimédia cuando haya una sesión multimédia activa</string>
@@ -670,4 +670,17 @@
     <string name="import_theme_apply">Aplicar tema</string>
     <string name="shortcut_label_unavailable">No disponible</string>
     <string name="shortcut_unavailable_description">Este acceso directo no está disponible porque %1$s no es el lanzador predeterminado</string>
+    <string name="preference_mdy_color_source_wallpaper">Fondo de pantalla</string>
+    <string name="preference_mdy_color_source">Fuente para colores dinámicos</string>
+    <string name="preference_mdy_color_source_system">Sistema</string>
+    <string name="plugin_badge_official">Oficial</string>
+    <string name="plugin_action_setup">Configurar</string>
+    <string name="preference_plugin_enable">Activar plugin</string>
+    <string name="preference_category_advanced">Avanzado</string>
+    <string name="plugin_state_error">Este plugin no está funcionando correctamente</string>
+    <string name="plugin_state_setup_required">Necesitas configurar primero este plugin</string>
+    <string name="plugin_type_filesearch">Búsqueda de archivos</string>
+    <string name="plugin_type_weather">Proveedor de clima</string>
+    <string name="plugin_weather_provider_enable">Establecer como proveedor de clima</string>
+    <string name="plugin_weather_provider_enabled">Actualmente establecido como proveedor de clima</string>
 </resources>

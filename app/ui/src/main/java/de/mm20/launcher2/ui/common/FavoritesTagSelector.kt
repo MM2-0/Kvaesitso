@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ExpandLess
@@ -63,11 +64,9 @@ fun FavoritesTagSelector(
                 top = if (reverse) 8.dp else 4.dp,
                 bottom = if (reverse) 4.dp else 8.dp,
                 end = if (editButton) 8.dp else 0.dp
-            )
-                then
-                if (editButton && expanded) Modifier.height(IntrinsicSize.Min) else Modifier,
+            ),
         horizontalArrangement = Arrangement.End,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = if (expanded) Alignment.Bottom else Alignment.CenterVertically,
     ) {
         if (!expanded) {
             val canScroll by remember {

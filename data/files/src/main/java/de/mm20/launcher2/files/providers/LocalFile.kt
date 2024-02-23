@@ -316,7 +316,6 @@ internal data class LocalFile(
                                 metaData[FileMetaType.Location] = list[0].formatToString()
                             }
                         }
-                        retriever.release()
                     } catch (e: RuntimeException) {
                         CrashReporter.logException(e)
                     } catch (e: IOException) {
@@ -360,8 +359,8 @@ internal data class LocalFile(
                         ?: return metaData.toImmutableMap()
                     metaData[FileMetaType.AppName] =
                         pkgInfo.applicationInfo.loadLabel(context.packageManager).toString()
-                    metaData[FileMetaType.AppPackageName] = pkgInfo.packageName
-                    metaData[FileMetaType.AppVersion] = pkgInfo.versionName
+                    pkgInfo.versionName?.let { metaData[FileMetaType.AppVersion] = it }
+                    pkgInfo.packageName?.let { metaData[FileMetaType.AppPackageName] = it }
                     metaData[FileMetaType.AppMinSdk] =
                         pkgInfo.applicationInfo.minSdkVersion.toString()
                 }

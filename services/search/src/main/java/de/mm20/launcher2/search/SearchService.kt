@@ -3,14 +3,6 @@ package de.mm20.launcher2.search
 import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
-import de.mm20.launcher2.preferences.Settings.AppShortcutSearchSettings
-import de.mm20.launcher2.preferences.Settings.CalculatorSearchSettings
-import de.mm20.launcher2.preferences.Settings.CalendarSearchSettings
-import de.mm20.launcher2.preferences.Settings.ContactsSearchSettings
-import de.mm20.launcher2.preferences.Settings.FilesSearchSettings
-import de.mm20.launcher2.preferences.Settings.UnitConverterSearchSettings
-import de.mm20.launcher2.preferences.Settings.WebsiteSearchSettings
-import de.mm20.launcher2.preferences.Settings.WikipediaSearchSettings
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.SearchActionService
@@ -31,27 +23,7 @@ import kotlinx.coroutines.supervisorScope
 interface SearchService {
     fun search(
         query: String,
-        shortcuts: AppShortcutSearchSettings = AppShortcutSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        contacts: ContactsSearchSettings = ContactsSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        calendars: CalendarSearchSettings = CalendarSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        calculator: CalculatorSearchSettings = CalculatorSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        unitConverter: UnitConverterSearchSettings = UnitConverterSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        websites: WebsiteSearchSettings = WebsiteSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
-        wikipedia: WikipediaSearchSettings = WikipediaSearchSettings.newBuilder()
-            .setEnabled(false)
-            .build(),
+        allowNetwork: Boolean = false,
     ): Flow<SearchResults>
 }
 
@@ -72,13 +44,7 @@ internal class SearchServiceImpl(
 
     override fun search(
         query: String,
-        shortcuts: AppShortcutSearchSettings,
-        contacts: ContactsSearchSettings,
-        calendars: CalendarSearchSettings,
-        calculator: CalculatorSearchSettings,
-        unitConverter: UnitConverterSearchSettings,
-        websites: WebsiteSearchSettings,
-        wikipedia: WikipediaSearchSettings,
+        allowNetwork: Boolean,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -91,7 +57,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                appRepository.search(query)
+                appRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
@@ -99,82 +65,68 @@ internal class SearchServiceImpl(
                         }
                     }
             }
-            if (shortcuts.enabled) {
-                launch {
-                    appShortcutRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(shortcuts = r.toImmutableList())
-                            }
-                        }
-                }
-            }
-            if (contacts.enabled) {
-                launch {
-                    contactRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(contacts = r.toImmutableList())
-                            }
-                        }
-                }
-            }
-            if (calendars.enabled) {
-                launch {
-                    calendarRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(calendars = r.toImmutableList())
-                            }
-                        }
-                }
-            }
-            if (calculator.enabled) {
-                launch {
-                    calculatorRepository.search(query).collectLatest { r ->
+            launch {
+                appShortcutRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
                         results.update {
-                            it.copy(calculators = r?.let { persistentListOf(it) }
-                                ?: persistentListOf())
+                            it.copy(shortcuts = r.toImmutableList())
                         }
+                    }
+            }
+            launch {
+                contactRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(contacts = r.toImmutableList())
+                        }
+                    }
+            }
+            launch {
+                calendarRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(calendars = r.toImmutableList())
+                        }
+                    }
+            }
+            launch {
+                calculatorRepository.search(query).collectLatest { r ->
+                    results.update {
+                        it.copy(calculators = r?.let { persistentListOf(it) }
+                            ?: persistentListOf())
                     }
                 }
             }
-            if (unitConverter.enabled) {
-                launch {
-                    unitConverterRepository.search(query, unitConverter.currencies)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(unitConverters = r?.let { persistentListOf(it) }
-                                    ?: persistentListOf())
-                            }
+            launch {
+                unitConverterRepository.search(query)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(unitConverters = r?.let { persistentListOf(it) }
+                                ?: persistentListOf())
                         }
-                }
+                    }
             }
-            if (websites.enabled) {
-                launch {
-                    websiteRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(websites = r.toImmutableList())
-                            }
+            launch {
+                websiteRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(websites = r.toImmutableList())
                         }
-                }
+                    }
             }
-            if (wikipedia.enabled) {
-                launch {
-                    delay(750)
-                    articleRepository.search(query)
-                        .withCustomLabels(customAttributesRepository)
-                        .collectLatest { r ->
-                            results.update {
-                                it.copy(wikipedia = r.toImmutableList())
-                            }
+            launch {
+                delay(750)
+                articleRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(wikipedia = r.toImmutableList())
                         }
-                }
+                    }
             }
             launch {
                 locationRepository.search(query)
@@ -188,6 +140,7 @@ internal class SearchServiceImpl(
             launch {
                 fileRepository.search(
                     query,
+                    allowNetwork
                 )
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->

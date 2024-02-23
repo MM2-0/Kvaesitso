@@ -4,5 +4,5 @@ import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.flow.Flow
 
 interface SearchableRepository<T : Searchable> {
-    fun search(query: String): Flow<ImmutableList<T>>
+    fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<T>>
 }

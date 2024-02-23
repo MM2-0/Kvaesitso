@@ -39,7 +39,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.SearchBarStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.locals.LocalCardStyle
@@ -47,7 +47,7 @@ import de.mm20.launcher2.ui.locals.LocalCardStyle
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    style: Settings.SearchBarSettings.SearchBarStyle,
+    style: SearchBarStyle,
     level: SearchBarLevel,
     value: String,
     onValueChange: (String) -> Unit,
@@ -78,7 +78,7 @@ fun SearchBar(
         }
     ) {
         when {
-            it == SearchBarLevel.Resting && style != Settings.SearchBarSettings.SearchBarStyle.Solid -> 0.dp
+            it == SearchBarLevel.Resting && style != SearchBarStyle.Solid -> 0.dp
             it == SearchBarLevel.Raised -> 8.dp
             else -> 2.dp
         }
@@ -98,7 +98,7 @@ fun SearchBar(
         }) {
         when {
             it == SearchBarLevel.Active -> LocalCardStyle.current.opacity
-            style != Settings.SearchBarSettings.SearchBarStyle.Transparent -> 1f
+            style != SearchBarStyle.Transparent -> 1f
             it == SearchBarLevel.Resting -> 0f
             else -> 1f
         }
@@ -117,14 +117,14 @@ fun SearchBar(
             }
         }) {
         when {
-            style != Settings.SearchBarSettings.SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
+            style != SearchBarStyle.Transparent -> MaterialTheme.colorScheme.onSurface
             it == SearchBarLevel.Resting -> if (darkColors) Color(0, 0, 0, 180) else Color.White
             else -> MaterialTheme.colorScheme.onSurface
         }
     }
 
     val opacity by transition.animateFloat(label = "opacity") {
-        if (style == Settings.SearchBarSettings.SearchBarStyle.Hidden && it == SearchBarLevel.Resting) 0f
+        if (style == SearchBarStyle.Hidden && it == SearchBarLevel.Resting) 0f
         else 1f
     }
 

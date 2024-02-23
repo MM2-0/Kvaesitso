@@ -11,13 +11,12 @@ import de.mm20.launcher2.ktx.normalize
 import de.mm20.launcher2.music.MusicService
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LauncherDataStore
+import de.mm20.launcher2.preferences.media.MediaSettings
 import de.mm20.launcher2.search.AppProfile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
@@ -29,7 +28,9 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     private val musicService: MusicService by inject()
     private val appRepository: AppRepository by inject()
     private val iconService: IconService by inject()
-    private val dataStore: LauncherDataStore by inject()
+
+    private val mediaSettings: MediaSettings by inject()
+
     val hasPermission =
         permissionsManager.hasPermission(PermissionGroup.Notifications)
 
@@ -50,11 +51,11 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
         loading.value = true
         viewModelScope.launch(Dispatchers.Default) {
             val musicApps = musicService.getInstalledPlayerPackages()
-            val allApps = appRepository.findMany().first().filter { it.profile == AppProfile.Personal }
+            val allApps = appRepository.findMany().first { it.isNotEmpty() }.filter { it.profile == AppProfile.Personal }
                 .distinctBy { it.componentName.packageName }
-            val settings = dataStore.data.map { it.musicWidget }.first()
-            val allowList = settings.allowListList
-            val denyList = settings.denyListList
+            val settings = mediaSettings.first()
+            val allowList = settings.allowList
+            val denyList = settings.denyList
 
             appList.value = allApps.map {
                 AppListItem(
@@ -92,19 +93,7 @@ class MediaIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
                 denyList.add(app.packageName)
             }
         }
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setMusicWidget(
-                        it.musicWidget.toBuilder()
-                            .clearAllowList()
-                            .addAllAllowList(allowList)
-                            .clearDenyList()
-                            .addAllDenyList(denyList)
-                    )
-                    .build()
-            }
-        }
+        mediaSettings.setLists(allowList.toSet(), denyList.toSet())
     }
 
 }

@@ -5,7 +5,7 @@
     <string name="wind_south_south_west">Sud sud ovest</string>
     <string name="nextcloud_server_url_empty">L\'URL del server non deve essere vuoto</string>
     <string name="owncloud_username">Nome utente</string>
-    <string name="owncloud_login_2fa_hint">Se hai abilitato l\'autenticazione a due fattori, devi utilizzare una password per l\'app qui.</string>
+    <string name="owncloud_login_2fa_hint">Se hai abilitato l\'autenticazione a due fattori, devi usare una password per l\'app qui.</string>
     <string name="wikipedia_url">https://it.wikipedia.org</string>
     <string name="disclaimer_currency_converter">Tassi di cambio pubblicati una volta al giorno dalla Banca Centrale Europea. Tutte le informazioni sono fornite \"così come sono\" senza alcun tipo di garanzia. Non si assume alcuna responsabilità per queste informazioni.
 \n
@@ -39,7 +39,7 @@
     <string name="preference_clockwidget_layout_horizontal">Compatto</string>
     <string name="preference_clockwidget_music_part_summary">Mostra i controlli multimediali quando c\'è una riproduzione attiva</string>
     <string name="preference_search_files_summary">Cerca file locali e nel cloud</string>
-    <string name="preference_search_unitconverter_summary">Utilizzo: 1.5 kg oppure 4 cm &gt;&gt; in</string>
+    <string name="preference_search_unitconverter_summary">Uso: 1.5 kg oppure 4 cm &gt;&gt; in</string>
     <string name="edit_favorites_dialog_unpinned">Non appuntati - usati frequentemente</string>
     <string name="preference_search_websearch_summary">Mostra scorciatoie a diversi motori di ricerca</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Appuntati: ordinati automaticamente</string>
@@ -454,7 +454,7 @@
     <string name="missing_permission_appshortcuts_create">Imposta %1$s come app home predefinita per creare scorciatoie.</string>
     <string name="preference_category_debug_tools">Strumenti</string>
     <string name="preference_debug_cleanup_database">Pulisci database</string>
-    <string name="preference_debug_cleanup_database_summary">Rimuovi le voci interrotte e inutilizzate dal database del launcher</string>
+    <string name="preference_debug_cleanup_database_summary">Rimuovi le voci interrotte e inusate dal database del launcher</string>
     <plurals name="debug_cleanup_database_result">
         <item quantity="one">%1$d voce è stata rimossa.</item>
         <item quantity="many">%1$d voci sono state rimosse.</item>
@@ -468,7 +468,7 @@
     <string name="customize_tags_placeholder">Tag…</string>
     <string name="edit_favorites_dialog_tags">Tag</string>
     <string name="edit_favorites_dialog_tag_section_empty">I tag aggiunti verranno visualizzati qui</string>
-    <string name="favorites_empty">Gli elementi appuntati e utilizzati di frequente appariranno qui</string>
+    <string name="favorites_empty">Gli elementi appuntati e usati di frequente appariranno qui</string>
     <string name="favorites_empty_tag">Non ci sono elementi con questo tag</string>
     <string name="edit_favorites_dialog_new_tag">Crea tag…</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
@@ -515,7 +515,7 @@
     <string name="search_action_label">Nome</string>
     <string name="search_action_app">App</string>
     <string name="search_action_websearch_url">Modello dell\'URL</string>
-    <string name="search_action_websearch_url_hint">Il modello di URL utilizzato per creare l\'URL della ricerca web. Utilizza \'${1}\' come segnaposto per il termine di ricerca effettivo, ad es. https://google.com/search\?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Il modello di URL usato per creare l\'URL della ricerca web. Usa \'${1}\' come segnaposto per il termine di ricerca effettivo, ad es. https://google.com/search?q=${1}.</string>
     <string name="more_information">Maggiori informazioni</string>
     <string name="experimental_feature">Sperimentale</string>
     <string name="help">Aiuto</string>
@@ -584,7 +584,7 @@
     <string name="preference_search_result_ordering_weight_factor_high">Variabile</string>
     <string name="preference_search_result_ordering">Ordinamento risultati ricerca</string>
     <string name="preference_search_result_ordering_launch_count">Conteggio avvii</string>
-    <string name="preference_search_result_ordering_weighted">Utilizzo</string>
+    <string name="preference_search_result_ordering_weighted">Uso</string>
     <string name="preference_screen_integrations">Integrazioni</string>
     <string name="preference_screen_homescreen">Schermata home</string>
     <string name="preference_screen_icons_summary">Griglia, dimensione icona, pacchetti icone, indicatori</string>
@@ -664,10 +664,18 @@
     <string name="shortcut_unavailable_description">Questa scorciatoia non è disponibile perché %1$s non è il launcher predefinito</string>
     <string name="preference_clockwidget_dynamic_zone">Zona dinamica</string>
     <string name="preference_screen_plugins">Plugin</string>
-    <string name="missing_permission_plugins">Per utilizzare i plugin è necessaria l\'autorizzazione del plugin.</string>
+    <string name="missing_permission_plugins">Per usare i plugin è necessaria l\'autorizzazione del plugin.</string>
     <string name="preference_screen_plugins_summary">Gestisci estensioni installate</string>
     <string name="no_plugins_installed">Nessun plugin installato</string>
     <string name="plugin_host_not_installed">Host del plugin non installato</string>
     <string name="preference_plugin_badges">Plugin indicatori</string>
     <string name="preference_plugin_badges_summary">Indica con quale plugin è stato creato un risultato di ricerca</string>
+    <string name="plugin_state_setup_required">Devi prima configurare questo plugin</string>
+    <string name="plugin_action_setup">Imposta</string>
+    <string name="plugin_type_weather">Fornitore meteo</string>
+    <string name="plugin_weather_provider_enabled">Attualmente impostato come fornitore meteo</string>
+    <string name="plugin_state_error">Questo plugin non funziona correttamente</string>
+    <string name="plugin_type_filesearch">Ricerca file</string>
+    <string name="plugin_weather_provider_enable">Imposta come fornitore meteo</string>
+    <string name="plugin_badge_official">Ufficiale</string>
 </resources>

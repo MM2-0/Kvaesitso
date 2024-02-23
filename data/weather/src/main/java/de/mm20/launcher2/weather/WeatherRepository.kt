@@ -10,12 +10,13 @@ import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.preferences.LatLon
+import de.mm20.launcher2.preferences.weather.WeatherLocation
+import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.brightsky.BrightSkyProvider
 import de.mm20.launcher2.weather.here.HereProvider
 import de.mm20.launcher2.weather.metno.MetNoProvider
 import de.mm20.launcher2.weather.openweathermap.OpenWeatherMapProvider
-import de.mm20.launcher2.weather.settings.LatLon
-import de.mm20.launcher2.weather.settings.WeatherSettings
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import org.koin.core.component.KoinComponent
@@ -61,7 +62,7 @@ internal class WeatherRepositoryImpl(
     }
 
     override fun searchLocations(query: String): Flow<List<WeatherLocation>> {
-        return settings.data.map {
+        return settings.map {
             val provider = WeatherProvider.getInstance(it.provider)
             provider.findLocation(query)
         }
@@ -82,7 +83,7 @@ internal class WeatherRepositoryImpl(
             }
         }
         scope.launch {
-            settings.data.collectLatest {
+            settings.collectLatest {
                 requestUpdate()
             }
         }
@@ -197,7 +198,7 @@ class WeatherUpdateWorker(
 
     override suspend fun doWork(): Result {
         Log.d("WeatherUpdateWorker", "Requesting weather data")
-        val settingsData = settings.data.first()
+        val settingsData = settings.first()
         val provider = WeatherProvider.getInstance(settingsData.provider)
 
         val updateInterval = provider.getUpdateInterval()

@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.backup.Backupable
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.preferences.ThemeDescriptor
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -49,9 +50,15 @@ class ThemeRepository(
         }
     }
 
-    fun getThemeOrDefault(id: UUID?): Flow<Theme> {
-        if (id == null) return flowOf(getDefaultTheme())
-        return getTheme(id).map { it ?: getDefaultTheme() }
+    fun getThemeOrDefault(theme: ThemeDescriptor?): Flow<Theme> {
+        return when(theme) {
+            is ThemeDescriptor.BlackAndWhite -> flowOf(getBlackAndWhiteTheme())
+            is ThemeDescriptor.Custom -> {
+                val id = UUID.fromString(theme.id)
+                getTheme(id).map { it ?: getDefaultTheme() }
+            }
+            else -> flowOf(getDefaultTheme())
+        }
     }
 
     private fun getBuiltInThemes(): List<Theme> {

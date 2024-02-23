@@ -45,5 +45,6 @@ dependencies {
     implementation(libs.koin.android)
 
     implementation(project(":core:base"))
+    implementation(project(":core:preferences"))
 
 }

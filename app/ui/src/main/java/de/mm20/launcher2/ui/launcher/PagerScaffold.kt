@@ -86,7 +86,7 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.preferences.Settings.SearchBarSettings.SearchBarColors
+import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -398,15 +398,12 @@ fun PagerScaffold(
                     modifier = Modifier
                         .fillMaxSize()
                         .nestedScroll(pagerNestedScrollConnection),
-                    beyondBoundsPageCount = 1,
+                    outOfBoundsPageCount = 1,
                     reverseLayout = reverse == (LocalLayoutDirection.current == LayoutDirection.Ltr),
                     state = pagerState,
                     userScrollEnabled = false,//!isWidgetEditMode,
                     flingBehavior = PagerDefaults.flingBehavior(
                         state = pagerState,
-                        lowVelocityAnimationSpec = spring(
-                            stiffness = Spring.StiffnessMediumLow,
-                        ),
                         pagerSnapDistance = remember {
                             object : PagerSnapDistance {
                                 override fun calculateTargetPage(
@@ -495,6 +492,7 @@ fun PagerScaffold(
                                         .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
                                         .padding(bottom = clockPadding),
                                     editMode = isWidgetEditMode,
+                                    fillScreenHeight = fillClockHeight,
                                 )
 
                                 WidgetColumn(

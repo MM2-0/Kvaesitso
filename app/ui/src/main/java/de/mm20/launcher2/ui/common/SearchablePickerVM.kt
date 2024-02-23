@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.toList
@@ -15,15 +14,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class SearchablePickerVM: ViewModel(), KoinComponent {
+class SearchablePickerVM : ViewModel(), KoinComponent {
 
-    private val dataStore: LauncherDataStore by inject()
     private val searchService: SearchService by inject()
     private val iconService: IconService by inject()
 
@@ -41,15 +38,12 @@ class SearchablePickerVM: ViewModel(), KoinComponent {
         searchQuery = query
         searchJob?.cancel()
         searchJob = viewModelScope.launch {
-            val settings = dataStore.data.first()
             searchService.search(
                 query = query,
-                shortcuts = settings.appShortcutSearch,
-                contacts = settings.contactsSearch,
-                calendars = settings.calendarSearch,
+                allowNetwork = true,
             ).collectLatest {
                 if (searchQuery != query) return@collectLatest
-                items  = withContext(Dispatchers.Default) {
+                items = withContext(Dispatchers.Default) {
                     it.toList().filterIsInstance<SavableSearchable>().sorted()
                 }
             }

@@ -6,6 +6,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -24,16 +25,19 @@ import androidx.compose.material3.FilledIconToggleButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,7 +54,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.IconShape
+import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.IconSettings
+import de.mm20.launcher2.preferences.ui.IconSettingsData
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
@@ -63,25 +70,19 @@ import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.component.preferences.label
 import de.mm20.launcher2.ui.component.preferences.value
-import de.mm20.launcher2.ui.ktx.toPixels
+import kotlinx.coroutines.launch
 
 @Composable
 fun IconsSettingsScreen() {
     val viewModel: IconsSettingsScreenVM = viewModel(factory = IconsSettingsScreenVM.Factory)
     val context = LocalContext.current
 
-    val iconSize by viewModel.iconSize.collectAsStateWithLifecycle(48)
+    val grid by viewModel.grid.collectAsStateWithLifecycle(GridSettings())
+    val icons by viewModel.icons.collectAsStateWithLifecycle(null)
     val density = LocalDensity.current
-    val showLabels by viewModel.showLabels.collectAsStateWithLifecycle(null)
-    val columnCount by viewModel.columnCount.collectAsStateWithLifecycle(5)
-    val iconShape by viewModel.iconShape.collectAsStateWithLifecycle(Settings.IconSettings.IconShape.PlatformDefault)
-    val adaptifyLegacyIcons by viewModel.adaptifyLegacyIcons.collectAsStateWithLifecycle(null)
-    val themedIcons by viewModel.themedIcons.collectAsStateWithLifecycle(null)
+    val iconShape by viewModel.iconShape.collectAsStateWithLifecycle(IconShape.PlatformDefault)
 
-    val iconPackPackage by viewModel.iconPack.collectAsStateWithLifecycle(null)
-    val iconPackThemed by viewModel.iconPackThemed.collectAsState(true)
     val installedIconPacks by viewModel.installedIconPacks.collectAsState(emptyList())
-    val forceThemedIcons by viewModel.forceThemedIcons.collectAsStateWithLifecycle(null)
 
     val hasNotificationsPermission by viewModel.hasNotificationsPermission.collectAsStateWithLifecycle(null)
 
@@ -91,8 +92,8 @@ fun IconsSettingsScreen() {
     val shortcutBadges by viewModel.shortcutBadges.collectAsStateWithLifecycle(null)
     val pluginBadges by viewModel.pluginBadges.collectAsStateWithLifecycle(null)
 
-    val previewIcons by remember(iconSize) {
-        viewModel.getPreviewIcons(with(density) { iconSize.dp.toPx() }.toInt())
+    val previewIcons by remember(grid?.iconSize) {
+        viewModel.getPreviewIcons(with(density) { grid.iconSize.dp.toPx() }.toInt())
     }.collectAsState(
         emptyList()
     )
@@ -102,7 +103,7 @@ fun IconsSettingsScreen() {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid)) {
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_icon_size),
-                    value = iconSize,
+                    value = grid.iconSize,
                     step = 8,
                     min = 32,
                     max = 64,
@@ -113,14 +114,14 @@ fun IconsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_grid_labels),
                     summary = stringResource(R.string.preference_grid_labels_summary),
-                    value = showLabels == true,
+                    value = grid.showLabels,
                     onValueChanged = {
                         viewModel.setShowLabels(it)
                     }
                 )
                 SliderPreference(
                     title = stringResource(R.string.preference_grid_column_count),
-                    value = columnCount,
+                    value = grid.columnCount,
                     min = 3,
                     max = 12,
                     onValueChanged = {
@@ -148,7 +149,7 @@ fun IconsSettingsScreen() {
                                     modifier = Modifier.weight(1f),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    ShapedLauncherIcon(size = iconSize.dp, icon = { icon })
+                                    ShapedLauncherIcon(size = grid.iconSize.dp, icon = { icon })
                                 }
                             }
                         }
@@ -165,7 +166,7 @@ fun IconsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_enforce_icon_shape),
                     summary = stringResource(R.string.preference_enforce_icon_shape_summary),
-                    value = adaptifyLegacyIcons == true,
+                    value = icons?.adaptify == true,
                     onValueChanged = {
                         viewModel.setAdaptifyLegacyIcons(it)
                     }
@@ -173,7 +174,7 @@ fun IconsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_themed_icons),
                     summary = stringResource(R.string.preference_themed_icons_summary),
-                    value = themedIcons == true,
+                    value = icons?.themedIcons == true,
                     onValueChanged = {
                         viewModel.setThemedIcons(it)
                     }
@@ -181,14 +182,14 @@ fun IconsSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_force_themed_icons),
                     summary = stringResource(R.string.preference_force_themed_icons_summary),
-                    value = forceThemedIcons == true,
-                    enabled = themedIcons == true,
+                    value = icons?.forceThemed == true,
+                    enabled = icons?.themedIcons == true,
                     onValueChanged = {
                         viewModel.setForceThemedIcons(it)
                     }
                 )
                 val iconPack by remember {
-                    derivedStateOf { installedIconPacks.firstOrNull { it.packageName == iconPackPackage } }
+                    derivedStateOf { installedIconPacks.firstOrNull { it.packageName == icons?.iconPack } }
                 }
                 val items = installedIconPacks.map {
                     it.name to it
@@ -262,10 +263,27 @@ fun IconsSettingsScreen() {
                             modifier = Modifier
                                 .padding(12.dp)
                         ) {
-                            PlainTooltipBox(tooltip = { Text(stringResource(R.string.icon_pack_dynamic_colors)) }) {
+                            val tooltipState = rememberTooltipState()
+                            val scope = rememberCoroutineScope()
+                            TooltipBox(
+                                state = tooltipState,
+                                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                                tooltip = {
+                                    PlainTooltip {
+                                        Text(stringResource(R.string.icon_pack_dynamic_colors))
+                                    }
+                                },
+                            ) {
                                 FilledIconToggleButton(
-                                    modifier = Modifier.tooltipTrigger(),
-                                    checked = iconPackThemed,
+                                    modifier = Modifier.combinedClickable(
+                                        onClick = {},
+                                        onLongClick = {
+                                            scope.launch {
+                                                tooltipState.show()
+                                            }
+                                        }
+                                    ),
+                                    checked = icons?.iconPackThemed == true,
                                     onCheckedChange = {
                                         viewModel.setIconPackThemed(it)
                                     }) {
@@ -347,16 +365,16 @@ fun IconsSettingsScreen() {
 fun IconShapePreference(
     title: String,
     summary: String? = null,
-    value: Settings.IconSettings.IconShape?,
-    onValueChanged: (Settings.IconSettings.IconShape) -> Unit
+    value: IconShape?,
+    onValueChanged: (IconShape) -> Unit
 ) {
     var showDialog by remember { mutableStateOf(false) }
     Preference(title = title, summary = summary, onClick = { showDialog = true })
 
     if (showDialog && value != null) {
         val shapes = remember {
-            Settings.IconSettings.IconShape.values()
-                .filter { it != Settings.IconSettings.IconShape.UNRECOGNIZED && it != Settings.IconSettings.IconShape.EasterEgg }
+            IconShape.entries
+                .filter { it != IconShape.EasterEgg }
         }
         Dialog(onDismissRequest = { showDialog = false }) {
             Surface(
@@ -431,19 +449,19 @@ fun IconShapePreference(
 
 
 @Composable
-private fun getShapeName(shape: Settings.IconSettings.IconShape?): String? {
+private fun getShapeName(shape: IconShape?): String? {
     return stringResource(
         when (shape) {
-            Settings.IconSettings.IconShape.Triangle -> R.string.preference_icon_shape_triangle
-            Settings.IconSettings.IconShape.Hexagon -> R.string.preference_icon_shape_hexagon
-            Settings.IconSettings.IconShape.RoundedSquare -> R.string.preference_icon_shape_rounded_square
-            Settings.IconSettings.IconShape.Squircle -> R.string.preference_icon_shape_squircle
-            Settings.IconSettings.IconShape.Square -> R.string.preference_icon_shape_square
-            Settings.IconSettings.IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
-            Settings.IconSettings.IconShape.PlatformDefault -> R.string.preference_icon_shape_platform
-            Settings.IconSettings.IconShape.Circle -> R.string.preference_icon_shape_circle
-            Settings.IconSettings.IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
-            Settings.IconSettings.IconShape.Pebble -> R.string.preference_icon_shape_pebble
+            IconShape.Triangle -> R.string.preference_icon_shape_triangle
+            IconShape.Hexagon -> R.string.preference_icon_shape_hexagon
+            IconShape.RoundedSquare -> R.string.preference_icon_shape_rounded_square
+            IconShape.Squircle -> R.string.preference_icon_shape_squircle
+            IconShape.Square -> R.string.preference_icon_shape_square
+            IconShape.Pentagon -> R.string.preference_icon_shape_pentagon
+            IconShape.PlatformDefault -> R.string.preference_icon_shape_platform
+            IconShape.Circle -> R.string.preference_icon_shape_circle
+            IconShape.Teardrop -> R.string.preference_icon_shape_teardrop
+            IconShape.Pebble -> R.string.preference_icon_shape_pebble
             else -> return null
         }
     )

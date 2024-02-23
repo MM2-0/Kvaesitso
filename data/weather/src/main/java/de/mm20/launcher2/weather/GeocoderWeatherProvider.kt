@@ -4,6 +4,7 @@ import android.content.Context
 import android.location.Geocoder
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.formatToString
+import de.mm20.launcher2.preferences.weather.WeatherLocation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException

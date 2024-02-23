@@ -7,15 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.preferences.Settings
 import java.util.*
 
 @Composable
 fun BinaryClock(
     time: Long,
-    layout: Settings.ClockWidgetSettings.ClockWidgetLayout
+    compact: Boolean,
 ) {
-    val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
+    val verticalLayout = !compact
     val date = Calendar.getInstance()
     date.timeInMillis = time
     val minute = date[Calendar.MINUTE]

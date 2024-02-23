@@ -1,9 +1,9 @@
 package de.mm20.launcher2.preferences.migrations
 
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
 
 class Migration_10_11: VersionedMigration(10, 11) {
-    override suspend fun applyMigrations(builder: Settings.Builder): Settings.Builder {
+    override suspend fun applyMigrations(builder: LegacySettings.Builder): LegacySettings.Builder {
         return builder.setAppearance(
             builder.appearance.toBuilder()
                 .setCustomColors(

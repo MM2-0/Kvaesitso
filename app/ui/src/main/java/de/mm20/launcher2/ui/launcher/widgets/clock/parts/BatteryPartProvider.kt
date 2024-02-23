@@ -20,14 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.getSystemService
-import de.mm20.launcher2.preferences.Settings
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.icons.*
 import kotlinx.coroutines.channels.awaitClose
@@ -54,13 +52,13 @@ class BatteryPartProvider : PartProvider {
     }
 
     @Composable
-    override fun Component(layout: Settings.ClockWidgetSettings.ClockWidgetLayout) {
+    override fun Component(compactLayout: Boolean) {
 
         val batteryInfo by this.batteryInfo.collectAsState(null)
 
         batteryInfo?.let {
 
-            if (layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical) {
+            if (!compactLayout) {
                 Row(
                     Modifier.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically
@@ -86,7 +84,7 @@ class BatteryPartProvider : PartProvider {
                     }
                 }
             }
-            if (layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Horizontal) {
+            if (compactLayout) {
                 Row(
                     Modifier.padding(8.dp),
                     verticalAlignment = Alignment.CenterVertically

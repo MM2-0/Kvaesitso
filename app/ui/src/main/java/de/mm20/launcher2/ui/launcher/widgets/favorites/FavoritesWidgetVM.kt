@@ -1,32 +1,34 @@
 package de.mm20.launcher2.ui.launcher.widgets.favorites
 
+import de.mm20.launcher2.preferences.ui.GridSettings
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.services.widgets.WidgetsService
-import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
 import de.mm20.launcher2.ui.common.FavoritesVM
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
+import de.mm20.launcher2.widgets.FavoritesWidget
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.inject
 
 class FavoritesWidgetVM : FavoritesVM() {
 
     private val widgetsService: WidgetsService by inject()
 
-    override val tagsExpanded: Flow<Boolean> = dataStore.data.map { it.ui.widgetTagsMultiline }
-        .shareIn(viewModelScope, SharingStarted.Lazily)
+    private val uiSettings: UiSettings by inject()
+
+    override val tagsExpanded: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val widget = MutableStateFlow<FavoritesWidget?>(null)
 
     private val isTopWidget = widgetsService.isFavoritesWidgetFirst()
-    private val clockWidgetFavSlots = dataStore.data.combine(isTopWidget) { data, isTop ->
-        if (!isTop || !data.clockWidget.favoritesPart) 0
-        else {
-            if (data.clockWidget.layout == ClockWidgetLayout.Horizontal) data.grid.columnCount - 2
-            else data.grid.columnCount
+    private val clockWidgetFavSlots =
+        combine(uiSettings.dock, isTopWidget, uiSettings.gridSettings) { (dock, isTop, grid) ->
+            dock as Boolean
+            isTop as Boolean
+            grid as GridSettings
+            if (!isTop || !dock) 0
+            else {
+                grid.columnCount
+            }
         }
-    }
 
     override val favorites = super.favorites.combine(clockWidgetFavSlots) { favs, slots ->
         if (selectedTag.value == null) {
@@ -38,17 +40,17 @@ class FavoritesWidgetVM : FavoritesVM() {
     }
 
     override fun setTagsExpanded(expanded: Boolean) {
-        viewModelScope.launch {
-            dataStore.updateData {
-                it.toBuilder()
-                    .setUi(
-                        it.ui.toBuilder()
-                            .setWidgetTagsMultiline(expanded)
-                            .build()
-                    )
-                    .build()
-            }
-        }
+        this.tagsExpanded.value = expanded
+        val widget = this.widget.value ?: return
+        widgetsService.updateWidget(
+            widget.copy(
+                config = widget.config.copy(tagsMultiline = expanded)
+            )
+        )
+    }
+
+    fun updateWidget(widget: FavoritesWidget) {
+        tagsExpanded.value = widget.config.tagsMultiline
     }
 
 }

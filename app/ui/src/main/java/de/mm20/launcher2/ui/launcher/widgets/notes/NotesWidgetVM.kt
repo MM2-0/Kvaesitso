@@ -3,7 +3,6 @@ package de.mm20.launcher2.ui.launcher.widgets.notes
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
@@ -13,6 +12,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.services.widgets.WidgetsService
 import de.mm20.launcher2.widgets.NotesWidget
+import de.mm20.launcher2.widgets.NotesWidgetConfig
 import de.mm20.launcher2.widgets.Widget
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -259,6 +259,13 @@ class NotesWidgetVM(
         } catch (e: SecurityException) {
             CrashReporter.logException(e)
         }
+    }
+
+    fun updateWidgetContent(config: NotesWidgetConfig) {
+        val updatedWidget = widget.value?.copy(config = config) ?: return
+        noteText.value = TextFieldValue(config.storedText)
+        widget.value = updatedWidget
+        widgetsService.updateWidget(updatedWidget)
     }
 
 

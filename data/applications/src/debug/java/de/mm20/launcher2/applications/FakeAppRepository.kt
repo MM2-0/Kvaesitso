@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.map
 class FakeAppRepository(private val context: Context, private val fakePackages: Int) : SearchableRepository<Application> {
 
 
-    override fun search(query: String): Flow<ImmutableList<Application>> {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<Application>> {
         return if (query.isEmpty()) {
             buildList {
                 repeat(fakePackages) {

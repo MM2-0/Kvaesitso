@@ -68,7 +68,7 @@ import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.SearchBarColors
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.SearchBarLevel
@@ -401,7 +401,7 @@ fun PullDownScaffold(
             ) {
                 VerticalPager(
                     modifier = Modifier.fillMaxSize(),
-                    beyondBoundsPageCount = 1,
+                    outOfBoundsPageCount = 1,
                     state = pagerState,
                     reverseLayout = true,
                     userScrollEnabled = false,
@@ -472,6 +472,7 @@ fun PullDownScaffold(
                                         .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
                                         .padding(bottom = clockPadding),
                                     editMode = isWidgetEditMode,
+                                    fillScreenHeight = fillClockHeight,
                                 )
 
                                 WidgetColumn(
@@ -605,7 +606,7 @@ fun PullDownScaffold(
             showHiddenItemsButton = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
-            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == Settings.SearchBarSettings.SearchBarColors.Auto || searchBarColor == Settings.SearchBarSettings.SearchBarColors.Dark,
+            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
             reverse = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {

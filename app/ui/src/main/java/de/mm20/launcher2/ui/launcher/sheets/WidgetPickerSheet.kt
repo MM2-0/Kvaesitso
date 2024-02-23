@@ -78,6 +78,8 @@ class BindAndConfigureAppWidgetActivity : Activity() {
     private lateinit var appWidgetHost: AppWidgetHost
     private lateinit var appWidgetManager: AppWidgetManager
 
+    private var appWidgetId: Int? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appWidgetHost = AppWidgetHost(this, 44203)
@@ -92,7 +94,9 @@ class BindAndConfigureAppWidgetActivity : Activity() {
             return
         }
 
-        val widgetId = appWidgetHost.allocateAppWidgetId()
+        val widgetId = appWidgetHost.allocateAppWidgetId().also {
+            appWidgetId = it
+        }
 
         val canBind =
             appWidgetManager.bindAppWidgetIdIfAllowed(
@@ -153,8 +157,12 @@ class BindAndConfigureAppWidgetActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             RequestCodeBind -> {
-                val appWidgetId =
-                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return cancel()
+                val appWidgetId = appWidgetId
+                if (appWidgetId == null) {
+                    Log.e("MM20", "No app widget id provided, canceling")
+                    cancel()
+                    return
+                }
                 if (resultCode == RESULT_OK) {
                     val widget = appWidgetManager.getAppWidgetInfo(appWidgetId)
                     configureAppWidget(widget, appWidgetId)
@@ -166,8 +174,12 @@ class BindAndConfigureAppWidgetActivity : Activity() {
             }
 
             RequestCodeConfigure -> {
-                val appWidgetId =
-                    data?.extras?.getInt(AppWidgetManager.EXTRA_APPWIDGET_ID) ?: return cancel()
+                val appWidgetId = appWidgetId
+                if (appWidgetId == null) {
+                    Log.e("MM20", "No app widget id provided, canceling")
+                    cancel()
+                    return
+                }
                 if (resultCode == RESULT_OK) {
                     finishWithResult(appWidgetId)
                 } else {
@@ -187,6 +199,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
         val data = Intent().putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId)
         data.putExtra(ExtraAppWidgetProviderInfo, intent.getParcelableExtra<AppWidgetProviderInfo>(ExtraAppWidgetProviderInfo))
         setResult(RESULT_OK, data)
+        appWidgetId = null
         finish()
     }
 
@@ -225,7 +238,11 @@ private class BindAndConfigureAppWidgetContract(
                         widgetId = widgetId,
                     ),
                 )
+            } else {
+                Log.e("MM20", "Could not parse widget result: widgetId=$widgetId, widgetProviderInfo=$widgetProviderInfo")
             }
+        } else {
+            Log.e("MM20", "Widget result was not OK")
         }
         return null
     }

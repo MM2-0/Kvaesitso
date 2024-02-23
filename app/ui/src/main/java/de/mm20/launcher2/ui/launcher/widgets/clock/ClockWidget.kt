@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -64,10 +62,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockStyle
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetAlignment
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetColors
-import de.mm20.launcher2.preferences.Settings.ClockWidgetSettings.ClockWidgetLayout
+import de.mm20.launcher2.preferences.ClockWidgetAlignment
+import de.mm20.launcher2.preferences.ClockWidgetColors
+import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
@@ -85,11 +82,12 @@ import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
 @Composable
 fun ClockWidget(
     modifier: Modifier = Modifier,
+    fillScreenHeight: Boolean,
     editMode: Boolean = false,
 ) {
     val viewModel: ClockWidgetVM = viewModel()
     val context = LocalContext.current
-    val layout by viewModel.layout.collectAsState()
+    val compact by viewModel.compactLayout.collectAsState()
     val clockStyle by viewModel.clockStyle.collectAsState()
     val color by viewModel.color.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
@@ -106,7 +104,9 @@ fun ClockWidget(
         viewModel.updateTime(time)
     }
 
-    val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(null)
+    val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(
+        null
+    )
 
     AnimatedContent(editMode, label = "ClockWidget") {
         if (it) {
@@ -154,7 +154,7 @@ fun ClockWidget(
             Column(modifier = modifier) {
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .then(if(fillScreenHeight) Modifier.weight(1f) else Modifier)
                         .fillMaxWidth(),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center
@@ -165,32 +165,32 @@ fun ClockWidget(
                     CompositionLocalProvider(
                         LocalContentColor provides contentColor
                     ) {
-                        if (layout == ClockWidgetLayout.Vertical) {
+                        if (compact == false) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 Box(
                                     modifier = Modifier.clickable(
-                                        enabled = clockStyle != ClockStyle.EmptyClock,
+                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
                                         indication = null,
                                         interactionSource = remember { MutableInteractionSource() }
                                     ) {
                                         viewModel.launchClockApp(context)
                                     }
                                 ) {
-                                    Clock(clockStyle, ClockWidgetLayout.Vertical)
+                                    Clock(clockStyle, false)
                                 }
 
                                 if (partProvider != null) {
                                     DynamicZone(
                                         modifier = Modifier.padding(bottom = 8.dp),
-                                        layout = ClockWidgetLayout.Vertical,
+                                        compact = false,
                                         provider = partProvider,
                                     )
                                 }
                             }
                         }
-                        if (layout == ClockWidgetLayout.Horizontal) {
+                        if (compact == true) {
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -201,7 +201,7 @@ fun ClockWidget(
                                 if (partProvider != null) {
                                     DynamicZone(
                                         modifier = Modifier.weight(1f),
-                                        layout = ClockWidgetLayout.Horizontal,
+                                        compact = true,
                                         provider = partProvider,
                                     )
                                 }
@@ -216,14 +216,14 @@ fun ClockWidget(
                                 )
                                 Box(
                                     modifier = Modifier.clickable(
-                                        enabled = clockStyle != ClockStyle.EmptyClock,
+                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
                                         indication = null,
                                         interactionSource = remember { MutableInteractionSource() }
                                     ) {
                                         viewModel.launchClockApp(context)
                                     }
                                 ) {
-                                    Clock(clockStyle, ClockWidgetLayout.Horizontal)
+                                    Clock(clockStyle, true)
                                 }
                             }
                         }
@@ -236,7 +236,7 @@ fun ClockWidget(
                             .fillMaxWidth()
                             .padding(bottom = 16.dp)
                     ) {
-                        dockProvider?.Component(ClockWidgetLayout.Vertical)
+                        dockProvider?.Component(false)
                     }
                 }
             }
@@ -246,21 +246,18 @@ fun ClockWidget(
 
 @Composable
 fun Clock(
-    style: ClockStyle?,
-    layout: ClockWidgetLayout
+    style: ClockWidgetStyle?,
+    compact: Boolean,
 ) {
     val time = LocalTime.current
     when (style) {
-        ClockStyle.DigitalClock1,
-        ClockStyle.DigitalClock1_Outlined,
-        ClockStyle.DigitalClock1_MDY,
-        ClockStyle.DigitalClock1_OnePlus -> DigitalClock1(time, layout, style)
+        is ClockWidgetStyle.Digital1 -> DigitalClock1(time, compact, style)
 
-        ClockStyle.DigitalClock2 -> DigitalClock2(time, layout)
-        ClockStyle.BinaryClock -> BinaryClock(time, layout)
-        ClockStyle.AnalogClock -> AnalogClock(time, layout)
-        ClockStyle.OrbitClock -> OrbitClock(time, layout)
-        ClockStyle.EmptyClock -> {}
+        is ClockWidgetStyle.Digital2 -> DigitalClock2(time, compact)
+        is ClockWidgetStyle.Binary -> BinaryClock(time, compact)
+        is ClockWidgetStyle.Analog -> AnalogClock(time, compact)
+        is ClockWidgetStyle.Orbit -> OrbitClock(time, compact)
+        is ClockWidgetStyle.Empty -> {}
         else -> {}
     }
 }
@@ -268,13 +265,13 @@ fun Clock(
 @Composable
 fun DynamicZone(
     modifier: Modifier = Modifier,
-    layout: ClockWidgetLayout,
+    compact: Boolean,
     provider: PartProvider?,
 ) {
     Column(
         modifier = modifier
     ) {
-        provider?.Component(layout)
+        provider?.Component(compact)
     }
 }
 
@@ -283,18 +280,12 @@ fun ConfigureClockWidgetSheet(
     onDismiss: () -> Unit,
 ) {
     val viewModel: ClockWidgetSettingsScreenVM = viewModel()
-    val layout by viewModel.layout.collectAsState()
+    val compact by viewModel.compact.collectAsState()
     val color by viewModel.color.collectAsState()
     val style by viewModel.clockStyle.collectAsState()
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
-
-    val date by viewModel.datePart.collectAsState()
-    val favorites by viewModel.favoritesPart.collectAsState()
-    val media by viewModel.musicPart.collectAsState()
-    val alarm by viewModel.alarmPart.collectAsState()
-    val battery by viewModel.batteryPart.collectAsState()
-
+    val parts by viewModel.parts.collectAsState()
 
     BottomSheetDialog(onDismissRequest = onDismiss) {
         Column(
@@ -307,14 +298,14 @@ fun ConfigureClockWidgetSheet(
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 SegmentedButton(
-                    selected = layout == ClockWidgetLayout.Vertical,
+                    selected = compact == false,
                     onClick = {
-                        viewModel.setLayout(ClockWidgetLayout.Vertical)
+                        viewModel.setCompact(false)
                     },
                     shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
                     icon = {
                         SegmentedButtonDefaults.Icon(
-                            active = layout == ClockWidgetLayout.Vertical,
+                            active = compact == false,
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.HorizontalSplit,
@@ -327,14 +318,14 @@ fun ConfigureClockWidgetSheet(
                     Text(text = stringResource(R.string.preference_clockwidget_layout_vertical))
                 }
                 SegmentedButton(
-                    selected = layout == ClockWidgetLayout.Horizontal,
+                    selected = compact == true,
                     onClick = {
-                        viewModel.setLayout(ClockWidgetLayout.Horizontal)
+                        viewModel.setCompact(true)
                     },
                     shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
                     icon = {
                         SegmentedButtonDefaults.Icon(
-                            active = layout == ClockWidgetLayout.Horizontal,
+                            active = compact == true,
                         ) {
                             Icon(
                                 imageVector = Icons.Rounded.VerticalSplit,
@@ -348,9 +339,9 @@ fun ConfigureClockWidgetSheet(
                 }
             }
 
-            if (color != null && layout != null) {
+            if (color != null && compact != null) {
                 WatchFaceSelector(
-                    layout = layout!!,
+                    compact = compact!!,
                     colors = color!!,
                     selected = style,
                     onSelect = {
@@ -477,23 +468,6 @@ fun ConfigureClockWidgetSheet(
                     }
                 }
             }
-            OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clockwidget_favorites_part),
-                        summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
-                        icon = Icons.Rounded.Star,
-                        value = favorites == true,
-                        onValueChanged = {
-                            viewModel.setFavoritesPart(it)
-                        }
-                    )
-                }
-            }
             Text(
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.titleSmall,
@@ -510,7 +484,7 @@ fun ConfigureClockWidgetSheet(
                         title = stringResource(R.string.preference_clockwidget_date_part),
                         summary = stringResource(R.string.preference_clockwidget_date_part_summary),
                         icon = Icons.Rounded.Today,
-                        value = date == true,
+                        value = parts?.date == true,
                         onValueChanged = {
                             viewModel.setDatePart(it)
                         }
@@ -519,7 +493,7 @@ fun ConfigureClockWidgetSheet(
                         title = stringResource(R.string.preference_clockwidget_music_part),
                         summary = stringResource(R.string.preference_clockwidget_music_part_summary),
                         icon = Icons.Rounded.MusicNote,
-                        value = media == true,
+                        value = parts?.music == true,
                         onValueChanged = {
                             viewModel.setMusicPart(it)
                         }
@@ -528,7 +502,7 @@ fun ConfigureClockWidgetSheet(
                         title = stringResource(R.string.preference_clockwidget_alarm_part),
                         summary = stringResource(R.string.preference_clockwidget_alarm_part_summary),
                         icon = Icons.Rounded.Alarm,
-                        value = alarm == true,
+                        value = parts?.alarm == true,
                         onValueChanged = {
                             viewModel.setAlarmPart(it)
                         }
@@ -537,7 +511,7 @@ fun ConfigureClockWidgetSheet(
                         title = stringResource(R.string.preference_clockwidget_battery_part),
                         summary = stringResource(R.string.preference_clockwidget_battery_part_summary),
                         icon = Icons.Rounded.BatteryFull,
-                        value = battery == true,
+                        value = parts?.battery == true,
                         onValueChanged = {
                             viewModel.setBatteryPart(it)
                         }

@@ -670,4 +670,13 @@
     <string name="plugin_host_not_installed">Hostitel doplňků není nainstalován</string>
     <string name="preference_plugin_badges">Odznaky doplňků</string>
     <string name="preference_plugin_badges_summary">Zobrazit, který doplněk vytvořil výsledek vyhledávání</string>
+    <string name="plugin_state_setup_required">Nejprve musíte nastavit tento doplněk</string>
+    <string name="plugin_action_setup">Nastavit</string>
+    <string name="plugin_type_filesearch">Vyhledávání souborů</string>
+    <string name="plugin_type_weather">Poskytovatel počasí</string>
+    <string name="plugin_weather_provider_enable">Nastavit jako poskytovatele počasí</string>
+    <string name="plugin_weather_provider_enabled">Momentálně nastaven jako poskytovatel počasí</string>
+    <string name="plugin_state_error">Tento doplněk nefunguje tak, jak by měl</string>
+    <string name="plugin_badge_official">Oficiální</string>
+    <string name="preference_plugin_enable">Povolit doplněk</string>
 </resources>

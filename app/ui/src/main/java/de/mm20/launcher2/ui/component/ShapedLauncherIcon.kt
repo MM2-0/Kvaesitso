@@ -78,7 +78,7 @@ import de.mm20.launcher2.icons.TintedClockLayer
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
-import de.mm20.launcher2.preferences.Settings.IconSettings.IconShape
+import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
@@ -493,7 +493,6 @@ fun getShape(iconShape: IconShape): Shape {
         IconShape.Teardrop -> TeardropShape
         IconShape.Pebble -> PebbleShape
         IconShape.EasterEgg -> EasterEggShape
-        IconShape.UNRECOGNIZED -> CircleShape
     }
 }
 

@@ -24,7 +24,6 @@ import de.mm20.launcher2.ui.common.WeatherLocationSearchDialog
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
-import de.mm20.launcher2.weather.WeatherLocation
 import de.mm20.launcher2.weather.WeatherProviderInfo
 
 @Composable

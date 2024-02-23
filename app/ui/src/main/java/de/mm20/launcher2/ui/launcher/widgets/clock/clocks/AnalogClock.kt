@@ -11,15 +11,15 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
-import de.mm20.launcher2.preferences.Settings
+import de.mm20.launcher2.preferences.LegacySettings
 import java.util.*
 
 @Composable
 fun AnalogClock(
     time: Long,
-    layout: Settings.ClockWidgetSettings.ClockWidgetLayout
+    compact: Boolean,
 ) {
-    val verticalLayout = layout == Settings.ClockWidgetSettings.ClockWidgetLayout.Vertical
+    val verticalLayout = !compact
     val date = Calendar.getInstance()
     date.timeInMillis = time
     val minute = date[Calendar.MINUTE]

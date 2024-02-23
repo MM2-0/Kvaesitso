@@ -9,7 +9,7 @@ import de.mm20.launcher2.sdk.base.SearchPluginProvider
 abstract class FileProvider(
     config: SearchPluginConfig,
 ) : SearchPluginProvider<File>(config) {
-    abstract override suspend fun search(query: String): List<File>
+    abstract override suspend fun search(query: String, allowNetwork: Boolean): List<File>
 
     final override fun getPluginType(): PluginType {
         return PluginType.FileSearch
