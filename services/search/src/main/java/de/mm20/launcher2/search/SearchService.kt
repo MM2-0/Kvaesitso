@@ -129,7 +129,7 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
-                locationRepository.search(query)
+                locationRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
