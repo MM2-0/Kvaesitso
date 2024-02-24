@@ -58,4 +58,16 @@
     <string name="search_action_call">Telephonar</string>
     <string name="shortcut_label_unavailable">Non disponibile</string>
     <string name="search_action_email">Email</string>
+    <string name="calendar_widget_no_events">Necun eventos hodie</string>
+    <string name="preference_screen_about">A proposito de</string>
+    <string name="preference_about_fdroid">Repositorio de Telegram</string>
+    <string name="preference_about_license_summary">Sub licentia GNU General Public License 3.0</string>
+    <string name="date_today">Hodie</string>
+    <string name="preference_category_widgets">Widgets</string>
+    <string name="preference_screen_widgets_summary">Configurar le widgets</string>
+    <string name="menu_edit_widgets">Modificar le widgets</string>
+    <string name="preference_screen_about_summary">Information de application e licentia</string>
+    <string name="preference_about_telegram">Gruppo de Telegram</string>
+    <string name="preference_about_license">Iste application es software libere</string>
+    <string name="preference_screen_buildinfo_summary">Plus de information re le compilation de iste application</string>
 </resources>
