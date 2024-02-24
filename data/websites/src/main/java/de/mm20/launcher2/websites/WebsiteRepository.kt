@@ -3,6 +3,7 @@ package de.mm20.launcher2.websites
 import android.content.Context
 import android.webkit.URLUtil
 import androidx.core.graphics.toColorInt
+import de.mm20.launcher2.ktx.splitAtFirst
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.Website
@@ -19,18 +20,13 @@ import okhttp3.Request
 import org.jsoup.Jsoup
 import org.jsoup.UncheckedIOException
 import java.io.IOException
-import java.net.IDN
 import java.net.MalformedURLException
 import java.net.URISyntaxException
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
-// https://code.whatever.social/questions/10306690/what-is-a-regular-expression-which-will-match-a-valid-domain-name-without-a-subd#26987741
 private val DomainRegex by lazy {
-    Regex(
-        """^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]?\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$""",
-        RegexOption.IGNORE_CASE
-    )
+    Regex("""^(?:(?!-)[-\w]+(?<!-)\.)+[^\d\W_]+$""", RegexOption.IGNORE_CASE)
 }
 
 internal class WebsiteRepository(
@@ -61,41 +57,32 @@ internal class WebsiteRepository(
         }
     }
 
+    private val protocols = listOf("http://", "https://")
     private suspend fun queryWebsite(query: String): Website? {
         val result = withContext(Dispatchers.IO) {
 
-            val (protocol, domain, path) = when {
-                query.contains("://") -> {
-                    val protocol = query.substringBefore("://")
+            val query = query.trim()
 
-                    if (protocol !in listOf("http", "https")) return@withContext null
-
-                    val noProtocol = query.substringAfter("://").takeIf { it.isNotEmpty() }
-                        ?: return@withContext null
-                    Triple(
-                        protocol,
-                        noProtocol.substringBefore('/'),
-                        noProtocol.substringAfter('/', "").takeIf { it.isNotEmpty() }
-                    )
+            var url = when {
+                protocols.any { query.startsWith(it) } -> {
+                    if (query.substringAfter("://").isEmpty()) return@withContext null
+                    query // expect user knows what they are doing
                 }
 
-                query.contains('/') -> Triple(
-                    null,
-                    query.substringBefore('/').takeIf { it.isNotEmpty() }
-                        ?: return@withContext null,
-                    query.substringAfter('/').takeIf { it.isNotEmpty() }
-                )
+                // deny any other protocol & malformed queries
+                query.contains("://") -> return@withContext null
 
-                else -> Triple(null, query, null)
+                // "hello. world"
+                query.any { it.isWhitespace() } -> return@withContext null
+
+                else -> {
+                    val (domain, path) = query.splitAtFirst('/')
+
+                    if (!DomainRegex.matches(domain)) return@withContext null
+
+                    "https://$domain${path.takeIf { it.isNotBlank() }?.let { "/$it" }.orEmpty()}"
+                }
             }
-
-            val aceDomain =
-                domain.runCatching { IDN.toASCII(this, IDN.ALLOW_UNASSIGNED) }.getOrNull()
-                    ?: return@withContext null
-
-            if (!DomainRegex.matches(aceDomain)) return@withContext null
-
-            var url = "${protocol ?: "https"}://$aceDomain${path?.let { "/$it" }.orEmpty()}"
 
             if (!URLUtil.isNetworkUrl(url)) return@withContext null
 

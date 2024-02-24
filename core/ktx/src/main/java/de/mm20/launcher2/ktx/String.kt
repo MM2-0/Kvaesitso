@@ -30,3 +30,6 @@ fun String.normalize(): String {
 fun String.romanize(): String {
     return Pinyin.toPinyin(this, "")
 }
+
+fun String.splitAtFirst(delimiter: Char, missingSecondSplitValue: String = ""): Pair<String, String> =
+    this.substringBefore(delimiter) to this.substringAfter('/', missingDelimiterValue = missingSecondSplitValue)
