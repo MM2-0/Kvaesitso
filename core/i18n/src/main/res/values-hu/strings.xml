@@ -373,8 +373,8 @@
     </plurals>
     <string name="plugin_state_setup_required">Először be kell állítanod ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
-    <string name="plugin_type_weather">Időjárás szolgáltató</string>
-    <string name="plugin_weather_provider_enable">Beállítás időjárás szolgáltatónak</string>
+    <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
+    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzés szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor aktuális töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 15 percen belül megszólalnak</string>
@@ -444,7 +444,7 @@
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók kinyitásakor</string>
     <string name="note_widget_link_file_summary">Szinkronizálja a widget tartalmát egy külső fájllal</string>
-    <string name="plugin_weather_provider_enabled">Jelenleg időjárás szolgáltatóként van beállítva</string>
+    <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés URL</string>
     <string name="preference_google_signin_summary">Bejelentkezés a Google Drive kereséséhez</string>
@@ -528,7 +528,7 @@
     <string name="apps_profile_work">Munka</string>
     <string name="preference_search_result_ordering_alphabetic">Abc szerint</string>
     <string name="preference_search_result_ordering_launch_count">Indítások száma</string>
-    <string name="widget_config_weather_integration_settings">Időjárás integráció beállításai</string>
+    <string name="widget_config_weather_integration_settings">Az időjárás integráció beállításai</string>
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő integráció beállításai</string>
     <string name="note_widget_link_file">Link a fájlhoz</string>
