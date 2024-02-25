@@ -124,7 +124,7 @@
     <string name="nextcloud_server_url_empty">La URL del servidor no debe estar vacía</string>
     <string name="owncloud_server_url">URL del servidor Owncloud</string>
     <string name="music_widget_default_title">%1$s está reproduciendo música</string>
-    <string name="music_widget_no_data">Aún no se ha reproducido ninguna música</string>
+    <string name="music_widget_no_data">Aún no se ha reproducido música</string>
     <string name="weather_condition_unknown">Desconocido</string>
     <string name="weather_widget_show_details">Mostrar detalles</string>
     <string name="weather_widget_hide_details">Ocultar detalles</string>
@@ -224,7 +224,7 @@
     <string name="preference_category_grid">Cuadrícula</string>
     <string name="preference_force_themed_icons_summary">Aplicar esquema de color de la aplicación a todos los iconos, incluyendo los no soportados (no recomendado)</string>
     <string name="preference_force_themed_icons">Forzar iconos tematizados</string>
-    <string name="preference_screen_musicwidget">Musica</string>
+    <string name="preference_screen_musicwidget">Música</string>
     <string name="preference_screen_widgets_summary">Configurar widgets</string>
     <string name="preference_favorites_frequently_used_summary">Mostrar elementos frecuentemente usados en favoritos</string>
     <string name="preference_category_favorites_frequently_used">Frecuentemente usado</string>
@@ -267,7 +267,7 @@
     <string name="preference_wallpaper_summary">Elije un papel tapiz</string>
     <string name="preference_screen_badges_summary">Configura insignias de iconos</string>
     <string name="preference_notification_badges">Insignias de notificación</string>
-    <string name="preference_search_favorites_summary">Mostrar elementos fijados y frecuéntemente usados encima de la cuadrícula de aplicaciones</string>
+    <string name="preference_search_favorites_summary">Mostrar elementos fijados y frecuentemente usados encima de la cuadrícula de aplicaciones</string>
     <string name="preference_screen_tags">Etiquetas</string>
     <string name="preference_screen_tags_summary">Administrar etiquetas y elementos etiquetados</string>
     <string name="icon_picker_suggestions">Sugerencias</string>
@@ -319,8 +319,8 @@
     <string name="preference_clock_widget_style_summary">Selecciona un reloj</string>
     <string name="preference_clockwidget_favorites_part">Barra</string>
     <string name="preference_clockwidget_favorites_part_summary">Mostrar la primera fila de items fijados</string>
-    <string name="preference_clockwidget_music_part">Multimédia</string>
-    <string name="preference_clockwidget_music_part_summary">Mostrar controles multimédia cuando haya una sesión multimédia activa</string>
+    <string name="preference_clockwidget_music_part">Multimedia</string>
+    <string name="preference_clockwidget_music_part_summary">Mostrar controles multimedia cuando haya una sesión multimedia activa</string>
     <string name="preference_clockwidget_alarm_part_summary">Mostrar alarmas que suenen en los próximos 15 minutos</string>
     <string name="preference_search_bar_auto_focus">Abrir teclado</string>
     <string name="preference_export_log">Exportar archivo de registros</string>
@@ -568,7 +568,7 @@
     <string name="preference_themed_icons">Íconos temáticos</string>
     <string name="help">Ayuda</string>
     <string name="preference_layout_fixed_rotation">Rotación de la pantalla fija</string>
-    <string name="preference_layout_fixed_rotation_summary">Fijar la rotación de la pantalla al modo vertifcal</string>
+    <string name="preference_layout_fixed_rotation_summary">Fijar la rotación de la pantalla al modo vertical</string>
     <string name="preference_compact_mode_summary">Esconde pronósticos de cada hora y diarios</string>
     <string name="preference_screen_integrations">Integraciones</string>
     <string name="preference_category_media_apps">Aplicaciones multimedia</string>
@@ -618,7 +618,7 @@
     <string name="preference_screen_homescreen_summary">Reloj, barra de búsqueda, fondo de pantalla, barras del sistema</string>
     <string name="preference_screen_icons">Cuadrícula e ícono</string>
     <string name="preference_screen_icons_summary">Cuadrícula, tamaño de íconos, paquete de íconos, insignias</string>
-    <string name="widget_config_music_integration_settings">Configuración de multimedia</string>
+    <string name="widget_config_music_integration_settings">Configuración de integración para control multimedia</string>
     <string name="gesture_action_launch_app">Iniciar aplicación</string>
     <string name="icon_picker_no_packs_installed">No hay paquetes de iconos instalados</string>
     <string name="icon_picker_filter_all_packs">Todos los paquetes de íconos</string>

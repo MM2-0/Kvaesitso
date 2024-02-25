@@ -306,13 +306,13 @@
     <string name="preference_debug_cleanup_database">Az adatbázis tisztítása</string>
     <string name="preference_category_icons">Ikonok</string>
     <string name="preference_cards">Kártyák</string>
-    <string name="preference_cards_corner_radius">Sarok sugara</string>
+    <string name="preference_cards_corner_radius">A sarok sugara</string>
     <string name="weather_details_wind">Szél: %1$s</string>
     <string name="weather_details_precipitation">Csapadék: %1$s</string>
     <string name="weather_no_data">Az időjárás-adatok nem állnak rendelkezésre.</string>
     <string name="missing_permission_auto_location">A hely automatikus meghatározásához helyhozzáférés szükséges</string>
     <string name="missing_permission_contact_search_settings">A névjegyek kereséséhez, névjegy engedélyre van szükség</string>
-    <string name="preference_cards_stroke_width">Löketszélesség</string>
+    <string name="preference_cards_stroke_width">A keret szélessége</string>
     <string name="preference_cards_opacity">Átlátszatlanság</string>
     <string name="preference_cards_shape">Alakzat</string>
     <string name="preference_cards_shape_rounded">Kerekített</string>
@@ -511,7 +511,7 @@
     <string name="preference_search_contacts">Névjegyek</string>
     <string name="preference_edit_button">Szerkesztés gomb</string>
     <string name="preference_favorites_edit_button_summary">Egy gomb megjelenítése a kedvencek átrendezéséhez</string>
-    <string name="preference_screen_icons">Rács &amp; ikonok</string>
+    <string name="preference_screen_icons">Rács és ikonok</string>
     <string name="no_account_google">Még nem csatlakoztatottál Google fiókot</string>
     <string name="connect_account">Fiók csatlakoztatása</string>
     <string name="backup_component_searchactions">Gyors művelet</string>
@@ -584,7 +584,7 @@
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
-    <string name="preference_screen_backup">Biztonsági mentés &amp; Visszaállítás</string>
+    <string name="preference_screen_backup">Biztonsági mentés és Visszaállítás</string>
     <string name="preference_screen_backup_summary">Kvaesitso adatok exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
     <string name="preference_backup_summary">A beállítások és az indítóadatok exportálása</string>
@@ -673,4 +673,9 @@
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabíl</string>
     <string name="plugin_badge_official">Hivatalos</string>
+    <string name="preference_mdy_color_source_system">Rendszer</string>
+    <string name="preference_mdy_color_source">A dinamikus színek forrása</string>
+    <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
+    <string name="preference_category_advanced">Haladó</string>
+    <string name="preference_plugin_enable">A bővítmény engedélyezése</string>
 </resources>
