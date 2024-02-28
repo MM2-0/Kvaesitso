@@ -160,4 +160,5 @@
     <string name="preference_category_custom_colors_dark">Schema de colores obscur</string>
     <string name="widget_config_weather_compact">Modo compacte</string>
     <string name="preference_debug_reinstall_iconpacks">Reinstallar pacchettos de icones</string>
+    <string name="plugin_type_weather">Fornitor de tempore</string>
 </resources>
