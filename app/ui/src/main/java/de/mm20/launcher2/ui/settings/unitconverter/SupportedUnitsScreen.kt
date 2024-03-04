@@ -63,7 +63,7 @@ fun SupportedUnitsScreen() {
                     }
                 }
                 Preference(
-                    title = converter.dimension.name,
+                    title = stringResource(converter.dimension.resource),
                     summary = units
                 )
             }

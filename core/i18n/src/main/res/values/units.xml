@@ -3,6 +3,20 @@
     <!--
     Important note: Unit symbols may not contain spaces.
     -->
+    <!-- DIMENSIONS -->
+    <string name="dimension_length">Length</string>
+    <string name="dimension_mass">Mass</string>
+    <string name="dimension_velocity">Velocity</string>
+    <string name="dimension_volume">Volume</string>
+    <string name="dimension_area">Area</string>
+    <string name="dimension_currency">Currency</string>
+    <string name="dimension_data">Data</string>
+    <string name="dimension_bitrate">Bitrate</string>
+    <string name="dimension_pressure">Pressure</string>
+    <string name="dimension_energy">Energy</string>
+    <string name="dimension_frequency">Frequency</string>
+    <string name="dimension_temperature">Temperature</string>
+    <string name="dimension_time">Time</string>
     <!-- UNITS OF LENGTH -->
     <string name="unit_meter_symbol">m</string>
     <plurals name="unit_meter">

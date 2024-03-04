@@ -43,8 +43,8 @@ fun UnitConverterSettingsScreen() {
             }
             PreferenceCategory {
                 Preference(
-                    title = "Supported units",
-                    summary = "Listed abbreviations are used on the converter",
+                    title = stringResource(R.string.preference_search_supportedunits),
+                    summary = stringResource(R.string.preference_search_supportedunits_summary),
                     onClick = {
                         navController?.navigate("settings/search/unitconverter/units")
                     }
