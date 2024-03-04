@@ -57,7 +57,10 @@ internal class UnitConverterRepositoryImpl(
         query: String,
         includeCurrencies: Boolean
     ): UnitConverter? {
-        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) && !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+"))) return null
+        if (!query.matches(Regex("[0-9,.:]+ [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ >> [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ > [^\\s]+")) &&
+            !query.matches(Regex("[0-9,.:]+ [^\\s]+ - [^\\s]+"))) return null
         val valueStr: String
         val unitStr: String
         val targetUnitStr: String?
