@@ -296,7 +296,6 @@ fun ConfigureClockWidgetSheet(
     val alignment by viewModel.alignment.collectAsState()
     val showSeconds by viewModel.showSeconds.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
-
     val parts by viewModel.parts.collectAsState()
 
     BottomSheetDialog(onDismissRequest = onDismiss) {

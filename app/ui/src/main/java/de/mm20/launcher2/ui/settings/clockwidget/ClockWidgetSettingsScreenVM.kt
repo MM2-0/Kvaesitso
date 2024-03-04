@@ -33,7 +33,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     val showSeconds = settings.showSeconds
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), true)
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
 
     fun setShowSeconds(showSeconds: Boolean) {
         settings.setShowSeconds(showSeconds)
