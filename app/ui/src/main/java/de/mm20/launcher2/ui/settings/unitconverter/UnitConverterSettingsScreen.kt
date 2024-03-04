@@ -13,7 +13,8 @@ import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 @Composable
 fun UnitConverterSettingsScreen() {
     val viewModel: UnitConverterSettingsScreenVM = viewModel()
-    PreferenceScreen(title = stringResource(R.string.preference_search_unitconverter)) {
+    PreferenceScreen(title = stringResource(R.string.preference_search_unitconverter),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/search/unit-converter") {
         item {
             PreferenceCategory {
                 val unitConverter by viewModel.unitConverter.collectAsState()
