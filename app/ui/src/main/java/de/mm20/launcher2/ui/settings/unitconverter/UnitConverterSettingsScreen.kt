@@ -6,13 +6,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.locals.LocalNavController
 
 @Composable
 fun UnitConverterSettingsScreen() {
     val viewModel: UnitConverterSettingsScreenVM = viewModel()
+    val navController = LocalNavController.current
+
     PreferenceScreen(title = stringResource(R.string.preference_search_unitconverter),
         helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/search/unit-converter") {
         item {
@@ -34,6 +38,15 @@ fun UnitConverterSettingsScreen() {
                     value = currencyConverter == true,
                     onValueChanged = {
                         viewModel.setCurrencyConverter(it)
+                    }
+                )
+            }
+            PreferenceCategory {
+                Preference(
+                    title = "Supported units",
+                    summary = "Listed abbreviations are used on the converter",
+                    onClick = {
+                        navController?.navigate("settings/search/unitconverter/units")
                     }
                 )
             }

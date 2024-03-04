@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.work.*
 import de.mm20.launcher2.database.AppDatabase
+import de.mm20.launcher2.database.entities.CurrencyEntity
 import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 
@@ -58,6 +59,12 @@ class CurrencyRepository(
                 }
                 listOf(toCurrency to value * to.value / from.value)
             }
+        }
+    }
+
+    suspend fun getKnownUnits(): List<String> {
+        return withContext(Dispatchers.IO) {
+            AppDatabase.getInstance(context).currencyDao().getAllCurrencies().map { it.symbol }
         }
     }
 

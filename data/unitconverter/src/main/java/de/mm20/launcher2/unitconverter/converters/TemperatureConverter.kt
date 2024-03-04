@@ -7,7 +7,7 @@ import de.mm20.launcher2.unitconverter.*
 class TemperatureConverter(context: Context) : Converter {
     override val dimension = Dimension.Temperature
 
-    private val units = listOf(
+    val units = listOf(
         TemperatureMeasureUnit(
             context.getString(R.string.unit_degree_celsius_symbol),
             R.plurals.unit_degree_celsius,
@@ -102,14 +102,14 @@ class TemperatureConverter(context: Context) : Converter {
     }
 }
 
-private data class TemperatureMeasureUnit(
+data class TemperatureMeasureUnit(
     override val symbol: String,
     override val nameResource: Int,
     val unit: TemperatureUnit
 ) :
     MeasureUnit
 
-private enum class TemperatureUnit {
+enum class TemperatureUnit {
     DegreeCelsius,
     DegreeFahrenheit,
     Kelvin,

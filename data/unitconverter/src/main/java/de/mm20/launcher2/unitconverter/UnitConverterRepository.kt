@@ -5,6 +5,7 @@ import de.mm20.launcher2.currencies.CurrencyRepository
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.unitconverter.converters.AreaConverter
+import de.mm20.launcher2.unitconverter.converters.Converter
 import de.mm20.launcher2.unitconverter.converters.CurrencyConverter
 import de.mm20.launcher2.unitconverter.converters.DataConverter
 import de.mm20.launcher2.unitconverter.converters.LengthConverter
@@ -25,6 +26,7 @@ import org.koin.core.component.KoinComponent
 
 interface UnitConverterRepository {
     fun search(query: String): Flow<UnitConverter?>
+    fun availableConverters(includeCurrencies: Boolean) : List<Converter>
 }
 
 internal class UnitConverterRepositoryImpl(
@@ -53,6 +55,21 @@ internal class UnitConverterRepositoryImpl(
         }
     }
 
+    override fun availableConverters(includeCurrencies: Boolean) : List<Converter> {
+        val converters = mutableListOf(
+            MassConverter(context),
+            LengthConverter(context),
+            DataConverter(context),
+            TimeConverter(context),
+            VelocityConverter(context),
+            AreaConverter(context),
+            TemperatureConverter(context)
+        )
+        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
+
+        return converters
+    }
+
     private suspend fun queryUnitConverter(
         query: String,
         includeCurrencies: Boolean
@@ -73,17 +90,7 @@ internal class UnitConverterRepositoryImpl(
         val value = valueStr.toDoubleOrNull() ?: valueStr.replace(',', '.').toDoubleOrNull()
         ?: return null
 
-        val converters = mutableListOf(
-            MassConverter(context),
-            LengthConverter(context),
-            DataConverter(context),
-            TimeConverter(context),
-            VelocityConverter(context),
-            AreaConverter(context),
-            TemperatureConverter(context)
-        )
-
-        if (includeCurrencies) converters.add(CurrencyConverter(currencyRepository))
+        val converters = availableConverters(includeCurrencies)
 
         for (converter in converters) {
             if (!converter.isValidUnit(unitStr)) continue
