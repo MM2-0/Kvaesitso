@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.ui.base.ProvideClockTime
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
@@ -154,13 +155,15 @@ fun WatchFaceSelector(
                                 .padding(top = 24.dp, bottom = 8.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
-                            val currentPageStyles = remember {
-                                styles.filter { it.value == pageIndex }
-                            }
-                            if (currentPageStyles.containsKey(selected)) {
-                                Clock(selected, compact)
-                            } else {
-                                Clock(currentPageStyles.keys.first(), compact)
+                            ProvideClockTime {
+                                val currentPageStyles = remember {
+                                    styles.filter { it.value == pageIndex }
+                                }
+                                if (currentPageStyles.containsKey(selected)) {
+                                    Clock(selected, compact)
+                                } else {
+                                    Clock(currentPageStyles.keys.first(), compact)
+                                }
                             }
                         }
                     }
