@@ -1,0 +1,20 @@
+.material-symbols-rounded {
+  vertical-align: text-top;
+  font-size: 20px !important;
+  font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 20;
+}
+
+.home-screenshots {
+  display: grid;
+  max-width: 1200px;
+  margin: 4rem auto;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, 320px);
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  img {
+    width: 320px;
+    border-radius: 16px;
+  }
+}

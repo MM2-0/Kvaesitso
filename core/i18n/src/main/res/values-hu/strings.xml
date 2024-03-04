@@ -306,13 +306,13 @@
     <string name="preference_debug_cleanup_database">Az adatbázis tisztítása</string>
     <string name="preference_category_icons">Ikonok</string>
     <string name="preference_cards">Kártyák</string>
-    <string name="preference_cards_corner_radius">Sarok sugara</string>
+    <string name="preference_cards_corner_radius">A sarok sugara</string>
     <string name="weather_details_wind">Szél: %1$s</string>
     <string name="weather_details_precipitation">Csapadék: %1$s</string>
     <string name="weather_no_data">Az időjárás-adatok nem állnak rendelkezésre.</string>
     <string name="missing_permission_auto_location">A hely automatikus meghatározásához helyhozzáférés szükséges</string>
     <string name="missing_permission_contact_search_settings">A névjegyek kereséséhez, névjegy engedélyre van szükség</string>
-    <string name="preference_cards_stroke_width">Löketszélesség</string>
+    <string name="preference_cards_stroke_width">A keret szélessége</string>
     <string name="preference_cards_opacity">Átlátszatlanság</string>
     <string name="preference_cards_shape">Alakzat</string>
     <string name="preference_cards_shape_rounded">Kerekített</string>
@@ -373,8 +373,8 @@
     </plurals>
     <string name="plugin_state_setup_required">Először be kell állítanod ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
-    <string name="plugin_type_weather">Időjárás szolgáltató</string>
-    <string name="plugin_weather_provider_enable">Beállítás időjárás szolgáltatónak</string>
+    <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
+    <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzés szolgáltatónak</string>
     <string name="preference_clock_widget_alignment_bottom">Alulra</string>
     <string name="preference_clockwidget_battery_part_summary">Az akkumulátor aktuális töltöttségi szintjének megjelenítése, amikor az akkumulátor lemerült vagy töltődik</string>
     <string name="preference_clockwidget_alarm_part_summary">Azon riasztások megjelenítése, amelyek a következő 15 percen belül megszólalnak</string>
@@ -444,7 +444,7 @@
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók kinyitásakor</string>
     <string name="note_widget_link_file_summary">Szinkronizálja a widget tartalmát egy külső fájllal</string>
-    <string name="plugin_weather_provider_enabled">Jelenleg időjárás szolgáltatóként van beállítva</string>
+    <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés URL</string>
     <string name="preference_google_signin_summary">Bejelentkezés a Google Drive kereséséhez</string>
@@ -511,7 +511,7 @@
     <string name="preference_search_contacts">Névjegyek</string>
     <string name="preference_edit_button">Szerkesztés gomb</string>
     <string name="preference_favorites_edit_button_summary">Egy gomb megjelenítése a kedvencek átrendezéséhez</string>
-    <string name="preference_screen_icons">Rács &amp; ikonok</string>
+    <string name="preference_screen_icons">Rács és ikonok</string>
     <string name="no_account_google">Még nem csatlakoztatottál Google fiókot</string>
     <string name="connect_account">Fiók csatlakoztatása</string>
     <string name="backup_component_searchactions">Gyors művelet</string>
@@ -528,7 +528,7 @@
     <string name="apps_profile_work">Munka</string>
     <string name="preference_search_result_ordering_alphabetic">Abc szerint</string>
     <string name="preference_search_result_ordering_launch_count">Indítások száma</string>
-    <string name="widget_config_weather_integration_settings">Időjárás integráció beállításai</string>
+    <string name="widget_config_weather_integration_settings">Az időjárás integráció beállításai</string>
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
     <string name="widget_config_music_integration_settings">Médiavezérlő integráció beállításai</string>
     <string name="note_widget_link_file">Link a fájlhoz</string>
@@ -584,7 +584,7 @@
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
-    <string name="preference_screen_backup">Biztonsági mentés &amp; Visszaállítás</string>
+    <string name="preference_screen_backup">Biztonsági mentés és Visszaállítás</string>
     <string name="preference_screen_backup_summary">Kvaesitso adatok exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
     <string name="preference_backup_summary">A beállítások és az indítóadatok exportálása</string>
@@ -672,4 +672,10 @@
     <string name="preference_search_result_ordering_weighted">Használat</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabíl</string>
+    <string name="plugin_badge_official">Hivatalos</string>
+    <string name="preference_mdy_color_source_system">Rendszer</string>
+    <string name="preference_mdy_color_source">A dinamikus színek forrása</string>
+    <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
+    <string name="preference_category_advanced">Haladó</string>
+    <string name="preference_plugin_enable">A bővítmény engedélyezése</string>
 </resources>

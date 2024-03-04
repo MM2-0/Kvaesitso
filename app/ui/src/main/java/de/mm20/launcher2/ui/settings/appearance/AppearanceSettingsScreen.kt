@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.ColorScheme
 import de.mm20.launcher2.preferences.Font
 import de.mm20.launcher2.ui.R
@@ -26,6 +27,7 @@ fun AppearanceSettingsScreen() {
     val context = LocalContext.current
     val navController = LocalNavController.current
     val themeName by viewModel.themeName.collectAsStateWithLifecycle(null)
+    val compatModeColors by viewModel.compatModeColors.collectAsState()
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_appearance)) {
         item {
             PreferenceCategory {
@@ -76,6 +78,24 @@ fun AppearanceSettingsScreen() {
                         navController?.navigate("settings/appearance/cards")
                     }
                 )
+            }
+        }
+
+        if (isAtLeastApiLevel(31)) {
+            item {
+                PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
+                    ListPreference(
+                        title = stringResource(R.string.preference_mdy_color_source),
+                        items = listOf(
+                            stringResource(R.string.preference_mdy_color_source_system) to false,
+                            stringResource(R.string.preference_mdy_color_source_wallpaper) to true,
+                        ),
+                        value = compatModeColors,
+                        onValueChanged = {
+                            viewModel.setCompatModeColors(it)
+                        }
+                    )
+                }
             }
         }
     }

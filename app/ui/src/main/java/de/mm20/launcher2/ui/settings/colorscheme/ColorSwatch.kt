@@ -24,7 +24,6 @@ fun ColorSwatch(
     color: Color,
     modifier: Modifier = Modifier,
     selected: Boolean = false,
-    onClick: (() -> Unit)? = null
 ) {
     val darkTheme = LocalDarkTheme.current
     val iconColor = Color(Hct.fromInt(color.toArgb()).let {
@@ -48,7 +47,6 @@ fun ColorSwatch(
     Box(
         modifier = modifier
             .clip(CircleShape)
-            .clickable(enabled = onClick != null, onClick = onClick ?: {})
             .border(
                 if (selected) 4.dp else 1.dp,
                 borderColor,

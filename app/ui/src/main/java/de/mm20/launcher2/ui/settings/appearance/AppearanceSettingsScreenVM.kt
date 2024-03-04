@@ -33,6 +33,12 @@ class AppearanceSettingsScreenVM : ViewModel(), KoinComponent {
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
+    val compatModeColors = uiSettings.compatModeColors
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
+    fun setCompatModeColors(enabled: Boolean) {
+        uiSettings.setCompatModeColors(enabled)
+    }
 
     val font = uiSettings.font
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)

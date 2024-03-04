@@ -52,9 +52,10 @@ fun ColumnScope.SearchBarActions(
                     } else AssistChipDefaults.assistChipColors(),
                     border = if (it == highlightedAction) {
                         AssistChipDefaults.assistChipBorder(
+                            true,
                             borderColor = MaterialTheme.colorScheme.secondary,
                         )
-                    } else AssistChipDefaults.assistChipBorder(),
+                    } else AssistChipDefaults.assistChipBorder(true),
                     onClick = {
                         it.start(context)
                     },

@@ -447,12 +447,16 @@
     <string name="preference_colors_auto_generate">Generate from primary color</string>
     <string name="preference_category_custom_colors_light">Light color scheme</string>
     <string name="preference_category_custom_colors_dark">Dark color scheme</string>
+    <string name="preference_mdy_color_source">Source for dynamic colors</string>
+    <string name="preference_mdy_color_source_system">System</string>
+    <string name="preference_mdy_color_source_wallpaper">Wallpaper</string>
     <string name="preference_font">Font</string>
     <string name="preference_font_system">System default</string>
     <string name="preference_screen_about">About</string>
     <string name="preference_version">Version</string>
     <string name="preference_category_links">Links</string>
     <string name="preference_category_licenses">Open source licenses</string>
+    <string name="preference_category_advanced">Advanced</string>
     <!-- Open website of an open source library -->
     <string name="open_webpage">Open website</string>
     <string name="preference_screen_about_summary">App and license information</string>
@@ -856,11 +860,13 @@
     <string name="shortcut_label_unavailable">Unavailable</string>
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
+    <string name="preference_plugin_enable">Enable plugin</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
     <string name="plugin_state_setup_required">You need to setup this plugin first</string>
     <string name="plugin_action_setup">Set up</string>
     <string name="plugin_type_filesearch">File search</string>
     <string name="plugin_type_weather">Weather provider</string>
+    <string name="plugin_badge_official">Official</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
 </resources>

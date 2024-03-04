@@ -48,6 +48,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.sendWithBackgroundPermission
 import de.mm20.launcher2.plugin.PluginState
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.ui.R
@@ -187,7 +188,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         .padding(4.dp)
                                 ) {
                                     Text(
-                                        "Official",
+                                        stringResource(R.string.plugin_badge_official),
                                         modifier = Modifier.padding(horizontal = 4.dp),
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.onSecondary,
@@ -252,8 +253,8 @@ fun PluginSettingsScreen(pluginId: String) {
                                 )
                                 Text(
                                     when (type) {
-                                        PluginType.FileSearch -> "File search"
-                                        PluginType.Weather -> "Weather provider"
+                                        PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
+                                        PluginType.Weather -> stringResource(R.string.plugin_type_weather)
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,
@@ -280,7 +281,7 @@ fun PluginSettingsScreen(pluginId: String) {
                 SwitchPreference(
                     enabled = pluginPackage != null && hasPermission != null,
                     iconPadding = false,
-                    title = "Enable plugin",
+                    title = stringResource(R.string.preference_plugin_enable),
                     value = pluginPackage?.enabled == true && hasPermission == true,
                     onValueChanged = {
                         if (hasPermission == true) {
@@ -312,12 +313,12 @@ fun PluginSettingsScreen(pluginId: String) {
                                     primaryAction = {
                                         TextButton(onClick = {
                                             try {
-                                                state.setupActivity.send()
+                                                state.setupActivity.sendWithBackgroundPermission()
                                             } catch (e: PendingIntent.CanceledException) {
                                                 CrashReporter.logException(e)
                                             }
                                         }) {
-                                            Text("Set up")
+                                            Text(stringResource(R.string.plugin_action_setup))
                                         }
                                     }
                                 )
@@ -362,7 +363,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     primaryAction = {
                                         TextButton(onClick = {
                                             try {
-                                                state.setupActivity.send()
+                                                state.setupActivity.sendWithBackgroundPermission()
                                             } catch (e: PendingIntent.CanceledException) {
                                                 CrashReporter.logException(e)
                                             }
@@ -387,6 +388,9 @@ fun PluginSettingsScreen(pluginId: String) {
                                     stringResource(R.string.plugin_weather_provider_enable)
                                 } else {
                                     stringResource(R.string.plugin_weather_provider_enabled)
+                                },
+                                onClick = {
+                                    viewModel.setWeatherProvider(plugin.plugin.authority)
                                 }
                             )
                         }

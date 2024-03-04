@@ -6,7 +6,10 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-    paths: docs/**/*
+    paths:
+      - docs/**/*
+      - plugins/sdk/**/*
+      - core/shared/**/*
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -32,19 +35,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Use Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - run: gradle dokkaHtmlMultiModule
+        working-directory: .
+      - run: mv build/dokka/htmlMultiModule docs/public/reference
+        working-directory: .
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
         working-directory: docs
-      - run: npm run build --if-present
+      - run: npm run docs:build
         working-directory: docs
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          # Upload entire repository
-          path: 'docs/build'
+          path: 'docs/.vitepress/dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1

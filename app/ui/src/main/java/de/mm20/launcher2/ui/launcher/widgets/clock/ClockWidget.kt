@@ -297,7 +297,6 @@ fun ConfigureClockWidgetSheet(
     val showSeconds by viewModel.showSeconds.collectAsState()
     val useAccentColor by viewModel.useThemeColor.collectAsState()
 
-    val dock by viewModel.dock.collectAsState()
     val parts by viewModel.parts.collectAsState()
 
     BottomSheetDialog(onDismissRequest = onDismiss) {
@@ -507,23 +506,6 @@ fun ConfigureClockWidgetSheet(
                                 })
                         }
                     }
-                }
-            }
-            OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clockwidget_favorites_part),
-                        summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
-                        icon = Icons.Rounded.Star,
-                        value = dock == true,
-                        onValueChanged = {
-                            viewModel.setFavoritesPart(it)
-                        }
-                    )
                 }
             }
             Text(

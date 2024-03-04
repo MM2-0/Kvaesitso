@@ -265,4 +265,5 @@
         <item quantity="one">timme</item>
         <item quantity="other">timmar</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
 </resources>

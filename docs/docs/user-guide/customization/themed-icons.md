@@ -7,13 +7,10 @@ Themed Icons is a feature that adapt app icons to the launcher's color scheme:
 
 Themed icons can be enabled for supported apps in Settings > Grid & icons > Themed Icons.
 
-:::note
-
-If you are an app developer, you can support themed icons by adding a `<monochrome>` drawable to
-your app icon. For more information refer to
-[the official documentation](https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#add_your_adaptive_icon_to_your_app).
-
-:::
+> [!NOTE]
+> If you are an app developer, you can support themed icons by adding a `<monochrome>` drawable to
+> your app icon. For more information refer to
+> [the official documentation](https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#add_your_adaptive_icon_to_your_app).
 
 While themed icons were originally introduced in Android 13, support has been backported to Android
 8.0-12.
@@ -30,21 +27,19 @@ that pack using the toggle button that appears in the icon pack preference:
 
 ![Themed icon pack](/img/themed-icon-pack.png)
 
-:::note
-
-If you are an icon pack developer, you can indicate that your icon pack supports themed icons by
-adding
-the following intent filter:
-
-```xml
-
-<intent-filter>
-    <action android:name="app.lawnchair.icons.THEMED_ICON" />
-    <category android:name="android.intent.category.DEFAULT" />
-</intent-filter>
-```
-
-:::
+> [!NOTE]
+> If you are an icon pack developer, you can indicate that your icon pack supports themed icons by
+> adding
+> the following intent filter:
+>
+> ```xml
+> <intent-filter>
+>
+>    <action android:name="app.lawnchair.icons.THEMED_ICON" />
+>    <category android:name="android.intent.category.DEFAULT" />
+>
+> </intent-filter>
+> ```
 
 ## Auto generated themed icons
 

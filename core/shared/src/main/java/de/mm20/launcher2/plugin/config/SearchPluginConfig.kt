@@ -9,24 +9,4 @@ data class SearchPluginConfig(
      * @see [StorageStrategy]
      */
     val storageStrategy: StorageStrategy = StorageStrategy.StoreCopy,
-) {
-    fun toBundle(): Bundle {
-        return Bundle().apply {
-            putString("storageStrategy", storageStrategy.name)
-        }
-    }
-
-    companion object {
-        operator fun invoke(bundle: Bundle): SearchPluginConfig? {
-            return SearchPluginConfig(
-                storageStrategy = StorageStrategy.valueOfOrElse(
-                    bundle.getString(
-                        "storageStrategy",
-                        StorageStrategy.StoreCopy.name
-                    ),
-                    StorageStrategy.StoreCopy,
-                )
-            )
-        }
-    }
-}
+)
