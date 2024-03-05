@@ -1,36 +1,47 @@
 package de.mm20.launcher2.ui.settings.unitconverter
 
 import android.icu.util.Currency
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
-import de.mm20.launcher2.unitconverter.MeasureUnit
-import de.mm20.launcher2.unitconverter.UnitConverterRepository
+import de.mm20.launcher2.ui.launcher.search.unitconverter.getIcon
 import de.mm20.launcher2.unitconverter.converters.CurrencyConverter
 import de.mm20.launcher2.unitconverter.converters.SimpleFactorConverter
 import de.mm20.launcher2.unitconverter.converters.TemperatureConverter
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.inject
-import kotlin.coroutines.CoroutineContext
 
 @Composable
 fun SupportedUnitsScreen() {
-    val scope = rememberCoroutineScope()
     val settings: UnitConverterSettings by inject()
-    val repository: UnitConverterRepository by inject()
+    val viewModel: SupportedUnitsScreenVM = viewModel()
+    val loading by viewModel.loading
 
-    val currencies = settings.currencies.collectAsState(initial = false).value
+    val currenciesEnabled by settings.currencies.collectAsState(initial = false)
 
-    PreferenceScreen(title = "Supported units") {
-        for (converter in repository.availableConverters(currencies)) {
+    LaunchedEffect(currenciesEnabled) {
+        viewModel.loadCurrencies()
+    }
+
+    PreferenceScreen(title = stringResource(R.string.preference_search_supportedunits)) {
+        if (loading) {
+            item {
+                LinearProgressIndicator(
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+        for (converter in viewModel.convertersList.value) {
             item {
                 val units = buildString {
                     when (converter) {
@@ -51,23 +62,20 @@ fun SupportedUnitsScreen() {
 
                         }
                         is CurrencyConverter -> {
-                            scope.launch {
-                                val abbreviations = converter.getAbbreviations()
-                                abbreviations.forEachIndexed { index, unit ->
-                                    if (index > 0) append(", ")
-                                    append(Currency.getInstance(unit)?.displayName ?: unit)
-                                    append(" ($unit)")
-                                }
+                            viewModel.currenciesList.value.forEachIndexed { index, currency ->
+                                if (index > 0) append(", ")
+                                append(Currency.getInstance(currency)?.displayName ?: currency)
+                                append(" ($currency)")
                             }
                         }
                     }
                 }
                 Preference(
                     title = stringResource(converter.dimension.resource),
+                    icon = converter.dimension.getIcon(),
                     summary = units
                 )
             }
         }
-
     }
 }
