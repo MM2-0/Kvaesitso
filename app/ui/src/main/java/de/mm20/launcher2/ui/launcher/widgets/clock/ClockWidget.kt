@@ -353,13 +353,15 @@ fun ConfigureClockWidgetSheet(
             }
 
             if (color != null && compact != null) {
-                WatchFaceSelector(
-                    compact = compact!!,
-                    colors = color!!,
-                    selected = style,
-                    onSelect = {
-                        viewModel.setClockStyle(it)
-                    })
+                ProvideClockTime {
+                    WatchFaceSelector(
+                        compact = compact!!,
+                        colors = color!!,
+                        selected = style,
+                        onSelect = {
+                            viewModel.setClockStyle(it)
+                        })
+                }
             }
 
             SingleChoiceSegmentedButtonRow(

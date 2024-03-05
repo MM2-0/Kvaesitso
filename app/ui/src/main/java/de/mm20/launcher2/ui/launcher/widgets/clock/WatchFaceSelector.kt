@@ -155,15 +155,13 @@ fun WatchFaceSelector(
                                 .padding(top = 24.dp, bottom = 8.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
-                            ProvideClockTime {
-                                val currentPageStyles = remember {
-                                    styles.filter { it.value == pageIndex }
-                                }
-                                if (currentPageStyles.containsKey(selected)) {
-                                    Clock(selected, compact)
-                                } else {
-                                    Clock(currentPageStyles.keys.first(), compact)
-                                }
+                            val currentPageStyles = remember {
+                                styles.filter { it.value == pageIndex }
+                            }
+                            if (currentPageStyles.containsKey(selected)) {
+                                Clock(selected, compact)
+                            } else {
+                                Clock(currentPageStyles.keys.first(), compact)
                             }
                         }
                     }

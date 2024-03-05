@@ -30,11 +30,12 @@ fun ProvideClockTime(content: @Composable () -> Unit) {
     val context = LocalContext.current
     val clockSettings: ClockWidgetSettings by inject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
+    val isCompact by clockSettings.compact.collectAsState(initial = false)
 
     var time by remember { mutableStateOf(System.currentTimeMillis()) }
 
     val lifecycleOwner = LocalLifecycleOwner.current
-    LaunchedEffect(showSeconds) {
+    LaunchedEffect(showSeconds, isCompact) {
         time = System.currentTimeMillis()
 
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -52,7 +53,7 @@ fun ProvideClockTime(content: @Composable () -> Unit) {
                 }
             }
 
-            if (showSeconds) {
+            if (!isCompact && showSeconds) {
                 context.registerReceiver(receiver, IntentFilter().apply {
                     addAction(Intent.ACTION_TIME_CHANGED)
                 })
