@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.drawText
@@ -32,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toOffset
 import de.mm20.launcher2.ktx.TWO_PI
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import palettes.TonalPalette
 import java.time.Instant
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -110,27 +112,18 @@ fun OrbitClock(
         label = "hoursAnimation"
     )
 
-    val color = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
-            if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
-            else MaterialTheme.colorScheme.primaryContainer
-        } else {
-            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primaryContainer
-            else MaterialTheme.colorScheme.primary
-        }
+    val fgTone = if (LocalContentColor.current == Color.White) 90 else 10
+    val bgTone = if (LocalContentColor.current == Color.White) 30 else 90
+
+    val background = if (useThemeColor) {
+        Color(TonalPalette.fromInt(MaterialTheme.colorScheme.primaryContainer.toArgb()).tone(bgTone))
     }
     else {
         LocalContentColor.current
     }
 
-    val secondaryColor = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
-            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primaryContainer
-            else MaterialTheme.colorScheme.onPrimaryContainer
-        } else {
-            if (LocalDarkTheme.current) MaterialTheme.colorScheme.primary
-            else MaterialTheme.colorScheme.primaryContainer
-        }
+    val foreground = if (useThemeColor) {
+        Color(TonalPalette.fromInt(MaterialTheme.colorScheme.onPrimaryContainer.toArgb()).tone(fgTone))
     }
     else {
         LocalContentColor.current.invert()
@@ -237,13 +230,26 @@ fun OrbitClock(
 
             drawText(
                 textMResult,
-                color = secondaryColor.copy(alpha = 0.65f),
+                color = Color.Black,
+                topLeft = size.center - textMResult.size.center.toOffset() + mPos,
+                blendMode = BlendMode.DstOut
+            )
+            drawText(
+                textHResult,
+                color = Color.Black,
+                topLeft = size.center - textHResult.size.center.toOffset() + mPos,
+                blendMode = BlendMode.DstOut
+            )
+
+            drawText(
+                textMResult,
+                color = foreground,
                 topLeft = size.center - textMResult.size.center.toOffset() + mPos,
                 blendMode = BlendMode.Overlay
             )
             drawText(
                 textHResult,
-                color = secondaryColor.copy(alpha = 0.65f),
+                color = foreground,
                 topLeft = size.center - textHResult.size.center.toOffset() + hPos,
                 blendMode = BlendMode.Overlay
             )
@@ -251,20 +257,20 @@ fun OrbitClock(
 
         if (verticalLayout && showSeconds) {
             drawCircle(
-                color = color,
+                color = background,
                 radius = sSize,
                 center = size.center + sPos,
                 blendMode = BlendMode.Overlay
             )
         }
         drawCircle(
-            color = color,
+            color = background,
             radius = mSize,
             center = size.center + mPos,
             blendMode = BlendMode.Overlay
         )
         drawCircle(
-            color = color,
+            color = background,
             radius = hSize,
             center = size.center + hPos,
             blendMode = BlendMode.Overlay
