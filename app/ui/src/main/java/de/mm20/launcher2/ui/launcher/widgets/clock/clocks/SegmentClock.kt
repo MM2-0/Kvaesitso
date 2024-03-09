@@ -1,21 +1,18 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateFloat
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.rememberInfiniteTransition
+import android.os.Handler
+import android.os.Looper
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -25,8 +22,12 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import kotlinx.coroutines.awaitCancellation
 import java.time.Instant
 import java.time.ZoneId
 
@@ -41,6 +42,7 @@ fun SegmentClock(
     val hour = parsed.hour
     val minute = parsed.minute
     val second = parsed.second
+    val flick = remember { mutableStateOf(time % 1000 <= 500) }
 
     val enabled = if (useThemeColor) {
         if (LocalContentColor.current == Color.White) {
@@ -55,21 +57,31 @@ fun SegmentClock(
         LocalContentColor.current
     }
     val disabled = LocalContentColor.current
-    val infiniteTransition = rememberInfiniteTransition(label = "flickerEverySecond")
-    val flicker by infiniteTransition.animateFloat(
-        label = "flick",
-        initialValue = 1f,
-        targetValue = 0.05f,
-        animationSpec = infiniteRepeatable(
-            animation = keyframes {
-                durationMillis = 1000
-                1f at 0
-                1f at 500
-                0.05f at 510
-                0.05f at 1000
-            },
-            repeatMode = RepeatMode.Restart)
-    )
+
+    val owner = LocalLifecycleOwner.current
+    LaunchedEffect(null) {
+        owner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            val handler = Handler(Looper.myLooper()!!)
+
+            val callback = object : Runnable {
+                override fun run() {
+                    val currentTime = System.currentTimeMillis()
+                    flick.value = currentTime % 1000 <= 500
+                    handler.postDelayed(this, (500 - (currentTime % 500)))
+                }
+            }
+
+            val currentTime = System.currentTimeMillis()
+            handler.postDelayed(callback, (500 - (currentTime % 500)))
+
+            try {
+                awaitCancellation()
+            }
+            finally {
+                handler.removeCallbacks(callback)
+            }
+        }
+    }
 
     val allSegmentVectors = remember(compact, enabled, disabled) {
         val vectors = mutableListOf<ImageVector>()
@@ -97,7 +109,7 @@ fun SegmentClock(
         Image(allSegmentVectors[hour % 10], null)
 
         Separator(compact)
-        Box(Modifier.alpha(flicker)) { Image(separator, null) }
+        Box(Modifier.alpha(if (flick.value) 1f else 0.05f)) { Image(separator, null) }
         Separator(compact)
 
         Image(allSegmentVectors[minute / 10], null)
@@ -106,7 +118,7 @@ fun SegmentClock(
 
         if (!compact && showSeconds) {
             Separator(false)
-            Box(Modifier.alpha(flicker)) { Image(separator, null) }
+            Box(Modifier.alpha(if (flick.value) 1f else 0.05f)) { Image(separator, null) }
             Separator(false)
 
             Image(allSegmentVectors[second / 10], null)
