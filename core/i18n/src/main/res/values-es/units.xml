@@ -50,19 +50,19 @@
         <item quantity="other">yardas</item>
     </plurals>
     <plurals name="unit_kilometer">
-        <item quantity="one">kilometro</item>
-        <item quantity="many">kilometros</item>
-        <item quantity="other">kilometros</item>
+        <item quantity="one">kilómetro</item>
+        <item quantity="many">kilómetros</item>
+        <item quantity="other">kilómetros</item>
     </plurals>
     <plurals name="unit_centimeter">
-        <item quantity="one">centimetro</item>
+        <item quantity="one">centímetro</item>
         <item quantity="many">centímetros</item>
         <item quantity="other">centímetros</item>
     </plurals>
     <plurals name="unit_millimeter">
-        <item quantity="one">milimetro</item>
-        <item quantity="many">milimetros</item>
-        <item quantity="other">milimetros</item>
+        <item quantity="one">milímetro</item>
+        <item quantity="many">milímetros</item>
+        <item quantity="other">milímetros</item>
     </plurals>
     <plurals name="unit_inch">
         <item quantity="one">pulgada</item>
@@ -195,26 +195,26 @@
     </plurals>
     <string name="unit_kilobit_symbol">kb</string>
     <string name="unit_bit_symbol">bit</string>
-    <string name="unit_megabit_symbol">MB</string>
-    <string name="unit_gigabit_symbol">GB</string>
-    <string name="unit_terabit_symbol">TB</string>
+    <string name="unit_megabit_symbol">Mb</string>
+    <string name="unit_gigabit_symbol">Gb</string>
+    <string name="unit_terabit_symbol">Tb</string>
     <string name="unit_meter_per_second_symbol">m/s</string>
     <string name="unit_kilometer_per_hour_symbol">km/h</string>
     <string name="unit_mile_per_hour_symbol">mph</string>
     <string name="unit_knot_symbol">kn</string>
     <string name="unit_kilogram_symbol">kg</string>
-    <string name="unit_gram_symbol">gr</string>
+    <string name="unit_gram_symbol">g</string>
     <string name="unit_metric_ton_symbol">t</string>
     <string name="unit_long_ton_symbol">tn.l.</string>
     <string name="unit_stone_symbol">st.</string>
-    <string name="unit_pound_symbol">lb.</string>
-    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_pound_symbol">lb</string>
+    <string name="unit_ounce_symbol">oz</string>
     <string name="unit_short_ton_symbol">tn. sh.</string>
     <string name="unit_degree_celsius_symbol">°C</string>
     <plurals name="unit_degree_celsius">
-        <item quantity="one">grado Celcius</item>
-        <item quantity="many">grados Celcius</item>
-        <item quantity="other">grados Celcius</item>
+        <item quantity="one">grado Celsius</item>
+        <item quantity="many">grados Celsius</item>
+        <item quantity="other">grados Celsius</item>
     </plurals>
     <string name="unit_degree_fahrenheit_symbol">°F</string>
     <plurals name="unit_degree_fahrenheit">
@@ -222,7 +222,7 @@
         <item quantity="many">grados Fahrenheit</item>
         <item quantity="other">grados Fahrenheit</item>
     </plurals>
-    <string name="unit_kelvin_symbol">°K</string>
+    <string name="unit_kelvin_symbol">K</string>
     <plurals name="unit_kelvin">
         <item quantity="one">grado Kelvin</item>
         <item quantity="many">grados Kelvin</item>
@@ -317,5 +317,11 @@
         <item quantity="one">metro por segundo</item>
         <item quantity="many">metros por segundo</item>
         <item quantity="other">metros por segundo</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decímetro</item>
+        <item quantity="many">decímetros</item>
+        <item quantity="other">decímetros</item>
     </plurals>
 </resources>

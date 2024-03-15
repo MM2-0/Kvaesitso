@@ -85,7 +85,7 @@
     <string name="shortcut_summary">От %1$s</string>
     <string name="installation_in_progress">Выполняется установка… (%1$s)</string>
     <string name="easter_egg_1">Здесь нет пасхалок, если только вы не принесли их с собой.</string>
-    <string name="easter_egg_text">Ну, ты нашел меня. Поздравляю. Оно того стоило\?</string>
+    <string name="easter_egg_text">Ладно, ты нашел меня. Поздравляю. Оно того стоило?</string>
     <string name="easter_egg_2">Пожалуйста, прекрати, ты зря тратишь время</string>
     <string name="close">Закрыть</string>
     <string name="turn_off">Выключить</string>
@@ -208,7 +208,7 @@
     <string name="alert_delete_directory">Папка %1$s и всё её содержимое будут удалены навсегда. Продолжить\?</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
-    <string name="easter_egg_3">Повторяться не буду: здесь совершенно точно нет никаких пасхалок</string>
+    <string name="easter_egg_3">Повторяться не буду: здесь нет и никогда не было пасхалок</string>
     <string name="menu_item_edit_favs">Изменить избранное</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Закреплены – автоматически отсортированы</string>
     <string name="owncloud_server_invalid_url">Этот адрес не ведёт к действующей сборке Owncloud</string>
@@ -328,7 +328,7 @@
     <string name="preference_category_system_bars">Системные панели</string>
     <string name="websearch_dialog_query_encoding">Кодировка запроса</string>
     <string name="alert_delete_shortcut">Ярлык %1$s будет удален навсегда. Продолжить\?</string>
-    <string name="menu_customize">Настроить</string>
+    <string name="menu_customize">Персонализировать</string>
     <string name="menu_remove">Удалить</string>
     <string name="websearch_dialog_advanced">Расширенный</string>
     <string name="websearch_dialog_query_encoding_form">application/x-www-form-urlencoded</string>
@@ -652,8 +652,8 @@
     <string name="shortcut_unavailable_description">Этот ярлык недоступен, потому что %1$s не является главным экраном по умолчанию</string>
     <string name="plugin_type_weather">Провайдер погоды</string>
     <string name="plugin_weather_provider_enabled">В настоящее время назначен провайдером погоды</string>
-    <string name="plugin_state_setup_required">Сначала вам нужно установить этот плагин</string>
-    <string name="plugin_action_setup">Установить</string>
+    <string name="plugin_state_setup_required">Сначала вам нужно настроить этот плагин</string>
+    <string name="plugin_action_setup">Настроить</string>
     <string name="preference_clock_widget_alignment_top">Вверху</string>
     <string name="plugin_type_filesearch">Найти файлы</string>
     <string name="preference_clock_widget_alignment_center">По центру</string>
@@ -683,4 +683,9 @@
     <string name="import_theme_apply">Применить тему</string>
     <string name="shortcut_label_unavailable">Недоступно</string>
     <string name="plugin_badge_official">Официальный</string>
+    <string name="preference_mdy_color_source_wallpaper">Обои</string>
+    <string name="preference_mdy_color_source_system">Система</string>
+    <string name="preference_mdy_color_source">Источник динамических цветов</string>
+    <string name="preference_plugin_enable">Включить плагин</string>
+    <string name="preference_category_advanced">Прочее</string>
 </resources>
