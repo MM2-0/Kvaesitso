@@ -2,7 +2,7 @@ package de.mm20.launcher2.ui.settings.locations
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.mm20.launcher2.openstreetmaps.settings.LocationSearchSettings
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
