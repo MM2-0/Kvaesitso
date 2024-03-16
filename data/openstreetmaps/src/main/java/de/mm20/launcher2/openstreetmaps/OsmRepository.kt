@@ -181,6 +181,7 @@ internal class OsmRepository(
                                         } + luckyFirst
                                 }
                             }
+                            .take(7)
                             .toImmutableList()
                     )
                 }
