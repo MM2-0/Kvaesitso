@@ -178,7 +178,7 @@ fun SearchSettingsScreen() {
                 PreferenceWithSwitch(
                     title= stringResource(R.string.preference_search_locations),
                     summary = stringResource(R.string.preference_search_locations_summary),
-                    icon = Icons.Rounded.Map,
+                    icon = Icons.Rounded.Place,
                     switchValue = locations == true,
                     onSwitchChanged = {
                         viewModel.setLocations(it)

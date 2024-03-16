@@ -2,8 +2,6 @@ package de.mm20.launcher2.ui.settings.locations
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ZoomOutMap
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,19 +25,33 @@ import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 @Composable
 fun LocationsSettingsScreen() {
     val viewModel: LocationsSettingsScreenVM = viewModel()
+
+    val locations by viewModel.locations.collectAsState()
+    val imperialUnits by viewModel.imperialUnits.collectAsState()
+    val hideUncategorized by viewModel.hideUncategorized.collectAsState()
+    val radius by viewModel.radius.collectAsState()
+    val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
+    val showMap by viewModel.showMap.collectAsState()
+    val themeMap by viewModel.themeMap.collectAsState()
+    val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
+    val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
+
+
     PreferenceScreen(title = stringResource(R.string.preference_search_locations)) {
         item {
-            val locations by viewModel.locations.collectAsState()
-            SwitchPreference(
-                title = stringResource(R.string.preference_search_locations),
-                summary = stringResource(R.string.preference_search_locations_summary),
-                value = locations == true,
-                onValueChanged = {
-                    viewModel.setLocations(it)
-                }
-            )
             PreferenceCategory {
-                val imperialUnits by viewModel.imperialUnits.collectAsState()
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations),
+                    summary = stringResource(R.string.preference_search_locations_summary),
+                    value = locations == true,
+                    onValueChanged = {
+                        viewModel.setLocations(it)
+                    }
+                )
+            }
+        }
+        item {
+            PreferenceCategory {
                 ListPreference(
                     title = stringResource(R.string.length_unit),
                     items = listOf(
@@ -49,13 +61,11 @@ fun LocationsSettingsScreen() {
                     enabled = locations == true,
                     value = imperialUnits,
                     onValueChanged = {
-                        if (it != null) viewModel.setImperialUnits(it)
+                        viewModel.setImperialUnits(it)
                     }
                 )
-                val radius by viewModel.radius.collectAsState()
                 SliderPreference(
                     title = stringResource(R.string.preference_search_locations_radius),
-                    icon = Icons.Rounded.ZoomOutMap,
                     value = radius,
                     min = 500,
                     max = 10000,
@@ -69,13 +79,14 @@ fun LocationsSettingsScreen() {
                             modifier = Modifier
                                 .width(64.dp)
                                 .padding(start = 16.dp),
-                            text = it.toFloat().metersToLocalizedString(LocalContext.current, imperialUnits),
+                            text = it.toFloat()
+                                .metersToLocalizedString(LocalContext.current, imperialUnits),
                             style = MaterialTheme.typography.titleSmall
                         )
-                        it.toFloat().metersToLocalizedString(LocalContext.current, imperialUnits)
+                        it.toFloat()
+                            .metersToLocalizedString(LocalContext.current, imperialUnits)
                     }
                 )
-                val hideUncategorized by viewModel.hideUncategorized.collectAsState()
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_locations_hide_uncategorized),
                     summary = stringResource(R.string.preference_search_locations_hide_uncategorized_summary),
@@ -85,7 +96,42 @@ fun LocationsSettingsScreen() {
                         viewModel.setHideUncategorized(it)
                     }
                 )
-                val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
+            }
+        }
+        item {
+            PreferenceCategory {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations_show_map),
+                    summary = stringResource(R.string.preference_search_locations_show_map_summary),
+                    enabled = locations == true,
+                    value = showMap == true,
+                    onValueChanged = {
+                        viewModel.setShowMap(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations_theme_map),
+                    summary = stringResource(R.string.preference_search_locations_theme_map_summary),
+                    value = themeMap == true,
+                    enabled = locations == true && showMap == true,
+                    onValueChanged = {
+                        viewModel.setThemeMap(it)
+                    }
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_locations_show_position_on_map),
+                    summary = stringResource(R.string.preference_search_locations_show_position_on_map_summary),
+                    value = showPositionOnMap == true,
+                    enabled = locations == true && showMap == true,
+                    onValueChanged = {
+                        viewModel.setShowPositionOnMap(it)
+                    }
+                )
+            }
+
+        }
+        item {
+            PreferenceCategory(stringResource(R.string.preference_category_advanced)) {
                 TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_overpass_url),
                     value = customOverpassUrl,
@@ -96,39 +142,6 @@ fun LocationsSettingsScreen() {
                         viewModel.setCustomOverpassUrl(it)
                     }
                 )
-            }
-            PreferenceCategory {
-                val showMap by viewModel.showMap.collectAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_show_map),
-                    summary = stringResource(R.string.preference_search_locations_show_map_summary),
-                    enabled = locations == true,
-                    value = showMap == true,
-                    onValueChanged = {
-                        viewModel.setShowMap(it)
-                    }
-                )
-                val themeMap by viewModel.themeMap.collectAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_theme_map),
-                    summary = stringResource(R.string.preference_search_locations_theme_map_summary),
-                    value = themeMap == true,
-                    enabled = locations == true && showMap == true,
-                    onValueChanged = {
-                        viewModel.setThemeMap(it)
-                    }
-                )
-                val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_show_position_on_map),
-                    summary = stringResource(R.string.preference_search_locations_show_position_on_map_summary),
-                    value = showPositionOnMap == true,
-                    enabled = locations == true && showMap == true,
-                    onValueChanged = {
-                        viewModel.setShowPositionOnMap(it)
-                    }
-                )
-                val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
                 TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_tile_server_url),
                     value = customTileServerUrl ?: "",
