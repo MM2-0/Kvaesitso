@@ -181,6 +181,9 @@ internal class OsmRepository(
                                         } + luckyFirst
                                 }
                             }
+                            .sortedBy {
+                                it.distanceTo(userLocation)
+                            }
                             .take(7)
                             .toImmutableList()
                     )
