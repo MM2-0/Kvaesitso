@@ -160,6 +160,7 @@ internal class OsmRepository(
                 if (result.isNotEmpty()) {
                     send(
                         result
+                            .asSequence()
                             .filter {
                                 !settings.hideUncategorized || (it.category != null && it.category != LocationCategory.OTHER)
                             }
@@ -185,6 +186,7 @@ internal class OsmRepository(
                                 it.distanceTo(userLocation)
                             }
                             .take(7)
+                            .toList()
                             .toImmutableList()
                     )
                 }
