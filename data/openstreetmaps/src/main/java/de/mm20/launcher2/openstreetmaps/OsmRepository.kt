@@ -186,7 +186,6 @@ internal class OsmRepository(
                                 it.distanceTo(userLocation)
                             }
                             .take(7)
-                            .toList()
                             .toImmutableList()
                     )
                 }
