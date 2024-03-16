@@ -1,2 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <plurals name="unit_sqmeter">
+        <item quantity="one">metro quadrado</item>
+        <item quantity="many">metros quadrados</item>
+        <item quantity="other">metros quadrados</item>
+    </plurals>
+    <string name="unit_meter_symbol">m</string>
+    <string name="unit_kilometer_symbol">km</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <string name="unit_centimeter_symbol">cm</string>
+    <plurals name="unit_kilometer">
+        <item quantity="one">quilómetro</item>
+        <item quantity="many">quilómetros</item>
+        <item quantity="other">quilómetros</item>
+    </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decímetro</item>
+        <item quantity="many">decímetros</item>
+        <item quantity="other">decímetros</item>
+    </plurals>
+    <plurals name="unit_millimeter">
+        <item quantity="one">milímetro</item>
+        <item quantity="many">milímetros</item>
+        <item quantity="other">milímetros</item>
+    </plurals>
+    <plurals name="unit_inch">
+        <item quantity="one">polegada</item>
+        <item quantity="many">polegadas</item>
+        <item quantity="other">polegadas</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">mm</string>
+    <string name="unit_inch_symbol">pol</string>
+    <string name="unit_foot_symbol">p</string>
+    <string name="unit_yard_symbol">jd</string>
+    <string name="unit_mile_symbol">mi</string>
+    <string name="unit_nautic_mile_symbol">nm</string>
+    <string name="unit_sqmeter_symbol">m²</string>
+    <string name="unit_sqkilometer_symbol">km²</string>
+    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <plurals name="unit_mile">
+        <item quantity="one">milha</item>
+        <item quantity="many">milhas</item>
+        <item quantity="other">milhas</item>
+    </plurals>
+    <plurals name="unit_sqkilometer">
+        <item quantity="one">quilómetro quadrado</item>
+        <item quantity="many">quilómetros quadrados</item>
+        <item quantity="other">quilómetro quadrado</item>
+    </plurals>
+    <plurals name="unit_sqcentimeter">
+        <item quantity="one">centímetro quadrado</item>
+        <item quantity="many">centímetros quadrados</item>
+        <item quantity="other">centímetros quadrados</item>
+    </plurals>
+    <plurals name="unit_meter">
+        <item quantity="one">metro</item>
+        <item quantity="many">metros</item>
+        <item quantity="other">metros</item>
+    </plurals>
+    <plurals name="unit_centimeter">
+        <item quantity="one">centímetro</item>
+        <item quantity="many">centímetros</item>
+        <item quantity="other">centímetros</item>
+    </plurals>
+    <plurals name="unit_foot">
+        <item quantity="one">pé</item>
+        <item quantity="many">pés</item>
+        <item quantity="other">pés</item>
+    </plurals>
+    <plurals name="unit_yard">
+        <item quantity="one">jarda</item>
+        <item quantity="many">jardas</item>
+        <item quantity="other">jardas</item>
+    </plurals>
+    <plurals name="unit_nautic_mile">
+        <item quantity="one">milha náutica</item>
+        <item quantity="many">milhas náuticas</item>
+        <item quantity="other">milhas náuticas</item>
+    </plurals>
+</resources>

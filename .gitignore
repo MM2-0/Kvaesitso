@@ -303,3 +303,4 @@ fabric.properties
 
 */**/output-metadata.json
 .idea/deploymentTargetDropDown.xml
+.idea/copilot
