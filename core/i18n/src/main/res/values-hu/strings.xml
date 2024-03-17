@@ -57,7 +57,7 @@
     <string name="file_type_generic">%1$s fájl</string>
     <string name="alert_delete_file">A(z) %1$s fájl véglegesen törlve lesz. Folytatod?</string>
     <string name="alert_delete_shortcut">A(z) %1$s parancsikon véglegesen törölve lesz. Folytatod?</string>
-    <string name="error_activity_not_found">Nem sikerült megnyitni a(z) %1$s-t</string>
+    <string name="error_activity_not_found">Nem sikerült megnyitni a következőt: %1$s</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
     <string name="websearch_dialog_create_title">Internetes keresés hozzáadása</string>
@@ -195,9 +195,9 @@
     <string name="weather_condition_fair">Kellemes</string>
     <string name="weather_condition_rainshowers">Eső záporok</string>
     <string name="weather_condition_heavysnowandthunder">Heves havazás és mennydörgés</string>
-    <string name="weather_widget_set_location">Hely kiválasztása</string>
-    <string name="weather_location_search_no_result">A hely nem található.</string>
-    <string name="missing_permission_appshortcuts_search">Állítsd be a(z) %1$s alkalmazást alapértelmezett kezdőlapként az alkalmazások parancsikonjainak kereséséhez.</string>
+    <string name="weather_widget_set_location">Helyszín kiválasztása</string>
+    <string name="weather_location_search_no_result">A helyszín nem található.</string>
+    <string name="missing_permission_appshortcuts_search">Állítsd be a(z) %1$s alkalmazást alapértelmezett indítóként az alkalmazások parancsikonjainak kereséséhez.</string>
     <string name="preference_colors_default">Alapértelmezett</string>
     <string name="missing_permission_plugins">A bővítmények használatához bővítményengedély szükséges.</string>
     <string name="preference_custom_colors_simple_mode">Egyszerű mód</string>
@@ -227,7 +227,7 @@
     <string name="weather_condition_snowshowers">Hó záporok</string>
     <string name="weather_condition_heavyrainandthunder">Heves eső és mennydörgés</string>
     <string name="missing_permission_calendar_widget_settings">Ehhez a widgethez naptár-engedély szükséges</string>
-    <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s-t alapértelmezett kezdőlapként kell beállítani az alkalmazások parancsikonjainak kereséséhez</string>
+    <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s-t alapértelmezett indítóként kell beállítani az alkalmazások parancsikonjainak kereséséhez</string>
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
     <string name="preference_category_licenses">Nyílt forráskódú licencek</string>
     <string name="preference_icon_shape_hexagon">Hatszög</string>
@@ -272,8 +272,8 @@
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="provider_brightsky">Deutscher Wetterdienst (csak Németország)</string>
     <string name="provider_here">HERE</string>
-    <string name="preference_category_location">Tartózkodási Hely</string>
-    <string name="preference_automatic_location">Automatikus helymeghatározás</string>
+    <string name="preference_category_location">Tartózkodási helyszín</string>
+    <string name="preference_automatic_location">Automatikus helyszín meghatározás</string>
     <string name="grant_permission">Engedélyezés</string>
     <string name="preference_screen_appearance">Megjelenés</string>
     <string name="preference_layout_summary">A keresősáv, a widgetek és a keresési eredmények általános elrendezése</string>
@@ -283,7 +283,7 @@
     <string name="preference_custom_colors_a1">Elsődleges</string>
     <string name="preference_custom_colors_a3">Harmadlagos</string>
     <string name="preference_custom_colors_n1">Semleges</string>
-    <string name="preference_custom_colors_n2">Semleges Változat</string>
+    <string name="preference_custom_colors_n2">Semleges változat</string>
     <string name="preference_custom_colors_error">Hiba</string>
     <string name="preference_custom_colors_corepalette">Színpaletta</string>
     <string name="preference_debug_dump_heap_in_progress">Pillanatfelvétel készítése…</string>
@@ -297,8 +297,8 @@
     <string name="weather_widget_show_details">Részletek megjelenítése</string>
     <string name="weather_widget_hide_details">Részletek elrejtése</string>
     <string name="preference_category_custom_colors_light">Világos színséma</string>
-    <string name="preference_automatic_location_summary">GPS és helymeghatározó szolgáltatások használata a tartózkodási hely automatikus meghatározásához</string>
-    <string name="preference_location">Tartózkodási Hely</string>
+    <string name="preference_automatic_location_summary">GPS és helyszín meghatározó szolgáltatások használata a tartózkodási helyszín automatikus meghatározásához</string>
+    <string name="preference_location">Tartózkodási helyszín</string>
     <string name="preference_imperial_units_summary">Használja a Fahrenheit fokot és a mérföld per órát</string>
     <string name="preference_imperial_units">Birodalmi mértékegységek</string>
     <string name="widget_config_weather_compact">Kompakt mód</string>
@@ -309,8 +309,8 @@
     <string name="preference_cards_corner_radius">A sarok sugara</string>
     <string name="weather_details_wind">Szél: %1$s</string>
     <string name="weather_details_precipitation">Csapadék: %1$s</string>
-    <string name="weather_no_data">Az időjárás-adatok nem állnak rendelkezésre.</string>
-    <string name="missing_permission_auto_location">A hely automatikus meghatározásához helyhozzáférés szükséges</string>
+    <string name="weather_no_data">Az időjárás adatok nem állnak rendelkezésre.</string>
+    <string name="missing_permission_auto_location">A helyszín automatikus meghatározásához helyhozzáférés szükséges</string>
     <string name="missing_permission_contact_search_settings">A névjegyek kereséséhez, névjegy engedélyre van szükség</string>
     <string name="preference_cards_stroke_width">A keret szélessége</string>
     <string name="preference_cards_opacity">Átlátszatlanság</string>
@@ -354,7 +354,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Heves eső záporok és mennydörgés</string>
     <string name="weather_condition_heavysleetandthunder">Heves havas eső és mennydörgés</string>
     <string name="missing_permission_files_search">A fényképek, média és dokumentumok kereséséhez tárhely engedélyre van szükség.</string>
-    <string name="missing_permission_appshortcuts_create">Állítsd be a(z) %1$s alkalmazást alapértelmezett otthoni alkalmazásként a parancsikonok létrehozásához.</string>
+    <string name="missing_permission_appshortcuts_create">Állítsd be a(z) %1$s alkalmazást alapértelmezett indító alkalmazásként a parancsikonok létrehozásához.</string>
     <string name="preference_custom_colors_a2">Másodlagos</string>
     <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Kérjük, győződj meg róla, hogy érvényes témafájlt (*.kvtheme) választottál ki és hogy a fájl nem sérült.</string>
     <string name="preference_hidden_items_reveal_button">Kinyit gomb megjelenítése</string>
@@ -412,7 +412,7 @@
     <string name="preference_screen_buildinfo">Összeállítási információk</string>
     <string name="preference_screen_debug">Hibakeresés</string>
     <string name="preference_screen_widgets_summary">Widgetek konfigurálása</string>
-    <string name="battery_part_charging">Töltés ⚡︎⚠</string>
+    <string name="battery_part_charging">⚡︎ Töltés ⚡︎</string>
     <string name="backup_component_websearches">Internetes keresési parancsikonok</string>
     <string name="search_action_email">Email</string>
     <string name="search_action_alarm">Riasztás beállítása</string>
@@ -476,7 +476,7 @@
     <string name="preference_screen_tags">Címkék</string>
     <string name="backup_not_included">A csatlakoztatott fiókokról nem készül biztonsági másolat. A harmadik féltől származó alkalmazások widgetjeit csak ezen az eszközön lehet visszaállítani.</string>
     <string name="backup_component_favorites">Kedvencek &amp; rejtett alkalmazások</string>
-    <string name="restore_meta">Létrehozva a(z) %1$s , a %2$s-n ezzel: %3$s.</string>
+    <string name="restore_meta">A visszaállítani kívánt biztonsági mentés %1$s-kor lett létrehozva, a(z) %2$s készüléken, ezzel: %3$s.</string>
     <string name="search_action_websearch_url_hint">Az URL-sablon, amelyet az internetes keresés URL-jének létrehozásához használatos. Használd a ‘${1}’ szót a tényleges keresési kifejezés helyőrzőjeként, pl. https://google.com/search?q=${1}.</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">%1$s perc múlva feltöltődik</item>
@@ -610,7 +610,7 @@
     <string name="preference_search_localfiles_summary">Dokumentumok, fényképek és egyéb, ezen az eszközön tárolt fájlok keresése</string>
     <string name="preference_search_gdrive_summary">Keresés a(z) %1$s fájljai között a Google Drive-on</string>
     <string name="preference_search_onedrive">OneDrive</string>
-    <string name="preference_search_onedrive_summary">Keressen a(z) %1$s fájljai között a OneDrive-on</string>
+    <string name="preference_search_onedrive_summary">Keresés a(z) %1$s fájljai között a OneDrive-on</string>
     <string name="preference_search_nextcloud">Nextcloud</string>
     <string name="preference_search_owncloud">Owncloud</string>
     <string name="preference_screen_calendarwidget">Naptár</string>
@@ -644,7 +644,7 @@
     <string name="widget_config_appwidget_background">Háttér kártya</string>
     <string name="widget_config_appwidget_configure">Widget konfigurálása</string>
     <string name="widget_config_appwidget_resize_hint">Húzás az átméretezéshez</string>
-    <string name="note_widget_linked_file_summary">Összekapcsolva a(z) %1$s-val/vel</string>
+    <string name="note_widget_linked_file_summary">Hivatkozik a következő fájlra: %1$s</string>
     <string name="note_widget_conflict_local_version">Utolsó mentett verzió:</string>
     <string name="note_widget_conflict_file_version">Aktuális fájl tartalma:</string>
     <string name="note_widget_file_read_error">Hiba a jegyzet olvasásakor</string>
