@@ -76,7 +76,7 @@
     <string name="preference_category_debug">Débogage</string>
     <!-- Wikipedia url prefix -->
     <string name="wikipedia_url">https://fr.wikipedia.org</string>
-    <string name="wikipedia_source">De Wikipédia</string>
+    <string name="wikipedia_source">Depuis Wikipédia</string>
     <string name="preference_category_icons">Icônes</string>
     <string name="preference_icon_shape">Forme</string>
     <string name="preference_icon_shape_square">Carré</string>
@@ -429,7 +429,7 @@
     <string name="backup_component_widgets">Widgets intégrés</string>
     <string name="backup_complete">La sauvegarde a bien été réalisée.</string>
     <string name="restore_meta">Créée le %1$s sur %2$s depuis %3$s.</string>
-    <string name="preference_category_custom_colors_dark">Palette de couleurs sombres</string>
+    <string name="preference_category_custom_colors_dark">Palette de couleurs foncées</string>
     <string name="calendar_widget_next_events">Événement suivant</string>
     <string name="preference_layout">Disposition</string>
     <string name="preference_layout_summary">Organisation générale de la barre de recherche, des widgets et des résultats de recherches</string>
@@ -517,7 +517,7 @@
     <string name="preference_system_bar_icons_auto">Automatique</string>
     <string name="preference_system_bar_icons_light">Clair</string>
     <string name="preference_system_bar_icons_dark">Sombre</string>
-    <string name="preference_icon_shape_pebble">Pebble</string>
+    <string name="preference_icon_shape_pebble">Galet</string>
     <string name="preference_clock_widget_color">Couleur</string>
     <string name="preference_search_bar_color">Couleur</string>
     <string name="skip">Passer</string>
@@ -597,7 +597,7 @@
     <string name="widget_name_unknown">Widget d\'application non reconnu</string>
     <string name="widget_action_replace">Remplacer</string>
     <string name="widget_config_weather_compact">Mode compacte</string>
-    <string name="preference_compact_mode_summary">Cacher les prévisions heure par heure et journalières</string>
+    <string name="preference_compact_mode_summary">Cacher les prévisions journalières et par heure</string>
     <string name="preference_weather_integration">Météo</string>
     <string name="preference_media_integration">Contrôle multimédias</string>
     <string name="search_results_order_top_down">De haut en bas</string>
@@ -671,7 +671,7 @@
     <string name="preference_category_animations">Animations</string>
     <string name="preference_charging_animation_summary">Animer des bulles pendant que lappareil est en charge</string>
     <string name="theme_color_scheme_system_default">Utiliser la valeur par défaut du système</string>
-    <string name="theme_color_scheme_autogenerate">Depuis la couleurs primaire</string>
+    <string name="theme_color_scheme_autogenerate">A partir de la couleur principale</string>
     <string name="theme_color_scheme_custom_color">Personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>
     <string name="preference_restore_default">Restaurer la valeur par défaut</string>
@@ -697,7 +697,7 @@
     <string name="no_plugins_installed">Aucun plugins installés</string>
     <string name="preference_clockwidget_dynamic_zone">Zone dynamique</string>
     <string name="plugin_host_not_installed">Hôte du plugin non installé</string>
-    <string name="preference_blur_wallpaper_radius">Rayon de flou</string>
+    <string name="preference_blur_wallpaper_radius">Rayon de floutage</string>
     <string name="plugin_state_setup_required">Vous devez d\'abord configurer ce plugin</string>
     <string name="plugin_action_setup">Configuration</string>
     <string name="plugin_type_filesearch">Recherche de fichier</string>
@@ -708,4 +708,9 @@
     <string name="preference_plugin_badges">Insignes de plugin</string>
     <string name="preference_plugin_badges_summary">Indique par quel plugin un résultat de recherche a été créé</string>
     <string name="plugin_badge_official">Officiel</string>
+    <string name="preference_mdy_color_source_system">Utiliser les couleurs Material You suggérées par le système</string>
+    <string name="preference_plugin_enable">Activer le plugin</string>
+    <string name="preference_category_advanced">Avancé</string>
+    <string name="preference_mdy_color_source_wallpaper">Extraire les couleurs Material You à partir du fond d\'écran actuel. Ceci est le choix par défaut pour Android 11 et plus ancien, mais est aussi disponible avec Android 12+ pour des raisons de compatibilité</string>
+    <string name="preference_mdy_color_source">Source pour les couleurs dynamiques</string>
 </resources>
