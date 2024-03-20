@@ -675,11 +675,11 @@
     <string name="theme_color_scheme_custom_color">Personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>
     <string name="preference_restore_default">Restaurer la valeur par défaut</string>
-    <string name="new_color_scheme_name">Nouveau thème</string>
+    <string name="new_color_scheme_name">Nouveau jeu de couleurs</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
-    <string name="search_action_websearch">Recherche internet</string>
-    <string name="confirmation_delete_color_scheme">Voulez-vous supprimer le thème %1$s \?</string>
+    <string name="search_action_websearch">Recherche web</string>
+    <string name="confirmation_delete_color_scheme">Voulez-vous vraiment supprimer le jeu de couleurs %1$s ?</string>
     <string name="import_theme_apply">Appliquer le thème</string>
     <string name="import_theme_error">Le fichier sélectionne n\'a pas pu être lu. Assurez-vous d\'avoir sélectionner un fichier de thème valide (*.kvtheme) et que ce fichier ne soit pas corrompu.</string>
     <string name="preference_clock_widget_alignment">Alignement</string>
@@ -688,7 +688,7 @@
     <string name="preference_clock_widget_alignment_bottom">Bas</string>
     <string name="shortcut_label_unavailable">Indisponible</string>
     <string name="shortcut_unavailable_description">Ce raccourci n\'est pas disponible car %1$s n\'est pas le lanceur par défaut</string>
-    <string name="backup_component_themes">Thème de couleur</string>
+    <string name="backup_component_themes">Jeux de couleurs</string>
     <string name="action_import">Importer</string>
     <string name="file_type_launchertheme">Thème %1$s</string>
     <string name="missing_permission_plugins">La permission d\'accès aux plugins est nécessaire pour utiliser ces derniers.</string>
