@@ -865,4 +865,6 @@
     <string name="plugin_badge_official">Official</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
+    <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate list</string>
 </resources>

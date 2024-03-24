@@ -133,6 +133,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         searchUiSettings.setReversedResults(reverseSearchResults)
     }
 
+    val separateWorkProfile = searchUiSettings.separateWorkProfile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
+        searchUiSettings.setSeparateWorkProfile(separateWorkProfile)
+    }
+
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }

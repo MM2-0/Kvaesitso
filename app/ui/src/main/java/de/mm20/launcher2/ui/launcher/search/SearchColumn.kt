@@ -92,6 +92,7 @@ fun SearchColumn(
     val wikipedia by viewModel.articleResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
+    val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
 
     val bestMatch by viewModel.bestMatch
 
@@ -153,11 +154,11 @@ fun SearchColumn(
         }
 
         GridResults(
-            items = if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList(),
+            items = if (separateWorkProfile) if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList() else listOf(apps, workApps).flatten().sorted().toImmutableList(),
             columns = columns,
             reverse = reverse,
             key = "apps",
-            before = if (workApps.isNotEmpty() && apps.isNotEmpty()) {
+            before = if (separateWorkProfile && workApps.isNotEmpty() && apps.isNotEmpty()) {
                 {
                     Row(
                         modifier = Modifier
