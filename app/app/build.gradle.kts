@@ -101,6 +101,12 @@ android {
     lint {
         abortOnError = false
     }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     namespace = "de.mm20.launcher2"
 }
 
