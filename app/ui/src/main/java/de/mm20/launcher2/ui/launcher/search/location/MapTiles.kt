@@ -65,8 +65,8 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.ui.ktx.contrast
 import de.mm20.launcher2.ui.ktx.hue
-import de.mm20.launcher2.ui.ktx.invert
 import de.mm20.launcher2.ui.ktx.hueRotate
+import de.mm20.launcher2.ui.ktx.invert
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
@@ -154,14 +154,8 @@ fun MapTiles(
                             modifier = Modifier
                                 .weight(1f / sideLength)
                                 .fillMaxSize(),
-                            imageLoader = TileMapRepository.loader,
-                            model = ImageRequest.Builder(context)
-                                .data("$tileServerUrl/$zoom/$x/$y.png")
-                                .addHeader(
-                                    "User-Agent",
-                                    TileMapRepository.userAgent
-                                )
-                                .build(),
+                            imageLoader = MapTileLoader.loader,
+                            model = MapTileLoader.getTileRequest(tileServerUrl, x, y, zoom),
                             contentDescription = null,
                             colorFilter = colorMatrix?.let { ColorFilter.colorMatrix(it) },
                             filterQuality = FilterQuality.High,
@@ -482,15 +476,24 @@ private fun getEnclosingTiles(
     throw IllegalStateException("Unreachable (right?) | lat: ${location.latitude} | lon: ${location.longitude} | user: $userLocation | nTiles: $nTiles")
 }
 
-private object TileMapRepository : KoinComponent {
+private object MapTileLoader : KoinComponent {
     private val context: Context by inject()
 
-    val userAgent = "${context.packageName}/${
+    private val userAgent = "${context.packageName}/${
         context.packageManager.getPackageInfo(
             context.packageName,
             0
         )?.versionName ?: "dev"
     }"
+    fun getTileRequest(tileServerUrl: String, x: Int, y: Int, zoom: Int): ImageRequest {
+        return ImageRequest.Builder(context)
+            .data("$tileServerUrl/$zoom/$x/$y.png")
+            .addHeader(
+                "User-Agent",
+                userAgent
+            )
+            .build()
+    }
 
     val loader = ImageLoader
         .Builder(context)
