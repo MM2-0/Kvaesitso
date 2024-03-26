@@ -9,15 +9,14 @@ import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -32,6 +31,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
 
     private val permissionsManager: PermissionsManager by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
 
     val favorites = searchUiSettings.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -95,8 +95,14 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         websiteSearchSettings.setEnabled(websites)
     }
 
-    val autoFocus = searchUiSettings.openKeyboard
+    val locations = locationSearchSettings.enabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setLocations(locations: Boolean) {
+        locationSearchSettings.setEnabled(locations)
+    }
+
+    val autoFocus = searchUiSettings.openKeyboard
 
     fun setAutoFocus(autoFocus: Boolean) {
         searchUiSettings.setOpenKeyboard(autoFocus)

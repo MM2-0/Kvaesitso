@@ -26,8 +26,10 @@ import de.mm20.launcher2.database.databaseModule
 import de.mm20.launcher2.debug.initDebugMode
 import de.mm20.launcher2.globalactions.globalActionsModule
 import de.mm20.launcher2.notifications.notificationsModule
+import de.mm20.launcher2.openstreetmaps.openStreetMapsModule
 import de.mm20.launcher2.permissions.permissionsModule
 import de.mm20.launcher2.data.plugins.dataPluginsModule
+import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
 import de.mm20.launcher2.searchactions.searchActionsModule
@@ -86,11 +88,13 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     websitesModule,
                     widgetsModule,
                     wikipediaModule,
+                    openStreetMapsModule,
                     servicesTagsModule,
                     widgetsServiceModule,
                     dataPluginsModule,
                     servicesPluginsModule,
                     backupModule,
+                    devicePoseModule,
                 )
             )
         }

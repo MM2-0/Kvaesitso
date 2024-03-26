@@ -1,28 +1,32 @@
 package de.mm20.launcher2.ui.launcher.search.common
 
 import android.content.Context
-import android.content.pm.LauncherApps
-import android.content.pm.ShortcutInfo
-import android.graphics.drawable.Drawable
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.getSystemService
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.icons.IconService
 import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.notifications.Notification
 import de.mm20.launcher2.notifications.NotificationRepository
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
+import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.UpdatableSearchable
+import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.services.favorites.FavoritesService
 import de.mm20.launcher2.services.tags.TagsService
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.search.ListItemViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -35,7 +39,9 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration.Companion.hours
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val favoritesService: FavoritesService by inject()
     private val badgeService: BadgeService by inject()
@@ -44,9 +50,14 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     private val notificationRepository: NotificationRepository by inject()
     private val appShortcutRepository: AppShortcutRepository by inject()
     private val permissionsManager: PermissionsManager by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
 
-    private val searchable = MutableStateFlow<SavableSearchable?>(null)
-    private val iconSize = MutableStateFlow<Int>(0)
+    val isUpToDate = MutableStateFlow(true)
+
+    val devicePoseProvider: DevicePoseProvider by inject()
+
+    val searchable = MutableStateFlow<SavableSearchable?>(null)
+    private val iconSize = MutableStateFlow(0)
     fun init(searchable: SavableSearchable, iconSize: Int) {
         this.searchable.value = searchable
         this.iconSize.value = iconSize
@@ -104,7 +115,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             ).first()
     }
 
-    open fun launch(context: Context, bounds: Rect? = null): Boolean {
+    fun launch(context: Context, bounds: Rect? = null): Boolean {
         val searchable = searchable.value ?: return false
         val view = (context as? AppCompatActivity)?.window?.decorView
         val options = if (bounds != null && view != null) {
@@ -167,7 +178,63 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         favoritesService.reset(searchable)
     }
 
+    private var shouldRetryUpdate = false
+
+    fun requestUpdatedSearchable(context: Context) {
+        val searchable = searchable.value ?: return
+        if (searchable is UpdatableSearchable<*>) {
+            val updatedSelf = searchable.updatedSelf ?: return
+            if (!shouldRetryUpdate && System.currentTimeMillis() < searchable.timestamp + 1.hours.inWholeMilliseconds) return
+            viewModelScope.launch {
+                this@SearchableItemVM.searchable.value = with(updatedSelf()) {
+                    when (this) {
+                        is UpdateResult.Success -> {
+                            isUpToDate.value = true
+                            shouldRetryUpdate = false
+                            favoritesService.upsert(this.result)
+                            this.result
+                        }
+
+                        is UpdateResult.TemporarilyUnavailable -> {
+                            isUpToDate.value = false
+                            shouldRetryUpdate = true
+                            return@launch
+                        }
+
+                        is UpdateResult.PermanentlyUnavailable -> {
+                            isUpToDate.value = false
+                            shouldRetryUpdate = false
+                            favoritesService.delete(searchable)
+                            Toast.makeText(
+                                context,
+                                R.string.unavailable_searchable,
+                                Toast.LENGTH_LONG
+                            ).show()
+                            Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
+                            null
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     fun requestShortcutPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
+
+    val useInsaneUnits = locationSearchSettings.imperialUnits
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val showMap = locationSearchSettings.showMap
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val applyMapTheming = locationSearchSettings.themeMap
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val showPositionOnMap = locationSearchSettings.showPositionOnMap
+        .stateIn(viewModelScope, SharingStarted.Lazily, false)
+
+    val mapTileServerUrl = locationSearchSettings.tileServer
+        .stateIn(viewModelScope, SharingStarted.Lazily, "")
 }

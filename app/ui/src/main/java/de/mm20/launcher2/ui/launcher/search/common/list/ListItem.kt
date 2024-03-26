@@ -13,6 +13,7 @@ import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -21,6 +22,7 @@ import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactItem
 import de.mm20.launcher2.ui.launcher.search.files.FileItem
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.launcher.search.location.LocationItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
@@ -39,6 +41,12 @@ fun ListItem(
     LaunchedEffect(item, iconSize) {
         viewModel.init(item, iconSize.toInt())
     }
+    
+    LaunchedEffect(showDetails) {
+        if (showDetails) viewModel.requestUpdatedSearchable(context)
+    }
+
+    val item = viewModel.searchable.collectAsState().value ?: item
 
     var bounds by remember { mutableStateOf(Rect.Zero) }
     InnerCard(
@@ -64,52 +72,69 @@ fun ListItem(
                     onBack = { showDetails = false }
                 )
             }
+
             is File -> {
                 FileItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .combinedClickable(
-                        enabled = !showDetails,
-                        onClick = {
-                            if (!viewModel.launch(context, bounds)) {
-                                showDetails = true
-                            }
-                        },
-                        onLongClick = { showDetails = true }
-                    ),
+                            enabled = !showDetails,
+                            onClick = {
+                                if (!viewModel.launch(context, bounds)) {
+                                    showDetails = true
+                                }
+                            },
+                            onLongClick = { showDetails = true }
+                        ),
                     file = item,
                     showDetails = showDetails,
                     onBack = { showDetails = false }
                 )
             }
+
             is CalendarEvent -> {
                 CalendarItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .combinedClickable(
-                        enabled = !showDetails,
-                        onClick = { showDetails = true },
-                        onLongClick = { showDetails = true }
-                    ),
+                            enabled = !showDetails,
+                            onClick = { showDetails = true },
+                            onLongClick = { showDetails = true }
+                        ),
                     calendar = item,
                     showDetails = showDetails,
                     onBack = { showDetails = false }
                 )
             }
+
+            is Location -> {
+                LocationItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .combinedClickable(
+                            enabled = !showDetails,
+                            onClick = { showDetails = true },
+                            onLongClick = { showDetails = true }),
+                    location = item,
+                    showDetails = showDetails,
+                    onBack = { showDetails = false }
+                )
+            }
+
             is AppShortcut -> {
                 AppShortcutItem(
                     shortcut = item,
                     modifier = Modifier
                         .fillMaxWidth()
                         .combinedClickable(
-                        enabled = !showDetails,
-                        onClick = {
-                            if (!viewModel.launch(context, bounds)) {
-                                showDetails = true
-                            }
-                        },
-                        onLongClick = { showDetails = true }
-                    ),
+                            enabled = !showDetails,
+                            onClick = {
+                                if (!viewModel.launch(context, bounds)) {
+                                    showDetails = true
+                                }
+                            },
+                            onLongClick = { showDetails = true }
+                        ),
                     showDetails = showDetails,
                     onBack = { showDetails = false }
                 )

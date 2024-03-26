@@ -6,6 +6,10 @@ plugins {
 android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
+    packaging {
+        resources.excludes.add("META-INF/DEPENDENCIES")
+    }
+
     defaultConfig {
         minSdk = libs.versions.minSdk.get().toInt()
         
@@ -136,6 +140,7 @@ dependencies {
     implementation(project(":core:crashreporter"))
     implementation(project(":data:notifications"))
     implementation(project(":data:contacts"))
+    implementation(project(":data:openstreetmaps"))
     implementation(project(":core:permissions"))
     implementation(project(":data:websites"))
     implementation(project(":data:unitconverter"))
@@ -149,4 +154,5 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
+    implementation(project(":core:devicepose"))
 }
