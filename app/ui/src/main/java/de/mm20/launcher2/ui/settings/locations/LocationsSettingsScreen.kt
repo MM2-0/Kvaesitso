@@ -135,9 +135,9 @@ fun LocationsSettingsScreen() {
                 TextPreference(
                     title = stringResource(R.string.preference_search_location_custom_overpass_url),
                     value = customOverpassUrl,
-                    placeholder = stringResource(id = R.string.overpass_url),
+                    placeholder = LocationSearchSettings.DefaultOverpassUrl,
                     summary = customOverpassUrl.takeIf { !it.isNullOrBlank() }
-                        ?: stringResource(id = R.string.overpass_url),
+                        ?: LocationSearchSettings.DefaultOverpassUrl,
                     onValueChanged = {
                         viewModel.setCustomOverpassUrl(it)
                     }
