@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
@@ -59,6 +61,9 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.ceil
+
+private const val PRIORITY_MIN = Int.MAX_VALUE
+private const val PRIORITY_MAX = Int.MIN_VALUE
 
 @Composable
 fun SearchColumn(
@@ -90,6 +95,7 @@ fun SearchColumn(
     val unitConverter by viewModel.unitConverterResults
     val calculator by viewModel.calculatorResults
     val wikipedia by viewModel.articleResults
+    val locations by viewModel.locationResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
     val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
@@ -101,6 +107,7 @@ fun SearchColumn(
     val missingCalendarPermission by viewModel.missingCalendarPermission.collectAsState(false)
     val missingShortcutsPermission by viewModel.missingAppShortcutPermission.collectAsState(false)
     val missingContactsPermission by viewModel.missingContactsPermission.collectAsState(false)
+    val missingLocationPermission by viewModel.missingLocationPermission.collectAsState(false)
     val missingFilesPermission by viewModel.missingFilesPermission.collectAsState(false)
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
@@ -296,6 +303,30 @@ fun SearchColumn(
             key = "contacts",
             highlightedItem = bestMatch as? SavableSearchable
         )
+        ListResults(
+            before = if (missingLocationPermission && !isSearchEmpty) {
+                {
+                    MissingPermissionBanner(
+                        modifier = Modifier.padding(8.dp),
+                        text = stringResource(R.string.missing_permission_location_search),
+                        onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
+                        secondaryAction = {
+                            OutlinedButton(onClick = {
+                                viewModel.disableLocationSearch()
+                            }) {
+                                Text(
+                                    stringResource(R.string.turn_off),
+                                )
+                            }
+                        }
+                    )
+                }
+            } else null,
+            items = locations.toImmutableList(),
+            reverse = reverse,
+            key = "locations",
+            highlightedItem = bestMatch as? SavableSearchable
+        )
         for (wiki in wikipedia) {
             SingleResult(highlight = bestMatch == wiki) {
                 ArticleItem(article = wiki)
@@ -437,7 +468,7 @@ fun LazyListScope.ListResults(
     key: String,
     before: (@Composable () -> Unit)? = null,
     after: (@Composable () -> Unit)? = null,
-    highlightedItem: SavableSearchable?
+    highlightedItem: SavableSearchable?,
 ) {
     if (before != null) {
         item(key = "$key-before") {

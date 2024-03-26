@@ -7,6 +7,7 @@ import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.RankingSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
@@ -47,4 +48,5 @@ val preferencesModule = module {
     factory { GestureSettings(get()) }
     factory { CalculatorSearchSettings(get()) }
     factory { ClockWidgetSettings(get()) }
+    factory { LocationSearchSettings(get()) }
 }

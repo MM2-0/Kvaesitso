@@ -1,5 +1,6 @@
 package de.mm20.launcher2.database
 
+import android.util.Log
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -8,13 +9,14 @@ import androidx.room.Transaction
 import androidx.room.Update
 import androidx.room.Upsert
 import de.mm20.launcher2.database.entities.SavedSearchableEntity
+import de.mm20.launcher2.database.entities.SavedSearchableUpdateContentEntity
 import de.mm20.launcher2.database.entities.SavedSearchableUpdatePinEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SearchableDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(searchable: SavedSearchableEntity)
+    suspend fun insert(searchable: SavedSearchableEntity): Long
 
     @Upsert(entity = SavedSearchableEntity::class)
     suspend fun upsert(searchable: SavedSearchableEntity)
@@ -24,6 +26,9 @@ interface SearchableDao {
 
     @Update(entity = SavedSearchableEntity::class)
     suspend fun update(searchable: SavedSearchableUpdatePinEntity)
+
+    @Update(entity = SavedSearchableEntity::class)
+    suspend fun update(searchable: SavedSearchableUpdateContentEntity)
 
     @Query(
         "SELECT * FROM Searchable " +
@@ -146,7 +151,15 @@ interface SearchableDao {
         incrementLaunchCount(item.key)
         increaseWeightWhere(item.key, alpha)
         reduceWeightExcept(item.key, alpha)
-        insert(item)
+        if (insert(item) == -1L) {
+            update(
+                SavedSearchableUpdateContentEntity(
+                    serializedSearchable = item.serializedSearchable,
+                    type = item.type,
+                    key = item.key,
+                )
+            )
+        }
     }
 
     @Query("UPDATE Searchable SET launchCount = launchCount + 1 WHERE `key` = :key")

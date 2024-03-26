@@ -82,6 +82,7 @@ import de.mm20.launcher2.ui.settings.clockwidget.ClockWidgetSettingsScreenVM
 @Composable
 fun ClockWidget(
     modifier: Modifier = Modifier,
+    fillScreenHeight: Boolean,
     editMode: Boolean = false,
 ) {
     val viewModel: ClockWidgetVM = viewModel()
@@ -153,7 +154,7 @@ fun ClockWidget(
             Column(modifier = modifier) {
                 Box(
                     modifier = Modifier
-                        .weight(1f)
+                        .then(if(fillScreenHeight) Modifier.weight(1f) else Modifier)
                         .fillMaxWidth(),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center
@@ -284,7 +285,6 @@ fun ConfigureClockWidgetSheet(
     val style by viewModel.clockStyle.collectAsState()
     val fillHeight by viewModel.fillHeight.collectAsState()
     val alignment by viewModel.alignment.collectAsState()
-    val dock by viewModel.dock.collectAsState()
     val parts by viewModel.parts.collectAsState()
 
     BottomSheetDialog(onDismissRequest = onDismiss) {
@@ -466,23 +466,6 @@ fun ConfigureClockWidgetSheet(
                                 })
                         }
                     }
-                }
-            }
-            OutlinedCard(
-                modifier = Modifier.padding(top = 16.dp),
-            ) {
-                Column(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clockwidget_favorites_part),
-                        summary = stringResource(R.string.preference_clockwidget_favorites_part_summary),
-                        icon = Icons.Rounded.Star,
-                        value = dock == true,
-                        onValueChanged = {
-                            viewModel.setFavoritesPart(it)
-                        }
-                    )
                 }
             }
             Text(

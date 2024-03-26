@@ -10,7 +10,7 @@ import de.mm20.launcher2.sdk.databinding.ActivityRequestPermissionBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 
-class RequestPermissionActivity: Activity() {
+internal class RequestPermissionActivity: Activity() {
 
     private lateinit var binding: ActivityRequestPermissionBinding
 

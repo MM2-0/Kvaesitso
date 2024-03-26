@@ -1,0 +1,12 @@
+- ⚠️ **Breaking**: Backups  that were created with an older version cannot be fully restored on this version.
+- ⚠️ **Breaking**: Weather provider settings are reset after the update
+- Added support for plugins:
+  - For now, plugins can add more weather providers and more file search providers (more plugin types will be added in the future)
+  - There are two plugins available right now: OpenWeatherMap and OneDrive search
+  - If you are a developer, and you want to create your own plugins, read the [docs](https://kvaesitso.mm20.de/docs/developer-guide/plugins/get-started.html) to get started
+- The dock is now always shown at the bottom of the screen, regardless of clock position and clock widget layout
+- Moved dock settings from clock widget to home screen settings
+- Fix that some third party app widgets cannot be added
+- (Android 12+) Added a preference to use Material You compat colors instead of system provided colors (thanks to @strongville)
+- "Edit widgets" is now shown in overflow menu if button is disabled (thanks to @strongville)
+- Bugfixes

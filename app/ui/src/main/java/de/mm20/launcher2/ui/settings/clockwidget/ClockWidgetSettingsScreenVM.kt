@@ -40,18 +40,11 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setFillHeight(fillHeight)
     }
 
-    val dock = settings.dock
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
     val parts = settings.parts
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setDatePart(datePart: Boolean) {
         settings.setDatePart(datePart)
-    }
-
-    fun setFavoritesPart(favoritesPart: Boolean) {
-        settings.setDock(favoritesPart)
     }
 
     fun setBatteryPart(batteryPart: Boolean) {

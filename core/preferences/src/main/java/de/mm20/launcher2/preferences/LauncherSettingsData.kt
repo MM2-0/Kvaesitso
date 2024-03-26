@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.UUID
@@ -11,6 +12,7 @@ data class LauncherSettingsData(
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
+    val uiCompatModeColors: Boolean = false,
     val uiFont: Font = Font.Outfit,
     val uiBaseLayout: BaseLayout = BaseLayout.PullDown,
     val uiOrientation: ScreenOrientation = ScreenOrientation.Auto,
@@ -124,11 +126,23 @@ data class LauncherSettingsData(
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
     val weatherImperialUnits: Boolean = false,
 
+    val locationSearchEnabled: Boolean = false,
+    val locationSearchImperialUnits: Boolean = false,
+    val locationSearchRadius: Int = 1500,
+    val locationSearchHideUncategorized: Boolean = true,
+    val locationSearchOverpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
+    val locationSearchTileServer: String = LocationSearchSettings.DefaultTileServerUrl,
+    val locationSearchShowMap: Boolean = false,
+    val locationSearchShowPositionOnMap: Boolean = false,
+    val locationSearchThemeMap: Boolean = true,
+
+
     ) {
     constructor(
         context: Context,
     ) : this(
         weatherImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
+        locationSearchImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
     )
 }

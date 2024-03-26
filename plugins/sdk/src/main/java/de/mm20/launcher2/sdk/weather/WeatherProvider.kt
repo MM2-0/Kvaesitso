@@ -12,6 +12,7 @@ import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
 import de.mm20.launcher2.sdk.base.BasePluginProvider
+import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.ktx.formatToString
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +23,7 @@ import kotlin.math.absoluteValue
 import kotlin.math.roundToInt
 
 abstract class WeatherProvider(
-    val config: WeatherPluginConfig,
+    private val config: WeatherPluginConfig,
 ) : BasePluginProvider() {
     override fun getPluginType(): PluginType {
         return PluginType.Weather
@@ -30,6 +31,10 @@ abstract class WeatherProvider(
 
     override fun onCreate(): Boolean {
         return true
+    }
+
+    override fun getPluginConfig(): Bundle {
+        return config.toBundle()
     }
 
     override fun query(

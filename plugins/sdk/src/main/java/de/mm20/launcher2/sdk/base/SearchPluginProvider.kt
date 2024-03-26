@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.runBlocking
 
@@ -19,8 +20,15 @@ abstract class SearchPluginProvider<T>(
      * Search for items matching the given query
      * @param query The query to search for
      */
-    abstract suspend fun search(query: String): List<T>
-    abstract suspend fun get(id: String): T?
+    abstract suspend fun search(query: String, allowNetwork: Boolean): List<T>
+
+    /**
+     * Get an item by its id.
+     * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference`
+     */
+    open suspend fun get(id: String): T? {
+        return null
+    }
 
     override fun onCreate(): Boolean {
         return true
@@ -48,7 +56,10 @@ abstract class SearchPluginProvider<T>(
             uri.pathSegments.size == 1 && uri.pathSegments.first() == SearchPluginContract.Paths.Search -> {
                 val query =
                     uri.getQueryParameter(SearchPluginContract.Paths.QueryParam) ?: return null
-                val results = search(query, cancellationSignal)
+                val allowNetwork =
+                    uri.getQueryParameter(SearchPluginContract.Paths.AllowNetworkParam)?.toBoolean()
+                        ?: false
+                val results = search(query, allowNetwork, cancellationSignal)
                 val cursor = createCursor(results.size)
                 for (result in results) {
                     writeToCursor(cursor, result)
@@ -95,10 +106,11 @@ abstract class SearchPluginProvider<T>(
 
     private fun search(
         query: String,
+        allowNetwork: Boolean,
         cancellationSignal: CancellationSignal?
     ): List<T> {
         return launchWithCancellationSignal(cancellationSignal) {
-            search(query)
+            search(query, allowNetwork)
         }
     }
 

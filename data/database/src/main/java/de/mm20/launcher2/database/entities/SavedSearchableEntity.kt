@@ -21,3 +21,9 @@ data class SavedSearchableUpdatePinEntity(
         @ColumnInfo(name = "searchable") val serializedSearchable: String,
         val pinPosition: Int? = null,
 )
+
+data class SavedSearchableUpdateContentEntity(
+        val key: String,
+        val type: String,
+        @ColumnInfo(name = "searchable") val serializedSearchable: String,
+)

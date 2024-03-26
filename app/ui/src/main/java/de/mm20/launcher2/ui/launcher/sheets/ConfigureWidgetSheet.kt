@@ -1,11 +1,13 @@
 package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -44,10 +46,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.rememberPlainTooltipState
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -70,11 +74,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import de.mm20.launcher2.calendar.CalendarRepository
+import de.mm20.launcher2.calendar.UserCalendar
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.calendar.UserCalendar
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
@@ -366,10 +370,15 @@ fun ColumnScope.ConfigureAppWidget(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val scope = rememberCoroutineScope()
-            val tooltipState = rememberPlainTooltipState()
-            PlainTooltipBox(
-                tooltipState = tooltipState,
-                tooltip = { Text(stringResource(R.string.widget_config_appwidget_resize_hint)) }
+            val tooltipState = rememberTooltipState()
+            TooltipBox(
+                state = tooltipState,
+                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+                tooltip = {
+                    PlainTooltip {
+                        Text(stringResource(R.string.widget_config_appwidget_resize_hint))
+                    }
+                }
             ) {
                 Box(
                     modifier = Modifier
@@ -479,7 +488,18 @@ fun ColumnScope.ConfigureAppWidget(
                         widget.config.widgetId,
                         0,
                         0,
-                        null
+                        if (Build.VERSION.SDK_INT < 34) {
+                            null
+                        } else {
+                            ActivityOptions.makeBasic()
+                                .setPendingIntentBackgroundActivityStartMode(
+                                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                )
+                                .setPendingIntentCreatorBackgroundActivityStartMode(
+                                    ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                )
+                                .toBundle()
+                        }
                     )
                 }) {
                 Text(

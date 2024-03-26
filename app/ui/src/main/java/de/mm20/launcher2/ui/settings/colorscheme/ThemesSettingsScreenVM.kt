@@ -47,11 +47,11 @@ class ThemesSettingsScreenVM : ViewModel(), KoinComponent {
     }
 
     fun selectTheme(theme: Theme) {
-        when(theme.id) {
+        uiSettings.setTheme(when(theme.id) {
             DefaultThemeId -> ThemeDescriptor.Default
             BlackAndWhiteThemeId -> ThemeDescriptor.BlackAndWhite
             else -> ThemeDescriptor.Custom(theme.id.toString())
-        }
+        })
     }
 
     fun duplicate(theme: Theme) {

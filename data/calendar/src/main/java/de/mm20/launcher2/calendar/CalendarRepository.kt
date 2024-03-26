@@ -40,7 +40,7 @@ internal class CalendarRepositoryImpl(
     private val settings: CalendarSearchSettings,
 ) : CalendarRepository {
 
-    override fun search(query: String): Flow<ImmutableList<CalendarEvent>> {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<CalendarEvent>> {
         if (query.isBlank() || query.length < 2) {
             return flow {
                 emit(persistentListOf())

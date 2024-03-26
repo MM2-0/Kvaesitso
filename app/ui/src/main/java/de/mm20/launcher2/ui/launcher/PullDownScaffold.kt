@@ -401,7 +401,7 @@ fun PullDownScaffold(
             ) {
                 VerticalPager(
                     modifier = Modifier.fillMaxSize(),
-                    beyondBoundsPageCount = 1,
+                    outOfBoundsPageCount = 1,
                     state = pagerState,
                     reverseLayout = true,
                     userScrollEnabled = false,
@@ -472,6 +472,7 @@ fun PullDownScaffold(
                                         .then(clockHeight?.let { Modifier.height(it) } ?: Modifier)
                                         .padding(bottom = clockPadding),
                                     editMode = isWidgetEditMode,
+                                    fillScreenHeight = fillClockHeight,
                                 )
 
                                 WidgetColumn(

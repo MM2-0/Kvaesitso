@@ -64,4 +64,169 @@
         <item quantity="one">kvadratmillimeter</item>
         <item quantity="other">kvadratmillimeter</item>
     </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decimeter</item>
+        <item quantity="other">decimeter</item>
+    </plurals>
+    <string name="unit_sqinch_symbol">cm²</string>
+    <string name="unit_nautic_mile_symbol">sømil</string>
+    <plurals name="unit_sqinch">
+        <item quantity="one">kvadratcentimeter</item>
+        <item quantity="other">kvadratcentimeter</item>
+    </plurals>
+    <string name="unit_sqfoot_symbol">m²</string>
+    <plurals name="unit_sqfoot">
+        <item quantity="one">kvadratmeter</item>
+        <item quantity="other">kvadratmeter</item>
+    </plurals>
+    <string name="unit_second_symbol">s</string>
+    <plurals name="unit_second">
+        <item quantity="one">sekund</item>
+        <item quantity="other">sekunder</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">ms</string>
+    <plurals name="unit_millisecond">
+        <item quantity="one">millisekund</item>
+        <item quantity="other">millisekunder</item>
+    </plurals>
+    <string name="unit_minute_symbol">min</string>
+    <plurals name="unit_minute">
+        <item quantity="one">minut</item>
+        <item quantity="other">minutter</item>
+    </plurals>
+    <string name="unit_byte_symbol">B</string>
+    <string name="unit_hour_symbol">t</string>
+    <plurals name="unit_hour">
+        <item quantity="one">time</item>
+        <item quantity="other">timer</item>
+    </plurals>
+    <string name="unit_day_symbol">d</string>
+    <plurals name="unit_day">
+        <item quantity="one">dag</item>
+        <item quantity="other">dage</item>
+    </plurals>
+    <string name="unit_year_symbol">år</string>
+    <plurals name="unit_year">
+        <item quantity="one">år</item>
+        <item quantity="other">år</item>
+    </plurals>
+    <string name="unit_kilobyte_symbol">kB</string>
+    <string name="unit_megabyte_symbol">MB</string>
+    <plurals name="unit_byte">
+        <item quantity="one">byte</item>
+        <item quantity="other">bytes</item>
+    </plurals>
+    <plurals name="unit_kilobyte">
+        <item quantity="one">kilobyte</item>
+        <item quantity="other">kilobytes</item>
+    </plurals>
+    <string name="unit_terabyte_symbol">TB</string>
+    <string name="unit_kibibyte_symbol">kiB</string>
+    <string name="unit_mebibyte_symbol">MiB</string>
+    <string name="unit_gibibyte_symbol">GiB</string>
+    <string name="unit_tebibyte_symbol">TiB</string>
+    <plurals name="unit_gigabyte">
+        <item quantity="one">gigabyte</item>
+        <item quantity="other">gigabytes</item>
+    </plurals>
+    <plurals name="unit_terabyte">
+        <item quantity="one">terabyte</item>
+        <item quantity="other">terabytes</item>
+    </plurals>
+    <plurals name="unit_mebibyte">
+        <item quantity="one">mebibyte</item>
+        <item quantity="other">mebibytes</item>
+    </plurals>
+    <plurals name="unit_gibibyte">
+        <item quantity="one">gibibyte</item>
+        <item quantity="other">gibibytes</item>
+    </plurals>
+    <plurals name="unit_tebibyte">
+        <item quantity="one">tebibyte</item>
+        <item quantity="other">tebibytes</item>
+    </plurals>
+    <string name="unit_bit_symbol">bit</string>
+    <plurals name="unit_bit">
+        <item quantity="one">bit</item>
+        <item quantity="other">bits</item>
+    </plurals>
+    <string name="unit_kilobit_symbol">kbit</string>
+    <plurals name="unit_kilobit">
+        <item quantity="one">kilobit</item>
+        <item quantity="other">kilobits</item>
+    </plurals>
+    <string name="unit_megabit_symbol">Mbit</string>
+    <plurals name="unit_megabit">
+        <item quantity="one">megabit</item>
+        <item quantity="other">megabits</item>
+    </plurals>
+    <string name="unit_gigabit_symbol">Gbit</string>
+    <plurals name="unit_gigabit">
+        <item quantity="one">gigabit</item>
+        <item quantity="other">gigabits</item>
+    </plurals>
+    <string name="unit_terabit_symbol">Tbit</string>
+    <plurals name="unit_terabit">
+        <item quantity="one">terabit</item>
+        <item quantity="other">terabits</item>
+    </plurals>
+    <string name="unit_meter_per_second_symbol">m/s</string>
+    <plurals name="unit_meter_per_second">
+        <item quantity="one">meter i sekundet</item>
+        <item quantity="other">meter i sekundet</item>
+    </plurals>
+    <string name="unit_kilometer_per_hour_symbol">km/t</string>
+    <plurals name="unit_kilometer_per_hour">
+        <item quantity="one">kilometer i timen</item>
+        <item quantity="other">kilometer i timen</item>
+    </plurals>
+    <string name="unit_mile_per_hour_symbol">mph</string>
+    <plurals name="unit_mile_per_hour">
+        <item quantity="one">mil i timen</item>
+        <item quantity="other">mile i timen</item>
+    </plurals>
+    <plurals name="unit_kilogram">
+        <item quantity="one">kilogram</item>
+        <item quantity="other">kilogram</item>
+    </plurals>
+    <string name="unit_gram_symbol">g</string>
+    <plurals name="unit_gram">
+        <item quantity="one">gram</item>
+        <item quantity="other">gram</item>
+    </plurals>
+    <string name="unit_metric_ton_symbol">t</string>
+    <string name="unit_pound_symbol">lb.</string>
+    <string name="unit_stone_symbol">st.</string>
+    <string name="unit_ounce_symbol">oz.</string>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grad celcius</item>
+        <item quantity="other">grader celcius</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grad fahrenheit</item>
+        <item quantity="other">grader fahrenheit</item>
+    </plurals>
+    <string name="unit_kelvin_symbol">K</string>
+    <plurals name="unit_kelvin">
+        <item quantity="one">kelvin</item>
+        <item quantity="other">kelvin</item>
+    </plurals>
+    <plurals name="unit_hectare">
+        <item quantity="one">hektar</item>
+        <item quantity="other">hektarer</item>
+    </plurals>
+    <plurals name="unit_kibibyte">
+        <item quantity="one">kibibyte</item>
+        <item quantity="other">kibibytes</item>
+    </plurals>
+    <string name="unit_kilogram_symbol">kg</string>
+    <string name="unit_hectare_symbol">ha</string>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_metric_ton">
+        <item quantity="one">ton</item>
+        <item quantity="other">tons</item>
+    </plurals>
+    <string name="unit_gigabyte_symbol">GB</string>
 </resources>

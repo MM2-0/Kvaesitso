@@ -22,13 +22,4 @@ enum class StorageStrategy {
      * results and if you don't want to implement a cache for search results.
      */
     StoreCopy;
-    companion object {
-        fun valueOfOrElse(value: String, default: StorageStrategy): StorageStrategy {
-            return try {
-                valueOf(value)
-            } catch (e: IllegalArgumentException) {
-                default
-            }
-        }
-    }
 }

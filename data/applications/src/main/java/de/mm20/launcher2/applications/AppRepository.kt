@@ -29,8 +29,6 @@ import org.apache.commons.text.similarity.FuzzyScore
 import java.util.Locale
 
 interface AppRepository : SearchableRepository<Application> {
-    override fun search(query: String): Flow<ImmutableList<Application>>
-
     fun findMany(): Flow<ImmutableList<Application>>
 }
 
@@ -197,7 +195,7 @@ internal class AppRepositoryImpl(
         return installedApps.map { it.toImmutableList() }
     }
 
-    override fun search(query: String): Flow<ImmutableList<LauncherApp>> {
+    override fun search(query: String, allowNetwork: Boolean): Flow<ImmutableList<LauncherApp>> {
         return installedApps.map { apps ->
             withContext(Dispatchers.Default) {
                 val appResults = mutableListOf<LauncherApp>()

@@ -144,6 +144,17 @@ class UiSettings internal constructor(
             it.uiColorScheme
         }.distinctUntilChanged()
 
+    val compatModeColors
+        get() = launcherDataStore.data.map {
+            it.uiCompatModeColors
+        }.distinctUntilChanged()
+
+    fun setCompatModeColors(enabled: Boolean) {
+        launcherDataStore.update {
+            it.copy(uiCompatModeColors = enabled)
+        }
+    }
+
     val statusBarColor
         get() = launcherDataStore.data.map {
             it.systemBarsStatusColors

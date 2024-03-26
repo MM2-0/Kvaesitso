@@ -64,4 +64,6 @@ include(":services:widgets")
 include(":services:favorites")
 
 include(":plugins:sdk")
+include(":data:openstreetmaps")
 include(":services:plugins")
+include(":core:devicepose")

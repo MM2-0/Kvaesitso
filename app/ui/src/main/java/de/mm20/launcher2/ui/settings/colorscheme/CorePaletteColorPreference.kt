@@ -3,6 +3,7 @@ package de.mm20.launcher2.ui.settings.colorscheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,13 +16,17 @@ import androidx.compose.material.icons.rounded.SettingsSuggest
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.PlainTooltipBox
+import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TooltipBox
+import androidx.compose.material3.TooltipDefaults
+import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,13 +51,28 @@ fun CorePaletteColorPreference(
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    PlainTooltipBox(tooltip = { Text(title) }) {
+    val scope = rememberCoroutineScope()
+    val tooltipState = rememberTooltipState()
+
+    TooltipBox(
+        state = tooltipState,
+        positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
+        tooltip = {
+            PlainTooltip {
+                Text(title)
+            }
+        },
+    ) {
         ColorSwatch(
             color = Color(value ?: defaultValue),
             modifier = modifier
                 .size(48.dp)
-                .tooltipTrigger(),
-            onClick = { showDialog = true },
+                .combinedClickable(
+                    onClick = { showDialog = true },
+                    onLongClick = {
+                        onValueChange(null)
+                    }
+                ),
         )
     }
 
