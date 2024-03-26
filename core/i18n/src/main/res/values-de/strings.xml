@@ -694,4 +694,14 @@
     <string name="length_unit">Längeneinheit</string>
     <string name="imperial">Imperial</string>
     <string name="metric">Metrisch</string>
+    <string name="preference_search_locations_theme_map_summary">Kartenvorschau an das Farbschema des Launchers anpassen</string>
+    <string name="preference_search_locations_show_map_summary">Eine Vorschaukarte für Orte anzeigen</string>
+    <string name="preference_search_locations_theme_map">Karte einfärben</string>
+    <string name="preference_search_locations_show_position_on_map">Eigene Position anzeigen</string>
+    <string name="preference_search_location_custom_tile_server_url">Tileserver-URL</string>
+    <string name="menu_dial">Anrufen</string>
+    <string name="menu_bugreport">Fehler melden</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Nur Ergebnisse mit klar definierten, wie „Café“ oder „Restaurant“ anzeigen</string>
+    <string name="preference_search_locations_show_map">Karte</string>
+    <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
 </resources>
