@@ -24,6 +24,7 @@ import androidx.navigation.navArgument
 import de.mm20.launcher2.licenses.AppLicense
 import de.mm20.launcher2.licenses.OpenSourceLicenses
 import de.mm20.launcher2.ui.base.BaseActivity
+import de.mm20.launcher2.ui.base.ProvideCurrentTime
 import de.mm20.launcher2.ui.base.ProvideSettings
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalNavController
@@ -83,152 +84,154 @@ class SettingsActivity : BaseActivity() {
                 LocalWallpaperColors provides wallpaperColors,
             ) {
                 ProvideSettings {
-                    LauncherTheme {
-                        val systemBarColor = MaterialTheme.colorScheme.surfaceDim
-                        val systemBarColorAlt = MaterialTheme.colorScheme.onSurface
-                        val isDarkTheme = LocalDarkTheme.current
-                        LaunchedEffect(isDarkTheme, systemBarColor, systemBarColorAlt) {
-                            enableEdgeToEdge(
-                                if (isDarkTheme) SystemBarStyle.dark(systemBarColor.toArgb())
-                                else SystemBarStyle.light(systemBarColor.toArgb(), systemBarColorAlt.toArgb())
-                            )
-                        }
-                        OverlayHost {
-                            NavHost(
-                                navController = navController,
-                                startDestination = "settings",
-                                exitTransition = {
-                                    fadeOut() + scaleOut(targetScale = 0.5f)
-                                },
-                                enterTransition = {
-                                    slideInHorizontally { it }
-                                },
-                                popEnterTransition = {
-                                    fadeIn() + scaleIn(initialScale = 0.5f)
-                                },
-                                popExitTransition = {
-                                    slideOutHorizontally { it }
-                                },
-                            ) {
-                                composable("settings") {
-                                    MainSettingsScreen()
-                                }
-                                composable("settings/appearance") {
-                                    AppearanceSettingsScreen()
-                                }
-                                composable("settings/homescreen") {
-                                    HomescreenSettingsScreen()
-                                }
-                                composable("settings/icons") {
-                                    IconsSettingsScreen()
-                                }
-                                composable("settings/appearance/themes") {
-                                    ThemesSettingsScreen()
-                                }
-                                composable(
-                                    "settings/appearance/themes/{id}",
-                                    arguments = listOf(navArgument("id") {
-                                        nullable = false
-                                    })
+                    ProvideCurrentTime {
+                        LauncherTheme {
+                            val systemBarColor = MaterialTheme.colorScheme.surfaceDim
+                            val systemBarColorAlt = MaterialTheme.colorScheme.onSurface
+                            val isDarkTheme = LocalDarkTheme.current
+                            LaunchedEffect(isDarkTheme, systemBarColor, systemBarColorAlt) {
+                                enableEdgeToEdge(
+                                    if (isDarkTheme) SystemBarStyle.dark(systemBarColor.toArgb())
+                                    else SystemBarStyle.light(systemBarColor.toArgb(), systemBarColorAlt.toArgb())
+                                )
+                            }
+                            OverlayHost {
+                                NavHost(
+                                    navController = navController,
+                                    startDestination = "settings",
+                                    exitTransition = {
+                                        fadeOut() + scaleOut(targetScale = 0.5f)
+                                    },
+                                    enterTransition = {
+                                        slideInHorizontally { it }
+                                    },
+                                    popEnterTransition = {
+                                        fadeIn() + scaleIn(initialScale = 0.5f)
+                                    },
+                                    popExitTransition = {
+                                        slideOutHorizontally { it }
+                                    },
                                 ) {
-                                    val id = it.arguments?.getString("id")?.let {
-                                        UUID.fromString(it)
-                                    } ?: return@composable
-                                    ThemeSettingsScreen(id)
-                                }
-                                composable("settings/appearance/cards") {
-                                    CardsSettingsScreen()
-                                }
-                                composable("settings/search") {
-                                    SearchSettingsScreen()
-                                }
-                                composable("settings/gestures") {
-                                    GestureSettingsScreen()
-                                }
-                                composable("settings/search/unitconverter") {
-                                    UnitConverterSettingsScreen()
-                                }
-                                composable("settings/search/wikipedia") {
-                                    WikipediaSettingsScreen()
-                                }
-                                composable("settings/search/files") {
-                                    FileSearchSettingsScreen()
-                                }
-                                composable("settings/search/searchactions") {
-                                    SearchActionsSettingsScreen()
-                                }
-                                composable("settings/search/hiddenitems") {
-                                    HiddenItemsSettingsScreen()
-                                }
-                                composable("settings/search/tags") {
-                                    TagsSettingsScreen()
-                                }
-                                composable(ROUTE_WEATHER_INTEGRATION) {
-                                    WeatherIntegrationSettingsScreen()
-                                }
-                                composable(ROUTE_MEDIA_INTEGRATION) {
-                                    MediaIntegrationSettingsScreen()
-                                }
-                                composable("settings/favorites") {
-                                    FavoritesSettingsScreen()
-                                }
-                                composable("settings/integrations") {
-                                    IntegrationsSettingsScreen()
-                                }
-                                composable("settings/plugins") {
-                                    PluginsSettingsScreen()
-                                }
-                                composable("settings/plugins/{id}") {
-                                    PluginSettingsScreen(it.arguments?.getString("id") ?: return@composable)
-                                }
-                                composable("settings/about") {
-                                    AboutSettingsScreen()
-                                }
-                                composable("settings/about/buildinfo") {
-                                    BuildInfoSettingsScreen()
-                                }
-                                composable("settings/about/easteregg") {
-                                    EasterEggSettingsScreen()
-                                }
-                                composable("settings/debug") {
-                                    DebugSettingsScreen()
-                                }
-                                composable("settings/backup") {
-                                    BackupSettingsScreen()
-                                }
-                                composable("settings/debug/crashreporter") {
-                                    CrashReporterScreen()
-                                }
-                                composable("settings/debug/logs") {
-                                    LogScreen()
-                                }
-                                composable(
-                                    "settings/debug/crashreporter/report?fileName={fileName}",
-                                    arguments = listOf(navArgument("fileName") {
-                                        nullable = false
-                                    })
-                                ) {
-                                    val fileName = it.arguments?.getString("fileName")
-                                        ?.let {
-                                            URLDecoder.decode(it, "utf8")
-                                        }
-                                    CrashReportScreen(fileName!!)
-                                }
-                                composable(
-                                    "settings/license?library={libraryName}",
-                                    arguments = listOf(navArgument("libraryName") {
-                                        nullable = true
-                                    })
-                                ) {
-                                    val libraryName = it.arguments?.getString("libraryName")
-                                    val library = remember(libraryName) {
-                                        if (libraryName == null) {
-                                            AppLicense.get(this@SettingsActivity)
-                                        } else {
-                                            OpenSourceLicenses.first { it.name == libraryName }
-                                        }
+                                    composable("settings") {
+                                        MainSettingsScreen()
                                     }
-                                    LicenseScreen(library)
+                                    composable("settings/appearance") {
+                                        AppearanceSettingsScreen()
+                                    }
+                                    composable("settings/homescreen") {
+                                        HomescreenSettingsScreen()
+                                    }
+                                    composable("settings/icons") {
+                                        IconsSettingsScreen()
+                                    }
+                                    composable("settings/appearance/themes") {
+                                        ThemesSettingsScreen()
+                                    }
+                                    composable(
+                                        "settings/appearance/themes/{id}",
+                                        arguments = listOf(navArgument("id") {
+                                            nullable = false
+                                        })
+                                    ) {
+                                        val id = it.arguments?.getString("id")?.let {
+                                            UUID.fromString(it)
+                                        } ?: return@composable
+                                        ThemeSettingsScreen(id)
+                                    }
+                                    composable("settings/appearance/cards") {
+                                        CardsSettingsScreen()
+                                    }
+                                    composable("settings/search") {
+                                        SearchSettingsScreen()
+                                    }
+                                    composable("settings/gestures") {
+                                        GestureSettingsScreen()
+                                    }
+                                    composable("settings/search/unitconverter") {
+                                        UnitConverterSettingsScreen()
+                                    }
+                                    composable("settings/search/wikipedia") {
+                                        WikipediaSettingsScreen()
+                                    }
+                                    composable("settings/search/files") {
+                                        FileSearchSettingsScreen()
+                                    }
+                                    composable("settings/search/searchactions") {
+                                        SearchActionsSettingsScreen()
+                                    }
+                                    composable("settings/search/hiddenitems") {
+                                        HiddenItemsSettingsScreen()
+                                    }
+                                    composable("settings/search/tags") {
+                                        TagsSettingsScreen()
+                                    }
+                                    composable(ROUTE_WEATHER_INTEGRATION) {
+                                        WeatherIntegrationSettingsScreen()
+                                    }
+                                    composable(ROUTE_MEDIA_INTEGRATION) {
+                                        MediaIntegrationSettingsScreen()
+                                    }
+                                    composable("settings/favorites") {
+                                        FavoritesSettingsScreen()
+                                    }
+                                    composable("settings/integrations") {
+                                        IntegrationsSettingsScreen()
+                                    }
+                                    composable("settings/plugins") {
+                                        PluginsSettingsScreen()
+                                    }
+                                    composable("settings/plugins/{id}") {
+                                        PluginSettingsScreen(it.arguments?.getString("id") ?: return@composable)
+                                    }
+                                    composable("settings/about") {
+                                        AboutSettingsScreen()
+                                    }
+                                    composable("settings/about/buildinfo") {
+                                        BuildInfoSettingsScreen()
+                                    }
+                                    composable("settings/about/easteregg") {
+                                        EasterEggSettingsScreen()
+                                    }
+                                    composable("settings/debug") {
+                                        DebugSettingsScreen()
+                                    }
+                                    composable("settings/backup") {
+                                        BackupSettingsScreen()
+                                    }
+                                    composable("settings/debug/crashreporter") {
+                                        CrashReporterScreen()
+                                    }
+                                    composable("settings/debug/logs") {
+                                        LogScreen()
+                                    }
+                                    composable(
+                                        "settings/debug/crashreporter/report?fileName={fileName}",
+                                        arguments = listOf(navArgument("fileName") {
+                                            nullable = false
+                                        })
+                                    ) {
+                                        val fileName = it.arguments?.getString("fileName")
+                                            ?.let {
+                                                URLDecoder.decode(it, "utf8")
+                                            }
+                                        CrashReportScreen(fileName!!)
+                                    }
+                                    composable(
+                                        "settings/license?library={libraryName}",
+                                        arguments = listOf(navArgument("libraryName") {
+                                            nullable = true
+                                        })
+                                    ) {
+                                        val libraryName = it.arguments?.getString("libraryName")
+                                        val library = remember(libraryName) {
+                                            if (libraryName == null) {
+                                                AppLicense.get(this@SettingsActivity)
+                                            } else {
+                                                OpenSourceLicenses.first { it.name == libraryName }
+                                            }
+                                        }
+                                        LicenseScreen(library)
+                                    }
                                 }
                             }
                         }

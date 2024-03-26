@@ -26,6 +26,8 @@ data class LauncherSettingsData(
     val clockWidgetCompact: Boolean = false,
     val clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
+    val clockWidgetShowSeconds: Boolean = true,
+    val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
@@ -175,7 +177,6 @@ sealed interface ClockWidgetStyle {
         @Serializable
         enum class Variant {
             Default,
-            MDY,
             OnePlus,
         }
     }
@@ -195,6 +196,10 @@ sealed interface ClockWidgetStyle {
     @Serializable
     @SerialName("binary")
     data object Binary : ClockWidgetStyle
+
+    @Serializable
+    @SerialName("segment")
+    data object Segment : ClockWidgetStyle
 
     @Serializable
     @SerialName("empty")
