@@ -141,6 +141,10 @@ fun UnitConverterItem(
     }
 }
 
+fun Dimension.getIcon() : ImageVector {
+    return getDimensionIcon(this)
+}
+
 fun getDimensionIcon(dimension: Dimension): ImageVector {
     return when (dimension) {
         Dimension.Mass -> Icons.Rounded.FitnessCenter
