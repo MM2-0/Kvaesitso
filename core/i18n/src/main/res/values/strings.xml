@@ -896,6 +896,6 @@
     <string name="plugin_badge_official">Official</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
-    <string name="cached_searchable">This value is possibly outdated because of connectivity issues.</string>
+    <string name="cached_searchable">Showing a cached version, information might be outdated.</string>
     <string name="unavailable_searchable">This item does not exist anymore.</string>
 </resources>
