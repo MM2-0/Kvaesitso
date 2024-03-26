@@ -7,7 +7,7 @@
     <!-- Shown when a location search result opens in TIMESPAN on the same day -->
     <string name="location_open_next">Opens in %1$s</string>
     <!-- Shown when a location search result opens next DAY-OF-WEEK -->
-    <string name="location_open_next_day">Opens next %1$s</string>
+    <string name="location_open_next_day">Opens on %1$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
@@ -28,8 +28,8 @@
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
     <string name="menu_hide">Hide</string>
-    <string name="menu_map">Map</string>
-    <string name="menu_website">Website</string>
+    <string name="menu_map">View on map</string>
+    <string name="menu_website">Open website</string>
     <string name="menu_unhide">Don\'t hide</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="msg_item_hidden">%1$s has been hidden.</string>
