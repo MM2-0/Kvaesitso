@@ -704,4 +704,5 @@
     <string name="preference_search_locations_hide_uncategorized_summary">Nur Ergebnisse mit klar definierten, wie „Café“ oder „Restaurant“ anzeigen</string>
     <string name="preference_search_locations_show_map">Karte</string>
     <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
+    <string name="location_open_24_7">24/7 geöffnet</string>
 </resources>
