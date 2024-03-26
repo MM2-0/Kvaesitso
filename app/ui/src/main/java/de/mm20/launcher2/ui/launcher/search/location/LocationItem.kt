@@ -111,8 +111,6 @@ fun LocationItem(
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
-    var showBugreportDialog by remember { mutableStateOf(false) }
-
     Row(modifier = modifier) {
         Column {
             Row(
@@ -445,7 +443,11 @@ fun LocationItem(
                             label = stringResource(id = R.string.menu_bugreport),
                             icon = Icons.Rounded.BugReport,
                         ) {
-                            showBugreportDialog = true
+                            context.tryStartActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
+                                )
+                            )
                         }
                     }
 
@@ -462,58 +464,6 @@ fun LocationItem(
                 }
             }
         }
-    }
-
-    if (showBugreportDialog && location.fixMeUrl != null) {
-        AlertDialog(
-            containerColor = MaterialTheme.colorScheme.surface,
-            tonalElevation = 35.dp,
-            confirmButton = {
-                TextButton(
-                    onClick = { showBugreportDialog = false },
-                    shape = MaterialTheme.shapes.medium,
-                ) {
-                    Text(
-                        text = stringResource(id = android.R.string.ok),
-                        style = MaterialTheme.typography.labelLarge,
-                    )
-                }
-            },
-            onDismissRequest = {
-                showBugreportDialog = false
-            },
-            text = {
-                Column(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.alert_bugreport),
-                        style = MaterialTheme.typography.bodyLarge,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        softWrap = true,
-                        textAlign = TextAlign.Justify
-                    )
-                    HorizontalDivider(Modifier.padding(vertical = 8.dp))
-                    Text(
-                        modifier = modifier.clickable {
-                            showBugreportDialog = false
-                            viewModel.viewModelScope.launch {
-                                context.tryStartActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
-                                    )
-                                )
-                            }
-                        },
-                        text = location.fixMeUrl!!,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
-        )
     }
 }
 
