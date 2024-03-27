@@ -3,6 +3,7 @@ package de.mm20.launcher2.websites
 import android.content.Context
 import android.webkit.URLUtil
 import androidx.core.graphics.toColorInt
+import de.mm20.launcher2.ktx.splitAtFirst
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.search.SearchableRepository
 import de.mm20.launcher2.search.Website
@@ -24,6 +25,9 @@ import java.net.URISyntaxException
 import java.net.URL
 import java.util.concurrent.TimeUnit
 
+private val DomainRegex by lazy {
+    Regex("""^(?:(?!-)[-\w]+(?<!-)\.)+[^\d\W_]+$""", RegexOption.IGNORE_CASE)
+}
 
 internal class WebsiteRepository(
     val context: Context,
@@ -53,13 +57,35 @@ internal class WebsiteRepository(
         }
     }
 
+    private val protocols = listOf("http://", "https://")
     private suspend fun queryWebsite(query: String): Website? {
         val result = withContext(Dispatchers.IO) {
-            var url = query
-            val protocol = "https://"
-            if (!query.startsWith("https://") && !query.startsWith("http://")) url =
-                "$protocol$query"
-            if (!URLUtil.isValidUrl(url)) return@withContext null
+
+            val query = query.trim()
+
+            var url = when {
+                protocols.any { query.startsWith(it) } -> {
+                    if (query.substringAfter("://").isEmpty()) return@withContext null
+                    query // expect user knows what they are doing
+                }
+
+                // deny any other protocol & malformed queries
+                query.contains("://") -> return@withContext null
+
+                // "hello. world"
+                query.any { it.isWhitespace() } -> return@withContext null
+
+                else -> {
+                    val (domain, path) = query.splitAtFirst('/')
+
+                    if (!DomainRegex.matches(domain)) return@withContext null
+
+                    "https://$domain${path.takeIf { it.isNotBlank() }?.let { "/$it" }.orEmpty()}"
+                }
+            }
+
+            if (!URLUtil.isNetworkUrl(url)) return@withContext null
+
             try {
                 val request = Request.Builder()
                     .url(URL(url))
