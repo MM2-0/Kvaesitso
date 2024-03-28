@@ -1,17 +1,26 @@
 package de.mm20.launcher2.ui.settings.search
 
+import android.content.Context
+import android.content.pm.LauncherApps
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.getSystemService
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.preferences.SearchResultOrder
@@ -20,14 +29,27 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.*
 import de.mm20.launcher2.ui.icons.Wikipedia
 import de.mm20.launcher2.ui.locals.LocalNavController
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 
 @Composable
 fun SearchSettingsScreen() {
 
     val viewModel: SearchSettingsScreenVM = viewModel()
     val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val navController = LocalNavController.current
+
+    val hasWorkProfile by viewModel.hasWorkProfile
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.onResume(context)
+        }
+    }
+
 
     PreferenceScreen(title = stringResource(R.string.preference_screen_search)) {
         item {
@@ -55,7 +77,9 @@ fun SearchSettingsScreen() {
                     }
                 )
 
-                val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(null)
+                val hasContactsPermission by viewModel.hasContactsPermission.collectAsStateWithLifecycle(
+                    null
+                )
                 AnimatedVisibility(hasContactsPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(R.string.missing_permission_contact_search_settings),
@@ -77,7 +101,9 @@ fun SearchSettingsScreen() {
                     enabled = hasContactsPermission == true
                 )
 
-                val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(null)
+                val hasCalendarPermission by viewModel.hasCalendarPermission.collectAsStateWithLifecycle(
+                    null
+                )
                 AnimatedVisibility(hasCalendarPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(R.string.missing_permission_calendar_search_settings),
@@ -99,7 +125,9 @@ fun SearchSettingsScreen() {
                     enabled = hasCalendarPermission == true
                 )
 
-                val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(null)
+                val hasAppShortcutsPermission by viewModel.hasAppShortcutPermission.collectAsStateWithLifecycle(
+                    null
+                )
                 AnimatedVisibility(hasAppShortcutsPermission == false) {
                     MissingPermissionBanner(
                         text = stringResource(
@@ -176,7 +204,7 @@ fun SearchSettingsScreen() {
 
                 val locations by viewModel.locations.collectAsStateWithLifecycle(null)
                 PreferenceWithSwitch(
-                    title= stringResource(R.string.preference_search_locations),
+                    title = stringResource(R.string.preference_search_locations),
                     summary = stringResource(R.string.preference_search_locations_summary),
                     icon = Icons.Rounded.Place,
                     switchValue = locations == true,
@@ -216,16 +244,24 @@ fun SearchSettingsScreen() {
                         navController?.navigate("settings/search/tags")
                     }
                 )
-                val separateWorkProfile by viewModel.separateWorkProfile.collectAsStateWithLifecycle(null)
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_bar_separate_work_profile),
-                    summary = stringResource(R.string.preference_search_bar_separate_work_profile_summary),
-                    icon = Icons.Rounded.Work,
-                    value = separateWorkProfile == true,
-                    onValueChanged = {
-                        viewModel.setSeparateWorkProfile(it)
-                    }
-                )
+            }
+        }
+        if (hasWorkProfile) {
+            item {
+                PreferenceCategory {
+                    val separateWorkProfile by viewModel.separateWorkProfile.collectAsStateWithLifecycle(
+                        null
+                    )
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_search_bar_separate_work_profile),
+                        summary = stringResource(R.string.preference_search_bar_separate_work_profile_summary),
+                        icon = Icons.Rounded.Work,
+                        value = separateWorkProfile == true,
+                        onValueChanged = {
+                            viewModel.setSeparateWorkProfile(it)
+                        }
+                    )
+                }
             }
         }
         item {
@@ -253,7 +289,9 @@ fun SearchSettingsScreen() {
         }
         item {
             PreferenceCategory {
-                val searchResultOrdering by viewModel.searchResultOrdering.collectAsStateWithLifecycle(null)
+                val searchResultOrdering by viewModel.searchResultOrdering.collectAsStateWithLifecycle(
+                    null
+                )
                 ListPreference(
                     title = stringResource(R.string.preference_search_result_ordering),
                     items = listOf(
@@ -267,8 +305,11 @@ fun SearchSettingsScreen() {
                     icon = Icons.Rounded.Sort
                 )
 
-                val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(null)
-                ListPreference(title = stringResource(R.string.preference_layout_search_results),
+                val reverseSearchResults by viewModel.reverseSearchResults.collectAsStateWithLifecycle(
+                    null
+                )
+                ListPreference(
+                    title = stringResource(R.string.preference_layout_search_results),
                     items = listOf(
                         stringResource(R.string.search_results_order_top_down) to false,
                         stringResource(R.string.search_results_order_bottom_up) to true,
