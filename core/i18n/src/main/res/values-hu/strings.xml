@@ -55,8 +55,8 @@
     <string name="file_type_ebook">E-book</string>
     <string name="file_type_drawing">Rajz</string>
     <string name="file_type_generic">%1$s fájl</string>
-    <string name="alert_delete_file">A(z) %1$s fájl véglegesen törlve lesz. Folytatod?</string>
-    <string name="alert_delete_shortcut">A(z) %1$s parancsikon véglegesen törölve lesz. Folytatod?</string>
+    <string name="alert_delete_file">A(z) %1$s fájl véglegesen törlődni fog. Folytatja?</string>
+    <string name="alert_delete_shortcut">A(z) %1$s parancsikon véglegesen törölődni fog. Folytatja?</string>
     <string name="error_activity_not_found">Nem sikerült megnyitni a következőt: %1$s</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
@@ -87,7 +87,7 @@
     <string name="file_type_presentation">Prezentáció</string>
     <string name="file_type_form">Űrlap</string>
     <string name="file_type_launcherbackup">%1$s biztonsági mentés</string>
-    <string name="alert_delete_directory">A(z) %1$s könyvtár és annak összes tartalma véglegesen törlődik. Folytatod?</string>
+    <string name="alert_delete_directory">A(z) %1$s könyvtár és annak teljes tartalma véglegesen törlődni fog. Folytatatja?</string>
     <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
@@ -97,7 +97,7 @@
     <string name="websearch_dialog_import_url">Importálás URL-címről</string>
     <string name="widget_name_weather">Időjárás</string>
     <string name="widget_add_external">Továbbiak</string>
-    <string name="easter_egg_1">Itt nincsenek Easter Egg-ek, hacsak nem hoztál magaddal.</string>
+    <string name="easter_egg_1">Itt nincsenek Easter Egg-ek, hacsak nem hozott magával.</string>
     <string name="close">Bezárás</string>
     <string name="action_continue">Tovább</string>
     <string name="widget_action_settings">Beállítások</string>
@@ -114,7 +114,7 @@
     <string name="websearch_dialog_query_encoding">A lekérdezés kódolása</string>
     <string name="websearch_dialog_query_encoding_url">Százalékos-kódolás</string>
     <string name="save">Mentés</string>
-    <string name="easter_egg_text">Nos, megtaláltál. Gratulálok. Megérte\?</string>
+    <string name="easter_egg_text">Nos, megtalált. Gratulálok. Megérte?</string>
     <string name="edit_favorites_dialog_unpinned">Nincs kitűzve - gyakran használt</string>
     <string name="edit_favorites_dialog_pinned_unsorted">Kitűzött - automatikusan rendezett</string>
     <string name="owncloud_server_invalid_url">Ez az URL nem egy érvényes Owncloud telepítésre mutat</string>
@@ -127,15 +127,15 @@
     <string name="music_widget_default_title">A(z) %1$s médiát játszik le</string>
     <string name="weather_condition_lightsnowshowers">Enyhe hó záporok</string>
     <string name="widget_name_notes">Jegyzet</string>
-    <string name="easter_egg_2">Kérlek, hagyd abba, csak az idődet vesztegeted</string>
+    <string name="easter_egg_2">Hagyja abba, csak az idejét vesztegeti</string>
     <string name="edit_favorites_dialog_pinned_sorted">Kitűzött - kézzel rendezett</string>
     <string name="edit_favorites_dialog_new_tag">Címke készítése…</string>
-    <string name="nextcloud_server_url">Nextcloud szerver URL</string>
+    <string name="nextcloud_server_url">Nextcloud kiszolgáló címe</string>
     <string name="edit_favorites_dialog_tag_section_empty">A kitűzött címkék itt jelennek meg</string>
     <string name="owncloud_username">Felhasználónév</string>
-    <string name="owncloud_login_2fa_hint">Ha engedélyezted a kétfaktoros hitelesítést, akkor itt egy alkalmazásjelszót kell használnod.</string>
+    <string name="owncloud_login_2fa_hint">Ha engedélyezte a kétfaktoros hitelesítést, akkor itt egy alkalmazásjelszót kell használnia.</string>
     <string name="owncloud_login_failed">A bejelentkezés sikertelen: helytelen felhasználónév vagy jelszó.</string>
-    <string name="owncloud_server_url">Owncloud szerver URL</string>
+    <string name="owncloud_server_url">Owncloud kiszolgáló címe</string>
     <string name="calendar_widget_pinned_events">Közelgő</string>
     <string name="calendar_widget_next_events">Következő esemény</string>
     <string name="unit_converter_show_all">Mindent mutat</string>
@@ -145,7 +145,7 @@
     <string name="weather_condition_lightsnowandthunder">Enyhe havazás és mennydörgés</string>
     <string name="notes_widget_action_new">Új jegyzet</string>
     <string name="notes_widget_action_save">Mentés</string>
-    <string name="notes_widget_placeholder">Írj egy jegyzetet…</string>
+    <string name="notes_widget_placeholder">Jegyzet készítése…</string>
     <string name="notes_widget_export_filename">Jegyzet_%1$s</string>
     <string name="notes_widget_action_dismiss">Elvetés</string>
     <string name="notes_widget_dismissed">Jegyzet elvetve.</string>
@@ -169,7 +169,7 @@
     <string name="wind_east_south_east">Kelet-délkelet</string>
     <string name="wind_south_east">Délkelet</string>
     <string name="wind_north_north_west">Észak-északnyugat</string>
-    <string name="nextcloud_server_url_empty">Szerver URL nem lehet üres</string>
+    <string name="nextcloud_server_url_empty">Kiszolgáló címe nem lehet üres</string>
     <string name="owncloud_username_empty">A felhasználónév nem lehet üres</string>
     <string name="disclaimer_currency_converter">Az Európai Központi Bank által naponta egyszer közzétett árfolyamok. Minden információ \"úgy, ahogy van\", mindenféle garancia nélkül. Ezen információkért semmilyen felelősséget nem vállalunk.
 \n
@@ -182,7 +182,7 @@
     <string name="weather_condition_lightrainshowersandthunder">Enyhe eső záporok és mennydörgés</string>
     <string name="weather_condition_lightsnow">Enyhe havazás</string>
     <string name="weather_condition_heavysleetshowersandthunder">Heves havas eső záporok és mennydörgés</string>
-    <string name="file_type_launchertheme">%1$s téma</string>
+    <string name="file_type_launchertheme">%1$s színséma</string>
     <string name="preference_charging_animation">Töltés animáció</string>
     <string name="file_meta_dimensions">Méretek: %1$s</string>
     <string name="websearch_dialog_url_description">A \'${1}\' helyőrzőbe a tényleges keresési kifejezés kerül.</string>
@@ -197,11 +197,11 @@
     <string name="weather_condition_heavysnowandthunder">Heves havazás és mennydörgés</string>
     <string name="weather_widget_set_location">Helyszín kiválasztása</string>
     <string name="weather_location_search_no_result">A helyszín nem található.</string>
-    <string name="missing_permission_appshortcuts_search">Állítsd be a(z) %1$s alkalmazást alapértelmezett indítóként az alkalmazások parancsikonjainak kereséséhez.</string>
+    <string name="missing_permission_appshortcuts_search">Állítsa be a(z) %1$s alkalmazást alapértelmezett indítóként az alkalmazások parancsikonjainak kereséséhez.</string>
     <string name="preference_colors_default">Alapértelmezett</string>
     <string name="missing_permission_plugins">A bővítmények használatához bővítményengedély szükséges.</string>
     <string name="preference_custom_colors_simple_mode">Egyszerű mód</string>
-    <string name="preference_force_themed_icons">Témázott ikonok kényszerítése</string>
+    <string name="preference_force_themed_icons">Ikonok kényszerítése a színsémához</string>
     <string name="preference_compact_mode_summary">Óránkénti és napi előrejelzések elrejtése</string>
     <string name="missing_permission_music_widget">A médialejátszás vezérléséhez értesítési hozzáférés szükséges</string>
     <string name="missing_permission_calendar_search">A naptárban való kereséshez szükséges a naptárhoz való hozzáférés engedélyezése.</string>
@@ -212,7 +212,7 @@
         <item quantity="other">%1$d bejegyzés törölve</item>
     </plurals>
     <string name="preference_screen_integrations_summary">Csatlakoztatott fiókok és szolgáltatások kezelése</string>
-    <string name="missing_permission_calendar_widget">Adj engedélyt a naptárnak a közelgő találkozók és események megjelenítéséhez.</string>
+    <string name="missing_permission_calendar_widget">Adjon engedélyt a naptárnak a közelgő találkozók és események megjelenítéséhez.</string>
     <string name="weather_condition_heavysnowshowers">Heves hó záporok</string>
     <string name="preference_colors_bw">Fekete-fehér</string>
     <string name="preference_custom_colors_advanced_mode">Haladó mód</string>
@@ -233,7 +233,7 @@
     <string name="preference_icon_shape_hexagon">Hatszög</string>
     <string name="preference_category_searchbar">Keresés sáv</string>
     <string name="missing_permission_file_search_settings">A helyi fájlok kereséséhez, tárhely engedélyre van szükség</string>
-    <string name="widget_config_calendar_missing_calendars_hint">Nem találod a naptárakat?</string>
+    <string name="widget_config_calendar_missing_calendars_hint">Nem találja a naptárakat?</string>
     <string name="missing_permission_file_search_settings_android10">A helyi fájlok kereséséhez, összes fájl kezelése engedélyre van szükség</string>
     <string name="missing_permission_contact_search">A névjegyek kereséséhez névjegy hozzáférésre van szükség.</string>
     <string name="preference_category_debug">Hibakeresés</string>
@@ -256,7 +256,7 @@
     <string name="preference_version">Verzió</string>
     <string name="preference_category_system_bars">Rendszer sávok</string>
     <string name="preference_layout">Elrendezés</string>
-    <string name="preference_theme">Téma</string>
+    <string name="preference_theme">Színséma</string>
     <string name="preference_status_bar_icons">Állapotsori ikonok</string>
     <string name="preference_category_links">Linkek</string>
     <string name="preference_hide_nav_bar">Navigációs sáv elrejtése</string>
@@ -328,7 +328,7 @@
     <string name="preference_screen_plugins">Bővítmények</string>
     <string name="preference_screen_plugins_summary">Telepített kiterjesztések kezelése</string>
     <string name="no_plugins_installed">Nincsenek telepített bővítmények</string>
-    <string name="plugin_host_not_installed">Bővítmény hoszt nincs telepítve</string>
+    <string name="plugin_host_not_installed">Bővítmény kiszolgáló nincs telepítve</string>
     <string name="preference_theme_system">Kövesse a rendszer beállításait</string>
     <string name="preference_themed_icons">Témázott ikonok</string>
     <string name="preference_icon_pack">Ikoncsomag</string>
@@ -354,9 +354,9 @@
     <string name="weather_condition_heavyrainshowersandthunder">Heves eső záporok és mennydörgés</string>
     <string name="weather_condition_heavysleetandthunder">Heves havas eső és mennydörgés</string>
     <string name="missing_permission_files_search">A fényképek, média és dokumentumok kereséséhez tárhely engedélyre van szükség.</string>
-    <string name="missing_permission_appshortcuts_create">Állítsd be a(z) %1$s alkalmazást alapértelmezett indító alkalmazásként a parancsikonok létrehozásához.</string>
+    <string name="missing_permission_appshortcuts_create">Állítsa be a(z) %1$s alkalmazást alapértelmezett indító alkalmazásként a parancsikonok létrehozásához.</string>
     <string name="preference_custom_colors_a2">Másodlagos</string>
-    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Kérjük, győződj meg róla, hogy érvényes témafájlt (*.kvtheme) választottál ki és hogy a fájl nem sérült.</string>
+    <string name="import_theme_error">A kiválasztott fájlt nem lehetett beolvasni. Győződjön meg róla, hogy érvényes színsémát (*.kvtheme) választott ki és hogy a fájl nem sérült-e.</string>
     <string name="preference_hidden_items_reveal_button">Kinyit gomb megjelenítése</string>
     <string name="favorites_empty_tag">Nincsenek elemek ilyen címkével</string>
     <string name="preference_layout_open_search">Keresés / alkalmazás tár</string>
@@ -371,7 +371,7 @@
         <item quantity="one">%1$d naptár kiválasztva</item>
         <item quantity="other">%1$d naptár kiválasztva</item>
     </plurals>
-    <string name="plugin_state_setup_required">Először be kell állítanod ezt a bővítményt</string>
+    <string name="plugin_state_setup_required">Először be kell állítani ezt a bővítményt</string>
     <string name="plugin_action_setup">Beállítás</string>
     <string name="plugin_type_weather">Időjárás-előrejelzés szolgáltató</string>
     <string name="plugin_weather_provider_enable">Beállítás időjárás-előrejelzés szolgáltatónak</string>
@@ -387,13 +387,13 @@
     <string name="preference_wikipedia_customurl">Wikipedia URL</string>
     <string name="preference_screen_icons_summary">Rács, ikonméret, ikoncsomagok, jelvények</string>
     <string name="backup_component_themes">Színsémák</string>
-    <string name="backup_select_components">Válaszd ki, hogy miről szeretnél biztonsági másolatot készíteni:</string>
+    <string name="backup_select_components">Válassza ki, hogy miről szeretne biztonsági másolatot készíteni:</string>
     <string name="apps_profile_main">Személyes</string>
     <string name="favorites_empty">A kitűzött és gyakran használt elemek itt jelennek meg</string>
     <string name="create_app_shortcut">Parancsikon létrehozása</string>
     <string name="frequently_used_show_in_favorites">Megjelenítés a kedvencekben</string>
     <string name="search_action_timer">Időzítő indítása</string>
-    <string name="tag_exists_message">Egy ilyen nevű címke már létezik. Ha folytatod, a két címke egyesül.</string>
+    <string name="tag_exists_message">Egy ilyen nevű címke már létezik. Ha folytatja, a két címke egyesül.</string>
     <string name="tag_empty_message">A címke neve nem lehet üres.</string>
     <string name="search_action_contact">Hozzáadás a névjegyekhez</string>
     <string name="search_bar_position_top">Fent</string>
@@ -433,7 +433,7 @@
     <string name="preference_shortcut_badges_summary">Egy jelvény megjelenítése, amely jelzi, hogy egy parancsikon melyik alkalmazáshoz tartozik</string>
     <string name="app_widget_loading_failed">Az alkalmazás widgetet nem sikerült betölteni.</string>
     <string name="preference_screen_search">Keresés</string>
-    <string name="preference_nextcloud_signin_summary">A Nextcloud szervereden való kereséshez be kell jelentkezned</string>
+    <string name="preference_nextcloud_signin_summary">A Nextcloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_screen_musicwidget">Zene</string>
     <string name="preference_screen_debug_summary">Hibaelhárító eszközök</string>
     <string name="preference_category_widgets">Widgetek</string>
@@ -447,14 +447,14 @@
     <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés URL</string>
-    <string name="preference_google_signin_summary">Bejelentkezés a Google Drive kereséséhez</string>
+    <string name="preference_google_signin_summary">A Google Drive kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_edit_favorites_summary">A kitűzött elemek sorrendjének módosítása</string>
     <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a widgetek hozzáadásához, eltávolításához és átrendezéséhez</string>
-    <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. Lehetséges, hogy áthelyezték vagy törölték. A másolat visszaállításra került a Kvaesitso belső tárolójából. Ha szerkeszted a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül.</string>
+    <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. Lehetséges, hogy áthelyezték vagy törölték. A másolat visszaállításra került a Kvaesitso belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül.</string>
     <string name="plugin_state_error">Ez a bővítmény nem működik megfelelően</string>
     <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
     <string name="preference_search_websearch_summary">A különböző keresőmotorok parancsikonjainak megjelenítése</string>
-    <string name="preference_search_files_summary">Keress helyi- és felhőfájlokat</string>
+    <string name="preference_search_files_summary">Keresés helyi- és felhőfájlok között</string>
     <string name="preference_search_cloud_summary">Keresés a(z) %1$s fájljai között</string>
     <string name="preference_favorites_frequently_used_summary">Gyakran használt elemek megjelenítése a kedvencek között</string>
     <string name="backup_component_settings">Beállítások</string>
@@ -463,8 +463,8 @@
         <item quantity="other">%1$d kiválasztott elem</item>
     </plurals>
     <string name="open_search_swipe_left">Balra húzás</string>
-    <string name="preference_search_contacts_summary">Névjegyek keresése ezen az eszközön</string>
-    <string name="no_account_owncloud">Még nem csatlakoztatottál Owncloud fiókot</string>
+    <string name="preference_search_contacts_summary">Keresés a névjegyek között</string>
+    <string name="no_account_owncloud">Még nem kapcsolódik egyetlen Owncloud fiókhoz sem</string>
     <string name="backup_complete">A biztonsági mentés befejeződött.</string>
     <string name="search_action_message">Üzenet</string>
     <string name="preference_calendar_calendars">Naptárak</string>
@@ -475,7 +475,7 @@
     <string name="preference_layout_fixed_search_bar">Rögzített keresősáv</string>
     <string name="preference_screen_tags">Címkék</string>
     <string name="backup_not_included">A csatlakoztatott fiókokról nem készül biztonsági másolat. A harmadik féltől származó alkalmazások widgetjeit csak ezen az eszközön lehet visszaállítani.</string>
-    <string name="backup_component_favorites">Kedvencek &amp; rejtett alkalmazások</string>
+    <string name="backup_component_favorites">Kedvencek és rejtett alkalmazások</string>
     <string name="restore_meta">A visszaállítani kívánt biztonsági mentés %1$s-kor lett létrehozva, a(z) %2$s készüléken, ezzel: %3$s.</string>
     <string name="search_action_websearch_url_hint">Az URL-sablon, amelyet az internetes keresés URL-jének létrehozásához használatos. Használd a ‘${1}’ szót a tényleges keresési kifejezés helyőrzőjeként, pl. https://google.com/search?q=${1}.</string>
     <plurals name="battery_part_remaining_charge_time">
@@ -483,11 +483,11 @@
         <item quantity="other">%1$s perc múlva feltöltődik</item>
     </plurals>
     <string name="search_action_event">Esemény ütemezése</string>
-    <string name="create_search_action_website_url">Add meg a weboldal címét:</string>
+    <string name="create_search_action_website_url">Adja meg a weboldal címét:</string>
     <string name="search_results_order_bottom_up">Lentről-fölfelé</string>
-    <string name="tag_no_items_message">Ehhez a címkéhez nincsenek elemek hozzárendelve. Ha folytatod, a címke törlődik.</string>
+    <string name="tag_no_items_message">Ehhez a címkéhez nincsenek elemek hozzárendelve. Ha folytatja, a címke törlődik.</string>
     <string name="tag_select_items">Elemek kiválasztása:</string>
-    <string name="gesture_failed_message">Egy \"%1$s\" gesztust hajtottál végre. Ez a gesztus jelenleg egy \"%2$s\" művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
+    <string name="gesture_failed_message">Egy \"%1$s\" gesztust hajtott végre. Ez a gesztus jelenleg egy \"%2$s\" művelet kiváltására van beállítva. Az akciót azonban a következő okból nem lehetett végrehajtani:</string>
     <string name="search_results_order_top_down">Föntről-lefelé</string>
     <string name="preference_gesture_swipe_down">Lefelé húzás</string>
     <string name="gesture_action_power_menu">Kikapcsolási menü megjelenítése</string>
@@ -498,7 +498,7 @@
     <string name="create_search_action_type_intent">Egyedi szándék</string>
     <string name="create_search_action_title">Új gyors művelet</string>
     <string name="edit_search_action_title">Gyors művelet szerkesztése</string>
-    <string name="create_search_action_website_invalid_url">Az adott weboldal nem importálható automatikusan webes keresésként. A következő lépésben megpróbálhatsz egy másik webhelyet, vagy manuálisan megadhatod a szükséges adatokat.</string>
+    <string name="create_search_action_website_invalid_url">Az adott weboldal nem importálható automatikusan webes keresésként. A következő lépésben megpróbálhat egy másik webhelyet, vagy manuálisan megadhatja a szükséges adatokat.</string>
     <string name="search_action_app">Alkalmazás</string>
     <string name="search_action_websearch_url">URL sablon</string>
     <string name="experimental_feature">Kísérleti</string>
@@ -512,11 +512,11 @@
     <string name="preference_edit_button">Szerkesztés gomb</string>
     <string name="preference_favorites_edit_button_summary">Egy gomb megjelenítése a kedvencek átrendezéséhez</string>
     <string name="preference_screen_icons">Rács és ikonok</string>
-    <string name="no_account_google">Még nem csatlakoztatottál Google fiókot</string>
-    <string name="connect_account">Fiók csatlakoztatása</string>
+    <string name="no_account_google">Még nem kapcsolódik egyetlen Google fiókhoz sem</string>
+    <string name="connect_account">Bejelentkezés a fiókba</string>
     <string name="backup_component_searchactions">Gyors művelet</string>
     <string name="backup_component_widgets">Beépített widgetek</string>
-    <string name="restore_select_components">Válaszd ki, hogy mit szeretnél visszaállítani. A meglévő adatok felülírásra kerülnek!</string>
+    <string name="restore_select_components">Válassza ki, hogy mit szeretne visszaállítani. A meglévő adatok felülírásra kerülnek!</string>
     <string name="icon_picker_search_icon">Keresés az ikoncsomagokban</string>
     <string name="icon_picker_no_packs_installed">Nincs telepítve ikoncsomag</string>
     <string name="search_bar_position_bottom">Lent</string>
@@ -526,7 +526,7 @@
     <string name="preference_gesture_double_tap">Dupla érintés</string>
     <string name="widget_config_appwidget_borderless">Szegély nélküli</string>
     <string name="apps_profile_work">Munka</string>
-    <string name="preference_search_result_ordering_alphabetic">Abc szerint</string>
+    <string name="preference_search_result_ordering_alphabetic">A-Z</string>
     <string name="preference_search_result_ordering_launch_count">Indítások száma</string>
     <string name="widget_config_weather_integration_settings">Az időjárás integráció beállításai</string>
     <string name="widget_config_calendar_no_calendars">Nem található naptár</string>
@@ -541,10 +541,10 @@
     <string name="preference_search_search_actions_summary">Gyorsműveletek és keresési parancsikonok konfigurálása</string>
     <string name="note_widget_action_relink_file">Újraválasztás</string>
     <string name="note_widget_conflict">Ütközés</string>
-    <string name="note_widget_conflict_action_resolve">Ütközések Megoldása</string>
-    <string name="note_widget_conflict_description">A hivatkozott fájl nem üres, és tartalma nem egyezik a jegyzet utolsó mentett verziójával. Melyik változatot szeretnéd megtartani?</string>
+    <string name="note_widget_conflict_action_resolve">Ütközések megoldása</string>
+    <string name="note_widget_conflict_description">A hivatkozott fájl nem üres, és a tartalma nem egyezik a jegyzet utolsó mentett verziójával. Melyik változatot szeretné megtartani?</string>
     <string name="preference_dim_wallpaper">Háttérkép homályosítása</string>
-    <string name="preference_dim_wallpaper_summary">Sötét témák esetén sötétítse a háttérképet</string>
+    <string name="preference_dim_wallpaper_summary">Sötét színsémák esetén sötétítse a háttérképet</string>
     <string name="preference_blur_wallpaper">Háttérkép elmosása</string>
     <string name="preference_blur_wallpaper_radius">Elmosási sugár</string>
     <string name="preference_screen_badges_summary">Ikonjelvények konfigurálása</string>
@@ -557,7 +557,7 @@
     <string name="preference_category_badges">Jelvények</string>
     <string name="preference_owncloud">Owncloud</string>
     <string name="preference_owncloud_signin">Bejelentkezés az Owncloud-ba</string>
-    <string name="preference_owncloud_signin_summary">Az Owncloud szervereden való kereséshez be kell jelentkezned</string>
+    <string name="preference_owncloud_signin_summary">Az Owncloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_enforce_icon_shape_summary">Alkalmazza az alakzatot az összes ikonra, beleértve azokat is, amelyek általában nem támogatnák</string>
     <string name="preference_category_license">Licenc</string>
     <string name="preference_about_license">Ez az alkalmazás egy ingyenes szoftver.</string>
@@ -584,7 +584,7 @@
     <string name="preference_clockwidget_music_part">Média</string>
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
-    <string name="preference_screen_backup">Biztonsági mentés és Visszaállítás</string>
+    <string name="preference_screen_backup">Biztonsági mentés és visszaállítás</string>
     <string name="preference_screen_backup_summary">Kvaesitso adatok exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
     <string name="preference_backup_summary">A beállítások és az indítóadatok exportálása</string>
@@ -596,9 +596,9 @@
     <string name="preference_search_favorites_summary">Rögzített és gyakran használt elemek megjelenítése az alkalmazásrács felett</string>
     <string name="preference_search_files">Fájlok</string>
     <string name="preference_search_calendar">Naptár</string>
-    <string name="preference_search_calendar_summary">Közelgő találkozók és események keresése</string>
-    <string name="preference_search_appshortcuts">Alkalmazás parancsikonok</string>
-    <string name="preference_search_appshortcuts_summary">Alkalmazás parancsikonok keresése</string>
+    <string name="preference_search_calendar_summary">Keresés a naptárban a közelgő találkozók és események között</string>
+    <string name="preference_search_appshortcuts">Alkalmazások</string>
+    <string name="preference_search_appshortcuts_summary">Keresés a telepített alkalmazások között</string>
     <string name="preference_search_calculator">Számológép</string>
     <string name="preference_search_calculator_summary">Matematikai kifejezések kiértékelése</string>
     <string name="preference_search_unitconverter">Mértékegység váltó</string>
@@ -616,7 +616,7 @@
     <string name="preference_screen_calendarwidget">Naptár</string>
     <string name="preference_search_wikipedia_pictures">Képek megjelenítése</string>
     <string name="preference_search_wikipedia_pictures_summary">Jelentősen növeli az adatforgalmat</string>
-    <string name="preference_google_signin">Bejelentkezés a Google segítségével</string>
+    <string name="preference_google_signin">Bejelentkezés a Google Drive-ba</string>
     <string name="preference_music_filter_sources">Zenei alkalmazások korlátozása</string>
     <string name="preference_music_filter_sources_summary">A nem zenei alkalmazások médiaműveleteinek figyelmen kívül hagyása</string>
     <string name="preference_search_bar_style">Stílus</string>
@@ -630,7 +630,7 @@
     <string name="preference_category_accounts">Fiókok</string>
     <string name="preference_weather_integration">Időjárás</string>
     <string name="preference_media_integration">Média vezérlés</string>
-    <string name="no_account_nextcloud">Még nem csatlakoztatottál Nextcloud fiókot</string>
+    <string name="no_account_nextcloud">Még nem kapcsolódik egyetlen Nextcloud fiókhoz sem</string>
     <string name="restore_invalid_file">A kiválasztott fájl nem tűnik biztonsági mentésnek. Biztos, hogy a megfelelő fájlt választottad ki?</string>
     <string name="restore_incompatible_file">Ez a biztonsági mentés a(z) %1$s egy másik verziójával készült, és ezzel a verzióval nem állítható vissza.</string>
     <string name="restore_complete">A biztonsági mentés visszaállítása megtörtént.</string>
@@ -655,7 +655,7 @@
     <string name="theme_color_scheme_custom_color">Egyedi</string>
     <string name="theme_color_scheme_palette_color">Paletta</string>
     <string name="preference_restore_default">Alapértelmezett visszaállítása</string>
-    <string name="import_theme_apply">Téma alkalmazása</string>
+    <string name="import_theme_apply">Színséma alkalmazása</string>
     <string name="shortcut_label_unavailable">Nem elérhető</string>
     <string name="edit_tag_title">címke szerkesztése</string>
     <string name="tag_exists_error">Egy ilyen nevű címke már létezik.</string>
@@ -669,7 +669,7 @@
     <string name="gesture_action_lock_screen">Képernyő kikapcsolása</string>
     <string name="gesture_action_quick_settings">Gyorsbeállítások megnyitása</string>
     <string name="missing_permission_accessibility_gesture_failed">A művelet végrehajtásához engedélyezni kell a Kvaesitso kisegítő lehetőségek szolgáltatását.</string>
-    <string name="preference_search_result_ordering_weighted">Használat</string>
+    <string name="preference_search_result_ordering_weighted">Utoljára használva</string>
     <string name="preference_search_result_ordering_weight_factor">Rugalmasság a rangsorolásban</string>
     <string name="preference_search_result_ordering_weight_factor_low">Stabíl</string>
     <string name="plugin_badge_official">Hivatalos</string>
@@ -678,4 +678,33 @@
     <string name="preference_mdy_color_source_wallpaper">Háttérkép</string>
     <string name="preference_category_advanced">Haladó</string>
     <string name="preference_plugin_enable">A bővítmény engedélyezése</string>
+    <string name="preference_search_locations">Helyek</string>
+    <string name="missing_permission_location_search">A közeli helyek kereséséhez engedélyezni kell a hozzáférést a helymeghatározó szolgáltatáshoz.</string>
+    <string name="preference_search_locations_summary">Keressen a környéken üzleteket és egyéb helyeket</string>
+    <string name="length_unit">Hosszúság mértékegysége</string>
+    <string name="imperial">Birodalmi</string>
+    <string name="metric">Metrikus</string>
+    <string name="preference_search_location_custom_overpass_url">Overpass URL</string>
+    <string name="preference_search_locations_hide_uncategorized">Kategorizálatlan helyek elrejtése</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Csak jól meghatározott kategóriák, például kávézók, vagy éttermek eredményeit jeleníti meg</string>
+    <string name="preference_search_locations_show_map">Térkép</string>
+    <string name="location_open_next_day">Kinyit ekkor: %1$s</string>
+    <string name="preference_search_locations_theme_map">Térkép színséma</string>
+    <string name="preference_search_locations_theme_map_summary">Az indító színsémájának alkalmazása a térképre</string>
+    <string name="preference_search_locations_show_position_on_map">Saját helyszín megjelenítése</string>
+    <string name="preference_search_location_custom_tile_server_url">Csempekiszolgáló címe</string>
+    <string name="menu_dial">Hívás</string>
+    <string name="location_open">Nyitva</string>
+    <string name="location_closed">Zárva</string>
+    <string name="location_open_until">Nyitva eddig: %1$s</string>
+    <string name="location_open_next">Kinyit ekkor: %1$s</string>
+    <string name="menu_map">Megtekintés a térképen</string>
+    <string name="menu_website">Weboldal megnyitása</string>
+    <string name="preference_search_locations_radius">Keresési körzet</string>
+    <string name="preference_search_locations_show_position_on_map_summary">Saját helyszínének megjelenítése a térképen</string>
+    <string name="preference_search_locations_show_map_summary">Térkép előnézet megjelenítése a helyekhez</string>
+    <string name="cached_searchable">A gyorsítótárazott verzió megjelenítése, az információ elavult lehet.</string>
+    <string name="menu_bugreport">Hiba bejelentése</string>
+    <string name="location_open_24_7">Nyitva 24/7</string>
+    <string name="unavailable_searchable">Ez az elem már nem létezik.</string>
 </resources>

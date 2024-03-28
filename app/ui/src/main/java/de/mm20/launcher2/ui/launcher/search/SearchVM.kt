@@ -90,6 +90,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
+    val separateWorkProfile = searchUiSettings.separateWorkProfile
+
     private val hiddenItemKeys = searchableRepository
         .getKeys(
             hidden = true,
