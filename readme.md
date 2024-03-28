@@ -6,6 +6,8 @@ Kvaesitso is a search focused, free and open source launcher for Android.
 
 [Website and documentation](https://kvaesitso.mm20.de)
 
+<img src="https://raw.githubusercontent.com/Drsheppard01/Kvaesitso/main/assets/screenshots/Screenshot_2024-02-22-19-21-56-40_94226bc2e387a4f039bd6db013273604.jpg" width="124"> <img src="https://raw.githubusercontent.com/Drsheppard01/Kvaesitso/main/assets/screenshots/Screenshot_2024-02-22-19-22-00-48_94226bc2e387a4f039bd6db013273604.jpg" width="124"> <img src="https://github.com/Drsheppard01/Kvaesitso/blob/main/assets/screenshots/Screenshot_2024-02-22-19-23-03-73_94226bc2e387a4f039bd6db013273604.jpg" width="124">
+
 ## Installation
 
 ### Using an F-Droid client and MM20's repo
