@@ -706,4 +706,7 @@
     <string name="preference_search_locations_hide_uncategorized">Unkategorisierte Orte ausblenden</string>
     <string name="location_open_24_7">24/7 geöffnet</string>
     <string name="cached_searchable">Es wird eine zwischengespeicherte Version angezeigt, die Informationen können veraltet sein.</string>
+    <string name="preference_search_bar_separate_work_profile">Arbeitsprofil-Apps trennen</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Apps im Arbeitsprofil in einem separaten Tab anzeigen</string>
+    <string name="unavailable_searchable">Dieses Element existiert nicht mehr.</string>
 </resources>
