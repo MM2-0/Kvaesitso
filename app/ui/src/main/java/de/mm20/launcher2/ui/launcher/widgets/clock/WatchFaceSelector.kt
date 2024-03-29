@@ -77,7 +77,6 @@ fun WatchFaceSelector(
                 mapOf(
                     ClockStyle.DigitalClock1 to 0,
                     ClockStyle.DigitalClock1_Outlined to 0,
-                    ClockStyle.DigitalClock1_OnePlus to 0,
                     ClockStyle.DigitalClock2 to 1,
                     ClockStyle.AnalogClock to 2,
                     ClockStyle.OrbitClock to 3,
@@ -258,7 +257,6 @@ fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
         ClockStyle.DigitalClock1,
         ClockStyle.DigitalClock1_Outlined,
-        ClockStyle.DigitalClock1_OnePlus -> context.getString(R.string.clock_style_digital1)
         ClockStyle.DigitalClock2 -> context.getString(R.string.clock_style_digital2)
         ClockStyle.OrbitClock -> context.getString(R.string.clock_style_orbit)
         ClockStyle.BinaryClock -> context.getString(R.string.clock_style_binary)
@@ -279,7 +277,6 @@ fun getVariantName(context: Context, style: ClockWidgetStyle): String {
         ClockStyle.SegmentClock,
         ClockStyle.EmptyClock -> context.getString(R.string.clock_variant_standard)
         ClockStyle.DigitalClock1_Outlined -> context.getString(R.string.clock_variant_outlined)
-        ClockStyle.DigitalClock1_OnePlus -> "OnePlus"
         else -> ""
 
     }
@@ -289,7 +286,6 @@ fun getVariantName(context: Context, style: ClockWidgetStyle): String {
 object ClockStyle {
     val DigitalClock1 = ClockWidgetStyle.Digital1()
     val DigitalClock1_Outlined = ClockWidgetStyle.Digital1(outlined = true)
-    val DigitalClock1_OnePlus = ClockWidgetStyle.Digital1(variant = ClockWidgetStyle.Digital1.Variant.OnePlus)
     val DigitalClock2 = ClockWidgetStyle.Digital2
     val OrbitClock = ClockWidgetStyle.Orbit
     val AnalogClock = ClockWidgetStyle.Analog
