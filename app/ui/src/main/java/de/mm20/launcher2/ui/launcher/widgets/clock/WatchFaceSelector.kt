@@ -45,6 +45,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.ProvideClockTime
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
@@ -75,13 +77,13 @@ fun WatchFaceSelector(
                 mapOf(
                     ClockStyle.DigitalClock1 to 0,
                     ClockStyle.DigitalClock1_Outlined to 0,
-                    ClockStyle.DigitalClock1_MDY to 0,
                     ClockStyle.DigitalClock1_OnePlus to 0,
                     ClockStyle.DigitalClock2 to 1,
                     ClockStyle.AnalogClock to 2,
                     ClockStyle.OrbitClock to 3,
                     ClockStyle.BinaryClock to 4,
-                    ClockStyle.EmptyClock to 5,
+                    ClockStyle.SegmentClock to 5,
+                    ClockStyle.EmptyClock to 6,
                 )
             }
             val pagerState = rememberPagerState(
@@ -256,13 +258,13 @@ fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
         ClockStyle.DigitalClock1,
         ClockStyle.DigitalClock1_Outlined,
-        ClockStyle.DigitalClock1_MDY,
-        ClockStyle.DigitalClock1_OnePlus -> "Bold"
-        ClockStyle.DigitalClock2 -> "Simple"
-        ClockStyle.OrbitClock -> "Orbit"
-        ClockStyle.BinaryClock -> "Binary"
-        ClockStyle.AnalogClock -> "Hands"
-        ClockStyle.EmptyClock -> "Empty"
+        ClockStyle.DigitalClock1_OnePlus -> context.getString(R.string.clock_style_digital1)
+        ClockStyle.DigitalClock2 -> context.getString(R.string.clock_style_digital2)
+        ClockStyle.OrbitClock -> context.getString(R.string.clock_style_orbit)
+        ClockStyle.BinaryClock -> context.getString(R.string.clock_style_binary)
+        ClockStyle.AnalogClock -> context.getString(R.string.clock_style_analog)
+        ClockStyle.SegmentClock -> context.getString(R.string.clock_style_segment)
+        ClockStyle.EmptyClock -> context.getString(R.string.clock_style_empty)
         else -> ""
     }
 }
@@ -274,9 +276,9 @@ fun getVariantName(context: Context, style: ClockWidgetStyle): String {
         ClockStyle.OrbitClock,
         ClockStyle.BinaryClock,
         ClockStyle.AnalogClock,
-        ClockStyle.EmptyClock -> "Standard"
-        ClockStyle.DigitalClock1_Outlined -> "Outlined"
-        ClockStyle.DigitalClock1_MDY -> "Material You"
+        ClockStyle.SegmentClock,
+        ClockStyle.EmptyClock -> context.getString(R.string.clock_variant_standard)
+        ClockStyle.DigitalClock1_Outlined -> context.getString(R.string.clock_variant_outlined)
         ClockStyle.DigitalClock1_OnePlus -> "OnePlus"
         else -> ""
 
@@ -287,11 +289,11 @@ fun getVariantName(context: Context, style: ClockWidgetStyle): String {
 object ClockStyle {
     val DigitalClock1 = ClockWidgetStyle.Digital1()
     val DigitalClock1_Outlined = ClockWidgetStyle.Digital1(outlined = true)
-    val DigitalClock1_MDY = ClockWidgetStyle.Digital1(variant = ClockWidgetStyle.Digital1.Variant.MDY)
     val DigitalClock1_OnePlus = ClockWidgetStyle.Digital1(variant = ClockWidgetStyle.Digital1.Variant.OnePlus)
     val DigitalClock2 = ClockWidgetStyle.Digital2
     val OrbitClock = ClockWidgetStyle.Orbit
     val AnalogClock = ClockWidgetStyle.Analog
     val BinaryClock = ClockWidgetStyle.Binary
+    val SegmentClock = ClockWidgetStyle.Segment
     val EmptyClock = ClockWidgetStyle.Empty
 }
