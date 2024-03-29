@@ -413,10 +413,17 @@ fun ConfigureClockWidgetSheet(
                 Column(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    if (compact == false) {
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_clock_widget_use_theme_color),
+                        icon = Icons.Rounded.ColorLens,
+                        value = useAccentColor,
+                        onValueChanged = {
+                            viewModel.setUseThemeColor(it)
+                        }
+                    )
+                    AnimatedVisibility(compact == false) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_show_seconds),
-                            summary = stringResource(R.string.preference_clock_widget_show_seconds_summary),
                             icon = Icons.Rounded.AccessTime,
                             value = showSeconds,
                             onValueChanged = {
@@ -424,15 +431,6 @@ fun ConfigureClockWidgetSheet(
                             }
                         )
                     }
-                    SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_use_theme_color),
-                        summary = stringResource(R.string.preference_clock_widget_use_theme_color_summary),
-                        icon = Icons.Rounded.ColorLens,
-                        value = useAccentColor,
-                        onValueChanged = {
-                            viewModel.setUseThemeColor(it)
-                        }
-                    )
                 }
             }
             OutlinedCard(
