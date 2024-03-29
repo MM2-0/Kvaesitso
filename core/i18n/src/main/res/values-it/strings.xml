@@ -678,4 +678,9 @@
     <string name="plugin_type_filesearch">Ricerca file</string>
     <string name="plugin_weather_provider_enable">Imposta come fornitore meteo</string>
     <string name="plugin_badge_official">Ufficiale</string>
+    <string name="preference_category_advanced">Avanzate</string>
+    <string name="preference_plugin_enable">Abilita plugin</string>
+    <string name="preference_mdy_color_source">Sorgente colori dinamici</string>
+    <string name="preference_mdy_color_source_system">Sistema</string>
+    <string name="preference_mdy_color_source_wallpaper">Sfondo</string>
 </resources>

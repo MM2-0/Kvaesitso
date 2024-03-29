@@ -71,7 +71,7 @@ This software is free software licensed under the GNU General Public License 3.0
 
 ```
 
-Copyright (C) 2021–2023 MM2-0 and the Kvaesitso contributors
+Copyright (C) 2021–2024 MM2-0 and the Kvaesitso contributors
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

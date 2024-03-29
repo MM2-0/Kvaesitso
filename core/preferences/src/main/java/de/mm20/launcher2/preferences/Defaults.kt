@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import androidx.core.graphics.blue
 import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.preferences.LegacySettings.SearchBarSettings.SearchBarColors
 import de.mm20.launcher2.preferences.ktx.toSettingsColorsScheme

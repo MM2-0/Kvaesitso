@@ -49,6 +49,7 @@ import de.mm20.launcher2.ui.settings.homescreen.HomescreenSettingsScreen
 import de.mm20.launcher2.ui.settings.icons.IconsSettingsScreen
 import de.mm20.launcher2.ui.settings.integrations.IntegrationsSettingsScreen
 import de.mm20.launcher2.ui.settings.license.LicenseScreen
+import de.mm20.launcher2.ui.settings.locations.LocationsSettingsScreen
 import de.mm20.launcher2.ui.settings.log.LogScreen
 import de.mm20.launcher2.ui.settings.main.MainSettingsScreen
 import de.mm20.launcher2.ui.settings.media.MediaIntegrationSettingsScreen
@@ -152,6 +153,9 @@ class SettingsActivity : BaseActivity() {
                                     }
                                     composable("settings/search/wikipedia") {
                                         WikipediaSettingsScreen()
+                                    }
+                                    composable("settings/search/locations") {
+                                        LocationsSettingsScreen()
                                     }
                                     composable("settings/search/files") {
                                         FileSearchSettingsScreen()

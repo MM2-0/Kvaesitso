@@ -14,7 +14,7 @@ import java.io.File
 object CrashReporter {
     fun logException(e: Exception) {
         if (e !is CancellationException) {
-            com.balsikandar.crashreporter.CrashReporter.logException(e)
+            CrashReporter.logException(e)
         }
         Log.e("MM20", Log.getStackTraceString(e))
     }

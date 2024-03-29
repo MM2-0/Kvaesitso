@@ -144,4 +144,32 @@
         <item quantity="many">ميلمترات مربعة</item>
         <item quantity="other">ميلمترات مربعة</item>
     </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="zero">ديسيمتر</item>
+        <item quantity="one">ديسيمتر</item>
+        <item quantity="two">ديسيمتران</item>
+        <item quantity="few">ديسيمترات</item>
+        <item quantity="many">ديسيمترات</item>
+        <item quantity="other">ديسيمترات</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">ديسم</string>
+    <string name="unit_hectare_symbol">هكتار</string>
+    <string name="unit_second_symbol">ث</string>
+    <plurals name="unit_second">
+        <item quantity="zero">ثانية</item>
+        <item quantity="one">ثانية</item>
+        <item quantity="two">ثانيتان</item>
+        <item quantity="few">ثوانٍ</item>
+        <item quantity="many">ثوانٍ</item>
+        <item quantity="other">ثوانٍ</item>
+    </plurals>
+    <string name="unit_millisecond_symbol">مللي ث</string>
+    <plurals name="unit_hectare">
+        <item quantity="zero">هكتار</item>
+        <item quantity="one">هكتار</item>
+        <item quantity="two">هكتاران</item>
+        <item quantity="few">هكتارات</item>
+        <item quantity="many">هكتارات</item>
+        <item quantity="other">هكتارات</item>
+    </plurals>
 </resources>
