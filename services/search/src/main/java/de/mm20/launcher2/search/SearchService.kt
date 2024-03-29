@@ -34,6 +34,7 @@ internal class SearchServiceImpl(
     private val contactRepository: SearchableRepository<Contact>,
     private val fileRepository: SearchableRepository<File>,
     private val articleRepository: SearchableRepository<Article>,
+    private val locationRepository: SearchableRepository<Location>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
     private val websiteRepository: SearchableRepository<Website>,
@@ -128,6 +129,15 @@ internal class SearchServiceImpl(
                     }
             }
             launch {
+                locationRepository.search(query, allowNetwork)
+                    .withCustomLabels(customAttributesRepository)
+                    .collectLatest { r ->
+                        results.update {
+                            it.copy(locations = r.toImmutableList())
+                        }
+                    }
+            }
+            launch {
                 fileRepository.search(
                     query,
                     allowNetwork
@@ -166,6 +176,7 @@ data class SearchResults(
     val unitConverters: ImmutableList<UnitConverter>? = null,
     val websites: ImmutableList<Website>? = null,
     val wikipedia: ImmutableList<Article>? = null,
+    val locations: ImmutableList<Location>? = null,
     val searchActions: ImmutableList<SearchAction>? = null,
     val other: ImmutableList<SavableSearchable>? = null,
 )

@@ -13,7 +13,7 @@ android {
     }
 
     packaging {
-        //resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("META-INF/DEPENDENCIES")
         resources.excludes.add("META-INF/LICENSE")
         resources.excludes.add("META-INF/LICENSE.txt")
         resources.excludes.add("META-INF/license.txt")
@@ -101,6 +101,12 @@ android {
     lint {
         abortOnError = false
     }
+
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     namespace = "de.mm20.launcher2"
 }
 
@@ -166,7 +172,9 @@ dependencies {
     implementation(project(":services:global-actions"))
     implementation(project(":services:widgets"))
     implementation(project(":services:favorites"))
+    implementation(project(":data:openstreetmaps"))
     implementation(project(":services:plugins"))
+    implementation(project(":core:devicepose"))
 
     // Uncomment this if you want annoying notifications in your debug builds yelling at you how terrible your code is
     //debugImplementation(libs.leakcanary)

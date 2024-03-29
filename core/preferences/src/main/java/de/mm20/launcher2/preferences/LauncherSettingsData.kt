@@ -1,6 +1,7 @@
 package de.mm20.launcher2.preferences
 
 import android.content.Context
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import java.util.UUID
@@ -26,6 +27,8 @@ data class LauncherSettingsData(
     val clockWidgetCompact: Boolean = false,
     val clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
+    val clockWidgetShowSeconds: Boolean = false,
+    val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
     val clockWidgetMusicPart: Boolean = true,
@@ -78,6 +81,7 @@ data class LauncherSettingsData(
 
     val searchResultsReversed: Boolean = false,
     val searchResultOrder: SearchResultOrder = SearchResultOrder.Weighted,
+    val separateWorkProfile: Boolean = true,
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
 
@@ -124,11 +128,23 @@ data class LauncherSettingsData(
     val weatherProviderSettings: Map<String, ProviderSettings> = emptyMap(),
     val weatherImperialUnits: Boolean = false,
 
+    val locationSearchEnabled: Boolean = false,
+    val locationSearchImperialUnits: Boolean = false,
+    val locationSearchRadius: Int = 1500,
+    val locationSearchHideUncategorized: Boolean = true,
+    val locationSearchOverpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
+    val locationSearchTileServer: String = LocationSearchSettings.DefaultTileServerUrl,
+    val locationSearchShowMap: Boolean = false,
+    val locationSearchShowPositionOnMap: Boolean = false,
+    val locationSearchThemeMap: Boolean = true,
+
+
     ) {
     constructor(
         context: Context,
     ) : this(
         weatherImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
+        locationSearchImperialUnits = context.resources.getBoolean(R.bool.default_imperialUnits),
         gridColumnCount = context.resources.getInteger(R.integer.config_columnCount),
     )
 }
@@ -175,7 +191,6 @@ sealed interface ClockWidgetStyle {
         @Serializable
         enum class Variant {
             Default,
-            MDY,
             OnePlus,
         }
     }
@@ -195,6 +210,10 @@ sealed interface ClockWidgetStyle {
     @Serializable
     @SerialName("binary")
     data object Binary : ClockWidgetStyle
+
+    @Serializable
+    @SerialName("segment")
+    data object Segment : ClockWidgetStyle
 
     @Serializable
     @SerialName("empty")

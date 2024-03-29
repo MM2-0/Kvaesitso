@@ -1,6 +1,10 @@
 package de.mm20.launcher2.ui.settings.search
 
+import android.content.Context
+import android.content.pm.LauncherApps
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.getSystemService
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.permissions.PermissionGroup
@@ -9,15 +13,15 @@ import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -32,6 +36,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
     private val calculatorSearchSettings: CalculatorSearchSettings by inject()
 
     private val permissionsManager: PermissionsManager by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
+
+    val hasWorkProfile = mutableStateOf(false)
+
+    fun onResume(context: Context) {
+        hasWorkProfile.value = context.getSystemService<LauncherApps>()!!.profiles.size > 1
+    }
 
     val favorites = searchUiSettings.favorites
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
@@ -95,8 +106,14 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         websiteSearchSettings.setEnabled(websites)
     }
 
-    val autoFocus = searchUiSettings.openKeyboard
+    val locations = locationSearchSettings.enabled
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setLocations(locations: Boolean) {
+        locationSearchSettings.setEnabled(locations)
+    }
+
+    val autoFocus = searchUiSettings.openKeyboard
 
     fun setAutoFocus(autoFocus: Boolean) {
         searchUiSettings.setOpenKeyboard(autoFocus)
@@ -131,6 +148,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setReverseSearchResults(reverseSearchResults: Boolean) {
         searchUiSettings.setReversedResults(reverseSearchResults)
+    }
+
+    val separateWorkProfile = searchUiSettings.separateWorkProfile
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setSeparateWorkProfile(separateWorkProfile: Boolean) {
+        searchUiSettings.setSeparateWorkProfile(separateWorkProfile)
     }
 
     fun requestAppShortcutsPermission(activity: AppCompatActivity) {

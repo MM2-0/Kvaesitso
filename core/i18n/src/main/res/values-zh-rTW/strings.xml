@@ -538,9 +538,9 @@
     <string name="preference_layout_search_results">搜尋結果排列方式</string>
     <string name="search_results_order_top_down">從頂部到底部</string>
     <string name="search_results_order_bottom_up">從底部到頂部</string>
-    <string name="preference_layout_fixed_search_bar">修正搜尋欄</string>
+    <string name="preference_layout_fixed_search_bar">固定搜尋欄</string>
     <string name="preference_layout_fixed_search_bar_summary">在離開首頁面檢視時禁止滾動搜尋欄</string>
-    <string name="preference_layout_fixed_rotation">修正螢幕方向</string>
+    <string name="preference_layout_fixed_rotation">固定螢幕方向</string>
     <string name="preference_layout_fixed_rotation_summary">鎖定螢幕方向為豎屏模式</string>
     <string name="preference_screen_gestures">手勢</string>
     <string name="preference_screen_gestures_summary">手勢與動作</string>

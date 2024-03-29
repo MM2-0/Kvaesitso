@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="location_open">Open</string>
+    <string name="location_closed">Closed</string>
+    <!-- Shown when a location search result is open until TIMESTAMP (hours:minutes) of the same day -->
+    <string name="location_open_until">Open until %1$s</string>
+    <!-- Shown when a location search result opens in TIMESPAN on the same day -->
+    <string name="location_open_next">Opens in %1$s</string>
+    <!-- Shown when a location search result opens next DAY-OF-WEEK -->
+    <string name="location_open_next_day">Opens on %1$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
@@ -20,6 +28,8 @@
     <!-- Open a file in the corresponding app -->
     <string name="menu_open_file">Open</string>
     <string name="menu_hide">Hide</string>
+    <string name="menu_map">View on map</string>
+    <string name="menu_website">Open website</string>
     <string name="menu_unhide">Don\'t hide</string>
     <!-- Shown in a snackbar after an item has been hidden. %1$s: label of the item -->
     <string name="msg_item_hidden">%1$s has been hidden.</string>
@@ -413,6 +423,8 @@
     <string name="missing_permission_calendar_widget">Grant calendar permission to display upcoming appointments and events here.</string>
     <!-- Missing calendar permission, used in calendar search results -->
     <string name="missing_permission_calendar_search">Grant calendar permission to search your calendar.</string>
+    <!-- Missing location permission, used in location search results -->
+    <string name="missing_permission_location_search">Grant location permission to search nearby locations.</string>
     <!-- Missing files permission, used in files search results -->
     <string name="missing_permission_files_search">Grant storage permission to search photos, media and document on this device.</string>
     <!-- Missing files permission, used in contact search results -->
@@ -588,6 +600,8 @@
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
+    <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_use_theme_color">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_fill_height_summary">Insert extra space above the clock to fill the entire screen height</string>
     <string name="preference_clock_widget_color">Color</string>
@@ -642,7 +656,11 @@
     <string name="preference_search_wikipedia">Wikipedia</string>
     <string name="preference_search_wikipedia_summary">Search the free encyclopedia</string>
     <string name="preference_search_websites">Websites</string>
+    <string name="preference_search_locations">Places</string>
+    <string name="preference_search_locations_radius">Search radius</string>
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
+    <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
+    <string name="preference_search_locations_show_position_on_map_summary">Show your own location in the map</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
     <string name="preference_search_localfiles">Local files</string>
@@ -859,6 +877,21 @@
     <!-- %1$s: app name -->
     <string name="shortcut_unavailable_description">This shortcut is unavailable because %1$s isn\'t the default launcher</string>
     <string name="preference_plugin_enable">Enable plugin</string>
+    <string name="length_unit">Unit of length</string>
+    <string name="imperial">Imperial</string>
+    <string name="metric">Metric</string>
+    <string name="preference_search_location_custom_overpass_url">Overpass URL</string>
+    <string name="preference_search_locations_hide_uncategorized">Hide uncategorized places</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Only show results with well defined categories, like cafés or restaurants</string>
+    <string name="preference_search_locations_show_map">Map</string>
+    <string name="preference_search_locations_show_map_summary">Show a map preview for places</string>
+    <string name="preference_search_locations_theme_map">Map theming</string>
+    <string name="preference_search_locations_theme_map_summary">Apply the color scheme of the launcher to the map</string>
+    <string name="preference_search_locations_show_position_on_map">Show own position</string>
+    <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
+    <string name="menu_dial">Call</string>
+    <string name="menu_bugreport">Bug Report</string>
+    <string name="location_open_24_7">Open 24/7</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
     <string name="plugin_state_setup_required">You need to setup this plugin first</string>
     <string name="plugin_action_setup">Set up</string>
@@ -867,4 +900,18 @@
     <string name="plugin_badge_official">Official</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
+    <string name="cached_searchable">Showing a cached version, information might be outdated.</string>
+    <string name="unavailable_searchable">This item does not exist anymore.</string>
+    <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate tab</string>
+
+    <string name="clock_style_digital1">Bold</string>
+    <string name="clock_style_digital2">Simple</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_binary">Binary</string>
+    <string name="clock_style_analog">Hands</string>
+    <string name="clock_style_segment">7 segment</string>
+    <string name="clock_style_empty">No clock</string>
+    <string name="clock_variant_standard">Standard</string>
+    <string name="clock_variant_outlined">Outlined</string>
 </resources>

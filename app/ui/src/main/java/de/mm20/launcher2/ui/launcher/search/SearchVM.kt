@@ -5,14 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
-import de.mm20.launcher2.preferences.LegacySettings.SearchResultOrderingSettings.Ordering
 import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.AppProfile
@@ -25,6 +26,7 @@ import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.UnitConverter
@@ -37,6 +39,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
@@ -57,6 +60,8 @@ class SearchVM : ViewModel(), KoinComponent {
     private val calendarSearchSettings: CalendarSearchSettings by inject()
     private val shortcutSearchSettings: ShortcutSearchSettings by inject()
     private val searchUiSettings: SearchUiSettings by inject()
+    private val locationSearchSettings: LocationSearchSettings by inject()
+    private val devicePoseProvider: DevicePoseProvider by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -66,6 +71,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = mutableStateOf("")
     val isSearchEmpty = mutableStateOf(true)
 
+    val locationResults = mutableStateOf<List<Location>>(emptyList())
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
@@ -84,6 +90,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
+    val separateWorkProfile = searchUiSettings.separateWorkProfile
+
     private val hiddenItemKeys = searchableRepository
         .getKeys(
             hidden = true,
@@ -94,7 +102,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val bestMatch = mutableStateOf<Searchable?>(null)
 
     init {
-        search("", true)
+        search("", forceRestart = true)
     }
 
     fun launchBestMatchOrAction(context: Context) {
@@ -138,6 +146,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.files,
                             results.contacts,
                             results.calendars,
+                            results.locations,
                             results.wikipedia,
                             results.websites,
                             results.calculators,
@@ -169,6 +178,11 @@ class SearchVM : ViewModel(), KoinComponent {
 
                     resultsList = resultsList.sortedWith { a, b ->
                         when {
+                            a is Location && b is Location && devicePoseProvider.lastLocation != null -> {
+                                a.distanceTo(devicePoseProvider.lastLocation!!)
+                                    .compareTo(b.distanceTo(devicePoseProvider.lastLocation!!))
+                            }
+
                             a is SavableSearchable && b !is SavableSearchable -> -1
                             a !is SavableSearchable && b is SavableSearchable -> 1
                             a is SavableSearchable && b is SavableSearchable -> {
@@ -200,6 +214,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         val unitConv = mutableListOf<UnitConverter>()
                         val calc = mutableListOf<Calculator>()
                         val articles = mutableListOf<Article>()
+                        val locations = mutableListOf<Location>()
                         val website = mutableListOf<Website>()
                         val actions = mutableListOf<SearchAction>()
                         for (r in resultsList) {
@@ -218,6 +233,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is Calculator -> calc.add(r)
                                 r is Website -> website.add(r)
                                 r is Article -> articles.add(r)
+                                r is Location -> locations.add(r)
                                 r is SearchAction -> actions.add(r)
                             }
                         }
@@ -230,6 +246,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 unitConv,
                                 calc,
                                 events,
+                                locations,
                                 contacts,
                                 articles,
                                 website,
@@ -245,6 +262,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         contactResults.value = contacts
                         calendarResults.value = events
                         articleResults.value = articles
+                        locationResults.value = locations
                         websiteResults.value = website
                         calculatorResults.value = calc
                         unitConverterResults.value = unitConv
@@ -280,6 +298,19 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun disableContactsSearch() {
         contactSearchSettings.setEnabled(false)
+    }
+
+    val missingLocationPermission = combine(
+        permissionsManager.hasPermission(PermissionGroup.Location),
+        locationSearchSettings.enabled.distinctUntilChanged()
+    ) { perm, enabled -> !perm && enabled }
+
+    fun requestLocationPermission(context: AppCompatActivity) {
+        permissionsManager.requestPermission(context, PermissionGroup.Location)
+    }
+
+    fun disableLocationSearch() {
+        locationSearchSettings.setEnabled(false)
     }
 
     val missingFilesPermission = combine(

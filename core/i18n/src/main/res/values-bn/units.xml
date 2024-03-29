@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="unit_decimeter">
+        <item quantity="one">ডেসিমিটার</item>
+        <item quantity="other">ডেসিমিটার</item>
+    </plurals>
+    <string name="unit_meter_symbol">মি</string>
+    <plurals name="unit_meter">
+        <item quantity="one">মিটার</item>
+        <item quantity="other">মিটার</item>
+    </plurals>
+    <string name="unit_kilometer_symbol">কিমি</string>
+    <string name="unit_decimeter_symbol">ডেসিমি</string>
+    <string name="unit_centimeter_symbol">সেমি</string>
+    <plurals name="unit_centimeter">
+        <item quantity="one">সেন্টিমিটার</item>
+        <item quantity="other">সেন্টিমিটার</item>
+    </plurals>
+    <string name="unit_millimeter_symbol">মিমি</string>
+    <plurals name="unit_millimeter">
+        <item quantity="one">মিলিমিটার</item>
+        <item quantity="other">মিলিমিটার</item>
+    </plurals>
+</resources>

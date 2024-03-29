@@ -250,7 +250,7 @@ fun ShapedLauncherIcon(
                     _badge.progress?.let {
                         val progress by animateFloatAsState(it)
                         CircularProgressIndicator(
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize(0.8f),
                             progress = progress,
                             strokeWidth = size / 48,
                             color = MaterialTheme.colorScheme.secondaryContainer

@@ -10,3 +10,7 @@ fun Float.ceilToInt(): Int {
 private const val TWO_PI_F = (2.0 * PI).toFloat()
 val Float.Companion.TWO_PI: Float
     get() = TWO_PI_F
+
+private const val PI_F = PI.toFloat()
+val Float.Companion.PI: Float
+    get() = PI_F

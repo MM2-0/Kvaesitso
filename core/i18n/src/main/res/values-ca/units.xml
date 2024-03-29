@@ -265,4 +265,10 @@
         <item quantity="one">nus</item>
         <item quantity="other">nusos</item>
     </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
+    <plurals name="unit_decimeter">
+        <item quantity="one">decímetre</item>
+        <item quantity="many">decímetres</item>
+        <item quantity="other">decímetres</item>
+    </plurals>
 </resources>

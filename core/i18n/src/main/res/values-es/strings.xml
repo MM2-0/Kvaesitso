@@ -678,7 +678,7 @@
     <string name="preference_plugin_enable">Activar plugin</string>
     <string name="preference_category_advanced">Avanzado</string>
     <string name="plugin_state_error">Este plugin no está funcionando correctamente</string>
-    <string name="plugin_state_setup_required">Necesitas configurar primero este plugin</string>
+    <string name="plugin_state_setup_required">Primero debes configurar este plugin</string>
     <string name="plugin_type_filesearch">Búsqueda de archivos</string>
     <string name="plugin_type_weather">Proveedor de clima</string>
     <string name="plugin_weather_provider_enable">Establecer como proveedor de clima</string>
