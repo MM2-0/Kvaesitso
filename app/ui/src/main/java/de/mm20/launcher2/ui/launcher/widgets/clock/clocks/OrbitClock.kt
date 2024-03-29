@@ -112,8 +112,8 @@ fun OrbitClock(
         label = "hoursAnimation"
     )
 
-    val fgTone = if (LocalContentColor.current == Color.White) 90 else 10
-    val bgTone = if (LocalContentColor.current == Color.White) 30 else 90
+    val fgTone = if (LocalContentColor.current == Color.White) 10 else 90
+    val bgTone = if (LocalContentColor.current == Color.White) 90 else 30
 
     val background = if (useThemeColor) {
         Color(TonalPalette.fromInt(MaterialTheme.colorScheme.primaryContainer.toArgb()).tone(bgTone))
