@@ -901,7 +901,7 @@
     <string name="cached_searchable">Showing a cached version, information might be outdated.</string>
     <string name="unavailable_searchable">This item does not exist anymore.</string>
     <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
-    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate list</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate tab</string>
 
     <string name="clock_style_digital1">Bold</string>
     <string name="clock_style_digital2">Simple</string>
