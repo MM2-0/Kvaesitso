@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.ProvideClockTime
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -257,13 +258,13 @@ fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
         ClockStyle.DigitalClock1,
         ClockStyle.DigitalClock1_Outlined,
-        ClockStyle.DigitalClock1_OnePlus -> "Bold"
-        ClockStyle.DigitalClock2 -> "Simple"
-        ClockStyle.OrbitClock -> "Orbit"
-        ClockStyle.BinaryClock -> "Binary"
-        ClockStyle.AnalogClock -> "Hands"
-        ClockStyle.SegmentClock -> "7 segment"
-        ClockStyle.EmptyClock -> "Empty"
+        ClockStyle.DigitalClock1_OnePlus -> context.getString(R.string.clock_style_digital1)
+        ClockStyle.DigitalClock2 -> context.getString(R.string.clock_style_digital2)
+        ClockStyle.OrbitClock -> context.getString(R.string.clock_style_orbit)
+        ClockStyle.BinaryClock -> context.getString(R.string.clock_style_binary)
+        ClockStyle.AnalogClock -> context.getString(R.string.clock_style_analog)
+        ClockStyle.SegmentClock -> context.getString(R.string.clock_style_segment)
+        ClockStyle.EmptyClock -> context.getString(R.string.clock_style_empty)
         else -> ""
     }
 }
@@ -276,8 +277,8 @@ fun getVariantName(context: Context, style: ClockWidgetStyle): String {
         ClockStyle.BinaryClock,
         ClockStyle.AnalogClock,
         ClockStyle.SegmentClock,
-        ClockStyle.EmptyClock -> "Standard"
-        ClockStyle.DigitalClock1_Outlined -> "Outlined"
+        ClockStyle.EmptyClock -> context.getString(R.string.clock_variant_standard)
+        ClockStyle.DigitalClock1_Outlined -> context.getString(R.string.clock_variant_outlined)
         ClockStyle.DigitalClock1_OnePlus -> "OnePlus"
         else -> ""
 

@@ -867,4 +867,14 @@
     <string name="plugin_badge_official">Official</string>
     <string name="plugin_weather_provider_enable">Set as weather provider</string>
     <string name="plugin_weather_provider_enabled">Currently set as weather provider</string>
+
+    <string name="clock_style_digital1">Bold</string>
+    <string name="clock_style_digital2">Simple</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_binary">Binary</string>
+    <string name="clock_style_analog">Hands</string>
+    <string name="clock_style_segment">7 segment</string>
+    <string name="clock_style_empty">No clock</string>
+    <string name="clock_variant_standard">Standard</string>
+    <string name="clock_variant_outlined">Outlined</string>
 </resources>
