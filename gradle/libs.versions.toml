@@ -8,24 +8,24 @@ pluginSdk = "1.0.0"
 gradle = "8.1.2"
 android-gradle-plugin = "8.2.2"
 protobuf-gradle-plugin = "0.9.4"
-ksp-gradle-plugin = "1.9.0-1.0.13"
+ksp-gradle-plugin = "1.9.23-1.0.19"
 
-kotlin = "1.9.22"
-kotlinx-coroutines = "1.7.3"
+kotlin = "1.9.23"
+kotlinx-coroutines = "1.8.0"
 kotlinx-immutable = "0.3.5"
-kotlinx-serialization = "1.6.2"
+kotlinx-serialization = "1.6.3"
 
-jetbrains-markdown = "0.4.1"
+jetbrains-markdown = "0.5.2"
 
-androidx-compose = "1.7.0-alpha02"
-androidx-compose-material3 = "1.2.0"
-androidx-compose-compiler = "1.5.8"
+androidx-compose = "1.7.0-alpha05"
+androidx-compose-material3 = "1.3.0-alpha03"
+androidx-compose-compiler = "1.5.11"
 androidx-lifecycle = "2.7.0"
 androidx-core = "1.12.0"
 androidx-appcompat = "1.7.0-alpha03"
 androidx-activity = "1.8.2"
 androidx-work = "2.9.0"
-androidx-browser = "1.7.0"
+androidx-browser = "1.8.0"
 androidx-palette = "1.0.0"
 androidx-media2 = "1.3.0"
 androidx-room = "2.6.1"
@@ -108,7 +108,7 @@ coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coi
 
 leakcanary = { group = "com.squareup.leakcanary", name = "leakcanary", version = "2.10" }
 suncalc = { group = "org.shredzone.commons", name = "commons-suncalc", version = "3.7" }
-jsoup = { group = "org.jsoup", name = "jsoup", version = "1.15.4" }
+jsoup = { group = "org.jsoup", name = "jsoup", version = "1.16.1" }
 commons-text = { group = "org.apache.commons", name = "commons-text", version = "1.10.0" }
 
 # 4.4.2 is the last GPL compatible version, don't update to 5.x
@@ -147,4 +147,4 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
-dokka = { id = "org.jetbrains.dokka", version = "1.9.10" }
+dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }
