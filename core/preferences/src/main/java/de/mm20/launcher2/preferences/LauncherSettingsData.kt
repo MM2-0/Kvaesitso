@@ -26,7 +26,7 @@ data class LauncherSettingsData(
     val clockWidgetCompact: Boolean = false,
     val clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
-    val clockWidgetShowSeconds: Boolean = true,
+    val clockWidgetShowSeconds: Boolean = false,
     val clockWidgetUseThemeColor: Boolean = false,
     val clockWidgetAlarmPart: Boolean = true,
     val clockWidgetBatteryPart: Boolean = true,
