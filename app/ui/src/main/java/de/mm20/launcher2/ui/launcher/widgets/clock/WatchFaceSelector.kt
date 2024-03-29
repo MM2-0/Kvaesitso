@@ -262,7 +262,7 @@ fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
         ClockStyle.OrbitClock -> "Orbit"
         ClockStyle.BinaryClock -> "Binary"
         ClockStyle.AnalogClock -> "Hands"
-        ClockStyle.SegmentClock -> "Display"
+        ClockStyle.SegmentClock -> "7 segment"
         ClockStyle.EmptyClock -> "Empty"
         else -> ""
     }
