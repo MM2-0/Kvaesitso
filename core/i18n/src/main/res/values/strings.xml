@@ -600,6 +600,8 @@
     <string name="preference_clockwidget_layout">Layout</string>
     <string name="preference_clockwidget_layout_vertical">Default</string>
     <string name="preference_clockwidget_layout_horizontal">Compact</string>
+    <string name="preference_clock_widget_show_seconds">Show seconds</string>
+    <string name="preference_clock_widget_use_theme_color">Use theme color</string>
     <string name="preference_clock_widget_fill_height">Fill screen height</string>
     <string name="preference_clock_widget_fill_height_summary">Insert extra space above the clock to fill the entire screen height</string>
     <string name="preference_clock_widget_color">Color</string>
@@ -900,4 +902,14 @@
     <string name="unavailable_searchable">This item does not exist anymore.</string>
     <string name="preference_search_bar_separate_work_profile">Separate work profile apps</string>
     <string name="preference_search_bar_separate_work_profile_summary">Shows work profile apps in a separate tab</string>
+
+    <string name="clock_style_digital1">Bold</string>
+    <string name="clock_style_digital2">Simple</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_binary">Binary</string>
+    <string name="clock_style_analog">Hands</string>
+    <string name="clock_style_segment">7 segment</string>
+    <string name="clock_style_empty">No clock</string>
+    <string name="clock_variant_standard">Standard</string>
+    <string name="clock_variant_outlined">Outlined</string>
 </resources>

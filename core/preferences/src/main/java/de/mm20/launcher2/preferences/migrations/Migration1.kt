@@ -76,7 +76,7 @@ class Migration1(
                 LegacySettings.ClockWidgetSettings.ClockStyle.AnalogClock -> ClockWidgetStyle.Analog
                 LegacySettings.ClockWidgetSettings.ClockStyle.EmptyClock -> ClockWidgetStyle.Empty
                 LegacySettings.ClockWidgetSettings.ClockStyle.DigitalClock1_MDY -> ClockWidgetStyle.Digital1(
-                    variant = ClockWidgetStyle.Digital1.Variant.MDY
+                    variant = ClockWidgetStyle.Digital1.Variant.Default
                 )
 
                 LegacySettings.ClockWidgetSettings.ClockStyle.DigitalClock1_Outlined -> ClockWidgetStyle.Digital1(

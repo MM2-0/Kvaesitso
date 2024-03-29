@@ -101,66 +101,66 @@ abstract class SharedLauncherActivity(
                 LocalGestureDetector provides gestureDetector,
             ) {
                 LauncherTheme {
-                    ProvideCurrentTime {
-                        ProvideSettings {
-                            val statusBarColor by viewModel.statusBarColor.collectAsState()
-                            val navBarColor by viewModel.navBarColor.collectAsState()
+                    ProvideSettings {
+                        val statusBarColor by viewModel.statusBarColor.collectAsState()
+                        val navBarColor by viewModel.navBarColor.collectAsState()
 
-                            val chargingAnimation by viewModel.chargingAnimation.collectAsState()
+                        val chargingAnimation by viewModel.chargingAnimation.collectAsState()
 
-                            val lightStatus =
-                                !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
-                            val lightNav =
-                                !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+                        val lightStatus =
+                            !dimBackground && (statusBarColor == SystemBarColors.Dark || statusBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
+                        val lightNav =
+                            !dimBackground && (navBarColor == SystemBarColors.Dark || navBarColor == SystemBarColors.Auto && wallpaperColors.supportsDarkText)
 
-                            val hideStatus by viewModel.hideStatusBar.collectAsState()
-                            val hideNav by viewModel.hideNavBar.collectAsState()
-                            val layout by viewModel.baseLayout.collectAsState(null)
-                            val bottomSearchBar by viewModel.bottomSearchBar.collectAsState()
-                            val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
-                            val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
+                        val hideStatus by viewModel.hideStatusBar.collectAsState()
+                        val hideNav by viewModel.hideNavBar.collectAsState()
+                        val layout by viewModel.baseLayout.collectAsState(null)
+                        val bottomSearchBar by viewModel.bottomSearchBar.collectAsState()
+                        val reverseSearchResults by viewModel.reverseSearchResults.collectAsState()
+                        val fixedSearchBar by viewModel.fixedSearchBar.collectAsState()
 
-                            val fixedRotation by viewModel.fixedRotation.collectAsState()
+                        val fixedRotation by viewModel.fixedRotation.collectAsState()
 
-                            LaunchedEffect(fixedRotation) {
-                                requestedOrientation = if (fixedRotation) {
-                                    ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-                                } else {
-                                    ActivityInfo.SCREEN_ORIENTATION_USER
-                                }
+                        LaunchedEffect(fixedRotation) {
+                            requestedOrientation = if (fixedRotation) {
+                                ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+                            } else {
+                                ActivityInfo.SCREEN_ORIENTATION_USER
                             }
+                        }
 
 
-                            val systemUiController = rememberSystemUiController()
+                        val systemUiController = rememberSystemUiController()
 
-                            val enterTransitionProgress = remember { mutableStateOf(1f) }
-                            var enterTransition by remember {
-                                mutableStateOf<EnterHomeTransition?>(
-                                    null
-                                )
-                            }
+                        val enterTransitionProgress = remember { mutableStateOf(1f) }
+                        var enterTransition by remember {
+                            mutableStateOf<EnterHomeTransition?>(
+                                null
+                            )
+                        }
 
-                            LaunchedEffect(null) {
-                                enterHomeTransitionManager
-                                    .currentTransition
-                                    .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
-                                    .collect {
-                                        if (it != null) {
-                                            enterTransitionProgress.value = 0f
-                                            enterTransition = it
-                                            enterTransitionProgress.animateTo(1f)
-                                            enterTransition = null
-                                        }
+                        LaunchedEffect(null) {
+                            enterHomeTransitionManager
+                                .currentTransition
+                                .flowWithLifecycle(lifecycle, Lifecycle.State.RESUMED)
+                                .collect {
+                                    if (it != null) {
+                                        enterTransitionProgress.value = 0f
+                                        enterTransition = it
+                                        enterTransitionProgress.animateTo(1f)
+                                        enterTransition = null
                                     }
-                            }
+                                }
+                        }
 
-                            LaunchedEffect(hideStatus) {
-                                systemUiController.isStatusBarVisible = !hideStatus
-                            }
-                            LaunchedEffect(hideNav) {
-                                systemUiController.isNavigationBarVisible = !hideNav
-                            }
+                        LaunchedEffect(hideStatus) {
+                            systemUiController.isStatusBarVisible = !hideStatus
+                        }
+                        LaunchedEffect(hideNav) {
+                            systemUiController.isNavigationBarVisible = !hideNav
+                        }
 
+                        ProvideCurrentTime {
                             OverlayHost(
                                 modifier = Modifier
                                     .fillMaxSize()
