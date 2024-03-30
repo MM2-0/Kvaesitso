@@ -678,4 +678,11 @@
     <string name="default_websearch_3_url">https://play.google.com/store/search?q=${1}</string>
     <string name="shortcut_unavailable_description">Denne genvej er utilgængelig, fordi %1$s ikke er din standard launcher</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results?search_query=${1}</string>
+    <string name="location_open_next_day">Åbner på %1$s</string>
+    <string name="location_open">Åben</string>
+    <string name="location_closed">Lukket</string>
+    <string name="location_open_until">Åben indtil %1$s</string>
+    <string name="location_open_next">Åbner om %1$s</string>
+    <string name="menu_map">Se på kort</string>
+    <string name="menu_website">Åbn hjemmeside</string>
 </resources>

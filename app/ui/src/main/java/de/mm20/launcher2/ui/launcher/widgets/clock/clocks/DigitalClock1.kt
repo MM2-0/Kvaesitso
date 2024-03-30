@@ -84,32 +84,11 @@ fun DigitalClock1(
     Column(
         verticalArrangement = Arrangement.Center
     ) {
-        if (style.variant == ClockWidgetStyle.Digital1.Variant.OnePlus) {
-            val hour = formattedString.substring(0, 2)
-            Text(
-                modifier = modifier,
-                text = buildAnnotatedString {
-                    hour.forEach {
-                        if (it == '1') {
-                            withStyle(style = SpanStyle(color = Color(0xFFC41442))) {
-                                append(it)
-                            }
-                        } else {
-                            append(it)
-                        }
-                    }
-                    append(formattedString.substring(2))
-                },
-                style = textStyle
-            )
-        }
-        else {
-            Text(
-                modifier = modifier,
-                text = formattedString,
-                style = textStyle,
-            )
-        }
+        Text(
+            modifier = modifier,
+            text = formattedString,
+            style = textStyle,
+        )
 
         if (verticalLayout && showSeconds) {
             Text(

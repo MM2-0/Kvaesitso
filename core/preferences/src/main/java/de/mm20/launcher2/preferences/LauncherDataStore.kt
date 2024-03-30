@@ -2,6 +2,7 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import de.mm20.launcher2.preferences.migrations.Migration1
+import de.mm20.launcher2.preferences.migrations.Migration2
 import de.mm20.launcher2.settings.BaseSettings
 
 internal class LauncherDataStore(
@@ -11,7 +12,10 @@ internal class LauncherDataStore(
     context,
     fileName = "settings.json",
     serializer = LauncherSettingsDataSerializer,
-    migrations = listOf(Migration1(legacyDataStore)),
+    migrations = listOf(
+        Migration1(legacyDataStore),
+        Migration2(),
+    ),
 ) {
 
     val data

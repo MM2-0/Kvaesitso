@@ -15,6 +15,7 @@ internal object LauncherSettingsDataSerializer : Serializer<LauncherSettingsData
     internal val json = Json {
         ignoreUnknownKeys = true
         encodeDefaults = true
+        coerceInputValues = true
     }
 
     override val defaultValue: LauncherSettingsData

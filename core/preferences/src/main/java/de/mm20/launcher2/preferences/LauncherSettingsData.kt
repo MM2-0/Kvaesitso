@@ -4,11 +4,10 @@ import android.content.Context
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import java.util.UUID
 
 @Serializable
 data class LauncherSettingsData(
-    val schemaVersion: Int = 1,
+    val schemaVersion: Int = 2,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
     val uiTheme: ThemeDescriptor = ThemeDescriptor.Default,
@@ -186,12 +185,14 @@ sealed interface ClockWidgetStyle {
     @SerialName("digital1")
     data class Digital1(
         val outlined: Boolean = false,
+        @Deprecated("Variant.MDY has been replaced with LauncherSettingsData.clockWidgetUseThemeColor")
         val variant: Variant = Variant.Default,
     ) : ClockWidgetStyle {
         @Serializable
+        @Deprecated("No longer in use")
         enum class Variant {
             Default,
-            OnePlus,
+            MDY,
         }
     }
 
