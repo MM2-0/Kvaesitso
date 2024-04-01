@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.component
 
+import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.exponentialDecay
@@ -107,8 +108,8 @@ fun BottomSheetDialog(
         }
     }
 
-    LaunchedEffect(draggableState.currentValue) {
-        if (isOpenAnimationFinished && draggableState.currentValue == SwipeState.Dismiss) {
+    LaunchedEffect(draggableState.settledValue) {
+        if (isOpenAnimationFinished && draggableState.settledValue == SwipeState.Dismiss) {
             onDismissRequest()
         } else {
             isOpenAnimationFinished = true
