@@ -15,8 +15,10 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Style
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
@@ -40,13 +42,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.base.ProvideClockTime
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
@@ -74,62 +76,60 @@ fun WatchFaceSelector(
             modifier = Modifier,
         ) {
             val styles = remember {
-                mapOf(
-                    ClockStyle.DigitalClock1 to 0,
-                    ClockStyle.DigitalClock1_Outlined to 0,
-                    ClockStyle.DigitalClock2 to 1,
-                    ClockStyle.AnalogClock to 2,
-                    ClockStyle.OrbitClock to 3,
-                    ClockStyle.BinaryClock to 4,
-                    ClockStyle.SegmentClock to 5,
-                    ClockStyle.EmptyClock to 6,
+                listOf(
+                    ClockWidgetStyle.Digital1(),
+                    ClockWidgetStyle.Digital2,
+                    ClockWidgetStyle.Analog,
+                    ClockWidgetStyle.Orbit,
+                    ClockWidgetStyle.Segment,
+                    ClockWidgetStyle.Binary,
+                    ClockWidgetStyle.Empty,
                 )
             }
             val pagerState = rememberPagerState(
-                initialPage = styles.getOrDefault(selected, 0)
+                initialPage = styles.indexOfFirst { it.javaClass == selected?.javaClass }.coerceAtLeast(0),
             ) {
-                styles.values.max() + 1
+                styles.size
             }
 
             LaunchedEffect(pagerState.currentPage) {
-                if (styles.getOrDefault(selected, 0) == pagerState.currentPage) {
-                    return@LaunchedEffect
-                }
-                onSelect(styles.entries.first { it.value == pagerState.currentPage }.key)
+                val newStyle = styles[pagerState.currentPage]
+                if (newStyle.javaClass == selected?.javaClass) return@LaunchedEffect
+                onSelect(newStyle)
             }
 
             val scope = rememberCoroutineScope()
 
             Box {
                 androidx.compose.animation.AnimatedVisibility(
-                    styles.entries.count { it.value == pagerState.currentPage } > 1,
+                    selected is ClockWidgetStyle.Digital1,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .zIndex(1f),
                     enter = scaleIn(),
                     exit = scaleOut(),
                 ) {
-                    var showVariantDropdown by remember { mutableStateOf(false) }
+                    var showStyleSettings by remember { mutableStateOf(false) }
                     IconButton(
-                        onClick = { showVariantDropdown = true },
+                        onClick = { showStyleSettings = true },
                         modifier = Modifier
                             .padding(4.dp)
                     ) {
-                        Icon(Icons.Rounded.Style, null)
+                        Icon(Icons.Rounded.Settings, null)
                     }
                     DropdownMenu(
-                        expanded = showVariantDropdown,
-                        onDismissRequest = { showVariantDropdown = false }) {
-                        for (variant in styles.filter { it.value == pagerState.currentPage }) {
+                        expanded = showStyleSettings,
+                        onDismissRequest = { showStyleSettings = false }) {
+                        if (selected is ClockWidgetStyle.Digital1) {
                             DropdownMenuItem(
-                                onClick = {
-                                    onSelect(variant.key)
-                                    showVariantDropdown = false
+                                text = { Text(stringResource(R.string.clock_variant_outlined)) },
+                                leadingIcon = {
+                                    if (selected.outlined) {
+                                        Icon(Icons.Rounded.Check, null)
+                                    }
                                 },
-                                text = {
-                                    Text(
-                                        text = getVariantName(context, variant.key),
-                                    )
+                                onClick = {
+                                    onSelect(selected.copy(outlined = !selected.outlined))
                                 }
                             )
                         }
@@ -155,13 +155,11 @@ fun WatchFaceSelector(
                                 .padding(top = 24.dp, bottom = 8.dp),
                             contentAlignment = Alignment.TopCenter,
                         ) {
-                            val currentPageStyles = remember {
-                                styles.filter { it.value == pageIndex }
-                            }
-                            if (currentPageStyles.containsKey(selected)) {
+                            val currentPageStyle = styles[pageIndex]
+                            if (currentPageStyle.javaClass == selected?.javaClass) {
                                 Clock(selected, compact)
                             } else {
-                                Clock(currentPageStyles.keys.first(), compact)
+                                Clock(currentPageStyle, compact)
                             }
                         }
                     }
@@ -200,9 +198,9 @@ fun WatchFaceSelector(
                     ),
                 ) {
                     Text(
-                        text = getClockstyleName(
+                        text = getClockStyleName(
                             context,
-                            styles.entries.first { (k, v) -> v == pagerState.currentPage }.key
+                            styles[pagerState.currentPage]
                         ),
                         textAlign = TextAlign.Center,
                     )
@@ -217,19 +215,19 @@ fun WatchFaceSelector(
                         expanded = showStyleDropdown,
                         onDismissRequest = { showStyleDropdown = false }
                     ) {
-                        for (style in styles.entries.distinctBy { it.value }.sortedBy { it.value }) {
+                        for (style in styles.withIndex()) {
                             DropdownMenuItem(
                                 onClick = {
                                     scope.launch {
                                         pagerState.animateScrollToPage(
-                                            style.value,
+                                            style.index,
                                         )
                                     }
                                     showStyleDropdown = false
                                 },
                                 text = {
                                     Text(
-                                        text = getClockstyleName(context, style.key),
+                                        text = getClockStyleName(context, style.value),
                                     )
                                 }
                             )
@@ -253,32 +251,16 @@ fun WatchFaceSelector(
     }
 }
 
-fun getClockstyleName(context: Context, style: ClockWidgetStyle): String {
+fun getClockStyleName(context: Context, style: ClockWidgetStyle): String {
     return when (style) {
-        ClockStyle.DigitalClock1,
-        ClockStyle.DigitalClock1_Outlined,
-        ClockStyle.DigitalClock2 -> context.getString(R.string.clock_style_digital2)
-        ClockStyle.OrbitClock -> context.getString(R.string.clock_style_orbit)
-        ClockStyle.BinaryClock -> context.getString(R.string.clock_style_binary)
-        ClockStyle.AnalogClock -> context.getString(R.string.clock_style_analog)
-        ClockStyle.SegmentClock -> context.getString(R.string.clock_style_segment)
-        ClockStyle.EmptyClock -> context.getString(R.string.clock_style_empty)
+        is ClockWidgetStyle.Digital1 -> context.getString(R.string.clock_style_digital1)
+        is ClockWidgetStyle.Digital2 -> context.getString(R.string.clock_style_digital2)
+        is ClockWidgetStyle.Orbit -> context.getString(R.string.clock_style_orbit)
+        is ClockWidgetStyle.Binary -> context.getString(R.string.clock_style_binary)
+        is ClockWidgetStyle.Analog -> context.getString(R.string.clock_style_analog)
+        is ClockWidgetStyle.Segment -> context.getString(R.string.clock_style_segment)
+        is ClockWidgetStyle.Empty -> context.getString(R.string.clock_style_empty)
         else -> ""
-    }
-}
-
-fun getVariantName(context: Context, style: ClockWidgetStyle): String {
-    return when (style) {
-        ClockStyle.DigitalClock1,
-        ClockStyle.DigitalClock2,
-        ClockStyle.OrbitClock,
-        ClockStyle.BinaryClock,
-        ClockStyle.AnalogClock,
-        ClockStyle.SegmentClock,
-        ClockStyle.EmptyClock -> context.getString(R.string.clock_variant_standard)
-        ClockStyle.DigitalClock1_Outlined -> context.getString(R.string.clock_variant_outlined)
-        else -> ""
-
     }
 }
 
