@@ -1,5 +1,6 @@
 package de.mm20.launcher2.applications
 
+import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -16,6 +17,7 @@ import android.os.Process
 import android.os.UserHandle
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
+import androidx.core.content.pm.PackageInfoCompat
 import de.mm20.launcher2.compat.PackageManagerCompat
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.LauncherIcon
@@ -35,6 +37,7 @@ import kotlinx.coroutines.withContext
 internal data class LauncherApp(
     private val launcherActivityInfo: LauncherActivityInfo,
     override val versionName: String?,
+    override val versionCode: String?,
     override val isSuspended: Boolean = false,
     internal val userSerialNumber: Long,
     override val labelOverride: String? = null,
@@ -49,6 +52,7 @@ internal data class LauncherApp(
     constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+        versionCode = getPackageVersionCode(context, launcherActivityInfo.applicationInfo.packageName),
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
     )
 
@@ -185,7 +189,7 @@ internal data class LauncherApp(
         val launcherApps = context.getSystemService<LauncherApps>()!!
         val fileCopy = java.io.File(
             context.cacheDir,
-            "${componentName.packageName}-${versionName}.apk"
+            "${componentName.packageName}-${versionName}_${versionCode}.apk"
         )
         withContext(Dispatchers.IO) {
             try {
@@ -256,6 +260,15 @@ internal data class LauncherApp(
         fun getPackageVersionName(context: Context, packageName: String): String? {
             return try {
                 context.packageManager.getPackageInfo(packageName, 0).versionName
+            } catch (e: PackageManager.NameNotFoundException) {
+                null
+            }
+        }
+
+        fun getPackageVersionCode(context: Context, packageName: String) : String? {
+            return try {
+                val info = context.packageManager.getPackageInfo(packageName, 0)
+                "${PackageInfoCompat.getLongVersionCode(info)}"
             } catch (e: PackageManager.NameNotFoundException) {
                 null
             }

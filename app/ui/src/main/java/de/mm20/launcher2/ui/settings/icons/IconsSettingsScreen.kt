@@ -92,6 +92,10 @@ fun IconsSettingsScreen() {
     val shortcutBadges by viewModel.shortcutBadges.collectAsStateWithLifecycle(null)
     val pluginBadges by viewModel.pluginBadges.collectAsStateWithLifecycle(null)
 
+    val showPackageName by viewModel.showPackageName.collectAsState(initial = true)
+    val showVersionName by viewModel.showVersionName.collectAsState(initial = true)
+    val showVersionCode by viewModel.showVersionCode.collectAsState(initial = false)
+
     val previewIcons by remember(grid?.iconSize) {
         viewModel.getPreviewIcons(with(density) { grid.iconSize.dp.toPx() }.toInt())
     }.collectAsState(
@@ -352,6 +356,27 @@ fun IconsSettingsScreen() {
                         viewModel.setPluginBadges(it)
                     }
                 )
+            }
+        }
+        item {
+            PreferenceCategory(
+                title = stringResource(R.string.preference_category_icons_advanced)
+            ) {
+                SwitchPreference(
+                    title = stringResource(R.string.preference_show_package_name),
+                    summary = stringResource(R.string.preference_show_package_name_summary),
+                    value = showPackageName,
+                    onValueChanged = { viewModel.setShowPackageName(it) })
+                SwitchPreference(
+                    title = stringResource(R.string.preference_show_version_name),
+                    summary = stringResource(R.string.preference_show_version_name_summary),
+                    value = showVersionName,
+                    onValueChanged = { viewModel.setShowVersionName(it) })
+                SwitchPreference(
+                    title = stringResource(R.string.preference_show_version_code),
+                    summary = stringResource(R.string.preference_show_version_code_summary),
+                    value = showVersionCode,
+                    onValueChanged = { viewModel.setShowVersionCode(it) })
             }
         }
     }

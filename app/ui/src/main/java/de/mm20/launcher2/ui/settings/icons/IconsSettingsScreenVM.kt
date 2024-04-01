@@ -17,6 +17,7 @@ import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -31,6 +32,7 @@ class IconsSettingsScreenVM(
 ) : ViewModel() {
 
     val grid = uiSettings.gridSettings
+    val dev = uiSettings.devSettings
 
     fun setColumnCount(columnCount: Int) {
         uiSettings.setGridColumnCount(columnCount)
@@ -110,6 +112,31 @@ class IconsSettingsScreenVM(
     fun setPluginBadges(plugins: Boolean) {
         badgeSettings.setPlugins(plugins)
     }
+
+    val showPackageName: Flow<Boolean> = dev.map {
+        it.showPackageName
+    }
+
+    fun setShowPackageName(showPackageName: Boolean) {
+        uiSettings.setShowPackageName(showPackageName)
+    }
+
+    val showVersionName: Flow<Boolean> = dev.map {
+        it.showVersionName
+    }
+
+    fun setShowVersionName(showVersionName: Boolean) {
+        uiSettings.setShowVersionName(showVersionName)
+    }
+
+    val showVersionCode: Flow<Boolean> = dev.map {
+        it.showVersionCode
+    }
+
+    fun setShowVersionCode(showVersionCode: Boolean) {
+        uiSettings.setShowVersionCode(showVersionCode)
+    }
+
 
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
         return grid.flatMapLatest { grid ->
