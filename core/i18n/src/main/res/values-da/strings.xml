@@ -685,4 +685,13 @@
     <string name="location_open_next">Åbner om %1$s</string>
     <string name="menu_map">Se på kort</string>
     <string name="menu_website">Åbn hjemmeside</string>
+    <string name="missing_permission_location_search">Giv tilladelse til placering for at søge i nærheden.</string>
+    <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
+    <string name="preference_clock_widget_use_theme_color">Brug temafarve</string>
+    <string name="preference_search_locations">Steder</string>
+    <string name="preference_search_locations_radius">Søgeradius</string>
+    <string name="preference_search_locations_summary">Søg i det lokale område efter butikker og andre steder</string>
+    <string name="preference_search_locations_show_position_on_map_summary">Vis din egen placering på kortet</string>
+    <string name="length_unit">Længdeenhed</string>
+    <string name="imperial"></string>
 </resources>
