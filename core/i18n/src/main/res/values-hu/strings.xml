@@ -439,7 +439,7 @@
     <string name="preference_category_widgets">Modulok</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
     <string name="plugin_type_filesearch">Fájl keresés</string>
-    <string name="preference_crash_reporter_summary">Hiba és összeomlás jelentések</string>
+    <string name="preference_crash_reporter_summary">Hiba és összeomlási jelentések</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variálható</string>
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók kinyitásakor</string>
@@ -450,7 +450,7 @@
     <string name="preference_google_signin_summary">A Google Drive kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_edit_favorites_summary">A kitűzött elemek sorrendjének módosítása</string>
     <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a modulok hozzáadásához, eltávolításához és átrendezéséhez</string>
-    <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. Lehetséges, hogy áthelyezték vagy törölték. A másolat visszaállításra került a Kvaesitso belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül.</string>
+    <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. Lehetséges, hogy áthelyezték vagy törölték. A másolat visszaállításra került az indító alkalmazás belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül.</string>
     <string name="plugin_state_error">Ez a bővítmény nem működik megfelelően</string>
     <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
     <string name="preference_search_websearch_summary">A különböző keresőmotorok parancsikonjainak megjelenítése</string>
@@ -477,7 +477,7 @@
     <string name="backup_not_included">A csatlakoztatott fiókokról nem készül biztonsági másolat. A harmadik féltől származó alkalmazások moduljait csak ezen az eszközön lehet visszaállítani.</string>
     <string name="backup_component_favorites">Kedvencek és rejtett alkalmazások</string>
     <string name="restore_meta">A visszaállítani kívánt biztonsági mentés %1$s-kor lett létrehozva, a(z) %2$s készüléken, ezzel: %3$s.</string>
-    <string name="search_action_websearch_url_hint">Az URL-sablon, amelyet az internetes keresés URL-jének létrehozásához használatos. Használd a ‘${1}’ szót a tényleges keresési kifejezés helyőrzőjeként, pl. https://google.com/search?q=${1}.</string>
+    <string name="search_action_websearch_url_hint">Az URL-sablon, amelyet az internetes keresés URL-jének létrehozásához használatos. Használja a ‘${1}’ szót a tényleges keresési kifejezés helyőrzőjeként, pl. https://google.com/search?q=${1}.</string>
     <plurals name="battery_part_remaining_charge_time">
         <item quantity="one">%1$s perc múlva feltöltődik</item>
         <item quantity="other">%1$s perc múlva feltöltődik</item>
@@ -495,7 +495,7 @@
     <string name="preference_notification_badges_summary">Az olvasatlan értesítésekkel rendelkező alkalmazások jelvényének megjelenítése</string>
     <string name="create_search_action_type_web">Keresés egy weboldalon</string>
     <string name="create_search_action_type_app">Keresés egy alkalmazásban</string>
-    <string name="create_search_action_type_intent">Egyedi szándék</string>
+    <string name="create_search_action_type_intent">Egyéb akció</string>
     <string name="create_search_action_title">Új gyors művelet</string>
     <string name="edit_search_action_title">Gyors művelet szerkesztése</string>
     <string name="create_search_action_website_invalid_url">Az adott weboldal nem importálható automatikusan webes keresésként. A következő lépésben megpróbálhat egy másik webhelyet, vagy manuálisan megadhatja a szükséges adatokat.</string>
@@ -517,7 +517,7 @@
     <string name="backup_component_searchactions">Gyors művelet</string>
     <string name="backup_component_widgets">Beépített modulok</string>
     <string name="restore_select_components">Válassza ki, hogy mit szeretne visszaállítani. A meglévő adatok felülírásra kerülnek!</string>
-    <string name="icon_picker_search_icon">Keresés az ikoncsomagokban</string>
+    <string name="icon_picker_search_icon">Keresés az ikoncsomagok között</string>
     <string name="icon_picker_no_packs_installed">Nincs telepítve ikoncsomag</string>
     <string name="search_bar_position_bottom">Lent</string>
     <string name="preference_screen_gestures">Gesztusok</string>
@@ -587,7 +587,7 @@
     <string name="preference_screen_backup">Biztonsági mentés és visszaállítás</string>
     <string name="preference_screen_backup_summary">Az indító alkalmazás adatainak exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
-    <string name="preference_backup_summary">A beállítások és az indítóadatok exportálása</string>
+    <string name="preference_backup_summary">A beállítások és az indító alkalmazás adatainak exportálása</string>
     <string name="preference_restore">Visszaállítás</string>
     <string name="preference_restore_summary">Egy korábban létrehozott biztonsági másolat importálása</string>
     <string name="preference_crash_reporter">Összeomlás jelentő</string>
@@ -649,7 +649,7 @@
     <string name="note_widget_conflict_file_version">Aktuális fájl tartalma:</string>
     <string name="note_widget_file_read_error">Hiba a jegyzet olvasásakor</string>
     <string name="note_widget_file_write_error">Hiba a jegyzet mentése közben</string>
-    <string name="note_widget_file_write_error_description">A jegyzetet nem lehetett a kapcsolódó fájlba írni. Lehetséges, hogy áthelyezték vagy törölték. A másolat el lett mentve a Kvaesitso belső tárolójába.</string>
+    <string name="note_widget_file_write_error_description">A jegyzetet nem lehetett a kapcsolódó fájlba írni. Lehetséges, hogy áthelyezték vagy törölték. A másolat el lett mentve az indító alkalmazás belső tárolójába.</string>
     <string name="confirmation_delete_color_scheme">Biztosan törölni szeretné a(z) %1$s színsémát?</string>
     <string name="new_color_scheme_name">Új színséma</string>
     <string name="theme_color_scheme_custom_color">Egyedi</string>
@@ -707,7 +707,7 @@
     <string name="menu_bugreport">Hiba bejelentése</string>
     <string name="location_open_24_7">Nyitva 24/7</string>
     <string name="unavailable_searchable">Ez az elem már nem létezik.</string>
-    <string name="clock_style_segment">7 szegmens</string>
+    <string name="clock_style_segment">7-szegmenses</string>
     <string name="clock_variant_standard">Általános</string>
     <string name="preference_clock_widget_use_theme_color">Színséma használata</string>
     <string name="preference_search_bar_separate_work_profile">Lap elkülönítés az alkalmazásokhoz</string>
@@ -715,9 +715,9 @@
     <string name="preference_clock_widget_show_seconds">Másodperc megjelenítése</string>
     <string name="clock_style_digital1">Félkövér</string>
     <string name="clock_style_digital2">Egyszerű</string>
-    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_orbit">Orbitális</string>
     <string name="clock_style_binary">Bináris</string>
-    <string name="clock_style_analog">Kezek</string>
+    <string name="clock_style_analog">Analóg</string>
     <string name="clock_style_empty">Nincs óra</string>
     <string name="clock_variant_outlined">Körvonalazott</string>
 </resources>
