@@ -11,7 +11,7 @@
     <string name="menu_customize">Testreszabás</string>
     <string name="menu_hide">Elrejtés</string>
     <string name="menu_unhide">Ne rejtse el</string>
-    <string name="msg_item_hidden">%1$s el lett rejtve.</string>
+    <string name="msg_item_hidden">A(z) %1$s el lett rejtve.</string>
     <string name="action_undo">Visszavonás</string>
     <string name="menu_delete">Törlés</string>
     <string name="menu_remove">Eltávolítás</string>
@@ -35,9 +35,9 @@
     <string name="file_meta_size">Méret: %1$s</string>
     <string name="file_meta_path">Hely: %1$s</string>
     <string name="file_meta_type">Típus: %1$s</string>
-    <string name="file_meta_app_name">Alkalmazás neve: %1$s</string>
+    <string name="file_meta_app_name">Alkalmazás név: %1$s</string>
     <string name="file_meta_app_version">Verzió: %1$s</string>
-    <string name="file_meta_app_pkgname">Csomag neve: %1$s</string>
+    <string name="file_meta_app_pkgname">Csomag név: %1$s</string>
     <string name="file_meta_app_min_sdk">Legrégibb SDK verzió: %1$s</string>
     <string name="file_meta_owner">Tulajdonos: %1$s</string>
     <string name="file_meta_location">Hely: %1$s</string>
@@ -67,11 +67,11 @@
     <string name="websearch_dialog_custom_icon">Egyéni ikon</string>
     <string name="websearch_dialog_advanced">Haladó</string>
     <string name="websearch_dialog_query_encoding_none">Nincs</string>
-    <string name="menu_edit_widgets">Widgetek módosítása</string>
+    <string name="menu_edit_widgets">Modulok szerkesztése</string>
     <string name="widget_name_calendar">Naptár</string>
     <string name="widget_name_music">Zene</string>
     <string name="widget_name_favorites">Kedvencek</string>
-    <string name="widget_add_widget">Widget hozzáadása</string>
+    <string name="widget_add_widget">Modul hozzáadása</string>
     <string name="shortcut_summary">Készítette: %1$s</string>
     <string name="installation_in_progress">Telepítés folyamatban... (%1$s)</string>
     <string name="duplicate">Másolat készítése</string>
@@ -175,7 +175,7 @@
 \n
 \nUtoljára frissítve: %1$s</string>
     <string name="calendar_widget_new_event">Új esemény</string>
-    <string name="music_widget_no_data">Még nem játszottak le médiát</string>
+    <string name="music_widget_no_data">Még nem játszott le média tartalmat</string>
     <string name="weather_condition_sleetshowers">Havas eső záporok</string>
     <string name="weather_condition_heavysleet">Heves havas eső</string>
     <string name="weather_condition_heavyrain">Heves eső</string>
@@ -222,11 +222,11 @@
     <string name="weather_condition_thunder">Zivatar</string>
     <string name="weather_condition_snowshowersandthunder">Hó záporok és mennydörgés</string>
     <string name="weather_condition_lightssleetshowersandthunder">Enyhe havas eső záporok és mennydörgés</string>
-    <string name="preference_screen_colors">Színösszeállítás</string>
+    <string name="preference_screen_colors">Szín összeállítás</string>
     <string name="weather_condition_wind">Szél</string>
     <string name="weather_condition_snowshowers">Hó záporok</string>
     <string name="weather_condition_heavyrainandthunder">Heves eső és mennydörgés</string>
-    <string name="missing_permission_calendar_widget_settings">Ehhez a widgethez naptár-engedély szükséges</string>
+    <string name="missing_permission_calendar_widget_settings">Ehhez a modulhoz naptár-engedély szükséges</string>
     <string name="missing_permission_appshortcuts_search_settings">A(z) %1$s-t alapértelmezett indítóként kell beállítani az alkalmazások parancsikonjainak kereséséhez</string>
     <string name="missing_permission_notification_badges">Az értesítési jelvények megjelenítéséhez értesítési hozzáférés szükséges</string>
     <string name="preference_category_licenses">Nyílt forráskódú licencek</string>
@@ -276,7 +276,7 @@
     <string name="preference_automatic_location">Automatikus helyszín meghatározás</string>
     <string name="grant_permission">Engedélyezés</string>
     <string name="preference_screen_appearance">Megjelenés</string>
-    <string name="preference_layout_summary">A keresősáv, a widgetek és a keresési eredmények általános elrendezése</string>
+    <string name="preference_layout_summary">A keresősáv, a modulok és a keresési eredmények általános elrendezése</string>
     <string name="preference_theme_light">Világos</string>
     <string name="preference_theme_dark">Sötét</string>
     <string name="preference_colors_custom">Egyedi színséma</string>
@@ -319,8 +319,8 @@
     <string name="preference_cards_shape_cut">Csapott</string>
     <string name="preference_icon_shape">Alakzat</string>
     <string name="preference_icon_shape_platform">Rendszer alapértelmezett</string>
-    <string name="preference_icon_shape_rounded_square">Kerekített négyzet</string>
-    <string name="preference_icon_shape_squircle">Lekerekített négyzet</string>
+    <string name="preference_icon_shape_rounded_square">Lekerekített négyzet</string>
+    <string name="preference_icon_shape_squircle">Kerekített négyzet</string>
     <string name="preference_icon_shape_triangle">Reuleaux háromszög</string>
     <string name="preference_icon_shape_circle">Kör</string>
     <string name="preference_icon_shape_teardrop">Könnycsepp</string>
@@ -330,9 +330,9 @@
     <string name="no_plugins_installed">Nincsenek telepített bővítmények</string>
     <string name="plugin_host_not_installed">Bővítmény kiszolgáló nincs telepítve</string>
     <string name="preference_theme_system">Kövesse a rendszer beállításait</string>
-    <string name="preference_themed_icons">Témázott ikonok</string>
+    <string name="preference_themed_icons">Színsémának megfelelő ikonok</string>
     <string name="preference_icon_pack">Ikoncsomag</string>
-    <string name="preference_icon_pack_summary_empty">Nincs telepített ikoncsomag</string>
+    <string name="preference_icon_pack_summary_empty">Nincs telepítve ikoncsomag</string>
     <string name="icon_pack_dynamic_colors">Dinamikus színek</string>
     <string name="preference_category_animations">Animációk</string>
     <string name="preference_charging_animation_summary">Buborék animáció lejátszása a készülék töltése közben</string>
@@ -411,7 +411,7 @@
     <string name="note_widget_conflict_keep_selected">Maradjon kiválasztva</string>
     <string name="preference_screen_buildinfo">Összeállítási információk</string>
     <string name="preference_screen_debug">Hibakeresés</string>
-    <string name="preference_screen_widgets_summary">Widgetek konfigurálása</string>
+    <string name="preference_screen_widgets_summary">Modulok beállítása</string>
     <string name="battery_part_charging">⚡︎ Töltés ⚡︎</string>
     <string name="backup_component_websearches">Internetes keresési parancsikonok</string>
     <string name="search_action_email">Email</string>
@@ -423,7 +423,7 @@
     <string name="preference_notification_badges">Értesítési jelvények</string>
     <string name="preference_grid_column_count">Oszlopok száma</string>
     <string name="preference_screen_weatherwidget">Időjárás</string>
-    <string name="preference_clock_widget_fill_height_summary">Szúrjon be extra helyet az óra fölé, hogy kitöltse a teljes képernyőmagasságot</string>
+    <string name="preference_clock_widget_fill_height_summary">Szúrjon be további üres helyet az óra fölé, hogy kitöltse a teljes képernyőmagasságot</string>
     <string name="preference_shortcut_badges">Parancsikon jelvények</string>
     <string name="preference_grid_labels_summary">Az alkalmazás nevének megjelenítése az ikon alatt</string>
     <string name="preference_screen_clockwidget_summary">Az óra stílusának és összetevőinek konfigurálása</string>
@@ -431,25 +431,25 @@
     <string name="preference_blur_wallpaper_unsupported">Nem támogatott ezen az eszközön</string>
     <string name="preference_wallpaper_summary">Háttérkép kiválasztása</string>
     <string name="preference_shortcut_badges_summary">Egy jelvény megjelenítése, amely jelzi, hogy egy parancsikon melyik alkalmazáshoz tartozik</string>
-    <string name="app_widget_loading_failed">Az alkalmazás widgetet nem sikerült betölteni.</string>
+    <string name="app_widget_loading_failed">Az alkalmazás modult nem sikerült betölteni.</string>
     <string name="preference_screen_search">Keresés</string>
     <string name="preference_nextcloud_signin_summary">A Nextcloud kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_screen_musicwidget">Zene</string>
     <string name="preference_screen_debug_summary">Hibaelhárító eszközök</string>
-    <string name="preference_category_widgets">Widgetek</string>
+    <string name="preference_category_widgets">Modulok</string>
     <string name="preference_clockwidget_music_part_summary">Médiavezérlők megjelenítése, ha aktív médiamunkamenet van</string>
     <string name="plugin_type_filesearch">Fájl keresés</string>
     <string name="preference_crash_reporter_summary">Hiba és összeomlás jelentések</string>
     <string name="preference_search_result_ordering_weight_factor_high">Variálható</string>
     <string name="preference_search_currencyconverter">Valutaváltó</string>
     <string name="preference_search_bar_auto_focus_summary">A billentyűzet automatikus megjelenítése az alkalmazásfiók kinyitásakor</string>
-    <string name="note_widget_link_file_summary">Szinkronizálja a widget tartalmát egy külső fájllal</string>
+    <string name="note_widget_link_file_summary">Szinkronizálja a modul tartalmát egy külső fájllal</string>
     <string name="plugin_weather_provider_enabled">Jelenleg időjárás-előrejelzés szolgáltatóként van beállítva</string>
     <string name="preference_search_websites">Weboldalak</string>
     <string name="preference_search_websites_summary">Egy weboldal előnézetének megjelenítése, ha a keresési lekérdezés URL</string>
     <string name="preference_google_signin_summary">A Google Drive kiszolgálón való kereséshez be kell jelentkezni</string>
     <string name="preference_edit_favorites_summary">A kitűzött elemek sorrendjének módosítása</string>
-    <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a widgetek hozzáadásához, eltávolításához és átrendezéséhez</string>
+    <string name="preference_widgets_edit_button_summary">Egy gomb megjelenítése a modulok hozzáadásához, eltávolításához és átrendezéséhez</string>
     <string name="note_widget_file_read_error_description">A hivatkozott fájlt nem lehetett beolvasni. Lehetséges, hogy áthelyezték vagy törölték. A másolat visszaállításra került a Kvaesitso belső tárolójából. Ha szerkeszti a jegyzetet, a hivatkozott fájl valószínűleg felülírásra kerül.</string>
     <string name="plugin_state_error">Ez a bővítmény nem működik megfelelően</string>
     <string name="preference_screen_search_summary">Keresés, címkék, rejtett elemek</string>
@@ -474,7 +474,7 @@
     <string name="search_action_label">Név</string>
     <string name="preference_layout_fixed_search_bar">Rögzített keresősáv</string>
     <string name="preference_screen_tags">Címkék</string>
-    <string name="backup_not_included">A csatlakoztatott fiókokról nem készül biztonsági másolat. A harmadik féltől származó alkalmazások widgetjeit csak ezen az eszközön lehet visszaállítani.</string>
+    <string name="backup_not_included">A csatlakoztatott fiókokról nem készül biztonsági másolat. A harmadik féltől származó alkalmazások moduljait csak ezen az eszközön lehet visszaállítani.</string>
     <string name="backup_component_favorites">Kedvencek és rejtett alkalmazások</string>
     <string name="restore_meta">A visszaállítani kívánt biztonsági mentés %1$s-kor lett létrehozva, a(z) %2$s készüléken, ezzel: %3$s.</string>
     <string name="search_action_websearch_url_hint">Az URL-sablon, amelyet az internetes keresés URL-jének létrehozásához használatos. Használd a ‘${1}’ szót a tényleges keresési kifejezés helyőrzőjeként, pl. https://google.com/search?q=${1}.</string>
@@ -515,7 +515,7 @@
     <string name="no_account_google">Még nem kapcsolódik egyetlen Google fiókhoz sem</string>
     <string name="connect_account">Bejelentkezés a fiókba</string>
     <string name="backup_component_searchactions">Gyors művelet</string>
-    <string name="backup_component_widgets">Beépített widgetek</string>
+    <string name="backup_component_widgets">Beépített modulok</string>
     <string name="restore_select_components">Válassza ki, hogy mit szeretne visszaállítani. A meglévő adatok felülírásra kerülnek!</string>
     <string name="icon_picker_search_icon">Keresés az ikoncsomagokban</string>
     <string name="icon_picker_no_packs_installed">Nincs telepítve ikoncsomag</string>
@@ -572,7 +572,7 @@
     <string name="preference_clock_widget_fill_height">Képernyő magasságának kitöltése</string>
     <string name="preference_clock_widget_color">Szín</string>
     <string name="preference_clock_widget_style">Stílus</string>
-    <string name="preference_clock_widget_style_summary">Válassz egy órát</string>
+    <string name="preference_clock_widget_style_summary">Válasszon egy órát</string>
     <string name="preference_clock_widget_alignment">Igazítás</string>
     <string name="preference_clock_widget_alignment_center">Középre</string>
     <string name="preference_clock_widget_alignment_top">Felülre</string>
@@ -585,11 +585,11 @@
     <string name="preference_clockwidget_battery_part">Akkumulátor</string>
     <string name="preference_clockwidget_alarm_part">Riasztások</string>
     <string name="preference_screen_backup">Biztonsági mentés és visszaállítás</string>
-    <string name="preference_screen_backup_summary">Kvaesitso adatok exportálása és importálása</string>
+    <string name="preference_screen_backup_summary">Az indító alkalmazás adatainak exportálása és importálása</string>
     <string name="preference_backup">Biztonsági mentés</string>
     <string name="preference_backup_summary">A beállítások és az indítóadatok exportálása</string>
     <string name="preference_restore">Visszaállítás</string>
-    <string name="preference_restore_summary">Importálj egy korábban létrehozott biztonsági másolatot</string>
+    <string name="preference_restore_summary">Egy korábban létrehozott biztonsági másolat importálása</string>
     <string name="preference_crash_reporter">Összeomlás jelentő</string>
     <string name="preference_export_log">Naplófájl exportálása</string>
     <string name="preference_search_favorites">Kedvencek</string>
@@ -642,7 +642,7 @@
     <string name="search_action_open_url">Weboldal meglátogatása</string>
     <string name="create_search_action_pick_app">Válassz egy alkalmazást a kereséshez:</string>
     <string name="widget_config_appwidget_background">Háttér kártya</string>
-    <string name="widget_config_appwidget_configure">Widget konfigurálása</string>
+    <string name="widget_config_appwidget_configure">Modul beállítása</string>
     <string name="widget_config_appwidget_resize_hint">Húzás az átméretezéshez</string>
     <string name="note_widget_linked_file_summary">Hivatkozik a következő fájlra: %1$s</string>
     <string name="note_widget_conflict_local_version">Utolsó mentett verzió:</string>
@@ -707,4 +707,17 @@
     <string name="menu_bugreport">Hiba bejelentése</string>
     <string name="location_open_24_7">Nyitva 24/7</string>
     <string name="unavailable_searchable">Ez az elem már nem létezik.</string>
+    <string name="clock_style_segment">7 szegmens</string>
+    <string name="clock_variant_standard">Általános</string>
+    <string name="preference_clock_widget_use_theme_color">Színséma használata</string>
+    <string name="preference_search_bar_separate_work_profile">Lap elkülönítés az alkalmazásokhoz</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Külön lapon mutatja az alkalmazásokat</string>
+    <string name="preference_clock_widget_show_seconds">Másodperc megjelenítése</string>
+    <string name="clock_style_digital1">Félkövér</string>
+    <string name="clock_style_digital2">Egyszerű</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_binary">Bináris</string>
+    <string name="clock_style_analog">Kezek</string>
+    <string name="clock_style_empty">Nincs óra</string>
+    <string name="clock_variant_outlined">Körvonalazott</string>
 </resources>
