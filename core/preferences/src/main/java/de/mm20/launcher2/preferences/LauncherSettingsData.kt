@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LauncherSettingsData(
+data class LauncherSettingsData internal constructor(
     val schemaVersion: Int = 2,
 
     val uiColorScheme: ColorScheme = ColorScheme.System,
@@ -24,7 +24,12 @@ data class LauncherSettingsData(
     val mediaDenyList: Set<String> = emptySet(),
 
     val clockWidgetCompact: Boolean = false,
-    val clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
+    @Deprecated("")
+    @SerialName("clockWidgetStyle")
+    val _clockWidgetStyle: ClockWidgetStyle = ClockWidgetStyle.Digital1(),
+    @SerialName("clockWidgetStyle2")
+    internal val clockWidgetStyle: ClockWidgetStyleEnum = ClockWidgetStyleEnum.Digital1,
+    val clockWidgetDigital1: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
     val clockWidgetUseThemeColor: Boolean = false,
@@ -177,6 +182,16 @@ sealed interface ThemeDescriptor {
     data class Custom(
         val id: String,
     ) : ThemeDescriptor
+}
+
+internal enum class ClockWidgetStyleEnum {
+    Digital1,
+    Digital2,
+    Orbit,
+    Analog,
+    Binary,
+    Segment,
+    Empty,
 }
 
 @Serializable

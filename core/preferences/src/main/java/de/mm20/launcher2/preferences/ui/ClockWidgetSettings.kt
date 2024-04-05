@@ -3,7 +3,9 @@ package de.mm20.launcher2.preferences.ui
 import de.mm20.launcher2.preferences.ClockWidgetAlignment
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
+import de.mm20.launcher2.preferences.ClockWidgetStyleEnum
 import de.mm20.launcher2.preferences.LauncherDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
@@ -87,12 +89,28 @@ class ClockWidgetSettings internal constructor(
         }
     }
 
-    val clockStyle
-        get() = launcherDataStore.data.map { it.clockWidgetStyle }
+    val clockStyle: Flow<ClockWidgetStyle>
+        get() = launcherDataStore.data.map {
+            when (it.clockWidgetStyle) {
+                ClockWidgetStyleEnum.Digital1 -> it.clockWidgetDigital1
+                ClockWidgetStyleEnum.Digital2 -> ClockWidgetStyle.Digital2
+                ClockWidgetStyleEnum.Orbit -> ClockWidgetStyle.Orbit
+                ClockWidgetStyleEnum.Analog -> ClockWidgetStyle.Analog
+                ClockWidgetStyleEnum.Binary -> ClockWidgetStyle.Binary
+                ClockWidgetStyleEnum.Segment -> ClockWidgetStyle.Segment
+                ClockWidgetStyleEnum.Empty -> ClockWidgetStyle.Empty
+            }
+        }
+
+    val digital1: Flow<ClockWidgetStyle.Digital1>
+        get() = launcherDataStore.data.map { it.clockWidgetDigital1 }
 
     fun setClockStyle(clockStyle: ClockWidgetStyle) {
         launcherDataStore.update {
-            it.copy(clockWidgetStyle = clockStyle)
+            it.copy(
+                clockWidgetStyle = clockStyle.enumValue,
+                clockWidgetDigital1 = if (clockStyle is ClockWidgetStyle.Digital1) clockStyle else it.clockWidgetDigital1,
+            )
         }
     }
 
@@ -123,3 +141,14 @@ class ClockWidgetSettings internal constructor(
         }
     }
 }
+
+internal val ClockWidgetStyle.enumValue
+    get() = when (this) {
+        is ClockWidgetStyle.Digital1 -> ClockWidgetStyleEnum.Digital1
+        is ClockWidgetStyle.Digital2 -> ClockWidgetStyleEnum.Digital2
+        is ClockWidgetStyle.Orbit -> ClockWidgetStyleEnum.Orbit
+        is ClockWidgetStyle.Analog -> ClockWidgetStyleEnum.Analog
+        is ClockWidgetStyle.Binary -> ClockWidgetStyleEnum.Binary
+        is ClockWidgetStyle.Segment -> ClockWidgetStyleEnum.Segment
+        is ClockWidgetStyle.Empty -> ClockWidgetStyleEnum.Empty
+    }

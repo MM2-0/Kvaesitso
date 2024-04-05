@@ -20,6 +20,7 @@ import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Style
+import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -55,6 +56,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun WatchFaceSelector(
+    styles: List<ClockWidgetStyle>,
     compact: Boolean,
     colors: ClockWidgetColors,
     selected: ClockWidgetStyle?,
@@ -75,17 +77,6 @@ fun WatchFaceSelector(
         Column(
             modifier = Modifier,
         ) {
-            val styles = remember {
-                listOf(
-                    ClockWidgetStyle.Digital1(),
-                    ClockWidgetStyle.Digital2,
-                    ClockWidgetStyle.Analog,
-                    ClockWidgetStyle.Orbit,
-                    ClockWidgetStyle.Segment,
-                    ClockWidgetStyle.Binary,
-                    ClockWidgetStyle.Empty,
-                )
-            }
             val pagerState = rememberPagerState(
                 initialPage = styles.indexOfFirst { it.javaClass == selected?.javaClass }.coerceAtLeast(0),
             ) {
@@ -115,23 +106,23 @@ fun WatchFaceSelector(
                         modifier = Modifier
                             .padding(4.dp)
                     ) {
-                        Icon(Icons.Rounded.Settings, null)
-                    }
-                    DropdownMenu(
-                        expanded = showStyleSettings,
-                        onDismissRequest = { showStyleSettings = false }) {
-                        if (selected is ClockWidgetStyle.Digital1) {
-                            DropdownMenuItem(
-                                text = { Text(stringResource(R.string.clock_variant_outlined)) },
-                                leadingIcon = {
-                                    if (selected.outlined) {
-                                        Icon(Icons.Rounded.Check, null)
+                        Icon(Icons.Rounded.Tune, null)
+                        DropdownMenu(
+                            expanded = showStyleSettings,
+                            onDismissRequest = { showStyleSettings = false }) {
+                            if (selected is ClockWidgetStyle.Digital1) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.clock_variant_outlined)) },
+                                    leadingIcon = {
+                                        if (selected.outlined) {
+                                            Icon(Icons.Rounded.Check, null)
+                                        }
+                                    },
+                                    onClick = {
+                                        onSelect(selected.copy(outlined = !selected.outlined))
                                     }
-                                },
-                                onClick = {
-                                    onSelect(selected.copy(outlined = !selected.outlined))
-                                }
-                            )
+                                )
+                            }
                         }
                     }
                 }

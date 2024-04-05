@@ -352,9 +352,12 @@ fun ConfigureClockWidgetSheet(
                 }
             }
 
-            if (color != null && compact != null) {
+            val availableStyles by viewModel.availableClockStyles.collectAsState()
+
+            if (color != null && compact != null && availableStyles.isNotEmpty()) {
                 ProvideClockTime {
                     WatchFaceSelector(
+                        styles = availableStyles,
                         compact = compact!!,
                         colors = color!!,
                         selected = style,
