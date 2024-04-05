@@ -707,4 +707,17 @@
     <string name="location_open_next">Disponible en %1$s</string>
     <string name="menu_map">Veure al mapa</string>
     <string name="menu_website">Lloc web obert</string>
+    <string name="preference_search_bar_separate_work_profile_summary">Mostra les aplicacions del perfil de treball en una pestanya independent</string>
+    <string name="preference_search_bar_separate_work_profile">Aplicacions del perfil de treball separades</string>
+    <string name="preference_clock_widget_show_seconds">Mostra els segons</string>
+    <string name="preference_clock_widget_use_theme_color">Utilitzeu el color del tema</string>
+    <string name="clock_style_digital1">Negreta</string>
+    <string name="clock_style_digital2">Simple</string>
+    <string name="clock_style_orbit">Orbit</string>
+    <string name="clock_style_binary">Digital</string>
+    <string name="clock_style_analog">Analògic</string>
+    <string name="clock_style_segment">7 segments</string>
+    <string name="clock_style_empty">Sense rellotge</string>
+    <string name="clock_variant_standard">Estàndard</string>
+    <string name="clock_variant_outlined">Perfilat</string>
 </resources>
