@@ -45,8 +45,7 @@ fun DigitalClock2(
         else {
             "hh:mm:ss"
         }
-    }
-    else {
+    } else {
         if (DateFormat.is24HourFormat(LocalContext.current)) {
             "HH:mm"
         }

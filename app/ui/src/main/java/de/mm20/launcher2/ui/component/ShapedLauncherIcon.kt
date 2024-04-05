@@ -409,39 +409,11 @@ private fun ClockLayer(
     tintColor: Color?,
     modifier: Modifier = Modifier,
 ) {
-    val time = remember(LocalTime.current) {
-        Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
-    }
+    val time = Instant.ofEpochMilli(LocalTime.current).atZone(ZoneId.systemDefault())
 
-    val second = remember {
-        Animatable((time.second).toFloat() + (time.nano / 1000000f) / 1000f)
-    }
-
-    val minute = remember {
-        Animatable((time.minute).toFloat() + time.second.toFloat() / 60f)
-    }
-
-    val hour = remember {
-        Animatable((time.hour).toFloat() + time.minute.toFloat() / 60f)
-    }
-
-    LaunchedEffect(time) {
-        val h = (time.hour).toFloat() + (time.minute).toFloat() / 60f
-        val m = (time.minute.toFloat() + (time.second).toFloat() / 60f)
-        val s = (time.second).toFloat() + (time.nano / 1000000f) / 1000f
-        second.snapTo(s)
-        hour.snapTo(h)
-        minute.snapTo(m)
-        launch {
-            hour.animateTo(h + 1.5f / 60f, tween(90000, easing = LinearEasing))
-        }
-        launch {
-            minute.animateTo(m + 1.5f, tween(90000, easing = LinearEasing))
-        }
-        launch {
-            second.animateTo(s + 90f, tween(90000, easing = LinearEasing))
-        }
-    }
+    val second = time.second
+    val minute = time.minute
+    val hour = time.hour
 
     Canvas(modifier = modifier) {
         val colorFilter = tintColor?.let {
@@ -453,11 +425,11 @@ private fun ClockLayer(
             for (sublayer in sublayers) {
                 when (sublayer.role) {
                     ClockSublayerRole.Hour -> {
-                        sublayer.drawable.level = (((hour.value.toInt() - defaultHour + 12) % 12) * 60
-                                + ((minute.value.toInt()) % 60))
+                        sublayer.drawable.level = (((hour - defaultHour + 12) % 12) * 60
+                                + ((minute) % 60))
                     }
-                    ClockSublayerRole.Minute -> sublayer.drawable.level = ((minute.value.toInt() - defaultMinute + 60) % 60)
-                    ClockSublayerRole.Second -> sublayer.drawable.level = (((second.value.toInt() - defaultSecond + 60) % 60) * 10)
+                    ClockSublayerRole.Minute -> sublayer.drawable.level = ((minute - defaultMinute + 60) % 60)
+                    ClockSublayerRole.Second -> sublayer.drawable.level = (((second - defaultSecond + 60) % 60) * 10)
                     else -> {}
                 }
                 drawIntoCanvas {

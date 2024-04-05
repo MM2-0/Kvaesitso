@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
@@ -47,24 +48,18 @@ private val currentTime
 
 @Composable
 fun OrbitClock(
-    _time: Long,
+    time: Long,
     compact: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean
 ) {
     val verticalLayout = !compact
 
-    val timeState = remember { mutableStateOf<ZonedDateTime>(currentTime) }
+    val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
 
-    LaunchedEffect(_time) {
-        timeState.value = currentTime
-    }
-
-    val time by timeState
-
-    val second = time.second
-    val minute = time.minute
-    val hour = time.hour
+    val second = parsed.second
+    val minute = parsed.minute
+    val hour = parsed.hour
     val formattedHour = (
             if (DateFormat.is24HourFormat(LocalContext.current))
                 hour
