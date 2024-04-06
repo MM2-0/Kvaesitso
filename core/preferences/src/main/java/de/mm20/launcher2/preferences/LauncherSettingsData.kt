@@ -30,6 +30,7 @@ data class LauncherSettingsData internal constructor(
     @SerialName("clockWidgetStyle2")
     internal val clockWidgetStyle: ClockWidgetStyleEnum = ClockWidgetStyleEnum.Digital1,
     val clockWidgetDigital1: ClockWidgetStyle.Digital1 = ClockWidgetStyle.Digital1(),
+    val clockWidgetCustom: ClockWidgetStyle.Custom = ClockWidgetStyle.Custom(),
     val clockWidgetColors: ClockWidgetColors = ClockWidgetColors.Auto,
     val clockWidgetShowSeconds: Boolean = false,
     val clockWidgetUseThemeColor: Boolean = false,
@@ -192,6 +193,7 @@ internal enum class ClockWidgetStyleEnum {
     Binary,
     Segment,
     Empty,
+    Custom,
 }
 
 @Serializable
@@ -234,6 +236,10 @@ sealed interface ClockWidgetStyle {
     @Serializable
     @SerialName("empty")
     data object Empty : ClockWidgetStyle
+
+    @Serializable
+    @SerialName("custom")
+    data class Custom(val widgetId: Int? = null) : ClockWidgetStyle
 }
 
 @Serializable

@@ -35,6 +35,7 @@ fun DigitalClock1(
     compact: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val verticalLayout = !compact
     val format = SimpleDateFormat(
@@ -56,7 +57,7 @@ fun DigitalClock1(
     )
 
     val color = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {

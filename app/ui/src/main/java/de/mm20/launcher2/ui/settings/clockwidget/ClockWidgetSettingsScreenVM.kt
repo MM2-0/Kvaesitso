@@ -7,6 +7,7 @@ import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
@@ -20,7 +21,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setCompact(compact)
     }
 
-    val availableClockStyles = settings.digital1.map {digital1 ->
+    val availableClockStyles = combine(settings.digital1, settings.custom) {digital1, custom ->
         listOf(
             digital1,
             ClockWidgetStyle.Digital2,
@@ -28,6 +29,7 @@ class ClockWidgetSettingsScreenVM : ViewModel(), KoinComponent {
             ClockWidgetStyle.Orbit,
             ClockWidgetStyle.Segment,
             ClockWidgetStyle.Binary,
+            custom,
             ClockWidgetStyle.Empty,
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

@@ -50,7 +50,8 @@ fun SegmentClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
-    useThemeColor: Boolean
+    useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
     val hour = parsed.hour
@@ -66,7 +67,7 @@ fun SegmentClock(
     }
 
     val enabled = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {

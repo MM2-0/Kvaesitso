@@ -74,6 +74,7 @@ import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.CustomClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
@@ -97,8 +98,11 @@ fun ClockWidget(
     val alignment by viewModel.alignment.collectAsState()
     val time = LocalTime.current
 
+    val darkColors =
+        color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark
+
     val contentColor =
-        if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
+        if (darkColors) {
             Color(0, 0, 0, 180)
         } else {
             Color.White
@@ -182,7 +186,7 @@ fun ClockWidget(
                                         viewModel.launchClockApp(context)
                                     }
                                 ) {
-                                    Clock(clockStyle, false)
+                                    Clock(clockStyle, false, darkColors)
                                 }
 
                                 if (partProvider != null) {
@@ -227,7 +231,7 @@ fun ClockWidget(
                                         viewModel.launchClockApp(context)
                                     }
                                 ) {
-                                    Clock(clockStyle, true)
+                                    Clock(clockStyle, true, darkColors)
                                 }
                             }
                         }
@@ -248,10 +252,14 @@ fun ClockWidget(
     }
 }
 
+/**
+ * @param darkColors: use dark content color / suited for light backgrounds
+ */
 @Composable
 fun Clock(
     style: ClockWidgetStyle?,
     compact: Boolean,
+    darkColors: Boolean = false
 ) {
     val time = LocalTime.current
     val clockSettings: ClockWidgetSettings by inject()
@@ -264,14 +272,51 @@ fun Clock(
             style,
             compact,
             showSeconds,
-            useThemeColor
+            useThemeColor,
+            darkColors
         )
 
-        is ClockWidgetStyle.Digital2 -> DigitalClock2(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Binary -> BinaryClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Analog -> AnalogClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Orbit -> OrbitClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Segment -> SegmentClock(time, compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Digital2 -> DigitalClock2(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Binary -> BinaryClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Analog -> AnalogClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Orbit -> OrbitClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Segment -> SegmentClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
         is ClockWidgetStyle.Empty -> {}
         else -> {}
     }
@@ -426,7 +471,7 @@ fun ConfigureClockWidgetSheet(
                             viewModel.setUseThemeColor(it)
                         }
                     )
-                    AnimatedVisibility(compact == false) {
+                    AnimatedVisibility(compact == false && style !is ClockWidgetStyle.Custom) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_show_seconds),
                             icon = Icons.Rounded.AccessTime,

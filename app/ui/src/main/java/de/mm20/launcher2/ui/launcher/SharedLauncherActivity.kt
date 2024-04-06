@@ -38,8 +38,7 @@ import de.mm20.launcher2.preferences.BaseLayout
 import de.mm20.launcher2.preferences.SystemBarColors
 import de.mm20.launcher2.ui.assistant.AssistantScaffold
 import de.mm20.launcher2.ui.base.BaseActivity
-import de.mm20.launcher2.ui.base.ProvideCurrentTime
-import de.mm20.launcher2.ui.base.ProvideSettings
+import de.mm20.launcher2.ui.base.ProvideCompositionLocals
 import de.mm20.launcher2.ui.component.NavBarEffects
 import de.mm20.launcher2.ui.gestures.GestureDetector
 import de.mm20.launcher2.ui.gestures.LocalGestureDetector
@@ -101,7 +100,7 @@ abstract class SharedLauncherActivity(
                 LocalGestureDetector provides gestureDetector,
             ) {
                 LauncherTheme {
-                    ProvideSettings {
+                    ProvideCompositionLocals {
                         val statusBarColor by viewModel.statusBarColor.collectAsState()
                         val navBarColor by viewModel.navBarColor.collectAsState()
 
@@ -160,111 +159,109 @@ abstract class SharedLauncherActivity(
                             systemUiController.isNavigationBarVisible = !hideNav
                         }
 
-                        ProvideCurrentTime {
-                            OverlayHost(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
-                                contentAlignment = Alignment.BottomCenter
-                            ) {
-                                if (chargingAnimation == true) {
-                                    NavBarEffects(modifier = Modifier.fillMaxSize())
-                                }
-                                if (mode == LauncherActivityMode.Assistant) {
-                                    key(bottomSearchBar, reverseSearchResults) {
-                                        AssistantScaffold(
-                                            modifier = Modifier
-                                                .fillMaxSize(),
-                                            darkStatusBarIcons = lightStatus,
-                                            darkNavBarIcons = lightNav,
-                                            bottomSearchBar = bottomSearchBar,
-                                            reverseSearchResults = reverseSearchResults,
-                                            fixedSearchBar = fixedSearchBar,
-                                        )
-                                    }
-                                } else {
-                                    when (layout) {
-                                        BaseLayout.PullDown -> {
-                                            key(bottomSearchBar, reverseSearchResults) {
-                                                PullDownScaffold(
-                                                    modifier = Modifier
-                                                        .fillMaxSize()
-                                                        .graphicsLayer {
-                                                            scaleX =
-                                                                0.5f + enterTransitionProgress.value * 0.5f
-                                                            scaleY =
-                                                                0.5f + enterTransitionProgress.value * 0.5f
-                                                            alpha = enterTransitionProgress.value
-                                                        },
-                                                    darkStatusBarIcons = lightStatus,
-                                                    darkNavBarIcons = lightNav,
-                                                    bottomSearchBar = bottomSearchBar,
-                                                    reverseSearchResults = reverseSearchResults,
-                                                    fixedSearchBar = fixedSearchBar,
-                                                )
-                                            }
-                                        }
-
-                                        BaseLayout.Pager,
-                                        BaseLayout.PagerReversed -> {
-                                            key(bottomSearchBar, reverseSearchResults) {
-                                                PagerScaffold(
-                                                    modifier = Modifier
-                                                        .fillMaxSize()
-                                                        .graphicsLayer {
-                                                            scaleX =
-                                                                0.5f + enterTransitionProgress.value * 0.5f
-                                                            scaleY =
-                                                                0.5f + enterTransitionProgress.value * 0.5f
-                                                            alpha = enterTransitionProgress.value
-                                                        },
-                                                    darkStatusBarIcons = lightStatus,
-                                                    darkNavBarIcons = lightNav,
-                                                    reverse = layout == BaseLayout.PagerReversed,
-                                                    bottomSearchBar = bottomSearchBar,
-                                                    reverseSearchResults = reverseSearchResults,
-                                                    fixedSearchBar = fixedSearchBar,
-                                                )
-                                            }
-                                        }
-
-                                        else -> {}
-                                    }
-                                }
-                                SnackbarHost(
-                                    snackbarHostState,
-                                    modifier = Modifier
-                                        .navigationBarsPadding()
-                                        .imePadding()
-                                )
-                                enterTransition?.let {
-                                    if (it.startBounds == null || it.targetBounds == null) return@let
-                                    val dX = it.startBounds.center.x - it.targetBounds.center.x
-                                    val dY = it.startBounds.center.y - it.targetBounds.center.y
-                                    val s =
-                                        (it.startBounds.minDimension / it.targetBounds.minDimension - 1f) * 0.5f
-                                    Box(
-                                        modifier = Modifier
-                                            .align(Alignment.TopStart)
-                                            .graphicsLayer {
-                                                val p = (enterTransitionProgress.value).pow(2f)
-                                                transformOrigin = TransformOrigin.Center
-                                                translationX = it.targetBounds.left + dX * (1 - p)
-                                                translationY = it.targetBounds.top + dY * (1 - p)
-                                                alpha = enterTransitionProgress.value
-                                                scaleX = 1f + s * (1 - p)
-                                                scaleY = 1f + s * (1 - p)
-                                            }) {
-                                        it.icon?.invoke(
-                                            Offset(
-                                                dX,
-                                                dY
-                                            )
-                                        ) { enterTransitionProgress.value }
-                                    }
-                                }
-                                LauncherBottomSheets()
+                        OverlayHost(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(if (dimBackground) Color.Black.copy(alpha = 0.30f) else Color.Transparent),
+                            contentAlignment = Alignment.BottomCenter
+                        ) {
+                            if (chargingAnimation == true) {
+                                NavBarEffects(modifier = Modifier.fillMaxSize())
                             }
+                            if (mode == LauncherActivityMode.Assistant) {
+                                key(bottomSearchBar, reverseSearchResults) {
+                                    AssistantScaffold(
+                                        modifier = Modifier
+                                            .fillMaxSize(),
+                                        darkStatusBarIcons = lightStatus,
+                                        darkNavBarIcons = lightNav,
+                                        bottomSearchBar = bottomSearchBar,
+                                        reverseSearchResults = reverseSearchResults,
+                                        fixedSearchBar = fixedSearchBar,
+                                    )
+                                }
+                            } else {
+                                when (layout) {
+                                    BaseLayout.PullDown -> {
+                                        key(bottomSearchBar, reverseSearchResults) {
+                                            PullDownScaffold(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .graphicsLayer {
+                                                        scaleX =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        scaleY =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        alpha = enterTransitionProgress.value
+                                                    },
+                                                darkStatusBarIcons = lightStatus,
+                                                darkNavBarIcons = lightNav,
+                                                bottomSearchBar = bottomSearchBar,
+                                                reverseSearchResults = reverseSearchResults,
+                                                fixedSearchBar = fixedSearchBar,
+                                            )
+                                        }
+                                    }
+
+                                    BaseLayout.Pager,
+                                    BaseLayout.PagerReversed -> {
+                                        key(bottomSearchBar, reverseSearchResults) {
+                                            PagerScaffold(
+                                                modifier = Modifier
+                                                    .fillMaxSize()
+                                                    .graphicsLayer {
+                                                        scaleX =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        scaleY =
+                                                            0.5f + enterTransitionProgress.value * 0.5f
+                                                        alpha = enterTransitionProgress.value
+                                                    },
+                                                darkStatusBarIcons = lightStatus,
+                                                darkNavBarIcons = lightNav,
+                                                reverse = layout == BaseLayout.PagerReversed,
+                                                bottomSearchBar = bottomSearchBar,
+                                                reverseSearchResults = reverseSearchResults,
+                                                fixedSearchBar = fixedSearchBar,
+                                            )
+                                        }
+                                    }
+
+                                    else -> {}
+                                }
+                            }
+                            SnackbarHost(
+                                snackbarHostState,
+                                modifier = Modifier
+                                    .navigationBarsPadding()
+                                    .imePadding()
+                            )
+                            enterTransition?.let {
+                                if (it.startBounds == null || it.targetBounds == null) return@let
+                                val dX = it.startBounds.center.x - it.targetBounds.center.x
+                                val dY = it.startBounds.center.y - it.targetBounds.center.y
+                                val s =
+                                    (it.startBounds.minDimension / it.targetBounds.minDimension - 1f) * 0.5f
+                                Box(
+                                    modifier = Modifier
+                                        .align(Alignment.TopStart)
+                                        .graphicsLayer {
+                                            val p = (enterTransitionProgress.value).pow(2f)
+                                            transformOrigin = TransformOrigin.Center
+                                            translationX = it.targetBounds.left + dX * (1 - p)
+                                            translationY = it.targetBounds.top + dY * (1 - p)
+                                            alpha = enterTransitionProgress.value
+                                            scaleX = 1f + s * (1 - p)
+                                            scaleY = 1f + s * (1 - p)
+                                        }) {
+                                    it.icon?.invoke(
+                                        Offset(
+                                            dX,
+                                            dY
+                                        )
+                                    ) { enterTransitionProgress.value }
+                                }
+                            }
+                            LauncherBottomSheets()
                         }
                     }
                 }

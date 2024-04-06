@@ -1,6 +1,11 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock
 
+import android.app.Activity
+import android.app.ActivityOptions
+import android.appwidget.AppWidgetManager
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
@@ -19,8 +24,8 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.Style
 import androidx.compose.material.icons.rounded.Tune
+import androidx.compose.material.icons.rounded.Widgets
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -38,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -50,8 +56,11 @@ import androidx.compose.ui.zIndex
 import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.LocalAppWidgetHost
+import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
+import de.mm20.launcher2.widgets.AppWidget
 import kotlinx.coroutines.launch
 
 @Composable
@@ -63,6 +72,9 @@ fun WatchFaceSelector(
     onSelect: (ClockWidgetStyle) -> Unit,
 ) {
     val context = LocalContext.current
+
+    var showWidgetPicker by rememberSaveable { mutableStateOf(false) }
+
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -78,7 +90,8 @@ fun WatchFaceSelector(
             modifier = Modifier,
         ) {
             val pagerState = rememberPagerState(
-                initialPage = styles.indexOfFirst { it.javaClass == selected?.javaClass }.coerceAtLeast(0),
+                initialPage = styles.indexOfFirst { it.javaClass == selected?.javaClass }
+                    .coerceAtLeast(0),
             ) {
                 styles.size
             }
@@ -93,7 +106,7 @@ fun WatchFaceSelector(
 
             Box {
                 androidx.compose.animation.AnimatedVisibility(
-                    selected is ClockWidgetStyle.Digital1,
+                    selected is ClockWidgetStyle.Digital1 || selected is ClockWidgetStyle.Custom,
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .zIndex(1f),
@@ -123,12 +136,60 @@ fun WatchFaceSelector(
                                     }
                                 )
                             }
+                            if (selected is ClockWidgetStyle.Custom) {
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.widget_pick_widget)) },
+                                    leadingIcon = {
+                                        Icon(Icons.Rounded.Widgets, null)
+                                    },
+                                    onClick = {
+                                        showWidgetPicker = true
+                                        showStyleSettings = false
+                                    }
+                                )
+                                val widget = remember(selected.widgetId) {
+                                    val id = selected.widgetId ?: return@remember null
+                                    AppWidgetManager.getInstance(context)
+                                        .getAppWidgetInfo(id)
+                                }
+                                val appWidgetHost = LocalAppWidgetHost.current
+                                if (widget?.configure != null) {
+                                    DropdownMenuItem(
+                                        text = { Text(stringResource(R.string.widget_config_appwidget_configure)) },
+                                        leadingIcon = {
+                                            Icon(Icons.Rounded.Settings, null)
+                                        },
+                                        onClick = {
+                                            appWidgetHost.startAppWidgetConfigureActivityForResult(
+                                                context as Activity,
+                                                selected.widgetId ?: return@DropdownMenuItem,
+                                                0,
+                                                0,
+                                                if (Build.VERSION.SDK_INT < 34) {
+                                                    null
+                                                } else {
+                                                    ActivityOptions.makeBasic()
+                                                        .setPendingIntentBackgroundActivityStartMode(
+                                                            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                                        )
+                                                        .setPendingIntentCreatorBackgroundActivityStartMode(
+                                                            ActivityOptions.MODE_BACKGROUND_ACTIVITY_START_ALLOWED
+                                                        )
+                                                        .toBundle()
+                                                }
+                                            )
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
 
+                val darkColors = colors == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || colors == ClockWidgetColors.Dark
+
                 CompositionLocalProvider(
-                    LocalContentColor provides if (colors == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || colors == ClockWidgetColors.Dark) {
+                    LocalContentColor provides if (darkColors) {
                         Color(0, 0, 0, 180)
                     } else {
                         Color.White
@@ -148,9 +209,9 @@ fun WatchFaceSelector(
                         ) {
                             val currentPageStyle = styles[pageIndex]
                             if (currentPageStyle.javaClass == selected?.javaClass) {
-                                Clock(selected, compact)
+                                Clock(selected, compact, darkColors)
                             } else {
-                                Clock(currentPageStyle, compact)
+                                Clock(currentPageStyle, compact, darkColors)
                             }
                         }
                     }
@@ -240,6 +301,23 @@ fun WatchFaceSelector(
             }
         }
     }
+
+    if (showWidgetPicker && selected is ClockWidgetStyle.Custom) {
+        val previousWidgetId = selected.widgetId
+        val appWidgetHost = LocalAppWidgetHost.current
+        WidgetPickerSheet(
+            includeBuiltinWidgets = false,
+            onWidgetSelected = {
+                if (previousWidgetId != null) {
+                    appWidgetHost.deleteAppWidgetId(previousWidgetId)
+                }
+                onSelect(selected.copy(widgetId = (it as AppWidget).config.widgetId))
+            },
+            onDismiss = {
+                showWidgetPicker = false
+            }
+        )
+    }
 }
 
 fun getClockStyleName(context: Context, style: ClockWidgetStyle): String {
@@ -251,18 +329,7 @@ fun getClockStyleName(context: Context, style: ClockWidgetStyle): String {
         is ClockWidgetStyle.Analog -> context.getString(R.string.clock_style_analog)
         is ClockWidgetStyle.Segment -> context.getString(R.string.clock_style_segment)
         is ClockWidgetStyle.Empty -> context.getString(R.string.clock_style_empty)
+        is ClockWidgetStyle.Custom -> context.getString(R.string.clock_style_custom)
         else -> ""
     }
-}
-
-// Compat for old enum names, TODO refactor this screen
-object ClockStyle {
-    val DigitalClock1 = ClockWidgetStyle.Digital1()
-    val DigitalClock1_Outlined = ClockWidgetStyle.Digital1(outlined = true)
-    val DigitalClock2 = ClockWidgetStyle.Digital2
-    val OrbitClock = ClockWidgetStyle.Orbit
-    val AnalogClock = ClockWidgetStyle.Analog
-    val BinaryClock = ClockWidgetStyle.Binary
-    val SegmentClock = ClockWidgetStyle.Segment
-    val EmptyClock = ClockWidgetStyle.Empty
 }

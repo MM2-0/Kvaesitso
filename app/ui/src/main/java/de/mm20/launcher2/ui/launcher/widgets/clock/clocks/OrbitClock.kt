@@ -43,15 +43,13 @@ import kotlin.math.sin
 
 private const val PHI_F = 1.618033988749895.toFloat()
 
-private val currentTime
-    get() = Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
-
 @Composable
 fun OrbitClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
-    useThemeColor: Boolean
+    useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val verticalLayout = !compact
 
@@ -107,8 +105,8 @@ fun OrbitClock(
         label = "hoursAnimation"
     )
 
-    val fgTone = if (LocalContentColor.current == Color.White) 10 else 90
-    val bgTone = if (LocalContentColor.current == Color.White) 90 else 30
+    val fgTone = if (!darkColors) 10 else 90
+    val bgTone = if (!darkColors) 90 else 30
 
     val background = if (useThemeColor) {
         Color(TonalPalette.fromInt(MaterialTheme.colorScheme.primaryContainer.toArgb()).tone(bgTone))
