@@ -13,7 +13,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
@@ -33,27 +33,44 @@ fun ProvideCurrentTime(content: @Composable () -> Unit) {
 
     val context = LocalContext.current
 
-    var time by remember { mutableStateOf(System.currentTimeMillis()) }
+    var time by remember { mutableLongStateOf(System.currentTimeMillis()) }
 
     val secondsAnimation = remember { Animatable(0f) }
 
     LaunchedEffect(time) {
-        val currentSeconds = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).second
-        secondsAnimation.animateTo(currentSeconds.toFloat(), snap())
+        val currentTime = System.currentTimeMillis()
+        val seconds = Instant
+            .ofEpochMilli(currentTime)
+            .atZone(ZoneId.systemDefault()).second
+        val millis = (currentTime % 1000).toInt()
+        secondsAnimation.animateTo(seconds.toFloat() + millis / 1000f, snap())
         secondsAnimation.animateTo(
             60f,
-            tween((60 - currentSeconds) * 1000, easing = LinearEasing)
+            tween(
+                (60 - seconds) * 1000 - millis,
+                delayMillis = millis,
+                easing = LinearEasing
+            )
         )
     }
 
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(null) {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            time = System.currentTimeMillis()
+            val dateTime = Instant.ofEpochMilli(System.currentTimeMillis())
+                .atZone(ZoneId.systemDefault())
+                .withSecond(0)
+                .withNano(0)
+
+            time = dateTime.toEpochSecond() * 1000
 
             val receiver = object : BroadcastReceiver() {
                 override fun onReceive(context: Context?, intent: Intent?) {
-                    time = System.currentTimeMillis()
+                    val dt = Instant.ofEpochMilli(System.currentTimeMillis())
+                        .atZone(ZoneId.systemDefault())
+                        .withSecond(0)
+                        .withNano(0)
+                    time = dt.toEpochSecond() * 1000
                 }
             }
 
