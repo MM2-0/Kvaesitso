@@ -60,7 +60,6 @@ import de.mm20.launcher2.widgets.Widget
 @Composable
 fun WidgetItem(
     widget: Widget,
-    appWidgetHost: AppWidgetHost,
     modifier: Modifier = Modifier,
     editMode: Boolean = false,
     onWidgetAdd: (widget: Widget, offset: Int) -> Unit = { _, _ -> },
@@ -222,7 +221,6 @@ fun WidgetItem(
                             }
                         } else {
                             ExternalWidget(
-                                appWidgetHost = appWidgetHost,
                                 widgetId = widget.config.widgetId,
                                 widgetInfo = widgetInfo,
                                 modifier = Modifier.fillMaxWidth(),
@@ -237,7 +235,6 @@ fun WidgetItem(
     }
     if (configure) {
         ConfigureWidgetSheet(
-            appWidgetHost = appWidgetHost,
             widget = widget,
             onWidgetUpdated = onWidgetUpdate,
             onDismiss = { configure = false },

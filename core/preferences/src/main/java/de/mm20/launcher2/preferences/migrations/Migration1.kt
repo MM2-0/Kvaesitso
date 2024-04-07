@@ -68,7 +68,7 @@ class Migration1(
             clockWidgetFillHeight = legacyData.clockWidget.fillHeight,
             clockWidgetCompact = legacyData.clockWidget.layout == LegacySettings.ClockWidgetSettings.ClockWidgetLayout.Horizontal,
             clockWidgetMusicPart = legacyData.clockWidget.musicPart,
-            clockWidgetStyle = when (legacyData.clockWidget.clockStyle) {
+            _clockWidgetStyle = when (legacyData.clockWidget.clockStyle) {
                 LegacySettings.ClockWidgetSettings.ClockStyle.DigitalClock1 -> ClockWidgetStyle.Digital1()
                 LegacySettings.ClockWidgetSettings.ClockStyle.DigitalClock2 -> ClockWidgetStyle.Digital2
                 LegacySettings.ClockWidgetSettings.ClockStyle.OrbitClock -> ClockWidgetStyle.Orbit

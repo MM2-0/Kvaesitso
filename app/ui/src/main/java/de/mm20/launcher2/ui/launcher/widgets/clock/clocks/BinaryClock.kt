@@ -23,6 +23,7 @@ fun BinaryClock(
     compact: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val verticalLayout = !compact
     val date = Calendar.getInstance()
@@ -33,7 +34,7 @@ fun BinaryClock(
     if (hour == 0) hour = 12
 
     val color = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {

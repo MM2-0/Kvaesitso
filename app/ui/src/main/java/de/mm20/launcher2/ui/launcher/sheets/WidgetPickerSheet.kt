@@ -251,6 +251,8 @@ private class BindAndConfigureAppWidgetContract(
 
 @Composable
 fun WidgetPickerSheet(
+    includeBuiltinWidgets: Boolean = true,
+    title: String = stringResource(R.string.widget_pick_widget),
     onWidgetSelected: (Widget) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -277,7 +279,7 @@ fun WidgetPickerSheet(
     BottomSheetDialog(
         onDismissRequest = onDismiss,
         title = {
-            Text(stringResource(R.string.widget_add_widget))
+            Text(title)
         }) {
         val builtIn by viewModel.builtInWidgets.collectAsState(emptyList())
         LazyColumn(
@@ -318,44 +320,46 @@ fun WidgetPickerSheet(
                 ) {
                 }
             }
-            items(builtIn) {
-                OutlinedCard(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
-                    onClick = {
-                        val id = UUID.randomUUID()
-                        val widget = when(it.type) {
-                            WeatherWidget.Type -> WeatherWidget(id)
-                            CalendarWidget.Type -> CalendarWidget(id)
-                            MusicWidget.Type -> MusicWidget(id)
-                            FavoritesWidget.Type -> FavoritesWidget(id)
-                            NotesWidget.Type -> NotesWidget(id)
-                            else -> return@OutlinedCard
+            if (includeBuiltinWidgets) {
+                items(builtIn) {
+                    OutlinedCard(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                        onClick = {
+                            val id = UUID.randomUUID()
+                            val widget = when (it.type) {
+                                WeatherWidget.Type -> WeatherWidget(id)
+                                CalendarWidget.Type -> CalendarWidget(id)
+                                MusicWidget.Type -> MusicWidget(id)
+                                FavoritesWidget.Type -> FavoritesWidget(id)
+                                NotesWidget.Type -> NotesWidget(id)
+                                else -> return@OutlinedCard
+                            }
+                            onWidgetSelected(widget)
+                            onDismiss()
+                        }) {
+                        Row(
+                            modifier = Modifier.padding(16.dp),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                imageVector = when (it.type) {
+                                    WeatherWidget.Type -> Icons.Rounded.LightMode
+                                    CalendarWidget.Type -> Icons.Rounded.Today
+                                    MusicWidget.Type -> Icons.Rounded.MusicNote
+                                    FavoritesWidget.Type -> Icons.Rounded.Star
+                                    NotesWidget.Type -> Icons.Rounded.StickyNote2
+                                    else -> Icons.Rounded.Widgets
+                                },
+                                contentDescription = null,
+                                modifier = Modifier.padding(end = 16.dp)
+                            )
+                            Text(
+                                text = it.label,
+                                style = MaterialTheme.typography.titleSmall
+                            )
                         }
-                        onWidgetSelected(widget)
-                        onDismiss()
-                    }) {
-                    Row(
-                        modifier = Modifier.padding(16.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = when (it.type) {
-                                WeatherWidget.Type -> Icons.Rounded.LightMode
-                                CalendarWidget.Type -> Icons.Rounded.Today
-                                MusicWidget.Type -> Icons.Rounded.MusicNote
-                                FavoritesWidget.Type -> Icons.Rounded.Star
-                                NotesWidget.Type -> Icons.Rounded.StickyNote2
-                                else -> Icons.Rounded.Widgets
-                            },
-                            contentDescription = null,
-                            modifier = Modifier.padding(end = 16.dp)
-                        )
-                        Text(
-                            text = it.label,
-                            style = MaterialTheme.typography.titleSmall
-                        )
                     }
                 }
             }

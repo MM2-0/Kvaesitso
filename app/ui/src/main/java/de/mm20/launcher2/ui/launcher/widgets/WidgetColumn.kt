@@ -36,6 +36,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.ktx.animateTo
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
@@ -51,27 +52,11 @@ fun WidgetColumn(
 ) {
 
     val viewModel: WidgetsVM = viewModel()
-    val context = LocalContext.current
     val bottomSheetManager = LocalBottomSheetManager.current
-    val lifecycleOwner = LocalLifecycleOwner.current
-    val widgetHost = remember { AppWidgetHost(context.applicationContext, 44203) }
 
     var addNewWidget by rememberSaveable { mutableStateOf(false) }
 
-    LaunchedEffect(null) {
-        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            widgetHost.startListening()
-            try {
-                awaitCancellation()
-            } finally {
-                try {
-                    widgetHost.stopListening()
-                } catch (e: Exception) {
-                    CrashReporter.logException(e)
-                }
-            }
-        }
-    }
+
 
     Column(
         modifier = modifier
@@ -92,9 +77,10 @@ fun WidgetColumn(
                         dragOffsetAfterSwap = null
                     }
 
+                    val widgetHost = LocalAppWidgetHost.current
+
                     WidgetItem(
                         widget = widget,
-                        appWidgetHost = widgetHost,
                         editMode = editMode,
                         onWidgetAdd = { widget, offset ->
                             viewModel.addWidget(widget, i + offset)

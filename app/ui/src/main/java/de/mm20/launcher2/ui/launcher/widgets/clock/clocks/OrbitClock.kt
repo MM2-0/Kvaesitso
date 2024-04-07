@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
@@ -42,29 +43,21 @@ import kotlin.math.sin
 
 private const val PHI_F = 1.618033988749895.toFloat()
 
-private val currentTime
-    get() = Instant.ofEpochMilli(System.currentTimeMillis()).atZone(ZoneId.systemDefault())
-
 @Composable
 fun OrbitClock(
-    _time: Long,
+    time: Long,
     compact: Boolean,
     showSeconds: Boolean,
-    useThemeColor: Boolean
+    useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val verticalLayout = !compact
 
-    val timeState = remember { mutableStateOf<ZonedDateTime>(currentTime) }
+    val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
 
-    LaunchedEffect(_time) {
-        timeState.value = currentTime
-    }
-
-    val time by timeState
-
-    val second = time.second
-    val minute = time.minute
-    val hour = time.hour
+    val second = parsed.second
+    val minute = parsed.minute
+    val hour = parsed.hour
     val formattedHour = (
             if (DateFormat.is24HourFormat(LocalContext.current))
                 hour
@@ -112,8 +105,8 @@ fun OrbitClock(
         label = "hoursAnimation"
     )
 
-    val fgTone = if (LocalContentColor.current == Color.White) 10 else 90
-    val bgTone = if (LocalContentColor.current == Color.White) 90 else 30
+    val fgTone = if (!darkColors) 10 else 90
+    val bgTone = if (!darkColors) 90 else 30
 
     val background = if (useThemeColor) {
         Color(TonalPalette.fromInt(MaterialTheme.colorScheme.primaryContainer.toArgb()).tone(bgTone))

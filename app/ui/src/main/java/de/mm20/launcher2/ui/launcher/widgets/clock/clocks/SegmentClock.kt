@@ -2,6 +2,17 @@ package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.StartOffset
+import androidx.compose.animation.core.StartOffsetType
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.snap
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -12,8 +23,10 @@ import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -28,6 +41,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import kotlinx.coroutines.awaitCancellation
+import kotlinx.coroutines.delay
 import java.time.Instant
 import java.time.ZoneId
 
@@ -36,52 +50,34 @@ fun SegmentClock(
     time: Long,
     compact: Boolean,
     showSeconds: Boolean,
-    useThemeColor: Boolean
+    useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
     val hour = parsed.hour
     val minute = parsed.minute
     val second = parsed.second
-    val flick = remember { mutableStateOf(time % 1000 <= 500) }
+
+    var flick by remember { mutableStateOf(false) }
+
+    LaunchedEffect(second) {
+        flick = true
+        delay(500)
+        flick = false
+    }
 
     val enabled = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.primaryContainer
             else MaterialTheme.colorScheme.primary
         }
-    }
-    else {
+    } else {
         LocalContentColor.current
     }
     val disabled = LocalContentColor.current
-
-    val owner = LocalLifecycleOwner.current
-    LaunchedEffect(null) {
-        owner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
-            val handler = Handler(Looper.myLooper()!!)
-
-            val callback = object : Runnable {
-                override fun run() {
-                    val currentTime = System.currentTimeMillis()
-                    flick.value = currentTime % 1000 <= 500
-                    handler.postDelayed(this, (500 - (currentTime % 500)))
-                }
-            }
-
-            val currentTime = System.currentTimeMillis()
-            handler.postDelayed(callback, (500 - (currentTime % 500)))
-
-            try {
-                awaitCancellation()
-            }
-            finally {
-                handler.removeCallbacks(callback)
-            }
-        }
-    }
 
     val allSegmentVectors = remember(compact, enabled, disabled) {
         val vectors = mutableListOf<ImageVector>()
@@ -98,9 +94,11 @@ fun SegmentClock(
     }
 
     Row(
-        modifier = Modifier.padding(top = if (!compact) 16.dp else 0.dp,
+        modifier = Modifier.padding(
+            top = if (!compact) 16.dp else 0.dp,
             bottom = if (!compact) 16.dp else 0.dp,
-            start = 0.dp, end = 0.dp),
+            start = 0.dp, end = 0.dp
+        ),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -109,7 +107,7 @@ fun SegmentClock(
         Image(allSegmentVectors[hour % 10], null)
 
         Separator(compact)
-        Box(Modifier.alpha(if (flick.value) 1f else 0.05f)) { Image(separator, null) }
+        Box(Modifier.alpha(if (flick) 1f else 0.05f)) { Image(separator, null) }
         Separator(compact)
 
         Image(allSegmentVectors[minute / 10], null)
@@ -118,7 +116,7 @@ fun SegmentClock(
 
         if (!compact && showSeconds) {
             Separator(false)
-            Box(Modifier.alpha(if (flick.value) 1f else 0.05f)) { Image(separator, null) }
+            Box(Modifier.alpha(if (flick) 1f else 0.05f)) { Image(separator, null) }
             Separator(false)
 
             Image(allSegmentVectors[second / 10], null)
@@ -140,9 +138,15 @@ private fun Separator(compact: Boolean) {
   (E)   (C)
    └─(D)─┘
  */
-private val segmentBitsForDigits = arrayOf(0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x00)
+private val segmentBitsForDigits =
+    arrayOf(0x3f, 0x06, 0x5b, 0x4f, 0x66, 0x6d, 0x7d, 0x07, 0x7f, 0x6f, 0x00)
 
-private fun getVectorDigitForNumber(compact: Boolean, number: Int, enabled: Color, disabled: Color) : ImageVector {
+private fun getVectorDigitForNumber(
+    compact: Boolean,
+    number: Int,
+    enabled: Color,
+    disabled: Color
+): ImageVector {
     if (number < 0 || number > segmentBitsForDigits.size) {
         throw IllegalArgumentException()
     }
@@ -249,10 +253,10 @@ private fun getVectorDigitForNumber(compact: Boolean, number: Int, enabled: Colo
         close()
     }
 
-    .build()
+        .build()
 }
 
-private fun getVectorSeparator(compact: Boolean, enabled: Color) : ImageVector {
+private fun getVectorSeparator(compact: Boolean, enabled: Color): ImageVector {
 
     return ImageVector.Builder(
         defaultWidth = if (compact) 3.6.dp else 6.dp,
@@ -266,16 +270,80 @@ private fun getVectorSeparator(compact: Boolean, enabled: Color) : ImageVector {
             pathFillType = PathFillType.NonZero
         ) {
             moveTo(3.175f, 18.5f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.587f, 1.588f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.588f, -1.588f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.588f, -1.587f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.587f, 1.587f)
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                -1.587f,
+                1.588f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                -1.588f,
+                -1.588f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                1.588f,
+                -1.587f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                1.587f,
+                1.587f
+            )
             close()
             moveToRelative(0f, -9.634f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.587f, 1.588f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, -1.588f, -1.588f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.588f, -1.587f)
-            arcToRelative(1.587f, 1.587f, 0f, isMoreThanHalf = false, isPositiveArc = true, 1.587f, 1.587f)
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                -1.587f,
+                1.588f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                -1.588f,
+                -1.588f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                1.588f,
+                -1.587f
+            )
+            arcToRelative(
+                1.587f,
+                1.587f,
+                0f,
+                isMoreThanHalf = false,
+                isPositiveArc = true,
+                1.587f,
+                1.587f
+            )
             close()
         }
     }.build()
