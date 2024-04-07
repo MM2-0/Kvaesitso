@@ -68,13 +68,13 @@ import de.mm20.launcher2.preferences.ClockWidgetColors
 import de.mm20.launcher2.preferences.ClockWidgetStyle
 import de.mm20.launcher2.preferences.ui.ClockWidgetSettings
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.base.LocalClockTime
-import de.mm20.launcher2.ui.base.ProvideClockTime
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.AnalogClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.BinaryClock
+import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.CustomClock
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock1
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.DigitalClock2
 import de.mm20.launcher2.ui.launcher.widgets.clock.clocks.OrbitClock
@@ -90,160 +90,161 @@ fun ClockWidget(
     fillScreenHeight: Boolean,
     editMode: Boolean = false,
 ) {
-    ProvideClockTime {
-        val viewModel: ClockWidgetVM = viewModel()
-        val context = LocalContext.current
-        val compact by viewModel.compactLayout.collectAsState()
-        val clockStyle by viewModel.clockStyle.collectAsState()
-        val color by viewModel.color.collectAsState()
-        val alignment by viewModel.alignment.collectAsState()
-        val time = LocalClockTime.current
+    val viewModel: ClockWidgetVM = viewModel()
+    val context = LocalContext.current
+    val compact by viewModel.compactLayout.collectAsState()
+    val clockStyle by viewModel.clockStyle.collectAsState()
+    val color by viewModel.color.collectAsState()
+    val alignment by viewModel.alignment.collectAsState()
+    val time = LocalTime.current
 
-        val contentColor =
-            if (color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark) {
-                Color(0, 0, 0, 180)
-            } else {
-                Color.White
-            }
+    val darkColors =
+        color == ClockWidgetColors.Auto && LocalPreferDarkContentOverWallpaper.current || color == ClockWidgetColors.Dark
 
-        LaunchedEffect(time) {
-            viewModel.updateTime(time)
+    val contentColor =
+        if (darkColors) {
+            Color(0, 0, 0, 180)
+        } else {
+            Color.White
         }
 
-        val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(
-            null
-        )
+    LaunchedEffect(time) {
+        viewModel.updateTime(time)
+    }
 
-        AnimatedContent(editMode, label = "ClockWidget") {
-            if (it) {
-                var configure by remember { mutableStateOf(false) }
-                Column {
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        shape = MaterialTheme.shapes.medium,
-                        color = MaterialTheme.colorScheme.surfaceVariant,
-                        shadowElevation = 2.dp,
-                        tonalElevation = 2.dp,
+    val partProvider by remember { viewModel.getActivePart(context) }.collectAsStateWithLifecycle(
+        null
+    )
+
+    AnimatedContent(editMode, label = "ClockWidget") {
+        if (it) {
+            var configure by remember { mutableStateOf(false) }
+            Column {
+                Surface(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shadowElevation = 2.dp,
+                    tonalElevation = 2.dp,
+                ) {
+                    Row(
+                        modifier = Modifier.padding(8.dp),
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Row(
-                            modifier = Modifier.padding(8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Box(modifier = Modifier.size(24.dp))
-                            Text(
-                                text = stringResource(id = R.string.preference_screen_clockwidget),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .padding(horizontal = 8.dp),
-                                overflow = TextOverflow.Ellipsis,
-                                maxLines = 1
+                        Box(modifier = Modifier.size(24.dp))
+                        Text(
+                            text = stringResource(id = R.string.preference_screen_clockwidget),
+                            style = MaterialTheme.typography.titleMedium,
+                            modifier = Modifier
+                                .weight(1f)
+                                .padding(horizontal = 8.dp),
+                            overflow = TextOverflow.Ellipsis,
+                            maxLines = 1
+                        )
+                        IconButton(onClick = {
+                            configure = true
+                        }) {
+                            Icon(
+                                imageVector = Icons.Rounded.Tune,
+                                contentDescription = stringResource(R.string.settings)
                             )
-                            IconButton(onClick = {
-                                configure = true
-                            }) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Tune,
-                                    contentDescription = stringResource(R.string.settings)
-                                )
-                            }
                         }
-                    }
-                    HorizontalDivider()
-                    if (configure) {
-                        ConfigureClockWidgetSheet(onDismiss = { configure = false })
                     }
                 }
-            } else {
-                Column(modifier = modifier) {
-                    Box(
-                        modifier = Modifier
-                            .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
-                            .fillMaxWidth(),
-                        contentAlignment = when (alignment) {
-                            ClockWidgetAlignment.Center -> Alignment.Center
-                            ClockWidgetAlignment.Top -> Alignment.TopCenter
-                            else -> Alignment.BottomCenter
-                        }
+                HorizontalDivider()
+                if (configure) {
+                    ConfigureClockWidgetSheet(onDismiss = { configure = false })
+                }
+            }
+        } else {
+            Column(modifier = modifier) {
+                Box(
+                    modifier = Modifier
+                        .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
+                        .fillMaxWidth(),
+                    contentAlignment = when (alignment) {
+                        ClockWidgetAlignment.Center -> Alignment.Center
+                        ClockWidgetAlignment.Top -> Alignment.TopCenter
+                        else -> Alignment.BottomCenter
+                    }
+                ) {
+                    CompositionLocalProvider(
+                        LocalContentColor provides contentColor
                     ) {
-                        CompositionLocalProvider(
-                            LocalContentColor provides contentColor
-                        ) {
-                            if (compact == false) {
-                                Column(
-                                    horizontalAlignment = Alignment.CenterHorizontally,
-                                ) {
-                                    Box(
-                                        modifier = Modifier.clickable(
-                                            enabled = clockStyle !is ClockWidgetStyle.Empty,
-                                            indication = null,
-                                            interactionSource = remember { MutableInteractionSource() }
-                                        ) {
-                                            viewModel.launchClockApp(context)
-                                        }
+                        if (compact == false) {
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                Box(
+                                    modifier = Modifier.clickable(
+                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() }
                                     ) {
-                                        Clock(clockStyle, false)
+                                        viewModel.launchClockApp(context)
                                     }
+                                ) {
+                                    Clock(clockStyle, false, darkColors)
+                                }
 
-                                    if (partProvider != null) {
-                                        DynamicZone(
-                                            modifier = Modifier.padding(bottom = 8.dp),
-                                            compact = false,
-                                            provider = partProvider,
-                                        )
-                                    }
+                                if (partProvider != null) {
+                                    DynamicZone(
+                                        modifier = Modifier.padding(bottom = 8.dp),
+                                        compact = false,
+                                        provider = partProvider,
+                                    )
                                 }
                             }
-                            if (compact == true) {
-                                Row(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .padding(end = 8.dp, bottom = 16.dp),
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    if (partProvider != null) {
-                                        DynamicZone(
-                                            modifier = Modifier.weight(1f),
-                                            compact = true,
-                                            provider = partProvider,
-                                        )
-                                    }
-                                    Box(
-                                        modifier = Modifier
-                                            .padding(horizontal = 16.dp)
-                                            .height(56.dp)
-                                            .width(2.dp)
-                                            .background(
-                                                LocalContentColor.current
-                                            ),
+                        }
+                        if (compact == true) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(end = 8.dp, bottom = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                if (partProvider != null) {
+                                    DynamicZone(
+                                        modifier = Modifier.weight(1f),
+                                        compact = true,
+                                        provider = partProvider,
                                     )
-                                    Box(
-                                        modifier = Modifier.clickable(
-                                            enabled = clockStyle !is ClockWidgetStyle.Empty,
-                                            indication = null,
-                                            interactionSource = remember { MutableInteractionSource() }
-                                        ) {
-                                            viewModel.launchClockApp(context)
-                                        }
+                                }
+                                Box(
+                                    modifier = Modifier
+                                        .padding(horizontal = 16.dp)
+                                        .height(56.dp)
+                                        .width(2.dp)
+                                        .background(
+                                            LocalContentColor.current
+                                        ),
+                                )
+                                Box(
+                                    modifier = Modifier.clickable(
+                                        enabled = clockStyle !is ClockWidgetStyle.Empty,
+                                        indication = null,
+                                        interactionSource = remember { MutableInteractionSource() }
                                     ) {
-                                        Clock(clockStyle, true)
+                                        viewModel.launchClockApp(context)
                                     }
+                                ) {
+                                    Clock(clockStyle, true, darkColors)
                                 }
                             }
                         }
                     }
-                    val dockProvider by viewModel.dockProvider.collectAsState()
-                    if (dockProvider != null) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 16.dp)
-                        ) {
-                            dockProvider?.Component(false)
-                        }
+                }
+                val dockProvider by viewModel.dockProvider.collectAsState()
+                if (dockProvider != null) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp)
+                    ) {
+                        dockProvider?.Component(false)
                     }
                 }
             }
@@ -251,23 +252,71 @@ fun ClockWidget(
     }
 }
 
+/**
+ * @param darkColors: use dark content color / suited for light backgrounds
+ */
 @Composable
 fun Clock(
     style: ClockWidgetStyle?,
     compact: Boolean,
+    darkColors: Boolean = false
 ) {
-    val time = LocalClockTime.current
+    val time = LocalTime.current
     val clockSettings: ClockWidgetSettings by inject()
     val showSeconds by clockSettings.showSeconds.collectAsState(initial = false)
     val useThemeColor by clockSettings.useThemeColor.collectAsState(initial = false)
 
     when (style) {
-        is ClockWidgetStyle.Digital1 -> DigitalClock1(time, style, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Digital2 -> DigitalClock2(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Binary -> BinaryClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Analog -> AnalogClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Orbit -> OrbitClock(time, compact, showSeconds, useThemeColor)
-        is ClockWidgetStyle.Segment -> SegmentClock(time,  compact, showSeconds, useThemeColor)
+        is ClockWidgetStyle.Digital1 -> DigitalClock1(
+            time,
+            style,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Digital2 -> DigitalClock2(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Binary -> BinaryClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Analog -> AnalogClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Orbit -> OrbitClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Segment -> SegmentClock(
+            time,
+            compact,
+            showSeconds,
+            useThemeColor,
+            darkColors
+        )
+
+        is ClockWidgetStyle.Custom -> CustomClock(style, compact, useThemeColor, darkColors)
         is ClockWidgetStyle.Empty -> {}
         else -> {}
     }
@@ -352,16 +401,17 @@ fun ConfigureClockWidgetSheet(
                 }
             }
 
-            if (color != null && compact != null) {
-                ProvideClockTime {
-                    WatchFaceSelector(
-                        compact = compact!!,
-                        colors = color!!,
-                        selected = style,
-                        onSelect = {
-                            viewModel.setClockStyle(it)
-                        })
-                }
+            val availableStyles by viewModel.availableClockStyles.collectAsState()
+
+            if (color != null && compact != null && availableStyles.isNotEmpty()) {
+                WatchFaceSelector(
+                    styles = availableStyles,
+                    compact = compact!!,
+                    colors = color!!,
+                    selected = style,
+                    onSelect = {
+                        viewModel.setClockStyle(it)
+                    })
             }
 
             SingleChoiceSegmentedButtonRow(
@@ -421,7 +471,7 @@ fun ConfigureClockWidgetSheet(
                             viewModel.setUseThemeColor(it)
                         }
                     )
-                    AnimatedVisibility(compact == false) {
+                    AnimatedVisibility(compact == false && style !is ClockWidgetStyle.Custom) {
                         SwitchPreference(
                             title = stringResource(R.string.preference_clock_widget_show_seconds),
                             icon = Icons.Rounded.AccessTime,

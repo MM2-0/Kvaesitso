@@ -574,4 +574,8 @@
     <string name="missing_permission_accessibility_gesture_settings">Ta czynność wymaga włączenia usługi dostępności launchera.</string>
     <string name="help">Pomoc</string>
     <string name="preference_system_bar_icons_dark">Ciemny</string>
+    <string name="location_open">Otwarte</string>
+    <string name="location_closed">Zamknięte</string>
+    <string name="location_open_until">Otwarte do %1$s</string>
+    <string name="location_open_next">Otwarcie o %1$s</string>
 </resources>

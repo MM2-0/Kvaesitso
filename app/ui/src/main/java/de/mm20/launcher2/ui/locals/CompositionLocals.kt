@@ -11,8 +11,6 @@ import de.mm20.launcher2.ui.theme.WallpaperColors
 
 val LocalWindowSize = compositionLocalOf { Size(0f, 0f) }
 
-val LocalAppWidgetHost = compositionLocalOf<AppWidgetHost?>(defaultFactory = { null })
-
 val LocalNavController = compositionLocalOf<NavController?> { null }
 
 val LocalCardStyle = compositionLocalOf { CardStyle() }

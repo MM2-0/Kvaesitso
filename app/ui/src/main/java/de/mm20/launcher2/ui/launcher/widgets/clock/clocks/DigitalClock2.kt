@@ -22,11 +22,12 @@ fun DigitalClock2(
     compact: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
 
     val verticalLayout = !compact
     val color = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {
@@ -45,8 +46,7 @@ fun DigitalClock2(
         else {
             "hh:mm:ss"
         }
-    }
-    else {
+    } else {
         if (DateFormat.is24HourFormat(LocalContext.current)) {
             "HH:mm"
         }

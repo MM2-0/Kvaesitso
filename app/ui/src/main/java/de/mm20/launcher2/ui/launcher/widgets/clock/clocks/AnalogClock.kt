@@ -22,6 +22,7 @@ fun AnalogClock(
     compact: Boolean,
     showSeconds: Boolean,
     useThemeColor: Boolean,
+    darkColors: Boolean,
 ) {
     val verticalLayout = !compact
     val date = Calendar.getInstance()
@@ -34,7 +35,7 @@ fun AnalogClock(
     val strokeWidth = if (verticalLayout) 4.dp else 2.dp
 
     val color = if (useThemeColor) {
-        if (LocalContentColor.current == Color.White) {
+        if (!darkColors) {
             if (LocalDarkTheme.current) MaterialTheme.colorScheme.onPrimaryContainer
             else MaterialTheme.colorScheme.primaryContainer
         } else {

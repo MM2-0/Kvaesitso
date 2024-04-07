@@ -80,6 +80,7 @@ import de.mm20.launcher2.ktx.isAtLeastApiLevel
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -103,7 +104,6 @@ import kotlin.math.roundToInt
 
 @Composable
 fun ConfigureWidgetSheet(
-    appWidgetHost: AppWidgetHost,
     widget: Widget,
     onWidgetUpdated: (Widget) -> Unit,
     onDismiss: () -> Unit,
@@ -128,7 +128,7 @@ fun ConfigureWidgetSheet(
         ) {
             when (widget) {
                 is WeatherWidget -> ConfigureWeatherWidget(widget, onWidgetUpdated)
-                is AppWidget -> ConfigureAppWidget(appWidgetHost, widget, onWidgetUpdated)
+                is AppWidget -> ConfigureAppWidget(widget, onWidgetUpdated)
                 is CalendarWidget -> ConfigureCalendarWidget(widget, onWidgetUpdated)
                 is FavoritesWidget -> ConfigureFavoritesWidget(widget, onWidgetUpdated)
                 is MusicWidget -> ConfigureMusicWidget()
@@ -272,7 +272,6 @@ fun ColumnScope.ConfigureMusicWidget(
 
 @Composable
 fun ColumnScope.ConfigureAppWidget(
-    appWidgetHost: AppWidgetHost,
     widget: AppWidget,
     onWidgetUpdated: (Widget) -> Unit,
 ) {
@@ -346,7 +345,6 @@ fun ColumnScope.ConfigureAppWidget(
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
             ExternalWidget(
-                appWidgetHost = appWidgetHost,
                 widgetInfo = widgetInfo,
                 widgetId = widget.config.widgetId,
                 modifier = Modifier.fillMaxWidth(),
@@ -472,6 +470,7 @@ fun ColumnScope.ConfigureAppWidget(
             }
         }
         if (isAtLeastApiLevel(28) && widgetInfo.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_RECONFIGURABLE != 0) {
+            val appWidgetHost = LocalAppWidgetHost.current
             TextButton(
                 modifier = Modifier
                     .padding(top = 8.dp)

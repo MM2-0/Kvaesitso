@@ -854,6 +854,7 @@
     <string name="widget_config_appwidget_resize_hint">Drag to resize</string>
     <string name="widget_config_weather_integration_settings">Weather integration settings</string>
     <string name="widget_config_calendar_no_calendars">No calendars found</string>
+    <string name="widget_pick_widget">Pick widget</string>
     <string name="app_widget_loading_failed">App widget failed to load.</string>
     <string name="widget_config_music_integration_settings">Media control integration settings</string>
     <string name="note_widget_link_file">Link to file</string>
@@ -918,6 +919,7 @@
     <string name="clock_style_analog">Hands</string>
     <string name="clock_style_segment">7-segment</string>
     <string name="clock_style_empty">No clock</string>
+    <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_standard">Standard</string>
     <string name="clock_variant_outlined">Outlined</string>
 </resources>
