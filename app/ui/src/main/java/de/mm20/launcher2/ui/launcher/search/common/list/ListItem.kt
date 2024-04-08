@@ -1,5 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common.list
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +12,7 @@ import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.*
 import de.mm20.launcher2.search.data.PojoSettings
 import de.mm20.launcher2.ui.component.InnerCard
@@ -23,6 +26,7 @@ import de.mm20.launcher2.ui.launcher.search.location.LocationItem
 import de.mm20.launcher2.ui.launcher.search.settings.SettingsItem
 import de.mm20.launcher2.ui.launcher.search.shortcut.AppShortcutItem
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.settings.SettingsActivity
 
 @Composable
 fun ListItem(
@@ -125,7 +129,11 @@ fun ListItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clickable {
-                            viewModel.launch(context, bounds)
+                            if (!viewModel.launch(context, bounds)) {
+                                when (item.specialId) {
+                                    PojoSettings.specialIdLauncher -> launchSettingsPage(context)
+                                }
+                            }
                         }
                 )
             }
@@ -149,5 +157,11 @@ fun ListItem(
                 )
             }
         }
+    }
+}
+
+private fun launchSettingsPage(context: Context) {
+    context.tryStartActivity(Intent(context, SettingsActivity::class.java)).apply {
+        Intent.FLAG_ACTIVITY_NEW_TASK
     }
 }

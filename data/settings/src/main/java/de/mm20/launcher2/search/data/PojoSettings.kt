@@ -31,9 +31,7 @@ data class PojoSettings(
 
     override fun launch(context: Context, options: Bundle?): Boolean {
         return when (specialId) {
-            specialIdLauncher -> {
-                true
-            }
+            specialIdLauncher -> false
 
             else -> context.tryStartActivity(
                 Intent(actionId).apply {
