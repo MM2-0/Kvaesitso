@@ -725,4 +725,6 @@
     <string name="clock_style_empty">Žádné hodiny</string>
     <string name="clock_variant_standard">Standardní</string>
     <string name="clock_variant_outlined">Ohraničené</string>
+    <string name="widget_pick_widget">Vyberte widget</string>
+    <string name="clock_style_custom">Vlastní widget</string>
 </resources>
