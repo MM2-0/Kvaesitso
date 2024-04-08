@@ -658,6 +658,12 @@
     <string name="preference_search_locations_radius">Search radius</string>
     <string name="preference_search_websites_summary">Show a preview of a website if the search query is a URL</string>
     <string name="preference_search_locations_summary">Search the local area for shops and other places</string>
+    <string name="preference_search_settings">Settings</string>
+    <string name="preference_search_settings_summary">Search for common settings pages for your device</string>
+    <string name="settings_placeholder">Settings: %1$s</string>
+    <string name="settings_airplane">Airplane mode</string>
+    <string name="settings_deviceinfo">Device info</string>
+    <string name="settings_manage_applications">All apps</string>
     <string name="preference_search_locations_show_position_on_map_summary">Show your own location in the map</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>

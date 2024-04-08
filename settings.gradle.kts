@@ -44,6 +44,7 @@ include(":data:weather")
 include(":data:notifications")
 include(":data:search-actions")
 include(":data:searchable")
+include(":data:settings")
 include(":data:plugins")
 
 include(":services:accounts")

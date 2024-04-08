@@ -1,34 +1,18 @@
 package de.mm20.launcher2.ui.launcher.search
 
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Work
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -39,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.common.FavoritesTagSelector
@@ -96,6 +79,7 @@ fun SearchColumn(
     val calculator by viewModel.calculatorResults
     val wikipedia by viewModel.articleResults
     val locations by viewModel.locationResults
+    val settings by viewModel.settingsResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
     val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
@@ -243,6 +227,12 @@ fun SearchColumn(
             items = appShortcuts.toImmutableList(),
             reverse = reverse,
             key = "shortcuts",
+            highlightedItem = bestMatch as? SavableSearchable
+        )
+        ListResults(
+            items = settings.toImmutableList(),
+            reverse = reverse,
+            key = "settings",
             highlightedItem = bestMatch as? SavableSearchable
         )
         for (conv in unitConverter) {

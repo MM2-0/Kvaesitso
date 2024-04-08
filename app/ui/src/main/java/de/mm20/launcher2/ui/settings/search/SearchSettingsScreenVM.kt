@@ -14,6 +14,7 @@ import de.mm20.launcher2.preferences.search.CalculatorSearchSettings
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
+import de.mm20.launcher2.preferences.search.SettingsSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.search.UnitConverterSettings
 import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
@@ -37,6 +38,7 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     private val permissionsManager: PermissionsManager by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
+    private val settingsSearchSettings: SettingsSearchSettings by inject()
 
     val hasWorkProfile = mutableStateOf(false)
 
@@ -111,6 +113,13 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
 
     fun setLocations(locations: Boolean) {
         locationSearchSettings.setEnabled(locations)
+    }
+
+    val settings = settingsSearchSettings.enabled
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
+    fun setSettings(settings: Boolean) {
+        settingsSearchSettings.setEnabled(settings)
     }
 
     val autoFocus = searchUiSettings.openKeyboard

@@ -11,7 +11,6 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
-import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
@@ -23,12 +22,13 @@ import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
-import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
+import de.mm20.launcher2.search.data.PojoSettings
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchable.SavableSearchableRepository
 import de.mm20.launcher2.searchactions.actions.SearchAction
@@ -41,7 +41,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -72,6 +71,7 @@ class SearchVM : ViewModel(), KoinComponent {
     val isSearchEmpty = mutableStateOf(true)
 
     val locationResults = mutableStateOf<List<Location>>(emptyList())
+    val settingsResults = mutableStateOf<List<PojoSettings>>(emptyList())
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
     val appShortcutResults = mutableStateOf<List<AppShortcut>>(emptyList())
@@ -147,6 +147,7 @@ class SearchVM : ViewModel(), KoinComponent {
                             results.contacts,
                             results.calendars,
                             results.locations,
+                            results.settings,
                             results.wikipedia,
                             results.websites,
                             results.calculators,
@@ -217,6 +218,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         val locations = mutableListOf<Location>()
                         val website = mutableListOf<Website>()
                         val actions = mutableListOf<SearchAction>()
+                        val settings = mutableListOf<PojoSettings>()
                         for (r in resultsList) {
                             when {
                                 r is SavableSearchable && hiddenKeys.contains(r.key) -> {
@@ -235,6 +237,7 @@ class SearchVM : ViewModel(), KoinComponent {
                                 r is Article -> articles.add(r)
                                 r is Location -> locations.add(r)
                                 r is SearchAction -> actions.add(r)
+                                r is PojoSettings -> settings.add(r)
                             }
                         }
 
@@ -251,7 +254,8 @@ class SearchVM : ViewModel(), KoinComponent {
                                 articles,
                                 website,
                                 files,
-                                actions
+                                actions,
+                                settings,
                             ).firstNotNullOfOrNull { it.firstOrNull() }
                         }
 
@@ -266,6 +270,7 @@ class SearchVM : ViewModel(), KoinComponent {
                         websiteResults.value = website
                         calculatorResults.value = calc
                         unitConverterResults.value = unitConv
+                        settingsResults.value = settings
                         hiddenResults.value = hidden
                         if (results.searchActions != null) searchActionResults.value = actions
                     }

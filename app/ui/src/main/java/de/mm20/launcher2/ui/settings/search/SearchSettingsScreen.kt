@@ -152,6 +152,17 @@ fun SearchSettingsScreen() {
                     enabled = hasAppShortcutsPermission == true
                 )
 
+                val settings by viewModel.settings.collectAsStateWithLifecycle(null)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_settings),
+                    summary = stringResource(R.string.preference_search_settings_summary),
+                    icon = Icons.Rounded.Settings,
+                    value = settings == true,
+                    onValueChanged = {
+                        viewModel.setSettings(it)
+                    }
+                )
+
                 val calculator by viewModel.calculator.collectAsStateWithLifecycle(null)
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_calculator),

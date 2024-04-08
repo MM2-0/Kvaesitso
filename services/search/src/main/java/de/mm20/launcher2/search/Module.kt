@@ -15,6 +15,7 @@ val searchModule = module {
             get(named<Location>()),
             get(),
             get(),
+            get(),
             get(named<Website>()),
             get(),
             get(),

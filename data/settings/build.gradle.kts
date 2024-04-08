@@ -30,7 +30,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    namespace = "de.mm20.launcher2.search"
+    namespace = "de.mm20.launcher2.settings"
 }
 
 dependencies {
@@ -42,18 +42,8 @@ dependencies {
 
     implementation(libs.koin.android)
 
-    implementation(libs.jsoup)
-    implementation(libs.okhttp)
-    implementation(libs.coil.core)
-
-    implementation(project(":data:calculator"))
-    implementation(project(":data:settings"))
-    implementation(project(":data:unitconverter"))
-    implementation(project(":data:customattrs"))
-    implementation(project(":data:search-actions"))
-
     implementation(project(":core:base"))
     implementation(project(":core:preferences"))
-    implementation(project(":core:crashreporter"))
     implementation(project(":core:ktx"))
+
 }
