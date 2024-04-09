@@ -203,6 +203,12 @@ fun SearchColumn(
             highlightedItem = bestMatch as? SavableSearchable
         )
         ListResults(
+            items = settings.toImmutableList(),
+            reverse = reverse,
+            key = "settings",
+            highlightedItem = bestMatch as? SavableSearchable
+        )
+        ListResults(
             before = if (missingShortcutsPermission && !isSearchEmpty) {
                 {
                     MissingPermissionBanner(
@@ -227,12 +233,6 @@ fun SearchColumn(
             items = appShortcuts.toImmutableList(),
             reverse = reverse,
             key = "shortcuts",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        ListResults(
-            items = settings.toImmutableList(),
-            reverse = reverse,
-            key = "settings",
             highlightedItem = bestMatch as? SavableSearchable
         )
         for (conv in unitConverter) {
