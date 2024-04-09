@@ -725,4 +725,6 @@
     <string name="preference_search_location_custom_overpass_url">URL de Overpass</string>
     <string name="preference_search_locations_hide_uncategorized">Ocultar lugares sin categoría</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Solo mostrar resultados con categorías bien definidas, como cafeterías o restaurantes</string>
+    <string name="widget_pick_widget">Elegir widget</string>
+    <string name="clock_style_custom">Widget personalizado</string>
 </resources>
