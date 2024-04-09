@@ -720,4 +720,6 @@
     <string name="clock_style_analog">Analóg</string>
     <string name="clock_style_empty">Nincs óra</string>
     <string name="clock_variant_outlined">Körvonalazott</string>
+    <string name="widget_pick_widget">Modul kiválasztása</string>
+    <string name="clock_style_custom">Modul testreszabása</string>
 </resources>
