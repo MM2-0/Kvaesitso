@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
@@ -16,11 +15,11 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 
 data class PojoSettings(
-    @get:StringRes val titleForPage: Int,
     @get:DrawableRes val icon: Int,
 
     val actionId: String? = null,
     val specialId: String? = null,
+    val packageName: String? = null,
 
     override val key: String,
     override val label: String
@@ -30,8 +29,15 @@ data class PojoSettings(
     }
 
     override fun launch(context: Context, options: Bundle?): Boolean {
-        return when (specialId) {
-            specialIdLauncher -> false
+        return when {
+            specialId != null -> false
+
+            packageName != null -> context.tryStartActivity(
+                Intent(actionId).apply {
+                    setClassName(packageName, actionId!!)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                }, options
+            )
 
             else -> context.tryStartActivity(
                 Intent(actionId).apply {
@@ -51,7 +57,7 @@ data class PojoSettings(
         val bgColor = R.color.teal
         return StaticLauncherIcon(
             foregroundLayer = TintedIconLayer(
-                icon = ContextCompat.getDrawable(context, R.drawable.ic_file_code)!!,
+                icon = ContextCompat.getDrawable(context, icon)!!,
                 scale = 0.5f,
                 color = ContextCompat.getColor(context, bgColor)
             ),

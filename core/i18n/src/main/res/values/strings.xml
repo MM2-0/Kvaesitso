@@ -664,6 +664,20 @@
     <string name="settings_airplane">Airplane mode</string>
     <string name="settings_deviceinfo">Device info</string>
     <string name="settings_manage_applications">All apps</string>
+    <string name="settings_storage">Storage</string>
+    <string name="settings_wireless">Wireless connection</string>
+    <string name="settings_tethering">Tethering</string>
+    <string name="settings_accessibility">Accessibility</string>
+    <string name="settings_battery">Battery</string>
+    <string name="settings_sound">Sound</string>
+    <string name="settings_display">Display</string>
+    <string name="settings_developer">Development</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_updates">System updates</string>
+    <string name="settings_wifi" translatable="false">Wi-Fi</string>
+    <string name="settings_bluetooth" translatable="false">Bluetooth</string>
+    <string name="settings_nfc" translatable="false">NFC</string>
+    <string name="settings_location">Location</string>
     <string name="preference_search_locations_show_position_on_map_summary">Show your own location in the map</string>
     <string name="preference_search_websearch">Web search</string>
     <string name="preference_search_websearch_summary">Show shortcuts to different search engines</string>
