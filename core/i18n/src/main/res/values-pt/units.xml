@@ -107,7 +107,7 @@
     <plurals name="unit_gigabit">
         <item quantity="one">gigabit</item>
         <item quantity="many">gigabits</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <string name="unit_meter_per_second_symbol">m/s</string>
     <string name="unit_kilometer_per_hour_symbol">km/h</string>
@@ -119,156 +119,174 @@
     <plurals name="unit_sqmillimeter">
         <item quantity="one">milímetro quadrado</item>
         <item quantity="many">milímetros quadrados</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_sqinch">
         <item quantity="one">polegada quadrada</item>
         <item quantity="many">polegadas quadradas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_sqyard">
         <item quantity="one">jarda quadrada</item>
         <item quantity="many">jardas quadradas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_hectare">
         <item quantity="one">hectare</item>
         <item quantity="many">hectares</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_acre">
         <item quantity="one">acre</item>
         <item quantity="many">acres</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_second">
         <item quantity="one">segundo</item>
         <item quantity="many">segundos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_minute">
         <item quantity="one">minuto</item>
         <item quantity="many">minutos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_hour">
         <item quantity="one">hora</item>
         <item quantity="many">horas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_year">
         <item quantity="one">ano</item>
         <item quantity="many">anos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_byte">
         <item quantity="one">byte</item>
         <item quantity="many">bytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_kilobyte">
         <item quantity="one">kilobyte</item>
         <item quantity="many">kilobytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_gigabyte">
         <item quantity="one">gigabyte</item>
         <item quantity="many">gigabytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_terabyte">
         <item quantity="one">terabyte</item>
         <item quantity="many">terabytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_kibibyte">
         <item quantity="one">kibibyte</item>
         <item quantity="many">kibibytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_mebibyte">
         <item quantity="one">mebibyte</item>
         <item quantity="many">mebibytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_gibibyte">
         <item quantity="one">gibibyte</item>
         <item quantity="many">gibibytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_bit">
         <item quantity="one">bit</item>
         <item quantity="many">bits</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_megabit">
         <item quantity="one">megabit</item>
         <item quantity="many">megabits</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_terabit">
         <item quantity="one">terabit</item>
         <item quantity="many">terabits</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_meter_per_second">
         <item quantity="one">metro por segundo</item>
         <item quantity="many">metros por segundo</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_kilometer_per_hour">
         <item quantity="one">quilómetro por hora</item>
         <item quantity="many">quilómetros por hora</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_knot">
         <item quantity="one">nó</item>
         <item quantity="many">nós</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_kilogram">
         <item quantity="one">kilograma</item>
         <item quantity="many">kilogramas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_gram">
         <item quantity="one">grama</item>
         <item quantity="many">gramas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_metric_ton">
         <item quantity="one">tonelada métrica</item>
         <item quantity="many">toneladas métricas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_sqfoot">
         <item quantity="one">pé quadrado</item>
         <item quantity="many">pés quadrados</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_millisecond">
         <item quantity="one">milisegundo</item>
         <item quantity="many">milisegundos</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_day">
         <item quantity="one">dia</item>
         <item quantity="many">dias</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_kilobit">
         <item quantity="one">kilobit</item>
         <item quantity="many">kilobits</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_tebibyte">
         <item quantity="one">tebibyte</item>
         <item quantity="many">tebibytes</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_mile_per_hour">
         <item quantity="one">milha por hora</item>
         <item quantity="many">milhas por hora</item>
+        <item quantity="other"/>
+    </plurals>
+    <string name="unit_long_ton_symbol">tn.l.</string>
+    <string name="unit_stone_symbol">st</string>
+    <string name="unit_pound_symbol">lb</string>
+    <plurals name="unit_long_ton">
+        <item quantity="one">tonelada longa</item>
+        <item quantity="many">toneladas longas</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_stone">
+        <item quantity="one">stone</item>
+        <item quantity="many">stones</item>
+        <item quantity="other"></item>
+    </plurals>
+    <plurals name="unit_pound">
+        <item quantity="one">libra</item>
+        <item quantity="many">libra</item>
         <item quantity="other"></item>
     </plurals>
 </resources>
