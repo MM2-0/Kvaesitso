@@ -398,7 +398,7 @@ fun PagerScaffold(
                     modifier = Modifier
                         .fillMaxSize()
                         .nestedScroll(pagerNestedScrollConnection),
-                    outOfBoundsPageCount = 1,
+                    beyondViewportPageCount = 1,
                     reverseLayout = reverse == (LocalLayoutDirection.current == LayoutDirection.Ltr),
                     state = pagerState,
                     userScrollEnabled = false,//!isWidgetEditMode,

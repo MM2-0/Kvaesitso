@@ -401,7 +401,7 @@ fun PullDownScaffold(
             ) {
                 VerticalPager(
                     modifier = Modifier.fillMaxSize(),
-                    outOfBoundsPageCount = 1,
+                    beyondViewportPageCount = 1,
                     state = pagerState,
                     reverseLayout = true,
                     userScrollEnabled = false,
