@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
@@ -41,6 +40,7 @@ import androidx.compose.material.icons.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -87,7 +87,9 @@ import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
+import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -344,12 +346,14 @@ fun ColumnScope.ConfigureAppWidget(
                 .clip(MaterialTheme.shapes.medium)
                 .background(MaterialTheme.colorScheme.surfaceVariant)
         ) {
-            ExternalWidget(
+            AppWidgetHost(
                 widgetInfo = widgetInfo,
                 widgetId = widget.config.widgetId,
                 modifier = Modifier.fillMaxWidth(),
                 height = widget.config.height + dragDelta,
                 borderless = widget.config.borderless,
+                useThemeColors = widget.config.themeColors,
+                onLightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
             )
         }
         val density = LocalDensity.current
@@ -422,7 +426,7 @@ fun ColumnScope.ConfigureAppWidget(
                 onValueChange = {
                     val intValue = it.toIntOrNull()
                     if (intValue == null) textFieldValue = ""
-                    else if (intValue in 1..500) {
+                    else if (intValue in 1..1000) {
                         onWidgetUpdated(
                             widget.copy(
                                 config = widget.config.copy(
@@ -458,7 +462,7 @@ fun ColumnScope.ConfigureAppWidget(
                         onWidgetUpdated(widget.copy(config = widget.config.copy(borderless = it)))
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 SwitchPreference(
                     title = stringResource(R.string.widget_config_appwidget_background),
                     iconPadding = false,
@@ -467,6 +471,17 @@ fun ColumnScope.ConfigureAppWidget(
                         onWidgetUpdated(widget.copy(config = widget.config.copy(background = it)))
                     }
                 )
+                if (isAtLeastApiLevel(31)) {
+                    HorizontalDivider()
+                    SwitchPreference(
+                        title = stringResource(R.string.widget_use_theme_colors),
+                        iconPadding = false,
+                        value = widget.config.themeColors,
+                        onValueChanged = {
+                            onWidgetUpdated(widget.copy(config = widget.config.copy(themeColors = it)))
+                        }
+                    )
+                }
             }
         }
         if (isAtLeastApiLevel(28) && widgetInfo.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_RECONFIGURABLE != 0) {

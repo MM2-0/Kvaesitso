@@ -464,7 +464,7 @@ fun ConfigureClockWidgetSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_use_theme_color),
+                        title = stringResource(R.string.widget_use_theme_colors),
                         icon = Icons.Rounded.ColorLens,
                         value = useAccentColor,
                         onValueChanged = {

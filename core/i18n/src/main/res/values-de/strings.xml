@@ -710,7 +710,7 @@
     <string name="preference_search_bar_separate_work_profile_summary">Apps im Arbeitsprofil in einem separaten Tab anzeigen</string>
     <string name="unavailable_searchable">Dieses Element existiert nicht mehr.</string>
     <string name="preference_clock_widget_show_seconds">Sekunden anzeigen</string>
-    <string name="preference_clock_widget_use_theme_color">Design-Farbe verwenden</string>
+    <string name="widget_use_theme_colors">Design-Farbe verwenden</string>
     <string name="clock_style_digital1">Fett</string>
     <string name="clock_style_digital2">Einfach</string>
     <string name="clock_style_orbit">Orbit</string>
