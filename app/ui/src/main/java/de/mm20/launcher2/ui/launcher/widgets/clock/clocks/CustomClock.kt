@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.appwidget.AppWidgetManager
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,11 +33,10 @@ fun CustomClock(
             AppWidgetHost(
                 widgetInfo = widgetInfo,
                 widgetId = widgetId,
-                height = if (compact) 64 else 200,
                 useThemeColors = useThemeColor,
                 onLightBackground = darkColors,
                 borderless = compact,
-                modifier = Modifier.widthIn(max = 250.dp)
+                modifier = Modifier.widthIn(max = 250.dp).height(if (compact) 64.dp else 200.dp)
             )
         }
     }

@@ -2,8 +2,11 @@ package de.mm20.launcher2.ui.launcher.widgets.external
 
 import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
@@ -15,10 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isUnspecified
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.Banner
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -90,14 +95,22 @@ fun AppWidget(
             )
         }
     } else {
-        AppWidgetHost(
-            widgetId = widget.config.widgetId,
-            widgetInfo = widgetInfo,
-            modifier = Modifier.fillMaxWidth(),
-            height = widget.config.height,
-            borderless = widget.config.borderless,
-            useThemeColors = widget.config.themeColors,
-            onLightBackground = lightBackground,
-        )
+        val width = widget.config.width
+        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+            AppWidgetHost(
+                widgetId = widget.config.widgetId,
+                widgetInfo = widgetInfo,
+                modifier = Modifier
+                    .then(
+                        if (width == null) Modifier.fillMaxWidth() else Modifier.requiredWidth(
+                            width.dp
+                        )
+                    )
+                    .height(widget.config.height.dp),
+                borderless = widget.config.borderless,
+                useThemeColors = widget.config.themeColors,
+                onLightBackground = lightBackground,
+            )
+        }
     }
 }

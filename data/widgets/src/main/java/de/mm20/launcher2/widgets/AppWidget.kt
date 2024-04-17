@@ -15,6 +15,7 @@ import java.util.UUID
 data class AppWidgetConfig(
     val widgetId: Int,
     val height: Int,
+    val width: Int? = null,
     val borderless: Boolean = false,
     val background: Boolean = true,
     val themeColors: Boolean = true,
