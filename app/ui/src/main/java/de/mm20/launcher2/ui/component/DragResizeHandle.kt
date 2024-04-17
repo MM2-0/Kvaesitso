@@ -38,6 +38,7 @@ enum class ResizeAxis {
     Horizontal,
     Vertical,
     Both,
+    None,
 }
 
 @Composable

@@ -235,6 +235,7 @@ private class BindAndConfigureAppWidgetContract(
                     id = UUID.randomUUID(),
                     config = AppWidgetConfig(
                         height = widgetProviderInfo.minHeight,
+                        width = widgetProviderInfo.minWidth,
                         widgetId = widgetId,
                     ),
                 )

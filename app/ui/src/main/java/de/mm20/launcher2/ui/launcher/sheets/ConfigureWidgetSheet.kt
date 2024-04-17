@@ -92,6 +92,7 @@ import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
@@ -379,10 +380,41 @@ fun ColumnScope.ConfigureAppWidget(
                 useThemeColors = widget.config.themeColors,
                 onLightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
             )
+
+            val maxWidth = if (isAtLeastApiLevel(31)) {
+                widgetInfo.maxResizeWidth.takeIf { it > 0 }?.dp ?: Dp.Unspecified
+            } else Dp.Unspecified
+
+            val maxHeight = if (isAtLeastApiLevel(31)) {
+                widgetInfo.maxResizeHeight.takeIf { it > 0 }?.dp ?: 2000.dp
+            } else 2000.dp
+
+            val minWidth = if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
+                widgetInfo.minResizeWidth.dp
+            } else {
+                widgetInfo.minWidth.dp
+            }
+
+            val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
+                widgetInfo.minResizeHeight.dp
+            } else {
+                widgetInfo.minHeight.dp
+            }
+
             DragResizeHandle(
                 alignment = Alignment.TopCenter,
                 height = resizeHeight,
                 width = resizeWidth,
+                minWidth = minWidth,
+                minHeight = minHeight,
+                maxWidth = maxWidth,
+                maxHeight = maxHeight,
+                resizeAxis = when(widgetInfo.resizeMode) {
+                    AppWidgetProviderInfo.RESIZE_HORIZONTAL -> ResizeAxis.Horizontal
+                    AppWidgetProviderInfo.RESIZE_VERTICAL -> ResizeAxis.Vertical
+                    AppWidgetProviderInfo.RESIZE_BOTH -> ResizeAxis.Both
+                    else -> ResizeAxis.None
+                },
                 snapToMeasuredWidth = true,
                 onResize = { w, h ->
                     resizeWidth = w
