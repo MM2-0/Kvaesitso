@@ -695,4 +695,6 @@
     <string name="menu_map">Показать на карте</string>
     <string name="preference_search_locations">Места</string>
     <string name="preference_search_locations_radius">Радиус поиска</string>
+    <string name="location_open">Открыто</string>
+    <string name="location_closed">Закрыто</string>
 </resources>
