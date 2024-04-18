@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.material3.Button
@@ -102,9 +103,7 @@ fun AppWidget(
                 widgetInfo = widgetInfo,
                 modifier = Modifier
                     .then(
-                        if (width == null) Modifier.fillMaxWidth() else Modifier.requiredWidth(
-                            width.dp
-                        )
+                        if (width == null) Modifier.fillMaxWidth() else Modifier.width(width.dp)
                     )
                     .height(widget.config.height.dp),
                 borderless = widget.config.borderless,

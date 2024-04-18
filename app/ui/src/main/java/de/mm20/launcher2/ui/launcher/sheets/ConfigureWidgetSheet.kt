@@ -13,25 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.awaitEachGesture
 import androidx.compose.foundation.gestures.awaitFirstDown
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
@@ -40,7 +33,6 @@ import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.HorizontalDivider
@@ -48,20 +40,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -71,11 +57,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.PointerEventPass
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isUnspecified
@@ -96,6 +79,7 @@ import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
+import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
@@ -107,7 +91,6 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -367,7 +350,10 @@ fun ColumnScope.ConfigureAppWidget(
                 widgetId = widget.config.widgetId,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
-                    .then(if (resizeWidth.isUnspecified) Modifier.fillMaxWidth() else Modifier.requiredWidth(resizeWidth))
+                    .then(
+                        if (resizeWidth.isUnspecified) Modifier.fillMaxWidth()
+                        else Modifier.width(resizeWidth)
+                    )
                     .height(resizeHeight)
                     .align(Alignment.TopCenter)
                     .pointerInput(Unit) {
@@ -382,23 +368,23 @@ fun ColumnScope.ConfigureAppWidget(
             )
 
             val maxWidth = if (isAtLeastApiLevel(31)) {
-                widgetInfo.maxResizeWidth.takeIf { it > 0 }?.dp ?: Dp.Unspecified
+                widgetInfo.maxResizeWidth.takeIf { it > 0 }?.toDp() ?: Dp.Unspecified
             } else Dp.Unspecified
 
             val maxHeight = if (isAtLeastApiLevel(31)) {
-                widgetInfo.maxResizeHeight.takeIf { it > 0 }?.dp ?: 2000.dp
+                widgetInfo.maxResizeHeight.takeIf { it > 0 }?.toDp() ?: 2000.dp
             } else 2000.dp
 
             val minWidth = if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
-                widgetInfo.minResizeWidth.dp
+                widgetInfo.minResizeWidth.toDp()
             } else {
-                widgetInfo.minWidth.dp
+                widgetInfo.minWidth.toDp()
             }
 
             val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
-                widgetInfo.minResizeHeight.dp
+                widgetInfo.minResizeHeight.toDp()
             } else {
-                widgetInfo.minHeight.dp
+                widgetInfo.minHeight.toDp()
             }
 
             DragResizeHandle(
@@ -409,12 +395,6 @@ fun ColumnScope.ConfigureAppWidget(
                 minHeight = minHeight,
                 maxWidth = maxWidth,
                 maxHeight = maxHeight,
-                resizeAxis = when(widgetInfo.resizeMode) {
-                    AppWidgetProviderInfo.RESIZE_HORIZONTAL -> ResizeAxis.Horizontal
-                    AppWidgetProviderInfo.RESIZE_VERTICAL -> ResizeAxis.Vertical
-                    AppWidgetProviderInfo.RESIZE_BOTH -> ResizeAxis.Both
-                    else -> ResizeAxis.None
-                },
                 snapToMeasuredWidth = true,
                 onResize = { w, h ->
                     resizeWidth = w

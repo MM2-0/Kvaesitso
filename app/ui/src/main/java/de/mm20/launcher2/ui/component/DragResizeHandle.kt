@@ -68,8 +68,8 @@ fun DragResizeHandle(
 
         Box(
             modifier = Modifier
-                .then(if (width.isUnspecified) Modifier.fillMaxWidth() else Modifier.requiredWidth(width))
-                .then(if (height.isUnspecified) Modifier.fillMaxHeight() else Modifier.requiredHeight(height))
+                .then(if (width.isUnspecified) Modifier.fillMaxWidth() else Modifier.width(width))
+                .then(if (height.isUnspecified) Modifier.fillMaxHeight() else Modifier.height(height))
                 .align(alignment)
                 .border(1.dp, color = MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small)
         ) {
