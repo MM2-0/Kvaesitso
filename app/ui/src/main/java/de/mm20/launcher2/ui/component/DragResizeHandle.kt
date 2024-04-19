@@ -104,6 +104,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.CenterEnd)
+                        .offset(x = 64.dp)
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
@@ -113,7 +114,6 @@ fun DragResizeHandle(
                             startDragImmediately = true,
                         )
                         .requiredSize(128.dp)
-                        .offset(x = 64.dp)
                 ) {
                     Icon(
                         modifier = Modifier
@@ -157,6 +157,7 @@ fun DragResizeHandle(
                 Box(
                     Modifier
                         .align(Alignment.BottomCenter)
+                        .offset(y = 64.dp)
                         .draggable(
                             state = verticalDragState,
                             orientation = Orientation.Vertical,
@@ -166,7 +167,6 @@ fun DragResizeHandle(
                             startDragImmediately = true,
                         )
                         .requiredSize(128.dp)
-                        .offset(y = 64.dp)
                 ) {
                     Icon(
                         modifier = Modifier
