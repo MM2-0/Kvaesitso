@@ -384,7 +384,7 @@ fun ColumnScope.ConfigureAppWidget(
             val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
                 widgetInfo.minResizeHeight.toDp()
             } else {
-                widgetInfo.minHeight.toDp()
+                    widgetInfo.minHeight.toDp()
             }
 
             DragResizeHandle(
