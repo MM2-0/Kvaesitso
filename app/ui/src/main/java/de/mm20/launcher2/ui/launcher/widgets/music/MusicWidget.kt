@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -44,6 +45,7 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Slider
+import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TooltipBox
 import androidx.compose.material3.TooltipDefaults
@@ -153,8 +155,6 @@ fun MusicWidget(widget: MusicWidget) {
                         )
                     }
                     Column {
-
-
                         val dur = duration
                         var pos by remember(position) { mutableStateOf(position) }
 
@@ -168,7 +168,7 @@ fun MusicWidget(widget: MusicWidget) {
                                 Slider(
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(horizontal = 8.dp)
+                                        .padding(horizontal = 14.dp)
                                         .requiredHeightIn(max = 20.dp),
                                     value = (if (isDragged) seekPosition else pos?.toFloat()) ?: 0f,
                                     valueRange = 0f..dur.toFloat(),
@@ -182,10 +182,16 @@ fun MusicWidget(widget: MusicWidget) {
                                             pos = it.toLong()
                                         }
                                     },
+                                    track = {
+                                        SliderDefaults.Track(
+                                            sliderState = it,
+                                            modifier = Modifier.requiredHeight(4.dp)
+                                        )
+                                    }
                                 )
                             } else {
                                 LinearProgressIndicator(
-                                    progress = (pos?.toFloat() ?: 0f) / dur.toFloat(),
+                                    progress = { (pos?.toFloat() ?: 0f) / dur.toFloat() },
                                     modifier = Modifier
                                         .fillMaxWidth()
                                         .padding(vertical = 8.dp, horizontal = 16.dp),
@@ -294,7 +300,7 @@ fun MusicWidget(widget: MusicWidget) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround,
             verticalAlignment = Alignment.CenterVertically,
 
@@ -313,13 +319,10 @@ fun MusicWidget(widget: MusicWidget) {
             val playPauseIcon =
                 AnimatedImageVector.animatedVectorResource(R.drawable.anim_ic_play_pause)
             FilledTonalIconButton(
-                modifier = Modifier
-                    .size(40.dp),
                 colors = IconButtonDefaults.filledTonalIconButtonColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = LocalCardStyle.current.opacity),
                 ),
                 onClick = { viewModel.togglePause() },
-                shape = MaterialTheme.shapes.extraSmall,
             ) {
                 Icon(
                     painter = rememberAnimatedVectorPainter(
