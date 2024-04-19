@@ -725,4 +725,6 @@
     <string name="menu_map">Visualizza sulla mappa</string>
     <string name="menu_website">Apri sito web</string>
     <string name="cached_searchable">Mostrando una versione memorizzata nella cache, le informazioni potrebbero essere obsolete.</string>
+    <string name="widget_pick_widget">Scegli widget</string>
+    <string name="clock_style_custom">Widget personalizzato</string>
 </resources>
