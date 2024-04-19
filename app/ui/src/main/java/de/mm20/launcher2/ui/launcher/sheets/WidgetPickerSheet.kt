@@ -275,7 +275,7 @@ fun WidgetPickerSheet(
     val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
     val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
 
-    val colorSurface = MaterialTheme.colorScheme.surface
+    val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
 
     val query by viewModel.searchQuery.collectAsState("")
 
