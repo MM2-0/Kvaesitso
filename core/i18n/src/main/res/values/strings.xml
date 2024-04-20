@@ -915,4 +915,6 @@
     <string name="clock_style_custom">Custom widget</string>
     <string name="clock_variant_standard">Standard</string>
     <string name="clock_variant_outlined">Outlined</string>
+    <string name="search_filter_tools">Tools</string>
+    <string name="search_filter_online">Online results</string>
 </resources>

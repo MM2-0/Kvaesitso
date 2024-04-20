@@ -2,9 +2,7 @@ package de.mm20.launcher2.ui.launcher
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.spring
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.LocalOverscrollConfiguration
@@ -627,7 +625,7 @@ fun PagerScaffold(
             },
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
-            showHiddenItemsButton = isSearchOpen,
+            isSearchOpen = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,

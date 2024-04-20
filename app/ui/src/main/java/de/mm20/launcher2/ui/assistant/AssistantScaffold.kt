@@ -199,7 +199,7 @@ fun AssistantScaffold(
             },
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
-            showHiddenItemsButton = true,
+            isSearchOpen = true,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,

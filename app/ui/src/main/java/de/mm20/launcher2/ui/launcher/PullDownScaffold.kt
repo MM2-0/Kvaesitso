@@ -603,7 +603,7 @@ fun PullDownScaffold(
             },
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
-            showHiddenItemsButton = isSearchOpen,
+            isSearchOpen = isSearchOpen,
             value = { value },
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
