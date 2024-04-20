@@ -99,6 +99,7 @@ data class LauncherSettingsData internal constructor(
     val iconsThemed: Boolean = false,
     val iconsForceThemed: Boolean = false,
     val iconsPack: String? = null,
+    @Deprecated("Use iconsThemed instead")
     val iconsPackThemed: Boolean = false,
 
     val easterEgg: Boolean = false,
