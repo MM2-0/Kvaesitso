@@ -177,10 +177,11 @@ class SearchVM : ViewModel(), KoinComponent {
                         }
 
                     resultsList = resultsList.sortedWith { a, b ->
+                        val lastLocation = devicePoseProvider.lastLocation
                         when {
-                            a is Location && b is Location && devicePoseProvider.lastLocation != null -> {
-                                a.distanceTo(devicePoseProvider.lastLocation!!)
-                                    .compareTo(b.distanceTo(devicePoseProvider.lastLocation!!))
+                            a is Location && b is Location && lastLocation != null -> {
+                                a.distanceTo(lastLocation)
+                                    .compareTo(b.distanceTo(lastLocation))
                             }
 
                             a is SavableSearchable && b !is SavableSearchable -> -1

@@ -57,7 +57,7 @@ android {
         }
         debug {
             applicationIdSuffix = ".debug"
-            isDebuggable = false
+            isDebuggable = true
         }
         create("nightly") {
             initWith(getByName("release"))
