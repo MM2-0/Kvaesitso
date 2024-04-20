@@ -723,4 +723,7 @@
     <string name="widget_pick_widget">Widget auswählen</string>
     <string name="clock_style_custom">Eigenes Widget</string>
     <string name="widget_config_appwidget_resize">Größe anpassen</string>
+    <string name="search_action_share">Teilen</string>
+    <string name="search_filter_online">Webergebnisse</string>
+    <string name="search_filter_tools">Werkzeuge</string>
 </resources>
