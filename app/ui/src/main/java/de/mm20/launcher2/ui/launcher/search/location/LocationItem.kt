@@ -20,9 +20,12 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -66,6 +69,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.PublicTransportStop
 import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -332,6 +336,23 @@ fun LocationItem(
                     }
 
                     HorizontalDivider(Modifier.padding(top = 8.dp))
+
+                    if (location is PublicTransportStop) {
+
+                        LazyColumn(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceAround,
+                            modifier = Modifier.height(50.dp)
+                        ) {
+                            items(location.departures) { dep ->
+                                Text(
+                                    "${dep.type.toString()} ${dep.line} to ${dep.lastStop} at ${dep.time}"
+                                )
+                            }
+                        }
+
+                        HorizontalDivider(Modifier.padding(top = 8.dp, bottom = 8.dp))
+                    }
 
                     if (!isTwentyFourSeven && hasOpeningHours) {
                         val today = LocalDateTime.now().dayOfWeek
