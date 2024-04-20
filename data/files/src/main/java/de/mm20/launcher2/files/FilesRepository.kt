@@ -57,8 +57,8 @@ internal class FileRepository(
                 val results = mutableListOf<File>()
                 for (provider in providers) {
                     results.addAll(provider.search(query, allowNetwork))
-                    send(results.toImmutableList())
                 }
+                send(results.toImmutableList())
             }
     }
 }

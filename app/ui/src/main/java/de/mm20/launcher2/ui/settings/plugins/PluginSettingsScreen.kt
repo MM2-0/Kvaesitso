@@ -22,6 +22,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.InsertDriveFile
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.Delete
+import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.Error
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LightMode
@@ -246,6 +247,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     when (type) {
                                         PluginType.FileSearch -> Icons.AutoMirrored.Rounded.InsertDriveFile
                                         PluginType.Weather -> Icons.Rounded.LightMode
+                                        PluginType.PublicTransport -> Icons.Rounded.DirectionsBus
                                     },
                                     null,
                                     modifier = Modifier.size(16.dp),
@@ -255,6 +257,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                     when (type) {
                                         PluginType.FileSearch -> stringResource(R.string.plugin_type_filesearch)
                                         PluginType.Weather -> stringResource(R.string.plugin_type_weather)
+                                        PluginType.PublicTransport -> stringResource(R.string.plugin_type_publictransport)
                                     },
                                     modifier = Modifier.padding(horizontal = 4.dp),
                                     style = MaterialTheme.typography.labelMedium,

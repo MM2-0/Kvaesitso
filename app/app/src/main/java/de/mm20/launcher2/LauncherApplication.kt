@@ -32,6 +32,7 @@ import de.mm20.launcher2.data.plugins.dataPluginsModule
 import de.mm20.launcher2.devicepose.devicePoseModule
 import de.mm20.launcher2.plugins.servicesPluginsModule
 import de.mm20.launcher2.preferences.preferencesModule
+import de.mm20.launcher2.publictransport.publicTransportModule
 import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
@@ -89,6 +90,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     widgetsModule,
                     wikipediaModule,
                     openStreetMapsModule,
+                    publicTransportModule,
                     servicesTagsModule,
                     widgetsServiceModule,
                     dataPluginsModule,

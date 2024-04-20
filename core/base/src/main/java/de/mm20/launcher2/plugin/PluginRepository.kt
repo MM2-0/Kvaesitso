@@ -1,6 +1,5 @@
 package de.mm20.launcher2.plugin
 
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 

@@ -133,14 +133,11 @@ interface Location : SavableSearchable {
         )
     }
 
-    fun toAndroidLocation(): AndroidLocation {
-        val location = AndroidLocation("KvaesitsoLocationProvider")
-
-        location.latitude = latitude
-        location.longitude = longitude
-
-        return location
-    }
+    fun toAndroidLocation(): AndroidLocation =
+        AndroidLocation("KvaesitsoLocationProvider").apply {
+            this.latitude = latitude
+            this.longitude = longitude
+        }
 
     fun distanceTo(androidLocation: AndroidLocation): Float {
         return androidLocation.distanceTo(this.toAndroidLocation())
@@ -148,6 +145,12 @@ interface Location : SavableSearchable {
 
     fun distanceTo(otherLocation: Location): Float =
         this.distanceTo(otherLocation.toAndroidLocation())
+
+    fun distanceTo(latitude: Double, longitude: Double, locationProvider: String = "KvaesitsoLocationProvider"): Float =
+        this.distanceTo(AndroidLocation(locationProvider).apply {
+            this.latitude = latitude
+            this.longitude = longitude
+        })
 }
 
 // https://taginfo.openstreetmap.org/tags

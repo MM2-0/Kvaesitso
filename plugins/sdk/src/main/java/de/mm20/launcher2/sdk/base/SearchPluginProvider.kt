@@ -1,6 +1,7 @@
 package de.mm20.launcher2.sdk.base
 
 import android.content.ContentValues
+import android.database.AbstractCursor
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri

@@ -50,6 +50,8 @@ data class LauncherSettingsData internal constructor(
 
     val fileSearchProviders: Set<String> = setOf("local"),
 
+    val publicTransportSearchProviders: Set<String> = emptySet(),
+
     val contactSearchEnabled: Boolean = true,
 
     val calendarSearchEnabled: Boolean = true,
