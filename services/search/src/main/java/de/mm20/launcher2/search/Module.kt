@@ -13,6 +13,7 @@ val searchModule = module {
             get(named<File>()),
             get(named<Article>()),
             get(named<Location>()),
+            get(named<PublicTransportStop>()),
             get(),
             get(),
             get(named<Website>()),

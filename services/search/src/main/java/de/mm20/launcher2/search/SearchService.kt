@@ -35,6 +35,7 @@ internal class SearchServiceImpl(
     private val fileRepository: SearchableRepository<File>,
     private val articleRepository: SearchableRepository<Article>,
     private val locationRepository: SearchableRepository<Location>,
+    private val publicTransportRepository: QueryableRepository<List<Location>, PublicTransportStop>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
     private val websiteRepository: SearchableRepository<Website>,
@@ -131,9 +132,19 @@ internal class SearchServiceImpl(
             launch {
                 locationRepository.search(query, allowNetwork)
                     .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
+                    .collectLatest { locations ->
                         results.update {
-                            it.copy(locations = r.toImmutableList())
+                            it.copy(locations = locations.toImmutableList())
+                        }
+                        publicTransportRepository.search(
+                            locations.filter { it.category.isPublicTransportStopCategory() },
+                            allowNetwork
+                        ).collectLatest { stops ->
+                            val merged =
+                                stops + locations.filterNot { l -> stops.any { s -> s.key == l.key } }
+                            results.update {
+                                it.copy(locations = merged.toImmutableList())
+                            }
                         }
                     }
             }
