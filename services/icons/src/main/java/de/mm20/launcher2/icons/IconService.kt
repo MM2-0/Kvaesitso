@@ -107,7 +107,7 @@ class IconService(
                                     context,
                                     pack,
                                     iconPackManager,
-                                    settings.iconPackThemed,
+                                    settings.themedIcons,
                                 )
                             )
                         } else {
