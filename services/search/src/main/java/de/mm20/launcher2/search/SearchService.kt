@@ -140,6 +140,8 @@ internal class SearchServiceImpl(
                             locations.filter { it.category.isPublicTransportStopCategory() },
                             allowNetwork
                         ).collectLatest { stops ->
+                            if (stops.isEmpty()) return@collectLatest
+
                             val locationsWithUpdatedStops =
                                 stops + locations.filterNot { l -> stops.any { s -> s.key == l.key } }
                             results.update {
