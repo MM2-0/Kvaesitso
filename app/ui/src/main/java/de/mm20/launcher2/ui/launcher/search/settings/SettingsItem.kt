@@ -34,16 +34,24 @@ fun SettingsItem(
                 icon = { icon },
             )
         }
-        Box(modifier = Modifier.width(8.dp))
+        Box(modifier = Modifier.width(16.dp))
         Column(
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
-            Text(
-                text = stringResource(R.string.settings_placeholder, data.label),
-                style = MaterialTheme.typography.titleMedium,
-                overflow = TextOverflow.Ellipsis
-            )
+            Row {
+                Text(
+                    text = data.label,
+                    style = MaterialTheme.typography.titleMedium,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
+            Row {
+                Text(
+                    text = stringResource(R.string.preference_search_settings),
+                    style = MaterialTheme.typography.bodySmall,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
-
     }
 }
