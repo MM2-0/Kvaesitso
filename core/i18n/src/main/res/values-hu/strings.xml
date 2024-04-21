@@ -722,4 +722,8 @@
     <string name="clock_variant_outlined">Körvonalazott</string>
     <string name="widget_pick_widget">Modul kiválasztása</string>
     <string name="clock_style_custom">Modul testreszabása</string>
+    <string name="widget_config_appwidget_resize">Átméretezés</string>
+    <string name="search_action_share">Megosztás</string>
+    <string name="search_filter_online">Keresési találat</string>
+    <string name="search_filter_tools">Eszközök</string>
 </resources>
