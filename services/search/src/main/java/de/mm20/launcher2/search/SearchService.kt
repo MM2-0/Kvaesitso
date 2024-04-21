@@ -172,7 +172,19 @@ internal class SearchServiceImpl(
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
-                            it.copy(other = r.toImmutableList())
+                            it.copy(other = r
+                                .filter {
+                                    filters.apps && it is Application ||
+                                    filters.shortcuts && it is AppShortcut ||
+                                    filters.contacts && it is Contact ||
+                                    filters.events && it is CalendarEvent ||
+                                    filters.files && it is File ||
+                                    filters.websites && it is Website ||
+                                    filters.articles && it is Article ||
+                                    filters.places && it is Location
+                                }
+                                .toImmutableList()
+                            )
                         }
                     }
             }

@@ -279,7 +279,7 @@ abstract class SharedLauncherActivity(
         super.onResume()
         if (System.currentTimeMillis() - pauseTime > 20000) {
             viewModel.closeSearchWithoutAnimation()
-            searchVM.search("")
+            searchVM.reset()
         }
     }
 

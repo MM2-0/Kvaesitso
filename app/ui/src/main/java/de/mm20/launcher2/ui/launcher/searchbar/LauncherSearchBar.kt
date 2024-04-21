@@ -16,7 +16,6 @@ import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,6 +32,7 @@ import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
+import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
@@ -54,19 +54,14 @@ fun LauncherSearchBar(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
-    val sheetManager = LocalBottomSheetManager.current
-
     val searchVM: SearchVM = viewModel()
-    val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
-
-    val hiddenItems by searchVM.hiddenResults
 
     LaunchedEffect(focused) {
         if (focused) focusRequester.requestFocus()
         else focusManager.clearFocus()
     }
 
-    if (isSearchOpen && WindowInsets.isImeVisible) {
+    if (isSearchOpen && !searchVM.showFilters.value && WindowInsets.isImeVisible) {
         KeyboardFilterBar(
             filters = searchVM.filters.value,
             onFiltersChange = {
@@ -89,8 +84,11 @@ fun LauncherSearchBar(
                 exit = scaleOut(tween(100))
             ) {
                 FilledIconButton(
-                    onClick = { },
-                    colors = IconButtonDefaults.iconButtonColors()
+                    onClick = {
+                        searchVM.showFilters.value = !searchVM.showFilters.value
+                    },
+                    colors = if (searchVM.showFilters.value) IconButtonDefaults.filledTonalIconButtonColors()
+                    else IconButtonDefaults.iconButtonColors()
                 ) {
                     Box {
                         Icon(imageVector = Icons.Rounded.FilterAlt, contentDescription = null)
@@ -98,7 +96,9 @@ fun LauncherSearchBar(
                             !searchVM.filters.value.allCategoriesEnabled,
                             enter = scaleIn(tween(100)),
                             exit = scaleOut(tween(100)),
-                            modifier = Modifier.align(Alignment.BottomEnd).offset(-3.dp, -3.dp)
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .offset(-3.dp, -3.dp)
                         ) {
                             Badge(
                                 containerColor = MaterialTheme.colorScheme.tertiary,

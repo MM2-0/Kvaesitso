@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.searchbar
+package de.mm20.launcher2.ui.launcher.search.filters
 
 import de.mm20.launcher2.search.SearchFilters
 

@@ -917,4 +917,5 @@
     <string name="clock_variant_outlined">Outlined</string>
     <string name="search_filter_tools">Tools</string>
     <string name="search_filter_online">Online results</string>
+    <string name="search_filter_apps">Apps</string>
 </resources>

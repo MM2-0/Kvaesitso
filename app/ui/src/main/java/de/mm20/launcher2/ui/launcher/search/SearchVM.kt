@@ -91,6 +91,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
+    val showFilters = mutableStateOf(false)
+
     val filters = mutableStateOf(SearchFilters())
 
     val separateWorkProfile = searchUiSettings.separateWorkProfile
@@ -125,9 +127,21 @@ class SearchVM : ViewModel(), KoinComponent {
         search(searchQuery.value, forceRestart = true)
     }
 
+    fun closeFilters() {
+        showFilters.value = false
+    }
+
+    fun reset() {
+        closeFilters()
+        search("")
+    }
+
     private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
+        if (searchQuery.value != query) {
+            showFilters.value = false
+        }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
@@ -145,7 +159,7 @@ class SearchVM : ViewModel(), KoinComponent {
             searchUiSettings.resultOrder.collectLatest { resultOrder ->
                 searchService.search(
                     query,
-                    filters = filters,
+                    filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(

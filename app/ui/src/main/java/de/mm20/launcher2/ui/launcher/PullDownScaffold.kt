@@ -252,7 +252,7 @@ fun PullDownScaffold(
                 animationSpec = spring(stiffness = Spring.StiffnessMediumLow)
             )
         } else {
-            searchVM.search("")
+            searchVM.reset()
             if (viewModel.skipNextSearchAnimation) {
                 pagerState.scrollToPage(0)
                 viewModel.skipNextSearchAnimation = false
@@ -273,7 +273,7 @@ fun PullDownScaffold(
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
-                searchVM.search("")
+                searchVM.reset()
                 true
             }
 

@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.launcher.searchbar
+package de.mm20.launcher2.ui.launcher.search.filters
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -91,7 +91,7 @@ fun KeyboardFilterBar(filters: SearchFilters, onFiltersChange: (SearchFilters) -
                                 modifier = Modifier.size(FilterChipDefaults.IconSize)
                             )
                         },
-                        label = { Text("Apps") }
+                        label = { Text(stringResource(R.string.search_filter_apps)) }
                     )
                     FilterChip(
                         modifier = Modifier.padding(end = 8.dp),

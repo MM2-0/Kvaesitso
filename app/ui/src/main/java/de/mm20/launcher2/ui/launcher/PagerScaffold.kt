@@ -250,7 +250,7 @@ fun PagerScaffold(
             } else {
                 pagerState.animateScrollToPage(0)
             }
-            searchVM.search("")
+            searchVM.reset()
         }
     }
 
@@ -262,7 +262,7 @@ fun PagerScaffold(
         when {
             isSearchOpen -> {
                 viewModel.closeSearch()
-                searchVM.search("")
+                searchVM.reset()
                 true
             }
 
