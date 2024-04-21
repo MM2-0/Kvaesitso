@@ -153,7 +153,7 @@ fun CalendarItem(
                             style = MaterialTheme.typography.bodySmall
                         )
                     }
-                    if (calendar.description != null) {
+                    if (!calendar.description.isNullOrBlank()) {
                         Row(
                             Modifier
                                 .fillMaxWidth(),
@@ -187,7 +187,7 @@ fun CalendarItem(
                             )
                         }
                     }
-                    if (calendar.location != null) {
+                    if (!calendar.location.isNullOrBlank()) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
