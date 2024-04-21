@@ -54,16 +54,6 @@ internal data class OsmLocation(
         return this.copy(labelOverride = label)
     }
 
-    override fun launch(context: Context, options: Bundle?): Boolean {
-        return context.tryStartActivity(
-            Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")
-            ),
-            options
-        )
-    }
-
     override fun getSerializer(): SearchableSerializer {
         return OsmLocationSerializer()
     }

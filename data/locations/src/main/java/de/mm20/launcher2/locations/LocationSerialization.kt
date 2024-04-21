@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations
 
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.locations.providers.PluginLocation
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocationProvider
 import de.mm20.launcher2.search.LocationCategory
@@ -17,6 +18,38 @@ import org.json.JSONObject
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
+
+internal fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
+    fun getOpeningHours(array: JSONArray): ImmutableList<OpeningHours> {
+        val hours = mutableListOf<OpeningHours>()
+
+        for (i in 0 until array.length()) {
+            val json = array.getJSONObject(i)
+            val dayOfWeek =
+                DayOfWeek.of(json.optInt("day").takeIf { it in 1..7 } ?: continue)
+            val openingTimeMillis =
+                json.optLong("openingTime", -1).takeIf { it >= 0 } ?: continue
+            val durationMillis = json.optLong("duration", -1).takeIf { it >= 0 } ?: continue
+
+            hours.add(
+                OpeningHours(
+                    dayOfWeek = dayOfWeek,
+                    startTime = LocalTime.ofSecondOfDay(openingTimeMillis / 1000L),
+                    duration = Duration.ofMillis(durationMillis)
+                )
+            )
+        }
+
+        return hours.toPersistentList()
+    }
+
+    return OpeningSchedule(
+        isTwentyFourSeven = json.optBoolean("isTwentyFourSeven"),
+        openingHours = json.optJSONArray("openingHours")?.let {
+            getOpeningHours(it)
+        } ?: persistentListOf()
+    )
+}
 
 class OsmLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
@@ -74,36 +107,13 @@ internal class OsmLocationDeserializer(
             updatedSelf = { osmRepository.update(id) }
         )
     }
+}
 
-    private fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
-        return OpeningSchedule(
-            isTwentyFourSeven = json.optBoolean("isTwentyFourSeven"),
-            openingHours = json.optJSONArray("openingHours")?.let {
-                getOpeningHours(it)
-            } ?: persistentListOf()
-        )
+internal class PluginLocationSerializer : SearchableSerializer {
+    override fun serialize(searchable: SavableSearchable): String? {
+        TODO("Not yet implemented")
     }
 
-    private fun getOpeningHours(array: JSONArray): ImmutableList<OpeningHours> {
-        val hours = mutableListOf<OpeningHours>()
-
-        for (i in 0 until array.length()) {
-            val json = array.getJSONObject(i)
-            val dayOfWeek =
-                DayOfWeek.of(json.optInt("day").takeIf { it in 1..7 } ?: continue)
-            val openingTimeMillis =
-                json.optLong("openingTime", -1).takeIf { it >= 0 } ?: continue
-            val durationMillis = json.optLong("duration", -1).takeIf { it >= 0 } ?: continue
-
-            hours.add(
-                OpeningHours(
-                    dayOfWeek = dayOfWeek,
-                    startTime = LocalTime.ofSecondOfDay(openingTimeMillis / 1000L),
-                    duration = Duration.ofMillis(durationMillis)
-                )
-            )
-        }
-
-        return hours.toPersistentList()
-    }
+    override val typePrefix: String
+        get() = PluginLocation.DOMAIN
 }

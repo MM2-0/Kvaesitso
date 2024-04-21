@@ -572,7 +572,7 @@ internal object MockLocation : Location {
     override val phoneNumber: String = "+49 1234567"
     override val userRating: Float? = 1.0f
     override val departures: List<Departure>? = listOf(
-        Departure(LocalTime.NOON, "B1", "Hell", LineType.BUS)
+        Departure(LocalTime.NOON, null,"B1", "Hell", LineType.BUS)
     )
 
     override fun overrideLabel(label: String): SavableSearchable = TODO()

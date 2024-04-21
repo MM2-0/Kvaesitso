@@ -312,8 +312,7 @@ internal class OwncloudFileDeserializer : SearchableDeserializer {
     }
 }
 
-internal class PluginFileSerializer(
-) : SearchableSerializer {
+internal class PluginFileSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String? {
         searchable as PluginFile
         if (searchable.storageStrategy == StorageStrategy.StoreReference) {

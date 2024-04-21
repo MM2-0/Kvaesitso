@@ -1,11 +1,15 @@
 package de.mm20.launcher2.search
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Bundle
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
+import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.collections.immutable.ImmutableList
 import java.time.DayOfWeek
 import java.time.Duration
@@ -33,6 +37,16 @@ interface Location : SavableSearchable {
 
     override val preferDetailsOverLaunch: Boolean
         get() = true
+
+    override fun launch(context: Context, options: Bundle?): Boolean {
+        return context.tryStartActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("geo:$latitude,$longitude?q=${Uri.encode(label)}")
+            ),
+            options
+        )
+    }
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         val (resId, bgColor) = when (category) {

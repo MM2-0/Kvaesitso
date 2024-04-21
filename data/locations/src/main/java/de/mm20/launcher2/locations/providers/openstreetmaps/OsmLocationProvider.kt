@@ -3,6 +3,7 @@ package de.mm20.launcher2.locations.providers.openstreetmaps
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.devicepose.DevicePoseProvider
+import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
@@ -28,7 +29,6 @@ import java.net.UnknownHostException
 
 internal class OsmLocationProvider(
     private val overpassApi: StateFlow<OverpassApi?>,
-    private val poseProvider: DevicePoseProvider,
     private val scope: CoroutineScope,
     private val dispatcher: Dispatcher,
 ) : LocationProvider {
@@ -79,6 +79,7 @@ internal class OsmLocationProvider(
 
     override suspend fun search(
         query: String,
+        userLocation: AndroidLocation?,
         allowNetwork: Boolean,
         hasLocationPermission: Boolean,
         searchRadiusMeters: Int,
@@ -86,13 +87,13 @@ internal class OsmLocationProvider(
     ): List<Location> {
         // values higher than 2 might block searches for "dm"
         // (Drogerie Markt, a problem specific to germany, but probably also relevant for other countries)
-        if (!allowNetwork || !hasLocationPermission || query.length < 2)
+        if (!allowNetwork ||
+            !hasLocationPermission ||
+            userLocation == null ||
+            query.length < 2
+        ) {
             return emptyList()
-
-
-        val userLocation =
-            poseProvider.getLocation().firstOrNull() ?: poseProvider.lastLocation
-            ?: return emptyList()
+        }
 
         withContext(Dispatchers.IO) {
             dispatcher.cancelAll()
