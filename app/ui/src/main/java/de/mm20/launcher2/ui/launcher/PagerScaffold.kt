@@ -24,7 +24,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeDrawing
@@ -130,6 +130,10 @@ fun PagerScaffold(
     val searchState = rememberLazyListState()
 
     val pagerState = rememberPagerState { 2 }
+
+    val keyboardFilterBarPadding by animateDpAsState(
+        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value) 50.dp else 0.dp
+    )
 
     val isSearchAtBottom by remember {
         derivedStateOf {
@@ -511,11 +515,11 @@ fun PagerScaffold(
                             val paddingValues = if (bottomSearchBar) {
                                 PaddingValues(
                                     top = 4.dp + windowInsets.calculateTopPadding(),
-                                    bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding()
+                                    bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
                                 )
                             } else {
                                 PaddingValues(
-                                    bottom = 4.dp + windowInsets.calculateBottomPadding(),
+                                    bottom = 4.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding,
                                     top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
                                 )
                             }
@@ -597,27 +601,17 @@ fun PagerScaffold(
 
         LauncherSearchBar(
             modifier = Modifier
-                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(8.dp)
-                .offset {
-                    IntOffset(
-                        0,
-                        if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1
-                    )
-                }
-                .offset {
-                    IntOffset(
-                        0,
+                .fillMaxSize(),
+            level = { searchBarLevel },
+            searchBarOffset = {
+                (if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) +
                         with(density) {
-                            widgetEditModeOffset
+                            (widgetEditModeOffset - if (bottomSearchBar) keyboardFilterBarPadding else 0.dp)
                                 .toPx()
                                 .roundToInt()
-                        })
-                },
-            level = { searchBarLevel },
+                        }
+            },
+            bottomSearchBar = bottomSearchBar,
             focused = focusSearchBar,
             onFocusChange = {
                 if (it) viewModel.openSearch()
@@ -630,7 +624,6 @@ fun PagerScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null
@@ -702,7 +695,8 @@ fun Modifier.pagerScaffoldScrollHandler(
                         val available = dragAmount - preConsumed
                         val consumedY =
                             scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
-                        val consumedX = pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
+                        val consumedX =
+                            pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
                         val totalConsumed =
                             Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
                         nestedScrollDispatcher.dispatchPostScroll(

@@ -41,6 +41,7 @@ fun AssistantScaffold(
     fixedSearchBar: Boolean = false,
 ) {
     val viewModel: LauncherScaffoldVM = viewModel()
+    val searchVM: SearchVM = viewModel()
 
     val context = LocalContext.current
 
@@ -59,6 +60,10 @@ fun AssistantScaffold(
     }
 
     val searchState = rememberLazyListState()
+
+    val keyboardFilterBarPadding by animateDpAsState(
+        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value) 50.dp else 0.dp
+    )
 
     val isSearchAtStart by remember {
         derivedStateOf {
@@ -94,6 +99,7 @@ fun AssistantScaffold(
             }
         }
     }
+
     val showNavBarScrim by remember {
         derivedStateOf {
             if (reverseSearchResults) {
@@ -148,8 +154,6 @@ fun AssistantScaffold(
             }
         }
     }
-
-    val searchVM: SearchVM = viewModel()
     val actions by searchVM.searchActionResults
     val webSearchPadding by animateDpAsState(
         if (actions.isEmpty()) 0.dp else 48.dp
@@ -164,7 +168,7 @@ fun AssistantScaffold(
             modifier = Modifier.fillMaxSize(),
             paddingValues = PaddingValues(
                 top = (if (bottomSearchBar) 0.dp else 56.dp + webSearchPadding) + 4.dp + windowInsets.calculateTopPadding(),
-                bottom = (if (bottomSearchBar) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding()
+                bottom = (if (bottomSearchBar) 56.dp + webSearchPadding else 0.dp) + 4.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
             ),
             reverse = reverseSearchResults,
             state = searchState
@@ -179,18 +183,12 @@ fun AssistantScaffold(
 
         LauncherSearchBar(
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(8.dp)
-                .offset {
-                    if (searchBarFocused || fixedSearchBar) IntOffset.Zero
-                    else IntOffset(
-                        0,
-                        searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1
-                    )
-                },
+                .fillMaxSize(),
+            searchBarOffset = {
+                (if (searchBarFocused || fixedSearchBar) 0
+                else searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1)
+                - (if (bottomSearchBar) with(density) { keyboardFilterBarPadding.toPx() }.toInt() else 0)
+            },
             level = { searchBarLevel },
             focused = searchBarFocused,
             onFocusChange = {
@@ -204,7 +202,7 @@ fun AssistantScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar,
+            bottomSearchBar = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null

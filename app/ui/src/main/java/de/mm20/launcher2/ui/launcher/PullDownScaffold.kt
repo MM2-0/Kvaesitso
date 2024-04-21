@@ -21,11 +21,11 @@ import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imeAnimationTarget
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.VerticalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -115,6 +115,10 @@ fun PullDownScaffold(
     val offsetY = remember { mutableStateOf(0f) }
     val maxOffset = with(density) { 64.dp.toPx() }
     val toggleSearchThreshold = with(density) { 48.dp.toPx() }
+
+    val keyboardFilterBarPadding by animateDpAsState(
+        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value) 50.dp else 0.dp
+    )
 
     val isSearchAtTop by remember {
         derivedStateOf {
@@ -300,9 +304,7 @@ fun PullDownScaffold(
         handleBackOrHomeEvent()
     }
 
-    val keyboardController = LocalSoftwareKeyboardController.current
     val gestureManager = LocalGestureDetector.current
-    val hapticFeedback = LocalHapticFeedback.current
     val view = LocalView.current
 
     LaunchedEffect(isOverThreshold) {
@@ -517,7 +519,9 @@ fun PullDownScaffold(
                                     ),
                                 paddingValues = PaddingValues(
                                     top = windowInsets.calculateTopPadding() + if (!bottomSearchBar) 60.dp + webSearchPadding else 4.dp,
-                                    bottom = windowInsets.calculateBottomPadding() + if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
+                                    bottom = windowInsets.calculateBottomPadding() +
+                                            keyboardFilterBarPadding +
+                                            if (bottomSearchBar) 60.dp + webSearchPadding else 4.dp
                                 ),
                                 state = searchState,
                                 reverse = reverseSearchResults,
@@ -575,31 +579,20 @@ fun PullDownScaffold(
 
         LauncherSearchBar(
             modifier = Modifier
-                .align(if (bottomSearchBar) Alignment.BottomCenter else Alignment.TopCenter)
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .padding(8.dp)
-                .offset {
-                    IntOffset(
-                        0,
-                        if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)
-                    )
-                }
-                .offset {
-                    IntOffset(
-                        0,
-                        with(density) {
-                            editModeSearchBarOffset
-                                .toPx()
-                                .roundToInt()
-                        })
-                },
+                .fillMaxSize(),
             level = { searchBarLevel },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
+            },
+            searchBarOffset = {
+                (if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)) +
+                        with(density) {
+                            (editModeSearchBarOffset - if(bottomSearchBar) keyboardFilterBarPadding else 0.dp)
+                                .toPx()
+                                .roundToInt()
+                        }
             },
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
@@ -608,7 +601,7 @@ fun PullDownScaffold(
             onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
             style = searchBarStyle,
-            reverse = bottomSearchBar,
+            bottomSearchBar = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null
