@@ -30,7 +30,6 @@ import androidx.compose.material.icons.rounded.ArrowDropDown
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.ChevronLeft
 import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material.icons.rounded.CropFree
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.PhotoSizeSelectSmall
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
@@ -47,7 +46,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -278,13 +276,17 @@ fun WatchFaceSelector(
                                         .padding(top = 24.dp, bottom = 8.dp),
                                     contentAlignment = Alignment.TopCenter,
                                 ) {
-                                    OutlinedButton(
+                                    TextButton(
                                         onClick = {
                                             showWidgetPicker = true
                                         },
-                                        contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
+                                        contentPadding = ButtonDefaults.TextButtonWithIconContentPadding,
                                         modifier = Modifier
-                                            .padding(16.dp)
+                                            .padding(16.dp),
+                                        colors = ButtonDefaults.textButtonColors(
+                                            contentColor = if (darkColors == LocalDarkTheme.current) MaterialTheme.colorScheme.inversePrimary
+                                            else MaterialTheme.colorScheme.primary
+                                        )
                                     ) {
                                         Icon(
                                             modifier = Modifier
