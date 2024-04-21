@@ -97,6 +97,7 @@ data class LauncherSettingsData internal constructor(
     val iconsThemed: Boolean = false,
     val iconsForceThemed: Boolean = false,
     val iconsPack: String? = null,
+    @Deprecated("Use iconsThemed instead")
     val iconsPackThemed: Boolean = false,
 
     val easterEgg: Boolean = false,
@@ -239,7 +240,11 @@ sealed interface ClockWidgetStyle {
 
     @Serializable
     @SerialName("custom")
-    data class Custom(val widgetId: Int? = null) : ClockWidgetStyle
+    data class Custom(
+        val widgetId: Int? = null,
+        val width: Int? = null,
+        val height: Int = 200,
+    ) : ClockWidgetStyle
 }
 
 @Serializable

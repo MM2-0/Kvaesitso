@@ -715,7 +715,7 @@
     <string name="preference_search_bar_separate_work_profile">Oddělit aplikace pracovního profilu</string>
     <string name="preference_search_bar_separate_work_profile_summary">Zobrazit aplikace pracovního profilu v oddělené kartě</string>
     <string name="preference_clock_widget_show_seconds">Zobrazit sekundy</string>
-    <string name="preference_clock_widget_use_theme_color">Použít barvu motivu</string>
+    <string name="widget_use_theme_colors">Použít barvu motivu</string>
     <string name="clock_style_digital1">Tučné</string>
     <string name="clock_style_digital2">Jednoduché</string>
     <string name="clock_style_orbit">Kruh</string>
@@ -725,4 +725,6 @@
     <string name="clock_style_empty">Žádné hodiny</string>
     <string name="clock_variant_standard">Standardní</string>
     <string name="clock_variant_outlined">Ohraničené</string>
+    <string name="widget_pick_widget">Vyberte widget</string>
+    <string name="clock_style_custom">Vlastní widget</string>
 </resources>

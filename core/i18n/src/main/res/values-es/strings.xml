@@ -693,7 +693,7 @@
     <string name="preference_search_bar_separate_work_profile">Separar apps del perfil de trabajo</string>
     <string name="preference_search_bar_separate_work_profile_summary">Mostrar apps del perfil de trabajo en una pestaña separada</string>
     <string name="preference_clock_widget_show_seconds">Mostrar segundos</string>
-    <string name="preference_clock_widget_use_theme_color">Usar color del tema</string>
+    <string name="widget_use_theme_colors">Usar color del tema</string>
     <string name="preference_search_locations_radius">Radio de búsqueda</string>
     <string name="preference_search_locations_show_position_on_map_summary">Mostrar tu ubicación en el mapa</string>
     <string name="clock_style_digital1">Negrita</string>
@@ -725,4 +725,6 @@
     <string name="preference_search_location_custom_overpass_url">URL de Overpass</string>
     <string name="preference_search_locations_hide_uncategorized">Ocultar lugares sin categoría</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Solo mostrar resultados con categorías bien definidas, como cafeterías o restaurantes</string>
+    <string name="widget_pick_widget">Elegir widget</string>
+    <string name="clock_style_custom">Widget personalizado</string>
 </resources>

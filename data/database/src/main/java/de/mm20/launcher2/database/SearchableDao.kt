@@ -55,7 +55,7 @@ interface SearchableDao {
                 "(:automaticallySorted AND pinPosition = 1) OR" +
                 "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
                 "(:hidden AND hidden = 1)" +
-                ") AND hidden = :hidden ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
+                ") ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
     fun getIncludeTypes(
         includeTypes: List<String>?,
@@ -74,7 +74,7 @@ interface SearchableDao {
                 "(:automaticallySorted AND pinPosition = 1) OR" +
                 "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
                 "(:hidden AND hidden = 1)" +
-                ") AND hidden = :hidden ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
+                ") ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
     fun getExcludeTypes(
         excludeTypes: List<String>?,

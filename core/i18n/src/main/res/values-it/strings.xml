@@ -690,7 +690,7 @@
     <string name="location_open_next_day">Apertura %1$s</string>
     <string name="preference_search_locations_hide_uncategorized">Nascondi luoghi senza categoria</string>
     <string name="preference_clock_widget_show_seconds">Mostra secondi</string>
-    <string name="preference_clock_widget_use_theme_color">Usa colore del tema</string>
+    <string name="widget_use_theme_colors">Usa colore del tema</string>
     <string name="preference_search_locations">Luoghi</string>
     <string name="preference_search_locations_radius">Raggio di ricerca</string>
     <string name="preference_search_locations_summary">Cerca nella zona negozi e altri luoghi</string>
@@ -725,4 +725,6 @@
     <string name="menu_map">Visualizza sulla mappa</string>
     <string name="menu_website">Apri sito web</string>
     <string name="cached_searchable">Mostrando una versione memorizzata nella cache, le informazioni potrebbero essere obsolete.</string>
+    <string name="widget_pick_widget">Scegli widget</string>
+    <string name="clock_style_custom">Widget personalizzato</string>
 </resources>

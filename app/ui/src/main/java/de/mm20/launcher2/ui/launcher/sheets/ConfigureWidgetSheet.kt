@@ -2,7 +2,6 @@ package de.mm20.launcher2.ui.launcher.sheets
 
 import android.app.Activity
 import android.app.ActivityOptions
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProviderInfo
 import android.content.Intent
@@ -14,22 +13,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.browser.customtabs.CustomTabColorSchemeParams
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.draggable
-import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Build
@@ -38,40 +33,35 @@ import androidx.compose.material.icons.rounded.HelpOutline
 import androidx.compose.material.icons.rounded.Link
 import androidx.compose.material.icons.rounded.LinkOff
 import androidx.compose.material.icons.rounded.OpenInNew
-import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.isUnspecified
 import androidx.core.net.toUri
 import de.mm20.launcher2.calendar.CalendarRepository
 import de.mm20.launcher2.calendar.UserCalendar
@@ -82,12 +72,17 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.base.LocalAppWidgetHost
 import de.mm20.launcher2.ui.component.BottomSheetDialog
+import de.mm20.launcher2.ui.component.DragResizeHandle
 import de.mm20.launcher2.ui.component.LargeMessage
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.component.ResizeAxis
 import de.mm20.launcher2.ui.component.preferences.CheckboxPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
+import de.mm20.launcher2.ui.ktx.toDp
+import de.mm20.launcher2.ui.launcher.widgets.external.AppWidgetHost
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
+import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import de.mm20.launcher2.ui.settings.SettingsActivity
 import de.mm20.launcher2.widgets.AppWidget
 import de.mm20.launcher2.widgets.CalendarWidget
@@ -96,7 +91,6 @@ import de.mm20.launcher2.widgets.MusicWidget
 import de.mm20.launcher2.widgets.NotesWidget
 import de.mm20.launcher2.widgets.WeatherWidget
 import de.mm20.launcher2.widgets.Widget
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.get
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
@@ -336,109 +330,86 @@ fun ColumnScope.ConfigureAppWidget(
         return
     }
 
-    var dragDelta by remember { mutableStateOf(0) }
     Column {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(MaterialTheme.shapes.medium)
-                .background(MaterialTheme.colorScheme.surfaceVariant)
+                .padding(bottom = 64.dp)
+                .background(MaterialTheme.colorScheme.surfaceVariant, MaterialTheme.shapes.medium)
         ) {
-            ExternalWidget(
+            var resizeWidth by remember {
+                mutableStateOf(widget.config.width?.dp ?: Dp.Unspecified)
+            }
+
+            var resizeHeight by remember {
+                mutableStateOf(widget.config.height.dp)
+            }
+
+            AppWidgetHost(
                 widgetInfo = widgetInfo,
                 widgetId = widget.config.widgetId,
-                modifier = Modifier.fillMaxWidth(),
-                height = widget.config.height + dragDelta,
-                borderless = widget.config.borderless,
-            )
-        }
-        val density = LocalDensity.current
-        val draggableState = rememberDraggableState {
-            dragDelta = (dragDelta + it / density.density).roundToInt()
-                .coerceIn(
-                    -widget.config.height + 1,
-                    500 - widget.config.height
-                )
-        }
-        Row(
-            modifier = Modifier
-                .padding(top = 8.dp, bottom = 16.dp)
-                .padding(horizontal = 8.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            val scope = rememberCoroutineScope()
-            val tooltipState = rememberTooltipState()
-            TooltipBox(
-                state = tooltipState,
-                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-                tooltip = {
-                    PlainTooltip {
-                        Text(stringResource(R.string.widget_config_appwidget_resize_hint))
-                    }
-                }
-            ) {
-                Box(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .clip(MaterialTheme.shapes.small)
-                        .background(MaterialTheme.colorScheme.primaryContainer)
-                        .height(36.dp)
-                        .width(48.dp)
-                        .draggable(
-                            state = draggableState,
-                            orientation = Orientation.Vertical,
-                            onDragStopped = {
-                                onWidgetUpdated(
-                                    widget.copy(
-                                        config = widget.config.copy(
-                                            height = widget.config.height + dragDelta
-                                        )
-                                    )
-                                )
-                                dragDelta = 0
-                            }
-                        )
-                        .clickable {
-                            scope.launch {
-                                tooltipState.show()
-                            }
-                        },
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.UnfoldMore,
-                        contentDescription = null,
-                    )
-                }
-
-            }
-            var textFieldValue by remember(widget.config.height) { mutableStateOf(widget.config.height.toString()) }
-            OutlinedTextField(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = 8.dp),
-                value = (widget.config.height + dragDelta).toString(),
-                onValueChange = {
-                    val intValue = it.toIntOrNull()
-                    if (intValue == null) textFieldValue = ""
-                    else if (intValue in 1..500) {
-                        onWidgetUpdated(
-                            widget.copy(
-                                config = widget.config.copy(
-                                    height = intValue
-                                )
+                    .clip(MaterialTheme.shapes.medium)
+                    .then(
+                        if (resizeWidth.isUnspecified) Modifier.fillMaxWidth()
+                        else Modifier.width(resizeWidth)
+                    )
+                    .height(resizeHeight)
+                    .align(Alignment.TopCenter)
+                    .pointerInput(Unit) {
+                        awaitEachGesture {
+                            val event = awaitFirstDown(pass = PointerEventPass.Initial)
+                            event.consume()
+                        }
+                    },
+                borderless = widget.config.borderless,
+                useThemeColors = widget.config.themeColors,
+                onLightBackground = (!LocalDarkTheme.current && widget.config.background) || LocalPreferDarkContentOverWallpaper.current
+            )
+
+            val maxWidth = if (isAtLeastApiLevel(31)) {
+                widgetInfo.maxResizeWidth.takeIf { it > 0 }?.toDp() ?: Dp.Unspecified
+            } else Dp.Unspecified
+
+            val maxHeight = if (isAtLeastApiLevel(31)) {
+                widgetInfo.maxResizeHeight.takeIf { it > 0 }?.toDp() ?: 2000.dp
+            } else 2000.dp
+
+            val minWidth = if (widgetInfo.minResizeWidth in 1..widgetInfo.minWidth) {
+                widgetInfo.minResizeWidth.toDp()
+            } else {
+                widgetInfo.minWidth.toDp()
+            }
+
+            val minHeight = if (widgetInfo.minResizeHeight in 1..widgetInfo.minHeight) {
+                widgetInfo.minResizeHeight.toDp()
+            } else {
+                    widgetInfo.minHeight.toDp()
+            }
+
+            DragResizeHandle(
+                alignment = Alignment.TopCenter,
+                height = resizeHeight,
+                width = resizeWidth,
+                minWidth = minWidth,
+                minHeight = minHeight,
+                maxWidth = maxWidth,
+                maxHeight = maxHeight,
+                snapToMeasuredWidth = true,
+                onResize = { w, h ->
+                    resizeWidth = w
+                    resizeHeight = h
+                },
+                onResizeStopped = {
+                    onWidgetUpdated(
+                        widget.copy(
+                            config = widget.config.copy(
+                                height = resizeHeight.value.roundToInt(),
+                                width = resizeWidth.takeIf { it != Dp.Unspecified }?.value?.roundToInt()
                             )
                         )
-                        textFieldValue = intValue.toString()
-                    }
-                },
-                label = { Text(stringResource(R.string.widget_config_appwidget_height)) },
-                suffix = { Text("dp") },
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Number,
-                    imeAction = ImeAction.Done
-                ),
+                    )
+                }
             )
         }
     }
@@ -458,7 +429,7 @@ fun ColumnScope.ConfigureAppWidget(
                         onWidgetUpdated(widget.copy(config = widget.config.copy(borderless = it)))
                     }
                 )
-                Divider()
+                HorizontalDivider()
                 SwitchPreference(
                     title = stringResource(R.string.widget_config_appwidget_background),
                     iconPadding = false,
@@ -467,6 +438,17 @@ fun ColumnScope.ConfigureAppWidget(
                         onWidgetUpdated(widget.copy(config = widget.config.copy(background = it)))
                     }
                 )
+                if (isAtLeastApiLevel(31)) {
+                    HorizontalDivider()
+                    SwitchPreference(
+                        title = stringResource(R.string.widget_use_theme_colors),
+                        iconPadding = false,
+                        value = widget.config.themeColors,
+                        onValueChanged = {
+                            onWidgetUpdated(widget.copy(config = widget.config.copy(themeColors = it)))
+                        }
+                    )
+                }
             }
         }
         if (isAtLeastApiLevel(28) && widgetInfo.widgetFeatures and AppWidgetProviderInfo.WIDGET_FEATURE_RECONFIGURABLE != 0) {

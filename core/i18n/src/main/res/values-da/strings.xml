@@ -687,7 +687,7 @@
     <string name="menu_website">Åbn hjemmeside</string>
     <string name="missing_permission_location_search">Giv tilladelse til placering for at søge i nærheden.</string>
     <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
-    <string name="preference_clock_widget_use_theme_color">Brug temafarve</string>
+    <string name="widget_use_theme_colors">Brug temafarve</string>
     <string name="preference_search_locations">Steder</string>
     <string name="preference_search_locations_radius">Søgeradius</string>
     <string name="preference_search_locations_summary">Søg i det lokale område efter butikker og andre steder</string>

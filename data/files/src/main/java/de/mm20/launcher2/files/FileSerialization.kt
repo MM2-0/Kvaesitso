@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.MediaStore
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.files.providers.DeferredFile
 import de.mm20.launcher2.files.providers.GDriveFile
 import de.mm20.launcher2.files.providers.LocalFile
 import de.mm20.launcher2.files.providers.NextcloudFile
@@ -22,6 +23,7 @@ import de.mm20.launcher2.search.FileMetaType
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.firstOrNull
@@ -331,7 +333,7 @@ internal class PluginFileSerializer(
                 "thumbnailUri" to searchable.thumbnailUri?.toString(),
                 "isDirectory" to searchable.isDirectory,
                 "authority" to searchable.authority,
-                "strategy" to "copy",
+                "strategy" to if (searchable.storageStrategy == StorageStrategy.StoreCopy) "copy" else "deferred",
             ).toString()
         }
     }
@@ -344,14 +346,22 @@ internal class PluginFileSerializer(
 internal class PluginFileDeserializer(
     private val context: Context,
     private val pluginRepository: PluginRepository,
-): SearchableDeserializer {
+) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
         val jsonObject = JSONObject(serialized)
 
-        return if (jsonObject.optString("strategy", "ref") == "ref") {
-            getByRef(jsonObject)
-        } else {
-            getByCopy(jsonObject)
+        return when (jsonObject.optString("strategy", "copy")) {
+            "ref" -> {
+                getByRef(jsonObject)
+            }
+
+            "deferred" -> {
+                getDeferred(jsonObject)
+            }
+
+            else -> {
+                getByCopy(jsonObject)
+            }
         }
     }
 
@@ -368,6 +378,33 @@ internal class PluginFileDeserializer(
             return null
         }
     }
+
+    private fun getDeferred(obj: JSONObject): File? {
+        val cached = getByCopy(obj) ?: return null
+        val timestamp = obj.optLong("timestamp", 0L)
+        return DeferredFile(
+            cachedFile = cached as PluginFile,
+            timestamp = timestamp,
+            updatedSelf = {
+                val plugin = pluginRepository.get(cached.authority).firstOrNull()
+                    ?: return@DeferredFile UpdateResult.PermanentlyUnavailable()
+                if (!plugin.enabled) return@DeferredFile UpdateResult.PermanentlyUnavailable()
+                val provider = PluginFileProvider(context, cached.authority)
+                try {
+                    val file = provider.getFile(cached.id)
+                    if (file == null) {
+                        UpdateResult.PermanentlyUnavailable()
+                    } else {
+                        UpdateResult.Success(file)
+                    }
+                } catch (e: Exception) {
+                    CrashReporter.logException(e)
+                    UpdateResult.TemporarilyUnavailable(e)
+                }
+            }
+        )
+    }
+
     private fun getByCopy(obj: JSONObject): File? {
         try {
             val uri = obj.getString("uri")

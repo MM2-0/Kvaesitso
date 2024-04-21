@@ -1,8 +1,8 @@
 package de.mm20.launcher2.ui.launcher.widgets.external
 
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetProviderInfo
 import android.os.Build
+import android.os.Bundle
 import android.util.SparseIntArray
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +10,7 @@ import android.widget.ListView
 import android.widget.ScrollView
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.BoxWithConstraints
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -29,10 +29,9 @@ import palettes.TonalPalette
 import kotlin.math.roundToInt
 
 @Composable
-fun ExternalWidget(
+fun AppWidgetHost(
     widgetInfo: AppWidgetProviderInfo,
     widgetId: Int,
-    height: Int,
     modifier: Modifier = Modifier,
     borderless: Boolean = false,
     useThemeColors: Boolean = false,
@@ -43,18 +42,24 @@ fun ExternalWidget(
     val colorScheme = MaterialTheme.colorScheme
     val appWidgetHost = LocalAppWidgetHost.current
 
-    BoxWithConstraints {
+    BoxWithConstraints(
+        modifier = modifier,
+    ) {
         val maxWidth = maxWidth
+        val maxHeight = maxHeight
         key(widgetId) {
             AndroidView(
                 modifier = modifier
-                    .height(height.dp),
+                    .fillMaxSize(),
                 factory = {
                     val view = appWidgetHost.createView(it.applicationContext, widgetId, widgetInfo)
                     enableNestedScroll(view)
                     return@AndroidView view
                 },
                 update = {
+                    if (isAtLeastApiLevel(29)) {
+                        it.setOnLightBackground(onLightBackground)
+                    }
                     if (isAtLeastApiLevel(31)) {
                         if (useThemeColors) {
                             val colorMapping = getColorMapping(colorScheme)
@@ -64,18 +69,16 @@ fun ExternalWidget(
                         }
                     }
 
-                    if (isAtLeastApiLevel(29)) {
-                        it.setOnLightBackground(onLightBackground)
-                    }
-
                     it.updateAppWidgetSize(
                         null,
                         maxWidth.value.roundToInt(),
-                        height,
+                        maxHeight.value.roundToInt(),
                         maxWidth.value.roundToInt(),
-                        height,
+                        maxHeight.value.roundToInt(),
                     )
                     it.setPadding(padding)
+                    // Workaround to force update of the widget view
+                    it.updateAppWidgetOptions(Bundle())
                 }
             )
         }
