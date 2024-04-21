@@ -37,7 +37,7 @@ class SettingsRepositoryImpl(
     private suspend fun filteredSettingsList(query: String): ImmutableList<PojoSettings> {
         return withContext(Dispatchers.IO) {
             getKnownSettingsList(context).filter {
-                context.getString(R.string.settings_placeholder, "").contains(query, ignoreCase = true) ||
+                context.getString(R.string.preference_search_settings).contains(query, ignoreCase = true) ||
                 it.label.contains(query, ignoreCase = true)
             }.toImmutableList()
         }
