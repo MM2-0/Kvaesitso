@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
@@ -55,7 +54,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
@@ -602,16 +600,9 @@ fun PagerScaffold(
         LauncherSearchBar(
             modifier = Modifier
                 .fillMaxSize(),
+            style = searchBarStyle,
             level = { searchBarLevel },
-            searchBarOffset = {
-                (if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) +
-                        with(density) {
-                            (widgetEditModeOffset - if (bottomSearchBar) keyboardFilterBarPadding else 0.dp)
-                                .toPx()
-                                .roundToInt()
-                        }
-            },
-            bottomSearchBar = bottomSearchBar,
+            value = { value },
             focused = focusSearchBar,
             onFocusChange = {
                 if (it) viewModel.openSearch()
@@ -620,10 +611,16 @@ fun PagerScaffold(
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
             isSearchOpen = isSearchOpen,
-            value = { value },
-            onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
-            style = searchBarStyle,
+            bottomSearchBar = bottomSearchBar,
+            searchBarOffset = {
+                (if (focusSearchBar || fixedSearchBar) 0 else searchBarOffset.value.toInt() * if (bottomSearchBar) 1 else -1) +
+                        with(density) {
+                            (widgetEditModeOffset - if (bottomSearchBar) keyboardFilterBarPadding else 0.dp)
+                                .toPx()
+                                .roundToInt()
+                        }
+            },
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null

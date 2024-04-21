@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -13,7 +12,6 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.*
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
@@ -184,12 +182,9 @@ fun AssistantScaffold(
         LauncherSearchBar(
             modifier = Modifier
                 .fillMaxSize(),
-            searchBarOffset = {
-                (if (searchBarFocused || fixedSearchBar) 0
-                else searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1)
-                - (if (bottomSearchBar) with(density) { keyboardFilterBarPadding.toPx() }.toInt() else 0)
-            },
+            style = searchBarStyle,
             level = { searchBarLevel },
+            value = { value },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
@@ -198,11 +193,13 @@ fun AssistantScaffold(
             actions = actions,
             highlightedAction = searchVM.bestMatch.value as? SearchAction,
             isSearchOpen = true,
-            value = { value },
-            onValueChange = { searchVM.search(it) },
             darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
-            style = searchBarStyle,
             bottomSearchBar = bottomSearchBar,
+            searchBarOffset = {
+                (if (searchBarFocused || fixedSearchBar) 0
+                else searchBarOffset.toInt() * if (bottomSearchBar) -1 else 1)
+                - (if (bottomSearchBar) with(density) { keyboardFilterBarPadding.toPx() }.toInt() else 0)
+            },
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null

@@ -58,9 +58,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -580,12 +578,19 @@ fun PullDownScaffold(
         LauncherSearchBar(
             modifier = Modifier
                 .fillMaxSize(),
+            style = searchBarStyle,
             level = { searchBarLevel },
+            value = { value },
             focused = searchBarFocused,
             onFocusChange = {
                 if (it) viewModel.openSearch()
                 viewModel.setSearchbarFocus(it)
             },
+            actions = actions,
+            highlightedAction = searchVM.bestMatch.value as? SearchAction,
+            isSearchOpen = isSearchOpen,
+            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
+            bottomSearchBar = bottomSearchBar,
             searchBarOffset = {
                 (if (searchBarFocused || fixedSearchBar) 0 else searchBarOffset.value.toInt() * (if (bottomSearchBar) 1 else -1)) +
                         with(density) {
@@ -594,14 +599,6 @@ fun PullDownScaffold(
                                 .roundToInt()
                         }
             },
-            actions = actions,
-            highlightedAction = searchVM.bestMatch.value as? SearchAction,
-            isSearchOpen = isSearchOpen,
-            value = { value },
-            onValueChange = { searchVM.search(it) },
-            darkColors = LocalPreferDarkContentOverWallpaper.current && searchBarColor == SearchBarColors.Auto || searchBarColor == SearchBarColors.Dark,
-            style = searchBarStyle,
-            bottomSearchBar = bottomSearchBar,
             onKeyboardActionGo = if (launchOnEnter) {
                 { searchVM.launchBestMatchOrAction(context) }
             } else null
