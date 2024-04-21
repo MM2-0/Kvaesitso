@@ -1,6 +1,8 @@
-package de.mm20.launcher2.openstreetmaps
+package de.mm20.launcher2.locations
 
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
+import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocationProvider
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
@@ -50,7 +52,7 @@ class OsmLocationSerializer : SearchableSerializer {
 }
 
 internal class OsmLocationDeserializer(
-    private val osmRepository: OsmRepository,
+    private val osmRepository: OsmLocationProvider,
 ) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable {
         val json = JSONObject(serialized)

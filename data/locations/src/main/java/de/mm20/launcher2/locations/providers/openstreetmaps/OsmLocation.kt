@@ -1,4 +1,4 @@
-package de.mm20.launcher2.openstreetmaps
+package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import android.content.Context
 import android.content.Intent
@@ -7,6 +7,8 @@ import android.net.Uri
 import android.util.Log
 import de.mm20.launcher2.ktx.orRunCatching
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.locations.OsmLocationSerializer
+import de.mm20.launcher2.search.Departure
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
@@ -44,6 +46,9 @@ internal data class OsmLocation(
     override val key: String = "$domain://$id"
     override val fixMeUrl: String
         get() = FIXMEURL
+
+    override val departures: List<Departure>? = null
+    override val userRating: Float? = null
 
     override fun overrideLabel(label: String): OsmLocation {
         return this.copy(labelOverride = label)

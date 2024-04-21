@@ -20,7 +20,6 @@ import de.mm20.launcher2.preferences.search.WebsiteSearchSettings
 import de.mm20.launcher2.preferences.search.WikipediaSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -106,11 +105,11 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         websiteSearchSettings.setEnabled(websites)
     }
 
-    val locations = locationSearchSettings.enabled
+    val locations = locationSearchSettings.osmLocations
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun setLocations(locations: Boolean) {
-        locationSearchSettings.setEnabled(locations)
+        locationSearchSettings.setOsmLocations(locations)
     }
 
     val autoFocus = searchUiSettings.openKeyboard

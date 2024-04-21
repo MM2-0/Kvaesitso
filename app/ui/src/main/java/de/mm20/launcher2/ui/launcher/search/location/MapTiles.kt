@@ -57,6 +57,8 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.Departure
+import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
@@ -74,6 +76,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import java.time.LocalTime
 import kotlin.math.asinh
 import kotlin.math.ceil
 import kotlin.math.floor
@@ -567,6 +570,10 @@ internal object MockLocation : Location {
     override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 
     override val phoneNumber: String = "+49 1234567"
+    override val userRating: Float? = 1.0f
+    override val departures: List<Departure>? = listOf(
+        Departure(LocalTime.NOON, "B1", "Hell", LineType.BUS)
+    )
 
     override fun overrideLabel(label: String): SavableSearchable = TODO()
 

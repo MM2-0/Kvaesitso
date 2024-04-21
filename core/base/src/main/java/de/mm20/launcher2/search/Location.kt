@@ -27,6 +27,10 @@ interface Location : SavableSearchable {
     val websiteUrl: String?
     val phoneNumber: String?
 
+    val userRating: Float?
+
+    val departures: List<Departure>?
+
     override val preferDetailsOverLaunch: Boolean
         get() = true
 

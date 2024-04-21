@@ -1,4 +1,4 @@
-package de.mm20.launcher2.openstreetmaps
+package de.mm20.launcher2.locations.providers.openstreetmaps
 
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody

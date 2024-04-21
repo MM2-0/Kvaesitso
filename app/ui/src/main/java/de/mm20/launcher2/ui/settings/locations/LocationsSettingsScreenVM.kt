@@ -4,19 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class LocationsSettingsScreenVM: ViewModel(), KoinComponent {
     private val settings: LocationSearchSettings by inject()
 
-    val locations = settings.enabled
+    val locations = settings.osmLocations
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
     fun setLocations(openStreetMaps: Boolean) {
-        settings.setEnabled(openStreetMaps)
+        settings.setOsmLocations(openStreetMaps)
     }
 
     val imperialUnits = settings.imperialUnits

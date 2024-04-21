@@ -1,12 +1,12 @@
 package de.mm20.launcher2.preferences.search
 
 import de.mm20.launcher2.preferences.LauncherDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class LocationSearchSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
-
     val data
         get() = launcherDataStore.data.map {
             LocationSearchSettingsData(
@@ -22,12 +22,32 @@ class LocationSearchSettings internal constructor(
             )
         }
 
-    val enabled
-        get() = launcherDataStore.data.map { it.locationSearchEnabled }
+    val enabledProviders: Flow<Set<String>>
+        get() = launcherDataStore.data.map { it.locationSearchProviders }
 
-    fun setEnabled(enabled: Boolean) {
+    val osmLocations
+        get() = launcherDataStore.data.map { it.locationSearchProviders.contains("openstreetmaps") }
+
+    fun setOsmLocations(osmLocations: Boolean) {
         launcherDataStore.update {
-            it.copy(locationSearchEnabled = enabled)
+            if (osmLocations) {
+                it.copy(locationSearchProviders = it.locationSearchProviders + "openstreetmaps")
+            } else {
+                it.copy(locationSearchProviders = it.locationSearchProviders - "openstreetmaps")
+            }
+        }
+    }
+
+    val enabledPlugins: Flow<Set<String>>
+        get() = launcherDataStore.data.map { it.locationSearchProviders - "openstreetmaps" }
+
+    fun setPluginEnabled(authority: String, enabled: Boolean) {
+        launcherDataStore.update {
+            if (enabled) {
+                it.copy(locationSearchProviders = it.locationSearchProviders + authority)
+            } else {
+                it.copy(locationSearchProviders = it.locationSearchProviders - authority)
+            }
         }
     }
 

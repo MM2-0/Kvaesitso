@@ -11,7 +11,6 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
-import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
@@ -42,7 +41,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -325,7 +323,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val missingLocationPermission = combine(
         permissionsManager.hasPermission(PermissionGroup.Location),
-        locationSearchSettings.enabled.distinctUntilChanged()
+        locationSearchSettings.osmLocations.distinctUntilChanged()
     ) { perm, enabled -> !perm && enabled }
 
     fun requestLocationPermission(context: AppCompatActivity) {
@@ -333,7 +331,7 @@ class SearchVM : ViewModel(), KoinComponent {
     }
 
     fun disableLocationSearch() {
-        locationSearchSettings.setEnabled(false)
+        locationSearchSettings.setOsmLocations(false)
     }
 
     val missingFilesPermission = combine(
