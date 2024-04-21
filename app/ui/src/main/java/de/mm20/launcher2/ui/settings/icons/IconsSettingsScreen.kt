@@ -6,8 +6,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,62 +13,55 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FormatPaint
-import androidx.compose.material3.FilledIconToggleButton
+import androidx.compose.material.icons.rounded.Palette
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.PlainTooltip
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TooltipBox
-import androidx.compose.material3.TooltipDefaults
-import androidx.compose.material3.rememberTooltipState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.icons.IconPack
+import de.mm20.launcher2.icons.LauncherIcon
 import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.preferences.ui.GridSettings
-import de.mm20.launcher2.preferences.ui.IconSettings
-import de.mm20.launcher2.preferences.ui.IconSettingsData
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.getShape
-import de.mm20.launcher2.ui.component.preferences.ListPreference
 import de.mm20.launcher2.ui.component.preferences.Preference
 import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
 import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
 import de.mm20.launcher2.ui.component.preferences.SliderPreference
 import de.mm20.launcher2.ui.component.preferences.SwitchPreference
-import de.mm20.launcher2.ui.component.preferences.label
-import de.mm20.launcher2.ui.component.preferences.value
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
 @Composable
 fun IconsSettingsScreen() {
@@ -84,7 +75,11 @@ fun IconsSettingsScreen() {
 
     val installedIconPacks by viewModel.installedIconPacks.collectAsState(emptyList())
 
-    val hasNotificationsPermission by viewModel.hasNotificationsPermission.collectAsStateWithLifecycle(null)
+    var showIconPackSheet by remember { mutableStateOf(false) }
+
+    val hasNotificationsPermission by viewModel.hasNotificationsPermission.collectAsStateWithLifecycle(
+        null
+    )
 
     val notificationBadges by viewModel.notificationBadges.collectAsStateWithLifecycle(null)
     val cloudFileBadges by viewModel.cloudFileBadges.collectAsStateWithLifecycle(null)
@@ -96,12 +91,14 @@ fun IconsSettingsScreen() {
     val showVersionName by viewModel.showVersionName.collectAsState(initial = true)
     val showVersionCode by viewModel.showVersionCode.collectAsState(initial = false)
 
-    val previewIcons by remember(grid?.iconSize) {
-        viewModel.getPreviewIcons(with(density) { grid.iconSize.dp.toPx() }.toInt())
+    val iconSize = with(density) { grid.iconSize.dp.toPx() }.toInt()
+
+    val previewIcons = remember(iconSize) {
+        viewModel.getPreviewIcons(iconSize)
     }.collectAsState(
         emptyList()
     )
-    
+
     PreferenceScreen(title = stringResource(id = R.string.preference_screen_icons)) {
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_grid)) {
@@ -136,7 +133,7 @@ fun IconsSettingsScreen() {
         }
         item {
             PreferenceCategory(stringResource(R.string.preference_category_icons)) {
-                if (previewIcons.isNotEmpty()) {
+                if (previewIcons.value.isNotEmpty()) {
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -148,7 +145,7 @@ fun IconsSettingsScreen() {
                         Row(
                             modifier = Modifier.padding(vertical = 24.dp, horizontal = 8.dp)
                         ) {
-                            for (icon in previewIcons) {
+                            for (icon in previewIcons.value) {
                                 Box(
                                     modifier = Modifier.weight(1f),
                                     contentAlignment = Alignment.Center
@@ -198,108 +195,18 @@ fun IconsSettingsScreen() {
                 val items = installedIconPacks.map {
                     it.name to it
                 }
-                Row(
-                    verticalAlignment = (Alignment.CenterVertically)
-                ) {
-                    Box(
-                        modifier = Modifier.weight(1f)
-                    ) {
-                        ListPreference(
-                            title = stringResource(R.string.preference_icon_pack),
-                            items = items,
-                            summary = if (items.size <= 1) {
-                                stringResource(R.string.preference_icon_pack_summary_empty)
-                            } else {
-                                iconPack?.name ?: "System"
-                            },
-                            enabled = installedIconPacks.size > 1,
-                            value = iconPack,
-                            onValueChanged = {
-                                if (it != null) viewModel.setIconPack(it.packageName)
-                            },
-                            itemLabel = {
-                                Column(
-                                    verticalArrangement = Arrangement.Center,
-                                ) {
-                                    Text(
-                                        text = it.label,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                    )
-                                    if (it.value?.themed == true) {
-                                        Surface(
-                                            shape = MaterialTheme.shapes.extraSmall,
-                                            color = MaterialTheme.colorScheme.tertiary,
-                                            modifier = Modifier.padding(top = 4.dp)
-                                        ) {
-                                            Row(
-                                                modifier = Modifier.padding(horizontal = 4.dp),
-                                                verticalAlignment = Alignment.CenterVertically,
-                                            ) {
-                                                Icon(
-                                                    modifier = Modifier
-                                                        .size(20.dp)
-                                                        .padding(end = 4.dp),
-                                                    imageVector = Icons.Rounded.FormatPaint,
-                                                    contentDescription = null,
-                                                )
-                                                Text(
-                                                    text = stringResource(R.string.icon_pack_dynamic_colors),
-                                                    style = MaterialTheme.typography.labelSmall
-                                                )
-                                            }
-                                        }
-                                    }
-
-                                }
-                            }
-                        )
-                    }
-                    if (iconPack?.themed == true) {
-                        Box(
-                            modifier = Modifier
-                                .height(36.dp)
-                                .width(1.dp)
-                                .alpha(0.38f)
-                                .background(LocalContentColor.current)
-                        )
-                        Box(
-                            modifier = Modifier
-                                .padding(12.dp)
-                        ) {
-                            val tooltipState = rememberTooltipState()
-                            val scope = rememberCoroutineScope()
-                            TooltipBox(
-                                state = tooltipState,
-                                positionProvider = TooltipDefaults.rememberPlainTooltipPositionProvider(),
-                                tooltip = {
-                                    PlainTooltip {
-                                        Text(stringResource(R.string.icon_pack_dynamic_colors))
-                                    }
-                                },
-                            ) {
-                                FilledIconToggleButton(
-                                    modifier = Modifier.combinedClickable(
-                                        onClick = {},
-                                        onLongClick = {
-                                            scope.launch {
-                                                tooltipState.show()
-                                            }
-                                        }
-                                    ),
-                                    checked = icons?.iconPackThemed == true,
-                                    onCheckedChange = {
-                                        viewModel.setIconPackThemed(it)
-                                    }) {
-                                    Icon(
-                                        Icons.Rounded.FormatPaint,
-                                        stringResource(R.string.icon_pack_dynamic_colors)
-                                    )
-                                }
-                            }
-                        }
-                    }
-                }
+                Preference(
+                    title = stringResource(R.string.preference_icon_pack),
+                    summary = if (items.size <= 1) {
+                        stringResource(R.string.preference_icon_pack_summary_empty)
+                    } else {
+                        iconPack?.name ?: "System"
+                    },
+                    enabled = installedIconPacks.size > 1,
+                    onClick = {
+                        showIconPackSheet = true
+                    },
+                )
             }
         }
         item {
@@ -380,10 +287,126 @@ fun IconsSettingsScreen() {
             }
         }
     }
+
+    if (showIconPackSheet) {
+        val iconPackPreviewIcons = remember(installedIconPacks, iconSize) {
+
+            installedIconPacks.associate {
+                it.packageName to viewModel.getIconPackPreviewIcons(
+                    context,
+                    it,
+                    grid.columnCount,
+                    iconSize,
+                    icons?.themedIcons == true
+                )
+            }
+        }
+
+        IconPackSelectorSheet(
+            installedIconPacks,
+            iconPackPreviewIcons = iconPackPreviewIcons,
+            columns = grid.columnCount,
+            onSelect = {
+                viewModel.setIconPack(it.packageName)
+                showIconPackSheet = false
+            },
+            onDismiss = { showIconPackSheet = false },
+        )
+    }
 }
 
+@Composable
+private fun IconPackSelectorSheet(
+    installedIconPacks: List<IconPack>,
+    iconPackPreviewIcons: Map<String, Flow<List<LauncherIcon>>>,
+    columns: Int,
+    onSelect: (IconPack) -> Unit,
+    onDismiss: () -> Unit,
+) {
+    BottomSheetDialog(onDismissRequest = onDismiss) {
+        LazyColumn(
+            contentPadding = it,
+        ) {
+            items(installedIconPacks.size) {
+
+                val pack = installedIconPacks[it]
 
 
+                if (it > 0) {
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 8.dp)
+                    )
+                }
+                Column {
+
+
+                    Column(
+                        modifier = Modifier
+                            .clip(MaterialTheme.shapes.medium)
+                            .clickable {
+                                onSelect(pack)
+                            }
+                    ) {
+                        val icons by iconPackPreviewIcons[pack.packageName]!!.collectAsState(null)
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        ) {
+                            Text(
+                                text = pack.name,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                            )
+                            if (pack.themed) {
+                                Icon(
+                                    modifier = Modifier
+                                        .size(20.dp),
+                                    imageVector = Icons.Rounded.Palette,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
+
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, bottom = 16.dp)
+                                .height(48.dp)
+                        ) {
+                            if (icons == null) {
+                                for (i in 0 until columns) {
+                                    Box(
+                                        modifier = Modifier.weight(1f),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        ShapedLauncherIcon(size = 48.dp, icon = { null })
+                                    }
+                                }
+                            } else {
+                                for (icon in icons!!) {
+                                    Box(
+                                        modifier = Modifier.weight(1f),
+                                        contentAlignment = Alignment.Center,
+                                    ) {
+                                        ShapedLauncherIcon(size = 48.dp, icon = { icon })
+                                    }
+                                }
+                                for (i in 0..<(columns - icons!!.size)) {
+                                    Box(
+                                        modifier = Modifier.weight(1f),
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 @Composable

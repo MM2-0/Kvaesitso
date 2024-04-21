@@ -16,7 +16,6 @@ class FavoritesService(
         limit: Int = 100,
     ): Flow<List<SavableSearchable>> {
         return searchableRepository.get(
-            hidden = false,
             includeTypes = includeTypes,
             excludeTypes = excludeTypes,
             manuallySorted = manuallySorted,
@@ -38,7 +37,6 @@ class FavoritesService(
         searchableRepository.upsert(
             searchable,
             pinned = true,
-            hidden = false,
         )
     }
 
@@ -63,7 +61,6 @@ class FavoritesService(
         searchableRepository.upsert(
             searchable,
             hidden = true,
-            pinned = false,
         )
     }
 

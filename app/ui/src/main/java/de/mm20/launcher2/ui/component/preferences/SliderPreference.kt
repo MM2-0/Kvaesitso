@@ -38,7 +38,7 @@ fun SliderPreference(
     ) {
         Box(
             modifier = Modifier
-                .width(48.dp)
+                .width(54.dp)
                 .padding(start = 4.dp),
             contentAlignment = Alignment.CenterStart
         ) {
@@ -54,7 +54,7 @@ fun SliderPreference(
             modifier = Modifier.weight(1f)
         ) {
             Text(
-                modifier = Modifier.padding(start = 8.dp),
+                modifier = Modifier.padding(start = 2.dp),
                 text = title,
                 style = MaterialTheme.typography.titleMedium
             )

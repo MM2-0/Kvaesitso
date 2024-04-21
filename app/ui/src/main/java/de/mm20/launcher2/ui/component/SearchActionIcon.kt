@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.StickyNote2
 import androidx.compose.material.icons.rounded.Alarm
 import androidx.compose.material.icons.rounded.Call
 import androidx.compose.material.icons.rounded.Email
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.rounded.PersonSearch
 import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material.icons.rounded.QueryStats
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material.icons.rounded.Sms
 import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material.icons.rounded.StickyNote2
@@ -151,6 +153,7 @@ fun getSearchActionIconVector(icon: SearchActionIcon): ImageVector {
         SearchActionIcon.Movie -> Icons.Rounded.Movie
         SearchActionIcon.Music -> Icons.Rounded.MusicNote
         SearchActionIcon.Game -> Icons.Rounded.SportsEsports
-        SearchActionIcon.Note -> Icons.Rounded.StickyNote2
+        SearchActionIcon.Note -> Icons.AutoMirrored.Rounded.StickyNote2
+        SearchActionIcon.Share -> Icons.Rounded.Share
     }
 }

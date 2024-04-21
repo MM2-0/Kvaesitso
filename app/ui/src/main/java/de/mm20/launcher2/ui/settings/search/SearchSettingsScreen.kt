@@ -195,7 +195,7 @@ fun SearchSettingsScreen() {
                 SwitchPreference(
                     title = stringResource(R.string.preference_search_websites),
                     summary = stringResource(R.string.preference_search_websites_summary),
-                    icon = Icons.Rounded.Language,
+                    icon = Icons.Rounded.Public,
                     value = websites == true,
                     onValueChanged = {
                         viewModel.setWebsites(it)

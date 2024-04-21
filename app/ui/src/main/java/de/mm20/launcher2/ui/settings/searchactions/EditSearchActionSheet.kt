@@ -51,6 +51,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -572,7 +573,7 @@ fun CustomizeAppSearch(viewModel: EditSearchActionSheetVM, paddingValues: Paddin
             Box(modifier = Modifier
                 .fillMaxWidth()
                 .clickable { showAppDropdown = !showAppDropdown }) {
-                TextFieldDefaults.OutlinedTextFieldDecorationBox(
+                OutlinedTextFieldDefaults.DecorationBox(
                     value = selectedApp?.label ?: "",
                     enabled = true,
                     label = { Text(stringResource(R.string.search_action_app)) },

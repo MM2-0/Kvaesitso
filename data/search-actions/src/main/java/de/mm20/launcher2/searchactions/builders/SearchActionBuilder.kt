@@ -69,6 +69,7 @@ interface SearchActionBuilder {
                 "calendar" -> return ScheduleEventActionBuilder(context)
                 "website" -> return OpenUrlActionBuilder(context)
                 "websearch" -> return WebsearchActionBuilder(context)
+                "share" -> return ShareActionBuilder(context)
                 else -> return null
             }
         }
