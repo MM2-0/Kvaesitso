@@ -1,6 +1,21 @@
 package de.mm20.launcher2.ui.launcher.search
 
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
@@ -34,6 +50,7 @@ import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
+import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItem
@@ -100,258 +117,294 @@ fun SearchColumn(
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
-    LazyColumn(
-        state = state,
-        modifier = modifier,
-        userScrollEnabled = userScrollEnabled,
-        contentPadding = paddingValues,
-        reverseLayout = reverse,
-    ) {
-        if (!hideFavs && favoritesEnabled) {
-            GridResults(
-                items = favorites.toImmutableList(),
-                columns = columns,
-                key = "favorites",
-                reverse = reverse,
-                before = if (favorites.isEmpty()) {
-                    {
-                        Banner(
-                            modifier = Modifier.padding(16.dp),
-                            text = stringResource(
-                                if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
-                            ),
-                            icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
+    val showFilters by viewModel.showFilters
+
+    AnimatedContent(showFilters) {
+        if (it) {
+            BackHandler {
+                viewModel.showFilters.value = false
+            }
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
+                contentAlignment = if (reverse) Alignment.BottomCenter else Alignment.TopCenter,
+            ) {
+                LauncherCard(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp, vertical = 4.dp)
+                ) {
+                    SearchFilters(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        filters = viewModel.filters.value,
+                        onFiltersChange = {
+                            viewModel.setFilters(it)
+                        }
+                    )
+                }
+            }
+        } else {
+            LazyColumn(
+                state = state,
+                modifier = modifier,
+                userScrollEnabled = userScrollEnabled,
+                contentPadding = paddingValues,
+                reverseLayout = reverse,
+            ) {
+                if (!hideFavs && favoritesEnabled) {
+                    GridResults(
+                        items = favorites.toImmutableList(),
+                        columns = columns,
+                        key = "favorites",
+                        reverse = reverse,
+                        before = if (favorites.isEmpty()) {
+                            {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = stringResource(
+                                        if (selectedTag == null) R.string.favorites_empty else R.string.favorites_empty_tag
+                                    ),
+                                    icon = if (selectedTag == null) Icons.Rounded.Star else Icons.Rounded.Tag,
+                                )
+                            }
+                        } else null,
+                        after = if (pinnedTags.isEmpty() && !favoritesEditButton) {
+                            null
+                        } else {
+                            {
+                                FavoritesTagSelector(
+                                    tags = pinnedTags,
+                                    selectedTag = selectedTag,
+                                    editButton = favoritesEditButton,
+                                    reverse = reverse,
+                                    onSelectTag = { favoritesVM.selectTag(it) },
+                                    scrollState = tagsScrollState,
+                                    expanded = favoritesTagsExpanded,
+                                    onExpand = { favoritesVM.setTagsExpanded(it) }
+                                )
+                            }
+                        },
+                        highlightedItem = bestMatch as? SavableSearchable
+                    )
+                }
+
+                GridResults(
+                    items = if (separateWorkProfile) if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList() else listOf(
+                        apps,
+                        workApps
+                    ).flatten().sorted().toImmutableList(),
+                    columns = columns,
+                    reverse = reverse,
+                    key = "apps",
+                    before = if (separateWorkProfile && workApps.isNotEmpty() && apps.isNotEmpty()) {
+                        {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 8.dp)
+                                    .padding(
+                                        top = if (reverse) 4.dp else 8.dp,
+                                        bottom = if (reverse) 8.dp else 4.dp
+                                    ),
+                            ) {
+                                FilterChip(
+                                    modifier = Modifier.padding(horizontal = 8.dp),
+                                    selected = !showWorkProfileApps,
+                                    onClick = { showWorkProfileApps = false },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Person,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            stringResource(R.string.apps_profile_main),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
+                                )
+                                FilterChip(
+                                    selected = showWorkProfileApps,
+                                    onClick = { showWorkProfileApps = true },
+                                    leadingIcon = {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Work,
+                                            contentDescription = null,
+                                            modifier = Modifier.size(FilterChipDefaults.IconSize)
+                                        )
+                                    },
+                                    label = {
+                                        Text(
+                                            stringResource(R.string.apps_profile_work),
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis
+                                        )
+                                    }
+                                )
+                            }
+                        }
+                    } else null,
+                    highlightedItem = bestMatch as? SavableSearchable
+                )
+                ListResults(
+                    items = settings.toImmutableList(),
+                    reverse = reverse,
+                    key = "settings",
+                    highlightedItem = bestMatch as? SavableSearchable
+                 )
+                ListResults(
+                    before = if (missingShortcutsPermission && !isSearchEmpty) {
+                        {
+                            MissingPermissionBanner(
+                                modifier = Modifier.padding(8.dp),
+                                text = stringResource(
+                                    R.string.missing_permission_appshortcuts_search,
+                                    stringResource(R.string.app_name)
+                                ),
+                                onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
+                                secondaryAction = {
+                                    OutlinedButton(onClick = {
+                                        viewModel.disableAppShortcutSearch()
+                                    }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
+                            }
                         )
                     }
                 } else null,
-                after = if (pinnedTags.isEmpty() && !favoritesEditButton) {
-                    null
-                } else {
-                    {
-                        FavoritesTagSelector(
-                            tags = pinnedTags,
-                            selectedTag = selectedTag,
-                            editButton = favoritesEditButton,
-                            reverse = reverse,
-                            onSelectTag = { favoritesVM.selectTag(it) },
-                            scrollState = tagsScrollState,
-                            expanded = favoritesTagsExpanded,
-                            onExpand = { favoritesVM.setTagsExpanded(it) }
-                        )
-                    }
-                },
+                items = appShortcuts.toImmutableList(),
+                reverse = reverse,
+                key = "shortcuts",
                 highlightedItem = bestMatch as? SavableSearchable
             )
-        }
-
-        GridResults(
-            items = if (separateWorkProfile) if ((showWorkProfileApps || apps.isEmpty()) && workApps.isNotEmpty()) workApps.toImmutableList() else apps.toImmutableList() else listOf(apps, workApps).flatten().sorted().toImmutableList(),
-            columns = columns,
-            reverse = reverse,
-            key = "apps",
-            before = if (separateWorkProfile && workApps.isNotEmpty() && apps.isNotEmpty()) {
-                {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 8.dp)
-                            .padding(
-                                top = if (reverse) 4.dp else 8.dp,
-                                bottom = if (reverse) 8.dp else 4.dp
-                            ),
-                    ) {
-                        FilterChip(
-                            modifier = Modifier.padding(horizontal = 8.dp),
-                            selected = !showWorkProfileApps,
-                            onClick = { showWorkProfileApps = false },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Rounded.Person,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(R.string.apps_profile_main),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
-                            }
-                        )
-                        FilterChip(
-                            selected = showWorkProfileApps,
-                            onClick = { showWorkProfileApps = true },
-                            leadingIcon = {
-                                Icon(
-                                    imageVector = Icons.Rounded.Work,
-                                    contentDescription = null,
-                                    modifier = Modifier.size(FilterChipDefaults.IconSize)
-                                )
-                            },
-                            label = {
-                                Text(
-                                    stringResource(R.string.apps_profile_work),
-                                    maxLines = 1,
-                                    overflow = TextOverflow.Ellipsis
-                                )
+            for (conv in unitConverter) {
+                SingleResult {
+                    UnitConverterItem(unitConverter = conv)
+                }
+            }
+            for (calc in calculator) {
+                SingleResult {
+                    CalculatorItem(calculator = calc)
+                }
+            }
+            ListResults(
+                before = if (missingCalendarPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_calendar_search),
+                            onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableCalendarSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
                             }
                         )
                     }
-                }
-            } else null,
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        ListResults(
-            items = settings.toImmutableList(),
-            reverse = reverse,
-            key = "settings",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        ListResults(
-            before = if (missingShortcutsPermission && !isSearchEmpty) {
-                {
-                    MissingPermissionBanner(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(
-                            R.string.missing_permission_appshortcuts_search,
-                            stringResource(R.string.app_name)
-                        ),
-                        onClick = { viewModel.requestAppShortcutPermission(context as AppCompatActivity) },
-                        secondaryAction = {
-                            OutlinedButton(onClick = {
-                                viewModel.disableAppShortcutSearch()
-                            }) {
-                                Text(
-                                    stringResource(R.string.turn_off),
-                                )
+                } else null,
+                items = events.toImmutableList(),
+                reverse = reverse,
+                key = "events",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            ListResults(
+                before = if (missingContactsPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_contact_search),
+                            onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableContactsSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
                             }
-                        }
-                    )
+                        )
+                    }
+                } else null,
+                items = contacts.toImmutableList(),
+                reverse = reverse,
+                key = "contacts",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            ListResults(
+                before = if (missingLocationPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_location_search),
+                            onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableLocationSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
+                            }
+                        )
+                    }
+                } else null,
+                items = locations.toImmutableList(),
+                reverse = reverse,
+                key = "locations",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            for (wiki in wikipedia) {
+                SingleResult(highlight = bestMatch == wiki) {
+                    ArticleItem(article = wiki)
                 }
-            } else null,
-            items = appShortcuts.toImmutableList(),
-            reverse = reverse,
-            key = "shortcuts",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        for (conv in unitConverter) {
-            SingleResult {
-                UnitConverterItem(unitConverter = conv)
+            }
+            for (ws in website) {
+                SingleResult(highlight = bestMatch == ws) {
+                    WebsiteItem(website = ws)
+                }
+            }
+            ListResults(
+                before = if (missingFilesPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_files_search),
+                            onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableFilesSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
+                            }
+                        )
+                    }
+                } else null,
+                items = files.toImmutableList(),
+                reverse = reverse,
+                key = "files",
+                highlightedItem = bestMatch as? SavableSearchable
+                    )
             }
         }
-        for (calc in calculator) {
-            SingleResult {
-                CalculatorItem(calculator = calc)
-            }
-        }
-        ListResults(
-            before = if (missingCalendarPermission && !isSearchEmpty) {
-                {
-                    MissingPermissionBanner(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_calendar_search),
-                        onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
-                        secondaryAction = {
-                            OutlinedButton(onClick = {
-                                viewModel.disableCalendarSearch()
-                            }) {
-                                Text(
-                                    stringResource(R.string.turn_off),
-                                )
-                            }
-                        }
-                    )
-                }
-            } else null,
-            items = events.toImmutableList(),
-            reverse = reverse,
-            key = "events",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        ListResults(
-            before = if (missingContactsPermission && !isSearchEmpty) {
-                {
-                    MissingPermissionBanner(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_contact_search),
-                        onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
-                        secondaryAction = {
-                            OutlinedButton(onClick = {
-                                viewModel.disableContactsSearch()
-                            }) {
-                                Text(
-                                    stringResource(R.string.turn_off),
-                                )
-                            }
-                        }
-                    )
-                }
-            } else null,
-            items = contacts.toImmutableList(),
-            reverse = reverse,
-            key = "contacts",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        ListResults(
-            before = if (missingLocationPermission && !isSearchEmpty) {
-                {
-                    MissingPermissionBanner(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_location_search),
-                        onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
-                        secondaryAction = {
-                            OutlinedButton(onClick = {
-                                viewModel.disableLocationSearch()
-                            }) {
-                                Text(
-                                    stringResource(R.string.turn_off),
-                                )
-                            }
-                        }
-                    )
-                }
-            } else null,
-            items = locations.toImmutableList(),
-            reverse = reverse,
-            key = "locations",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
-        for (wiki in wikipedia) {
-            SingleResult(highlight = bestMatch == wiki) {
-                ArticleItem(article = wiki)
-            }
-        }
-        for (ws in website) {
-            SingleResult(highlight = bestMatch == ws) {
-                WebsiteItem(website = ws)
-            }
-        }
-        ListResults(
-            before = if (missingFilesPermission && !isSearchEmpty) {
-                {
-                    MissingPermissionBanner(
-                        modifier = Modifier.padding(8.dp),
-                        text = stringResource(R.string.missing_permission_files_search),
-                        onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
-                        secondaryAction = {
-                            OutlinedButton(onClick = {
-                                viewModel.disableFilesSearch()
-                            }) {
-                                Text(
-                                    stringResource(R.string.turn_off),
-                                )
-                            }
-                        }
-                    )
-                }
-            } else null,
-            items = files.toImmutableList(),
-            reverse = reverse,
-            key = "files",
-            highlightedItem = bestMatch as? SavableSearchable
-        )
     }
+
 
     val sheetManager = LocalBottomSheetManager.current
     if (sheetManager.hiddenItemsSheetShown.value) {

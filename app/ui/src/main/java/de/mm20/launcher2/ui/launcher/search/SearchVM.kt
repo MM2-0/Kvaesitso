@@ -26,6 +26,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchService
 import de.mm20.launcher2.search.Searchable
+import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.search.data.Calculator
 import de.mm20.launcher2.search.data.PojoSettings
@@ -90,6 +91,10 @@ class SearchVM : ViewModel(), KoinComponent {
     val favoritesEnabled = searchUiSettings.favorites
     val hideFavorites = mutableStateOf(false)
 
+    val showFilters = mutableStateOf(false)
+
+    val filters = mutableStateOf(SearchFilters())
+
     val separateWorkProfile = searchUiSettings.separateWorkProfile
 
     private val hiddenItemKeys = searchableRepository
@@ -117,16 +122,34 @@ class SearchVM : ViewModel(), KoinComponent {
         }
     }
 
+    fun setFilters(filters: SearchFilters) {
+        this.filters.value = filters
+        search(searchQuery.value, forceRestart = true)
+    }
+
+    fun closeFilters() {
+        showFilters.value = false
+    }
+
+    fun reset() {
+        closeFilters()
+        search("")
+    }
+
     private var searchJob: Job? = null
     fun search(query: String, forceRestart: Boolean = false) {
         if (searchQuery.value == query && !forceRestart) return
+        if (searchQuery.value != query) {
+            showFilters.value = false
+        }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
         hiddenResults.value = emptyList()
 
+        val filters = filters.value
+
         if (isSearchEmpty.value)
             bestMatch.value = null
-
         try {
             searchJob?.cancel()
         } catch (_: CancellationException) {
@@ -136,7 +159,7 @@ class SearchVM : ViewModel(), KoinComponent {
             searchUiSettings.resultOrder.collectLatest { resultOrder ->
                 searchService.search(
                     query,
-                    allowNetwork = true,
+                    filters = if (query.isEmpty()) filters.copy(apps = true) else filters,
                 ).collectLatest { results ->
                     var resultsList = withContext(Dispatchers.Default) {
                         listOfNotNull(
@@ -221,10 +244,9 @@ class SearchVM : ViewModel(), KoinComponent {
                         val settings = mutableListOf<PojoSettings>()
                         for (r in resultsList) {
                             when {
-                                r is SavableSearchable && hiddenKeys.contains(r.key) -> {
+                                r is SavableSearchable && hiddenKeys.contains(r.key) && !filters.hiddenItems -> {
                                     hidden.add(r)
                                 }
-
                                 r is Application && r.profile == AppProfile.Work -> workApps.add(r)
                                 r is Application -> apps.add(r)
                                 r is AppShortcut -> shortcuts.add(r)

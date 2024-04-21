@@ -17,7 +17,7 @@ class WebsearchActionBuilder(
     override val key: String
         get() = "websearch"
 
-    override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction? {
+    override fun build(context: Context, classifiedQuery: TextClassificationResult): SearchAction {
         return WebsearchAction(
             context.getString(R.string.search_action_websearch), classifiedQuery.text
         )

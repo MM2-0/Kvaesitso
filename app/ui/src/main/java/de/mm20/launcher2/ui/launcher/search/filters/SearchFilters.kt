@@ -1,0 +1,218 @@
+package de.mm20.launcher2.ui.launcher.search.filters
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.*
+import androidx.compose.material3.FilterChip
+import androidx.compose.material3.FilterChipDefaults
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.search.SearchFilters
+import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.icons.Wikipedia
+
+@Composable
+fun SearchFilters(
+    filters: SearchFilters,
+    onFiltersChange: (SearchFilters) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val allCategoriesEnabled = filters.allCategoriesEnabled
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(horizontal = 4.dp),
+    ) {
+        FilterChip(
+            selected = filters.allowNetwork,
+            onClick = {
+                onFiltersChange(filters.copy(allowNetwork = !filters.allowNetwork))
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Rounded.Language,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            },
+            label = { Text(stringResource(R.string.search_filter_online)) }
+        )
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+        FlowRow {
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.apps && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleApps())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Apps,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.search_filter_apps)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.files && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleFiles())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Description,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_files)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.contacts && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleContacts())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Person,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_contacts)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.events && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleEvents())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Today,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_calendar)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.shortcuts && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleShortcuts())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.AppShortcut,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_appshortcuts)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.articles && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleArticles())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Wikipedia,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_wikipedia)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.websites && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleWebsites())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Public,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_websites)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.places && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.togglePlaces())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Place,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_locations)) }
+            )
+            FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
+                selected = filters.tools && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleTools())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Handyman,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.search_filter_tools)) }
+            )
+            FilterChip(
+                selected = filters.settings && !allCategoriesEnabled,
+                onClick = {
+                    onFiltersChange(filters.toggleSettings())
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_settings)) }
+            )
+        }
+        HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+        FilterChip(
+            selected = filters.hiddenItems,
+            onClick = {
+                onFiltersChange(filters.copy(hiddenItems = !filters.hiddenItems))
+            },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Rounded.VisibilityOff,
+                    contentDescription = null,
+                    modifier = Modifier.size(FilterChipDefaults.IconSize)
+                )
+            },
+            label = { Text(stringResource(R.string.preference_hidden_items)) }
+        )
+    }
+}

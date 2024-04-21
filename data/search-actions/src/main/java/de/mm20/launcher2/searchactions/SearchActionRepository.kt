@@ -6,6 +6,7 @@ import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.database.AppDatabase
 import de.mm20.launcher2.database.entities.SearchActionEntity
 import de.mm20.launcher2.ktx.jsonObjectOf
+import de.mm20.launcher2.searchactions.actions.ShareAction
 import de.mm20.launcher2.searchactions.builders.CallActionBuilder
 import de.mm20.launcher2.searchactions.builders.CreateContactActionBuilder
 import de.mm20.launcher2.searchactions.builders.EmailActionBuilder
@@ -14,6 +15,7 @@ import de.mm20.launcher2.searchactions.builders.OpenUrlActionBuilder
 import de.mm20.launcher2.searchactions.builders.ScheduleEventActionBuilder
 import de.mm20.launcher2.searchactions.builders.SearchActionBuilder
 import de.mm20.launcher2.searchactions.builders.SetAlarmActionBuilder
+import de.mm20.launcher2.searchactions.builders.ShareActionBuilder
 import de.mm20.launcher2.searchactions.builders.TimerActionBuilder
 import de.mm20.launcher2.searchactions.builders.WebsearchActionBuilder
 import kotlinx.coroutines.CoroutineScope
@@ -58,6 +60,7 @@ internal class SearchActionRepositoryImpl(
             TimerActionBuilder(context),
             OpenUrlActionBuilder(context),
             WebsearchActionBuilder(context),
+            ShareActionBuilder(context),
         )
 
         return allActions

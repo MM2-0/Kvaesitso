@@ -58,6 +58,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -216,6 +217,7 @@ class BindAndConfigureAppWidgetActivity : Activity() {
 }
 
 private class BindAndConfigureAppWidgetContract(
+    private val density: Density,
 ) : ActivityResultContract<AppWidgetProviderInfo, Widget?>() {
     override fun createIntent(context: Context, input: AppWidgetProviderInfo): Intent {
         return Intent(context, BindAndConfigureAppWidgetActivity::class.java).apply {
@@ -234,7 +236,8 @@ private class BindAndConfigureAppWidgetContract(
                 return AppWidget(
                     id = UUID.randomUUID(),
                     config = AppWidgetConfig(
-                        height = widgetProviderInfo.minHeight,
+                        height = with(density) { widgetProviderInfo.minHeight.toDp() }.value.toInt(),
+                        width = with(density) { widgetProviderInfo.minWidth.toDp() }.value.toInt(),
                         widgetId = widgetId,
                     ),
                 )
@@ -261,7 +264,7 @@ fun WidgetPickerSheet(
     val viewModel: WidgetPickerSheetVM = viewModel(factory = WidgetPickerSheetVM.Factory)
 
     val bindAppWidgetStarter =
-        rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract()) {
+        rememberLauncherForActivityResult(BindAndConfigureAppWidgetContract(density)) {
             if (it != null) {
                 onWidgetSelected(it)
                 onDismiss()
@@ -272,7 +275,7 @@ fun WidgetPickerSheet(
     val appWidgetGroups by viewModel.appWidgetGroups.collectAsState(emptyList())
     val expandAllGroups by viewModel.expandAllGroups.collectAsState(false)
 
-    val colorSurface = MaterialTheme.colorScheme.surface
+    val colorSurface = MaterialTheme.colorScheme.surfaceContainerLow
 
     val query by viewModel.searchQuery.collectAsState("")
 

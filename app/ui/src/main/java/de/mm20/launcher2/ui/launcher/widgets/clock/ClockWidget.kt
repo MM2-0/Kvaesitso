@@ -163,7 +163,7 @@ fun ClockWidget(
                 Box(
                     modifier = Modifier
                         .then(if (fillScreenHeight) Modifier.weight(1f) else Modifier)
-                        .fillMaxWidth(),
+                        .fillMaxWidth().padding(horizontal = 24.dp),
                     contentAlignment = when (alignment) {
                         ClockWidgetAlignment.Center -> Alignment.Center
                         ClockWidgetAlignment.Top -> Alignment.TopCenter
@@ -408,6 +408,7 @@ fun ConfigureClockWidgetSheet(
                     styles = availableStyles,
                     compact = compact!!,
                     colors = color!!,
+                    themeColors = useAccentColor,
                     selected = style,
                     onSelect = {
                         viewModel.setClockStyle(it)
@@ -464,7 +465,7 @@ fun ConfigureClockWidgetSheet(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     SwitchPreference(
-                        title = stringResource(R.string.preference_clock_widget_use_theme_color),
+                        title = stringResource(R.string.widget_use_theme_colors),
                         icon = Icons.Rounded.ColorLens,
                         value = useAccentColor,
                         onValueChanged = {

@@ -25,7 +25,7 @@ import kotlinx.coroutines.supervisorScope
 interface SearchService {
     fun search(
         query: String,
-        allowNetwork: Boolean = false,
+        filters: SearchFilters,
     ): Flow<SearchResults>
 }
 
@@ -47,7 +47,7 @@ internal class SearchServiceImpl(
 
     override fun search(
         query: String,
-        allowNetwork: Boolean,
+        filters: SearchFilters,
     ): Flow<SearchResults> = channelFlow {
         val results = MutableStateFlow(SearchResults())
         supervisorScope {
@@ -59,112 +59,144 @@ internal class SearchServiceImpl(
                         }
                     }
             }
-            launch {
-                appRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(apps = r.toImmutableList())
+            if (filters.apps) {
+                launch {
+                    appRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(apps = r.toImmutableList())
+                            }
                         }
-                    }
-            }
-            launch {
-                appShortcutRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(shortcuts = r.toImmutableList())
-                        }
-                    }
-            }
-            launch {
-                contactRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(contacts = r.toImmutableList())
-                        }
-                    }
-            }
-            launch {
-                calendarRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(calendars = r.toImmutableList())
-                        }
-                    }
-            }
-            launch {
-                calculatorRepository.search(query).collectLatest { r ->
-                    results.update {
-                        it.copy(calculators = r?.let { persistentListOf(it) }
-                            ?: persistentListOf())
-                    }
                 }
             }
-            launch {
-                settingsRepository.search(query).collectLatest { r ->
-                    results.update {
-                        it.copy(settings = r)
-                    }
+            if (filters.shortcuts) {
+                launch {
+                    appShortcutRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(shortcuts = r.toImmutableList())
+                            }
+                        }
                 }
             }
-            launch {
-                unitConverterRepository.search(query)
-                    .collectLatest { r ->
+            if (filters.contacts) {
+                launch {
+                    contactRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(contacts = r.toImmutableList())
+                            }
+                        }
+                }
+            }
+            if (filters.events) {
+                launch {
+                    calendarRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(calendars = r.toImmutableList())
+                            }
+                        }
+                }
+            }
+            if (filters.tools) {
+                launch {
+                    calculatorRepository.search(query).collectLatest { r ->
                         results.update {
-                            it.copy(unitConverters = r?.let { persistentListOf(it) }
+                            it.copy(calculators = r?.let { persistentListOf(it) }
                                 ?: persistentListOf())
                         }
                     }
+                }
+                launch {
+                    unitConverterRepository.search(query)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(unitConverters = r?.let { persistentListOf(it) }
+                                    ?: persistentListOf())
+                            }
+                        }
+                }
             }
-            launch {
-                websiteRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
+            if (filters.settings) {
+                launch {
+                    settingsRepository.search(query).collectLatest { r ->
                         results.update {
-                            it.copy(websites = r.toImmutableList())
+                            it.copy(settings = r)
                         }
                     }
+                }
             }
-            launch {
-                delay(750)
-                articleRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(wikipedia = r.toImmutableList())
+            if (filters.websites) {
+                launch {
+                    websiteRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(websites = r.toImmutableList())
+                            }
                         }
-                    }
+                }
             }
-            launch {
-                locationRepository.search(query, allowNetwork)
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(locations = r.toImmutableList())
+            if (filters.articles) {
+                launch {
+                    delay(750)
+                    articleRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(wikipedia = r.toImmutableList())
+                            }
                         }
-                    }
+                }
             }
-            launch {
-                fileRepository.search(
-                    query,
-                    allowNetwork
-                )
-                    .withCustomLabels(customAttributesRepository)
-                    .collectLatest { r ->
-                        results.update {
-                            it.copy(files = r.toImmutableList())
+            if (filters.places) {
+                launch {
+                    locationRepository.search(query, filters.allowNetwork)
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(locations = r.toImmutableList())
+                            }
                         }
-                    }
+                }
+            }
+            if (filters.files) {
+                launch {
+                    fileRepository.search(
+                        query,
+                        filters.allowNetwork
+                    )
+                        .withCustomLabels(customAttributesRepository)
+                        .collectLatest { r ->
+                            results.update {
+                                it.copy(files = r.toImmutableList())
+                            }
+                        }
+                }
             }
             launch {
                 customAttributesRepository.search(query)
                     .withCustomLabels(customAttributesRepository)
                     .collectLatest { r ->
                         results.update {
-                            it.copy(other = r.toImmutableList())
+                            it.copy(other = r
+                                .filter {
+                                    filters.apps && it is Application ||
+                                    filters.shortcuts && it is AppShortcut ||
+                                    filters.contacts && it is Contact ||
+                                    filters.events && it is CalendarEvent ||
+                                    filters.files && it is File ||
+                                    filters.websites && it is Website ||
+                                    filters.articles && it is Article ||
+                                    filters.places && it is Location
+                                }
+                                .toImmutableList()
+                            )
                         }
                     }
             }

@@ -2,7 +2,6 @@ package de.mm20.launcher2.preferences.ui
 
 import de.mm20.launcher2.preferences.LauncherDataStore
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 
 data class IconSettingsData(
@@ -10,7 +9,6 @@ data class IconSettingsData(
     val forceThemed: Boolean,
     val adaptify: Boolean,
     val iconPack: String?,
-    val iconPackThemed: Boolean,
 )
 
 class IconSettings internal constructor(
@@ -22,7 +20,6 @@ class IconSettings internal constructor(
                 forceThemed = it.iconsForceThemed,
                 adaptify = it.iconsAdaptify,
                 iconPack = it.iconsPack,
-                iconPackThemed = it.iconsPackThemed,
             )
         }
         ) {
@@ -56,7 +53,6 @@ class IconSettings internal constructor(
             it.copy(iconsPackThemed = iconPackThemed)
         }
     }
-
 
 
 }

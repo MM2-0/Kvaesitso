@@ -33,13 +33,14 @@ enum class SearchActionIcon(private val value: Int) {
     Movie(18),
     Music(19),
     Game(20),
-    Note(21);
+    Note(21),
+    Share(22);
     fun toInt(): Int {
         return value
     }
     companion object {
         fun fromInt(value: Int?): SearchActionIcon {
-            return values().firstOrNull { it.value == value } ?: Search
+            return entries.firstOrNull { it.value == value } ?: Search
         }
     }
 }

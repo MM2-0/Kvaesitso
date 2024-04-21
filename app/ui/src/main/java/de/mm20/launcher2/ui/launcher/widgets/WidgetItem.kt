@@ -1,6 +1,5 @@
 package de.mm20.launcher2.ui.launcher.widgets
 
-import android.appwidget.AppWidgetHost
 import android.appwidget.AppWidgetManager
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -43,7 +42,7 @@ import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.launcher.sheets.ConfigureWidgetSheet
 import de.mm20.launcher2.ui.launcher.sheets.WidgetPickerSheet
 import de.mm20.launcher2.ui.launcher.widgets.calendar.CalendarWidget
-import de.mm20.launcher2.ui.launcher.widgets.external.ExternalWidget
+import de.mm20.launcher2.ui.launcher.widgets.external.AppWidget
 import de.mm20.launcher2.ui.launcher.widgets.favorites.FavoritesWidget
 import de.mm20.launcher2.ui.launcher.widgets.music.MusicWidget
 import de.mm20.launcher2.ui.launcher.widgets.notes.NotesWidget
@@ -174,60 +173,11 @@ fun WidgetItem(
                     }
 
                     is AppWidget -> {
-                        val widgetInfo = remember(widget.config.widgetId) {
-                            AppWidgetManager.getInstance(context)
-                                .getAppWidgetInfo(widget.config.widgetId)
-                        }
-                        if (widgetInfo == null) {
-                            var replaceWidget by rememberSaveable {
-                                mutableStateOf(false)
-                            }
-                            Banner(
-                                modifier = Modifier.padding(16.dp),
-                                text = stringResource(R.string.app_widget_loading_failed),
-                                icon = Icons.Rounded.Warning,
-                                secondaryAction = {
-                                    OutlinedButton(onClick = onWidgetRemove) {
-                                        Text(stringResource(R.string.widget_action_remove))
-                                    }
-                                },
-                                primaryAction = {
-                                    Button(onClick = { replaceWidget = true }) {
-                                        Text(stringResource(R.string.widget_action_replace))
-                                    }
-                                }
-                            )
-                            if (replaceWidget) {
-                                WidgetPickerSheet(
-                                    onDismiss = { replaceWidget = false },
-                                    onWidgetSelected = {
-                                        val updatedWidget = when (it) {
-                                            is AppWidget -> widget.copy(
-                                                config = widget.config.copy(
-                                                    widgetId = it.config.widgetId
-                                                )
-                                            )
-
-                                            is WeatherWidget -> it.copy(id = widget.id)
-                                            is MusicWidget -> it.copy(id = widget.id)
-                                            is CalendarWidget -> it.copy(id = widget.id)
-                                            is FavoritesWidget -> it.copy(id = widget.id)
-                                            is NotesWidget -> it.copy(id = widget.id)
-                                        }
-                                        onWidgetUpdate(updatedWidget)
-                                        replaceWidget = false
-                                    }
-                                )
-                            }
-                        } else {
-                            ExternalWidget(
-                                widgetId = widget.config.widgetId,
-                                widgetInfo = widgetInfo,
-                                modifier = Modifier.fillMaxWidth(),
-                                height = widget.config.height,
-                                borderless = widget.config.borderless,
-                            )
-                        }
+                        AppWidget(
+                            widget,
+                            onWidgetUpdate = onWidgetUpdate,
+                            onWidgetRemove = onWidgetRemove,
+                        )
                     }
                 }
             }
