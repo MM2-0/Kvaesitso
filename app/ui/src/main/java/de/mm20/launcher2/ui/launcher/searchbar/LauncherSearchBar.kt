@@ -2,19 +2,13 @@ package de.mm20.launcher2.ui.launcher.searchbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.BoxScope
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.imeAnimationTarget
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
@@ -29,8 +23,6 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,7 +38,6 @@ import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
-import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
 fun LauncherSearchBar(
@@ -54,7 +45,6 @@ fun LauncherSearchBar(
     style: SearchBarStyle,
     level: () -> SearchBarLevel,
     value: () -> String,
-    onValueChange: (String) -> Unit,
     focused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     actions: List<SearchAction>,
@@ -85,7 +75,9 @@ fun LauncherSearchBar(
                 .windowInsetsPadding(WindowInsets.safeDrawing)
                 .padding(8.dp)
                 .offset { IntOffset(0, searchBarOffset()) },
-            style = style, level = level(), value = _value, onValueChange = onValueChange,
+            style = style, level = level(), value = _value, onValueChange = {
+                searchVM.search(it)
+            },
             reverse = bottomSearchBar,
             darkColors = darkColors,
             menu = {
@@ -118,7 +110,9 @@ fun LauncherSearchBar(
                         }
                     }
                 }
-                SearchBarMenu(searchBarValue = _value, onSearchBarValueChange = onValueChange)
+                SearchBarMenu(searchBarValue = _value, onInputClear = {
+                    searchVM.reset()
+                })
             },
             actions = {
                 SearchBarActions(

@@ -1,7 +1,9 @@
 package de.mm20.launcher2.search
 
 import de.mm20.launcher2.ktx.toInt
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class SearchFilters(
     val allowNetwork: Boolean = false,
     val hiddenItems: Boolean = false,
