@@ -22,3 +22,7 @@ style. There is also an "empty style" that will remove the clock entirely.
 ## The toggle to grant notification access is disabled
 
 Please refer to the [Restricted Settings on Android 13+](/docs/user-guide/troubleshooting/restricted-settings) page.
+
+## The launcher keeps asking for notification access or accessibility service
+
+Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permissions).
