@@ -38,7 +38,7 @@ import de.mm20.launcher2.ui.settings.SettingsActivity
 @Composable
 fun RowScope.SearchBarMenu(
     searchBarValue: String,
-    onSearchBarValueChange: (newValue: String) -> Unit,
+    onInputClear: () -> Unit,
 ) {
     val context = LocalContext.current
     var showOverflowMenu by remember { mutableStateOf(false) }
@@ -47,7 +47,7 @@ fun RowScope.SearchBarMenu(
     val widgetsVM: WidgetsVM = viewModel()
 
     IconButton(onClick = {
-        if (searchBarValue.isNotBlank()) onSearchBarValueChange("")
+        if (searchBarValue.isNotBlank()) onInputClear()
         else showOverflowMenu = true
     }) {
         Icon(
