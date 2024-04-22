@@ -3,6 +3,7 @@ package de.mm20.launcher2.sdk.locations
 import android.database.MatrixCursor
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.sdk.base.SearchPluginProvider
 import org.json.JSONArray
@@ -11,9 +12,9 @@ import java.time.format.DateTimeFormatter
 
 private val LocalTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
-abstract class LocationProvider(
-    config: SearchPluginConfig,
-) : SearchPluginProvider<Location>(config) {
+abstract class LocationProvider :
+    SearchPluginProvider<Location>(SearchPluginConfig(StorageStrategy.Deferred)) { // "meaningless" config, it's used nowhere
+
     abstract override suspend fun search(query: String, allowNetwork: Boolean): List<Location>
 
     final override fun getPluginType(): PluginType {

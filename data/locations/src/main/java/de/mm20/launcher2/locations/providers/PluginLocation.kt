@@ -8,6 +8,8 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdatableSearchable
+import de.mm20.launcher2.search.UpdateResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -24,10 +26,12 @@ data class PluginLocation(
     override val userRating: Float?,
     override val departures: List<Departure>?,
     override val label: String,
+    override val timestamp: Long,
+    override val updatedSelf: (suspend () -> UpdateResult<Location>)?,
     override val labelOverride: String? = null,
     val authority: String,
     val id: String,
-): Location {
+) : Location, UpdatableSearchable<Location> {
     override val key: String
         get() = "$domain://$authority:$id"
 
@@ -43,7 +47,8 @@ data class PluginLocation(
 
     override suspend fun getProviderIcon(context: Context): Drawable? {
         return withContext(Dispatchers.IO) {
-            context.packageManager.resolveContentProvider(authority, 0)?.loadIcon(context.packageManager)
+            context.packageManager.resolveContentProvider(authority, 0)
+                ?.loadIcon(context.packageManager)
         }
     }
 

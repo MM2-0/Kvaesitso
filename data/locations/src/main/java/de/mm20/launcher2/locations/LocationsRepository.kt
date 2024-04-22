@@ -33,31 +33,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 internal class LocationsRepository(
     private val context: Context,
+    private val osmLocationProvider: OsmLocationProvider,
     private val settings: LocationSearchSettings,
     private val poseProvider: DevicePoseProvider,
     private val permissionsManager: PermissionsManager,
 ) : SearchableRepository<Location> {
-
-    private val scope = CoroutineScope(Job() + Dispatchers.Default)
-    private val httpClient = OkHttpClient()
-
-    private val overpassService by lazy {
-        settings.overpassUrl.map {
-            try {
-                Retrofit.Builder()
-                    .client(httpClient)
-                    .baseUrl(it.takeIf { it.isNotBlank() }
-                        ?: LocationSearchSettings.DefaultOverpassUrl)
-                    .addConverterFactory(OverpassQueryConverterFactory())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(OverpassApi::class.java)
-            } catch (e: Exception) {
-                CrashReporter.logException(e)
-                null
-            }
-        }.stateIn(scope, SharingStarted.Eagerly, null)
-    }
 
     override fun search(
         query: String,
@@ -77,13 +57,8 @@ internal class LocationsRepository(
         ) { providers, searchRadius, hideUncategorized, locationPermission, userLocation ->
             val providers = providers.map {
                 when (it) {
-                    "openstreetmaps" -> OsmLocationProvider(
-                        overpassService,
-                        scope,
-                        httpClient.dispatcher
-                    )
-
-                    else -> PluginLocationProvider(context, it, permissionsManager)
+                    "openstreetmaps" -> osmLocationProvider
+                    else -> PluginLocationProvider(context, it)
                 }
             }
 
@@ -91,8 +66,6 @@ internal class LocationsRepository(
                 send(persistentListOf())
                 return@combine
             }
-
-            poseProvider.getLocation()
 
             val results = mutableListOf<Location>()
             for (provider in providers) {

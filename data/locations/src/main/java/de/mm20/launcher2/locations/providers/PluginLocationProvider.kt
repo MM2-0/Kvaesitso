@@ -7,9 +7,7 @@ import android.os.CancellationSignal
 import android.util.Log
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.locations.getOpeningSchedule
-import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.search.Departure
 import de.mm20.launcher2.search.LineType
@@ -28,9 +26,8 @@ import kotlin.coroutines.resume
 
 internal class PluginLocationProvider(
     private val context: Context,
-    private val pluginAuthority: String,
-    private val permissionsManager: PermissionsManager,
-) : LocationProvider {
+    private val pluginAuthority: String
+) : LocationProvider<String> {
     @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun search(
         query: String,
@@ -89,6 +86,52 @@ internal class PluginLocationProvider(
         }
     }
 
+    override suspend fun update(id: String): UpdateResult<Location> = withContext(Dispatchers.IO) {
+        // TODO respect allowNetwork?
+        val uri = Uri.Builder()
+            .scheme("content")
+            .authority(pluginAuthority)
+            .path(LocationPluginContract.Paths.Get)
+            .appendQueryParameter(LocationPluginContract.GetParams.Id, id)
+            .build()
+
+        val cancellationSignal = CancellationSignal()
+
+        return@withContext suspendCancellableCoroutine {
+            it.invokeOnCancellation {
+                cancellationSignal.cancel()
+            }
+            val cursor = try {
+                context.contentResolver.query(
+                    uri,
+                    null,
+                    null,
+                    cancellationSignal
+                )
+            } catch (e: Exception) {
+                Log.e("MM20", "Plugin $pluginAuthority threw exception")
+                CrashReporter.logException(e)
+                it.resume(UpdateResult.TemporarilyUnavailable(e))
+                return@suspendCancellableCoroutine
+            }
+
+            if (cursor == null) {
+                Log.e("MM20", "Plugin $pluginAuthority returned null cursor")
+                it.resume(UpdateResult.TemporarilyUnavailable())
+                return@suspendCancellableCoroutine
+            }
+
+            val result = fromCursor(cursor)?.firstOrNull()
+
+            if (result == null) {
+                it.resume(UpdateResult.PermanentlyUnavailable())
+                return@suspendCancellableCoroutine
+            }
+
+            it.resume(UpdateResult.Success(result))
+        }
+    }
+
     private fun fromCursor(cursor: Cursor): List<Location>? {
         val idIdx =
             cursor.getColumnIndex(LocationPluginContract.LocationColumns.Id)
@@ -124,9 +167,10 @@ internal class PluginLocationProvider(
 
         val results = mutableListOf<Location>()
         while (cursor.moveToNext()) {
+            val id = cursor.getString(idIdx)
             results.add(
                 PluginLocation(
-                    id = cursor.getString(idIdx),
+                    id = id,
                     label = cursor.getString(labelIdx),
                     latitude = cursor.getDouble(latitudeIdx),
                     longitude = cursor.getDouble(longitudeIdx),
@@ -175,7 +219,9 @@ internal class PluginLocationProvider(
                             }
                         }
                     },
-                    authority = pluginAuthority
+                    authority = pluginAuthority,
+                    updatedSelf = null,
+                    timestamp = System.currentTimeMillis(),
                 )
             )
         }

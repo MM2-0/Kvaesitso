@@ -1,39 +1,59 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
+import android.content.Context
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
-import de.mm20.launcher2.permissions.PermissionGroup
-import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.UpdateResult
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.channelFlow
-import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
+import okhttp3.OkHttpClient
 import retrofit2.HttpException
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.net.UnknownHostException
 
-internal class OsmLocationProvider(
-    private val overpassApi: StateFlow<OverpassApi?>,
-    private val scope: CoroutineScope,
-    private val dispatcher: Dispatcher,
-) : LocationProvider {
+private val Scope = CoroutineScope(Job() + Dispatchers.Default)
+private val HttpClient = OkHttpClient()
 
-    internal suspend fun update(
+internal class OsmLocationProvider(
+    context: Context,
+    settings: LocationSearchSettings,
+) : LocationProvider<Long> {
+
+    private val overpassApi by lazy {
+        settings.overpassUrl.map {
+            try {
+                Retrofit.Builder()
+                    .client(HttpClient)
+                    .baseUrl(it.takeIf { it.isNotBlank() }
+                        ?: LocationSearchSettings.DefaultOverpassUrl)
+                    .addConverterFactory(OverpassQueryConverterFactory())
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(OverpassApi::class.java)
+            } catch (e: Exception) {
+                CrashReporter.logException(e)
+                null
+            }
+        }.stateIn(Scope, SharingStarted.Eagerly, null)
+    }
+
+    override suspend fun update(
         id: Long
     ): UpdateResult<Location> = overpassApi.first()?.runCatching {
         this.search(
@@ -96,7 +116,7 @@ internal class OsmLocationProvider(
         }
 
         withContext(Dispatchers.IO) {
-            dispatcher.cancelAll()
+            HttpClient.dispatcher.cancelAll()
         }
 
         suspend fun searchByTag(tag: String): OverpassResponse? =
@@ -120,8 +140,8 @@ internal class OsmLocationProvider(
             // optionally query by "amenity" or "shop" here
             // if we want to make searching for locations fuzzier
             // however, this would not account for localized queries like "Bäcker" (shop:bakery)
-            scope.async { searchByTag("name") },
-            scope.async { searchByTag("brand") },
+            Scope.async { searchByTag("name") },
+            Scope.async { searchByTag("brand") },
         ).flatMap {
             it?.let {
                 OsmLocation.fromOverpassResponse(it)
