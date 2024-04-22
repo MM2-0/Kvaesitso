@@ -11,9 +11,9 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.preferences.search.CalendarSearchSettings
 import de.mm20.launcher2.preferences.search.ContactSearchSettings
-import de.mm20.launcher2.preferences.search.FavoritesSettings
 import de.mm20.launcher2.preferences.search.FileSearchSettings
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
+import de.mm20.launcher2.preferences.search.SearchFilterSettings
 import de.mm20.launcher2.preferences.search.ShortcutSearchSettings
 import de.mm20.launcher2.preferences.ui.SearchUiSettings
 import de.mm20.launcher2.search.AppProfile
@@ -42,7 +42,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -63,6 +62,7 @@ class SearchVM : ViewModel(), KoinComponent {
     private val searchUiSettings: SearchUiSettings by inject()
     private val locationSearchSettings: LocationSearchSettings by inject()
     private val devicePoseProvider: DevicePoseProvider by inject()
+    private val searchFilterSettings: SearchFilterSettings by inject()
 
     val launchOnEnter = searchUiSettings.launchOnEnter
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
@@ -93,7 +93,8 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val showFilters = mutableStateOf(false)
 
-    val filters = mutableStateOf(SearchFilters())
+    val defaultFilters = searchFilterSettings.defaultFilter.stateIn(viewModelScope, SharingStarted.Eagerly, SearchFilters())
+    val filters = mutableStateOf(defaultFilters.value)
 
     val separateWorkProfile = searchUiSettings.separateWorkProfile
 
@@ -133,6 +134,7 @@ class SearchVM : ViewModel(), KoinComponent {
 
     fun reset() {
         closeFilters()
+        filters.value = defaultFilters.value
         search("")
     }
 
@@ -141,6 +143,9 @@ class SearchVM : ViewModel(), KoinComponent {
         if (searchQuery.value == query && !forceRestart) return
         if (searchQuery.value != query) {
             showFilters.value = false
+        }
+        if (query.isEmpty() && searchQuery.value.isNotEmpty()) {
+            filters.value = defaultFilters.value
         }
         searchQuery.value = query
         isSearchEmpty.value = query.isEmpty()
