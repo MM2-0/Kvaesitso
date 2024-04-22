@@ -2,6 +2,7 @@ package de.mm20.launcher2.preferences
 
 import android.content.Context
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
+import de.mm20.launcher2.search.SearchFilters
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -147,6 +148,23 @@ data class LauncherSettingsData internal constructor(
     val locationSearchShowMap: Boolean = false,
     val locationSearchShowPositionOnMap: Boolean = false,
     val locationSearchThemeMap: Boolean = true,
+
+    val searchFilter: SearchFilters = SearchFilters(),
+    val searchFilterBar: Boolean = true,
+    val searchFilterBarItems: List<KeyboardFilterBarItem> = listOf(
+        KeyboardFilterBarItem.OnlineResults,
+        KeyboardFilterBarItem.Apps,
+        KeyboardFilterBarItem.Shortcuts,
+        KeyboardFilterBarItem.Events,
+        KeyboardFilterBarItem.Contacts,
+        KeyboardFilterBarItem.Files,
+        KeyboardFilterBarItem.Places,
+        KeyboardFilterBarItem.Articles,
+        KeyboardFilterBarItem.Websites,
+        KeyboardFilterBarItem.Places,
+        KeyboardFilterBarItem.Tools,
+        KeyboardFilterBarItem.HiddenResults,
+    ),
 
 
     ) {
@@ -381,3 +399,18 @@ data class ProviderSettings(
     val locationId: String? = null,
     val locationName: String? = null,
 )
+
+@Serializable
+enum class KeyboardFilterBarItem {
+    @SerialName("online") OnlineResults,
+    @SerialName("apps") Apps,
+    @SerialName("websites") Websites,
+    @SerialName("articles") Articles,
+    @SerialName("places") Places,
+    @SerialName("files") Files,
+    @SerialName("shortcuts") Shortcuts,
+    @SerialName("contacts") Contacts,
+    @SerialName("events") Events,
+    @SerialName("tools") Tools,
+    @SerialName("hidden") HiddenResults,
+}
