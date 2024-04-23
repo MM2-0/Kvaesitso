@@ -918,4 +918,9 @@
     <string name="search_filter_tools">Tools</string>
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
+    <string name="preference_default_filter">Default filter</string>
+    <string name="preference_default_filter_summary">Customize the default filter for searches</string>
+    <string name="preference_filter_bar">Show filter bar</string>
+    <string name="preference_filter_bar_summary">Show quick filters above the keyboard</string>
+    <string name="filter_settings_network_warning">The current filter enables online results by default. Your search queries might unintentionally be sent to external web services. For privacy reasons, this is not recommended.</string>
 </resources>

@@ -23,6 +23,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -65,6 +67,7 @@ fun LauncherSearchBar(
         else focusManager.clearFocus()
     }
 
+    val filterBar by searchVM.filterBar.collectAsState(false)
 
     val _value = value()
 
@@ -127,7 +130,7 @@ fun LauncherSearchBar(
             onKeyboardActionGo = onKeyboardActionGo
         )
 
-        AnimatedVisibility (isSearchOpen && !searchVM.showFilters.value
+        AnimatedVisibility (filterBar && isSearchOpen && !searchVM.showFilters.value
                 // Use imeAnimationTarget instead of isImeVisible to animate the filter bar at the same time as the keyboard
                 && WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0,
             enter = fadeIn(),

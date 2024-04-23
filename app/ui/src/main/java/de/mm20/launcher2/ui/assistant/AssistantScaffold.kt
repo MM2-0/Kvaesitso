@@ -59,8 +59,10 @@ fun AssistantScaffold(
 
     val searchState = rememberLazyListState()
 
+    val filterBar by searchVM.filterBar.collectAsState(false)
+
     val keyboardFilterBarPadding by animateDpAsState(
-        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value) 50.dp else 0.dp
+        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value && filterBar) 50.dp else 0.dp
     )
 
     val isSearchAtStart by remember {
