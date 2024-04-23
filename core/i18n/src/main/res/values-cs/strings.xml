@@ -727,4 +727,9 @@
     <string name="clock_variant_outlined">Ohraničené</string>
     <string name="widget_pick_widget">Vyberte widget</string>
     <string name="clock_style_custom">Vlastní widget</string>
+    <string name="widget_config_appwidget_resize">Změnit velikost</string>
+    <string name="search_action_share">Sdílet</string>
+    <string name="search_filter_tools">Nástroje</string>
+    <string name="search_filter_online">Online výsledky</string>
+    <string name="search_filter_apps">Aplikace</string>
 </resources>
