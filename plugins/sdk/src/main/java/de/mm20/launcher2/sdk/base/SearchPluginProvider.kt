@@ -14,34 +14,20 @@ import kotlinx.coroutines.runBlocking
 
 abstract class SearchPluginProvider<T>(
     private val config: SearchPluginConfig,
-) : BasePluginProvider() {
+) : QueryPluginProvider<String, T>() {
 
     /**
      * Search for items matching the given query
      * @param query The query to search for
      */
-    abstract suspend fun search(query: String, allowNetwork: Boolean): List<T>
+    abstract override suspend fun search(query: String, allowNetwork: Boolean): List<T>
 
     /**
      * Get an item by its id.
      * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference`
      */
-    open suspend fun get(id: String): T? {
+    override suspend fun get(id: String): T? {
         return null
-    }
-
-    override fun onCreate(): Boolean {
-        return true
-    }
-
-    override fun query(
-        uri: Uri,
-        projection: Array<out String>?,
-        selection: String?,
-        selectionArgs: Array<out String>?,
-        sortOrder: String?
-    ): Cursor? {
-        return query(uri, projection, null, null)
     }
 
     override fun query(
@@ -66,6 +52,7 @@ abstract class SearchPluginProvider<T>(
                 }
                 return cursor
             }
+
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
                 val id = uri.pathSegments[1]
                 val result = runBlocking {
@@ -81,27 +68,6 @@ abstract class SearchPluginProvider<T>(
             }
         }
         return null
-    }
-
-    override fun getType(uri: Uri): String? {
-        throw UnsupportedOperationException("This operation is not supported")
-    }
-
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        throw UnsupportedOperationException("This operation is not supported")
-    }
-
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<out String>?): Int {
-        throw UnsupportedOperationException("This operation is not supported")
-    }
-
-    override fun update(
-        uri: Uri,
-        values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<out String>?
-    ): Int {
-        throw UnsupportedOperationException("This operation is not supported")
     }
 
     private fun search(

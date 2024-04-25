@@ -25,16 +25,16 @@ abstract class LocationPluginContract {
         const val UserLongitude = "user_longitude"
 
         /**
-         * Whether to allow network requests.
-         * Type: Boolean
-         */
-        const val AllowNetwork = "network"
-
-        /**
          * Search radius in meters.
          * Type: Long
          */
         const val SearchRadius = "search_radius"
+
+        /**
+         * Whether to allow network requests.
+         * Type: Boolean
+         */
+        const val AllowNetwork = "network"
     }
     object GetParams {
         /**
