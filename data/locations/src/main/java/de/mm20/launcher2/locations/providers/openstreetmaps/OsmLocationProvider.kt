@@ -27,7 +27,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.net.UnknownHostException
 
-private val Scope = CoroutineScope(Job() + Dispatchers.Default)
+private val Scope = CoroutineScope(Job() + Dispatchers.IO)
 private val HttpClient = OkHttpClient()
 
 internal class OsmLocationProvider(
@@ -35,23 +35,22 @@ internal class OsmLocationProvider(
     settings: LocationSearchSettings,
 ) : LocationProvider<Long> {
 
-    private val overpassApi by lazy {
-        settings.overpassUrl.map {
-            try {
-                Retrofit.Builder()
-                    .client(HttpClient)
-                    .baseUrl(it.takeIf { it.isNotBlank() }
-                        ?: LocationSearchSettings.DefaultOverpassUrl)
-                    .addConverterFactory(OverpassQueryConverterFactory())
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(OverpassApi::class.java)
-            } catch (e: Exception) {
-                CrashReporter.logException(e)
-                null
-            }
-        }.stateIn(Scope, SharingStarted.Eagerly, null)
-    }
+    private val overpassApi = settings.overpassUrl.map {
+        try {
+            Retrofit.Builder()
+                .client(HttpClient)
+                .baseUrl(it.takeIf { it.isNotBlank() }
+                    ?: LocationSearchSettings.DefaultOverpassUrl)
+                .addConverterFactory(OverpassQueryConverterFactory())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(OverpassApi::class.java)
+        } catch (e: Exception) {
+            CrashReporter.logException(e)
+            null
+        }
+    }.stateIn(Scope, SharingStarted.Eagerly, null)
+
 
     override suspend fun update(
         id: Long
