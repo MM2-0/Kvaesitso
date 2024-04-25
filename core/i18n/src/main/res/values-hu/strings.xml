@@ -726,4 +726,5 @@
     <string name="search_action_share">Megosztás</string>
     <string name="search_filter_online">Keresési találat</string>
     <string name="search_filter_tools">Eszközök</string>
+    <string name="search_filter_apps">Alkalmazások</string>
 </resources>

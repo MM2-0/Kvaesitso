@@ -34,7 +34,8 @@ import de.mm20.launcher2.ui.icons.Wikipedia
 fun SearchFilters(
     filters: SearchFilters,
     onFiltersChange: (SearchFilters) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    settings: Boolean = false
 ) {
     val allCategoriesEnabled = filters.allCategoriesEnabled
     Column(
@@ -60,9 +61,13 @@ fun SearchFilters(
         FlowRow {
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.apps && !allCategoriesEnabled,
+                selected = filters.apps && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleApps())
+                    if (settings) {
+                        onFiltersChange(filters.copy(apps = !filters.apps))
+                    } else {
+                        onFiltersChange(filters.toggleApps())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -75,9 +80,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.files && !allCategoriesEnabled,
+                selected = filters.files && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleFiles())
+                    if (settings) {
+                        onFiltersChange(filters.copy(files = !filters.files))
+                    } else {
+                        onFiltersChange(filters.toggleFiles())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -90,9 +99,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.contacts && !allCategoriesEnabled,
+                selected = filters.contacts && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleContacts())
+                    if (settings) {
+                        onFiltersChange(filters.copy(contacts = !filters.contacts))
+                    } else {
+                        onFiltersChange(filters.toggleContacts())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -105,9 +118,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.events && !allCategoriesEnabled,
+                selected = filters.events && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleEvents())
+                    if (settings) {
+                        onFiltersChange(filters.copy(events = !filters.events))
+                    } else {
+                        onFiltersChange(filters.toggleEvents())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -120,9 +137,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.shortcuts && !allCategoriesEnabled,
+                selected = filters.shortcuts && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleShortcuts())
+                    if (settings) {
+                        onFiltersChange(filters.copy(shortcuts = !filters.shortcuts))
+                    } else {
+                        onFiltersChange(filters.toggleShortcuts())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -135,9 +156,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.articles && !allCategoriesEnabled,
+                selected = filters.articles && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleArticles())
+                    if (settings) {
+                        onFiltersChange(filters.copy(articles = !filters.articles))
+                    } else {
+                        onFiltersChange(filters.toggleArticles())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -150,9 +175,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.websites && !allCategoriesEnabled,
+                selected = filters.websites && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleWebsites())
+                    if (settings) {
+                        onFiltersChange(filters.copy(websites = !filters.websites))
+                    } else {
+                        onFiltersChange(filters.toggleWebsites())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -165,9 +194,13 @@ fun SearchFilters(
             )
             FilterChip(
                 modifier = Modifier.padding(end = 16.dp),
-                selected = filters.places && !allCategoriesEnabled,
+                selected = filters.places && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.togglePlaces())
+                    if (settings) {
+                        onFiltersChange(filters.copy(places = !filters.places))
+                    } else {
+                        onFiltersChange(filters.togglePlaces())
+                    }
                 },
                 leadingIcon = {
                     Icon(
@@ -179,9 +212,13 @@ fun SearchFilters(
                 label = { Text(stringResource(R.string.preference_search_locations)) }
             )
             FilterChip(
-                selected = filters.tools && !allCategoriesEnabled,
+                selected = filters.tools && (!allCategoriesEnabled || settings),
                 onClick = {
-                    onFiltersChange(filters.toggleTools())
+                    if (settings) {
+                        onFiltersChange(filters.copy(tools = !filters.tools))
+                    } else {
+                        onFiltersChange(filters.toggleTools())
+                    }
                 },
                 leadingIcon = {
                     Icon(

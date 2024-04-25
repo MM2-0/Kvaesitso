@@ -93,8 +93,9 @@ class SearchVM : ViewModel(), KoinComponent {
 
     val showFilters = mutableStateOf(false)
 
-    val defaultFilters = searchFilterSettings.defaultFilter.stateIn(viewModelScope, SharingStarted.Eagerly, SearchFilters())
+    private val defaultFilters = searchFilterSettings.defaultFilter.stateIn(viewModelScope, SharingStarted.Eagerly, SearchFilters())
     val filters = mutableStateOf(defaultFilters.value)
+    val filterBar = searchFilterSettings.filterBar
 
     val separateWorkProfile = searchUiSettings.separateWorkProfile
 
