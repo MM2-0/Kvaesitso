@@ -54,6 +54,10 @@ internal class PluginLocationProvider(
                 LocationPluginContract.SearchParams.UserLongitude,
                 userLocation?.longitude.toString()
             )
+            .appendQueryParameter(
+                LocationPluginContract.SearchParams.SearchRadius,
+                searchRadiusMeters.toString()
+            )
             .build()
         val cancellationSignal = CancellationSignal()
 

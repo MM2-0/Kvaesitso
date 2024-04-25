@@ -48,14 +48,9 @@ internal class LocationsRepository(
             return@channelFlow
         }
 
-        combine(
-            settings.enabledProviders,
-            settings.searchRadius,
-            settings.hideUncategorized,
-            permissionsManager.hasPermission(PermissionGroup.Location),
-            poseProvider.getLocation().onStart { poseProvider.lastLocation?.let { emit(it) } }
-        ) { providers, searchRadius, hideUncategorized, locationPermission, userLocation ->
-            val providers = providers.map {
+        settings.enabledProviders.collectLatest {
+
+            val providers = it.map {
                 when (it) {
                     "openstreetmaps" -> osmLocationProvider
                     else -> PluginLocationProvider(context, it)
@@ -64,22 +59,35 @@ internal class LocationsRepository(
 
             if (providers.isEmpty()) {
                 send(persistentListOf())
-                return@combine
+                return@collectLatest
             }
 
-            val results = mutableListOf<Location>()
-            for (provider in providers) {
-                results.addAll(
-                    provider.search(
-                        query,
-                        if (locationPermission) userLocation else null,
-                        allowNetwork,
-                        locationPermission,
-                        searchRadius,
-                        hideUncategorized
-                    )
-                )
-                send(results.toImmutableList())
+            settings.searchRadius.collectLatest { searchRadius ->
+                settings.hideUncategorized.collectLatest { hideUncategorized ->
+                    permissionsManager.hasPermission(PermissionGroup.Location)
+                        .collectLatest { locationPermission ->
+
+                            val userLocation =
+                                if (!locationPermission) null else poseProvider.getLocation()
+                                    .firstOrNull()
+                                    ?: poseProvider.lastLocation
+
+                            val results = mutableListOf<Location>()
+                            for (provider in providers) {
+                                results.addAll(
+                                    provider.search(
+                                        query,
+                                        userLocation,
+                                        allowNetwork,
+                                        locationPermission,
+                                        searchRadius,
+                                        hideUncategorized
+                                    )
+                                )
+                                send(results.toImmutableList())
+                            }
+                        }
+                }
             }
         }
     }

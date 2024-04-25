@@ -6,7 +6,6 @@ abstract class LocationPluginContract {
         const val Get = "get"
     }
     object SearchParams {
-
         /**
          * Search query.
          * Type: String
@@ -30,8 +29,18 @@ abstract class LocationPluginContract {
          * Type: Boolean
          */
         const val AllowNetwork = "network"
+
+        /**
+         * Search radius in meters.
+         * Type: Long
+         */
+        const val SearchRadius = "search_radius"
     }
     object GetParams {
+        /**
+         * Unique identifier of location to look up.
+         * Type: String
+         */
         const val Id = "id"
     }
     object LocationColumns {

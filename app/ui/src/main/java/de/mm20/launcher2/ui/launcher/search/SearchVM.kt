@@ -232,7 +232,6 @@ class SearchVM : ViewModel(), KoinComponent {
                         }
                     }
 
-
                     hiddenItemKeys.collectLatest { hiddenKeys ->
                         val hidden = mutableListOf<SavableSearchable>()
                         val apps = mutableListOf<Application>()

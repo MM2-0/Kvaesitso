@@ -108,13 +108,6 @@ class SearchSettingsScreenVM : ViewModel(), KoinComponent {
         websiteSearchSettings.setEnabled(websites)
     }
 
-    val locations = locationSearchSettings.osmLocations
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setLocations(locations: Boolean) {
-        locationSearchSettings.setOsmLocations(locations)
-    }
-
     val autoFocus = searchUiSettings.openKeyboard
 
     fun setAutoFocus(autoFocus: Boolean) {
