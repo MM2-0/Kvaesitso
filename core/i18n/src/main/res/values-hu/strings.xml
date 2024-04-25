@@ -724,7 +724,12 @@
     <string name="clock_style_custom">Modul testreszabása</string>
     <string name="widget_config_appwidget_resize">Átméretezés</string>
     <string name="search_action_share">Megosztás</string>
-    <string name="search_filter_online">Keresési találat</string>
+    <string name="search_filter_online">Internetes keresési találat</string>
     <string name="search_filter_tools">Eszközök</string>
     <string name="search_filter_apps">Alkalmazások</string>
+    <string name="preference_filter_bar">Szűrősáv megjelenítése</string>
+    <string name="preference_filter_bar_summary">Gyors szűrők megjelenítése a billentyűzet felett</string>
+    <string name="preference_default_filter">Alapértelmezett szűrő</string>
+    <string name="preference_default_filter_summary">A keresések alapértelmezett szűrőjének testreszabása</string>
+    <string name="filter_settings_network_warning">Az aktuális szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
 </resources>
