@@ -732,4 +732,9 @@
     <string name="search_filter_tools">Nástroje</string>
     <string name="search_filter_online">Online výsledky</string>
     <string name="search_filter_apps">Aplikace</string>
+    <string name="preference_default_filter">Výchozí filtr</string>
+    <string name="preference_default_filter_summary">Přizpůsobit výchozí filtr pro vyhledávání</string>
+    <string name="preference_filter_bar_summary">Zobrazit rychlé filtry nad klávesnicí</string>
+    <string name="preference_filter_bar">Zobrazit lištu s filtry</string>
+    <string name="filter_settings_network_warning">Aktuální filtr má ve výchozím nastavení povolené online výsledky. Vaše dotazy mohou být neúmyslně odesílány na externí webové služby. Z důvodu ochrany soukromí toto není doporučeno.</string>
 </resources>
