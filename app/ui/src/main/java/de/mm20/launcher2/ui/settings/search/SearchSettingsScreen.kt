@@ -1,37 +1,42 @@
 package de.mm20.launcher2.ui.settings.search
 
-import android.content.Context
-import android.content.pm.LauncherApps
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.content.getSystemService
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import de.mm20.launcher2.preferences.LegacySettings
 import de.mm20.launcher2.preferences.SearchResultOrder
 import de.mm20.launcher2.ui.R
+import de.mm20.launcher2.ui.component.BottomSheetDialog
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
-import de.mm20.launcher2.ui.component.preferences.*
+import de.mm20.launcher2.ui.component.SmallMessage
+import de.mm20.launcher2.ui.component.preferences.ListPreference
+import de.mm20.launcher2.ui.component.preferences.Preference
+import de.mm20.launcher2.ui.component.preferences.PreferenceCategory
+import de.mm20.launcher2.ui.component.preferences.PreferenceScreen
+import de.mm20.launcher2.ui.component.preferences.PreferenceWithSwitch
+import de.mm20.launcher2.ui.component.preferences.SwitchPreference
 import de.mm20.launcher2.ui.icons.Wikipedia
+import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.locals.LocalNavController
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.map
 
 @Composable
 fun SearchSettingsScreen() {
@@ -48,6 +53,10 @@ fun SearchSettingsScreen() {
         lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
             viewModel.onResume(context)
         }
+    }
+
+    var showFilterEditor by remember {
+        mutableStateOf(false)
     }
 
 
@@ -257,6 +266,27 @@ fun SearchSettingsScreen() {
                 )
             }
         }
+        item {
+            val filterBar by viewModel.filterBar.collectAsStateWithLifecycle(null)
+            PreferenceCategory {
+                Preference(
+                    title = stringResource(R.string.preference_default_filter),
+                    summary = stringResource(R.string.preference_default_filter_summary),
+                    icon = Icons.Rounded.FilterAlt,
+                    onClick = {
+                        showFilterEditor = true
+                    },
+                )
+                SwitchPreference(
+                    title = stringResource(R.string.preference_filter_bar),
+                    summary = stringResource(R.string.preference_filter_bar_summary),
+                    value = filterBar == true,
+                    onValueChanged = {
+                        viewModel.setFilterBar(it)
+                    }
+                )
+            }
+        }
         if (hasWorkProfile) {
             item {
                 PreferenceCategory {
@@ -329,6 +359,30 @@ fun SearchSettingsScreen() {
                     onValueChanged = {
                         if (it != null) viewModel.setReverseSearchResults(it)
                     },
+                )
+            }
+        }
+    }
+
+    if (showFilterEditor) {
+        val filters by viewModel.searchFilters.collectAsStateWithLifecycle()
+        BottomSheetDialog(onDismissRequest = { showFilterEditor = false }) {
+            Column(
+                modifier = Modifier.padding(it)
+            ) {
+                AnimatedVisibility(filters.allowNetwork) {
+                    SmallMessage(
+                        modifier = Modifier.padding(bottom = 16.dp),
+                        icon = Icons.Rounded.Warning,
+                        text = stringResource(R.string.filter_settings_network_warning)
+                    )
+                }
+                SearchFilters(
+                    filters = filters,
+                    onFiltersChange = {
+                        viewModel.setSearchFilters(it)
+                    },
+                    settings = true,
                 )
             }
         }

@@ -1,5 +1,8 @@
 package de.mm20.launcher2.ui.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.Orientation
@@ -22,7 +25,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.UnfoldMore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -62,6 +70,8 @@ fun DragResizeHandle(
         val measuredWidth = this.maxWidth
         val measuredHeight = this.maxHeight
 
+        var dragging by remember { mutableStateOf(false) }
+
         val density = LocalDensity.current
 
         val hapticFeedback = LocalHapticFeedback.current
@@ -71,7 +81,7 @@ fun DragResizeHandle(
                 .then(if (width.isUnspecified) Modifier.fillMaxWidth() else Modifier.width(width))
                 .then(if (height.isUnspecified) Modifier.fillMaxHeight() else Modifier.height(height))
                 .align(alignment)
-                .border(1.dp, color = MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small)
+                .border(1.dp, color = MaterialTheme.colorScheme.primary, MaterialTheme.shapes.medium)
         ) {
             if (resizeAxis == ResizeAxis.Both || resizeAxis == ResizeAxis.Horizontal) {
                 val horizontalDragState = rememberDraggableState {
@@ -108,8 +118,12 @@ fun DragResizeHandle(
                         .draggable(
                             state = horizontalDragState,
                             orientation = Orientation.Horizontal,
+                            onDragStarted = {
+                                dragging = true
+                            },
                             onDragStopped = {
                                 onResizeStopped()
+                                dragging = false
                             },
                             startDragImmediately = true,
                         )
@@ -161,8 +175,12 @@ fun DragResizeHandle(
                         .draggable(
                             state = verticalDragState,
                             orientation = Orientation.Vertical,
+                            onDragStarted = {
+                                dragging = true
+                            },
                             onDragStopped = {
                                 onResizeStopped()
+                                dragging = false
                             },
                             startDragImmediately = true,
                         )
@@ -179,6 +197,31 @@ fun DragResizeHandle(
                     )
                 }
             }
+            AnimatedVisibility(
+                visible = dragging,
+                modifier = Modifier.align(Alignment.TopStart).padding(8.dp),
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.primary, MaterialTheme.shapes.small)
+                        .padding(vertical = 4.dp, horizontal = 8.dp)
+                ) {
+                    Text(
+                        "W: ${formatDimension(width)} H: ${formatDimension(height)}",
+                        style = MaterialTheme.typography.labelMedium,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                    )
+                }
+            }
         }
     }
+}
+
+private fun formatDimension(value: Dp): String {
+    if (value.isUnspecified) {
+        return "100%"
+    }
+    return "${value.value.toInt()}dp"
 }

@@ -727,4 +727,14 @@
     <string name="cached_searchable">Mostrando una versione memorizzata nella cache, le informazioni potrebbero essere obsolete.</string>
     <string name="widget_pick_widget">Scegli widget</string>
     <string name="clock_style_custom">Widget personalizzato</string>
+    <string name="widget_config_appwidget_resize">Ridimensiona</string>
+    <string name="search_action_share">Condividi</string>
+    <string name="search_filter_online">Risultati in linea</string>
+    <string name="search_filter_apps">App</string>
+    <string name="preference_filter_bar">Mostra barra filtri</string>
+    <string name="preference_filter_bar_summary">Mostra filtri rapidi sopra la tastiera</string>
+    <string name="preference_default_filter_summary">Personalizza filtro predefinito per ricerche</string>
+    <string name="search_filter_tools">Strumenti</string>
+    <string name="preference_default_filter">Filtro predefinito</string>
+    <string name="filter_settings_network_warning">Il filtro attuale abilita i risultati in linea per impostazione predefinita. Le tue query di ricerca potrebbero essere inviate involontariamente a servizi web esterni. Per motivi di privacy, questo non è raccomandato.</string>
 </resources>

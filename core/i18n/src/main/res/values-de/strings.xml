@@ -726,4 +726,10 @@
     <string name="search_action_share">Teilen</string>
     <string name="search_filter_online">Web-Ergebnisse</string>
     <string name="search_filter_tools">Werkzeuge</string>
+    <string name="search_filter_apps">Apps</string>
+    <string name="preference_default_filter_summary">Standardfilter für Suchen anpassen</string>
+    <string name="preference_filter_bar">Filterleiste anzeigen</string>
+    <string name="preference_default_filter">Standardfilter</string>
+    <string name="preference_filter_bar_summary">Schellfilter über der Tastatur anzeigen</string>
+    <string name="filter_settings_network_warning">Mit dem aktuellen Filter sind Online-Suchen standardmäßig aktiviert. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden. Aus Datenschutzgründen ist dies nicht empfohlen.</string>
 </resources>
