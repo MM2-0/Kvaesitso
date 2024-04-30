@@ -295,7 +295,7 @@ internal class PluginWeatherProvider(
                 if (lat != null && lon != null) {
                     results += WeatherLocation.LatLon(lat = lat, lon = lon, name = name)
                 } else if (locationId != null) {
-                    results += WeatherLocation.Id(locationId, name)
+                    results += WeatherLocation.Id(locationId = locationId, name = name)
                 }
             }
             results
