@@ -154,7 +154,6 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.Events,
         KeyboardFilterBarItem.Contacts,
         KeyboardFilterBarItem.Files,
-        KeyboardFilterBarItem.Places,
         KeyboardFilterBarItem.Articles,
         KeyboardFilterBarItem.Websites,
         KeyboardFilterBarItem.Places,

@@ -290,6 +290,15 @@ fun SearchSettingsScreen() {
                         viewModel.setFilterBar(it)
                     }
                 )
+                AnimatedVisibility(filterBar == true) {
+                    Preference(
+                        title = stringResource(R.string.preference_customize_filter_bar),
+                        summary = stringResource(R.string.preference_customize_filter_bar_summary),
+                        onClick =  {
+                            navController?.navigate("settings/search/filterbar")
+                        }
+                    )
+                }
             }
         }
         if (hasWorkProfile) {

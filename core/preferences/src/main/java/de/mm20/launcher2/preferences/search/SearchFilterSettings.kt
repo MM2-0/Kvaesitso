@@ -1,5 +1,6 @@
 package de.mm20.launcher2.preferences.search
 
+import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.preferences.LauncherDataStore
 import de.mm20.launcher2.search.SearchFilters
 import kotlinx.coroutines.flow.map
@@ -25,4 +26,12 @@ class SearchFilterSettings internal constructor(
         }
     }
 
+    val filterBarItems
+        get() = launcherDataStore.data.map { it.searchFilterBarItems.distinct() }
+
+    fun setFilterBarItems(items: List<KeyboardFilterBarItem>) {
+        launcherDataStore.update {
+            it.copy(searchFilterBarItems = items)
+        }
+    }
 }

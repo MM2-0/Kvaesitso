@@ -137,11 +137,13 @@ fun LauncherSearchBar(
             exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
+            val items by searchVM.filterBarItems.collectAsState(emptyList())
             KeyboardFilterBar(
                 filters = searchVM.filters.value,
                 onFiltersChange = {
                     searchVM.setFilters(it)
-                }
+                },
+                items = items
             )
         }
     }
