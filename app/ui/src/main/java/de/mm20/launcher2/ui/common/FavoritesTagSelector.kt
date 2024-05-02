@@ -1,20 +1,20 @@
 package de.mm20.launcher2.ui.common
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.ScrollState
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.ExpandLess
@@ -33,16 +33,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
-import androidx.compose.ui.input.nestedscroll.NestedScrollSource
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Velocity
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
+import de.mm20.launcher2.ui.layout.BottomReversed
+import de.mm20.launcher2.ui.layout.TopReversed
 import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 
 @Composable
@@ -56,106 +53,165 @@ fun FavoritesTagSelector(
     expanded: Boolean,
     onExpand: (Boolean) -> Unit,
 ) {
-    Row(
+    val sheetManager = LocalBottomSheetManager.current
+
+    SharedTransitionLayout(
         modifier = Modifier
             .fillMaxWidth()
-            .animateContentSize()
             .padding(
                 top = if (reverse) 8.dp else 4.dp,
                 bottom = if (reverse) 4.dp else 8.dp,
                 end = if (editButton) 8.dp else 0.dp
             ),
-        horizontalArrangement = Arrangement.End,
-        verticalAlignment = if (expanded) Alignment.Bottom else Alignment.CenterVertically,
     ) {
-        if (!expanded) {
-            val canScroll by remember {
-                derivedStateOf { scrollState.canScrollForward || scrollState.canScrollBackward }
-            }
-            Row(
-                modifier = Modifier
-                    .weight(1f)
-                    .consumeAllScrolling()
-                    .horizontalScroll(scrollState)
-                    .padding(end = 12.dp),
-            ) {
-                FilterChip(
-                    modifier = Modifier.padding(start = 16.dp),
-                    selected = selectedTag == null,
-                    onClick = { onSelectTag(null) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Rounded.Star,
-                            contentDescription = null,
-                            modifier = Modifier.size(FilterChipDefaults.IconSize),
-                        )
-                    },
-                    label = { Text(stringResource(R.string.favorites)) }
-                )
-                for (tag in tags) {
-                    TagChip(
-                        modifier = Modifier.padding(start = 8.dp),
-                        tag = tag,
-                        selected = selectedTag == tag.tag,
-                        onClick = { onSelectTag(tag.tag) },
-                    )
+        AnimatedContent(
+            targetState = expanded,
+        ) {
+            if (!it) {
+                val canScroll by remember {
+                    derivedStateOf { scrollState.canScrollForward || scrollState.canScrollBackward }
                 }
-                if (canScroll) {
-                    IconButton(
-                        onClick = { onExpand(true) }) {
-                        Icon(Icons.Rounded.ExpandMore, null)
-                    }
-                }
-            }
-        } else {
-            FlowRow(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 12.dp, start = 16.dp),
-            ) {
-                FilterChip(
-                    modifier = Modifier.padding(end = 8.dp),
-                    selected = selectedTag == null,
-                    onClick = { onSelectTag(null) },
-                    leadingIcon = {
-                        Icon(
-                            imageVector = Icons.Rounded.Star,
-                            contentDescription = null,
-                            modifier = Modifier.size(FilterChipDefaults.IconSize),
-                        )
-                    },
-                    label = { Text(stringResource(R.string.favorites)) }
-                )
-                for (tag in tags) {
-                    TagChip(
-                        modifier = Modifier.padding(end = 8.dp),
-                        tag = tag,
-                        selected = selectedTag == tag.tag,
-                        onClick = { onSelectTag(tag.tag) },
-                    )
-                }
-            }
-        }
-        if (editButton || expanded) {
-            Column(
-                modifier = if (expanded && editButton) Modifier.fillMaxHeight() else Modifier,
-                verticalArrangement = if (expanded && editButton) Arrangement.SpaceBetween else Arrangement.Center,
-            ) {
-                if (expanded) {
-                    IconButton(onClick = { onExpand(false) }) {
-                        Icon(Icons.Rounded.ExpandLess, null)
-                    }
-                }
-                if (editButton) {
-                    val sheetManager = LocalBottomSheetManager.current
-                    SmallFloatingActionButton(
-                        elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
-                        onClick = { sheetManager.showEditFavoritesSheet() }
+                Row {
+                    Row(
+                        modifier = Modifier
+                            .weight(1f)
+                            .consumeAllScrolling()
+                            .horizontalScroll(scrollState)
+                            .padding(end = 12.dp),
                     ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Edit,
-                            contentDescription = null
+                        FilterChip(
+                            modifier = Modifier
+                                .padding(start = 16.dp)
+                                .sharedBounds(
+                                    rememberSharedContentState("favorites"),
+                                    this@AnimatedContent
+                                ),
+                            selected = selectedTag == null,
+                            onClick = { onSelectTag(null) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            },
+                            label = { Text(stringResource(R.string.favorites)) }
                         )
+                        for (tag in tags) {
+                            TagChip(
+                                modifier = Modifier
+                                    .padding(start = 8.dp)
+                                    .sharedBounds(
+                                        rememberSharedContentState("tag-${tag.tag}"),
+                                        this@AnimatedContent
+                                    ),
+                                tag = tag,
+                                selected = selectedTag == tag.tag,
+                                onClick = { onSelectTag(tag.tag) },
+                            )
+                        }
+                        if (canScroll) {
+                            IconButton(
+                                modifier = Modifier.sharedElement(
+                                    rememberSharedContentState("expandButton"),
+                                    this@AnimatedContent
+                                ),
+                                onClick = { onExpand(true) }) {
+                                Icon(Icons.Rounded.ExpandMore, null)
+                            }
+                        }
+
+                    }
+
+                    if (editButton) {
+                        SmallFloatingActionButton(
+                            modifier = Modifier.sharedBounds(
+                                rememberSharedContentState("editButton"),
+                                this@AnimatedContent
+                            ),
+                            elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                            onClick = { sheetManager.showEditFavoritesSheet() }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Edit,
+                                contentDescription = null
+                            )
+                        }
+                    }
+                }
+            } else {
+                Row(
+                    verticalAlignment = if (reverse) Alignment.Top else Alignment.Bottom,
+                ) {
+                    FlowRow(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 12.dp, start = 16.dp),
+                    ) {
+                        FilterChip(
+                            modifier = Modifier
+                                .padding(end = 8.dp)
+                                .sharedBounds(
+                                    rememberSharedContentState("favorites"),
+                                    this@AnimatedContent
+                                ),
+                            selected = selectedTag == null,
+                            onClick = { onSelectTag(null) },
+                            leadingIcon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Star,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(FilterChipDefaults.IconSize),
+                                )
+                            },
+                            label = { Text(stringResource(R.string.favorites)) }
+                        )
+                        for (tag in tags) {
+                            TagChip(
+                                modifier = Modifier
+                                    .padding(end = 8.dp)
+                                    .sharedBounds(
+                                        rememberSharedContentState("tag-${tag.tag}"),
+                                        this@AnimatedContent
+                                    ),
+                                tag = tag,
+                                selected = selectedTag == tag.tag,
+                                onClick = { onSelectTag(tag.tag) },
+                            )
+                        }
+                    }
+
+                    Column(
+                        modifier = Modifier.fillMaxHeight(),
+                        verticalArrangement = if (reverse) Arrangement.TopReversed else Arrangement.Bottom,
+                    ) {
+                        if (expanded) {
+                            IconButton(
+                                modifier = Modifier.sharedElement(
+                                    rememberSharedContentState("expandButton"),
+                                    this@AnimatedContent
+                                ),
+                                onClick = { onExpand(false) }
+                            ) {
+                                Icon(Icons.Rounded.ExpandLess, null)
+                            }
+                        }
+
+                        if (editButton) {
+                            SmallFloatingActionButton(
+                                modifier = Modifier.sharedBounds(
+                                    rememberSharedContentState("editButton"),
+                                    this@AnimatedContent
+                                ),
+                                elevation = FloatingActionButtonDefaults.bottomAppBarFabElevation(),
+                                onClick = { sheetManager.showEditFavoritesSheet() }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.Edit,
+                                    contentDescription = null
+                                )
+                            }
+                        }
                     }
                 }
             }
