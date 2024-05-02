@@ -4,6 +4,7 @@ import android.content.Context
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
@@ -129,14 +130,14 @@ fun CalendarWidget(
         val hasPermission by viewModel.hasPermission.collectAsState()
         Column(
             modifier = Modifier
-                .padding(horizontal = 12.dp)
-                .padding(bottom = 12.dp)
+                .animateContentSize()
         ) {
             if (hasPermission == false) {
                 MissingPermissionBanner(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(4.dp),
+                        .padding(4.dp)
+                        .padding(horizontal = 12.dp),
                     text = stringResource(R.string.missing_permission_calendar_widget),
                     onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) }
                 )
@@ -151,17 +152,42 @@ fun CalendarWidget(
                     when {
                         initialState.first == targetState.first -> fadeIn() togetherWith fadeOut()
                         initialState.first < targetState.first -> {
-                            fadeIn() + slideIn { IntOffset((it.width * 0.25f).toInt(), 0) } togetherWith
-                            fadeOut() + slideOut { IntOffset((it.width * -0.25f).toInt(), 0) }
+                            fadeIn() + slideIn {
+                                IntOffset(
+                                    (it.width * 0.25f).toInt(),
+                                    0
+                                )
+                            } togetherWith
+                                    fadeOut() + slideOut {
+                                IntOffset(
+                                    (it.width * -0.25f).toInt(),
+                                    0
+                                )
+                            }
                         }
+
                         else -> {
-                            fadeIn() + slideIn { IntOffset((it.width * -0.25f).toInt(), 0) } togetherWith
-                                    fadeOut() + slideOut { IntOffset((it.width * 0.25f).toInt(), 0) }
+                            fadeIn() + slideIn {
+                                IntOffset(
+                                    (it.width * -0.25f).toInt(),
+                                    0
+                                )
+                            } togetherWith
+                                    fadeOut() + slideOut {
+                                IntOffset(
+                                    (it.width * 0.25f).toInt(),
+                                    0
+                                )
+                            }
                         }
                     }
                 }
             ) { (_, events, runningEvents) ->
-                Column {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 12.dp)
+                        .padding(bottom = 12.dp)
+                ) {
                     if (events.isEmpty() && hasPermission == true) {
                         Info(text = stringResource(R.string.calendar_widget_no_events))
                     }
