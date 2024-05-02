@@ -737,4 +737,6 @@
     <string name="preference_filter_bar_summary">Zobrazit rychlé filtry nad klávesnicí</string>
     <string name="preference_filter_bar">Zobrazit lištu s filtry</string>
     <string name="filter_settings_network_warning">Aktuální filtr má ve výchozím nastavení povolené online výsledky. Vaše dotazy mohou být neúmyslně odesílány na externí webové služby. Z důvodu ochrany soukromí toto není doporučeno.</string>
+    <string name="preference_customize_filter_bar">Přizpůsobit lištu filtrů</string>
+    <string name="preference_customize_filter_bar_summary">Přizpůsobte si, které položky mají být zahrnuty na liště filtrů</string>
 </resources>
