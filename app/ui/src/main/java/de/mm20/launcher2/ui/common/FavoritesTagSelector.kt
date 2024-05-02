@@ -1,18 +1,17 @@
 package de.mm20.launcher2.ui.common
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.EnterExitState
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.animation.core.animateFloat
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -33,12 +32,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.Tag
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.layout.BottomReversed
 import de.mm20.launcher2.ui.layout.TopReversed
 import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 
@@ -111,11 +110,16 @@ fun FavoritesTagSelector(
                             )
                         }
                         if (canScroll) {
+                            val rot by transition.animateFloat {
+                                if (it == EnterExitState.Visible) 0f else 180f
+                            }
                             IconButton(
-                                modifier = Modifier.sharedElement(
-                                    rememberSharedContentState("expandButton"),
-                                    this@AnimatedContent
-                                ),
+                                modifier = Modifier
+                                    .sharedElement(
+                                        rememberSharedContentState("expandButton"),
+                                        this@AnimatedContent
+                                    )
+                                    .rotate(rot),
                                 onClick = { onExpand(true) }) {
                                 Icon(Icons.Rounded.ExpandMore, null)
                             }
@@ -185,16 +189,19 @@ fun FavoritesTagSelector(
                         modifier = Modifier.fillMaxHeight(),
                         verticalArrangement = if (reverse) Arrangement.TopReversed else Arrangement.Bottom,
                     ) {
-                        if (expanded) {
-                            IconButton(
-                                modifier = Modifier.sharedElement(
+                        val rot by transition.animateFloat {
+                            if (it == EnterExitState.Visible) 0f else 180f
+                        }
+                        IconButton(
+                            modifier = Modifier
+                                .sharedElement(
                                     rememberSharedContentState("expandButton"),
                                     this@AnimatedContent
-                                ),
-                                onClick = { onExpand(false) }
-                            ) {
-                                Icon(Icons.Rounded.ExpandLess, null)
-                            }
+                                )
+                                .rotate(rot),
+                            onClick = { onExpand(false) }
+                        ) {
+                            Icon(Icons.Rounded.ExpandLess, null)
                         }
 
                         if (editButton) {

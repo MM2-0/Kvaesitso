@@ -3,22 +3,48 @@ package de.mm20.launcher2.ui.launcher.widgets.calendar
 import android.content.Context
 import android.text.format.DateUtils
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ArrowDropDown
+import androidx.compose.material.icons.rounded.ChevronLeft
+import androidx.compose.material.icons.rounded.ChevronRight
+import androidx.compose.material.icons.rounded.OpenInNew
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import de.mm20.launcher2.ui.R
@@ -36,6 +62,8 @@ fun CalendarWidget(
     val viewModel: CalendarWidgetVM = viewModel(key = "calendar-widget-${widget.id}")
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
+
+    val selectedDate by viewModel.selectedDate
 
     LaunchedEffect(null) {
         lifecycleOwner.repeatOnLifecycle(Lifecycle.State.RESUMED) {
@@ -59,7 +87,6 @@ fun CalendarWidget(
                 modifier = Modifier.weight(1f),
                 contentAlignment = Alignment.Center
             ) {
-                val selectedDate by viewModel.selectedDate
                 var showDropdown by remember { mutableStateOf(false) }
                 TextButton(onClick = { showDropdown = true }) {
                     Text(
@@ -98,10 +125,10 @@ fun CalendarWidget(
             }
         }
         val events by viewModel.calendarEvents
+        val runningEvents by viewModel.hiddenPastEvents
         val hasPermission by viewModel.hasPermission.collectAsState()
         Column(
             modifier = Modifier
-                .animateContentSize()
                 .padding(horizontal = 12.dp)
                 .padding(bottom = 12.dp)
         ) {
@@ -114,45 +141,78 @@ fun CalendarWidget(
                     onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) }
                 )
             }
-            if (events.isEmpty() && hasPermission == true) {
-                Info(text = stringResource(R.string.calendar_widget_no_events))
-            }
-            SearchResultList(
-                events,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
-            val runningEvents by viewModel.hiddenPastEvents
-            if (runningEvents > 0) {
-                Info(
-                    text = pluralStringResource(
-                        R.plurals.calendar_widget_running_events,
-                        runningEvents,
-                        runningEvents
-                    ),
-                    onClick = {
-                        viewModel.showAllEvents()
+            AnimatedContent(
+                Triple(
+                    selectedDate,
+                    events,
+                    runningEvents
+                ),
+                transitionSpec = {
+                    when {
+                        initialState.first == targetState.first -> fadeIn() togetherWith fadeOut()
+                        initialState.first < targetState.first -> {
+                            fadeIn() + slideIn { IntOffset((it.width * 0.25f).toInt(), 0) } togetherWith
+                            fadeOut() + slideOut { IntOffset((it.width * -0.25f).toInt(), 0) }
+                        }
+                        else -> {
+                            fadeIn() + slideIn { IntOffset((it.width * -0.25f).toInt(), 0) } togetherWith
+                                    fadeOut() + slideOut { IntOffset((it.width * 0.25f).toInt(), 0) }
+                        }
                     }
-                )
+                }
+            ) { (_, events, runningEvents) ->
+                Column {
+                    if (events.isEmpty() && hasPermission == true) {
+                        Info(text = stringResource(R.string.calendar_widget_no_events))
+                    }
+                    SearchResultList(
+                        events,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                    )
+                    if (runningEvents > 0) {
+                        Info(
+                            text = pluralStringResource(
+                                R.plurals.calendar_widget_running_events,
+                                runningEvents,
+                                runningEvents
+                            ),
+                            onClick = {
+                                viewModel.showAllEvents()
+                            }
+                        )
+                    }
+                    val nextEvents by viewModel.nextEvents
+                    if (nextEvents.isNotEmpty()) {
+                        Text(
+                            stringResource(R.string.calendar_widget_next_events),
+                            modifier = Modifier.padding(
+                                start = 4.dp,
+                                end = 4.dp,
+                                top = 8.dp,
+                                bottom = 4.dp
+                            ),
+                            style = MaterialTheme.typography.titleMedium
+                        )
+                        SearchResultList(
+                            nextEvents,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                        )
+                    }
+                }
             }
-            val nextEvents by viewModel.nextEvents
-            if (nextEvents.isNotEmpty()) {
-                Text(
-                    stringResource(R.string.calendar_widget_next_events),
-                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                SearchResultList(
-                    nextEvents,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                )
-            }
+
             val pinnedEvents by viewModel.pinnedCalendarEvents.collectAsState()
             if (pinnedEvents.isNotEmpty()) {
                 Text(
                     stringResource(R.string.calendar_widget_pinned_events),
-                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, top = 8.dp, bottom = 4.dp),
+                    modifier = Modifier.padding(
+                        start = 4.dp,
+                        end = 4.dp,
+                        top = 8.dp,
+                        bottom = 4.dp
+                    ),
                     style = MaterialTheme.typography.titleMedium
                 )
                 SearchResultList(
