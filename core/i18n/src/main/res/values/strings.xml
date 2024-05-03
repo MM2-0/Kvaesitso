@@ -482,7 +482,7 @@
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
     <string name="preference_location_managed">Managed by plugin</string>
-    <string name="preference_location_managed_summary">The location for this provider can be configured in the plugin app</string>
+    <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
