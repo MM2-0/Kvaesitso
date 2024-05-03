@@ -8,5 +8,6 @@ fun WeatherPluginConfig(bundle: Bundle): WeatherPluginConfig {
             "minUpdateInterval",
             60 * 60 * 1000L
         ),
+        managedLocation = bundle.getBoolean("managedLocation", false)
     )
 }

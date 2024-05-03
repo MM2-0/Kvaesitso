@@ -393,6 +393,7 @@ data class LatLon(
 data class ProviderSettings(
     val locationId: String? = null,
     val locationName: String? = null,
+    val managedLocation: Boolean = false,
 )
 
 @Serializable

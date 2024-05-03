@@ -1,7 +1,5 @@
 package de.mm20.launcher2.plugin.config
 
-import android.os.Bundle
-
 data class WeatherPluginConfig(
     /**
      * Minimum time (in ms) that needs to pass before the provider can be queried again.
@@ -9,4 +7,9 @@ data class WeatherPluginConfig(
      * or weather provider.
      */
     val minUpdateInterval: Long = 60 * 60 * 1000L,
+    /**
+     * Whether the location is managed by the plugin. If true, the user cannot change the location
+     * in the launcher settings.
+     */
+    val managedLocation: Boolean = false,
 )
