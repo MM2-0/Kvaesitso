@@ -91,7 +91,7 @@ data class LauncherSettingsData internal constructor(
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
 
-    val hiddenItemsShowButton: Boolean = true,
+    val hiddenItemsShowButton: Boolean = false,
 
     val iconsShape: IconShape = IconShape.PlatformDefault,
     val iconsAdaptify: Boolean = false,
