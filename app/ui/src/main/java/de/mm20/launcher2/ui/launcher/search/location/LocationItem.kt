@@ -33,20 +33,14 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material.icons.twotone.CloudOff
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -59,6 +53,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.times
@@ -105,7 +100,24 @@ fun LocationItem(
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
     }.collectAsStateWithLifecycle(viewModel.devicePoseProvider.lastLocation)
-    val insaneUnits by viewModel.useInsaneUnits.collectAsState()
+
+    val targetHeading by remember(userLocation, location) {
+        if (userLocation != null) {
+            viewModel.devicePoseProvider.getHeadingToDegrees(
+                userLocation!!.bearingTo(
+                    location.toAndroidLocation()
+                )
+            )
+        } else emptyFlow()
+    }.collectAsStateWithLifecycle(null)
+
+    val userHeading by remember {
+        if (userLocation != null) {
+            viewModel.devicePoseProvider.getAzimuthDegrees()
+        } else emptyFlow()
+    }.collectAsStateWithLifecycle(null)
+
+    val imperialUnits by viewModel.imperialUnits.collectAsState()
 
     val isUpToDate by viewModel.isUpToDate.collectAsState()
 
@@ -209,16 +221,6 @@ fun LocationItem(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
-                    val targetHeading by remember(userLocation, location) {
-                        if (userLocation != null)
-                            viewModel.devicePoseProvider.getHeadingToDegrees(
-                                userLocation!!.bearingTo(
-                                    location.toAndroidLocation()
-                                )
-                            )
-                        else
-                            emptyFlow()
-                    }.collectAsStateWithLifecycle(null)
 
                     if (targetHeading != null) {
                         val directionArrowAngle by animateValueAsState(
@@ -234,7 +236,7 @@ fun LocationItem(
                     if (distance != null) {
                         Text(
                             text = distance.metersToLocalizedString(
-                                context, insaneUnits
+                                context, imperialUnits
                             ), style = MaterialTheme.typography.labelSmall
                         )
                     }
@@ -299,7 +301,6 @@ fun LocationItem(
                                 .padding(top = 16.dp, bottom = 8.dp)
                                 .align(Alignment.CenterHorizontally)
                                 .fillMaxWidth(.9125f)
-                                .aspectRatio(1f)
                                 .border(1.dp, MaterialTheme.colorScheme.outline, shape)
                                 .clip(shape)
                                 .clickable {
@@ -307,15 +308,18 @@ fun LocationItem(
                                 },
                             tileServerUrl = tileServerUrl,
                             location = location,
-                            initialZoomLevel = zoomLevel,
-                            numberOfTiles = nTiles,
+                            maxZoomLevel = zoomLevel,
+                            tiles = IntSize(3, 2),
                             applyTheming = applyTheming,
-                            userLocation = if (showPositionOnMap) userLocation?.let {
-                                UserLocation(
-                                    it.latitude,
-                                    it.longitude
-                                )
-                            } else null,
+                            userLocation = {
+                                if (showPositionOnMap) userLocation?.let {
+                                    UserLocation(
+                                        it.latitude,
+                                        it.longitude,
+                                        heading = userHeading,
+                                    )
+                                } else null
+                            },
                         )
 
                         val address = buildAddress(location.street, location.houseNumber)
