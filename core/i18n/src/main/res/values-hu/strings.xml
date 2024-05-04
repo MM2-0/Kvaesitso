@@ -734,4 +734,6 @@
     <string name="filter_settings_network_warning">Az aktuális szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
     <string name="preference_customize_filter_bar_summary">Adja meg, hogy mely elemek szerepeljenek a szűrősávon</string>
     <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
+    <string name="preference_location_managed">Bővítmény által kezelt</string>
+    <string name="preference_location_managed_summary">A helyszín szolgáltatót a bővítmény alkalmazás kezeli</string>
 </resources>
