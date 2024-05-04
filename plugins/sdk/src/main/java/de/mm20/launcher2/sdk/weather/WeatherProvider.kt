@@ -107,6 +107,9 @@ abstract class WeatherProvider(
         if (locationName != null && lat != null && lon != null) {
             return getWeatherData(WeatherLocation.LatLon(locationName, lat, lon), lang)
         }
+        if (lat == null && lon == null && id == null) {
+            return getWeatherData(WeatherLocation.Managed, lang)
+        }
         return null
     }
 
@@ -226,6 +229,9 @@ abstract class WeatherProvider(
      */
     open suspend fun findLocations(query: String, lang: String): List<WeatherLocation> {
         val context = context ?: return emptyList()
+        if (config.managedLocation) {
+            return listOf(WeatherLocation.Managed)
+        }
         val parts = query.split(" ", limit = 3)
         val lat = parts.getOrNull(0)?.toDoubleOrNull()
         val lon = parts.getOrNull(1)?.toDoubleOrNull()

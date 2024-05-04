@@ -7,4 +7,8 @@ sealed interface WeatherLocation {
 
     data class LatLon(override val name: String, val lat: Double, val lon: Double) :
         WeatherLocation
+
+    data object Managed: WeatherLocation {
+        override val name: String = ""
+    }
 }

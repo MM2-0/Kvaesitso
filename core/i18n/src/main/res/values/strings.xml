@@ -481,6 +481,8 @@
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
+    <string name="preference_location_managed">Managed by plugin</string>
+    <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
@@ -923,6 +925,8 @@
     <string name="preference_default_filter_summary">Customize the default filter for searches</string>
     <string name="preference_filter_bar">Show filter bar</string>
     <string name="preference_filter_bar_summary">Show quick filters above the keyboard</string>
+    <string name="preference_customize_filter_bar">Customize filter bar</string>
+    <string name="preference_customize_filter_bar_summary">Customize which items are included in the filter bar</string>
     <string name="filter_settings_network_warning">The current filter enables online results by default. Your search queries might unintentionally be sent to external web services. For privacy reasons, this is not recommended.</string>
     <string name="preference_search_osm_locations">OpenStreetMap</string>
     <string name="preference_search_osm_locations_summary">Search OpenStreetMap for shops and other places in the local area</string>

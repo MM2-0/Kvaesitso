@@ -20,6 +20,10 @@ sealed interface WeatherLocation {
         override val name: String,
         val locationId: String,
     ) : WeatherLocation
+
+    data object Managed : WeatherLocation {
+        override val name: String = "Managed by plugin"
+    }
 }
 
 data class WeatherSettingsData(
@@ -51,6 +55,10 @@ class WeatherSettings internal constructor(
 
     val location = launcherDataStore.data.map {
         val providerSettings = it.weatherProviderSettings[it.weatherProvider]
+
+        if (providerSettings?.managedLocation == true) {
+            return@map WeatherLocation.Managed
+        }
         val id = providerSettings?.locationId
         val name = providerSettings?.locationName
 
@@ -87,6 +95,7 @@ class WeatherSettings internal constructor(
                                 providerSettings.copy(
                                     locationId = null,
                                     locationName = null,
+                                    managedLocation = false,
                                 )
                             )
                         }
@@ -104,7 +113,27 @@ class WeatherSettings internal constructor(
                                 it.weatherProvider,
                                 providerSettings.copy(
                                     locationId = location.locationId,
-                                    locationName = location.name
+                                    locationName = location.name,
+                                    managedLocation = false,
+                                )
+                            )
+                        }
+                    )
+                }
+
+                is WeatherLocation.Managed -> {
+                    it.copy(
+                        weatherLocation = null,
+                        weatherLocationName = null,
+                        weatherAutoLocation = true,
+                        weatherLastUpdate = 0L,
+                        weatherProviderSettings = it.weatherProviderSettings.toMutableMap().apply {
+                            put(
+                                it.weatherProvider,
+                                providerSettings.copy(
+                                    locationId = null,
+                                    locationName = null,
+                                    managedLocation = true,
                                 )
                             )
                         }

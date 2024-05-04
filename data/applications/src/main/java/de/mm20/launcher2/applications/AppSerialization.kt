@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.LauncherApps
 import android.os.UserManager
+import android.util.Log
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
@@ -40,6 +41,7 @@ class LauncherAppDeserializer(val context: Context) : SearchableDeserializer {
             val launcherActivityInfo = launcherApps.resolveActivity(intent, user) ?: return null
             return LauncherApp(context, launcherActivityInfo)
         } catch (e: SecurityException) {
+            Log.e("MM20", "Failed to deserialize app: $serialized", e)
             return null
         }
     }

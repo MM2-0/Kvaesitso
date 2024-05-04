@@ -301,7 +301,7 @@ fun Modifier.dragAndDrop(
     dragHorizontal: Boolean = true,
     hapticFeedback: HapticFeedback
 ) =
-    this then pointerInput(null) {
+    this then Modifier.pointerInput(null) {
         val scope = CoroutineScope(coroutineContext)
         detectDragGesturesAfterLongPress(
             onDragStart = { offset ->

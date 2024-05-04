@@ -732,4 +732,6 @@
     <string name="preference_default_filter">Standardfilter</string>
     <string name="preference_filter_bar_summary">Schellfilter über der Tastatur anzeigen</string>
     <string name="filter_settings_network_warning">Mit dem aktuellen Filter sind Online-Suchen standardmäßig aktiviert. Ihre Suchanfragen könnten unbeabsichtigt an externe Webdienste gesendet werden. Aus Datenschutzgründen ist dies nicht empfohlen.</string>
+    <string name="preference_customize_filter_bar">Filterleiste anpassen</string>
+    <string name="preference_customize_filter_bar_summary">Die in der Filterleiste enthaltenen Elemente anpassen</string>
 </resources>
