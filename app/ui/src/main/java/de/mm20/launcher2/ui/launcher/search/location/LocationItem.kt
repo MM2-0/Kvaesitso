@@ -17,45 +17,53 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Directions
+import androidx.compose.material.icons.rounded.DirectionsBus
+import androidx.compose.material.icons.rounded.DirectionsRailway
+import androidx.compose.material.icons.rounded.DirectionsSubwayFilled
+import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material.icons.twotone.CloudOff
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableFloatStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -65,6 +73,9 @@ import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.openstreetmaps.BuildConfig
+import de.mm20.launcher2.search.Departure
+import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
@@ -77,6 +88,7 @@ import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
@@ -100,7 +112,6 @@ fun LocationItem(
 ) {
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
-    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
@@ -282,23 +293,16 @@ fun LocationItem(
                     }
 
                     val showMap by viewModel.showMap.collectAsState()
-                    if (showMap) {
-                        val zoomLevel = 19
-                        val nTiles = 4
+                    val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
+                    val shape = MaterialTheme.shapes.small
+                    val applyTheming by viewModel.applyMapTheming.collectAsState()
+                    val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
+                    val zoomLevel = 19
 
-                        val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
-                        val shape = MaterialTheme.shapes.small
-
-                        val applyTheming by viewModel.applyMapTheming.collectAsState()
-                        val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
-
-                        HorizontalDivider()
-
+                    @Composable
+                    fun mapTiles(modifier: Modifier, nTiles: Int) {
                         MapTiles(
-                            modifier = Modifier
-                                .padding(top = 16.dp, bottom = 8.dp)
-                                .align(Alignment.CenterHorizontally)
-                                .fillMaxWidth(.9125f)
+                            modifier = modifier
                                 .aspectRatio(1f)
                                 .border(1.dp, MaterialTheme.colorScheme.outline, shape)
                                 .clip(shape)
@@ -317,16 +321,81 @@ fun LocationItem(
                                 )
                             } else null,
                         )
+                    }
 
+                    @Composable
+                    fun address(modifier: Modifier) {
                         val address = buildAddress(location.street, location.houseNumber)
                         if (address != null) {
                             Text(
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(bottom = 8.dp),
+                                modifier = modifier,
                                 text = address,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.secondary
+                            )
+                        }
+                    }
+
+                    val showDepartures =
+                        location.departures.isNullOrEmpty().not() || BuildConfig.DEBUG
+
+                    when {
+                        showMap && showDepartures -> {
+                            HorizontalDivider()
+
+                            Row(
+                                modifier = Modifier
+                                    .padding(top = 16.dp, bottom = 8.dp)
+                                    .align(Alignment.CenterHorizontally)
+                                    .fillMaxWidth(.9125f),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Column {
+                                    mapTiles(
+                                        modifier = Modifier
+                                            .fillMaxWidth(.45f)
+                                            .aspectRatio(1f),
+                                        nTiles = 1,
+                                    )
+                                    address(
+                                        modifier = Modifier
+                                            .align(Alignment.CenterHorizontally)
+                                            .padding(top = 8.dp)
+                                    )
+                                }
+
+                                Departures(
+                                    departures = location.departures,
+                                    modifier = Modifier
+                                        .fillMaxWidth(.95f)
+                                )
+                            }
+                        }
+
+                        showDepartures -> {
+                            HorizontalDivider()
+
+                            Departures(
+                                departures = location.departures,
+                                modifier = Modifier.fillMaxWidth(.9125f)
+                            )
+                        }
+
+                        showMap -> {
+                            HorizontalDivider()
+
+                            mapTiles(
+                                modifier = Modifier
+                                    .padding(top = 16.dp, bottom = 8.dp)
+                                    .align(Alignment.CenterHorizontally)
+                                    .fillMaxWidth(.9125f),
+                                nTiles = 4,
+                            )
+
+                            address(
+                                modifier = Modifier
+                                    .align(Alignment.CenterHorizontally)
+                                    .padding(bottom = 8.dp)
                             )
                         }
                     }
@@ -516,4 +585,121 @@ private fun buildAddress(
         }
     }
     return if (summary.isEmpty()) null else summary.toString()
+}
+
+@Composable
+fun Departures(modifier: Modifier, departures: List<Departure>?) {
+    if (!BuildConfig.DEBUG && departures.isNullOrEmpty())
+        return
+
+    val cardStyle = LocalCardStyle.current
+
+    LazyColumn(
+        modifier = modifier,
+        contentPadding = PaddingValues(vertical = 4.dp)
+    ) {
+        items(
+            departures ?: listOf(
+                Departure(
+                    LocalTime.NOON.plusMinutes(1),
+                    null,
+                    "B5",
+                    "heaven",
+                    LineType.BUS
+                ),
+                Departure(
+                    LocalTime.NOON.plusMinutes(1),
+                    Duration.ofMinutes(3),
+                    "U2",
+                    "hell",
+                    LineType.SUBWAY
+                ),
+                Departure(
+                    LocalTime.NOON.plusMinutes(10),
+                    null,
+                    "S1",
+                    null,
+                    LineType.STREETCAR
+                ),
+                Departure(
+                    LocalTime.NOON.plusMinutes(3),
+                    Duration.ofMinutes(10),
+                    "RE1",
+                    "pankow",
+                    LineType.TRAIN
+                ),
+            )
+        ) {
+            Row(modifier = Modifier.height(22.dp)) {
+                val lineBg = MaterialTheme.colorScheme.primaryContainer
+                Row(
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .drawBehind {
+                            drawRoundRect(
+                                color = lineBg,
+                                cornerRadius = CornerRadius(cardStyle.cornerRadius.toFloat())
+                            )
+                        }
+                ) {
+                    Icon(
+                        imageVector = when (it.type) {
+                            LineType.BUS -> Icons.Rounded.DirectionsBus
+                            LineType.STREETCAR -> Icons.Rounded.DirectionsTransit
+                            LineType.SUBWAY -> Icons.Rounded.DirectionsSubwayFilled
+                            LineType.TRAIN -> Icons.Rounded.DirectionsRailway
+                            null -> Icons.Rounded.Directions
+                        },
+                        contentDescription = it.type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
+                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                        modifier = Modifier
+                            .padding(horizontal = 4.dp)
+                            .size(16.dp)
+                    )
+                    Text(
+                        text = it.line,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1,
+                        modifier = Modifier
+                            .width(35.dp)
+                    )
+                }
+
+                Text(
+                    text = it.time.format(
+                        DateTimeFormatter.ofPattern(
+                            "HH:mm",
+                            Locale.current.platformLocale
+                        )
+                    ),
+                    style = MaterialTheme.typography.labelSmall,
+                    modifier = Modifier.padding(end = 2.dp)
+                )
+
+                val delayWidth = 25.dp
+                if (it.delay != null) {
+                    Text(
+                        text = "+${it.delay!!.toMinutes()}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.width(delayWidth)
+                    )
+                } else {
+                    Spacer(modifier = Modifier.width(delayWidth))
+                }
+
+                if (it.lastStop != null) {
+                    Text(
+                        text = it.lastStop!!,
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Light,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+            }
+        }
+    }
 }
