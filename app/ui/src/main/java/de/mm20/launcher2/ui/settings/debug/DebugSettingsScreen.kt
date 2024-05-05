@@ -72,7 +72,7 @@ fun DebugSettingsScreen() {
                             dumpingHeap = true
                             val df = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss")
                             val path = File(
-                                context.getExternalFilesDir(null),
+                                context.externalCacheDir,
                                 "kvaesitso-dump-${df.format(Date(System.currentTimeMillis()))}.hprof"
                             ).absolutePath
                             delay(100)
