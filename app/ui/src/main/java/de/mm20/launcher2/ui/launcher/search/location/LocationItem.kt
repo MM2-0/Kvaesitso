@@ -33,15 +33,15 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.BugReport
-import androidx.compose.material.icons.rounded.Directions
+import androidx.compose.material.icons.rounded.Commute
 import androidx.compose.material.icons.rounded.DirectionsBus
-import androidx.compose.material.icons.rounded.DirectionsRailway
-import androidx.compose.material.icons.rounded.DirectionsSubwayFilled
-import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Subway
+import androidx.compose.material.icons.rounded.Train
+import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.TravelExplore
 import androidx.compose.material.icons.twotone.CloudOff
 import androidx.compose.material3.HorizontalDivider
@@ -67,6 +67,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
+import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.times
@@ -596,7 +598,7 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
 
     LazyColumn(
         modifier = modifier,
-        contentPadding = PaddingValues(vertical = 4.dp)
+        contentPadding = PaddingValues(vertical = 4.dp),
     ) {
         items(
             departures ?: listOf(
@@ -625,12 +627,15 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                     LocalTime.NOON.plusMinutes(3),
                     Duration.ofMinutes(10),
                     "RE1",
-                    "pankow",
+                    "lorem ipsum dolor sit amet",
                     LineType.TRAIN
                 ),
             )
         ) {
-            Row(modifier = Modifier.height(22.dp)) {
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 4.dp)
+            ) {
                 val lineBg = MaterialTheme.colorScheme.primaryContainer
                 Row(
                     modifier = Modifier
@@ -645,10 +650,10 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                     Icon(
                         imageVector = when (it.type) {
                             LineType.BUS -> Icons.Rounded.DirectionsBus
-                            LineType.STREETCAR -> Icons.Rounded.DirectionsTransit
-                            LineType.SUBWAY -> Icons.Rounded.DirectionsSubwayFilled
-                            LineType.TRAIN -> Icons.Rounded.DirectionsRailway
-                            null -> Icons.Rounded.Directions
+                            LineType.STREETCAR -> Icons.Rounded.Tram
+                            LineType.SUBWAY -> Icons.Rounded.Subway
+                            LineType.TRAIN -> Icons.Rounded.Train
+                            null -> Icons.Rounded.Commute
                         },
                         contentDescription = it.type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
                         tint = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -679,12 +684,15 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                 )
 
                 val delayWidth = 25.dp
-                if (it.delay != null) {
+                val delayMinutes = it.delay?.toMinutes()
+                if (null != delayMinutes && 0L < delayMinutes) {
                     Text(
-                        text = "+${it.delay!!.toMinutes()}",
+                        text = "+$delayMinutes",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.width(delayWidth)
+                        fontSize = TextUnit(2f, TextUnitType.Em),
+                        modifier = Modifier
+                            .width(delayWidth)
                     )
                 } else {
                     Spacer(modifier = Modifier.width(delayWidth))
