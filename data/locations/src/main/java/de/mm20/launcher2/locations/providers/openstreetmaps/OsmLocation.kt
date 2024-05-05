@@ -67,8 +67,6 @@ internal data class OsmLocation(
             "amenity",
             "shop",
             "sport",   // "sport:soccer"
-            "railway", // "railway:stop"
-            "highway", // "highway:bus_stop"
             "tourism", // "tourism:museum"
             "leisure", // "leisure:fitness_center"
         )
@@ -88,7 +86,6 @@ internal data class OsmLocation(
                                     LocationCategory.valueOf(value.uppercase(Locale.ROOT))
                                 }.orRunCatching {
                                     LocationCategory.valueOf(
-                                        // e.g. "railway:stop" -> "RAILWAY_STOP"
                                         "${tag}_${value}".uppercase(
                                             Locale.ROOT
                                         )
