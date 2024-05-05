@@ -130,6 +130,7 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import kotlin.math.min
 import kotlin.math.pow
 
 @Composable
@@ -410,7 +411,20 @@ fun LocationItem(
 
                             Departures(
                                 departures = location.departures,
-                                modifier = Modifier.fillMaxWidth(.9125f)
+                                modifier = Modifier
+                                    .fillMaxWidth(.9125f)
+                                    .padding(start = 25.dp)
+                                    .height(
+                                        let {
+                                            if (BuildConfig.DEBUG) {
+                                                7 * 20
+                                            } else {
+                                                location.departures?.size?.let {
+                                                    min(it, 7) * 20
+                                                } ?: 0
+                                            }
+                                        }.dp
+                                    )
                             )
                         }
 
@@ -622,17 +636,15 @@ private fun buildAddress(
 
 @Composable
 fun Departures(modifier: Modifier, departures: List<Departure>?) {
-    if (!BuildConfig.DEBUG && departures.isNullOrEmpty())
-        return
 
-    val departures = departures ?: DEBUG_DPEARTURES
+    val departures = departures ?: if (BuildConfig.DEBUG) DEBUG_DPEARTURES else return
 
     val cardStyle = LocalCardStyle.current
 
     val listState = rememberLazyListState()
 
     LaunchedEffect(Unit) {
-        delay(500)
+        delay(650)
         val canScroll = listState.layoutInfo.visibleItemsInfo.size < departures.size
         if (canScroll) {
             val delayMs = 250
@@ -648,12 +660,13 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
 
     LazyColumn(
         state = listState,
-        modifier = modifier.pointerInput(Unit) { detectTapGestures { } },
+        modifier = modifier
+            .pointerInput(Unit) { detectTapGestures { } },
         verticalArrangement = Arrangement.spacedBy(6.dp),
         contentPadding = PaddingValues(vertical = 4.dp),
     ) {
         itemsIndexed(
-            departures ?: DEBUG_DPEARTURES,
+            departures,
             key = { idx, _ -> idx }
         ) { idx, it ->
             Row(
@@ -750,14 +763,13 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
 
 private val DEBUG_DPEARTURES = listOf(
     LocalTime.NOON.plusMinutes(5),
-    LocalTime.NOON.plusMinutes(10)
+    LocalTime.MIDNIGHT.plusMinutes(10)
 ).flatMap { time ->
     listOf(Duration.ofMinutes(3), Duration.ofMinutes(99), null).flatMap { delay ->
-        listOf("a", "abc", "longline").flatMap { name ->
+        listOf("512", "scrollingLineName").flatMap { name ->
             listOf(
-                "heaven",
-                "hell",
-                "lorem ipsum dolor sit amet",
+                "lastStop",
+                "longLastStopThatScrolls",
                 null
             ).flatMap { lastStop ->
                 (LineType.entries + null).map { type ->
