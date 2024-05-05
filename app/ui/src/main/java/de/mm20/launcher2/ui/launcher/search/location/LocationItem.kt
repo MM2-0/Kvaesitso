@@ -34,6 +34,7 @@ import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
+import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Phone
@@ -653,6 +654,7 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                             LineType.STREETCAR -> Icons.Rounded.Tram
                             LineType.SUBWAY -> Icons.Rounded.Subway
                             LineType.TRAIN -> Icons.Rounded.Train
+                            LineType.FERRY -> Icons.Rounded.DirectionsBoat
                             null -> Icons.Rounded.Commute
                         },
                         contentDescription = it.type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
