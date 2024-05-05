@@ -4,16 +4,27 @@ import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.Ease
+import androidx.compose.animation.core.EaseInOutBounce
+import androidx.compose.animation.core.EaseInOutElastic
+import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.EaseOutBack
+import androidx.compose.animation.core.EaseOutBounce
+import androidx.compose.animation.core.EaseOutCirc
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.animateValueAsState
+import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.animateScrollBy
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +40,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowUpward
@@ -50,9 +64,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -62,6 +80,9 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -87,14 +108,18 @@ import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.DegreesConverter
+import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
+import de.mm20.launcher2.ui.ktx.toDp
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.modifier.consumeAllScrolling
 import de.mm20.launcher2.ui.modifier.scale
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.DayOfWeek
@@ -104,6 +129,8 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import kotlin.math.max
+import kotlin.math.min
 import kotlin.math.pow
 
 @Composable
@@ -353,7 +380,10 @@ fun LocationItem(
                                     .fillMaxWidth(.9125f),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                Column {
+                                var colHeight by remember { mutableIntStateOf(0) }
+                                Column(modifier = Modifier.onSizeChanged {
+                                    colHeight = it.height
+                                }) {
                                     mapTiles(
                                         modifier = Modifier
                                             .fillMaxWidth(.45f)
@@ -371,6 +401,7 @@ fun LocationItem(
                                     departures = location.departures,
                                     modifier = Modifier
                                         .fillMaxWidth(.95f)
+                                        .height(colHeight.toDp())
                                 )
                             }
                         }
@@ -595,47 +626,39 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
     if (!BuildConfig.DEBUG && departures.isNullOrEmpty())
         return
 
+    val departures = departures ?: DEBUG_DPEARTURES
+
     val cardStyle = LocalCardStyle.current
 
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(Unit) {
+        delay(500)
+        val canScroll = listState.layoutInfo.visibleItemsInfo.size < departures.size
+        if (canScroll) {
+            val delayMs = 250
+            val deltaPixels = 20f
+            listState.animateScrollBy(deltaPixels, tween(durationMillis = delayMs, easing = EaseOut))
+            delay(delayMs.toLong())
+            listState.animateScrollBy(-deltaPixels, tween(easing = EaseOutBounce))
+        }
+    }
+
     LazyColumn(
-        modifier = modifier,
+        state = listState,
+        modifier = modifier.pointerInput(Unit) { detectTapGestures { } },
+        verticalArrangement = Arrangement.spacedBy(6.dp),
         contentPadding = PaddingValues(vertical = 4.dp),
     ) {
-        items(
-            departures ?: listOf(
-                Departure(
-                    LocalTime.NOON.plusMinutes(1),
-                    null,
-                    "B5",
-                    "heaven",
-                    LineType.BUS
-                ),
-                Departure(
-                    LocalTime.NOON.plusMinutes(1),
-                    Duration.ofMinutes(3),
-                    "U2",
-                    "hell",
-                    LineType.SUBWAY
-                ),
-                Departure(
-                    LocalTime.NOON.plusMinutes(10),
-                    null,
-                    "S1",
-                    null,
-                    LineType.STREETCAR
-                ),
-                Departure(
-                    LocalTime.NOON.plusMinutes(3),
-                    Duration.ofMinutes(10),
-                    "RE1",
-                    "lorem ipsum dolor sit amet",
-                    LineType.TRAIN
-                ),
-            )
-        ) {
+        itemsIndexed(
+            departures ?: DEBUG_DPEARTURES,
+            key = { idx, _ -> idx }
+        ) { idx, it ->
             Row(
                 modifier = Modifier
-                    .padding(vertical = 4.dp)
+                    .graphicsLayer {
+                        alpha = listState.layoutInfo.blendIntoViewScale(idx, 2f)
+                    }
             ) {
                 val lineBg = MaterialTheme.colorScheme.primaryContainer
                 Row(
@@ -692,7 +715,7 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                         text = "+$delayMinutes",
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.error,
-                        fontSize = TextUnit(2f, TextUnitType.Em),
+                        fontSize = TextUnit(2.2f, TextUnitType.Em),
                         modifier = Modifier
                             .width(delayWidth)
                     )
@@ -708,6 +731,26 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
+                }
+            }
+        }
+    }
+}
+
+private val DEBUG_DPEARTURES = listOf(
+    LocalTime.NOON.plusMinutes(5),
+    LocalTime.NOON.plusMinutes(10)
+).flatMap { time ->
+    listOf(Duration.ofMinutes(3), Duration.ofMinutes(99), null).flatMap { delay ->
+        listOf("a", "abc", "longline").flatMap { name ->
+            listOf(
+                "heaven",
+                "hell",
+                "lorem ipsum dolor sit amet",
+                null
+            ).flatMap { lastStop ->
+                (LineType.entries + null).map { type ->
+                    Departure(time, delay, name, lastStop, type)
                 }
             }
         }
