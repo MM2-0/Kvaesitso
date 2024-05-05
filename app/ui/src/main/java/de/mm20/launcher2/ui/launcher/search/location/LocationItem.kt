@@ -19,6 +19,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.Orientation
@@ -68,7 +69,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -104,6 +104,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
 import de.mm20.launcher2.ui.animation.animateTextStyleAsState
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
+import de.mm20.launcher2.ui.component.MarqueeText
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
@@ -129,8 +130,6 @@ import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
-import kotlin.math.max
-import kotlin.math.min
 import kotlin.math.pow
 
 @Composable
@@ -638,7 +637,10 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
         if (canScroll) {
             val delayMs = 250
             val deltaPixels = 20f
-            listState.animateScrollBy(deltaPixels, tween(durationMillis = delayMs, easing = EaseOut))
+            listState.animateScrollBy(
+                deltaPixels,
+                tween(durationMillis = delayMs, easing = EaseOut)
+            )
             delay(delayMs.toLong())
             listState.animateScrollBy(-deltaPixels, tween(easing = EaseOutBounce))
         }
@@ -686,12 +688,17 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                             .padding(horizontal = 4.dp)
                             .size(16.dp)
                     )
-                    Text(
+                    MarqueeText(
                         text = it.line,
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                         textAlign = TextAlign.Center,
-                        maxLines = 1,
+                        fadeLeft = 2.5.dp,
+                        fadeRight = 2.5.dp,
+                        iterations = Int.MAX_VALUE,
+                        delayMillis = 0,
+                        spacing = MarqueeSpacing(10.dp),
+                        velocity = 20.dp,
                         modifier = Modifier
                             .width(35.dp)
                     )
@@ -723,13 +730,17 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
                     Spacer(modifier = Modifier.width(delayWidth))
                 }
 
-                if (it.lastStop != null) {
-                    Text(
-                        text = it.lastStop!!,
+                val lastStop = it.lastStop
+                if (lastStop != null) {
+                    MarqueeText(
+                        text = lastStop,
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.Light,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        iterations = Int.MAX_VALUE,
+                        delayMillis = 0,
+                        velocity = 20.dp,
+                        fadeLeft = 5.dp,
+                        fadeRight = 5.dp,
                     )
                 }
             }
