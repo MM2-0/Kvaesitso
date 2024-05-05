@@ -687,7 +687,6 @@
     <string name="preference_search_location_custom_overpass_url">URL Overpass</string>
     <string name="preference_search_bar_separate_work_profile">App per profili di lavoro separate</string>
     <string name="preference_search_bar_separate_work_profile_summary">Mostra app del profilo di lavoro in una scheda separata</string>
-    <string name="location_open_next_day">Apertura %1$s</string>
     <string name="preference_search_locations_hide_uncategorized">Nascondi luoghi senza categoria</string>
     <string name="preference_clock_widget_show_seconds">Mostra secondi</string>
     <string name="widget_use_theme_colors">Usa colore del tema</string>

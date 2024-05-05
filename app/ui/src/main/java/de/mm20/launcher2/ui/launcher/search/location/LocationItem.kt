@@ -2,72 +2,75 @@ package de.mm20.launcher2.ui.launcher.search.location
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.EaseOutBack
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.ArrowUpward
+import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.FiberManualRecord
+import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Map
+import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.TravelExplore
-import androidx.compose.material.icons.twotone.CloudOff
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
-import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.ui.animation.animateHorizontalAlignmentAsState
-import de.mm20.launcher2.ui.animation.animateTextStyleAsState
+import de.mm20.launcher2.search.OpeningHours
+import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
@@ -76,14 +79,11 @@ import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.flow.emptyFlow
-import kotlinx.coroutines.launch
-import java.time.DayOfWeek
-import java.time.Duration
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
+import java.util.Locale
 import kotlin.math.pow
 
 @Composable
@@ -117,13 +117,442 @@ fun LocationItem(
         } else emptyFlow()
     }.collectAsStateWithLifecycle(null)
 
+    val icon by viewModel.icon.collectAsStateWithLifecycle()
+    val badge by viewModel.badge.collectAsStateWithLifecycle(null)
+
     val imperialUnits by viewModel.imperialUnits.collectAsState()
 
     val isUpToDate by viewModel.isUpToDate.collectAsState()
 
     val distance = userLocation?.distanceTo(location.toAndroidLocation())
 
-    Row(modifier = modifier) {
+    SharedTransitionLayout(
+        modifier = modifier,
+    ) {
+        AnimatedContent(showDetails) { showDetails ->
+            if (!showDetails) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    ShapedLauncherIcon(
+                        modifier = Modifier
+                            .animateEnterExit(
+                                enter = slideIn { IntOffset(-it.width, 0) } + fadeIn(),
+                                exit = slideOut { IntOffset(-it.width, 0) } + fadeOut(),
+                            )
+                            .padding(8.dp),
+                        size = 48.dp,
+                        icon = { icon },
+                        badge = { badge },
+                    )
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(horizontal = 8.dp),
+                        verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
+                    ) {
+                        Text(
+                            text = location.labelOverride ?: location.label,
+                            style = MaterialTheme.typography.titleSmall,
+                            modifier = Modifier
+                                .sharedBounds(
+                                    rememberSharedContentState("label"),
+                                    this@AnimatedContent
+                                )
+                        )
+                        val category = location.category
+                        val formattedDistance = distance?.metersToLocalizedString(
+                            context, imperialUnits
+                        )
+                        if (category != null || formattedDistance != null) {
+                            Text(
+                                when {
+                                    category != null && formattedDistance != null -> "${category} • ${formattedDistance}"
+                                    category != null -> category.toString()
+                                    formattedDistance != null -> formattedDistance
+                                    else -> ""
+                                },
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.secondary,
+                                modifier = Modifier
+                                    .sharedElement(
+                                        rememberSharedContentState("sublabel"),
+                                        this@AnimatedContent
+                                    )
+                            )
+                        }
+                    }
+                    Box(
+                        modifier = Modifier
+                            .animateEnterExit(
+                                enter = slideIn { IntOffset(it.width, 0) } + fadeIn(),
+                                exit = slideOut { IntOffset(it.width, 0) } + fadeOut(),
+                            )
+                            .padding(end = 8.dp)
+                            .size(48.dp)
+                            .background(
+                                MaterialTheme.colorScheme.secondaryContainer,
+                                MaterialTheme.shapes.small
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            if (targetHeading != null) Icons.Rounded.Navigation else Icons.Rounded.FiberManualRecord,
+                            null,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .rotate(targetHeading ?: 0f),
+                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                        )
+                    }
+                }
+            } else {
+                val showMap by viewModel.showMap.collectAsState()
+                Column {
+                    if (showMap) {
+                        val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
+                        val shape = MaterialTheme.shapes.small
+
+                        val applyTheming by viewModel.applyMapTheming.collectAsState()
+                        val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
+                        MapTiles(
+                            modifier = Modifier
+                                .animateEnterExit(
+                                    enter = expandVertically(),
+                                    exit = shrinkOut(),
+                                )
+                                .padding(12.dp)
+                                .align(Alignment.CenterHorizontally)
+                                .fillMaxWidth()
+                                .border(1.dp, MaterialTheme.colorScheme.outlineVariant, shape)
+                                .clip(MaterialTheme.shapes.small)
+                                .clickable {
+                                    viewModel.launch(context)
+                                },
+                            tileServerUrl = tileServerUrl,
+                            location = location,
+                            maxZoomLevel = 19,
+                            tiles = IntSize(3, 2),
+                            applyTheming = applyTheming,
+                            userLocation = {
+                                if (showPositionOnMap) userLocation?.let {
+                                    UserLocation(
+                                        it.latitude,
+                                        it.longitude,
+                                        heading = userHeading,
+                                    )
+                                } else null
+                            },
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier.padding(horizontal = 12.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Column {
+                            Text(
+                                text = location.labelOverride ?: location.label,
+                                style = MaterialTheme.typography.titleMedium,
+                                modifier = Modifier
+                                    .sharedBounds(
+                                        rememberSharedContentState("label"),
+                                        this@AnimatedContent
+                                    )
+                            )
+                            val category = location.category
+                            val formattedDistance = distance?.metersToLocalizedString(
+                                context, imperialUnits
+                            )
+                            if (category != null || formattedDistance != null) {
+                                Text(
+                                    when {
+                                        category != null && formattedDistance != null -> "${category} • ${formattedDistance}"
+                                        category != null -> category.toString()
+                                        formattedDistance != null -> formattedDistance
+                                        else -> ""
+                                    },
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    modifier = Modifier
+                                        .sharedElement(
+                                            rememberSharedContentState("sublabel"),
+                                            this@AnimatedContent
+                                        )
+                                )
+                            }
+                        }
+                    }
+
+                    val openingSchedule = location.openingSchedule
+                    if (openingSchedule != null && (openingSchedule.isTwentyFourSeven || openingSchedule.openingHours.isNotEmpty())) {
+                        var showOpeningSchedule by remember(openingSchedule) {
+                            mutableStateOf(false)
+                        }
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(start = 12.dp, end = 12.dp, top = 12.dp),
+                            shape = MaterialTheme.shapes.medium,
+                            color = MaterialTheme.colorScheme.surfaceContainer,
+                            onClick = {
+                                if (!openingSchedule.isTwentyFourSeven) {
+                                    showOpeningSchedule = true
+                                }
+                            }
+                        ) {
+                            AnimatedContent(showOpeningSchedule) { showSchedule ->
+                                if (!showSchedule) {
+                                    Row(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(12.dp),
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+                                        if (openingSchedule.isTwentyFourSeven) {
+                                            Text(
+                                                text = stringResource(R.string.location_open_24_7),
+                                                style = MaterialTheme.typography.labelMedium,
+                                            )
+                                        } else {
+                                            val text = remember(openingSchedule) {
+                                                val currentOpeningTime =
+                                                    openingSchedule.getCurrentOpeningHours()
+                                                val timeFormat =
+                                                    DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                                                return@remember if (currentOpeningTime != null) {
+                                                    val isSameDay =
+                                                        currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                    val formattedTime =
+                                                        timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
+                                                    val closingTime = if (isSameDay) {
+                                                        context.getString(
+                                                            R.string.location_closes,
+                                                            formattedTime
+                                                        )
+                                                    } else {
+                                                        val dow = currentOpeningTime.dayOfWeek.getDisplayName(
+                                                            TextStyle.SHORT,
+                                                            Locale.getDefault()
+                                                        )
+                                                        context.getString(
+                                                            R.string.location_closes_other_day,
+                                                            dow,
+                                                            formattedTime
+                                                        )
+                                                    }
+                                                    "${context.getString(R.string.location_open)} • $closingTime"
+                                                } else {
+                                                    val nextOpeningTime =
+                                                        openingSchedule.getNextOpeningHours()
+                                                    val isSameDay = nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                    val formattedTime = timeFormat.format(nextOpeningTime.startTime)
+                                                    val openingTime = if (isSameDay) {
+                                                        context.getString(
+                                                            R.string.location_opens,
+                                                            formattedTime
+                                                        )
+                                                    } else {
+                                                        val dow = nextOpeningTime.dayOfWeek.getDisplayName(
+                                                            TextStyle.SHORT,
+                                                            Locale.getDefault()
+                                                        )
+                                                        context.getString(
+                                                            R.string.location_opens_other_day,
+                                                            dow,
+                                                            formattedTime
+                                                        )
+                                                    }
+                                                    "${context.getString(R.string.location_closed)} • $openingTime"
+                                                }
+                                            }
+
+                                            Text(text = text, style = MaterialTheme.typography.labelMedium, modifier = Modifier.weight(1f))
+
+                                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                        }
+                                    }
+                                } else {
+                                    Column(
+                                        modifier = Modifier.padding(vertical = 6.dp)
+                                    ) {
+                                        val groups = remember(openingSchedule) {
+                                            openingSchedule.openingHours
+                                                .groupBy { it.dayOfWeek }.entries
+                                                .sortedBy { it.key }
+                                        }
+
+                                        for (group in groups) {
+                                            Row(
+                                                modifier = Modifier.padding(
+                                                    vertical = 2.dp,
+                                                    horizontal = 12.dp
+                                                ),
+                                            ) {
+                                                Text(
+                                                    modifier = Modifier.weight(1f),
+                                                    text = group.key.getDisplayName(
+                                                        TextStyle.FULL,
+                                                        Locale.getDefault()
+                                                    ),
+                                                    style = MaterialTheme.typography.bodySmall,
+                                                )
+                                                val times = remember(group.value) {
+                                                    val dateFormatter =
+                                                        DateTimeFormatter.ofLocalizedTime(
+                                                            FormatStyle.SHORT
+                                                        )
+                                                    group.value.sortedBy { it.startTime }
+                                                        .joinToString(separator = ", ") {
+                                                            "${it.startTime.format(dateFormatter)}–${
+                                                                it.startTime.plus(
+                                                                    it.duration
+                                                                ).format(dateFormatter)
+                                                            }"
+                                                        }
+                                                }
+                                                Text(
+                                                    text = times,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .horizontalScroll(rememberScrollState())
+                            .padding(start = 12.dp, top = 8.dp)
+                    ) {
+                        AssistChip(
+                            modifier = Modifier.padding(end = 12.dp),
+                            onClick = {
+                                context.tryStartActivity(
+                                    Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
+                                    ),
+                                )
+                            },
+                            label = { Text(stringResource(R.string.menu_navigation)) },
+                            leadingIcon = {
+                                Icon(
+                                    Icons.Rounded.Navigation, null,
+                                    modifier = Modifier.size(AssistChipDefaults.IconSize)
+                                )
+                            }
+                        )
+                        location.phoneNumber?.let {
+                            AssistChip(
+                                modifier = Modifier.padding(end = 12.dp),
+                                onClick = {
+                                    context.tryStartActivity(
+                                        Intent(
+                                            Intent.ACTION_DIAL, Uri.parse("tel:$it")
+                                        )
+                                    )
+                                },
+                                label = { Text(stringResource(R.string.menu_dial)) },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.Phone, null,
+                                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                                    )
+                                }
+                            )
+                        }
+
+                        location.websiteUrl?.let {
+                            AssistChip(
+                                modifier = Modifier.padding(end = 12.dp),
+                                onClick = {
+                                    context.tryStartActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW, Uri.parse(it)
+                                        )
+                                    )
+                                },
+                                label = { Text(stringResource(R.string.menu_website)) },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.Language, null,
+                                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                                    )
+                                }
+                            )
+                        }
+                    }
+
+
+                    val toolbarActions = mutableListOf<ToolbarAction>()
+
+                    if (LocalFavoritesEnabled.current) {
+                        val isPinned by viewModel.isPinned.collectAsState(false)
+                        val favAction = if (isPinned) {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_unpin),
+                                icon = Icons.Rounded.Star,
+                                action = {
+                                    viewModel.unpin()
+                                }
+                            )
+                        } else {
+                            DefaultToolbarAction(
+                                label = stringResource(R.string.menu_favorites_pin),
+                                icon = Icons.Rounded.StarOutline,
+                                action = {
+                                    viewModel.pin()
+                                })
+                        }
+                        toolbarActions.add(favAction)
+                    }
+
+                    if (!showMap) {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_map),
+                            icon = Icons.Rounded.Map
+                        ) {
+                            viewModel.launch(context)
+                        }
+
+                    }
+
+
+
+                    location.fixMeUrl?.let {
+                        toolbarActions += DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_bugreport),
+                            icon = Icons.Rounded.BugReport,
+                        ) {
+                            context.tryStartActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
+                                )
+                            )
+                        }
+                    }
+
+                    Toolbar(
+                        modifier = Modifier.fillMaxWidth(),
+                        leftActions = listOf(DefaultToolbarAction(
+                            label = stringResource(id = R.string.menu_back),
+                            icon = Icons.AutoMirrored.Rounded.ArrowBack
+                        ) {
+                            onBack()
+                        }),
+                        rightActions = toolbarActions,
+                    )
+                }
+            }
+        }
+    }
+
+    /*Row(modifier = modifier) {
         Column {
             Row(
                 modifier = Modifier
@@ -136,8 +565,6 @@ fun LocationItem(
                     modifier = Modifier.padding(start = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    val icon by viewModel.icon.collectAsStateWithLifecycle()
-                    val badge by viewModel.badge.collectAsState(null)
                     Box(
                         modifier = Modifier
                             .size(52.dp)
@@ -283,56 +710,20 @@ fun LocationItem(
                         }
                     }
 
-                    val showMap by viewModel.showMap.collectAsState()
-                    if (showMap) {
-                        val zoomLevel = 19
-                        val nTiles = 4
 
-                        val tileServerUrl by viewModel.mapTileServerUrl.collectAsState()
-                        val shape = MaterialTheme.shapes.small
+                    HorizontalDivider()
 
-                        val applyTheming by viewModel.applyMapTheming.collectAsState()
-                        val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
 
-                        HorizontalDivider()
-
-                        MapTiles(
+                    val address = buildAddress(location.street, location.houseNumber)
+                    if (address != null) {
+                        Text(
                             modifier = Modifier
-                                .padding(top = 16.dp, bottom = 8.dp)
                                 .align(Alignment.CenterHorizontally)
-                                .fillMaxWidth(.9125f)
-                                .border(1.dp, MaterialTheme.colorScheme.outline, shape)
-                                .clip(shape)
-                                .clickable {
-                                    viewModel.launch(context)
-                                },
-                            tileServerUrl = tileServerUrl,
-                            location = location,
-                            maxZoomLevel = zoomLevel,
-                            tiles = IntSize(3, 2),
-                            applyTheming = applyTheming,
-                            userLocation = {
-                                if (showPositionOnMap) userLocation?.let {
-                                    UserLocation(
-                                        it.latitude,
-                                        it.longitude,
-                                        heading = userHeading,
-                                    )
-                                } else null
-                            },
+                                .padding(bottom = 8.dp),
+                            text = address,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.secondary
                         )
-
-                        val address = buildAddress(location.street, location.houseNumber)
-                        if (address != null) {
-                            Text(
-                                modifier = Modifier
-                                    .align(Alignment.CenterHorizontally)
-                                    .padding(bottom = 8.dp),
-                                text = address,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.secondary
-                            )
-                        }
                     }
 
                     HorizontalDivider(Modifier.padding(top = 8.dp))
@@ -378,97 +769,10 @@ fun LocationItem(
                             style = MaterialTheme.typography.labelMedium,
                         )
                     }
-
-                    val toolbarActions = mutableListOf<ToolbarAction>()
-
-                    if (LocalFavoritesEnabled.current) {
-                        val isPinned by viewModel.isPinned.collectAsState(false)
-                        val favAction = if (isPinned) {
-                            DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_unpin),
-                                icon = Icons.Rounded.Star,
-                                action = {
-                                    viewModel.unpin()
-                                }
-                            )
-                        } else {
-                            DefaultToolbarAction(
-                                label = stringResource(R.string.menu_favorites_pin),
-                                icon = Icons.Rounded.StarOutline,
-                                action = {
-                                    viewModel.pin()
-                                })
-                        }
-                        toolbarActions.add(favAction)
-                    }
-
-                    if (!showMap) {
-                        toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_map),
-                            icon = Icons.Rounded.Map
-                        ) {
-                            viewModel.launch(context)
-                        }
-
-                    }
-
-                    location.phoneNumber?.let {
-                        toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_dial),
-                            icon = Icons.Rounded.Phone
-                        ) {
-                            viewModel.viewModelScope.launch {
-                                context.tryStartActivity(
-                                    Intent(
-                                        Intent.ACTION_DIAL, Uri.parse("tel:$it")
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    location.websiteUrl?.let {
-                        toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_website),
-                            icon = Icons.Rounded.TravelExplore
-                        ) {
-                            viewModel.viewModelScope.launch {
-                                context.tryStartActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW, Uri.parse(it)
-                                    )
-                                )
-                            }
-                        }
-                    }
-
-                    location.fixMeUrl?.let {
-                        toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_bugreport),
-                            icon = Icons.Rounded.BugReport,
-                        ) {
-                            context.tryStartActivity(
-                                Intent(
-                                    Intent.ACTION_VIEW, Uri.parse(location.fixMeUrl)
-                                )
-                            )
-                        }
-                    }
-
-                    Toolbar(
-                        modifier = Modifier.fillMaxWidth(),
-                        leftActions = listOf(DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_back),
-                            icon = Icons.AutoMirrored.Rounded.ArrowBack
-                        ) {
-                            onBack()
-                        }),
-                        rightActions = toolbarActions,
-                    )
                 }
             }
         }
-    }
+    }*/
 }
 
 @Composable
@@ -520,4 +824,26 @@ private fun buildAddress(
         }
     }
     return if (summary.isEmpty()) null else summary.toString()
+}
+
+private fun OpeningSchedule.getCurrentOpeningHours(): OpeningHours? {
+    return openingHours.find { it.isOpen }
+}
+
+private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
+    val now = LocalDateTime.now()
+    val sortedSchedule = this
+        .openingHours
+        .sortedWith { a, b ->
+            if (a.dayOfWeek == b.dayOfWeek) {
+                a.startTime.compareTo(b.startTime)
+            } else {
+                a.dayOfWeek.compareTo(b.dayOfWeek)
+            }
+        }
+
+    return sortedSchedule
+        .find {
+            now.dayOfWeek < it.dayOfWeek || now.dayOfWeek == it.dayOfWeek && now.toLocalTime() < it.startTime
+        } ?: sortedSchedule.first()
 }

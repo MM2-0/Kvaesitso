@@ -703,7 +703,6 @@
     <string name="clock_style_analog">Manecillas</string>
     <string name="clock_style_empty">Sin reloj</string>
     <string name="clock_variant_standard">Estándar</string>
-    <string name="location_open_next_day">Abre el %1$s</string>
     <string name="preference_search_locations_show_map">Mapa</string>
     <string name="preference_search_locations_show_map_summary">Mostrar una vista previa de mapa para los lugares</string>
     <string name="preference_search_locations_theme_map">Tema del mapa</string>

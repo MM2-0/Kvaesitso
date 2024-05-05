@@ -2,12 +2,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="location_open">Open</string>
     <string name="location_closed">Closed</string>
-    <!-- Shown when a location search result is open until TIMESTAMP (hours:minutes) of the same day -->
-    <string name="location_open_until">Open until %1$s</string>
-    <!-- Shown when a location search result opens in TIMESPAN on the same day -->
-    <string name="location_open_next">Opens in %1$s</string>
-    <!-- Shown when a location search result opens next DAY-OF-WEEK -->
-    <string name="location_open_next_day">Opens on %1$s</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">closes at %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">closes %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">opens at %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">opens %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
@@ -893,6 +895,7 @@
     <string name="preference_search_locations_show_position_on_map">Show own position</string>
     <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
     <string name="menu_dial">Call</string>
+    <string name="menu_navigation">Navigation</string>
     <string name="menu_bugreport">Bug Report</string>
     <string name="location_open_24_7">Open 24/7</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>

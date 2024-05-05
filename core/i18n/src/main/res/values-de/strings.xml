@@ -681,7 +681,6 @@
     <string name="preference_mdy_color_source">Quelle für dynamische Farben</string>
     <string name="preference_search_locations_show_position_on_map_summary">Den eigenen Standort auf der Karte zeigen</string>
     <string name="location_closed">Geschlossen</string>
-    <string name="location_open_next_day">Öffnet am %1$s</string>
     <string name="preference_search_location_custom_overpass_url">Overpass-URL</string>
     <string name="preference_search_locations">Orte</string>
     <string name="location_open">Geöffnet</string>

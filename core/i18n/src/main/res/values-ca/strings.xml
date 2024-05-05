@@ -666,7 +666,6 @@
     <string name="missing_permission_plugins">Es requereix permís de connector per utilitzar connectors.</string>
     <string name="preference_plugin_badges_summary">Indiqueu amb quin connector s\'ha creat un resultat de cerca</string>
     <string name="preference_mdy_color_source_wallpaper">Colors del Fons de Pantalla</string>
-    <string name="location_open_next_day">Estarà disponible %1$s</string>
     <string name="missing_permission_location_search">Doneu permís a la ubicació per cercar ubicacions properes.</string>
     <string name="preference_mdy_color_source">Font de Colors dinàmics</string>
     <string name="preference_mdy_color_source_system">Colors del Sistema</string>

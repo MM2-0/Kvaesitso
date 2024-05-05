@@ -23,9 +23,11 @@ import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Place
@@ -185,31 +187,6 @@ fun MapTiles(
             ),
             label = "poiLocAnimation"
         )
-
-        val textMeasurer = rememberTextMeasurer()
-        val osmAttributionTextStyle = MaterialTheme.typography.labelSmall
-        val osmAttributionTextColor = MaterialTheme.colorScheme.onSurface
-        val osmAttributionSurface =
-            MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f)
-
-        val (yLocation, xLocation) = remember(location, zoom) {
-            getTileCoordinates(
-                latitude = location.latitude,
-                longitude = location.longitude,
-                zoom
-            )
-        }
-        val userOffset = remember(userLocation, zoom) {
-            if (userLocation != null) {
-                getTileCoordinates(
-                    latitude = userLocation.lat,
-                    longitude = userLocation.lon,
-                    zoom
-                )
-            } else {
-                Offset.Unspecified
-            }
-        }
         val tileSize = minWidth / tiles.width.toFloat()
         val locationTileCoordinates =
             getTileCoordinates(location.latitude, location.longitude, zoom)
@@ -275,6 +252,18 @@ fun MapTiles(
                     .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
                     .shadow(1.dp, CircleShape)
             )
+
+            if (osmAttribution != null) {
+                Text(
+                    text = osmAttribution,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .background(MaterialTheme.colorScheme.surfaceContainerHigh.copy(alpha = .5f))
+                        .padding(top = 2.dp, bottom = 2.dp, start = 4.dp, end = 4.dp)
+                )
+            }
         }
     }
 }

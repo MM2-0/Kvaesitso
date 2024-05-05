@@ -688,7 +688,6 @@
     <string name="preference_search_locations_radius">Vzdálenost vyhledávání</string>
     <string name="preference_search_locations_summary">Vyhledat v místní oblasti obchody a další místa</string>
     <string name="preference_search_locations_show_position_on_map_summary">Zobrazit vlastní lokaci na mapě</string>
-    <string name="location_open_next_day">Otevírá v %1$s</string>
     <string name="preference_search_locations_show_map_summary">Zobrazit náhled mapy pro místa</string>
     <string name="preference_search_locations_theme_map">Téma mapy</string>
     <string name="preference_search_locations_theme_map_summary">Použít barevné schéma launcheru jako téma mapy</string>

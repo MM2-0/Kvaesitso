@@ -195,7 +195,6 @@
     <string name="location_closed">Kapalı</string>
     <string name="location_open_until">Saat %1$s\'e kadar açık</string>
     <string name="location_open_next">%1$s Sonra açılacaktır</string>
-    <string name="location_open_next_day">%1$s Günü açılacaktır</string>
     <string name="menu_map">Haritada göster</string>
     <string name="menu_website">Websiteyi aç</string>
     <string name="calendar_widget_pinned_events">Yakında</string>
