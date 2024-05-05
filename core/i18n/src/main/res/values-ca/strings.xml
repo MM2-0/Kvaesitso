@@ -702,8 +702,6 @@
     <string name="preference_search_locations_hide_uncategorized">Amaga llocs no categoritzats</string>
     <string name="location_open">Obert</string>
     <string name="location_closed">Tancat</string>
-    <string name="location_open_until">Disponible fins %1$s</string>
-    <string name="location_open_next">Disponible en %1$s</string>
     <string name="menu_map">Veure al mapa</string>
     <string name="menu_website">Lloc web obert</string>
     <string name="preference_search_bar_separate_work_profile_summary">Mostra les aplicacions del perfil de treball en una pestanya independent</string>

@@ -706,8 +706,6 @@
     <string name="preference_search_location_custom_overpass_url">Adresa URL Overpass</string>
     <string name="location_open">Otevřeno</string>
     <string name="location_closed">Zavřeno</string>
-    <string name="location_open_until">Otevřeno do %1$s</string>
-    <string name="location_open_next">Otevírá v %1$s</string>
     <string name="menu_map">Zobrazit na mapě</string>
     <string name="menu_website">Otevřít web</string>
     <string name="location_open_24_7">Otevřeno 24/7</string>

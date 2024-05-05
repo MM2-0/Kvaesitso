@@ -719,8 +719,6 @@
     <string name="unavailable_searchable">Questo elemento non esiste più.</string>
     <string name="location_open">Aperto</string>
     <string name="location_closed">Chiuso</string>
-    <string name="location_open_until">Aperto fino alle %1$s</string>
-    <string name="location_open_next">Si apre tra %1$s</string>
     <string name="menu_map">Visualizza sulla mappa</string>
     <string name="menu_website">Apri sito web</string>
     <string name="cached_searchable">Mostrando una versione memorizzata nella cache, le informazioni potrebbero essere obsolete.</string>

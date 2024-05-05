@@ -695,8 +695,6 @@
     <string name="menu_dial">Hívás</string>
     <string name="location_open">Nyitva</string>
     <string name="location_closed">Zárva</string>
-    <string name="location_open_until">Nyitva eddig: %1$s</string>
-    <string name="location_open_next">Kinyit ekkor: %1$s</string>
     <string name="menu_map">Megtekintés a térképen</string>
     <string name="menu_website">Weboldal megnyitása</string>
     <string name="preference_search_locations_radius">Keresési körzet</string>

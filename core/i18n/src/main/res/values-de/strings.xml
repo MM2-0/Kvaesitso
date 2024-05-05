@@ -684,8 +684,6 @@
     <string name="preference_search_location_custom_overpass_url">Overpass-URL</string>
     <string name="preference_search_locations">Orte</string>
     <string name="location_open">Geöffnet</string>
-    <string name="location_open_until">Geöffnet bis %1$s</string>
-    <string name="location_open_next">Öffnet in %1$s</string>
     <string name="menu_map">Auf Karte anzeigen</string>
     <string name="menu_website">Webseite öffnen</string>
     <string name="preference_search_locations_radius">Suchradius</string>
