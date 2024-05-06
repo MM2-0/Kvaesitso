@@ -733,4 +733,9 @@
     <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
     <string name="preference_location_managed">Bővítmény által kezelt</string>
     <string name="preference_location_managed_summary">A helyszín szolgáltatót a bővítmény alkalmazás kezeli</string>
+    <string name="location_closes">bezár ekkor: %1$s</string>
+    <string name="location_closes_other_day">bezár ekkor: %1$s, %2$s</string>
+    <string name="location_opens">kinyit ekkor: %1$s</string>
+    <string name="location_opens_other_day">kinyit ekkor: %1$s, %2$s</string>
+    <string name="menu_navigation">Navigáció</string>
 </resources>
