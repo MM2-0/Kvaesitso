@@ -930,7 +930,6 @@
     <string name="preference_customize_filter_bar">Customize filter bar</string>
     <string name="preference_customize_filter_bar_summary">Customize which items are included in the filter bar</string>
     <string name="filter_settings_network_warning">The current filter enables online results by default. Your search queries might unintentionally be sent to external web services. For privacy reasons, this is not recommended.</string>
-
     <string name="poi_category_restaurant">Restaurant</string>
     <string name="poi_category_fast_food">Fast food</string>
     <string name="poi_category_bar">Bar</string>
@@ -986,7 +985,7 @@
     <string name="poi_category_tobacco">Tobacco store</string>
     <string name="poi_category_wine">Wine store</string>
     <string name="poi_category_photo">Photo shop</string>
-    <string name="poi_category_coffee_shop">Coffee Shop</string>
+    <string name="poi_category_coffee_shop">Coffee shop</string>
     <string name="poi_category_bank">Bank</string>
     <string name="poi_category_soccer">Soccer</string>
     <string name="poi_category_basketball">Basketball</string>
