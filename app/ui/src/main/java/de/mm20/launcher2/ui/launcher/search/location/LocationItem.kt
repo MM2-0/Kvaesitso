@@ -18,6 +18,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,18 +30,24 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
+import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.BugReport
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Map
 import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Visibility
+import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -62,10 +69,13 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.times
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
 import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -77,10 +87,13 @@ import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
+import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -170,7 +183,7 @@ fun LocationItem(
                         if (category != null || formattedDistance != null) {
                             Text(
                                 when {
-                                    category != null && formattedDistance != null -> "${category} • ${formattedDistance}"
+                                    category != null && formattedDistance != null -> "${stringResource(category.labelRes)} • ${formattedDistance}"
                                     category != null -> category.toString()
                                     formattedDistance != null -> formattedDistance
                                     else -> ""
@@ -268,7 +281,7 @@ fun LocationItem(
                             if (category != null || formattedDistance != null) {
                                 Text(
                                     when {
-                                        category != null && formattedDistance != null -> "${category} • ${formattedDistance}"
+                                        category != null && formattedDistance != null -> "${stringResource(category.labelRes)} • ${formattedDistance}"
                                         category != null -> category.toString()
                                         formattedDistance != null -> formattedDistance
                                         else -> ""
@@ -291,7 +304,8 @@ fun LocationItem(
                         //TODO: add rating to location
                         if (showMap && false) {
                             RatingBar(0.66f)
-                        } else {
+                        }
+                        if (!showMap) {
                             Compass(
                                 targetHeading = targetHeading,
                                 modifier = Modifier
@@ -540,15 +554,22 @@ fun LocationItem(
                         toolbarActions.add(favAction)
                     }
 
-                    if (!showMap) {
-                        toolbarActions += DefaultToolbarAction(
-                            label = stringResource(id = R.string.menu_map),
-                            icon = Icons.Rounded.Map
-                        ) {
-                            viewModel.launch(context)
-                        }
-
+                    toolbarActions += DefaultToolbarAction(
+                        label = stringResource(id = R.string.menu_map),
+                        icon = Icons.AutoMirrored.Rounded.OpenInNew,
+                    ) {
+                        viewModel.launch(context)
                     }
+
+                    val sheetManager = LocalBottomSheetManager.current
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    val snackbarHostState = LocalSnackbarHostState.current
+
+                    toolbarActions.add(DefaultToolbarAction(
+                        label = stringResource(de.mm20.launcher2.ui.R.string.menu_customize),
+                        icon = Icons.Rounded.Edit,
+                        action = { sheetManager.showCustomizeSearchableModal(location) }
+                    ))
 
 
 
@@ -564,6 +585,41 @@ fun LocationItem(
                             )
                         }
                     }
+
+                    val isHidden by viewModel.isHidden.collectAsState(false)
+                    val hideAction = if (isHidden) {
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_unhide),
+                            icon = Icons.Rounded.Visibility,
+                            action = {
+                                viewModel.unhide()
+                                onBack()
+                            }
+                        )
+                    } else {
+                        DefaultToolbarAction(
+                            label = stringResource(R.string.menu_hide),
+                            icon = Icons.Rounded.VisibilityOff,
+                            action = {
+                                viewModel.hide()
+                                onBack()
+                                lifecycleOwner.lifecycleScope.launch {
+                                    val result = snackbarHostState.showSnackbar(
+                                        message = context.getString(
+                                            R.string.msg_item_hidden,
+                                            location.labelOverride ?: location.label
+                                        ),
+                                        actionLabel = context.getString(R.string.action_undo),
+                                        duration = SnackbarDuration.Short,
+                                    )
+                                    if (result == SnackbarResult.ActionPerformed) {
+                                        viewModel.unhide()
+                                    }
+                                }
+
+                            })
+                    }
+                    toolbarActions.add(hideAction)
 
                     Toolbar(
                         modifier = Modifier.fillMaxWidth(),
@@ -682,3 +738,80 @@ private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
             now.dayOfWeek < it.dayOfWeek || now.dayOfWeek == it.dayOfWeek && now.toLocalTime() < it.startTime
         } ?: sortedSchedule.first()
 }
+
+private val LocationCategory.labelRes
+    get() = when(this) {
+        LocationCategory.ART -> R.string.poi_category_art
+        LocationCategory.BANK -> R.string.poi_category_bank
+        LocationCategory.BAR -> R.string.poi_category_bar
+        LocationCategory.BEAUTY -> R.string.poi_category_beauty
+        LocationCategory.BICYCLE -> R.string.poi_category_bicycle
+        LocationCategory.RESTAURANT -> R.string.poi_category_restaurant
+        LocationCategory.FAST_FOOD -> R.string.poi_category_fast_food
+        LocationCategory.CAFE -> R.string.poi_category_coffee_shop
+        LocationCategory.HOTEL -> R.string.poi_category_hotel
+        LocationCategory.SUPERMARKET -> R.string.poi_category_supermarket
+        LocationCategory.OTHER -> R.string.poi_category_other
+        LocationCategory.SCHOOL -> R.string.poi_category_school
+        LocationCategory.PARKING -> R.string.poi_category_parking
+        LocationCategory.FUEL -> R.string.poi_category_fuel
+        LocationCategory.TOILETS -> R.string.poi_category_toilets
+        LocationCategory.PHARMACY -> R.string.poi_category_pharmacy
+        LocationCategory.HOSPITAL -> R.string.poi_category_hospital
+        LocationCategory.POST_OFFICE -> R.string.poi_category_post_office
+        LocationCategory.PUB -> R.string.poi_category_pub
+        LocationCategory.GRAVE_YARD -> R.string.poi_category_grave_yard
+        LocationCategory.DOCTORS -> R.string.poi_category_doctors
+        LocationCategory.POLICE -> R.string.poi_category_police
+        LocationCategory.DENTIST -> R.string.poi_category_dentist
+        LocationCategory.LIBRARY -> R.string.poi_category_library
+        LocationCategory.COLLEGE -> R.string.poi_category_college
+        LocationCategory.ICE_CREAM -> R.string.poi_category_ice_cream
+        LocationCategory.THEATER -> R.string.poi_category_theater
+        LocationCategory.PUBLIC_BUILDING -> R.string.poi_category_public_building
+        LocationCategory.CINEMA -> R.string.poi_category_cinema
+        LocationCategory.NIGHTCLUB -> R.string.poi_category_nightclub
+        LocationCategory.BIERGARTEN -> R.string.poi_category_biergarten
+        LocationCategory.CLINIC -> R.string.poi_category_clinic
+        LocationCategory.UNIVERSITY -> R.string.poi_category_university
+        LocationCategory.DEPARTMENT_STORE -> R.string.poi_category_department_store
+        LocationCategory.CLOTHES -> R.string.poi_category_clothes
+        LocationCategory.CONVENIENCE -> R.string.poi_category_convenience
+        LocationCategory.HAIRDRESSER -> R.string.poi_category_hairdresser
+        LocationCategory.CAR_REPAIR -> R.string.poi_category_car_repair
+        LocationCategory.BOOKS -> R.string.poi_category_books
+        LocationCategory.BAKERY -> R.string.poi_category_bakery
+        LocationCategory.CAR -> R.string.poi_category_car
+        LocationCategory.MOBILE_PHONE -> R.string.poi_category_mobile_phone
+        LocationCategory.FURNITURE -> R.string.poi_category_furniture
+        LocationCategory.ALCOHOL -> R.string.poi_category_alcohol
+        LocationCategory.FLORIST -> R.string.poi_category_florist
+        LocationCategory.HARDWARE -> R.string.poi_category_hardware
+        LocationCategory.ELECTRONICS -> R.string.poi_category_electronics
+        LocationCategory.SHOES -> R.string.poi_category_shoes
+        LocationCategory.MALL -> R.string.poi_category_mall
+        LocationCategory.OPTICIAN -> R.string.poi_category_optician
+        LocationCategory.JEWELRY -> R.string.poi_category_jewelry
+        LocationCategory.GIFT -> R.string.poi_category_gift
+        LocationCategory.LAUNDRY -> R.string.poi_category_laundry
+        LocationCategory.COMPUTER -> R.string.poi_category_computer
+        LocationCategory.TOBACCO -> R.string.poi_category_tobacco
+        LocationCategory.WINE -> R.string.poi_category_wine
+        LocationCategory.PHOTO -> R.string.poi_category_photo
+        LocationCategory.COFFEE_SHOP -> R.string.poi_category_coffee_shop
+        LocationCategory.SOCCER -> R.string.poi_category_soccer
+        LocationCategory.BASKETBALL -> R.string.poi_category_basketball
+        LocationCategory.TENNIS -> R.string.poi_category_tennis
+        LocationCategory.FITNESS -> R.string.poi_category_fitness
+        LocationCategory.TRAM_STOP -> R.string.poi_category_tram_stop
+        LocationCategory.RAILWAY_STATION -> R.string.poi_category_railway_station
+        LocationCategory.BUS_STATION -> R.string.poi_category_bus_station
+        LocationCategory.ATM -> R.string.poi_category_atm
+        LocationCategory.KIOSK -> R.string.poi_category_kiosk
+        LocationCategory.BUS_STOP -> R.string.poi_category_bus_stop
+        LocationCategory.MUSEUM -> R.string.poi_category_museum
+        LocationCategory.PARCEL_LOCKER -> R.string.poi_category_parcel_locker
+        LocationCategory.CHEMIST -> R.string.poi_category_chemist
+        LocationCategory.TRAVEL_AGENCY -> R.string.poi_category_travel_agency
+        LocationCategory.FITNESS_CENTER -> R.string.poi_category_fitness_center
+    }
