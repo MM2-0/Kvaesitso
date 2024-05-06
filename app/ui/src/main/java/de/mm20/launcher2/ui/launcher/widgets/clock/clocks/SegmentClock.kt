@@ -102,7 +102,7 @@ fun SegmentClock(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(allSegmentVectors[if (hour / 10 == 0) 10 else hour / 10], null)
+        Image(allSegmentVectors[hour / 10], null)
         Separator(compact)
         Image(allSegmentVectors[hour % 10], null)
 
