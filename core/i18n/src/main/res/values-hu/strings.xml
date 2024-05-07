@@ -688,7 +688,6 @@
     <string name="preference_search_locations_hide_uncategorized">Kategorizálatlan helyek elrejtése</string>
     <string name="preference_search_locations_hide_uncategorized_summary">Csak jól meghatározott kategóriák, például kávézók, vagy éttermek eredményeit jeleníti meg</string>
     <string name="preference_search_locations_show_map">Térkép</string>
-    <string name="location_open_next_day">Kinyit ekkor: %1$s</string>
     <string name="preference_search_locations_theme_map">Térkép színséma</string>
     <string name="preference_search_locations_theme_map_summary">Az indító színsémájának alkalmazása a térképre</string>
     <string name="preference_search_locations_show_position_on_map">Saját helyszín megjelenítése</string>
@@ -696,8 +695,6 @@
     <string name="menu_dial">Hívás</string>
     <string name="location_open">Nyitva</string>
     <string name="location_closed">Zárva</string>
-    <string name="location_open_until">Nyitva eddig: %1$s</string>
-    <string name="location_open_next">Kinyit ekkor: %1$s</string>
     <string name="menu_map">Megtekintés a térképen</string>
     <string name="menu_website">Weboldal megnyitása</string>
     <string name="preference_search_locations_radius">Keresési körzet</string>
@@ -732,4 +729,13 @@
     <string name="preference_default_filter">Alapértelmezett szűrő</string>
     <string name="preference_default_filter_summary">A keresések alapértelmezett szűrőjének testreszabása</string>
     <string name="filter_settings_network_warning">Az aktuális szűrő alapértelmezés szerint lehetővé teszi az internetes keresési találatokat. A keresési lekérdezések véletlenül külső webes szolgáltatásokra kerülhetnek. Adatvédelmi okokból ez nem ajánlott.</string>
+    <string name="preference_customize_filter_bar_summary">Adja meg, hogy mely elemek szerepeljenek a szűrősávon</string>
+    <string name="preference_customize_filter_bar">Szűrősáv testreszabása</string>
+    <string name="preference_location_managed">Bővítmény által kezelt</string>
+    <string name="preference_location_managed_summary">A helyszín szolgáltatót a bővítmény alkalmazás kezeli</string>
+    <string name="location_closes">bezár ekkor: %1$s</string>
+    <string name="location_closes_other_day">bezár ekkor: %1$s, %2$s</string>
+    <string name="location_opens">kinyit ekkor: %1$s</string>
+    <string name="location_opens_other_day">kinyit ekkor: %1$s, %2$s</string>
+    <string name="menu_navigation">Navigáció</string>
 </resources>

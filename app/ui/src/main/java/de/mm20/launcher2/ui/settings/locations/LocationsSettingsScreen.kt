@@ -118,15 +118,6 @@ fun LocationsSettingsScreen() {
                         viewModel.setThemeMap(it)
                     }
                 )
-                SwitchPreference(
-                    title = stringResource(R.string.preference_search_locations_show_position_on_map),
-                    summary = stringResource(R.string.preference_search_locations_show_position_on_map_summary),
-                    value = showPositionOnMap == true,
-                    enabled = locations == true && showMap == true,
-                    onValueChanged = {
-                        viewModel.setShowPositionOnMap(it)
-                    }
-                )
             }
 
         }

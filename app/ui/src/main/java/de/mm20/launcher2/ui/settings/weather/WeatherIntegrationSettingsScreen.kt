@@ -32,6 +32,11 @@ fun WeatherIntegrationSettingsScreen() {
     val context = LocalContext.current
 
     val availableProviders by viewModel.availableProviders.collectAsState(emptyList())
+    val weatherProvider by viewModel.weatherProvider.collectAsState()
+
+    val selectedProviderInfo by remember {
+        derivedStateOf { availableProviders.find { it.id == weatherProvider } }
+    }
 
     val pluginState by viewModel.weatherProviderPluginState.collectAsStateWithLifecycle(
         null,
@@ -63,7 +68,6 @@ fun WeatherIntegrationSettingsScreen() {
                         }
                     )
                 }
-                val weatherProvider by viewModel.weatherProvider.collectAsState()
                 ListPreference(
                     title = stringResource(R.string.preference_weather_provider),
                     items = availableProviders.map{
@@ -88,31 +92,39 @@ fun WeatherIntegrationSettingsScreen() {
         }
         item {
             PreferenceCategory(title = stringResource(R.string.preference_category_location)) {
-                val hasPermission by viewModel.hasLocationPermission.collectAsState()
-                AnimatedVisibility(hasPermission == false) {
-                    MissingPermissionBanner(
-                        text = stringResource(R.string.missing_permission_auto_location),
-                        onClick = {
-                            viewModel.requestLocationPermission(context as AppCompatActivity)
-                        },
-                        modifier = Modifier.padding(16.dp)
+                if (selectedProviderInfo?.managedLocation == true) {
+                    Preference(
+                        title = stringResource(R.string.preference_location_managed),
+                        summary = stringResource(R.string.preference_location_managed_summary),
+                        enabled = false
+                    )
+                } else {
+                    val hasPermission by viewModel.hasLocationPermission.collectAsState()
+                    AnimatedVisibility(hasPermission == false) {
+                        MissingPermissionBanner(
+                            text = stringResource(R.string.missing_permission_auto_location),
+                            onClick = {
+                                viewModel.requestLocationPermission(context as AppCompatActivity)
+                            },
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
+                    val autoLocation by viewModel.autoLocation.collectAsState()
+                    SwitchPreference(
+                        title = stringResource(R.string.preference_automatic_location),
+                        summary = stringResource(R.string.preference_automatic_location_summary),
+                        value = autoLocation,
+                        onValueChanged = {
+                            viewModel.setAutoLocation(it)
+                        }
+                    )
+                    val location by viewModel.location.collectAsStateWithLifecycle()
+                    LocationPreference(
+                        title = stringResource(R.string.preference_location),
+                        value = location,
+                        enabled = !autoLocation,
                     )
                 }
-                val autoLocation by viewModel.autoLocation.collectAsState()
-                SwitchPreference(
-                    title = stringResource(R.string.preference_automatic_location),
-                    summary = stringResource(R.string.preference_automatic_location_summary),
-                    value = autoLocation,
-                    onValueChanged = {
-                        viewModel.setAutoLocation(it)
-                    }
-                )
-                val location by viewModel.location.collectAsStateWithLifecycle()
-                LocationPreference(
-                    title = stringResource(R.string.preference_location),
-                    value = location,
-                    enabled = !autoLocation,
-                )
             }
         }
         if (BuildConfig.DEBUG) {

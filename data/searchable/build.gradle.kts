@@ -47,7 +47,6 @@ dependencies {
     implementation(project(":core:preferences"))
     implementation(project(":core:ktx"))
     implementation(project(":data:wikipedia"))
-    implementation(project(":services:badges"))
     implementation(project(":core:crashreporter"))
 
 }

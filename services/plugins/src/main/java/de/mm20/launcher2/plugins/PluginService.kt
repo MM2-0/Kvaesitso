@@ -189,7 +189,7 @@ internal class PluginServiceImpl(
         return withContext(Dispatchers.IO) {
             try {
                 val appInfo = context.packageManager.getApplicationInfo(plugin.packageName, PackageManager.GET_META_DATA)
-                val iconRes = appInfo.metaData.getInt("de.mm20.launcher2.plugin.icon")
+                val iconRes = appInfo.metaData?.getInt("de.mm20.launcher2.plugin.icon") ?: 0
                 if (iconRes != 0) {
                     val icon = context.packageManager.getResourcesForApplication(plugin.packageName).getDrawableOrNull(iconRes, null)
                     if (icon != null) {

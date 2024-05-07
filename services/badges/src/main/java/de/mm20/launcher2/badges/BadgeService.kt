@@ -4,6 +4,7 @@ import android.content.Context
 import de.mm20.launcher2.badges.providers.AppShortcutBadgeProvider
 import de.mm20.launcher2.badges.providers.BadgeProvider
 import de.mm20.launcher2.badges.providers.CloudBadgeProvider
+import de.mm20.launcher2.badges.providers.HiddenItemBadgeProvider
 import de.mm20.launcher2.badges.providers.NotificationBadgeProvider
 import de.mm20.launcher2.badges.providers.PluginBadgeProvider
 import de.mm20.launcher2.badges.providers.SuspendedAppsBadgeProvider
