@@ -10,6 +10,7 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
 import de.mm20.launcher2.plugin.contracts.PluginContract
@@ -66,23 +67,7 @@ class PluginFileProvider(
     }
 
     private fun getPluginConfig(): SearchPluginConfig? {
-        val configBundle = try {
-            context.contentResolver.call(
-                Uri.Builder()
-                    .scheme("content")
-                    .authority(pluginAuthority)
-                    .build(),
-                PluginContract.Methods.GetConfig,
-                null,
-                null
-            ) ?: return null
-        } catch (e: Exception) {
-            Log.e("MM20", "Plugin ${pluginAuthority} threw exception")
-            CrashReporter.logException(e)
-            return null
-        }
-
-        return SearchPluginConfig(configBundle)
+        return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 
     suspend fun getFile(id: String): File? {

@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.KeyboardActionScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
+import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Badge
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -23,6 +24,8 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +41,7 @@ import de.mm20.launcher2.ui.component.SearchBar
 import de.mm20.launcher2.ui.component.SearchBarLevel
 import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.search.filters.KeyboardFilterBar
+import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 
 @Composable
 fun LauncherSearchBar(
@@ -59,12 +63,17 @@ fun LauncherSearchBar(
     val focusRequester = remember { FocusRequester() }
 
     val searchVM: SearchVM = viewModel()
+    val hiddenItemsButtonEnabled by searchVM.hiddenResultsButton.collectAsState(false)
+    val hiddenItems by searchVM.hiddenResults
+
+    val sheetManager = LocalBottomSheetManager.current
 
     LaunchedEffect(focused) {
         if (focused) focusRequester.requestFocus()
         else focusManager.clearFocus()
     }
 
+    val filterBar by searchVM.filterBar.collectAsState(false)
 
     val _value = value()
 
@@ -81,6 +90,18 @@ fun LauncherSearchBar(
             reverse = bottomSearchBar,
             darkColors = darkColors,
             menu = {
+                AnimatedVisibility(
+                    hiddenItemsButtonEnabled && isSearchOpen && hiddenItems.isNotEmpty(),
+                    enter = scaleIn(tween(100)),
+                    exit = scaleOut(tween(100))
+                ) {
+                    FilledIconButton(
+                        onClick = { sheetManager.showHiddenItemsSheet() },
+                        colors = if (sheetManager.hiddenItemsSheetShown.value) IconButtonDefaults.filledTonalIconButtonColors() else IconButtonDefaults.iconButtonColors()
+                    ) {
+                        Icon(imageVector = Icons.Rounded.VisibilityOff, contentDescription = null)
+                    }
+                }
                 AnimatedVisibility(
                     isSearchOpen,
                     enter = scaleIn(tween(100)),
@@ -127,18 +148,20 @@ fun LauncherSearchBar(
             onKeyboardActionGo = onKeyboardActionGo
         )
 
-        AnimatedVisibility (isSearchOpen && !searchVM.showFilters.value
+        AnimatedVisibility (filterBar && isSearchOpen && !searchVM.showFilters.value
                 // Use imeAnimationTarget instead of isImeVisible to animate the filter bar at the same time as the keyboard
                 && WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0,
             enter = fadeIn(),
             exit = fadeOut(),
             modifier = Modifier.align(Alignment.BottomCenter)
         ) {
+            val items by searchVM.filterBarItems.collectAsState(emptyList())
             KeyboardFilterBar(
                 filters = searchVM.filters.value,
                 onFiltersChange = {
                     searchVM.setFilters(it)
-                }
+                },
+                items = items
             )
         }
     }

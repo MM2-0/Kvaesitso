@@ -1050,6 +1050,31 @@ fun ThemeSettingsScreen(themeId: UUID) {
                         defaultValue = selectedDefaultScheme.onSurfaceVariant,
                         modifier = Modifier.padding(end = 12.dp),
                     )
+
+                    ThemeColorPreference(
+                        title = "On Background",
+                        value = selectedColorScheme.onBackground,
+                        corePalette = mergedCorePalette,
+                        onValueChange = {
+                            viewModel.updateTheme(
+                                if (previewDarkTheme) {
+                                    theme!!.copy(
+                                        darkColorScheme = theme!!.darkColorScheme.copy(
+                                            onBackground = it
+                                        )
+                                    )
+                                } else {
+                                    theme!!.copy(
+                                        lightColorScheme = theme!!.lightColorScheme.copy(
+                                            onBackground = it
+                                        )
+                                    )
+                                }
+                            )
+                        },
+                        defaultValue = selectedDefaultScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(end = 12.dp),
+                    )
                 },
             ) {
                 ElevatedCard(

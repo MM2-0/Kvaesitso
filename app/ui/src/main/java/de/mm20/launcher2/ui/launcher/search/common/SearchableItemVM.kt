@@ -223,7 +223,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
         permissionsManager.requestPermission(activity, PermissionGroup.AppShortcuts)
     }
 
-    val useInsaneUnits = locationSearchSettings.imperialUnits
+    val imperialUnits = locationSearchSettings.imperialUnits
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
     val showMap = locationSearchSettings.showMap

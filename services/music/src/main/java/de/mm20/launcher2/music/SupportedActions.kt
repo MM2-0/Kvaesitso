@@ -23,12 +23,6 @@ data class SupportedActions(
         seekTo = actions?.and(PlaybackState.ACTION_SEEK_TO) == PlaybackState.ACTION_SEEK_TO,
         setPlaybackSpeed = actions?.and(PlaybackState.ACTION_SET_PLAYBACK_SPEED) == PlaybackState.ACTION_SET_PLAYBACK_SPEED,
         setRating = actions?.and(PlaybackState.ACTION_SET_RATING) == PlaybackState.ACTION_SET_RATING,
-        customActions = customActions?.filter {
-            // Most of Spotify's custom actions are known to be broken, blocklist them in release builds
-            if (!BuildConfig.DEBUG && playerPackege == "com.spotify.music") {
-                return@filter (it.action == "REMOVE_FROM_COLLECTION" || it.action == "ADD_TO_COLLECTION")
-            }
-            true
-        } ?: emptyList(),
+        customActions = customActions ?: emptyList(),
     )
 }

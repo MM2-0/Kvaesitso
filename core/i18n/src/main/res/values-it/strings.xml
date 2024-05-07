@@ -687,7 +687,6 @@
     <string name="preference_search_location_custom_overpass_url">URL Overpass</string>
     <string name="preference_search_bar_separate_work_profile">App per profili di lavoro separate</string>
     <string name="preference_search_bar_separate_work_profile_summary">Mostra app del profilo di lavoro in una scheda separata</string>
-    <string name="location_open_next_day">Apertura %1$s</string>
     <string name="preference_search_locations_hide_uncategorized">Nascondi luoghi senza categoria</string>
     <string name="preference_clock_widget_show_seconds">Mostra secondi</string>
     <string name="widget_use_theme_colors">Usa colore del tema</string>
@@ -720,11 +719,19 @@
     <string name="unavailable_searchable">Questo elemento non esiste più.</string>
     <string name="location_open">Aperto</string>
     <string name="location_closed">Chiuso</string>
-    <string name="location_open_until">Aperto fino alle %1$s</string>
-    <string name="location_open_next">Si apre tra %1$s</string>
     <string name="menu_map">Visualizza sulla mappa</string>
     <string name="menu_website">Apri sito web</string>
     <string name="cached_searchable">Mostrando una versione memorizzata nella cache, le informazioni potrebbero essere obsolete.</string>
     <string name="widget_pick_widget">Scegli widget</string>
     <string name="clock_style_custom">Widget personalizzato</string>
+    <string name="widget_config_appwidget_resize">Ridimensiona</string>
+    <string name="search_action_share">Condividi</string>
+    <string name="search_filter_online">Risultati in linea</string>
+    <string name="search_filter_apps">App</string>
+    <string name="preference_filter_bar">Mostra barra filtri</string>
+    <string name="preference_filter_bar_summary">Mostra filtri rapidi sopra la tastiera</string>
+    <string name="preference_default_filter_summary">Personalizza filtro predefinito per ricerche</string>
+    <string name="search_filter_tools">Strumenti</string>
+    <string name="preference_default_filter">Filtro predefinito</string>
+    <string name="filter_settings_network_warning">Il filtro attuale abilita i risultati in linea per impostazione predefinita. Le tue query di ricerca potrebbero essere inviate involontariamente a servizi web esterni. Per motivi di privacy, questo non è raccomandato.</string>
 </resources>

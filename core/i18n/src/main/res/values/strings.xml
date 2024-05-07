@@ -2,12 +2,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
     <string name="location_open">Open</string>
     <string name="location_closed">Closed</string>
-    <!-- Shown when a location search result is open until TIMESTAMP (hours:minutes) of the same day -->
-    <string name="location_open_until">Open until %1$s</string>
-    <!-- Shown when a location search result opens in TIMESPAN on the same day -->
-    <string name="location_open_next">Opens in %1$s</string>
-    <!-- Shown when a location search result opens next DAY-OF-WEEK -->
-    <string name="location_open_next_day">Opens on %1$s</string>
+    <!-- Time when a place next closes (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_closes">closes at %1$s</string>
+    <!-- Time when a place next closes (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_closes_other_day">closes %1$s, %2$s</string>
+    <!-- Time when a place next opens (on the same day). $1%s: time (hh:mm) -->
+    <string name="location_opens">opens at %1$s</string>
+    <!-- Time when a place next opens (on a different day). $1%s: day of week, %2$s: time (hh:mm) -->
+    <string name="location_opens_other_day">opens %1$s, %2$s</string>
     <!-- Name of the app -->
     <!-- Share something. Can be anything, an app, a website, a file, … -->
     <string name="menu_share">Share</string>
@@ -483,6 +485,8 @@
     <string name="preference_category_location">Location</string>
     <string name="preference_automatic_location">Automatic location</string>
     <string name="preference_automatic_location_summary">Use GPS and location services to determine location automatically</string>
+    <string name="preference_location_managed">Managed by plugin</string>
+    <string name="preference_location_managed_summary">The location for this provider is managed by the plugin app</string>
     <string name="preference_location">Location</string>
     <string name="preference_imperial_units_summary">Use degrees Fahrenheit and miles per hour</string>
     <string name="preference_imperial_units">Imperial units</string>
@@ -900,6 +904,7 @@
     <string name="preference_search_locations_show_position_on_map">Show own position</string>
     <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
     <string name="menu_dial">Call</string>
+    <string name="menu_navigation">Navigation</string>
     <string name="menu_bugreport">Bug Report</string>
     <string name="location_open_24_7">Open 24/7</string>
     <string name="plugin_state_error">This plugin isn\'t working correctly</string>
@@ -927,4 +932,84 @@
     <string name="search_filter_tools">Tools</string>
     <string name="search_filter_online">Online results</string>
     <string name="search_filter_apps">Apps</string>
+    <string name="preference_default_filter">Default filter</string>
+    <string name="preference_default_filter_summary">Customize the default filter for searches</string>
+    <string name="preference_filter_bar">Show filter bar</string>
+    <string name="preference_filter_bar_summary">Show quick filters above the keyboard</string>
+    <string name="preference_customize_filter_bar">Customize filter bar</string>
+    <string name="preference_customize_filter_bar_summary">Customize which items are included in the filter bar</string>
+    <string name="filter_settings_network_warning">The current filter enables online results by default. Your search queries might unintentionally be sent to external web services. For privacy reasons, this is not recommended.</string>
+    <string name="poi_category_restaurant">Restaurant</string>
+    <string name="poi_category_fast_food">Fast food</string>
+    <string name="poi_category_bar">Bar</string>
+    <string name="poi_category_cafe">Cafe</string>
+    <string name="poi_category_hotel">Hotel</string>
+    <string name="poi_category_supermarket">Supermarket</string>
+    <string name="poi_category_other">Place of interest</string>
+    <string name="poi_category_school">School</string>
+    <string name="poi_category_parking">Parking</string>
+    <string name="poi_category_fuel">Gas station</string>
+    <string name="poi_category_toilets">Restroom</string>
+    <string name="poi_category_pharmacy">Pharmacy</string>
+    <string name="poi_category_hospital">Hospital</string>
+    <string name="poi_category_post_office">Post office</string>
+    <string name="poi_category_pub">Pub</string>
+    <string name="poi_category_grave_yard">Graveyard</string>
+    <string name="poi_category_doctors">Doctors</string>
+    <string name="poi_category_police">Police</string>
+    <string name="poi_category_dentist">Dentist</string>
+    <string name="poi_category_library">Library</string>
+    <string name="poi_category_college">College</string>
+    <string name="poi_category_ice_cream">Ice cream parlor</string>
+    <string name="poi_category_theater">Theater</string>
+    <string name="poi_category_public_building">Public building</string>
+    <string name="poi_category_cinema">Cinema</string>
+    <string name="poi_category_nightclub">Nightclub</string>
+    <string name="poi_category_biergarten">Biergarten</string>
+    <string name="poi_category_clinic">Clinic</string>
+    <string name="poi_category_university">University</string>
+    <string name="poi_category_department_store">Department store</string>
+    <string name="poi_category_clothes">Apparel store</string>
+    <string name="poi_category_convenience">Convenience store</string>
+    <string name="poi_category_hairdresser">Hairdresser</string>
+    <string name="poi_category_car_repair">Car repair</string>
+    <string name="poi_category_beauty">Beauty salon</string>
+    <string name="poi_category_books">Bookstore</string>
+    <string name="poi_category_bakery">Bakery</string>
+    <string name="poi_category_car">Car service</string>
+    <string name="poi_category_mobile_phone">Cell phone store</string>
+    <string name="poi_category_furniture">Furniture store</string>
+    <string name="poi_category_alcohol">Liquor store</string>
+    <string name="poi_category_florist">Flower shop</string>
+    <string name="poi_category_hardware">Hardware store</string>
+    <string name="poi_category_electronics">Electronics store</string>
+    <string name="poi_category_shoes">Shoe store</string>
+    <string name="poi_category_mall">Mall</string>
+    <string name="poi_category_optician">Optometrist</string>
+    <string name="poi_category_jewelry">Jewelry store</string>
+    <string name="poi_category_gift">Gift shop</string>
+    <string name="poi_category_bicycle">Bicycle store</string>
+    <string name="poi_category_laundry">Laundry</string>
+    <string name="poi_category_computer">Computer store</string>
+    <string name="poi_category_tobacco">Tobacco store</string>
+    <string name="poi_category_wine">Wine store</string>
+    <string name="poi_category_photo">Photo shop</string>
+    <string name="poi_category_coffee_shop">Coffee shop</string>
+    <string name="poi_category_bank">Bank</string>
+    <string name="poi_category_soccer">Soccer</string>
+    <string name="poi_category_basketball">Basketball</string>
+    <string name="poi_category_tennis">Tennis</string>
+    <string name="poi_category_fitness">Fitness</string>
+    <string name="poi_category_tram_stop">Tram stop</string>
+    <string name="poi_category_railway_station">Railway station</string>
+    <string name="poi_category_bus_station">Bus station</string>
+    <string name="poi_category_atm">ATM</string>
+    <string name="poi_category_art">Art store</string>
+    <string name="poi_category_kiosk">Kiosk</string>
+    <string name="poi_category_bus_stop">Bus stop</string>
+    <string name="poi_category_museum">Museum</string>
+    <string name="poi_category_parcel_locker">Parcel locker</string>
+    <string name="poi_category_chemist">Drug store</string>
+    <string name="poi_category_travel_agency">Travel agency</string>
+    <string name="poi_category_fitness_center">Fitness center</string>
 </resources>

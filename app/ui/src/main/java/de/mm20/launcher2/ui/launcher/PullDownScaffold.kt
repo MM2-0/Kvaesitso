@@ -1,5 +1,6 @@
 package de.mm20.launcher2.ui.launcher
 
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -114,8 +115,9 @@ fun PullDownScaffold(
     val maxOffset = with(density) { 64.dp.toPx() }
     val toggleSearchThreshold = with(density) { 48.dp.toPx() }
 
+    val filterBar by searchVM.filterBar.collectAsState(false)
     val keyboardFilterBarPadding by animateDpAsState(
-        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value) 50.dp else 0.dp
+        if (WindowInsets.imeAnimationTarget.getBottom(LocalDensity.current) > 0 && !searchVM.showFilters.value && filterBar) 50.dp else 0.dp
     )
 
     val isSearchAtTop by remember {

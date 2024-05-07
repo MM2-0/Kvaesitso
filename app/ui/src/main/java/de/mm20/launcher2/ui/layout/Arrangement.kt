@@ -16,6 +16,18 @@ val Arrangement.BottomReversed: Arrangement.Vertical
         override fun toString() = "Arrangement#BottomReversed"
     }
 
+@Stable
+val Arrangement.TopReversed: Arrangement.Vertical
+    get() = object : Arrangement.Vertical {
+        override fun Density.arrange(
+            totalSize: Int,
+            sizes: IntArray,
+            outPositions: IntArray
+        ) = placeLeftOrTop(sizes, outPositions, reverseInput = true)
+
+        override fun toString() = "Arrangement#TopReversed"
+    }
+
 internal fun placeRightOrBottom(
     totalSize: Int,
     size: IntArray,
@@ -24,6 +36,14 @@ internal fun placeRightOrBottom(
 ) {
     val consumedSize = size.fold(0) { a, b -> a + b }
     var current = totalSize - consumedSize
+    size.forEachIndexed(reverseInput) { index, it ->
+        outPosition[index] = current
+        current += it
+    }
+}
+
+internal fun placeLeftOrTop(size: IntArray, outPosition: IntArray, reverseInput: Boolean) {
+    var current = 0
     size.forEachIndexed(reverseInput) { index, it ->
         outPosition[index] = current
         current += it
