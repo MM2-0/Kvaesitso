@@ -10,6 +10,7 @@ import androidx.core.database.getIntOrNull
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
@@ -27,11 +28,14 @@ internal class PluginWeatherProvider(
     private val pluginAuthority: String,
 ) : WeatherProvider {
     override suspend fun getWeatherData(location: WeatherLocation): List<Forecast>? {
+        val config = getPluginConfig()
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
             .path(WeatherPluginContract.Paths.Forecasts).apply {
-                if (location is WeatherLocation.LatLon) {
+                if (config?.managedLocation == true || location is WeatherLocation.Managed) {
+                    // no parameters
+                } else if (location is WeatherLocation.LatLon) {
                     appendQueryParameter(
                         WeatherPluginContract.ForecastParams.Lat,
                         location.lat.toString()
@@ -40,14 +44,15 @@ internal class PluginWeatherProvider(
                         WeatherPluginContract.ForecastParams.Lon,
                         location.lon.toString()
                     )
+                    appendQueryParameter(WeatherPluginContract.ForecastParams.LocationName, location.name)
                 } else if (location is WeatherLocation.Id) {
                     appendQueryParameter(
                         WeatherPluginContract.ForecastParams.Id,
                         location.locationId
                     )
+                    appendQueryParameter(WeatherPluginContract.ForecastParams.LocationName, location.name)
                 }
             }
-            .appendQueryParameter(WeatherPluginContract.ForecastParams.LocationName, location.name)
             .appendQueryParameter(WeatherPluginContract.ForecastParams.Language, getLang())
             .build()
 
@@ -295,7 +300,7 @@ internal class PluginWeatherProvider(
                 if (lat != null && lon != null) {
                     results += WeatherLocation.LatLon(lat = lat, lon = lon, name = name)
                 } else if (locationId != null) {
-                    results += WeatherLocation.Id(locationId, name)
+                    results += WeatherLocation.Id(locationId = locationId, name = name)
                 }
             }
             results
@@ -307,22 +312,6 @@ internal class PluginWeatherProvider(
     }
 
     private fun getPluginConfig(): WeatherPluginConfig? {
-        val configBundle = try {
-            context.contentResolver.call(
-                Uri.Builder()
-                    .scheme("content")
-                    .authority(pluginAuthority)
-                    .build(),
-                PluginContract.Methods.GetConfig,
-                null,
-                null
-            ) ?: return null
-        } catch (e: Exception) {
-            Log.e("PluginWeatherProvider", "Plugin $pluginAuthority threw exception", e)
-            CrashReporter.logException(e)
-            return null
-        }
-
-        return WeatherPluginConfig(configBundle)
+        return PluginApi(pluginAuthority, context.contentResolver).getWeatherPluginConfig()
     }
 }

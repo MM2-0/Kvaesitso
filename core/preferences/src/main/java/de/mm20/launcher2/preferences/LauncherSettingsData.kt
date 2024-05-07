@@ -91,7 +91,7 @@ data class LauncherSettingsData internal constructor(
 
     val rankingWeightFactor: WeightFactor = WeightFactor.Default,
 
-    val hiddenItemsShowButton: Boolean = true,
+    val hiddenItemsShowButton: Boolean = false,
 
     val iconsShape: IconShape = IconShape.PlatformDefault,
     val iconsAdaptify: Boolean = false,
@@ -154,7 +154,6 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.Events,
         KeyboardFilterBarItem.Contacts,
         KeyboardFilterBarItem.Files,
-        KeyboardFilterBarItem.Places,
         KeyboardFilterBarItem.Articles,
         KeyboardFilterBarItem.Websites,
         KeyboardFilterBarItem.Places,
@@ -394,6 +393,7 @@ data class LatLon(
 data class ProviderSettings(
     val locationId: String? = null,
     val locationName: String? = null,
+    val managedLocation: Boolean = false,
 )
 
 @Serializable

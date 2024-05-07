@@ -441,4 +441,12 @@
     <string name="file_type_drawing">Gambar</string>
     <string name="websearch_dialog_url_description">\'${1}\' akan diganti dengan kata kunci pencarian.</string>
     <string name="action_import">Impor</string>
+    <string name="location_closes_other_day">tutup pada %1$s , %2$s</string>
+    <string name="location_closes">Tutup pada%1$s</string>
+    <string name="location_opens">buka pada %1$s</string>
+    <string name="location_opens_other_day">buka pada %1$s, %2$s</string>
+    <string name="location_open">Buka</string>
+    <string name="location_closed">Tutup</string>
+    <string name="menu_map">Tampillkan pada peta</string>
+    <string name="menu_website">Buka situs</string>
 </resources>

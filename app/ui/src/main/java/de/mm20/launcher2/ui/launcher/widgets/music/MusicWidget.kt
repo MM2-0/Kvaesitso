@@ -4,10 +4,17 @@ import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.media.session.PlaybackState.CustomAction
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.graphics.res.animatedVectorResource
 import androidx.compose.animation.graphics.res.rememberAnimatedVectorPainter
 import androidx.compose.animation.graphics.vector.AnimatedImageVector
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -79,8 +86,8 @@ import de.mm20.launcher2.music.SupportedActions
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
 import de.mm20.launcher2.ui.ktx.conditional
-import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.launcher.transitions.EnterHomeTransitionParams
+import de.mm20.launcher2.ui.launcher.transitions.HandleEnterHomeTransition
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalWindowSize
 import de.mm20.launcher2.widgets.MusicWidget
@@ -228,29 +235,43 @@ fun MusicWidget(widget: MusicWidget) {
                         }
                     }
                 }
-                Box(
-                    modifier = Modifier
-                        .padding(top = 16.dp, end = 16.dp)
-                        .size(96.dp)
-                        .clip(MaterialTheme.shapes.small)
-                        .combinedClickable(
-                            onClick = {
-                                viewModel.openPlayer()
-                            },
-                            onLongClick = {
-                                viewModel.openPlayerSelector(context)
-                            }
-                        )
-                        .conditional(
-                            albumArt == null,
-                            Modifier.background(
-                                MaterialTheme.colorScheme.secondaryContainer,
+                AnimatedContent(
+                    albumArt,
+                    transitionSpec = {
+                        if (targetState != null && initialState == null) {
+                            fadeIn() togetherWith fadeOut()
+                        } else {
+                            (fadeIn(animationSpec = tween(220, delayMillis = 90)) +
+                                    scaleIn(
+                                        initialScale = 0.92f,
+                                        animationSpec = tween(220, delayMillis = 90)
+                                    ))
+                                .togetherWith(fadeOut(animationSpec = tween(90)))
+                        }
+                    }
+                ) { art ->
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 16.dp, end = 16.dp)
+                            .size(96.dp)
+                            .clip(MaterialTheme.shapes.small)
+                            .combinedClickable(
+                                onClick = {
+                                    viewModel.openPlayer()
+                                },
+                                onLongClick = {
+                                    viewModel.openPlayerSelector(context)
+                                }
                             )
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    if (albumArt != null) {
-                        albumArt?.let { art ->
+                            .conditional(
+                                art == null,
+                                Modifier.background(
+                                    MaterialTheme.colorScheme.secondaryContainer,
+                                )
+                            ),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        if (art != null) {
                             val windowSize = LocalWindowSize.current
                             var bounds by remember { mutableStateOf(Rect.Zero) }
                             Image(
@@ -285,14 +306,14 @@ fun MusicWidget(widget: MusicWidget) {
                                 }
                                 return@HandleEnterHomeTransition null
                             }
+                        } else {
+                            Icon(
+                                imageVector = Icons.Rounded.MusicNote,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSecondaryContainer,
+                                modifier = Modifier.size(48.dp)
+                            )
                         }
-                    } else {
-                        Icon(
-                            imageVector = Icons.Rounded.MusicNote,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                            modifier = Modifier.size(48.dp)
-                        )
                     }
                 }
             }

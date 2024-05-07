@@ -688,7 +688,6 @@
     <string name="preference_search_locations_radius">Vzdálenost vyhledávání</string>
     <string name="preference_search_locations_summary">Vyhledat v místní oblasti obchody a další místa</string>
     <string name="preference_search_locations_show_position_on_map_summary">Zobrazit vlastní lokaci na mapě</string>
-    <string name="location_open_next_day">Otevírá v %1$s</string>
     <string name="preference_search_locations_show_map_summary">Zobrazit náhled mapy pro místa</string>
     <string name="preference_search_locations_theme_map">Téma mapy</string>
     <string name="preference_search_locations_theme_map_summary">Použít barevné schéma launcheru jako téma mapy</string>
@@ -707,8 +706,6 @@
     <string name="preference_search_location_custom_overpass_url">Adresa URL Overpass</string>
     <string name="location_open">Otevřeno</string>
     <string name="location_closed">Zavřeno</string>
-    <string name="location_open_until">Otevřeno do %1$s</string>
-    <string name="location_open_next">Otevírá v %1$s</string>
     <string name="menu_map">Zobrazit na mapě</string>
     <string name="menu_website">Otevřít web</string>
     <string name="location_open_24_7">Otevřeno 24/7</string>
@@ -727,4 +724,18 @@
     <string name="clock_variant_outlined">Ohraničené</string>
     <string name="widget_pick_widget">Vyberte widget</string>
     <string name="clock_style_custom">Vlastní widget</string>
+    <string name="widget_config_appwidget_resize">Změnit velikost</string>
+    <string name="search_action_share">Sdílet</string>
+    <string name="search_filter_tools">Nástroje</string>
+    <string name="search_filter_online">Online výsledky</string>
+    <string name="search_filter_apps">Aplikace</string>
+    <string name="preference_default_filter">Výchozí filtr</string>
+    <string name="preference_default_filter_summary">Přizpůsobit výchozí filtr pro vyhledávání</string>
+    <string name="preference_filter_bar_summary">Zobrazit rychlé filtry nad klávesnicí</string>
+    <string name="preference_filter_bar">Zobrazit lištu s filtry</string>
+    <string name="filter_settings_network_warning">Aktuální filtr má ve výchozím nastavení povolené online výsledky. Vaše dotazy mohou být neúmyslně odesílány na externí webové služby. Z důvodu ochrany soukromí toto není doporučeno.</string>
+    <string name="preference_customize_filter_bar">Přizpůsobit lištu filtrů</string>
+    <string name="preference_customize_filter_bar_summary">Přizpůsobte si, které položky mají být zahrnuty na liště filtrů</string>
+    <string name="preference_location_managed">Spravování doplňkem</string>
+    <string name="preference_location_managed_summary">Umístění tohoto poskytovatele je spravováno doplňkovou aplikací</string>
 </resources>

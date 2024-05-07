@@ -8,7 +8,6 @@ import de.mm20.launcher2.permissions.PermissionsManager
 import de.mm20.launcher2.plugins.PluginService
 import de.mm20.launcher2.preferences.weather.WeatherSettings
 import de.mm20.launcher2.weather.WeatherRepository
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -27,6 +26,7 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
 
     val weatherProvider = weatherSettings.providerId
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
+
     fun setWeatherProvider(provider: String) {
         weatherSettings.setProvider(provider)
     }
@@ -42,6 +42,7 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
 
     val autoLocation = weatherSettings.autoLocation
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), false)
+
     fun setAutoLocation(autoLocation: Boolean) {
         weatherSettings.setAutoLocation(autoLocation)
     }
@@ -60,7 +61,6 @@ class WeatherIntegrationSettingsScreenVM : ViewModel(), KoinComponent {
     fun requestLocationPermission(activity: AppCompatActivity) {
         permissionsManager.requestPermission(activity, PermissionGroup.Location)
     }
-
 
     fun clearWeatherData() {
         repository.deleteForecasts()

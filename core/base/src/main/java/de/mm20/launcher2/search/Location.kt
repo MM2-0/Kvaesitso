@@ -80,7 +80,7 @@ interface Location : SavableSearchable {
             LocationCategory.LIBRARY, LocationCategory.BOOKS -> R.drawable.ic_location_library to R.color.brown
             LocationCategory.COLLEGE, LocationCategory.UNIVERSITY -> R.drawable.ic_location_college to R.color.purple
             LocationCategory.ICE_CREAM -> R.drawable.ic_location_ice_cream to R.color.pink
-            LocationCategory.THEATRE -> R.drawable.ic_location_theatre to R.color.purple
+            LocationCategory.THEATER -> R.drawable.ic_location_theatre to R.color.purple
             LocationCategory.PUBLIC_BUILDING -> R.drawable.ic_location_public_building to R.color.bluegrey
             LocationCategory.CINEMA -> R.drawable.ic_location_cinema to R.color.purple
             LocationCategory.NIGHTCLUB -> R.drawable.ic_location_nightclub to R.color.purple
@@ -111,9 +111,9 @@ interface Location : SavableSearchable {
             LocationCategory.SOCCER -> R.drawable.ic_location_soccer to R.color.green
             LocationCategory.BASKETBALL -> R.drawable.ic_location_basketball to R.color.orange
             LocationCategory.TENNIS -> R.drawable.ic_location_tennis to R.color.orange
-            LocationCategory.FITNESS, LocationCategory.FITNESS_CENTRE -> R.drawable.ic_location_fitness to R.color.orange
+            LocationCategory.FITNESS, LocationCategory.FITNESS_CENTER -> R.drawable.ic_location_fitness to R.color.orange
             LocationCategory.TRAM_STOP -> R.drawable.ic_location_tram_stop to R.color.blue
-            LocationCategory.RAILWAY_STOP -> R.drawable.ic_location_railway_stop to R.color.lightblue
+            LocationCategory.RAILWAY_STATION -> R.drawable.ic_location_railway_stop to R.color.lightblue
             LocationCategory.BUS_STATION, LocationCategory.BUS_STOP -> R.drawable.ic_location_bus_station to R.color.blue
             LocationCategory.ATM -> R.drawable.ic_location_atm to R.color.green
             LocationCategory.ART -> R.drawable.ic_location_art to R.color.deeporange
@@ -175,7 +175,7 @@ enum class LocationCategory {
     LIBRARY,
     COLLEGE,
     ICE_CREAM,
-    THEATRE,
+    THEATER,
     PUBLIC_BUILDING,
     CINEMA,
     NIGHTCLUB,
@@ -215,7 +215,7 @@ enum class LocationCategory {
     TENNIS,
     FITNESS,
     TRAM_STOP,
-    RAILWAY_STOP,
+    RAILWAY_STATION,
     BUS_STATION,
     ATM,
     ART,
@@ -225,7 +225,7 @@ enum class LocationCategory {
     PARCEL_LOCKER,
     CHEMIST,
     TRAVEL_AGENCY,
-    FITNESS_CENTRE
+    FITNESS_CENTER
 }
 
 data class OpeningHours(

@@ -345,9 +345,6 @@
     <string name="weather_condition_lightsnowshowers">Nevascas leves</string>
     <string name="location_open">Aberto</string>
     <string name="location_closed">Fechado</string>
-    <string name="location_open_until">Aberto até %1$s</string>
-    <string name="location_open_next">Abre em %1$s</string>
-    <string name="location_open_next_day">Abre no/na %1$s</string>
     <string name="menu_map">Ver no mapa</string>
     <string name="menu_website">Abrir página web</string>
 </resources>

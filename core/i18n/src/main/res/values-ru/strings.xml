@@ -689,9 +689,6 @@
     <string name="preference_plugin_enable">Включить плагин</string>
     <string name="preference_category_advanced">Прочее</string>
     <string name="missing_permission_location_search">Для поиска мест поблизости требуется разрешение на доступ к местоположению.</string>
-    <string name="location_open_until">Закроется в %1$s</string>
-    <string name="location_open_next">Откроется в %1$s</string>
-    <string name="location_open_next_day">Откроется в %1$s</string>
     <string name="menu_map">Показать на карте</string>
     <string name="preference_search_locations">Места</string>
     <string name="preference_search_locations_radius">Радиус поиска</string>

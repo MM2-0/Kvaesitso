@@ -8,6 +8,7 @@ import de.mm20.launcher2.devicepose.DevicePoseProvider
 import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.permissions.PermissionGroup
 import de.mm20.launcher2.permissions.PermissionsManager
+import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.PluginRepository
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.preferences.LatLon
@@ -180,8 +181,9 @@ internal class WeatherRepositoryImpl(
         }
         val pluginProviders = pluginRepository.findMany(type = PluginType.Weather, enabled = true)
         return pluginProviders.map {
-            providers + it.map {
-                WeatherProviderInfo(it.authority, it.label)
+            providers + it.mapNotNull {
+                val config = PluginApi(it.authority, context.contentResolver).getWeatherPluginConfig() ?: return@mapNotNull null
+                WeatherProviderInfo(it.authority, it.label, config.managedLocation)
             }
         }
     }
