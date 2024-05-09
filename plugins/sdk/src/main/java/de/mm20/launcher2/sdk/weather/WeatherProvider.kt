@@ -155,7 +155,7 @@ abstract class WeatherProvider(
                     forecast.location,
                     forecast.provider,
                     forecast.providerUrl,
-                    forecast.night,
+                    if (forecast.night) 1 else 0,
                     forecast.icon.name,
                     forecast.condition,
                 )

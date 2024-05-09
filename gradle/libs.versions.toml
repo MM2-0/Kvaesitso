@@ -3,7 +3,7 @@ minSdk = "26"
 compileSdk = "34"
 targetSdk = "34"
 
-pluginSdk = "1.1.0"
+pluginSdk = "1.1.1"
 
 gradle = "8.1.2"
 android-gradle-plugin = "8.2.2"
