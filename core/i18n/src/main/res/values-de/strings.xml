@@ -160,7 +160,7 @@
     <string name="weather_condition_lightrainandthunder">Leichter Regen und Gewitter</string>
     <string name="weather_condition_snow">Schneefall</string>
     <string name="weather_condition_hail">Hagel</string>
-    <string name="weather_condition_thunder">Gewitter</string>
+    <string name="weather_condition_thunder">Donner</string>
     <string name="weather_condition_heavysnowshowers">Starke Schneeschauer</string>
     <string name="weather_condition_heavyrainshowers">Starke Regenschauer</string>
     <string name="weather_condition_rainshowersandthunder">Regenschauer und Gewitter</string>
@@ -811,4 +811,6 @@
     <string name="poi_category_bicycle">Fahrradgeschäft</string>
     <string name="poi_category_railway_station">Bahnhof</string>
     <string name="poi_category_basketball">Basketball</string>
+    <string name="weather_condition_haze">Dunst</string>
+    <string name="weather_condition_thunderstorm">Gewitter</string>
 </resources>
