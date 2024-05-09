@@ -43,6 +43,7 @@ As of now, the following plugins are available:
   search [[Github]](https://github.com/Kvaesitso/Plugin-OneDrive) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.onedrive)
 - **OpenWeatherMap plugin**: adds OpenWeatherMap weather
   provider [[Github]](https://github.com/Kvaesitso/Plugin-OpenWeatherMap) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.openweathermap)
+- **Breezy Weather plugin**: forwards weather data from Breezy Weather to Kvaesitso [[Github]](https://github.com/Kvaesitso/Plugin-BreezyWeather) [[Download]](https://fdroid.mm20.de/app/de.mm20.launcher2.plugin.breezyweather)
 
 ## Plugin development
 
