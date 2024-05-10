@@ -120,7 +120,7 @@ internal class BrightSkyProvider(
             "sleet" -> R.string.weather_condition_sleet
             "snow" -> R.string.weather_condition_snow
             "hail" -> R.string.weather_condition_hail
-            "thunderstorm" -> R.string.weather_condition_thunder
+            "thunderstorm" -> R.string.weather_condition_thunderstorm
             else -> return null
         }
         return context.getString(resId)
