@@ -158,6 +158,7 @@ data class LauncherSettingsData internal constructor(
         KeyboardFilterBarItem.Websites,
         KeyboardFilterBarItem.Places,
         KeyboardFilterBarItem.Tools,
+        KeyboardFilterBarItem.Settings,
         KeyboardFilterBarItem.HiddenResults,
     ),
 
@@ -409,5 +410,6 @@ enum class KeyboardFilterBarItem {
     @SerialName("contacts") Contacts,
     @SerialName("events") Events,
     @SerialName("tools") Tools,
+    @SerialName("settings") Settings,
     @SerialName("hidden") HiddenResults,
 }

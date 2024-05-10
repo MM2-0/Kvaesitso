@@ -1,0 +1,15 @@
+- Places search: allows you to search OpenStreetMap for places in the local area (thanks to @Sir-Photch)
+- Search filters:
+  - temporary filters to quickly limit or extend the categories that should included
+  - includes an "online results" filter: as long as this filter is turned turned off, only local results are shown and no network requests are made, to protect your privacy
+  - you can customize the default filter in settings
+- More clock widget customizations:
+  - added 1 more clock style (7-segment, thanks to @strongville)
+  - added Material You option to every clock style (thanks to @strongville)
+  - added an option to show seconds to every clock style (thanks to @strongville)
+  - you can now use a custom app widget as clock
+- Widget customizations
+  - app widgets now respect the launcher's color scheme (if the widget supports it); this can be toggled per widget.
+  - app widgets can now be resized horizontally
+- **⚠️ Breaking** Removed HERE weather provider due to API / pricing changes. Please make sure to switch to a different provider after the update to continue receiving weather updates.
+

@@ -43,15 +43,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -199,7 +199,11 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
             targetState = true
         }
     }
-    val animationProgress = remember { Animatable(0f) }
+    val animationProgress = remember {
+        Animatable(0f).apply {
+            updateBounds(0f, 1f)
+        }
+    }
     LaunchedEffect(show.targetState) {
         if (!show.targetState) {
             animationProgress.animateTo(0f, tween(300))
@@ -239,7 +243,8 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                     .placeOverlay(
                         origin.translate(
                             -16.dp.toPixels(),
-                            -WindowInsets.systemBars.union(WindowInsets.ime).getTop(LocalDensity.current).toFloat()
+                            -WindowInsets.systemBars.union(WindowInsets.ime)
+                                .getTop(LocalDensity.current).toFloat()
                         ),
                         animationProgress.value
                     )

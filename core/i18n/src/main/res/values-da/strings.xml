@@ -709,4 +709,16 @@
     <string name="cached_searchable">Viser en cached version; information kan være forældet.</string>
     <string name="unavailable_searchable">Dette element findes ikke længere.</string>
     <string name="location_open_24_7">Åben 24/7</string>
+    <string name="widget_pick_widget">Vælg widget</string>
+    <string name="widget_config_appwidget_resize">Ændr størrelse</string>
+    <string name="location_closes_other_day">lukker %1$s, %2$s</string>
+    <string name="location_closes">lukker %1$s</string>
+    <string name="location_opens">åbner %1$s</string>
+    <string name="location_opens_other_day">åbner %1$s, %2$s</string>
+    <string name="search_action_share">Del</string>
+    <string name="menu_navigation">Navigation</string>
+    <string name="preference_search_locations_show_map_summary">Vis en forhåndsvisning af kort for steder</string>
+    <string name="preference_search_locations_theme_map_summary">Anvend farveskemaet for launcheren på kortet</string>
+    <string name="preference_location_managed">Håndteret af udvidelse</string>
+    <string name="preference_location_managed_summary">Lokaliteten for denne udbyder håndteres af udvidelsesappen</string>
 </resources>

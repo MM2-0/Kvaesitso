@@ -20,6 +20,10 @@ export const UserGuideSidebar: DefaultTheme.SidebarItem[] = [
         text: 'Tags',
         link: '/docs/user-guide/concepts/tags',
       },
+      {
+        text: 'Plugins',
+        link: '/docs/user-guide/concepts/plugins',
+      },
     ],
   },
   {
