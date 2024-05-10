@@ -47,7 +47,7 @@ fun DigitalClock1(
                 "HH mm"
             }
             verticalLayout -> {
-                "HH\nmm"
+                "hh\nmm"
             }
             else -> {
                 "hh mm"

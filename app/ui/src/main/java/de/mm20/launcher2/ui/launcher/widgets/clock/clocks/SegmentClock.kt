@@ -2,6 +2,7 @@ package de.mm20.launcher2.ui.launcher.widgets.clock.clocks
 
 import android.os.Handler
 import android.os.Looper
+import android.text.format.DateFormat
 import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
@@ -35,6 +36,7 @@ import androidx.compose.ui.graphics.PathFillType
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -54,7 +56,7 @@ fun SegmentClock(
     darkColors: Boolean,
 ) {
     val parsed = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault())
-    val hour = parsed.hour
+    val hour = if (DateFormat.is24HourFormat(LocalContext.current)) parsed.hour else (((parsed.hour + 11) % 12) + 1)
     val minute = parsed.minute
     val second = parsed.second
 

@@ -360,7 +360,8 @@
     <string name="weather_condition_lightrainandthunder">Light rain and thunder</string>
     <string name="weather_condition_snow">Snow</string>
     <string name="weather_condition_hail">Hail</string>
-    <string name="weather_condition_thunder">Thunderstorm</string>
+    <string name="weather_condition_thunder">Thunder</string>
+    <string name="weather_condition_thunderstorm">Thunderstorm</string>
     <string name="weather_condition_heavysnowshowers">Heavy snow showers</string>
     <string name="weather_condition_heavyrainshowers">Heavy rain showers</string>
     <string name="weather_condition_rainshowersandthunder">Rain showers and thunder</string>
@@ -372,6 +373,7 @@
     <string name="weather_condition_heavyrainshowersandthunder">Heavy rain showers and thunder</string>
     <string name="weather_condition_fair">Fair</string>
     <string name="weather_condition_fog">Fog</string>
+    <string name="weather_condition_haze">Haze</string>
     <string name="weather_condition_sleetshowersandthunder">Sleet showers and thunder</string>
     <string name="weather_condition_rainandthunder">Rain and thunder</string>
     <string name="weather_condition_lightsleet">Light sleet</string>

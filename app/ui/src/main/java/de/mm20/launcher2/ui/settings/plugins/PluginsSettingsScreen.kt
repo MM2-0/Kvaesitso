@@ -38,7 +38,10 @@ fun PluginsSettingsScreen() {
     val pluginPackages by viewModel.pluginPackages.collectAsState(null)
     val enabledPackages by viewModel.enabledPluginPackages.collectAsState(emptyList())
     val disabledPackages by viewModel.disabledPluginPackages.collectAsState(emptyList())
-    PreferenceScreen(title = stringResource(R.string.preference_screen_plugins)) {
+    PreferenceScreen(
+        title = stringResource(R.string.preference_screen_plugins),
+        helpUrl = "https://kvaesitso.mm20.de/docs/user-guide/concepts/plugins"
+    ) {
         when {
             pluginPackages?.isEmpty() == true -> {
                 item {
