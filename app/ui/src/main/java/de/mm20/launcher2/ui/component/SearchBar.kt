@@ -177,15 +177,9 @@ fun SearchBar(
                             value = value,
                             onValueChange = onValueChange,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                            keyboardOptions = KeyboardOptions(
-                                imeAction = if (onKeyboardActionGo == null) {
-                                    ImeAction.Search
-                                } else {
-                                    ImeAction.Go
-                                }
-                            ),
+                            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Go),
                             keyboardActions = KeyboardActions(
-                                onGo = onKeyboardActionGo
+                                onGo = onKeyboardActionGo,
                             )
                         )
                     }
