@@ -324,7 +324,7 @@ fun PagerScaffold(
                 available: Offset,
                 source: NestedScrollSource
             ): Offset {
-                if (source == NestedScrollSource.Drag && !isWidgetEditMode && available != Offset.Zero) {
+                if (source == NestedScrollSource.UserInput && !isWidgetEditMode && available != Offset.Zero) {
                     gestureManager.dispatchDrag(available)
                 }
                 val deltaSearchBarOffset =
@@ -365,7 +365,7 @@ fun PagerScaffold(
     val searchNestedScrollConnection = remember {
         object : NestedScrollConnection {
             override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                if (source == NestedScrollSource.Drag && available.y.absoluteValue > available.x.absoluteValue * 2) {
+                if (source == NestedScrollSource.UserInput && available.y.absoluteValue > available.x.absoluteValue * 2) {
                     viewModel.setSearchbarFocus(false)
                     searchVM.bestMatch.value = null
                 }
@@ -689,19 +689,20 @@ fun Modifier.pagerScaffoldScrollHandler(
                     scope.launch {
                         val preConsumed = nestedScrollDispatcher.dispatchPreScroll(
                             dragAmount,
-                            NestedScrollSource.Drag
+                            NestedScrollSource.UserInput
                         )
                         val available = dragAmount - preConsumed
                         val consumedY =
                             scrollableState.scrollBy(available.y * scrollMultiplier) * scrollMultiplier
                         val consumedX =
-                            pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
+                            if (disablePager) 0f
+                            else pagerState.scrollBy(available.x * pagerMultiplier) * pagerMultiplier
                         val totalConsumed =
                             Offset(preConsumed.x + consumedX, preConsumed.y + consumedY)
                         nestedScrollDispatcher.dispatchPostScroll(
                             totalConsumed,
                             dragAmount - totalConsumed,
-                            NestedScrollSource.Drag
+                            NestedScrollSource.UserInput
                         )
                     }
                 }
@@ -713,14 +714,16 @@ fun Modifier.pagerScaffoldScrollHandler(
                         val preConsumed = nestedScrollDispatcher.dispatchPreFling(velocity)
                         val flingVelocity = (velocity - preConsumed).x
 
-                        if (flingVelocity.absoluteValue > 400.dp.toPx()) {
-                            if (flingVelocity * pagerMultiplier < 0) {
-                                pagerState.animateScrollToPage(pagerState.settledPage - 1)
+                        if (!disablePager) {
+                            if (flingVelocity.absoluteValue > 400.dp.toPx()) {
+                                if (flingVelocity * pagerMultiplier < 0) {
+                                    pagerState.animateScrollToPage(pagerState.settledPage - 1)
+                                } else {
+                                    pagerState.animateScrollToPage(pagerState.settledPage + 1)
+                                }
                             } else {
-                                pagerState.animateScrollToPage(pagerState.settledPage + 1)
+                                pagerState.animateScrollToPage(pagerState.settledPage)
                             }
-                        } else {
-                            pagerState.animateScrollToPage(pagerState.settledPage)
                         }
 
                         nestedScrollDispatcher.dispatchPostFling(
