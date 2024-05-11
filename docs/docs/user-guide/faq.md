@@ -26,3 +26,13 @@ Please refer to the [Restricted Settings on Android 13+](/docs/user-guide/troubl
 ## The launcher keeps asking for notification access or accessibility service
 
 Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permissions).
+
+## How can I set up the nightly version in Obtainium ?
+
+1. In Obtainium, select "Add an app"
+2. Enter the URL : [https://fdroid.mm20.de/](https://fdroid.mm20.de/)
+3. Change the source as "Third Party F-Droid Repos"
+4. In ID/Name of the app, enter : ```nightly```
+5. Then, click Add !
+
+You can now enjoy the daily update in Obtainium :)
