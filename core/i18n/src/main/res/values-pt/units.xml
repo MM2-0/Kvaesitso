@@ -277,16 +277,46 @@
     <plurals name="unit_long_ton">
         <item quantity="one">tonelada longa</item>
         <item quantity="many">toneladas longas</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_stone">
         <item quantity="one">stone</item>
         <item quantity="many">stones</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
     </plurals>
     <plurals name="unit_pound">
         <item quantity="one">libra</item>
         <item quantity="many">libra</item>
-        <item quantity="other"></item>
+        <item quantity="other"/>
+    </plurals>
+    <string name="unit_ounce_symbol">on.</string>
+    <string name="unit_short_ton_symbol">ton. red.</string>
+    <string name="unit_degree_celsius_symbol">°C</string>
+    <plurals name="unit_short_ton">
+        <item quantity="one">tonelada reduzida</item>
+        <item quantity="many">toneladas reduzidas</item>
+        <item quantity="other">toneladas reduzidas</item>
+    </plurals>
+    <string name="unit_degree_fahrenheit_symbol">°F</string>
+    <string name="unit_kelvin_symbol">K</string>
+    <plurals name="unit_degree_celsius">
+        <item quantity="one">grau celsius</item>
+        <item quantity="many">graus celsius</item>
+        <item quantity="other">graus celsius</item>
+    </plurals>
+    <plurals name="unit_degree_fahrenheit">
+        <item quantity="one">grau fahrenheit</item>
+        <item quantity="many">graus fahrenheit</item>
+        <item quantity="other">graus fahrenheit</item>
+    </plurals>
+    <plurals name="unit_kelvin">
+        <item quantity="one">kelvin</item>
+        <item quantity="many">kelvins</item>
+        <item quantity="other">kelvins</item>
+    </plurals>
+    <plurals name="unit_ounce">
+        <item quantity="one">onça</item>
+        <item quantity="many">onças</item>
+        <item quantity="other">onças</item>
     </plurals>
 </resources>
