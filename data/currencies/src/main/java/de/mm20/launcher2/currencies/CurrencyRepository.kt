@@ -2,9 +2,12 @@ package de.mm20.launcher2.currencies
 
 import android.content.Context
 import android.util.Log
-import androidx.work.*
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import de.mm20.launcher2.database.AppDatabase
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.util.concurrent.TimeUnit
 
 class CurrencyRepository(
@@ -58,6 +61,12 @@ class CurrencyRepository(
                 }
                 listOf(toCurrency to value * to.value / from.value)
             }
+        }
+    }
+
+    suspend fun getKnownUnits(): List<String> {
+        return withContext(Dispatchers.IO) {
+            AppDatabase.getInstance(context).currencyDao().getAllCurrencies().map { it.symbol }
         }
     }
 
