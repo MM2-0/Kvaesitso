@@ -738,7 +738,7 @@
     <string name="search_action_share">Partager</string>
     <string name="preference_search_location_custom_overpass_url">URL Overpass</string>
     <string name="preference_clock_widget_show_seconds">Afficher les secondes</string>
-    <string name="preference_search_locations_show_map_summary"/>
+    <string name="preference_search_locations_show_map_summary">Afficher un aperçu pour les endroits</string>
     <string name="preference_search_locations_theme_map">Thème de la carte</string>
     <string name="preference_search_locations_theme_map_summary">Appliquer le thème du lanceur à la carte</string>
     <string name="location_closes">Ferme à %1$s</string>
@@ -783,4 +783,6 @@
     <string name="missing_permission_location_search">Accorder la permission de localisation pour rechercher des emplacements à proximité.</string>
     <string name="preference_search_locations">Emplacements</string>
     <string name="preference_search_locations_hide_uncategorized">Cacher des emplacements non catégorisés</string>
+    <string name="search_filter_online">Résultat web</string>
+    <string name="clock_variant_outlined">Détouré</string>
 </resources>
