@@ -32,7 +32,7 @@ Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permiss
 ### Using an F-Droid client
 
 1. Add the MM20 repo to your F-Droid client: `https://fdroid.mm20.de/repo`
-2. After a refresh, you should be Kvaesitso to find Kvaesitso Nightly using the search
+2. After a refresh, you should be able to find Kvaesitso Nightly using the search
 
 ### Using Obtainium
 
