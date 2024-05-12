@@ -264,7 +264,7 @@
     <string name="weather_condition_lightrainandthunder">Légère pluie et orage</string>
     <string name="weather_condition_snow">Neige</string>
     <string name="weather_condition_hail">Grêle</string>
-    <string name="weather_condition_thunder">Orage</string>
+    <string name="weather_condition_thunder">Tonnerre</string>
     <string name="weather_condition_heavysnowshowers">Fortes averses de neige</string>
     <string name="weather_condition_heavyrainshowers">Fortes averses</string>
     <string name="weather_condition_rainshowersandthunder">Averses et orage</string>
@@ -738,7 +738,7 @@
     <string name="search_action_share">Partager</string>
     <string name="preference_search_location_custom_overpass_url">URL Overpass</string>
     <string name="preference_clock_widget_show_seconds">Afficher les secondes</string>
-    <string name="preference_search_locations_show_map_summary"></string>
+    <string name="preference_search_locations_show_map_summary"/>
     <string name="preference_search_locations_theme_map">Thème de la carte</string>
     <string name="preference_search_locations_theme_map_summary">Appliquer le thème du lanceur à la carte</string>
     <string name="location_closes">Ferme à %1$s</string>
@@ -769,4 +769,18 @@
     <string name="poi_category_ice_cream">Glacier</string>
     <string name="poi_category_theater">Théâtre</string>
     <string name="poi_category_cinema">Cinéma</string>
+    <string name="preference_search_locations_show_position_on_map">Montrer sa position</string>
+    <string name="clock_variant_standard">Standard</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Montrer uniquement des résultats avec des catégories définies, comme des cafés ou des restaurants</string>
+    <string name="preference_location_managed_summary">La localisation pour ce fournisseur est géré par un plugin</string>
+    <string name="preference_search_locations_show_map">Carte</string>
+    <string name="menu_dial">Appeler</string>
+    <string name="menu_bugreport">Reporter un bug</string>
+    <string name="location_open_24_7">Ouvert 24h/24 - 7j/7</string>
+    <string name="unavailable_searchable">Cet élément n\'existe plus.</string>
+    <string name="preference_location_managed">Géré par un plugin</string>
+    <string name="weather_condition_haze">Brume</string>
+    <string name="missing_permission_location_search">Accorder la permission de localisation pour rechercher des emplacements à proximité.</string>
+    <string name="preference_search_locations">Emplacements</string>
+    <string name="preference_search_locations_hide_uncategorized">Cacher des emplacements non catégorisés</string>
 </resources>
