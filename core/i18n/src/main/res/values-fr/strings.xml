@@ -760,6 +760,7 @@
     <string name="clock_style_segment">7 segments</string>
     <string name="clock_style_empty">Pas d\'horloge</string>
     <string name="clock_style_custom">Widget personnalisé</string>
+    <string name="preference_default_filter_summary">Personnaliser les filtres de recherche par défaut</string>
     <string name="preference_filter_bar_summary">Afficher les filtres rapides au dessus du clavier</string>
     <string name="filter_settings_network_warning">Le filtre actuel active les résultats web par défaut. Vos recherches pourraient être involontairement envoyées à des services web externes. Pour des raisons de vie privée, ceci n\'est pas recommandé.</string>
     <string name="poi_category_pharmacy">Pharmacie</string>
