@@ -847,4 +847,5 @@
     <string name="poi_category_chemist">Pharmacie</string>
     <string name="poi_category_travel_agency">Agence de voyage</string>
     <string name="poi_category_bus_station">Gare routière</string>
+    <string name="poi_category_nightclub">Boîte de nuit</string>
 </resources>
