@@ -674,7 +674,7 @@
     <string name="theme_color_scheme_autogenerate">A partir de la couleur principale</string>
     <string name="theme_color_scheme_custom_color">Couleur personnalisée</string>
     <string name="preference_charging_animation">Animation de chargement</string>
-    <string name="preference_restore_default">Restaurer la valeur par défaut</string>
+    <string name="preference_restore_default">Rétablir la valeur par défaut</string>
     <string name="new_color_scheme_name">Nouveau jeu de couleurs</string>
     <string name="theme_color_scheme_palette_color">Palette</string>
     <string name="preference_debug_dump_heap">Sauvegarde mémoire</string>
