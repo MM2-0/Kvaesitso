@@ -780,11 +780,15 @@
     <string name="unavailable_searchable">Cet élément n\'existe plus.</string>
     <string name="preference_location_managed">Géré par un plugin</string>
     <string name="weather_condition_haze">Brume</string>
-    <string name="missing_permission_location_search">Accorder la permission de localisation pour rechercher des emplacements à proximité.</string>
+    <string name="missing_permission_location_search">Accorder la permission d\'accès à la localisation pour chercher des emplacements proches.</string>
     <string name="preference_search_locations">Emplacements</string>
     <string name="preference_search_locations_hide_uncategorized">Cacher des emplacements non catégorisés</string>
     <string name="search_filter_online">Résultat web</string>
     <string name="clock_variant_outlined">Détouré</string>
     <string name="preference_search_locations_summary">Rechercher des boutiques ou d\'autres emplacements à proximité</string>
     <string name="preference_customize_filter_bar">Personnaliser la barre de filtres</string>
+    <string name="preference_search_location_custom_tile_server_url">URL de serveur de tuiles</string>
+    <string name="poi_category_doctors">Médecins</string>
+    <string name="poi_category_college">Université</string>
+    <string name="poi_category_public_building">Bâtiment publique</string>
 </resources>
