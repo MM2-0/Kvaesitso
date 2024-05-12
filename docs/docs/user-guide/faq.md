@@ -27,7 +27,14 @@ Please refer to the [Restricted Settings on Android 13+](/docs/user-guide/troubl
 
 Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permissions).
 
-## How can I set up the nightly version in Obtainium ?
+## How can I set up the nightly version?
+
+### Using an F-Droid client
+
+1. Add the MM20 repo to your F-Droid client: `https://fdroid.mm20.de/repo`
+2. After a refresh, you should be Kvaesitso to find Kvaesitso Nightly using the search
+
+### Using Obtainium
 
 1. In Obtainium, select "Add an app"
 2. Enter the URL : [https://fdroid.mm20.de/](https://fdroid.mm20.de/)
@@ -36,3 +43,7 @@ Please refer to the [this page](/docs/user-guide/troubleshooting/granted-permiss
 5. Then, click Add !
 
 You can now enjoy the daily update in Obtainium :)
+
+### Manual download
+
+[Here](https://fdroid.mm20.de/app/de.mm20.launcher2.nightly)
