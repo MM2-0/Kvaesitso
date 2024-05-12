@@ -402,7 +402,7 @@
     <string name="preference_clockwidget_alarm_part">Alarmes</string>
     <string name="preference_clockwidget_alarm_part_summary">Afficher les alarmes qui vont sonner dans les 15 prochaines minutes</string>
     <string name="battery_part_charging">Chargement</string>
-    <string name="websearch_dialog_import_error">L\'URL donnée ne peut pas être importée automatiquement. Vous pouvez essayer une URL différente ou entrer les données requises manuellement.</string>
+    <string name="websearch_dialog_import_error">L\'URL entrée ne peut pas être importée automatiquement. Vous pouvez essayer une URL différente ou entrer les données requises manuellement.</string>
     <string name="missing_permission_appshortcuts_search_settings">%1$s doit être défini comme appli d\'accueil par défaut pour rechercher les raccourcis des applications</string>
     <string name="missing_permission_appshortcuts_search">Définissez %1$s comme appli d\'accueil par défaut pour recherche les raccourcis d\'applications.</string>
     <string name="preference_search_appshortcuts">Raccourcis d\'applications</string>
