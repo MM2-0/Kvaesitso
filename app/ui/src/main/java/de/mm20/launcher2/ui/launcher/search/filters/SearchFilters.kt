@@ -7,16 +7,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AppShortcut
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.Handyman
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -212,6 +203,7 @@ fun SearchFilters(
                 label = { Text(stringResource(R.string.preference_search_locations)) }
             )
             FilterChip(
+                modifier = Modifier.padding(end = 16.dp),
                 selected = filters.tools && (!allCategoriesEnabled || settings),
                 onClick = {
                     if (settings) {
@@ -228,6 +220,25 @@ fun SearchFilters(
                     )
                 },
                 label = { Text(stringResource(R.string.search_filter_tools)) }
+            )
+            FilterChip(
+                selected = filters.settings && (!allCategoriesEnabled || settings),
+                onClick = {
+                    if (settings) {
+                        onFiltersChange(filters.copy(settings = !filters.settings))
+                    }
+                    else {
+                        onFiltersChange(filters.toggleSettings())
+                    }
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Settings,
+                        contentDescription = null,
+                        modifier = Modifier.size(FilterChipDefaults.IconSize)
+                    )
+                },
+                label = { Text(stringResource(R.string.preference_search_settings)) }
             )
         }
         HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))

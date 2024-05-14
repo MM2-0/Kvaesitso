@@ -16,18 +16,15 @@ import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.Tag
 import androidx.compose.material.icons.rounded.Work
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -99,6 +96,7 @@ fun SearchColumn(
     val calculator by viewModel.calculatorResults
     val wikipedia by viewModel.articleResults
     val locations by viewModel.locationResults
+    val settings by viewModel.settingsResults
     val website by viewModel.websiteResults
     val hiddenResults by viewModel.hiddenResults
     val separateWorkProfile by viewModel.separateWorkProfile.collectAsState(true)
@@ -255,6 +253,12 @@ fun SearchColumn(
                     highlightedItem = bestMatch as? SavableSearchable
                 )
                 ListResults(
+                    items = settings.toImmutableList(),
+                    reverse = reverse,
+                    key = "settings",
+                    highlightedItem = bestMatch as? SavableSearchable
+                 )
+                ListResults(
                     before = if (missingShortcutsPermission && !isSearchEmpty) {
                         {
                             MissingPermissionBanner(
@@ -268,138 +272,137 @@ fun SearchColumn(
                                     OutlinedButton(onClick = {
                                         viewModel.disableAppShortcutSearch()
                                     }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
                                 }
-                            )
-                        }
-                    } else null,
-                    items = appShortcuts.toImmutableList(),
-                    reverse = reverse,
-                    key = "shortcuts",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                for (conv in unitConverter) {
-                    SingleResult {
-                        UnitConverterItem(unitConverter = conv)
+                            }
+                        )
                     }
+                } else null,
+                items = appShortcuts.toImmutableList(),
+                reverse = reverse,
+                key = "shortcuts",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            for (conv in unitConverter) {
+                SingleResult {
+                    UnitConverterItem(unitConverter = conv)
                 }
-                for (calc in calculator) {
-                    SingleResult {
-                        CalculatorItem(calculator = calc)
+            }
+            for (calc in calculator) {
+                SingleResult {
+                    CalculatorItem(calculator = calc)
+                }
+            }
+            ListResults(
+                before = if (missingCalendarPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_calendar_search),
+                            onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableCalendarSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
+                            }
+                        )
                     }
-                }
-                ListResults(
-                    before = if (missingCalendarPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_calendar_search),
-                                onClick = { viewModel.requestCalendarPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableCalendarSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
+                } else null,
+                items = events.toImmutableList(),
+                reverse = reverse,
+                key = "events",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            ListResults(
+                before = if (missingContactsPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_contact_search),
+                            onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableContactsSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
                                 }
-                            )
-                        }
-                    } else null,
-                    items = events.toImmutableList(),
-                    reverse = reverse,
-                    key = "events",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                ListResults(
-                    before = if (missingContactsPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_contact_search),
-                                onClick = { viewModel.requestContactsPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableContactsSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
-                        }
-                    } else null,
-                    items = contacts.toImmutableList(),
-                    reverse = reverse,
-                    key = "contacts",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                ListResults(
-                    before = if (missingLocationPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_location_search),
-                                onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableLocationSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
-                                }
-                            )
-                        }
-                    } else null,
-                    items = locations.toImmutableList(),
-                    reverse = reverse,
-                    key = "locations",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
-                for (wiki in wikipedia) {
-                    SingleResult(highlight = bestMatch == wiki) {
-                        ArticleItem(article = wiki)
+                            }
+                        )
                     }
-                }
-                for (ws in website) {
-                    SingleResult(highlight = bestMatch == ws) {
-                        WebsiteItem(website = ws)
-                    }
-                }
-                ListResults(
-                    before = if (missingFilesPermission && !isSearchEmpty) {
-                        {
-                            MissingPermissionBanner(
-                                modifier = Modifier.padding(8.dp),
-                                text = stringResource(R.string.missing_permission_files_search),
-                                onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
-                                secondaryAction = {
-                                    OutlinedButton(onClick = {
-                                        viewModel.disableFilesSearch()
-                                    }) {
-                                        Text(
-                                            stringResource(R.string.turn_off),
-                                        )
-                                    }
+                } else null,
+                items = contacts.toImmutableList(),
+                reverse = reverse,
+                key = "contacts",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            ListResults(
+                before = if (missingLocationPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_location_search),
+                            onClick = { viewModel.requestLocationPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableLocationSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
                                 }
-                            )
-                        }
-                    } else null,
-                    items = files.toImmutableList(),
-                    reverse = reverse,
-                    key = "files",
-                    highlightedItem = bestMatch as? SavableSearchable
-                )
+                            }
+                        )
+                    }
+                } else null,
+                items = locations.toImmutableList(),
+                reverse = reverse,
+                key = "locations",
+                highlightedItem = bestMatch as? SavableSearchable
+            )
+            for (wiki in wikipedia) {
+                SingleResult(highlight = bestMatch == wiki) {
+                    ArticleItem(article = wiki)
+                }
+            }
+            for (ws in website) {
+                SingleResult(highlight = bestMatch == ws) {
+                    WebsiteItem(website = ws)
+                }
+            }
+            ListResults(
+                before = if (missingFilesPermission && !isSearchEmpty) {
+                    {
+                        MissingPermissionBanner(
+                            modifier = Modifier.padding(8.dp),
+                            text = stringResource(R.string.missing_permission_files_search),
+                            onClick = { viewModel.requestFilesPermission(context as AppCompatActivity) },
+                            secondaryAction = {
+                                OutlinedButton(onClick = {
+                                    viewModel.disableFilesSearch()
+                                }) {
+                                    Text(
+                                        stringResource(R.string.turn_off),
+                                    )
+                                }
+                            }
+                        )
+                    }
+                } else null,
+                items = files.toImmutableList(),
+                reverse = reverse,
+                key = "files",
+                highlightedItem = bestMatch as? SavableSearchable
+                    )
             }
         }
-
     }
 
 

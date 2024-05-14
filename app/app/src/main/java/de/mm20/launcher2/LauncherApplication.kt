@@ -36,6 +36,7 @@ import de.mm20.launcher2.searchactions.searchActionsModule
 import de.mm20.launcher2.services.favorites.favoritesModule
 import de.mm20.launcher2.services.tags.servicesTagsModule
 import de.mm20.launcher2.services.widgets.widgetsServiceModule
+import de.mm20.launcher2.settings.settingsModule
 import de.mm20.launcher2.themes.themesModule
 import de.mm20.launcher2.weather.weatherModule
 import kotlinx.coroutines.*
@@ -82,6 +83,7 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
                     preferencesModule,
                     searchModule,
                     searchActionsModule,
+                    settingsModule,
                     themesModule,
                     unitConverterModule,
                     weatherModule,

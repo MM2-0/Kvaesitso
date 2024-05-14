@@ -2,16 +2,7 @@ package de.mm20.launcher2.ui.launcher.search.filters
 
 import android.content.Context
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AppShortcut
-import androidx.compose.material.icons.rounded.Apps
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.Handyman
-import androidx.compose.material.icons.rounded.Language
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.VisibilityOff
+import androidx.compose.material.icons.rounded.*
 import de.mm20.launcher2.preferences.KeyboardFilterBarItem
 import de.mm20.launcher2.search.SearchFilters
 import de.mm20.launcher2.ui.R
@@ -25,6 +16,7 @@ val KeyboardFilterBarItem.icon
         KeyboardFilterBarItem.Places -> Icons.Rounded.Place
         KeyboardFilterBarItem.Files -> Icons.Rounded.Description
         KeyboardFilterBarItem.Tools -> Icons.Rounded.Handyman
+        KeyboardFilterBarItem.Settings -> Icons.Rounded.Settings
         KeyboardFilterBarItem.Articles -> Icons.Rounded.Wikipedia
         KeyboardFilterBarItem.Websites -> Icons.Rounded.Public
         KeyboardFilterBarItem.Shortcuts -> Icons.Rounded.AppShortcut
@@ -40,6 +32,7 @@ fun KeyboardFilterBarItem.getLabel(context: Context): String {
         KeyboardFilterBarItem.Places -> context.getString(R.string.preference_search_locations)
         KeyboardFilterBarItem.Files -> context.getString(R.string.preference_search_files)
         KeyboardFilterBarItem.Tools -> context.getString(R.string.search_filter_tools)
+        KeyboardFilterBarItem.Settings -> context.getString(R.string.preference_search_settings)
         KeyboardFilterBarItem.Articles -> context.getString(R.string.preference_search_wikipedia)
         KeyboardFilterBarItem.Websites -> context.getString(R.string.preference_search_websites)
         KeyboardFilterBarItem.Shortcuts -> context.getString(R.string.preference_search_appshortcuts)
@@ -63,6 +56,7 @@ fun SearchFilters.isSelected(item: KeyboardFilterBarItem): Boolean {
         KeyboardFilterBarItem.Places -> places
         KeyboardFilterBarItem.Files -> files
         KeyboardFilterBarItem.Tools -> tools
+        KeyboardFilterBarItem.Settings -> settings
         KeyboardFilterBarItem.Articles -> articles
         KeyboardFilterBarItem.Websites -> websites
         KeyboardFilterBarItem.Shortcuts -> shortcuts
@@ -79,6 +73,7 @@ fun SearchFilters.toggle(item: KeyboardFilterBarItem): SearchFilters {
         KeyboardFilterBarItem.Places -> return togglePlaces()
         KeyboardFilterBarItem.Files -> return toggleFiles()
         KeyboardFilterBarItem.Tools -> return toggleTools()
+        KeyboardFilterBarItem.Settings -> return toggleSettings()
         KeyboardFilterBarItem.Articles -> return toggleArticles()
         KeyboardFilterBarItem.Websites -> return toggleWebsites()
         KeyboardFilterBarItem.Shortcuts -> return toggleShortcuts()

@@ -12,7 +12,8 @@ fun SearchFilters.withAllCategories(): SearchFilters {
         shortcuts = true,
         contacts = true,
         events = true,
-        tools = true
+        tools = true,
+        settings = true,
     )
 }
 
@@ -25,7 +26,8 @@ fun SearchFilters.withOnlyCategory(
     shortcuts: Boolean = false,
     contacts: Boolean = false,
     events: Boolean = false,
-    utilities: Boolean = false
+    utilities: Boolean = false,
+    settings: Boolean = false,
 ): SearchFilters {
     return copy(
         apps = apps,
@@ -36,7 +38,8 @@ fun SearchFilters.withOnlyCategory(
         shortcuts = shortcuts,
         contacts = contacts,
         events = events,
-        tools = utilities
+        tools = utilities,
+        settings = settings,
     )
 }
 
@@ -143,4 +146,15 @@ fun SearchFilters.toggleTools(): SearchFilters {
     }
 
     return copy(tools = !tools)
+}
+
+fun SearchFilters.toggleSettings(): SearchFilters {
+    if (allCategoriesEnabled) {
+        return withOnlyCategory(settings = true)
+    }
+    if (settings && enabledCategories == 1) {
+        return withAllCategories()
+    }
+
+    return copy(settings = !settings)
 }

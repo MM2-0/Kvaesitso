@@ -140,6 +140,7 @@ dependencies {
     implementation(project(":data:currencies"))
     implementation(project(":data:customattrs"))
     implementation(project(":data:searchable"))
+    implementation(project(":data:settings"))
     implementation(project(":data:plugins"))
     implementation(project(":data:themes"))
     implementation(project(":data:files"))

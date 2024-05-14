@@ -5,23 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AppShortcut
-import androidx.compose.material.icons.rounded.ArrowOutward
-import androidx.compose.material.icons.rounded.Calculate
-import androidx.compose.material.icons.rounded.Description
-import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.Keyboard
-import androidx.compose.material.icons.rounded.Loop
-import androidx.compose.material.icons.rounded.Person
-import androidx.compose.material.icons.rounded.Place
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Sort
-import androidx.compose.material.icons.rounded.Star
-import androidx.compose.material.icons.rounded.Tag
-import androidx.compose.material.icons.rounded.Today
-import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material.icons.rounded.Warning
-import androidx.compose.material.icons.rounded.Work
+import androidx.compose.material.icons.rounded.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -175,6 +159,17 @@ fun SearchSettingsScreen() {
                         viewModel.setAppShortcuts(it)
                     },
                     enabled = hasAppShortcutsPermission == true
+                )
+
+                val settings by viewModel.settings.collectAsStateWithLifecycle(null)
+                SwitchPreference(
+                    title = stringResource(R.string.preference_search_settings),
+                    summary = stringResource(R.string.preference_search_settings_summary),
+                    icon = Icons.Rounded.Settings,
+                    value = settings == true,
+                    onValueChanged = {
+                        viewModel.setSettings(it)
+                    }
                 )
 
                 val calculator by viewModel.calculator.collectAsStateWithLifecycle(null)

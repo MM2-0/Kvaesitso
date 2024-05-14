@@ -4,10 +4,12 @@ import de.mm20.launcher2.calculator.CalculatorRepository
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.utils.withCustomLabels
 import de.mm20.launcher2.search.data.Calculator
+import de.mm20.launcher2.search.data.PojoSettings
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.searchactions.SearchActionService
 import de.mm20.launcher2.searchactions.actions.SearchAction
 import de.mm20.launcher2.unitconverter.UnitConverterRepository
+import de.mm20.launcher2.settings.SettingsRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
@@ -37,6 +39,7 @@ internal class SearchServiceImpl(
     private val locationRepository: SearchableRepository<Location>,
     private val unitConverterRepository: UnitConverterRepository,
     private val calculatorRepository: CalculatorRepository,
+    private val settingsRepository: SettingsRepository,
     private val websiteRepository: SearchableRepository<Website>,
     private val searchActionService: SearchActionService,
     private val customAttributesRepository: CustomAttributesRepository,
@@ -117,6 +120,15 @@ internal class SearchServiceImpl(
                                     ?: persistentListOf())
                             }
                         }
+                }
+            }
+            if (filters.settings) {
+                launch {
+                    settingsRepository.search(query).collectLatest { r ->
+                        results.update {
+                            it.copy(settings = r)
+                        }
+                    }
                 }
             }
             if (filters.websites) {
@@ -207,6 +219,7 @@ data class SearchResults(
     val websites: ImmutableList<Website>? = null,
     val wikipedia: ImmutableList<Article>? = null,
     val locations: ImmutableList<Location>? = null,
+    val settings: ImmutableList<PojoSettings>? = null,
     val searchActions: ImmutableList<SearchAction>? = null,
     val other: ImmutableList<SavableSearchable>? = null,
 )
@@ -222,6 +235,7 @@ fun SearchResults.toList(): List<Searchable> {
         unitConverters,
         websites,
         wikipedia,
+        settings,
         searchActions,
         other,
     ).flatten()
