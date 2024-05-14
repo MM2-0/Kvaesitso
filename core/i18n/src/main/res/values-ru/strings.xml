@@ -84,7 +84,7 @@
     <string name="widget_add_external">Больше</string>
     <string name="shortcut_summary">От %1$s</string>
     <string name="installation_in_progress">Выполняется установка… (%1$s)</string>
-    <string name="easter_egg_1">У нас нет пасхальных яиц, конечно, если вы их не принесли их с собой.</string>
+    <string name="easter_egg_1">У нас нет пасхальных яиц, конечно, если вы не принесли их с собой.</string>
     <string name="easter_egg_text">Ладно, ты нашел меня. Поздравляю. Оно того стоило?</string>
     <string name="easter_egg_2">Пожалуйста, прекрати, ты зря тратишь время</string>
     <string name="close">Закрыть</string>
