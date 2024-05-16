@@ -12,13 +12,16 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.ktx.animateCorners
+import de.mm20.launcher2.ui.ktx.withCorners
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
 import de.mm20.launcher2.ui.launcher.search.common.grid.GridResults
 import de.mm20.launcher2.ui.layout.BottomReversed
+import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 
 fun LazyListScope.AppResults(
@@ -51,7 +54,7 @@ fun LazyListScope.AppResults(
                         modifier = Modifier
                             .fillMaxWidth()
                             .clip(
-                                MaterialTheme.shapes.medium.animateCorners(
+                                MaterialTheme.shapes.medium.withCorners(
                                     topStart = !reverse,
                                     topEnd = !reverse,
                                     bottomEnd = reverse,
@@ -59,6 +62,7 @@ fun LazyListScope.AppResults(
                                 )
                             ),
                         divider = {},
+                        containerColor = Color.Transparent
                     ) {
                         Tab(
                             selected = selectedTab == 0,
