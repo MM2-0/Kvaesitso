@@ -18,7 +18,7 @@
     <string name="file_type_music">Lydfil</string>
     <string name="wind_north_east">Nordøst</string>
     <string name="websearch_dialog_import_error">Den angivne URL kan ikke importeres automatisk. Prøv en anden URL eller indtast dataen manuelt.</string>
-    <string name="file_type_generic">%1$s fil</string>
+    <string name="file_type_generic">%1$s-fil</string>
     <string name="wind_north_north_west">Nord nordvest</string>
     <string name="skip">Spring over</string>
     <string name="alert_delete_directory">Mappen %1$s og dens indhold slettes permanent. Fortsæt?</string>
@@ -164,7 +164,7 @@
     <string name="file_meta_app_min_sdk">Min. SDK-version: %1$s</string>
     <string name="action_import">Importér</string>
     <string name="wallpaper">Baggrund</string>
-    <string name="file_meta_app_name">App-navn: %1$s</string>
+    <string name="file_meta_app_name">Appnavn: %1$s</string>
     <string name="file_meta_app_version">Version: %1$s</string>
     <string name="file_type_directory">Mappe</string>
     <string name="file_type_archive">Arkiv-fil</string>
@@ -217,7 +217,7 @@
     <string name="missing_permission_music_widget">Meddelelsesadgang er påkrævet for at styre medieafspilning</string>
     <string name="missing_permission_contact_search_settings">Tilladelse til kontakter er påkrævet for at søge i kontakter</string>
     <string name="missing_permission_notification_badges">Meddelelsesadgang er påkrævet for at vise meddelelsesbadges</string>
-    <string name="missing_permission_calendar_widget">Giv kalenderen tilladelse til at vise kommende aftaler og begivenheder her.</string>
+    <string name="missing_permission_calendar_widget">Giv kalendertilladelse for at vise kommende aftaler og begivenheder her.</string>
     <string name="missing_permission_contact_search">Giv tilladelse til kontakter for at søge i dine kontakter.</string>
     <string name="preference_layout">Layout</string>
     <string name="preference_colors_custom">Tilpasset</string>
@@ -230,7 +230,7 @@
     <string name="menu_uninstall">Afinstallér</string>
     <string name="menu_favorites_pin">Fastgør til favoritter</string>
     <string name="menu_favorites_unpin">Frigør</string>
-    <string name="menu_app_info">App-info</string>
+    <string name="menu_app_info">Appinfo</string>
     <string name="menu_launch">Start</string>
     <string name="menu_customize">Tilpas</string>
     <string name="menu_unhide">Skjul ikke</string>
@@ -253,7 +253,7 @@
     <string name="missing_permission_calendar_search_settings">Kalendertilladelse er påkrævet for at søge i kalenderen</string>
     <string name="menu_contacts_open_externally">Åbn i kontakter-app</string>
     <string name="file_meta_type">Type: %1$s</string>
-    <string name="file_type_launcherbackup">%1$s sikkerhedskopi</string>
+    <string name="file_type_launcherbackup">%1$s-sikkerhedskopi</string>
     <string name="edit_favorites_dialog_unpinned">Ikke fastgjort – bruges ofte</string>
     <string name="edit_favorites_dialog_tag_section_empty">Fastgjorte tags vises her</string>
     <string name="nextcloud_server_invalid_url">Denne URL henviser ikke til en gyldig Nextcloud-installation</string>
@@ -278,7 +278,7 @@
     <string name="weather_condition_hail">Hagl</string>
     <string name="weather_condition_partlycloudy">Delvist overskyet</string>
     <string name="weather_condition_heavyrainandthunder">Kraftig regn og torden</string>
-    <string name="missing_permission_calendar_search">Giv kalenderen tilladelse til at søge i din kalender.</string>
+    <string name="missing_permission_calendar_search">Giv kalendertilladelse for at søge i din kalender.</string>
     <string name="file_meta_location">Lokation: %1$s</string>
     <string name="websearch_dialog_create_title">Tilføj websøgning</string>
     <string name="websearch_dialog_delete_icon">Slet ikon</string>
@@ -682,7 +682,7 @@
     <string name="location_closed">Lukket</string>
     <string name="menu_map">Se på kort</string>
     <string name="menu_website">Åbn hjemmeside</string>
-    <string name="missing_permission_location_search">Giv tilladelse til placering for at søge i nærheden.</string>
+    <string name="missing_permission_location_search">Giv tilladelse til lokation for at søge i nærheden.</string>
     <string name="preference_clock_widget_show_seconds">Vis sekunder</string>
     <string name="widget_use_theme_colors">Brug temafarve</string>
     <string name="preference_search_locations">Steder</string>
