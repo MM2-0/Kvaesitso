@@ -43,7 +43,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
-import java.text.Collator
 import kotlin.coroutines.CoroutineContext
 
 class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
@@ -109,12 +108,4 @@ class LauncherApplication : Application(), CoroutineScope, ImageLoaderFactory {
             .crossfade(200)
             .build()
     }
-
-    companion object {
-
-        val collator: Collator by lazy {
-            Collator.getInstance().apply { strength = Collator.SECONDARY }
-        }
-    }
-
 }

@@ -140,21 +140,3 @@ fun UnitConverterItem(
         }
     }
 }
-
-fun getDimensionIcon(dimension: Dimension): ImageVector {
-    return when (dimension) {
-        Dimension.Mass -> Icons.Rounded.FitnessCenter
-        Dimension.Length -> Icons.Rounded.Straighten
-        Dimension.Velocity -> Icons.Rounded.Speed
-        Dimension.Volume -> TODO()
-        Dimension.Area -> Icons.Rounded.SquareFoot
-        Dimension.Currency -> Icons.Rounded.Toll
-        Dimension.Data -> Icons.Rounded.Storage
-        Dimension.Bitrate -> TODO()
-        Dimension.Pressure -> TODO()
-        Dimension.Energy -> Icons.Rounded.Bolt
-        Dimension.Frequency -> TODO()
-        Dimension.Temperature -> Icons.Rounded.Thermostat
-        Dimension.Time -> Icons.Rounded.Schedule
-    }
-}

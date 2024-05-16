@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerDefaults
@@ -56,6 +57,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -96,6 +98,7 @@ import de.mm20.launcher2.ui.launcher.search.SearchVM
 import de.mm20.launcher2.ui.launcher.searchbar.LauncherSearchBar
 import de.mm20.launcher2.ui.launcher.widgets.WidgetColumn
 import de.mm20.launcher2.ui.launcher.widgets.clock.ClockWidget
+import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalPreferDarkContentOverWallpaper
 import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
@@ -192,7 +195,8 @@ fun PagerScaffold(
     val systemUiController = rememberSystemUiController()
 
     val colorSurface = MaterialTheme.colorScheme.surface
-    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim) {
+    val isDarkTheme = LocalDarkTheme.current
+    LaunchedEffect(isWidgetEditMode, darkStatusBarIcons, colorSurface, showStatusBarScrim, isSearchOpen) {
         if (isWidgetEditMode) {
             systemUiController.setStatusBarColor(
                 colorSurface
@@ -200,6 +204,11 @@ fun PagerScaffold(
         } else if (showStatusBarScrim) {
             systemUiController.setStatusBarColor(
                 colorSurface.copy(0.7f),
+            )
+        } else if (isSearchOpen) {
+            systemUiController.setStatusBarColor(
+                Color.Transparent,
+                darkIcons = !isDarkTheme,
             )
         } else {
             systemUiController.setStatusBarColor(
@@ -292,8 +301,6 @@ fun PagerScaffold(
     BackHandler {
         handleBackOrHomeEvent()
     }
-
-    val keyboardController = LocalSoftwareKeyboardController.current
 
     val gestureManager = LocalGestureDetector.current
 
@@ -395,10 +402,16 @@ fun PagerScaffold(
             ) {
 
                 val minFlingVelocity = 1000.dp.toPixels()
+                val colorSurfaceContainer = MaterialTheme.colorScheme.surfaceContainer
 
                 HorizontalPager(
                     modifier = Modifier
                         .fillMaxSize()
+                        .drawBehind {
+                            drawRect(
+                                color = colorSurfaceContainer.copy(alpha = -pagerState.getOffsetDistanceInPages(0) * 0.85f),
+                            )
+                        }
                         .nestedScroll(pagerNestedScrollConnection),
                     beyondViewportPageCount = 1,
                     reverseLayout = reverse == (LocalLayoutDirection.current == LayoutDirection.Ltr),
@@ -514,13 +527,13 @@ fun PagerScaffold(
                             val windowInsets = WindowInsets.safeDrawing.asPaddingValues()
                             val paddingValues = if (bottomSearchBar) {
                                 PaddingValues(
-                                    top = 4.dp + windowInsets.calculateTopPadding(),
-                                    bottom = 60.dp + webSearchPadding + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
+                                    top = 8.dp + windowInsets.calculateTopPadding(),
+                                    bottom = 64.dp + webSearchPadding + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding
                                 )
                             } else {
                                 PaddingValues(
-                                    bottom = 4.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding,
-                                    top = 60.dp + webSearchPadding + windowInsets.calculateTopPadding()
+                                    bottom = 8.dp + windowInsets.calculateBottomPadding() + keyboardFilterBarPadding,
+                                    top = 64.dp + webSearchPadding + windowInsets.calculateTopPadding()
                                 )
                             }
                             SearchColumn(

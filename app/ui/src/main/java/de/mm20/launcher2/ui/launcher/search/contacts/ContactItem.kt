@@ -104,9 +104,7 @@ fun ContactItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
             val icon by viewModel.icon.collectAsStateWithLifecycle()
-            val padding by transition.animateDp(label = "iconPadding") {
-                if (it) 16.dp else 8.dp
-            }
+            val padding = 16.dp
             ShapedLauncherIcon(
                 size = 48.dp,
                 modifier = Modifier

@@ -156,7 +156,7 @@ fun LocationItem(
                                 enter = slideIn { IntOffset(-it.width, 0) } + fadeIn(),
                                 exit = slideOut { IntOffset(-it.width, 0) } + fadeOut(),
                             )
-                            .padding(8.dp),
+                            .padding(12.dp),
                         size = 48.dp,
                         icon = { icon },
                         badge = { badge },
@@ -201,7 +201,7 @@ fun LocationItem(
                     }
                     Compass(
                         targetHeading = targetHeading,
-                        modifier = Modifier.padding(end = 8.dp) then
+                        modifier = Modifier.padding(end = 12.dp) then
                                 if (!showMap) {
                                     Modifier.sharedBounds(
                                         rememberSharedContentState("compass"),

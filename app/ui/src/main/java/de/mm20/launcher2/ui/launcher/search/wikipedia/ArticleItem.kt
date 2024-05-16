@@ -61,9 +61,7 @@ fun ArticleItem(
     }
 
     Column(
-        modifier = modifier.clickable {
-            viewModel.launch(context)
-        }
+        modifier = modifier
     ) {
         if (!article.imageUrl.isNullOrEmpty()) {
             AsyncImage(

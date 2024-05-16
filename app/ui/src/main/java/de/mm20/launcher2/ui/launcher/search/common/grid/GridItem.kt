@@ -80,6 +80,7 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
+    labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
@@ -181,8 +182,9 @@ fun GridItem(
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                maxLines = labelMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 
@@ -223,7 +225,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 .fillMaxSize()
                 .systemBarsPadding()
                 .imePadding()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 8.dp)
                 .then(
                     if (show.targetState) {
                         Modifier.pointerInput(Unit) {
@@ -242,7 +244,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(
-                            -16.dp.toPixels(),
+                            -8.dp.toPixels(),
                             -WindowInsets.systemBars.union(WindowInsets.ime)
                                 .getTop(LocalDensity.current).toFloat()
                         ),

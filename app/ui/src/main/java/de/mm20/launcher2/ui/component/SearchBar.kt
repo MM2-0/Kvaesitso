@@ -80,7 +80,7 @@ fun SearchBar(
         when {
             it == SearchBarLevel.Resting && style != SearchBarStyle.Solid -> 0.dp
             it == SearchBarLevel.Raised -> 8.dp
-            else -> 2.dp
+            else -> 0.dp
         }
     }
 
