@@ -173,7 +173,7 @@
     <string name="weather_condition_sleetshowers">Rovesci di nevischio</string>
     <string name="weather_condition_snow">Neve</string>
     <string name="weather_condition_hail">Grandine</string>
-    <string name="weather_condition_thunder">Temporale</string>
+    <string name="weather_condition_thunder">Tuono</string>
     <string name="weather_condition_heavysnowshowers">Forti rovesci di neve</string>
     <string name="weather_condition_heavyrainshowers">Forti rovesci di pioggia</string>
     <string name="weather_condition_rainshowersandthunder">Rovesci di pioggia e tuoni</string>
@@ -816,4 +816,6 @@
     <string name="location_opens_other_day">apre %1$s, %2$s</string>
     <string name="preference_customize_filter_bar">Personalizza barra dei filtri</string>
     <string name="preference_customize_filter_bar_summary">Personalizza quali elementi includere nella barra dei filtri</string>
+    <string name="weather_condition_thunderstorm">Temporale</string>
+    <string name="weather_condition_haze">Foschia</string>
 </resources>
