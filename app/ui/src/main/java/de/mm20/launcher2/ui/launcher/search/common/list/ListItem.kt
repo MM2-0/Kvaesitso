@@ -178,6 +178,8 @@ fun ListItem(
                                     }
                                 },
                                 onLongClick = { onShowDetails(true) }),
+                        showDetails = showDetails,
+                        onBack = { onShowDetails(false) },
                         article = item,
                     )
                 }
