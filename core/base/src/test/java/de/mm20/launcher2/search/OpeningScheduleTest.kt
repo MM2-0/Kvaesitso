@@ -24,8 +24,8 @@ class OpeningScheduleTest(val date: LocalDateTime, val expected: Boolean) {
              * Wednesday: 08:00 - 12:00, 15:00 - 19:00
              * Thursday: 00:00 - Fri. 01:00
              * Friday: closed
-             * Saturday: 08:00 - 17:00
-             * Sunday: 12:00 - 12:30
+             * Saturday: 12:00 - 12:30
+             * Sunday: 23:00 - Mon. 01:00
              */
             openingHours = persistentListOf(
                 OpeningHours(
@@ -55,13 +55,13 @@ class OpeningScheduleTest(val date: LocalDateTime, val expected: Boolean) {
                 ),
                 OpeningHours(
                     dayOfWeek = DayOfWeek.SATURDAY,
-                    startTime = LocalTime.of(8, 0),
-                    duration = Duration.ofHours(9),
+                    startTime = LocalTime.of(12, 0),
+                    duration = Duration.ofMinutes(30),
                 ),
                 OpeningHours(
                     dayOfWeek = DayOfWeek.SUNDAY,
-                    startTime = LocalTime.of(12, 0),
-                    duration = Duration.ofMinutes(30),
+                    startTime = LocalTime.of(23, 0),
+                    duration = Duration.ofHours(2),
                 ),
             )
         )
@@ -91,14 +91,14 @@ class OpeningScheduleTest(val date: LocalDateTime, val expected: Boolean) {
             arrayOf(LocalDateTime.of(2024, 5, 17, 0, 30, 0), true),
             // Friday, 12:00
             arrayOf(LocalDateTime.of(2024, 5, 17, 12, 0, 0), false),
-            // Saturday, 16:00
-            arrayOf(LocalDateTime.of(2024, 5, 18, 16, 0, 0), true),
-            // Sunday, 12:15
-            arrayOf(LocalDateTime.of(2024, 5, 19, 12, 15, 0), true),
-            // Sunday, 12:31
-            arrayOf(LocalDateTime.of(2024, 5, 19, 12, 31, 0), false),
-
-
-            )
+            // Saturday, 12:15
+            arrayOf(LocalDateTime.of(2024, 5, 18, 12, 15, 0), true),
+            // Saturday, 12:31
+            arrayOf(LocalDateTime.of(2024, 5, 18, 12, 31, 0), false),
+            // Sunday, 23:30
+            arrayOf(LocalDateTime.of(2024, 5, 19, 23, 30, 0), true),
+            // Monday, 00:30
+            arrayOf(LocalDateTime.of(2024, 5, 20, 0, 30, 0), true),
+        )
     }
 }
