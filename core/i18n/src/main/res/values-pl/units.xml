@@ -55,8 +55,8 @@
         <item quantity="many">metrów kwadratowych</item>
         <item quantity="other">metrów kwadratowych</item>
     </plurals>
-    <string name="unit_sqkilometer_symbol">km²</string>
-    <string name="unit_sqcentimeter_symbol">cm²</string>
+    <string name="unit_sqkilometer_symbol">kilometry²</string>
+    <string name="unit_sqcentimeter_symbol">centymetry²</string>
     <plurals name="unit_sqcentimeter">
         <item quantity="one">centymetr kwadratowy</item>
         <item quantity="few">centymetry kwadratowe</item>
@@ -155,22 +155,22 @@
         <item quantity="other">tebibajtów</item>
     </plurals>
     <string name="unit_bit_symbol">bit</string>
-    <string name="unit_kilobit_symbol">kbit</string>
-    <string name="unit_megabit_symbol">Mbit</string>
+    <string name="unit_kilobit_symbol">kbity</string>
+    <string name="unit_megabit_symbol">Mbity</string>
     <plurals name="unit_megabit">
         <item quantity="one">megabit</item>
         <item quantity="few">megabity</item>
         <item quantity="many">megabitów</item>
         <item quantity="other">megabitów</item>
     </plurals>
-    <string name="unit_gigabit_symbol">Gbit</string>
+    <string name="unit_gigabit_symbol">Gbity</string>
     <plurals name="unit_gigabit">
         <item quantity="one">gigabit</item>
         <item quantity="few">gigabity</item>
         <item quantity="many">gigabitów</item>
         <item quantity="other">gigabitów</item>
     </plurals>
-    <string name="unit_terabit_symbol">Tbit</string>
+    <string name="unit_terabit_symbol">Tbity</string>
     <plurals name="unit_terabit">
         <item quantity="one">terabit</item>
         <item quantity="few">terabity</item>
@@ -371,4 +371,11 @@
         <item quantity="many">mil na godzinę</item>
         <item quantity="other">mil na godzinę</item>
     </plurals>
+    <plurals name="unit_decimeter">
+        <item quantity="one">Decymetr</item>
+        <item quantity="few">Decymetry</item>
+        <item quantity="many">Decymetrów</item>
+        <item quantity="other">Decymetrów</item>
+    </plurals>
+    <string name="unit_decimeter_symbol">dm</string>
 </resources>
