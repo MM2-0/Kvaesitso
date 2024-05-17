@@ -48,7 +48,7 @@ fun SearchResultGrid(
                             if (item != null) {
                                 GridItem(
                                     modifier = Modifier
-                                        .sharedBounds(
+                                        .sharedElement(
                                             rememberSharedContentState(item.key),
                                             this@AnimatedContent,
                                         )
