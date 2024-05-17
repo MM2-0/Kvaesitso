@@ -9,7 +9,7 @@ import de.mm20.launcher2.icons.TintedIconLayer
 import kotlinx.collections.immutable.ImmutableList
 import java.time.DayOfWeek
 import java.time.Duration
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
 import android.location.Location as AndroidLocation
 
@@ -233,10 +233,12 @@ data class OpeningHours(
     val startTime: LocalTime,
     val duration: Duration
 ) {
-    val isOpen: Boolean
-        get() = LocalDate.now().dayOfWeek == dayOfWeek &&
-                LocalTime.now().isAfter(startTime) &&
-                LocalTime.now().isBefore(startTime.plus(duration))
+
+    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+        return date.dayOfWeek == dayOfWeek &&
+                date.toLocalTime().isAfter(startTime) &&
+                date.toLocalTime().isBefore(startTime.plus(duration))
+    }
 
     override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
 }
@@ -245,6 +247,7 @@ data class OpeningSchedule(
     val isTwentyFourSeven: Boolean,
     val openingHours: ImmutableList<OpeningHours>
 ) {
-    val isOpen: Boolean
-        get() = isTwentyFourSeven || openingHours.any { it.isOpen }
+    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+        return isTwentyFourSeven || openingHours.any { it.isOpen(date) }
+    }
 }

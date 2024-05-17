@@ -718,7 +718,7 @@ private fun buildAddress(
 }
 
 private fun OpeningSchedule.getCurrentOpeningHours(): OpeningHours? {
-    return openingHours.find { it.isOpen }
+    return openingHours.find { it.isOpen() }
 }
 
 private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
