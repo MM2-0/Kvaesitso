@@ -112,7 +112,10 @@ fun ArticleItem(
                                         this@AnimatedContent,
                                         resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
                                     )
-                                    .background(MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.small)
+                                    .background(
+                                        MaterialTheme.colorScheme.secondaryContainer,
+                                        MaterialTheme.shapes.small
+                                    )
                                     .clip(MaterialTheme.shapes.small),
                                 model = article.imageUrl,
                                 contentScale = ContentScale.Crop,
@@ -124,7 +127,8 @@ fun ArticleItem(
                         modifier = Modifier.padding(horizontal = 16.dp),
                     ) {
                         Text(
-                            modifier = Modifier.padding(bottom = 24.dp)
+                            modifier = Modifier
+                                .padding(bottom = 24.dp)
                                 .sharedBounds(
                                     rememberSharedContentState("summary"),
                                     this@AnimatedContent,
@@ -134,20 +138,23 @@ fun ArticleItem(
                         )
                     }
                 } else {
-                    AsyncImage(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .aspectRatio(16f / 9f)
-                            .sharedBounds(
-                                rememberSharedContentState("image"),
-                                this@AnimatedContent,
-                                resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
-                            )
-                            .background(MaterialTheme.colorScheme.secondaryContainer),
-                        model = ImageRequest.Builder(context).data(article.imageUrl).crossfade(false).build(),
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
+                    if (!article.imageUrl.isNullOrEmpty()) {
+                        AsyncImage(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 9f)
+                                .sharedBounds(
+                                    rememberSharedContentState("image"),
+                                    this@AnimatedContent,
+                                    resizeMode = SharedTransitionScope.ResizeMode.RemeasureToBounds
+                                )
+                                .background(MaterialTheme.colorScheme.secondaryContainer),
+                            model = ImageRequest.Builder(context).data(article.imageUrl)
+                                .crossfade(false).build(),
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null
+                        )
+                    }
 
                     Column(
                         modifier = Modifier.padding(
@@ -186,7 +193,8 @@ fun ArticleItem(
                             color = MaterialTheme.colorScheme.secondary
                         )
                         Text(
-                            modifier = Modifier.padding(vertical = 16.dp)
+                            modifier = Modifier
+                                .padding(vertical = 16.dp)
                                 .sharedBounds(
                                     rememberSharedContentState("summary"),
                                     this@AnimatedContent,
