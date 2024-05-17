@@ -18,6 +18,7 @@ class FakeApp: Application {
     override val profile: AppProfile = AppProfile.Personal
     override val user: UserHandle = Process.myUserHandle()
     override val versionName: String = "1.0"
+    override val versionCode: String = "10000000"
     override val canUninstall: Boolean = false
 
     override fun uninstall(context: Context) {

@@ -66,6 +66,7 @@ import androidx.lifecycle.lifecycleScope
 import coil.compose.AsyncImage
 import com.google.accompanist.flowlayout.FlowRow
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.preferences.ui.UiSettings
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -82,6 +83,7 @@ import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.inject
 
 @Composable
 fun AppItem(
@@ -90,6 +92,7 @@ fun AppItem(
     onBack: () -> Unit
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${app.key}")
+    val uiSettings: UiSettings by inject()
     val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     LaunchedEffect(app) {
@@ -124,25 +127,41 @@ fun AppItem(
                         style = MaterialTheme.typography.labelSmall
                     )
                 }
-
-
-                app.versionName?.let {
-                    Text(
-                        text = stringResource(R.string.app_info_version, it),
-                        style = MaterialTheme.typography.bodySmall,
-                        modifier = Modifier.padding(top = 4.dp),
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
+                val labelsSettings = uiSettings.devSettings.collectAsState(initial = null).value
+                if (labelsSettings?.anyFlagSet == true) {
+                    Box(modifier = Modifier.padding(top = 4.dp))
+                    if (labelsSettings.showPackageName) {
+                        Text(
+                            text = app.componentName.packageName,
+                            style = MaterialTheme.typography.bodySmall,
+                            modifier = Modifier.padding(top = 1.dp),
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis,
+                        )
+                    }
+                    if (labelsSettings.showVersionName) {
+                        app.versionName?.let {
+                            Text(
+                                text = stringResource(R.string.app_info_version, it),
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 1.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                    if (labelsSettings.showVersionCode) {
+                        app.versionCode?.let {
+                            Text(
+                                text = stringResource(R.string.app_info_build, it),
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(top = 1.dp),
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
                 }
-                Text(
-                    text = app.componentName.packageName,
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = 1.dp),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                )
-
                 FlowRow(
                     modifier = Modifier
                         .padding(top = 12.dp)

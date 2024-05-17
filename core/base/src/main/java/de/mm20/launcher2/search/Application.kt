@@ -26,6 +26,7 @@ interface Application: SavableSearchable {
     val profile: AppProfile
     val user: UserHandle
     val versionName: String?
+    val versionCode: String?
 
     override fun getPlaceholderIcon(context: Context): StaticLauncherIcon {
         return StaticLauncherIcon(

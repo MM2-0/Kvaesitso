@@ -78,6 +78,10 @@ data class LauncherSettingsData internal constructor(
     val gridIconSize: Int = 48,
     val gridLabels: Boolean = true,
 
+    val showPackageName: Boolean = true,
+    val showVersionName: Boolean = true,
+    val showVersionCode: Boolean = false,
+
     val searchBarStyle: SearchBarStyle = SearchBarStyle.Transparent,
     val searchBarColors: SearchBarColors = SearchBarColors.Auto,
     val searchBarKeyboard: Boolean = true,

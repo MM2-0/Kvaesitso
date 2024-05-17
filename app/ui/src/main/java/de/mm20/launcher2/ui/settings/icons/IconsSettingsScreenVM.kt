@@ -22,8 +22,8 @@ import de.mm20.launcher2.services.favorites.FavoritesService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.shareIn
 import org.koin.core.component.KoinComponent
@@ -40,6 +40,7 @@ class IconsSettingsScreenVM(
 ) : ViewModel() {
 
     val grid = uiSettings.gridSettings
+    val dev = uiSettings.devSettings
 
     fun setColumnCount(columnCount: Int) {
         uiSettings.setGridColumnCount(columnCount)
@@ -129,6 +130,41 @@ class IconsSettingsScreenVM(
 
     fun getPreviewIcons(size: Int): Flow<List<LauncherIcon>> {
         return previewItems.flatMapLatest { apps ->
+    val showPackageName: Flow<Boolean> = dev.map {
+        it.showPackageName
+    }
+
+    fun setShowPackageName(showPackageName: Boolean) {
+        uiSettings.setShowPackageName(showPackageName)
+    }
+
+    val showVersionName: Flow<Boolean> = dev.map {
+        it.showVersionName
+    }
+
+    fun setShowVersionName(showVersionName: Boolean) {
+        uiSettings.setShowVersionName(showVersionName)
+    }
+
+    val showVersionCode: Flow<Boolean> = dev.map {
+        it.showVersionCode
+    }
+
+    fun setShowVersionCode(showVersionCode: Boolean) {
+        uiSettings.setShowVersionCode(showVersionCode)
+    }
+
+
+    fun getPreviewIcons(size: Int): Flow<List<LauncherIcon?>> {
+        return grid.flatMapLatest { grid ->
+            favoritesService.getFavorites(
+                includeTypes = listOf("app"),
+                limit = grid.columnCount,
+                manuallySorted = true,
+                automaticallySorted = true,
+                frequentlyUsed = true,
+            )
+        }.flatMapLatest { apps ->
             combine(apps.map {
                 iconService.getIcon(it, size).filterNotNull()
             }) {

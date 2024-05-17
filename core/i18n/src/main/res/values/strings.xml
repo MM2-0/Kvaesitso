@@ -48,6 +48,8 @@
     <string name="search_bar_placeholder">Search</string>
     <!-- App version, used in application details %1$s is the version -->
     <string name="app_info_version">Version %1$s</string>
+    <!-- App build, used in application details %1$s is the build number -->
+    <string name="app_info_build">Build %1$s</string>
     <!-- Menu entry for launcher settings -->
     <string name="settings">Settings</string>
     <!-- Menu entry for launcher help -->
@@ -576,6 +578,13 @@
     <string name="preference_shortcut_badges_summary">Show a badge which indicates to which app a shortcut belongs</string>
     <string name="preference_plugin_badges">Plugin badges</string>
     <string name="preference_plugin_badges_summary">Indicate by which plugin a search result was created</string>
+    <string name="preference_category_icons_advanced">Advanced</string>
+    <string name="preference_show_package_name">Show app package name</string>
+    <string name="preference_show_package_name_summary">Internal name used by Android to identify installed apps</string>
+    <string name="preference_show_version_name">Show app version</string>
+    <string name="preference_show_version_name_summary">Used on store for app user to identify installed version</string>
+    <string name="preference_show_version_code">Show build number</string>
+    <string name="preference_show_version_code_summary">Used internally by Android to compare versions during updates</string>
     <string name="preference_nextcloud_signin">Sign in to Nextcloud</string>
     <string name="preference_nextcloud_signin_summary">Sign in to search your Nextcloud server</string>
     <string name="preference_nextcloud">Nextcloud</string>

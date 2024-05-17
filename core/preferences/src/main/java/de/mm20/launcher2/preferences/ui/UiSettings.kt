@@ -27,6 +27,15 @@ data class GridSettings(
     val showLabels: Boolean = true,
 )
 
+data class DevSettings(
+    val showPackageName: Boolean = true,
+    val showVersionName: Boolean = true,
+    val showVersionCode: Boolean = false
+) {
+    val anyFlagSet: Boolean
+        get() = showPackageName || showVersionName || showVersionCode
+}
+
 class UiSettings internal constructor(
     private val launcherDataStore: LauncherDataStore,
 ) {
@@ -71,6 +80,32 @@ class UiSettings internal constructor(
         }
     }
 
+    val devSettings
+        get() = launcherDataStore.data.map {
+            DevSettings(
+                showPackageName = it.showPackageName,
+                showVersionName = it.showVersionName,
+                showVersionCode = it.showVersionCode
+            )
+        }
+
+    fun setShowPackageName(showPackageName: Boolean) {
+        launcherDataStore.update {
+            it.copy(showPackageName = showPackageName)
+        }
+    }
+
+    fun setShowVersionName(showVersionName: Boolean) {
+        launcherDataStore.update {
+            it.copy(showVersionName = showVersionName)
+        }
+    }
+
+    fun setShowVersionCode(showVersionCode: Boolean) {
+        launcherDataStore.update {
+            it.copy(showVersionCode = showVersionCode)
+        }
+    }
 
     val cardStyle
         get() = launcherDataStore.data.map {
