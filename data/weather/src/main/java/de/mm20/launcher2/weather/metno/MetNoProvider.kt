@@ -24,8 +24,11 @@ import org.shredzone.commons.suncalc.SunTimes
 import java.io.IOException
 import java.security.MessageDigest
 import java.text.SimpleDateFormat
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.util.Date
 import java.util.Locale
+import java.util.TimeZone
 import kotlin.math.roundToInt
 
 internal class MetNoProvider(
@@ -60,6 +63,7 @@ internal class MetNoProvider(
             val forecasts = mutableListOf<Forecast>()
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.ROOT)
+            dateFormat.timeZone = TimeZone.getTimeZone(ZoneId.ofOffset("UTC", ZoneOffset.UTC))
 
             val httpClient = OkHttpClient()
 
