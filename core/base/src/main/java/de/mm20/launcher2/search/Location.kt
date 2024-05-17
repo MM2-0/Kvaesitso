@@ -11,6 +11,7 @@ import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.temporal.TemporalAdjusters
 import android.location.Location as AndroidLocation
 
 interface Location : SavableSearchable {
@@ -235,9 +236,9 @@ data class OpeningHours(
 ) {
 
     fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
-        return date.dayOfWeek == dayOfWeek &&
-                date.toLocalTime().isAfter(startTime) &&
-                date.toLocalTime().isBefore(startTime.plus(duration))
+        val startTime = date.with(TemporalAdjusters.previousOrSame(dayOfWeek)).with(startTime)
+        val endTime = startTime.plus(duration)
+        return date in startTime..<endTime
     }
 
     override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
