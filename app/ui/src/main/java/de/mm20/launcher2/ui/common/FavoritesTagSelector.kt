@@ -106,7 +106,13 @@ fun FavoritesTagSelector(
                                     ),
                                 tag = tag,
                                 selected = selectedTag == tag.tag,
-                                onClick = { onSelectTag(tag.tag) },
+                                onClick = {
+                                    if (selectedTag == tag.tag) {
+                                        onSelectTag(null)
+                                    } else {
+                                        onSelectTag(tag.tag)
+                                    }
+                                },
                             )
                         }
                         if (canScroll) {
@@ -180,7 +186,13 @@ fun FavoritesTagSelector(
                                     ),
                                 tag = tag,
                                 selected = selectedTag == tag.tag,
-                                onClick = { onSelectTag(tag.tag) },
+                                onClick = {
+                                    if (selectedTag == tag.tag) {
+                                        onSelectTag(null)
+                                    } else {
+                                        onSelectTag(tag.tag)
+                                    }
+                                },
                             )
                         }
                     }
