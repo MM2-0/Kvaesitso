@@ -18,7 +18,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,7 +39,6 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
 import androidx.compose.material.icons.rounded.Visibility
 import androidx.compose.material.icons.rounded.VisibilityOff
-import androidx.compose.material.icons.rounded.WifiOff
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.Icon
@@ -767,7 +765,7 @@ private val LocationCategory.labelRes
         LocationCategory.LIBRARY -> R.string.poi_category_library
         LocationCategory.COLLEGE -> R.string.poi_category_college
         LocationCategory.ICE_CREAM -> R.string.poi_category_ice_cream
-        LocationCategory.THEATER -> R.string.poi_category_theater
+        LocationCategory.THEATRE -> R.string.poi_category_theater
         LocationCategory.PUBLIC_BUILDING -> R.string.poi_category_public_building
         LocationCategory.CINEMA -> R.string.poi_category_cinema
         LocationCategory.NIGHTCLUB -> R.string.poi_category_nightclub
@@ -805,6 +803,7 @@ private val LocationCategory.labelRes
         LocationCategory.FITNESS -> R.string.poi_category_fitness
         LocationCategory.TRAM_STOP -> R.string.poi_category_tram_stop
         LocationCategory.RAILWAY_STATION -> R.string.poi_category_railway_station
+        LocationCategory.RAILWAY_STOP -> R.string.poi_category_railway_stop
         LocationCategory.BUS_STATION -> R.string.poi_category_bus_station
         LocationCategory.ATM -> R.string.poi_category_atm
         LocationCategory.KIOSK -> R.string.poi_category_kiosk
@@ -813,5 +812,5 @@ private val LocationCategory.labelRes
         LocationCategory.PARCEL_LOCKER -> R.string.poi_category_parcel_locker
         LocationCategory.CHEMIST -> R.string.poi_category_chemist
         LocationCategory.TRAVEL_AGENCY -> R.string.poi_category_travel_agency
-        LocationCategory.FITNESS_CENTER -> R.string.poi_category_fitness_center
+        LocationCategory.FITNESS_CENTRE -> R.string.poi_category_fitness_center
     }
