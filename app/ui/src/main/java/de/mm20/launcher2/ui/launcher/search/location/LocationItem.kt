@@ -666,7 +666,7 @@ fun Departures(modifier: Modifier, departures: List<Departure>?) {
         contentPadding = PaddingValues(vertical = 4.dp),
     ) {
         itemsIndexed(
-            departures,
+            departures.sortedBy { it.time },
             key = { idx, _ -> idx }
         ) { idx, it ->
             Row(
