@@ -16,7 +16,7 @@ class CurrencyRepository(
 ) {
 
     private val currencySymbolAliases = buildMap {
-        val ownCurrency = java.util.Currency.getInstance(Locale.getDefault()).symbol ?: "USD"
+        val ownCurrency = java.util.Currency.getInstance(Locale.getDefault()).currencyCode ?: "USD"
 
         put("€", "EUR")
 
