@@ -96,15 +96,6 @@ class LocationSearchSettings internal constructor(
         }
     }
 
-    val showPositionOnMap
-        get() = launcherDataStore.data.map { it.locationSearchShowPositionOnMap }
-
-    fun setShowPositionOnMap(showPositionOnMap: Boolean) {
-        launcherDataStore.update {
-            it.copy(locationSearchShowPositionOnMap = showPositionOnMap)
-        }
-    }
-
     val themeMap
         get() = launcherDataStore.data.map { it.locationSearchThemeMap }
 

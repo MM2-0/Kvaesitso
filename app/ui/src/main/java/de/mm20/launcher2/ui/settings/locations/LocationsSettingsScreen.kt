@@ -43,7 +43,6 @@ fun LocationsSettingsScreen() {
     val customOverpassUrl by viewModel.customOverpassUrl.collectAsState()
     val showMap by viewModel.showMap.collectAsState()
     val themeMap by viewModel.themeMap.collectAsState()
-    val showPositionOnMap by viewModel.showPositionOnMap.collectAsState()
     val customTileServerUrl by viewModel.customTileServerUrl.collectAsState()
 
     val plugins by viewModel.availablePlugins.collectAsStateWithLifecycle(

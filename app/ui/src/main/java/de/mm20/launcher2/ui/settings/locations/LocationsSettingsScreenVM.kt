@@ -64,13 +64,6 @@ class LocationsSettingsScreenVM : ViewModel(), KoinComponent {
         settings.setShowMap(showMap)
     }
 
-    val showPositionOnMap = settings.showPositionOnMap
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
-
-    fun setShowPositionOnMap(showPositionOnMap: Boolean) {
-        settings.setShowPositionOnMap(showPositionOnMap)
-    }
-
     val customTileServerUrl = settings.tileServer
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 

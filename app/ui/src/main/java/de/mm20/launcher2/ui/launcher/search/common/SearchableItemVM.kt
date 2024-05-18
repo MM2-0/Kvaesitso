@@ -242,9 +242,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
     val applyMapTheming = locationSearchSettings.themeMap
         .stateIn(viewModelScope, SharingStarted.Lazily, false)
 
-    val showPositionOnMap = locationSearchSettings.showPositionOnMap
-        .stateIn(viewModelScope, SharingStarted.Lazily, false)
-
     val mapTileServerUrl = locationSearchSettings.tileServer
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
 }
