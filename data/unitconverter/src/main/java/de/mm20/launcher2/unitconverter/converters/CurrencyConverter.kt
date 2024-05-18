@@ -59,7 +59,10 @@ class CurrencyConverter(
 
 
     override suspend fun convert(context: Context, fromUnit: String, value: Double, toUnit: String?): UnitConverter {
-        val values = repository.convertCurrency(fromUnit, value, toUnit).map {
+        val fromIsoCode = repository.resolveAlias(fromUnit)
+        val toIsoCode = toUnit?.let { repository.resolveAlias(it) }
+
+        val values = repository.convertCurrency(fromIsoCode, value, toIsoCode).map {
             UnitValue(it.second, it.first, formatName(it.first, it.second), formatValue(it.first, it.second))
         }.toMutableList()
 
@@ -82,8 +85,8 @@ class CurrencyConverter(
             values.add(0, ownCurrency)
         }
 
-        val inputValue = UnitValue(value, fromUnit, formatName(fromUnit, value), formatValue(fromUnit, value))
-        val lastUpdate = repository.getLastUpdate(fromUnit)
+        val inputValue = UnitValue(value, fromIsoCode, formatName(fromIsoCode, value), formatValue(fromIsoCode, value))
+        val lastUpdate = repository.getLastUpdate(fromIsoCode)
         return CurrencyUnitConverter(dimension, inputValue, values, lastUpdate)
     }
 }
