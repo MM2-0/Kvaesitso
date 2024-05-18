@@ -8,6 +8,7 @@ import androidx.compose.animation.core.EaseInOutCirc
 import androidx.compose.animation.core.EaseInOutSine
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateOffsetAsState
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
@@ -49,6 +50,7 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -220,7 +222,15 @@ fun MapTiles(
                 )
         )
         if (userLocation != null) {
-            val userTileCoordinates = getTileCoordinates(userLocation.lat, userLocation.lon, zoom)
+            val userIndicatorOffset by animateOffsetAsState(
+                targetValue = getTileCoordinates(userLocation.lat, userLocation.lon, zoom).let {
+                    Offset(
+                        (it.x - start.x) * tileSize.value - 8f,
+                        (it.y - start.y) * tileSize.value - 8f
+                    )
+                },
+                animationSpec = tween()
+            )
 
             if (userLocation.heading != null) {
                 val headingAnim by animateValueAsState(
@@ -236,8 +246,8 @@ fun MapTiles(
                         .align(Alignment.TopStart)
                         .size(16.dp)
                         .absoluteOffset(
-                            x = (userTileCoordinates.x - start.x) * tileSize - 8.dp,
-                            y = (userTileCoordinates.y - start.y) * tileSize - 8.dp,
+                            userIndicatorOffset.x.dp,
+                            userIndicatorOffset.y.dp
                         )
                         .rotate(headingAnim)
                         .absoluteOffset(y = -8.dp)
@@ -249,8 +259,8 @@ fun MapTiles(
                     .align(Alignment.TopStart)
                     .size(16.dp)
                     .absoluteOffset(
-                        x = (userTileCoordinates.x - start.x) * tileSize - 8.dp,
-                        y = (userTileCoordinates.y - start.y) * tileSize - 8.dp,
+                        userIndicatorOffset.x.dp,
+                        userIndicatorOffset.y.dp
                     )
                     .background(MaterialTheme.colorScheme.tertiary, CircleShape)
                     .border(2.dp, MaterialTheme.colorScheme.onTertiary, CircleShape)
