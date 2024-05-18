@@ -74,6 +74,7 @@ internal data class OsmLocation(
         fun fromOverpassResponse(
             result: OverpassResponse
         ): List<OsmLocation> = result.elements.mapNotNull {
+            it.tags ?: return@mapNotNull null
             OsmLocation(
                 id = it.id,
                 label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,

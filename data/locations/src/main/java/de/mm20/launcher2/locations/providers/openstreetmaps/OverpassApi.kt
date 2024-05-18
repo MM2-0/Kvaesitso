@@ -36,7 +36,7 @@ data class OverpassResponseElement(
     val lat: Double?,
     val lon: Double?,
     val center: OverpassResponseElementCenter?,
-    val tags: Map<String, String>,
+    val tags: Map<String, String>?,
 )
 
 interface OverpassApi {

@@ -14,6 +14,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Process
 import android.os.UserHandle
+import android.util.Log
 import androidx.core.content.FileProvider
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.compat.PackageManagerCompat
@@ -31,6 +32,7 @@ import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.StoreLink
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import kotlin.math.roundToInt
 
 internal data class LauncherApp(
     private val launcherActivityInfo: LauncherActivityInfo,
@@ -86,7 +88,11 @@ internal data class LauncherApp(
         try {
             val icon =
                 withContext(Dispatchers.IO) {
-                    launcherActivityInfo.getIcon(context.resources.displayMetrics.densityDpi)
+                    // Adaptive icons have a size of 108dp (https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#design-adaptive-icons),
+                    // but we scale them to 1.5x so the inbounds are only 72dp
+                    val density = size / (108/1.5)
+                    Log.d("MM20", "Icon size: $size, density: $density, densityDpi: ${160 * density}")
+                    launcherActivityInfo.getIcon((160 * density).roundToInt())
 
                 } ?: return null
             if (icon is AdaptiveIconDrawable) {

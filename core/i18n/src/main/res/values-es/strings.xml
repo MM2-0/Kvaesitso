@@ -683,7 +683,6 @@
     <string name="plugin_type_weather">Proveedor de clima</string>
     <string name="plugin_weather_provider_enable">Establecer como proveedor de clima</string>
     <string name="plugin_weather_provider_enabled">Actualmente establecido como proveedor de clima</string>
-    <string name="location_open_until">Abierto hasta las %1$s</string>
     <string name="missing_permission_location_search">Otorgue el permiso de ubicación para buscar lugares cercanos.</string>
     <string name="preference_search_locations">Lugares</string>
     <string name="preference_search_locations_summary">Buscar negocios y otros lugares en el área local</string>
@@ -703,7 +702,6 @@
     <string name="clock_style_analog">Manecillas</string>
     <string name="clock_style_empty">Sin reloj</string>
     <string name="clock_variant_standard">Estándar</string>
-    <string name="location_open_next_day">Abre el %1$s</string>
     <string name="preference_search_locations_show_map">Mapa</string>
     <string name="preference_search_locations_show_map_summary">Mostrar una vista previa de mapa para los lugares</string>
     <string name="preference_search_locations_theme_map">Tema del mapa</string>
@@ -716,7 +714,6 @@
     <string name="unavailable_searchable">Este elemento ya no existe.</string>
     <string name="location_open">Abierto</string>
     <string name="location_closed">Cerrado</string>
-    <string name="location_open_next">Abre a las %1$s</string>
     <string name="menu_map">Ver en mapa</string>
     <string name="menu_website">Abrir sitio web</string>
     <string name="length_unit">Unidad de longitud</string>

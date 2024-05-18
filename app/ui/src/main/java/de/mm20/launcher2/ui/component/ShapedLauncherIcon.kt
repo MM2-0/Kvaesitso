@@ -8,6 +8,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -87,6 +88,7 @@ import de.mm20.launcher2.ui.modifier.scale
 import kotlinx.coroutines.launch
 import palettes.TonalPalette
 import java.time.Instant
+import java.time.LocalDate
 import java.time.ZoneId
 import kotlin.math.abs
 import kotlin.math.pow
@@ -133,9 +135,9 @@ fun ShapedLauncherIcon(
     }
 
     if (_icon is DynamicLauncherIcon) {
-        val time = LocalTime.current
-        LaunchedEffect(time, _icon) {
-            currentIcon = _icon.getIcon(time)
+        val date = Instant.ofEpochMilli(LocalTime.current).atZone(ZoneId.systemDefault())
+        LaunchedEffect(date.dayOfYear, _icon) {
+            currentIcon = _icon.getIcon(date.toEpochSecond() * 1000L)
         }
     }
 

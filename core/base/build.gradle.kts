@@ -54,4 +54,5 @@ dependencies {
     implementation(project(":libs:material-color-utilities"))
     api(project(":core:shared"))
 
+    testImplementation(libs.bundles.tests)
 }

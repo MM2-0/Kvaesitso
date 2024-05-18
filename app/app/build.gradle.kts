@@ -31,8 +31,8 @@ android {
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
         @SuppressLint("HighAppVersionCode")
-        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024022100
-        versionName = "1.29.1"
+        versionCode = System.getenv("VERSION_CODE_OVERRIDE")?.toIntOrNull() ?: 2024051000
+        versionName = "1.30.4"
         signingConfig = signingConfigs.getByName("debug")
     }
 
@@ -101,12 +101,6 @@ android {
     lint {
         abortOnError = false
     }
-
-    dependenciesInfo {
-        includeInApk = false
-        includeInBundle = false
-    }
-
     namespace = "de.mm20.launcher2"
 }
 

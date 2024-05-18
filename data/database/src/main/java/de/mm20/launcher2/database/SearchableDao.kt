@@ -35,7 +35,7 @@ interface SearchableDao {
                 "WHERE (" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR" +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND hidden = 0) OR " +
                 "(:hidden AND hidden = 1)" +
                 ") AND hidden = :hidden ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
@@ -53,7 +53,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR" +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND hidden = 0) OR " +
                 "(:hidden AND hidden = 1)" +
                 ") ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
     )
@@ -72,7 +72,7 @@ interface SearchableDao {
                 "(" +
                 "(:manuallySorted AND pinPosition > 1) OR " +
                 "(:automaticallySorted AND pinPosition = 1) OR" +
-                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0) OR " +
+                "(:frequentlyUsed AND pinPosition = 0 AND launchCount > 0 AND hidden = 0) OR " +
                 "(:hidden AND hidden = 1)" +
                 ") ORDER BY pinPosition DESC, weight DESC, launchCount DESC LIMIT :limit"
     )

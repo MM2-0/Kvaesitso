@@ -13,8 +13,9 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import kotlinx.collections.immutable.ImmutableList
 import java.time.DayOfWeek
 import java.time.Duration
-import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.temporal.TemporalAdjusters
 import android.location.Location as AndroidLocation
 
 interface Location : SavableSearchable {
@@ -131,7 +132,7 @@ interface Location : SavableSearchable {
             LocationCategory.TENNIS -> R.drawable.ic_location_tennis to R.color.orange
             LocationCategory.FITNESS, LocationCategory.FITNESS_CENTRE -> R.drawable.ic_location_fitness to R.color.orange
             LocationCategory.TRAM_STOP -> R.drawable.ic_location_tram_stop to R.color.blue
-            LocationCategory.RAILWAY_STOP -> R.drawable.ic_location_railway_stop to R.color.lightblue
+            LocationCategory.RAILWAY_STATION -> R.drawable.ic_location_railway_stop to R.color.lightblue
             LocationCategory.BUS_STATION, LocationCategory.BUS_STOP -> R.drawable.ic_location_bus_station to R.color.blue
             LocationCategory.ATM -> R.drawable.ic_location_atm to R.color.green
             LocationCategory.ART -> R.drawable.ic_location_art to R.color.deeporange
@@ -236,6 +237,7 @@ enum class LocationCategory {
     TENNIS,
     FITNESS,
     TRAM_STOP,
+    RAILWAY_STATION,
     RAILWAY_STOP,
     BUS_STATION,
     ATM,
@@ -254,10 +256,12 @@ data class OpeningHours(
     val startTime: LocalTime,
     val duration: Duration
 ) {
-    val isOpen: Boolean
-        get() = LocalDate.now().dayOfWeek == dayOfWeek &&
-                LocalTime.now().isAfter(startTime) &&
-                LocalTime.now().isBefore(startTime.plus(duration))
+
+    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+        val startTime = date.with(TemporalAdjusters.previousOrSame(dayOfWeek)).with(startTime)
+        val endTime = startTime.plus(duration)
+        return date in startTime..<endTime
+    }
 
     override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
 }
@@ -266,6 +270,7 @@ data class OpeningSchedule(
     val isTwentyFourSeven: Boolean,
     val openingHours: ImmutableList<OpeningHours>
 ) {
-    val isOpen: Boolean
-        get() = isTwentyFourSeven || openingHours.any { it.isOpen }
+    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+        return isTwentyFourSeven || openingHours.any { it.isOpen(date) }
+    }
 }

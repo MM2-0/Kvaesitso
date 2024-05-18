@@ -43,15 +43,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.mm20.launcher2.search.Contact
-import de.mm20.launcher2.search.File
-import de.mm20.launcher2.search.SavableSearchable
-import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.Article
 import de.mm20.launcher2.search.CalendarEvent
+import de.mm20.launcher2.search.Contact
+import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.SavableSearchable
+import de.mm20.launcher2.search.Searchable
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
 import de.mm20.launcher2.ui.component.LocalIconShape
@@ -80,6 +80,7 @@ fun GridItem(
     modifier: Modifier = Modifier,
     item: SavableSearchable,
     showLabels: Boolean = true,
+    labelMaxLines: Int = 1,
     highlight: Boolean = false
 ) {
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${item.key}")
@@ -181,8 +182,9 @@ fun GridItem(
                 text = item.labelOverride ?: item.label,
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                maxLines = labelMaxLines,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
 
@@ -199,7 +201,11 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
             targetState = true
         }
     }
-    val animationProgress = remember { Animatable(0f) }
+    val animationProgress = remember {
+        Animatable(0f).apply {
+            updateBounds(0f, 1f)
+        }
+    }
     LaunchedEffect(show.targetState) {
         if (!show.targetState) {
             animationProgress.animateTo(0f, tween(300))
@@ -219,7 +225,7 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 .fillMaxSize()
                 .systemBarsPadding()
                 .imePadding()
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 8.dp)
                 .then(
                     if (show.targetState) {
                         Modifier.pointerInput(Unit) {
@@ -238,8 +244,9 @@ fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit
                 modifier = Modifier
                     .placeOverlay(
                         origin.translate(
-                            -16.dp.toPixels(),
-                            -WindowInsets.systemBars.union(WindowInsets.ime).getTop(LocalDensity.current).toFloat()
+                            -8.dp.toPixels(),
+                            -WindowInsets.systemBars.union(WindowInsets.ime)
+                                .getTop(LocalDensity.current).toFloat()
                         ),
                         animationProgress.value
                     )

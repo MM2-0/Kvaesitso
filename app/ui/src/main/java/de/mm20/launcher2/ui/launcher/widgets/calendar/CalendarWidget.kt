@@ -48,6 +48,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import de.mm20.launcher2.Quadruple
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.InnerCard
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
@@ -126,12 +127,10 @@ fun CalendarWidget(
             }
         }
         val events by viewModel.calendarEvents
+        val nextEvents by viewModel.nextEvents
         val runningEvents by viewModel.hiddenPastEvents
         val hasPermission by viewModel.hasPermission.collectAsState()
-        Column(
-            modifier = Modifier
-                .animateContentSize()
-        ) {
+        Column {
             if (hasPermission == false) {
                 MissingPermissionBanner(
                     modifier = Modifier
@@ -143,10 +142,11 @@ fun CalendarWidget(
                 )
             }
             AnimatedContent(
-                Triple(
+                Quadruple(
                     selectedDate,
                     events,
-                    runningEvents
+                    runningEvents,
+                    nextEvents
                 ),
                 transitionSpec = {
                     when {
@@ -182,7 +182,7 @@ fun CalendarWidget(
                         }
                     }
                 }
-            ) { (_, events, runningEvents) ->
+            ) { (_, events, runningEvents, nextEvents) ->
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
@@ -208,7 +208,6 @@ fun CalendarWidget(
                             }
                         )
                     }
-                    val nextEvents by viewModel.nextEvents
                     if (nextEvents.isNotEmpty()) {
                         Text(
                             stringResource(R.string.calendar_widget_next_events),
