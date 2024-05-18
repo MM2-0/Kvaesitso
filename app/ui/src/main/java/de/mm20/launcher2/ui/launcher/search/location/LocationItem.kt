@@ -477,7 +477,7 @@ fun LocationItem(
                                         Intent.ACTION_VIEW,
                                         Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
                                     ),
-                                )
+                                ).or(location.launch(context, null))
                             },
                             label = { Text(stringResource(R.string.menu_navigation)) },
                             leadingIcon = {
