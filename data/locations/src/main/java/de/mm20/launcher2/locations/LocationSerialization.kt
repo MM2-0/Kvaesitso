@@ -74,6 +74,7 @@ internal abstract class BaseLocationSerializer : SearchableSerializer {
             "houseNumber" to searchable.houseNumber,
             "websiteUrl" to searchable.websiteUrl,
             "phoneNumber" to searchable.phoneNumber,
+            "userRating" to searchable.userRating,
             "openingSchedule" to searchable.openingSchedule?.let {
                 jsonObjectOf(
                     "isTwentyFourSeven" to it.isTwentyFourSeven,
@@ -123,7 +124,8 @@ internal class OsmLocationDeserializer(
             websiteUrl = json.optString("websiteUrl").takeIf { it.isNotBlank() },
             phoneNumber = json.optString("phoneNumber").takeIf { it.isNotBlank() },
             timestamp = json.optLong("timestamp"),
-            updatedSelf = { osmProvider.update(id) }
+            updatedSelf = { osmProvider.update(id) },
+            userRating = json.optDouble("userRating", -1.0).takeUnless { -1.0 == it }?.toFloat()
         )
     }
 }
@@ -134,7 +136,6 @@ internal class PluginLocationSerializer : BaseLocationSerializer() {
         return super.serializeBase(searchable).apply {
             put("id", searchable.id)
             put("authority", searchable.authority)
-            put("userRating", searchable.userRating)
             put("timestamp", searchable.timestamp)
             put("fixMeUrl", searchable.fixMeUrl)
             put("departures", searchable.departures?.let {
@@ -146,6 +147,7 @@ internal class PluginLocationSerializer : BaseLocationSerializer() {
                             put("line", it.line)
                             it.lastStop?.let { put("lastStop", it) }
                             it.type?.let { put("type", it.name) }
+                            it.lineColor?.let { put("lineColor", it.toArgb()) }
                         }
                     }
                 }

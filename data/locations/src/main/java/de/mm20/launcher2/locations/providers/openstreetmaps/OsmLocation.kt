@@ -24,6 +24,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.format.ResolverStyle
 import java.util.Locale
+import kotlin.math.min
 
 internal data class OsmLocation(
     internal val id: Long,
@@ -39,6 +40,7 @@ internal data class OsmLocation(
     override val labelOverride: String? = null,
     override val timestamp: Long,
     override var updatedSelf: (suspend () -> UpdateResult<Location>)? = null,
+    override val userRating: Float?
 ) : Location, UpdatableSearchable<Location> {
 
     override val domain: String
@@ -48,7 +50,6 @@ internal data class OsmLocation(
         get() = FIXMEURL
 
     override val departures: List<Departure>? = null
-    override val userRating: Float? = null
 
     override fun overrideLabel(label: String): OsmLocation {
         return this.copy(labelOverride = label)
@@ -103,6 +104,7 @@ internal data class OsmLocation(
                 websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
                 phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
                 timestamp = System.currentTimeMillis(),
+                userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()?.let { min(it, 5) / 5.0f }
             )
         }
     }
