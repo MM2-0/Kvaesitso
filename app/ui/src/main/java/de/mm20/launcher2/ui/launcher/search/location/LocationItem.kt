@@ -294,14 +294,12 @@ fun LocationItem(
                                         )
                                 )
                             }
-                            // TODO: add rating to location
-                            if (!showMap && false) {
-                                RatingBar(0.66f, modifier = Modifier.padding(top = 4.dp))
+                            if (!showMap && location.userRating != null) {
+                                RatingBar(location.userRating!!, modifier = Modifier.padding(top = 4.dp))
                             }
                         }
-                        //TODO: add rating to location
-                        if (showMap && false) {
-                            RatingBar(0.66f)
+                        if (showMap && location.userRating != null) {
+                            RatingBar(location.userRating!!)
                         }
                         if (!showMap) {
                             Compass(
