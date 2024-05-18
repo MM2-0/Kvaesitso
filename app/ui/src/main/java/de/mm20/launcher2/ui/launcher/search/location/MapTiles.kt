@@ -61,6 +61,8 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.Departure
+import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.OpeningHours
@@ -79,6 +81,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
+import java.time.Duration
+import java.time.LocalTime
 import kotlin.math.PI
 import kotlin.math.ceil
 import kotlin.math.cos
@@ -472,4 +476,17 @@ internal object MockLocation : Location {
         )
 
     override fun getSerializer(): SearchableSerializer = TODO()
+
+    override val departures: List<Departure> = listOf(
+        Departure(
+            LocalTime.NOON + Duration.ofMinutes(3),
+            Duration.ofMinutes(1),
+            "B2",
+            "heaven",
+            LineType.BUS
+        )
+    )
+
+    override val userRating: Float
+        get() = 0.9f
 }
