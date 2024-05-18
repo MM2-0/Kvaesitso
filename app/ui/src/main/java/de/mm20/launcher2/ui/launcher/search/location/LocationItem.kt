@@ -329,7 +329,7 @@ fun LocationItem(
                             shape = MaterialTheme.shapes.small,
                             onClick = {
                                 if (!openingSchedule.isTwentyFourSeven) {
-                                    showOpeningSchedule = true
+                                    showOpeningSchedule = !showOpeningSchedule
                                 }
                             }
                         ) {
