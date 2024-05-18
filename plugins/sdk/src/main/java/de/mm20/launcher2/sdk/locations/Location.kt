@@ -1,5 +1,6 @@
 package de.mm20.launcher2.sdk.locations
 
+import android.graphics.Color
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
@@ -37,6 +38,7 @@ data class Departure(
     val line: String,
     val lastStop: String?,
     val type: LineType?,
+    val lineColor: Color?
 )
 
 enum class LineType {

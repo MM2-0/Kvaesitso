@@ -48,9 +48,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
 import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -493,7 +491,8 @@ internal object MockLocation : Location {
             Duration.ofMinutes(1),
             "B2",
             "heaven",
-            LineType.BUS
+            LineType.BUS,
+            android.graphics.Color.valueOf(0xFAFAFAFA)
         )
     )
 

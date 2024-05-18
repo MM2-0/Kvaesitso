@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
+import android.graphics.Color
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.locations.getOpeningSchedule
@@ -15,7 +16,6 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.UpdateResult
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
@@ -28,7 +28,6 @@ internal class PluginLocationProvider(
     private val context: Context,
     private val pluginAuthority: String
 ) : LocationProvider<String> {
-    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation?,
@@ -218,7 +217,10 @@ internal class PluginLocationProvider(
                                         .takeIf { it.isNotBlank() },
                                     type = it.optString("type")
                                         .runCatching { LineType.valueOf(this.uppercase()) }
+                                        .getOrNull(),
+                                    lineColor = it.runCatching { getInt("lineColor") }
                                         .getOrNull()
+                                        ?.let { Color.valueOf(it) }
                                 )
                             }
                         }

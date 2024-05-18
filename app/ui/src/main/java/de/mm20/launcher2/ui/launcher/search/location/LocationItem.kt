@@ -22,23 +22,18 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectDragGestures
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
@@ -48,12 +43,8 @@ import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
-import androidx.compose.material.icons.rounded.Directions
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
-import androidx.compose.material.icons.rounded.DirectionsRailway
-import androidx.compose.material.icons.rounded.DirectionsSubwayFilled
-import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Navigation
@@ -87,14 +78,16 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -106,6 +99,7 @@ import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import blend.Blend.harmonize
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -144,6 +138,8 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
+
+typealias AndroidColor = android.graphics.Color
 
 @Composable
 fun LocationItem(
@@ -748,8 +744,6 @@ fun LocationItem(
                         action = { sheetManager.showCustomizeSearchableModal(location) }
                     ))
 
-
-
                     location.fixMeUrl?.let {
                         toolbarActions += DefaultToolbarAction(
                             label = stringResource(id = R.string.menu_bugreport),
@@ -999,8 +993,10 @@ fun debugDepartures(): List<Departure>? = if (BuildConfig.DEBUG) {
         listOf(null, Duration.ofMinutes(10)).flatMap { delay ->
             listOf("line", "verylonglinename").flatMap { line ->
                 listOf("lastStop", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.").flatMap { stop ->
-                    LineType.entries.map { type ->
-                        Departure(time, delay, line, stop, type)
+                    LineType.entries.flatMap { type ->
+                        listOf(null, AndroidColor.RED, AndroidColor.GREEN, AndroidColor.BLUE).map { color ->
+                            Departure(time, delay, line, stop, type, color?.let { AndroidColor.valueOf(it) })
+                        }
                     }
                 }
             }
@@ -1012,9 +1008,22 @@ fun debugDepartures(): List<Departure>? = if (BuildConfig.DEBUG) {
 fun Departure.LineIcon(
     modifier: Modifier
 ) {
+    val primaryArgb = MaterialTheme.colorScheme.primary.toArgb()
     val cardStyle = LocalCardStyle.current
-    // TODO set line color from provider
-    val lineBg = MaterialTheme.colorScheme.primaryContainer
+    val (lineBg, lineFg) = if (lineColor != null) {
+        val bg = Color(
+            harmonize(lineColor!!.toArgb(), primaryArgb)
+        )
+        val fg =  Color(
+            harmonize(
+                if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
+                primaryArgb
+            )
+        )
+        bg to fg
+    } else {
+        MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
+    }
 
     Row(
         modifier = modifier
@@ -1035,15 +1044,16 @@ fun Departure.LineIcon(
                 null -> Icons.Rounded.Commute
             },
             contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
-            tint = MaterialTheme.colorScheme.onPrimaryContainer,
+            tint = lineFg,
             modifier = Modifier
                 .padding(horizontal = 4.dp)
-                .size(16.dp)
+                .size(16.dp),
+
         )
         MarqueeText(
             text = line,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
+            color = lineFg,
             textAlign = TextAlign.Center,
             fadeLeft = 2.5.dp,
             fadeRight = 2.5.dp,

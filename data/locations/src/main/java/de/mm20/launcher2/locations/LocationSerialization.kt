@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations
 
 import android.content.Context
+import android.graphics.Color
 import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.locations.providers.PluginLocation
 import de.mm20.launcher2.locations.providers.PluginLocationProvider
@@ -198,7 +199,10 @@ internal class PluginLocationDeserializer(
                             line = it.getString("line"),
                             lastStop = it.optString("lastStop").takeIf { it.isNotBlank() },
                             type = it.optString("type").takeIf { it.isNotBlank() }
-                                ?.runCatching { LineType.valueOf(this.uppercase()) }?.getOrNull()
+                                ?.runCatching { LineType.valueOf(this.uppercase()) }?.getOrNull(),
+                            lineColor = it.runCatching { getInt("lineColor") }
+                                .getOrNull()
+                                ?.let { Color.valueOf(it) }
                         )
                     }
 

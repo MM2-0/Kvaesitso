@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
-import de.mm20.launcher2.sdk.base.BasePluginProvider
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import org.json.JSONArray
@@ -141,6 +140,7 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                                 put("line", departure.line)
                                 departure.lastStop?.let { put("lastStop", it) }
                                 departure.type?.let { put("type", it.name) }
+                                departure.lineColor?.let { put("lineColor", it.toArgb()) }
                             })
                         }
                     }
