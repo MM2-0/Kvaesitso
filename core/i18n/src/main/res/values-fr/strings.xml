@@ -233,7 +233,7 @@
     <string name="disclaimer_currency_converter">Les taux de change sont publiés une fois par jour par la Banque Centrale Européenne. Toutes les informations sont fournies \"en l\'état\", sans aucune sorte de garantie. Aucune responsabilité n\'est assumée pour ces informations
 \n
 \nDernière mise-à-jour : %1$s</string>
-    <string name="unit_converter_show_all">Tout afficher</string>
+    <string name="show_all">Tout afficher</string>
     <string name="date_today">Aujourd\'hui</string>
     <string name="date_tomorrow">Demain</string>
     <string name="calendar_widget_pinned_events">À venir</string>

@@ -72,6 +72,8 @@ class SearchVM : ViewModel(), KoinComponent {
     val searchQuery = mutableStateOf("")
     val isSearchEmpty = mutableStateOf(true)
 
+    val expandedCategory = mutableStateOf<SearchCategory?>(null)
+
     val locationResults = mutableStateOf<List<Location>>(emptyList())
     val appResults = mutableStateOf<List<Application>>(emptyList())
     val workAppResults = mutableStateOf<List<Application>>(emptyList())
@@ -154,6 +156,22 @@ class SearchVM : ViewModel(), KoinComponent {
         hiddenResults.value = emptyList()
 
         val filters = filters.value
+
+        if (filters.enabledCategories == 1) {
+            expandedCategory.value = when {
+                filters.apps -> SearchCategory.Apps
+                filters.events -> SearchCategory.Calendar
+                filters.contacts -> SearchCategory.Contacts
+                filters.files -> SearchCategory.Files
+                filters.websites -> SearchCategory.Website
+                filters.articles -> SearchCategory.Articles
+                filters.places -> SearchCategory.Location
+                filters.shortcuts -> SearchCategory.Shortcuts
+                else -> null
+            }
+        } else {
+            expandedCategory.value = null
+        }
 
         if (isSearchEmpty.value)
             bestMatch.value = null
@@ -367,4 +385,21 @@ class SearchVM : ViewModel(), KoinComponent {
     fun disableAppShortcutSearch() {
         shortcutSearchSettings.setEnabled(false)
     }
+
+    fun expandCategory(category: SearchCategory) {
+        expandedCategory.value = category
+    }
+}
+
+enum class SearchCategory {
+    Apps,
+    Calculator,
+    Calendar,
+    Contacts,
+    Files,
+    UnitConverter,
+    Articles,
+    Website,
+    Location,
+    Shortcuts,
 }

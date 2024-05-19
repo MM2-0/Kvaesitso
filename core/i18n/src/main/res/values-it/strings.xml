@@ -160,7 +160,7 @@
     <string name="owncloud_password_empty">La password non deve essere vuota</string>
     <string name="login_flow_continue">Continua</string>
     <string name="login_flow_login">Accedi</string>
-    <string name="unit_converter_show_all">Mostra tutti</string>
+    <string name="show_all">Mostra tutti</string>
     <string name="date_today">Oggi</string>
     <string name="date_tomorrow">Domani</string>
     <string name="calendar_widget_pinned_events">In arrivo</string>

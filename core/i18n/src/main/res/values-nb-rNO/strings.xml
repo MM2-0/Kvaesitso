@@ -135,7 +135,7 @@
     <string name="login_flow_continue">Fortsett</string>
     <string name="login_flow_login">Logg inn</string>
     <string name="disclaimer">Ansvarsfraskrivelse</string>
-    <string name="unit_converter_show_all">Vis alle</string>
+    <string name="show_all">Vis alle</string>
     <string name="date_today">I dag</string>
     <string name="date_tomorrow">I morgen</string>
     <string name="calendar_widget_pinned_events">Kommende</string>

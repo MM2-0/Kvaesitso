@@ -3,7 +3,7 @@
     <string name="help">幫助</string>
     <string name="file_meta_year">年份: %1$s</string>
     <string name="file_type_directory">目錄</string>
-    <string name="unit_converter_show_all">展示所有</string>
+    <string name="show_all">展示所有</string>
     <string name="weather_condition_lightsnowshowers">輕度陣雪</string>
     <string name="missing_permission_calendar_widget_settings">此元件需要日曆許可權</string>
     <string name="preference_category_searchbar">搜尋欄</string>

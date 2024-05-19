@@ -11,8 +11,10 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.launcher.search.common.ShowAllButton
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
+import kotlin.math.min
 
 fun LazyListScope.CalendarResults(
     events: List<CalendarEvent>,
@@ -23,9 +25,11 @@ fun LazyListScope.CalendarResults(
     onSelect: (Int) -> Unit,
     highlightedItem: CalendarEvent?,
     reverse: Boolean,
+    truncate: Boolean,
+    onShowAll: () -> Unit,
 ) {
     ListResults(
-        items = events,
+        items = events.subList(0, if (truncate) min(5, events.size) else events.size),
         key = "calendar",
         reverse = reverse,
         selectedIndex = selectedIndex,
@@ -53,6 +57,11 @@ fun LazyListScope.CalendarResults(
                         }
                     }
                 )
+            }
+        } else null,
+        after = if (truncate && events.size > 5) {
+            {
+                ShowAllButton(onShowAll = onShowAll)
             }
         } else null
     )

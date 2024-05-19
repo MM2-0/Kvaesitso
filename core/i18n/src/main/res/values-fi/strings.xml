@@ -314,7 +314,7 @@
         <item quantity="other">%1$d kohdetta valittu</item>
     </plurals>
     <string name="open_search_swipe_right">Oikealle pyyhkäisy</string>
-    <string name="unit_converter_show_all">Näytä kaikki</string>
+    <string name="show_all">Näytä kaikki</string>
     <string name="disclaimer_currency_converter">Euroopan keskuspankin päivittäin julkaisemat vaihtokurssit. Tiedot toimitetaan sellaisinaan ilman minkäänlaista takuuta. Mitään vastuuta ei oteta näistä tiedoista.
 \n
 \nTiedot päivitetty: %1$s</string>

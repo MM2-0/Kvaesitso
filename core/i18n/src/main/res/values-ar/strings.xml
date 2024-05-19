@@ -170,7 +170,7 @@
     <string name="owncloud_password_empty">يجب ألا تكون كلمة المرور فارغة</string>
     <string name="login_flow_continue">متابعة</string>
     <string name="disclaimer">اخلاء المسؤولية</string>
-    <string name="unit_converter_show_all">عرض الكل</string>
+    <string name="show_all">عرض الكل</string>
     <string name="calendar_widget_open_app">فتح تطبيق التقويم</string>
     <string name="calendar_widget_new_event">حدث جديد</string>
     <string name="calendar_widget_no_events">لا توجد أحداث اليوم</string>

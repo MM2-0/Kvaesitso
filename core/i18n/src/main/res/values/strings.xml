@@ -315,7 +315,7 @@
     <string name="disclaimer_currency_converter">Exchange rates as published once per day by the European Central Bank. All information is provided \"as is\" without any kind of guarantee. No liability is assumed for these information.
 \n
 \nLast update: %1$s</string>
-    <string name="unit_converter_show_all">Show all</string>
+    <string name="show_all">Show all</string>
     <!-- Used in calendar widget date selector. -->
     <string name="date_today">Today</string>
     <!-- Used in calendar widget date selector. -->

@@ -181,7 +181,7 @@
     <string name="login_flow_continue">Pokračovat</string>
     <string name="login_flow_login">Přihlásit se</string>
     <string name="disclaimer">Odmítnutí odpovědnosti</string>
-    <string name="unit_converter_show_all">Zobrazit vše</string>
+    <string name="show_all">Zobrazit vše</string>
     <string name="date_today">Dnes</string>
     <string name="date_tomorrow">Zítra</string>
     <string name="calendar_widget_pinned_events">Nadcházející</string>
@@ -818,4 +818,5 @@
     <string name="menu_navigation">Navigace</string>
     <string name="weather_condition_thunderstorm">Bouřka</string>
     <string name="weather_condition_haze">Opar</string>
+    <string name="poi_category_railway_stop">Železniční zastávka</string>
 </resources>

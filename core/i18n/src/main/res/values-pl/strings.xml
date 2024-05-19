@@ -91,7 +91,7 @@
     <string name="login_flow_continue">Kontynuuj</string>
     <string name="login_flow_login">Zaloguj się</string>
     <string name="disclaimer">Ostrzeżenie</string>
-    <string name="unit_converter_show_all">Pokaż wszystkie</string>
+    <string name="show_all">Pokaż wszystkie</string>
     <string name="date_today">Dzisiaj</string>
     <string name="date_tomorrow">Jutro</string>
     <string name="calendar_widget_pinned_events">Nadchodzące</string>

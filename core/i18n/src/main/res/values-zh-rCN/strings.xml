@@ -150,7 +150,7 @@
     <string name="login_flow_continue">继续</string>
     <string name="login_flow_login">登陆</string>
     <string name="disclaimer">声明</string>
-    <string name="unit_converter_show_all">展示所有</string>
+    <string name="show_all">展示所有</string>
     <string name="date_today">今日</string>
     <string name="date_tomorrow">明日</string>
     <string name="calendar_widget_pinned_events">即将来临</string>

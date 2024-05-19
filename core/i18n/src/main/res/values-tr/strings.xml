@@ -159,7 +159,7 @@
     <string name="notes_widget_dismissed">Not iptal edildi.</string>
     <string name="notes_widget_action_save">Kaydet</string>
     <string name="action_import">İçe aktar</string>
-    <string name="unit_converter_show_all">Hepsini göster</string>
+    <string name="show_all">Hepsini göster</string>
     <string name="calendar_event_allday">Tüm Gün</string>
     <string name="weather_condition_cloudy">Bulutlu</string>
     <string name="weather_condition_lightrainandthunder">Hafif yağmur ve gök gürültüsü</string>

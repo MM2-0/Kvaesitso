@@ -97,7 +97,7 @@
     <string name="owncloud_username_empty">ชื่อผู้ใช้ปล่อยว่างไม่ได้</string>
     <string name="login_flow_continue">ไปต่อ</string>
     <string name="disclaimer">ข้อจำกัดความรับผิดชอบ</string>
-    <string name="unit_converter_show_all">แสดงทั้งหมด</string>
+    <string name="show_all">แสดงทั้งหมด</string>
     <string name="date_today">วันนี้</string>
     <string name="date_tomorrow">พรุ่งนี้</string>
     <string name="calendar_widget_open_app">เปิดแอปปฏิทิน</string>

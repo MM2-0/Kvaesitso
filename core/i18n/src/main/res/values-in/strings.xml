@@ -96,7 +96,7 @@
     <string name="search_bar_placeholder">Cari</string>
     <string name="wallpaper">Wallpaper</string>
     <string name="login_flow_login">Masuk</string>
-    <string name="unit_converter_show_all">Tampilkan semua</string>
+    <string name="show_all">Tampilkan semua</string>
     <string name="calendar_widget_pinned_events">Akan datang</string>
     <string name="calendar_widget_next_events">Acara selanjutnya</string>
     <string name="calendar_widget_no_events">Tidak ada acara hari ini</string>

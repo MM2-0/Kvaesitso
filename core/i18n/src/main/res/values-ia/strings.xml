@@ -149,7 +149,7 @@
     <string name="preference_category_custom_colors_light">Schema de colores clar</string>
     <string name="provider_openweathermap">OpenWeatherMap</string>
     <string name="owncloud_server_url">URL de servitor Owncloud</string>
-    <string name="unit_converter_show_all">Monstrar toto</string>
+    <string name="show_all">Monstrar toto</string>
     <string name="calendar_widget_next_events">Proxime evento</string>
     <string name="weather_widget_show_details">Monstrar detalios</string>
     <string name="preference_colors_default">Predefinite</string>

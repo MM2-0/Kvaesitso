@@ -162,7 +162,7 @@
     <string name="edit_favorites_dialog_pinned_unsorted">고정됨 – 자동 정렬됨</string>
     <string name="edit_favorites_dialog_empty_section">여기에 항목 끌어다 놓기</string>
     <string name="preference_about_telegram">텔레그램 그룹</string>
-    <string name="unit_converter_show_all">모두 표시</string>
+    <string name="show_all">모두 표시</string>
     <string name="preference_screen_debug">디버그</string>
     <string name="preference_screen_weatherwidget">날씨</string>
     <string name="weather_condition_sleet">진눈깨비</string>
