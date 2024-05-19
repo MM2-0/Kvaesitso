@@ -6,14 +6,12 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Bolt
 import androidx.compose.material.icons.rounded.FitnessCenter
 import androidx.compose.material.icons.rounded.Schedule
@@ -24,7 +22,6 @@ import androidx.compose.material.icons.rounded.Straighten
 import androidx.compose.material.icons.rounded.Thermostat
 import androidx.compose.material.icons.rounded.Toll
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -45,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.data.CurrencyUnitConverter
 import de.mm20.launcher2.search.data.UnitConverter
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.ktx.TextButtonWithTrailingIconContentPadding
+import de.mm20.launcher2.ui.launcher.search.common.ShowAllButton
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItemSurface
 import de.mm20.launcher2.unitconverter.Dimension
 import java.util.Date
@@ -211,22 +208,7 @@ fun LazyListScope.UnitConverterResults(
                     isLast = true,
                     reverse = reverse,
                 ) {
-                    TextButton(
-                        modifier = Modifier
-                            .align(Alignment.End)
-                            .padding(4.dp),
-                        onClick = onShowAll,
-                        contentPadding = ButtonDefaults.TextButtonWithTrailingIconContentPadding,
-                    ) {
-                        Text(stringResource(R.string.unit_converter_show_all))
-                        Icon(
-                            Icons.AutoMirrored.Rounded.ArrowForward,
-                            null,
-                            modifier = Modifier
-                                .padding(start = ButtonDefaults.IconSpacing)
-                                .size(ButtonDefaults.IconSize)
-                        )
-                    }
+                    ShowAllButton(onShowAll = onShowAll)
                 }
             }
         }

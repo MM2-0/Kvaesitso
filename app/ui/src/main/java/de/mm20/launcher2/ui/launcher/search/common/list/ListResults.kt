@@ -29,9 +29,9 @@ import de.mm20.launcher2.ui.locals.LocalCardStyle
 fun <T : SavableSearchable> LazyListScope.ListResults(
     key: String,
     items: List<T>,
-    itemContent: @Composable LazyItemScope.(T, Boolean, Int) -> Unit,
-    before: @Composable (LazyItemScope.() -> Unit)? = null,
-    after: @Composable (LazyItemScope.() -> Unit)? = null,
+    itemContent: @Composable ColumnScope.(T, Boolean, Int) -> Unit,
+    before: @Composable (ColumnScope.() -> Unit)? = null,
+    after: @Composable (ColumnScope.() -> Unit)? = null,
     reverse: Boolean = false,
     selectedIndex: Int = -1,
 ) {
@@ -110,7 +110,6 @@ fun LazyItemScope.ListItemSurface(
 
     val modifier = if (reverse) {
         Modifier
-            .animateItem()
             .padding(
                 bottom = if (!isFirst) padding else 0.dp,
                 top = if (!isLast) padding else 8.dp
@@ -145,6 +144,7 @@ fun LazyItemScope.ListItemSurface(
 
     Column(
         modifier = modifier
+            .animateItem()
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface.copy(backgroundAlpha)),
         verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top

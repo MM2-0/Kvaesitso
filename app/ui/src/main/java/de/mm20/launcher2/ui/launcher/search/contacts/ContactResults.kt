@@ -11,8 +11,10 @@ import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.ui.R
 import de.mm20.launcher2.ui.component.MissingPermissionBanner
+import de.mm20.launcher2.ui.launcher.search.common.ShowAllButton
 import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.common.list.ListResults
+import kotlin.math.min
 
 fun LazyListScope.ContactResults(
     contacts: List<Contact>,
@@ -23,9 +25,11 @@ fun LazyListScope.ContactResults(
     onSelect: (Int) -> Unit,
     highlightedItem: Contact?,
     reverse: Boolean,
+    truncate: Boolean,
+    onShowAll: () -> Unit,
 ) {
     ListResults(
-        items = contacts,
+        items = contacts.subList(0, if (truncate) min(5, contacts.size) else contacts.size),
         key = "contact",
         reverse = reverse,
         selectedIndex = selectedIndex,
@@ -35,7 +39,7 @@ fun LazyListScope.ContactResults(
                     .fillMaxWidth(),
                 item = contact,
                 showDetails = showDetails,
-                onShowDetails = { onSelect(if(it) index else -1) },
+                onShowDetails = { onSelect(if (it) index else -1) },
                 highlight = highlightedItem?.key == contact.key
             )
         },
@@ -53,6 +57,11 @@ fun LazyListScope.ContactResults(
                         }
                     }
                 )
+            }
+        } else null,
+        after = if (truncate && contacts.size > 5) {
+            {
+                ShowAllButton(onShowAll = onShowAll)
             }
         } else null
     )

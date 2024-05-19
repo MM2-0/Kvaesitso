@@ -6,17 +6,13 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
@@ -29,7 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -40,15 +35,11 @@ import de.mm20.launcher2.search.CalendarEvent
 import de.mm20.launcher2.search.Contact
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.Website
 import de.mm20.launcher2.ui.component.LauncherCard
-import de.mm20.launcher2.ui.component.PartialLauncherCard
 import de.mm20.launcher2.ui.launcher.search.apps.AppResults
 import de.mm20.launcher2.ui.launcher.search.calculator.CalculatorResults
 import de.mm20.launcher2.ui.launcher.search.calendar.CalendarResults
-import de.mm20.launcher2.ui.launcher.search.common.grid.GridItem
-import de.mm20.launcher2.ui.launcher.search.common.list.ListItem
 import de.mm20.launcher2.ui.launcher.search.contacts.ContactResults
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavorites
 import de.mm20.launcher2.ui.launcher.search.favorites.SearchFavoritesVM
@@ -56,17 +47,13 @@ import de.mm20.launcher2.ui.launcher.search.files.FileResults
 import de.mm20.launcher2.ui.launcher.search.filters.SearchFilters
 import de.mm20.launcher2.ui.launcher.search.location.LocationResults
 import de.mm20.launcher2.ui.launcher.search.shortcut.ShortcutResults
-import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterItem
 import de.mm20.launcher2.ui.launcher.search.unitconverter.UnitConverterResults
-import de.mm20.launcher2.ui.launcher.search.website.WebsiteItem
 import de.mm20.launcher2.ui.launcher.search.website.WebsiteResults
-import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleItem
 import de.mm20.launcher2.ui.launcher.search.wikipedia.ArticleResults
 import de.mm20.launcher2.ui.launcher.sheets.HiddenItemsSheet
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
 import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalGridSettings
-import kotlinx.collections.immutable.ImmutableList
 
 @Composable
 fun SearchColumn(
@@ -112,7 +99,6 @@ fun SearchColumn(
 
     val pinnedTags by favoritesVM.pinnedTags.collectAsState(emptyList())
     val selectedTag by favoritesVM.selectedTag.collectAsState(null)
-    val tagsScrollState = rememberScrollState()
     val favoritesEditButton by favoritesVM.showEditButton.collectAsState(false)
     val favoritesTagsExpanded by favoritesVM.tagsExpanded.collectAsState(false)
 
@@ -130,15 +116,15 @@ fun SearchColumn(
         }
     }
 
-    var expandedCategory: SearchCategory? by remember(isSearchEmpty) { mutableStateOf(null) }
+    val expandedCategory: SearchCategory? by viewModel.expandedCategory
 
     var selectedContactIndex: Int by remember(contacts) { mutableIntStateOf(-1) }
     var selectedFileIndex: Int by remember(files) { mutableIntStateOf(-1) }
     var selectedCalendarIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedLocationIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedShortcutIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedArticleIndex: Int by remember(events) { mutableIntStateOf(-1) }
-    var selectedWebsiteIndex: Int by remember(events) { mutableIntStateOf(-1) }
+    var selectedLocationIndex: Int by remember(locations) { mutableIntStateOf(-1) }
+    var selectedShortcutIndex: Int by remember(appShortcuts) { mutableIntStateOf(-1) }
+    var selectedArticleIndex: Int by remember(wikipedia) { mutableIntStateOf(-1) }
+    var selectedWebsiteIndex: Int by remember(website) { mutableIntStateOf(-1) }
 
     val showFilters by viewModel.showFilters
 
@@ -218,6 +204,10 @@ fun SearchColumn(
                         selectedIndex = selectedShortcutIndex,
                         onSelect = { selectedShortcutIndex = it },
                         highlightedItem = bestMatch as? AppShortcut,
+                        truncate = expandedCategory != SearchCategory.Shortcuts,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Shortcuts)
+                        },
                     )
 
                     UnitConverterResults(
@@ -225,7 +215,7 @@ fun SearchColumn(
                         reverse = reverse,
                         truncate = expandedCategory != SearchCategory.UnitConverter,
                         onShowAll = {
-                            expandedCategory = SearchCategory.UnitConverter
+                            viewModel.expandCategory(SearchCategory.UnitConverter)
                         }
                     )
 
@@ -247,6 +237,10 @@ fun SearchColumn(
                         selectedIndex = selectedCalendarIndex,
                         onSelect = { selectedCalendarIndex = it },
                         highlightedItem = bestMatch as? CalendarEvent,
+                        truncate = expandedCategory != SearchCategory.Calendar,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Calendar)
+                        }
                     )
 
                     ContactResults(
@@ -262,6 +256,10 @@ fun SearchColumn(
                         selectedIndex = selectedContactIndex,
                         onSelect = { selectedContactIndex = it },
                         highlightedItem = bestMatch as? Contact,
+                        truncate = expandedCategory != SearchCategory.Contacts,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Contacts)
+                        },
                     )
 
                     LocationResults(
@@ -277,6 +275,10 @@ fun SearchColumn(
                         selectedIndex = selectedLocationIndex,
                         onSelect = { selectedLocationIndex = it },
                         highlightedItem = bestMatch as? Location,
+                        truncate = expandedCategory != SearchCategory.Location,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Location)
+                        }
                     )
                     ArticleResults(
                         articles = wikipedia,
@@ -306,6 +308,10 @@ fun SearchColumn(
                         selectedIndex = selectedFileIndex,
                         onSelect = {
                             selectedFileIndex = it
+                        },
+                        truncate = expandedCategory != SearchCategory.Files,
+                        onShowAll = {
+                            viewModel.expandCategory(SearchCategory.Files)
                         }
                     )
                 }
@@ -344,15 +350,3 @@ fun LazyListScope.SingleResult(
     }
 }
 
-enum class SearchCategory {
-    Apps,
-    Calculator,
-    Calendar,
-    Contacts,
-    Files,
-    UnitConverter,
-    Wikipedia,
-    Website,
-    Location,
-    Shortcut,
-}
