@@ -139,7 +139,7 @@ import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
 
-typealias AndroidColor = android.graphics.Color
+import android.graphics.Color as AndroidColor
 
 @Composable
 fun LocationItem(
