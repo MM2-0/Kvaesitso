@@ -91,7 +91,6 @@ internal data class LauncherApp(
                     // Adaptive icons have a size of 108dp (https://developer.android.com/develop/ui/views/launch/icon_design_adaptive#design-adaptive-icons),
                     // but we scale them to 1.5x so the inbounds are only 72dp
                     val density = size / (108/1.5)
-                    Log.d("MM20", "Icon size: $size, density: $density, densityDpi: ${160 * density}")
                     launcherActivityInfo.getIcon((160 * density).roundToInt())
 
                 } ?: return null
