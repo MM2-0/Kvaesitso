@@ -644,24 +644,26 @@ fun LocationItem(
                             .horizontalScroll(rememberScrollState())
                             .padding(start = 12.dp, top = 8.dp)
                     ) {
-                        AssistChip(
-                            modifier = Modifier.padding(end = 12.dp),
-                            onClick = {
-                                context.tryStartActivity(
-                                    Intent(
-                                        Intent.ACTION_VIEW,
-                                        Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
-                                    ),
-                                ).or(location.launch(context, null))
-                            },
-                            label = { Text(stringResource(R.string.menu_navigation)) },
-                            leadingIcon = {
-                                Icon(
-                                    Icons.Rounded.Navigation, null,
-                                    modifier = Modifier.size(AssistChipDefaults.IconSize)
-                                )
-                            }
+                        val navigationIntent = Intent(
+                            Intent.ACTION_VIEW,
+                            Uri.parse("google.navigation:q=${location.latitude},${location.longitude}")
                         )
+                        val canResolveNavigationIntent = remember {
+                            null != context.packageManager.resolveActivity(navigationIntent, 0)
+                        }
+                        if (canResolveNavigationIntent) {
+                            AssistChip(
+                                modifier = Modifier.padding(end = 12.dp),
+                                onClick = { context.tryStartActivity(navigationIntent) },
+                                label = { Text(stringResource(R.string.menu_navigation)) },
+                                leadingIcon = {
+                                    Icon(
+                                        Icons.Rounded.Navigation, null,
+                                        modifier = Modifier.size(AssistChipDefaults.IconSize)
+                                    )
+                                }
+                            )
+                        }
                         location.phoneNumber?.let {
                             AssistChip(
                                 modifier = Modifier.padding(end = 12.dp),

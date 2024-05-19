@@ -10,7 +10,9 @@ import android.hardware.SensorManager
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.content.getSystemService
 import de.mm20.launcher2.ktx.PI
 import kotlinx.coroutines.channels.awaitClose
