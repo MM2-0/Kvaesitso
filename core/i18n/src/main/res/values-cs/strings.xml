@@ -181,7 +181,7 @@
     <string name="login_flow_continue">Pokračovat</string>
     <string name="login_flow_login">Přihlásit se</string>
     <string name="disclaimer">Odmítnutí odpovědnosti</string>
-    <string name="unit_converter_show_all">Zobrazit vše</string>
+    <string name="show_all">Zobrazit vše</string>
     <string name="date_today">Dnes</string>
     <string name="date_tomorrow">Zítra</string>
     <string name="calendar_widget_pinned_events">Nadcházející</string>

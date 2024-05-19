@@ -156,7 +156,7 @@
     <string name="owncloud_password_empty">Palavra-passe não pode estar vazia</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="disclaimer">Aviso</string>
-    <string name="unit_converter_show_all">Mostrar tudo</string>
+    <string name="show_all">Mostrar tudo</string>
     <string name="date_today">Hoje</string>
     <string name="date_tomorrow">Amanhã</string>
     <string name="calendar_widget_pinned_events">Brevemente</string>

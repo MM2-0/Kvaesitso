@@ -132,7 +132,7 @@
     <string name="owncloud_server_url">URL van Owncloud server</string>
     <string name="owncloud_login_2fa_hint">Als meerfactorauthenticatie ingeschakeld is, moet je hier een applicatiewachtwoord gebruiken.</string>
     <string name="login_flow_login">Inloggen</string>
-    <string name="unit_converter_show_all">Alles tonen</string>
+    <string name="show_all">Alles tonen</string>
     <string name="date_today">Vandaag</string>
     <string name="date_tomorrow">Morgen</string>
     <string name="calendar_widget_pinned_events">Toekomstig</string>

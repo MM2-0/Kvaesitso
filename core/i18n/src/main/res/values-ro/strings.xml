@@ -128,7 +128,7 @@
     <string name="owncloud_username_empty">Numele de utilizator nu trebuie să fie gol</string>
     <string name="owncloud_password_empty">Parola nu trebuie să fie goală</string>
     <string name="disclaimer">Disclaimer</string>
-    <string name="unit_converter_show_all">Afișați toate</string>
+    <string name="show_all">Afișați toate</string>
     <string name="calendar_widget_pinned_events">Viitoare</string>
     <string name="calendar_widget_no_events">Nu există evenimente astăzi</string>
     <string name="calendar_widget_open_app">Deschideți aplicația calendar</string>

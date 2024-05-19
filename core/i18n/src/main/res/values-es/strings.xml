@@ -98,7 +98,7 @@
     <string name="owncloud_password_empty">La contraseña no debe estar vacía</string>
     <string name="login_flow_continue">Continuar</string>
     <string name="login_flow_login">Iniciar sesión</string>
-    <string name="unit_converter_show_all">Mostrar todo</string>
+    <string name="show_all">Mostrar todo</string>
     <string name="date_today">Hoy</string>
     <string name="date_tomorrow">Mañana</string>
     <string name="calendar_widget_pinned_events">Próximas</string>

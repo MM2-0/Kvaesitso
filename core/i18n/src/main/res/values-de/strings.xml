@@ -252,7 +252,7 @@
     <string name="disclaimer_currency_converter">Wechselkurse so wie sie einmal täglich von der Europäischen Zentralbank herausgegeben werden. Alle Angaben sind ohne Gewähr. Es wird keine Haftung für die hier dargestellten Informationen übernommen.
 \n
 \nLetzte Aktualisierung: %1$s</string>
-    <string name="unit_converter_show_all">Alle anzeigen</string>
+    <string name="show_all">Alle anzeigen</string>
     <string name="preference_screen_colors">Farbschema</string>
     <string name="preference_colors_default">Standard</string>
     <string name="preference_colors_bw">Schwarz-Weiß</string>

@@ -105,7 +105,7 @@
     <string name="owncloud_password_empty">Slaptažodis negali būti tuščias</string>
     <string name="login_flow_continue">Tęsti</string>
     <string name="login_flow_login">Prisijungti</string>
-    <string name="unit_converter_show_all">Rodyti visus</string>
+    <string name="show_all">Rodyti visus</string>
     <string name="date_today">Šiandien</string>
     <string name="date_tomorrow">Rytoj</string>
     <string name="calendar_widget_pinned_events">Vėliau</string>

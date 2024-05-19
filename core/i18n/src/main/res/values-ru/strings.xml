@@ -106,7 +106,7 @@
     <string name="login_flow_continue">Далее</string>
     <string name="login_flow_login">Вход</string>
     <string name="disclaimer">Отказ от ответственности</string>
-    <string name="unit_converter_show_all">Показать все</string>
+    <string name="show_all">Показать все</string>
     <string name="date_today">Сегодня</string>
     <string name="date_tomorrow">Завтра</string>
     <string name="calendar_widget_pinned_events">Предстоящие</string>

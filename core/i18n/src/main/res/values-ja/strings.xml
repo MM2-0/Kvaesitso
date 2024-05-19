@@ -123,7 +123,7 @@
     <string name="owncloud_login_2fa_hint">2要素認証を有効にしている場合は、ここでアプリパスワードを使用する必要があります。</string>
     <string name="owncloud_login_failed">ログイン失敗: ユーザー名またはパスワードが正しくありません。</string>
     <string name="owncloud_username_empty">ユーザー名は空にできません</string>
-    <string name="unit_converter_show_all">すべて表示</string>
+    <string name="show_all">すべて表示</string>
     <string name="calendar_widget_no_events">今日はイベントがありません</string>
     <string name="calendar_widget_next_events">次のイベント</string>
     <string name="calendar_widget_new_event">新しいイベント</string>

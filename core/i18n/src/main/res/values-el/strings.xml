@@ -95,7 +95,7 @@
     <string name="login_flow_continue">Συνέχεια</string>
     <string name="login_flow_login">Είσοδος</string>
     <string name="disclaimer">Αποποίηση ευθυνών</string>
-    <string name="unit_converter_show_all">Εμφάνιση όλων</string>
+    <string name="show_all">Εμφάνιση όλων</string>
     <string name="date_today">Σήμερα</string>
     <string name="calendar_widget_pinned_events">Επερχόμενα</string>
     <string name="calendar_widget_new_event">Νέα εκδήλωση</string>

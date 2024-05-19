@@ -118,7 +118,7 @@
     <string name="nextcloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Nextcloud</string>
     <string name="owncloud_server_invalid_url">Esta URL não aponta para uma instalação válida do Owncloud</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="unit_converter_show_all">Mostrar todos</string>
+    <string name="show_all">Mostrar todos</string>
     <string name="weather_condition_unknown">Desconhecido</string>
     <string name="weather_widget_show_details">Mostrar detalhes</string>
     <string name="weather_widget_hide_details">Ocultar detalhes</string>

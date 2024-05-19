@@ -28,7 +28,7 @@ fun ColumnScope.ShowAllButton(
         onClick = onShowAll,
         contentPadding = ButtonDefaults.TextButtonWithTrailingIconContentPadding,
     ) {
-        Text(stringResource(R.string.unit_converter_show_all))
+        Text(stringResource(R.string.show_all))
         Icon(
             Icons.AutoMirrored.Rounded.ArrowForward,
             null,

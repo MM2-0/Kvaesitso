@@ -130,7 +130,7 @@
     <string name="login_flow_continue">Continua</string>
     <string name="login_flow_login">Inici de sessió</string>
     <string name="disclaimer">Exempció de responsabilitat</string>
-    <string name="unit_converter_show_all">Mostra-ho tot</string>
+    <string name="show_all">Mostra-ho tot</string>
     <string name="date_today">Avui</string>
     <string name="date_tomorrow">Demà</string>
     <string name="calendar_widget_pinned_events">Properament</string>

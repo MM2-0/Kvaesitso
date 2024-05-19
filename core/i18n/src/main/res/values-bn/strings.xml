@@ -148,7 +148,7 @@
     <string name="login_flow_continue">চালিয়ে যান</string>
     <string name="login_flow_login">লগইন</string>
     <string name="disclaimer">ডিসক্লেইমার</string>
-    <string name="unit_converter_show_all">সব দেখুন</string>
+    <string name="show_all">সব দেখুন</string>
     <string name="date_today">আজ</string>
     <string name="date_tomorrow">আগামীকাল</string>
     <string name="calendar_widget_pinned_events">আসন্ন</string>

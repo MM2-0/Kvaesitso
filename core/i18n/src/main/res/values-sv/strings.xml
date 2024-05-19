@@ -108,7 +108,7 @@
     <string name="login_flow_continue">Fortsätt</string>
     <string name="login_flow_login">Logga in</string>
     <string name="disclaimer">Disclaimer</string>
-    <string name="unit_converter_show_all">Visa alla</string>
+    <string name="show_all">Visa alla</string>
     <string name="date_today">Idag</string>
     <string name="date_tomorrow">Imorgon</string>
     <string name="calendar_widget_pinned_events">Kommande</string>

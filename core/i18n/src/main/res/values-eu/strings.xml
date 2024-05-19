@@ -145,7 +145,7 @@
     <string name="calendar_widget_new_event">Gertaera berria</string>
     <string name="owncloud_login_failed">Saio-hasteak huts egin du: erabiltzaile-izen edo pasahitz okerra.</string>
     <string name="login_flow_login">Saioa hasi</string>
-    <string name="unit_converter_show_all">Guztia erakutsi</string>
+    <string name="show_all">Guztia erakutsi</string>
     <string name="music_widget_default_title">%1$s multimedia erreproduzitzen ari da</string>
     <string name="music_widget_no_data">Oraindik ez da multimediarik erreproduzitu</string>
     <string name="weather_condition_snow">Elurra</string>

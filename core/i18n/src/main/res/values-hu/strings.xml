@@ -138,7 +138,7 @@
     <string name="owncloud_server_url">Owncloud kiszolgáló címe</string>
     <string name="calendar_widget_pinned_events">Közelgő</string>
     <string name="calendar_widget_next_events">Következő esemény</string>
-    <string name="unit_converter_show_all">Mindent mutat</string>
+    <string name="show_all">Mindent mutat</string>
     <string name="date_today">Ma</string>
     <string name="weather_condition_lightrain">Enyhe eső</string>
     <string name="weather_condition_lightrainshowers">Enyhe eső záporok</string>
