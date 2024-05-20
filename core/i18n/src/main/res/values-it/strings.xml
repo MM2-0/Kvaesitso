@@ -818,4 +818,5 @@
     <string name="preference_customize_filter_bar_summary">Personalizza quali elementi includere nella barra dei filtri</string>
     <string name="weather_condition_thunderstorm">Temporale</string>
     <string name="weather_condition_haze">Foschia</string>
+    <string name="poi_category_railway_stop">Fermata ferroviaria</string>
 </resources>
