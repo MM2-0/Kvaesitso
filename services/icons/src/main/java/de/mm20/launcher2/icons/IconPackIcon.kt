@@ -11,7 +11,7 @@ sealed interface IconPackComponent {
 }
 
 sealed interface IconPackAppIcon: IconPackComponent {
-    val packageName: String
+    val packageName: String?
     val activityName: String?
     val name: String?
     val themed: Boolean
@@ -59,9 +59,9 @@ data class IconMask(
 data class AppIcon(
     val drawable: String,
     override val iconPack: String,
-    override val packageName: String,
-    override val activityName: String?,
-    override val name: String?,
+    override val packageName: String? = null,
+    override val activityName: String? = null,
+    override val name: String? = null,
     override val themed: Boolean = false,
 ): IconPackComponent, IconPackAppIcon {
     override fun toDatabaseEntity(): IconEntity {
@@ -80,7 +80,7 @@ data class AppIcon(
 data class CalendarIcon(
     val drawables: List<String>,
     override val iconPack: String,
-    override val packageName: String,
+    override val packageName: String?,
     override val activityName: String? = null,
     override val name: String? = null,
     override val themed: Boolean = false,
@@ -102,7 +102,7 @@ data class CalendarIcon(
 data class ClockIcon(
     val drawable: String,
     override val iconPack: String,
-    override val packageName: String,
+    override val packageName: String? = null,
     override val activityName: String? = null,
     override val name: String? = null,
     override val themed: Boolean,
@@ -146,7 +146,7 @@ fun Icon(entity: IconEntity): IconPackComponent? {
         "app" -> AppIcon(
             drawable = entity.drawable ?: return null,
             iconPack = entity.iconPack,
-            packageName = entity.packageName ?: return null,
+            packageName = entity.packageName,
             activityName = entity.activityName,
             themed = entity.themed,
             name = entity.name,
@@ -155,7 +155,7 @@ fun Icon(entity: IconEntity): IconPackComponent? {
             drawables = entity.drawable?.split(",") ?: return null,
             iconPack = entity.iconPack,
             themed = entity.themed,
-            packageName = entity.packageName ?: return null,
+            packageName = entity.packageName,
             activityName = entity.activityName,
             name = entity.name,
         )
@@ -164,7 +164,7 @@ fun Icon(entity: IconEntity): IconPackComponent? {
             ClockIcon(
                 drawable = entity.drawable!!,
                 iconPack = entity.iconPack,
-                packageName = entity.packageName ?: return null,
+                packageName = entity.packageName,
                 name = entity.name,
                 activityName = entity.activityName,
                 themed = entity.themed,

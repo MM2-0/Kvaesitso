@@ -11,6 +11,7 @@ import de.mm20.launcher2.data.customattrs.AdaptifiedLegacyIcon
 import de.mm20.launcher2.data.customattrs.CustomAttributesRepository
 import de.mm20.launcher2.data.customattrs.CustomIcon
 import de.mm20.launcher2.data.customattrs.CustomIconPackIcon
+import de.mm20.launcher2.data.customattrs.LegacyCustomIconPackIcon
 import de.mm20.launcher2.data.customattrs.CustomThemedIcon
 import de.mm20.launcher2.data.customattrs.DefaultPlaceholderIcon
 import de.mm20.launcher2.data.customattrs.ForceThemedIcon
@@ -18,6 +19,7 @@ import de.mm20.launcher2.data.customattrs.UnmodifiedSystemDefaultIcon
 import de.mm20.launcher2.icons.providers.CalendarIconProvider
 import de.mm20.launcher2.icons.providers.CompatIconProvider
 import de.mm20.launcher2.icons.providers.CustomIconPackIconProvider
+import de.mm20.launcher2.icons.providers.LegacyCustomIconPackIconProvider
 import de.mm20.launcher2.icons.providers.CustomThemedIconProvider
 import de.mm20.launcher2.icons.providers.DynamicClockIconProvider
 import de.mm20.launcher2.icons.providers.IconPackIconProvider
@@ -44,7 +46,6 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class IconService(
@@ -174,6 +175,14 @@ class IconService(
                 )
             )
         }
+        if (customIcon is LegacyCustomIconPackIcon) {
+            return listOf(
+                LegacyCustomIconPackIconProvider(
+                    customIcon,
+                    iconPackManager
+                )
+            )
+        }
         if (customIcon is CustomThemedIcon) {
             return listOf(
                 CustomThemedIconProvider(
@@ -288,11 +297,14 @@ class IconService(
             )
 
             providerOptions.addAll(
-                iconPackIcons.mapNotNull {
+                iconPackIcons.map {
+                    val ent = it.toDatabaseEntity()
                     CustomIconPackIcon(
                         iconPackPackage = it.iconPack,
-                        iconActivityName = it.activityName,
-                        iconPackageName = it.packageName,
+                        type = ent.type,
+                        drawable = ent.drawable,
+                        extras = ent.extras,
+                        allowThemed = it.themed,
                     )
                 }
             )
@@ -356,20 +368,22 @@ class IconService(
         val transformations = this.transformations.first()
         val iconPackIcons = iconPackManager.searchIconPackIcon(query, iconPack).flatMap {
             val unthemedIcon = if (it.themed) {
-                iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName, false)
+                iconPackManager.getIcon(it.iconPack, it, false)
                     ?.transform(transformations)
             } else null
-            val icon = iconPackManager.getIcon(it.iconPack, it.packageName, it.activityName, true)
+            val icon = iconPackManager.getIcon(it.iconPack, it, true)
                 ?.transform(transformations)
 
-            buildList<CustomIconWithPreview> {
+            buildList {
+                val ent = it.toDatabaseEntity()
                 if (icon != null) {
                     add(CustomIconWithPreview(
                         customIcon = CustomIconPackIcon(
                             iconPackPackage = it.iconPack,
-                            iconActivityName = it.activityName,
-                            iconPackageName = it.packageName,
-                            allowThemed = true
+                            type = ent.type,
+                            drawable = ent.drawable,
+                            extras = ent.extras,
+                            allowThemed = true,
                         ),
                         preview = icon
                     ))
@@ -378,9 +392,10 @@ class IconService(
                     add(CustomIconWithPreview(
                         customIcon = CustomIconPackIcon(
                             iconPackPackage = it.iconPack,
-                            iconActivityName = it.activityName,
-                            iconPackageName = it.packageName,
-                            allowThemed = false
+                            type = ent.type,
+                            drawable = ent.drawable,
+                            extras = ent.extras,
+                            allowThemed = false,
                         ),
                         preview = unthemedIcon
                     ))
