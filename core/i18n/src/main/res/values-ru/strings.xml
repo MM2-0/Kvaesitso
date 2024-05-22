@@ -812,4 +812,6 @@
     <string name="preference_search_locations_theme_map">Изменить внешний вид карты</string>
     <string name="preference_search_locations_theme_map_summary">Применить цветовую схему лаунчера к карте</string>
     <string name="menu_navigation">Навигация</string>
+    <string name="preference_search_location_custom_tile_server_url">Tileserver URL</string>
+    <string name="preference_location_managed_summary">Местоположение этого провайдера управляется приложением плагина</string>
 </resources>
