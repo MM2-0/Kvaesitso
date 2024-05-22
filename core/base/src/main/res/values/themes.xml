@@ -30,6 +30,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="DialogTheme" parent="BaseTheme">
