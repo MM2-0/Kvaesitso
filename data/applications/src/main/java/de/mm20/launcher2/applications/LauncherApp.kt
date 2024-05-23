@@ -1,5 +1,6 @@
 package de.mm20.launcher2.applications
 
+import android.app.admin.DevicePolicyManager
 import android.content.ActivityNotFoundException
 import android.content.ComponentName
 import android.content.Context
@@ -51,6 +52,7 @@ internal data class LauncherApp(
     constructor(context: Context, launcherActivityInfo: LauncherActivityInfo) : this(
         launcherActivityInfo,
         versionName = getPackageVersionName(context, launcherActivityInfo.applicationInfo.packageName),
+        isSuspended = launcherActivityInfo.applicationInfo.flags and ApplicationInfo.FLAG_SUSPENDED != 0,
         userSerialNumber = launcherActivityInfo.user.getSerialNumber(context)
     )
 
@@ -263,6 +265,14 @@ internal data class LauncherApp(
                 context.packageManager.getPackageInfo(packageName, 0).versionName
             } catch (e: PackageManager.NameNotFoundException) {
                 null
+            }
+        }
+
+        fun isSuspended(context: Context, packageName: String): Boolean {
+            return try {
+                context.packageManager.getApplicationInfo(packageName, 0).flags and ApplicationInfo.FLAG_SUSPENDED != 0
+            } catch (e: PackageManager.NameNotFoundException) {
+                false
             }
         }
 
