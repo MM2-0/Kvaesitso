@@ -47,7 +47,10 @@ fun LazyListScope.ShortcutResults(
             {
                 MissingPermissionBanner(
                     modifier = Modifier.padding(8.dp),
-                    text = stringResource(R.string.missing_permission_appshortcuts_search),
+                    text = stringResource(
+                        R.string.missing_permission_appshortcuts_search,
+                        stringResource(R.string.app_name)
+                    ),
                     onClick = onPermissionRequest,
                     secondaryAction = {
                         OutlinedButton(onClick = onPermissionRequestRejected) {
