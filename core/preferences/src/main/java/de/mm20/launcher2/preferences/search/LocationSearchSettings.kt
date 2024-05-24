@@ -10,7 +10,7 @@ class LocationSearchSettings internal constructor(
     val data
         get() = launcherDataStore.data.map {
             LocationSearchSettingsData(
-                enabled = it.locationSearchEnabled,
+                providers = it.locationSearchProviders,
                 searchRadius = it.locationSearchRadius,
                 hideUncategorized = it.locationSearchHideUncategorized,
                 overpassUrl = it.locationSearchOverpassUrl,
@@ -122,7 +122,7 @@ class LocationSearchSettings internal constructor(
 }
 
 data class LocationSearchSettingsData(
-    val enabled: Boolean = false,
+    val providers: Set<String> = setOf("openstreetmaps"),
     val searchRadius: Int = 1500,
     val hideUncategorized: Boolean = true,
     val overpassUrl: String = LocationSearchSettings.DefaultOverpassUrl,
