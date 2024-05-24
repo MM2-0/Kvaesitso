@@ -13,12 +13,14 @@ interface IconDao {
     @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND iconPack = :iconPack AND type IN ('app', 'calendar', 'clock') ORDER BY type DESC LIMIT 1")
     suspend fun getIcon(packageName: String, activityName: String?, iconPack: String): IconEntity?
 
+    @Query("SELECT * FROM Icons WHERE drawable = :iconName AND iconPack = :iconPack ORDER BY type DESC LIMIT 1")
+    suspend fun getIcon(iconName: String, iconPack: String): IconEntity?
+
     @Query("SELECT * FROM Icons WHERE packageName = :packageName AND (activityName = :activityName OR activityName IS NULL) AND type IN ('app', 'calendar', 'clock')")
     suspend fun getIconsFromAllPacks(packageName: String, activityName: String): List<IconEntity>
 
-    @Query("SELECT * FROM Icons WHERE type IN ('app', 'calendar', 'clock') AND (drawable LIKE :drawableQuery OR packageName LIKE :componentQuery OR activityName LIKE :componentQuery OR name LIKE :nameQuery) AND (:iconPack IS NULL OR iconPack = :iconPack) GROUP BY drawable ORDER BY iconPack, drawable LIMIT :limit")
+    @Query("SELECT * FROM Icons WHERE type IN ('app', 'calendar', 'clock') AND (drawable LIKE :drawableQuery OR name LIKE :nameQuery) AND (:iconPack IS NULL OR iconPack = :iconPack) GROUP BY drawable, iconPack, type ORDER BY type DESC, iconPack, drawable LIMIT :limit")
     suspend fun searchIconPackIcons(
-        componentQuery: String,
         nameQuery: String,
         drawableQuery: String,
         iconPack: String?,

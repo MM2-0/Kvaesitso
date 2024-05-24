@@ -112,6 +112,27 @@ class IconPackManager(
         return@withContext null
     }
 
+    suspend fun getIcon(
+        iconPack: String,
+        icon: IconPackAppIcon,
+        allowThemed: Boolean,
+    ): LauncherIcon? = withContext(Dispatchers.IO) {
+        val res = try {
+            context.packageManager.getResourcesForApplication(iconPack)
+        } catch (e: PackageManager.NameNotFoundException) {
+            Log.e("MM20", "Icon pack package $iconPack not found!")
+            return@withContext null
+        }
+        if (icon is CalendarIcon) {
+            return@withContext getIconPackCalendarIcon(icon, res, allowThemed)
+        } else if (icon is AppIcon) {
+            return@withContext getIconPackStaticIcon(icon, res, allowThemed)
+        } else if (icon is ClockIcon) {
+            return@withContext getIconPackClockIcon(icon, res, allowThemed)
+        }
+        return@withContext null
+    }
+
     suspend fun generateIcon(
         context: Context,
         iconPack: String,
@@ -448,12 +469,11 @@ class IconPackManager(
         val drawableQuery = query.replace(" ", "_").lowercase()
         return iconDao.searchIconPackIcons(
             drawableQuery = "%$drawableQuery%",
-            componentQuery = "%$query%",
             nameQuery = "%$query%",
             iconPack = iconPack?.packageName,
         ).mapNotNull {
             IconPackAppIcon(it)
-        }
+        }.distinct()
     }
 
 

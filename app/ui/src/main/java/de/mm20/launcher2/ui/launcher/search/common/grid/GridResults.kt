@@ -28,6 +28,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
     if (before != null) {
         item(
             key = "$key-before",
+            contentType = { "$key-before" },
         ) {
             val isTop = !reverse || items.isEmpty() && after == null
             val isBottom = reverse || items.isEmpty() && after == null
@@ -53,7 +54,8 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
         rows,
         key = {
             "$key-$it"
-        }
+        },
+        contentType = { key }
     ) {
 
         val isFirst = it == 0 && before == null
@@ -104,6 +106,7 @@ fun <T : SavableSearchable> LazyListScope.GridResults(
     if (after != null) {
         item(
             key = "$key-after",
+            contentType = { "$key-after" },
         ) {
             val isTop = reverse || items.isEmpty() && before == null
             val isBottom = !reverse || items.isEmpty() && before == null

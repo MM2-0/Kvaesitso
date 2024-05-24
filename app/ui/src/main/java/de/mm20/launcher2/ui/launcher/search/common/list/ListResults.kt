@@ -38,6 +38,7 @@ fun <T : SavableSearchable> LazyListScope.ListResults(
     if (before != null) {
         item(
             key = "$key-before",
+            contentType = { "$key-before" },
         ) {
             ListItemSurface(
                 isFirst = true,
@@ -55,6 +56,7 @@ fun <T : SavableSearchable> LazyListScope.ListResults(
         key = {
             "$key-${items[it].key}"
         },
+        contentType = { key },
     ) {
         val item = items[it]
         val showDetails = it == selectedIndex
@@ -73,6 +75,7 @@ fun <T : SavableSearchable> LazyListScope.ListResults(
     if (after != null) {
         item(
             key = "$key-after",
+            contentType = { "$key-after" },
         ) {
             ListItemSurface(
                 isFirst = before == null && items.isEmpty(),

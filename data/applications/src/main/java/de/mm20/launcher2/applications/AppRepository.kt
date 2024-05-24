@@ -58,8 +58,9 @@ internal class AppRepositoryImpl(
             ) {
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value =
-                            installedApps.value.filter { !packageNames.contains(it.componentName.packageName) }
+                        val apps = installedApps.value.toMutableList()
+                        apps.removeAll { packageNames.contains(it.componentName.packageName) && it.user == user }
+                        installedApps.value = apps
                     }
                 }
             }
@@ -68,8 +69,8 @@ internal class AppRepositoryImpl(
                 scope.launch {
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
-                        apps.removeAll { packageName == it.componentName.packageName }
-                        apps.addAll(getApplications(packageName))
+                        apps.removeAll { packageName == it.componentName.packageName && it.user == user }
+                        apps.addAll(getApplications(packageName, user))
                         installedApps.value = apps
                     }
                 }
@@ -84,7 +85,7 @@ internal class AppRepositoryImpl(
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
                         for (packageName in packageNames) {
-                            apps.addAll(getApplications(packageName))
+                            apps.addAll(getApplications(packageName, user))
                         }
                         installedApps.value = apps
                     }
@@ -95,7 +96,7 @@ internal class AppRepositoryImpl(
                 scope.launch {
                     mutex.withLock {
                         val apps = installedApps.value.toMutableList()
-                        apps.addAll(getApplications(packageName))
+                        apps.addAll(getApplications(packageName, user))
                         installedApps.value = apps
                     }
                 }
@@ -104,8 +105,9 @@ internal class AppRepositoryImpl(
             override fun onPackageRemoved(packageName: String, user: UserHandle) {
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value =
-                            installedApps.value.filter { packageName != (it.componentName.packageName) || it.user != user }
+                        val apps = installedApps.value.toMutableList()
+                        apps.removeAll { packageName == it.componentName.packageName && it.user == user }
+                        installedApps.value = apps
 
                     }
                 }
@@ -123,13 +125,15 @@ internal class AppRepositoryImpl(
                 packageNames ?: return
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value = installedApps.value.map {
-                            if (packageNames.contains(it.componentName.packageName)) {
+                        val apps = installedApps.value.toMutableList()
+                        apps.replaceAll {
+                            if (packageNames.contains(it.componentName.packageName) && it.user == user) {
                                 it.copy(isSuspended = true)
                             } else {
                                 it
                             }
                         }
+                        installedApps.value = apps
                     }
                 }
             }
@@ -141,13 +145,15 @@ internal class AppRepositoryImpl(
                 packageNames ?: return
                 scope.launch {
                     mutex.withLock {
-                        installedApps.value = installedApps.value.map {
-                            if (packageNames.contains(it.componentName.packageName)) {
+                        val apps = installedApps.value.toMutableList()
+                        apps.replaceAll {
+                            if (packageNames.contains(it.componentName.packageName) && it.user == user) {
                                 it.copy(isSuspended = false)
                             } else {
                                 it
                             }
                         }
+                        installedApps.value = apps
                     }
                 }
             }
@@ -157,7 +163,7 @@ internal class AppRepositoryImpl(
             mutex.withLock {
                 val apps = profiles.map { p ->
                     try {
-                        launcherApps.getActivityList(null, p).mapNotNull { getApplication(it, p) }
+                        launcherApps.getActivityList(null, p).mapNotNull { getApplication(it) }
                     } catch (e: SecurityException) {
                         emptyList()
                     }
@@ -167,22 +173,20 @@ internal class AppRepositoryImpl(
         }
     }
 
-    private fun getApplications(packageName: String): List<LauncherApp> {
+    private fun getApplications(packageName: String, userHandle: UserHandle): List<LauncherApp> {
         if (packageName == context.packageName) return emptyList()
 
-        return profiles.map { p ->
-            try {
-                launcherApps.getActivityList(packageName, p).mapNotNull { getApplication(it, p) }
-            } catch (e: SecurityException) {
-                emptyList()
-            }
-        }.flatten()
+        return try {
+            launcherApps.getActivityList(packageName, userHandle)
+                .mapNotNull { getApplication(it) }
+        } catch (e: SecurityException) {
+            emptyList()
+        }
     }
 
 
     private fun getApplication(
-        launcherActivityInfo: LauncherActivityInfo,
-        profile: UserHandle
+        launcherActivityInfo: LauncherActivityInfo
     ): LauncherApp? {
         if (launcherActivityInfo.applicationInfo.packageName == context.packageName && !context.packageName.endsWith(
                 ".debug"
