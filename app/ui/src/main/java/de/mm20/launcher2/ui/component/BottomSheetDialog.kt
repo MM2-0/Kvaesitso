@@ -56,6 +56,7 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
@@ -83,6 +84,11 @@ fun BottomSheetDialog(
     content: @Composable (paddingValues: PaddingValues) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
+
+    val focusManager = LocalFocusManager.current
+    LaunchedEffect(Unit) {
+        focusManager.clearFocus(true)
+    }
 
     var isOpenAnimationFinished by remember { mutableStateOf(false) }
 
