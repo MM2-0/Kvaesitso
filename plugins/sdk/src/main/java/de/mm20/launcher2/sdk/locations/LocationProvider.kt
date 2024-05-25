@@ -56,10 +56,10 @@ abstract class LocationPluginProvider(
                     uri.getQueryParameter(LocationPluginContract.SearchParams.Query) ?: return null
                 val userLat =
                     uri.getQueryParameter(LocationPluginContract.SearchParams.UserLatitude)
-                        ?.toDouble()
+                        ?.toDoubleOrNull() ?: return null
                 val userLon =
                     uri.getQueryParameter(LocationPluginContract.SearchParams.UserLongitude)
-                        ?.toDouble()
+                        ?.toDoubleOrNull() ?: return null
                 val radius = uri.getQueryParameter(LocationPluginContract.SearchParams.SearchRadius)
                     ?.toLong() ?: return null
                 val network =
