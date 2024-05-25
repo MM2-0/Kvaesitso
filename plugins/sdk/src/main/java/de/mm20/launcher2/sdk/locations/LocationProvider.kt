@@ -95,8 +95,7 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 LocationPluginContract.LocationColumns.Longitude,
                 LocationPluginContract.LocationColumns.FixMeUrl,
                 LocationPluginContract.LocationColumns.Category,
-                LocationPluginContract.LocationColumns.Street,
-                LocationPluginContract.LocationColumns.HouseNumber,
+                LocationPluginContract.LocationColumns.Address,
                 LocationPluginContract.LocationColumns.OpeningSchedule,
                 LocationPluginContract.LocationColumns.WebsiteUrl,
                 LocationPluginContract.LocationColumns.PhoneNumber,
@@ -116,8 +115,9 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 item.longitude,
                 item.fixMeUrl,
                 item.category?.name,
-                item.street,
-                item.houseNumber,
+                item.address?.let {
+                    json.encodeToString(it)
+                },
                 item.openingSchedule?.let {
                     json.encodeToString(it)
                 },

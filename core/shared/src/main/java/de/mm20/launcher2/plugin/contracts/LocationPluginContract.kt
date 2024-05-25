@@ -75,26 +75,20 @@ abstract class LocationPluginContract {
         const val FixMeUrl = "fix_me_url"
 
         /**
-         * Location category. See TODO for possible values.
-         * Type: String?
+         * Location category.
+         * Type: String? (LocationCategory enum value)
          */
         const val Category = "category"
 
         /**
          * Street name of location.
-         * Type: String?
+         * Type: String? (JSON)
          */
-        const val Street = "street"
-
-        /**
-         * House number of location.
-         * Type: String?
-         */
-        const val HouseNumber = "house_number"
+        const val Address = "street"
 
         /**
          * Opening schedule of location, encoded as JSON.
-         * Type: String?
+         * Type: String? (JSON)
          */
         const val OpeningSchedule = "opening_schedule"
 
@@ -118,7 +112,7 @@ abstract class LocationPluginContract {
 
         /**
          * Public transport departures originating from this location, encoded as JSON.
-         * Type: String?
+         * Type: String? (JSON)
          */
         const val Departures = "departures"
     }

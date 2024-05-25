@@ -11,6 +11,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
@@ -35,8 +36,7 @@ internal data class SerializedLocation(
     val lon: Double? = null,
     val category: LocationCategory? = null,
     val label: String? = null,
-    val street: String? = null,
-    val houseNumber: String? = null,
+    val address: Address? = null,
     val websiteUrl: String? = null,
     val phoneNumber: String? = null,
     val userRating: Float? = null,
@@ -90,8 +90,7 @@ internal class OsmLocationSerializer : SearchableSerializer {
                 lon = searchable.longitude,
                 category = searchable.category,
                 label = searchable.label,
-                street = searchable.street,
-                houseNumber = searchable.houseNumber,
+                address = searchable.address,
                 websiteUrl = searchable.websiteUrl,
                 phoneNumber = searchable.phoneNumber,
                 userRating = searchable.userRating,
@@ -120,8 +119,7 @@ internal class OsmLocationDeserializer(
             longitude = json.lon ?: return null,
             category = json.category,
             label = json.label ?: return null,
-            street = json.street,
-            houseNumber = json.houseNumber,
+            address = json.address,
             websiteUrl = json.websiteUrl,
             phoneNumber = json.phoneNumber,
             userRating = json.userRating,
@@ -154,8 +152,7 @@ internal class PluginLocationSerializer : SearchableSerializer {
                         lon = searchable.longitude,
                         category = searchable.category,
                         label = searchable.label,
-                        street = searchable.street,
-                        houseNumber = searchable.houseNumber,
+                        address = searchable.address,
                         websiteUrl = searchable.websiteUrl,
                         phoneNumber = searchable.phoneNumber,
                         userRating = searchable.userRating,
@@ -205,8 +202,7 @@ internal class PluginLocationDeserializer(
                     longitude = json.lon ?: return null,
                     category = json.category,
                     label = json.label ?: return null,
-                    street = json.street,
-                    houseNumber = json.houseNumber,
+                    address = json.address,
                     websiteUrl = json.websiteUrl,
                     phoneNumber = json.phoneNumber,
                     userRating = json.userRating,

@@ -64,6 +64,7 @@ import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.LocationCategory
@@ -451,7 +452,7 @@ private fun MapTilesPreview() {
     )
 }
 
-internal object MockLocation : Location {
+private object MockLocation : Location {
 
     override val domain: String = "MOCKLOCATION"
     override val key: String = "MOCKLOCATION"
@@ -463,9 +464,12 @@ internal object MockLocation : Location {
 
     override var category: LocationCategory? = LocationCategory.OTHER
 
-    override val street: String = "Pariser Platz"
-
-    override val houseNumber: String = "1"
+    override val address: Address = Address(
+        address = "Pariser Platz 1",
+        city = "Berlin",
+        postalCode = "10117",
+        country = "Germany"
+    )
 
     override val openingSchedule: OpeningSchedule =
         OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())

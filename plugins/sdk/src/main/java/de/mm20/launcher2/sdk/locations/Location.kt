@@ -1,5 +1,6 @@
 package de.mm20.launcher2.sdk.locations
 
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningSchedule
@@ -11,8 +12,7 @@ data class Location(
     val longitude: Double,
     val fixMeUrl: String?,
     val category: LocationCategory?,
-    val street: String?,
-    val houseNumber: String?,
+    val address: Address?,
     val openingSchedule: OpeningSchedule?,
     val websiteUrl: String?,
     val phoneNumber: String?,

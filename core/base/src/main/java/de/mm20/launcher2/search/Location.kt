@@ -10,6 +10,7 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
@@ -26,14 +27,14 @@ interface Location : SavableSearchable {
 
     val category: LocationCategory?
 
-    val street: String?
-    val houseNumber: String?
-    val openingSchedule: OpeningSchedule?
+    val address: Address?
+
     val websiteUrl: String?
     val phoneNumber: String?
 
     val userRating: Float?
 
+    val openingSchedule: OpeningSchedule?
     val departures: List<Departure>?
 
     override val preferDetailsOverLaunch: Boolean

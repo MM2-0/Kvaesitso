@@ -8,21 +8,19 @@ import android.util.Log
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.decodeFromStringOrNull
-import de.mm20.launcher2.locations.getOpeningSchedule
 import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
-import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.serialization.Json
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 import kotlin.coroutines.resume
 
 internal class PluginLocationProvider(
@@ -162,10 +160,8 @@ internal class PluginLocationProvider(
             .takeIf { it != -1 }
         val categoryIdy = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Category)
             .takeIf { it != -1 }
-        val streetIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Street).takeIf { it != -1 }
-        val houseNumberIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.HouseNumber)
+        val addressIdx =
+            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Address)
                 .takeIf { it != -1 }
         val openingScheduleIdx =
             cursor.getColumnIndex(LocationPluginContract.LocationColumns.OpeningSchedule)
@@ -195,11 +191,14 @@ internal class PluginLocationProvider(
                             cursor.getString(it)
                         )
                     },
-                    street = streetIdx?.let { cursor.getString(it) },
-                    houseNumber = houseNumberIdx?.let { cursor.getString(it) },
+                    address = addressIdx?.let {
+                        cursor.getStringOrNull(it)?.let {
+                            json.decodeFromStringOrNull<Address>(it)
+                        }
+                    },
                     openingSchedule = openingScheduleIdx?.let {
                         cursor.getStringOrNull(it)?.let {
-                            getOpeningSchedule(JSONObject(it))
+                            json.decodeFromStringOrNull<OpeningSchedule>(it)
                         }
                     },
                     websiteUrl = websiteUrlIdx?.let { cursor.getString(it) },
@@ -207,7 +206,7 @@ internal class PluginLocationProvider(
                     userRating = userRatingIdx?.let { cursor.getFloat(it) },
                     departures = departuresIdx?.let {
                         cursor.getStringOrNull(it)?.let {
-                            json.decodeFromStringOrNull<ImmutableList<Departure>>(it)
+                            json.decodeFromStringOrNull<List<Departure>>(it)
                         }
                     },
                     authority = pluginAuthority,

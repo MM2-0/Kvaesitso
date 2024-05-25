@@ -8,6 +8,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningSchedule
@@ -19,8 +20,7 @@ data class PluginLocation(
     override val longitude: Double,
     override val fixMeUrl: String?,
     override val category: LocationCategory?,
-    override val street: String?,
-    override val houseNumber: String?,
+    override val address: Address?,
     override val openingSchedule: OpeningSchedule?,
     override val websiteUrl: String?,
     override val phoneNumber: String?,

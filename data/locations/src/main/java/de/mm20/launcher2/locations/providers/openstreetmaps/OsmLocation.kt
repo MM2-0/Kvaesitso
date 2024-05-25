@@ -7,6 +7,7 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
@@ -27,8 +28,7 @@ internal data class OsmLocation(
     override val category: LocationCategory?,
     override val latitude: Double,
     override val longitude: Double,
-    override val street: String?,
-    override val houseNumber: String?,
+    override val address: Address?,
     override val openingSchedule: OpeningSchedule?,
     override val websiteUrl: String?,
     override val phoneNumber: String?,
@@ -93,8 +93,7 @@ internal data class OsmLocation(
                 } ?: LocationCategory.OTHER,
                 latitude = it.lat ?: it.center?.lat ?: return@mapNotNull null,
                 longitude = it.lon ?: it.center?.lon ?: return@mapNotNull null,
-                street = it.tags["addr:street"],
-                houseNumber = it.tags["addr:housenumber"],
+                address = null,
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
                 phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
