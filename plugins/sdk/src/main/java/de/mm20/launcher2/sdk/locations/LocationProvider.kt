@@ -9,6 +9,8 @@ import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
+import de.mm20.launcher2.serialization.Json
+import kotlinx.serialization.encodeToString
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.format.DateTimeFormatter
@@ -16,6 +18,8 @@ import java.time.format.DateTimeFormatter
 private val LocalTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
 
 abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Location>() {
+
+    private val json = Json.Lenient
 
     /**
      * Search for a location.
@@ -115,35 +119,13 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 item.street,
                 item.houseNumber,
                 item.openingSchedule?.let {
-                    JSONObject().apply {
-                        put("isTwentyFourSeven", it.isTwentyFourSeven)
-                        put("openingHours", JSONArray().apply {
-                            it.openingHours.forEach {
-                                put(JSONObject().apply {
-                                    put("dayOfWeek", it.dayOfWeek.value)
-                                    put("startTime", it.startTime.format(LocalTimeFormatter))
-                                    put("duration", it.duration.toMinutes())
-                                })
-                            }
-                        })
-                    }
+                    json.encodeToString(it)
                 },
                 item.websiteUrl,
                 item.phoneNumber,
                 item.userRating,
                 item.departures?.let {
-                    JSONArray().apply {
-                        it.forEach { departure ->
-                            put(JSONObject().apply {
-                                put("time", departure.time.format(LocalTimeFormatter))
-                                departure.delay?.let { put("delay", it.toMinutes()) }
-                                put("line", departure.line)
-                                departure.lastStop?.let { put("lastStop", it) }
-                                departure.type?.let { put("type", it.name) }
-                                departure.lineColor?.let { put("lineColor", it.toArgb()) }
-                            })
-                        }
-                    }
+                    json.encodeToString(it)
                 },
             )
         )

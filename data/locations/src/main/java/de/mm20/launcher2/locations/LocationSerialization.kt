@@ -8,15 +8,15 @@ import de.mm20.launcher2.locations.providers.PluginLocationProvider
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocationProvider
 import de.mm20.launcher2.plugin.PluginRepository
-import de.mm20.launcher2.search.Departure
-import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningHours
-import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineType
+import de.mm20.launcher2.search.location.OpeningHours
+import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
@@ -207,7 +207,6 @@ internal class PluginLocationDeserializer(
                                 ?.let { Color.valueOf(it) }
                         )
                     }
-
             }
         )
     }

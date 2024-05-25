@@ -3,13 +3,13 @@ package de.mm20.launcher2.locations.providers
 import android.content.Context
 import android.graphics.drawable.Drawable
 import de.mm20.launcher2.locations.PluginLocationSerializer
-import de.mm20.launcher2.search.Departure
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 

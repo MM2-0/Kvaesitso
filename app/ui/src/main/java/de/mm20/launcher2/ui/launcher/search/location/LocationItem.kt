@@ -107,8 +107,9 @@ import de.mm20.launcher2.search.Departure
 import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningHours
-import de.mm20.launcher2.search.OpeningSchedule
+import de.mm20.launcher2.search.isOpen
+import de.mm20.launcher2.search.location.OpeningHours
+import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText

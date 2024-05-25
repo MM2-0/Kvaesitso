@@ -1,21 +1,16 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
-import android.content.Context
-import android.content.Intent
-import android.os.Bundle
-import android.net.Uri
 import android.util.Log
 import de.mm20.launcher2.ktx.orRunCatching
-import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.search.Departure
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
-import de.mm20.launcher2.search.OpeningHours
-import de.mm20.launcher2.search.OpeningSchedule
 import de.mm20.launcher2.search.SearchableSerializer
-import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.UpdatableSearchable
+import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.OpeningHours
+import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.toImmutableList
 import java.time.DayOfWeek
 import java.time.Duration
@@ -104,7 +99,8 @@ internal data class OsmLocation(
                 websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
                 phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
                 timestamp = System.currentTimeMillis(),
-                userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()?.let { min(it, 5) / 5.0f }
+                userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
+                    ?.let { min(it, 5) / 5.0f }
             )
         }
     }

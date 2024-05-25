@@ -1,6 +1,8 @@
 package de.mm20.launcher2.sdk.locations
 
 import android.graphics.Color
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.OpeningSchedule
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
@@ -20,27 +22,3 @@ data class Location(
     val userRating: Float?,
     val departures: List<Departure>?,
 )
-
-data class OpeningSchedule(
-    val isTwentyFourSeven: Boolean,
-    val openingHours: List<OpeningHours>,
-)
-
-data class OpeningHours(
-    val dayOfWeek: DayOfWeek,
-    val startTime: LocalTime,
-    val duration: Duration,
-)
-
-data class Departure(
-    val time: LocalTime,
-    val delay: Duration?,
-    val line: String,
-    val lastStop: String?,
-    val type: LineType?,
-    val lineColor: Color?
-)
-
-enum class LineType {
-    BUS, STREETCAR, SUBWAY, TRAIN, FERRY
-}

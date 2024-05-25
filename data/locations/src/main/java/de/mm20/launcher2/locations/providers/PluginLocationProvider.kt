@@ -5,29 +5,30 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
-import android.graphics.Color
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
+import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.locations.getOpeningSchedule
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
-import de.mm20.launcher2.search.Departure
-import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.serialization.Json
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
 import org.json.JSONObject
-import java.time.Duration
-import java.time.LocalTime
 import kotlin.coroutines.resume
 
 internal class PluginLocationProvider(
     private val context: Context,
     private val pluginAuthority: String
 ) : LocationProvider<String> {
+
+    private val json = Json.Lenient
+
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation?,
@@ -197,32 +198,7 @@ internal class PluginLocationProvider(
                     userRating = userRatingIdx?.let { cursor.getFloat(it) },
                     departures = departuresIdx?.let {
                         cursor.getStringOrNull(it)?.let {
-                            val arr = JSONArray(it)
-                            (0 until arr.length()).mapNotNull {
-                                it.runCatching {
-                                    arr.getJSONObject(this)
-                                }.onFailure {
-                                    Log.w("MM20", "Got bad JSON from $pluginAuthority", it)
-                                }.getOrNull()
-                            }.mapNotNull {
-                                Departure(
-                                    time = it.optString("time")
-                                        .runCatching { LocalTime.parse(this) }.getOrNull()
-                                        ?: return@mapNotNull null,
-                                    delay = it.optLong("delay").takeIf { it != 0L }
-                                        ?.let { Duration.ofMinutes(it) },
-                                    line = it.optString("line").takeIf { it.isNotBlank() }
-                                        ?: return@mapNotNull null,
-                                    lastStop = it.optString("lastStop")
-                                        .takeIf { it.isNotBlank() },
-                                    type = it.optString("type")
-                                        .runCatching { LineType.valueOf(this.uppercase()) }
-                                        .getOrNull(),
-                                    lineColor = it.runCatching { getInt("lineColor") }
-                                        .getOrNull()
-                                        ?.let { Color.valueOf(it) }
-                                )
-                            }
+                            json.decodeFromStringOrNull<ImmutableList<Departure>>(it)
                         }
                     },
                     authority = pluginAuthority,

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.plugin.serialization)
     alias(libs.plugins.dokka)
     `maven-publish`
     signing
@@ -44,6 +45,11 @@ android {
             withSourcesJar()
         }
     }
+}
+
+dependencies {
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.bundles.kotlin)
 }
 
 tasks.dokkaHtml {

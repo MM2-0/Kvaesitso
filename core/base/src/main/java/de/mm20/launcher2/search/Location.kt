@@ -10,11 +10,10 @@ import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
-import kotlinx.collections.immutable.ImmutableList
-import java.time.DayOfWeek
-import java.time.Duration
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.OpeningHours
+import de.mm20.launcher2.search.location.OpeningSchedule
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.temporal.TemporalAdjusters
 import android.location.Location as AndroidLocation
 
@@ -165,7 +164,11 @@ interface Location : SavableSearchable {
     fun distanceTo(otherLocation: Location): Float =
         this.distanceTo(otherLocation.toAndroidLocation())
 
-    fun distanceTo(latitude: Double, longitude: Double, locationProvider: String = "KvaesitsoLocationProvider"): Float =
+    fun distanceTo(
+        latitude: Double,
+        longitude: Double,
+        locationProvider: String = "KvaesitsoLocationProvider"
+    ): Float =
         this.distanceTo(AndroidLocation(locationProvider).apply {
             this.latitude = latitude
             this.longitude = longitude
@@ -251,26 +254,12 @@ enum class LocationCategory {
     FITNESS_CENTRE
 }
 
-data class OpeningHours(
-    val dayOfWeek: DayOfWeek,
-    val startTime: LocalTime,
-    val duration: Duration
-) {
-
-    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
-        val startTime = date.with(TemporalAdjusters.previousOrSame(dayOfWeek)).with(startTime)
-        val endTime = startTime.plus(duration)
-        return date in startTime..<endTime
-    }
-
-    override fun toString(): String = "$dayOfWeek $startTime-${startTime.plus(duration)}"
+fun OpeningSchedule.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+    return isTwentyFourSeven || openingHours.any { it.isOpen(date) }
 }
 
-data class OpeningSchedule(
-    val isTwentyFourSeven: Boolean,
-    val openingHours: ImmutableList<OpeningHours>
-) {
-    fun isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
-        return isTwentyFourSeven || openingHours.any { it.isOpen(date) }
-    }
+fun OpeningHours.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
+    val startTime = date.with(TemporalAdjusters.previousOrSame(dayOfWeek)).with(startTime)
+    val endTime = startTime.plus(duration)
+    return date in startTime..<endTime
 }
