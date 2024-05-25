@@ -229,8 +229,12 @@ internal fun parseOpeningSchedule(it: String?): OpeningSchedule? {
 
         // if no day specified, treat as "every day"
         if (days.isEmpty()) {
-            everyDay = true
-            days = daysOfWeek.toSet()
+            if (group.any { it.equals("PH", ignoreCase = true) }) {
+                times = emptyList()
+            } else {
+                everyDay = true
+                days = daysOfWeek.toSet()
+            }
         }
 
         openingHours.addAll(days.flatMap { day ->
