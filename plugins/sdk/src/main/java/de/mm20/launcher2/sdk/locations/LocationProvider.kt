@@ -115,7 +115,7 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 item.latitude,
                 item.longitude,
                 item.fixMeUrl,
-                item.category,
+                item.category?.name,
                 item.street,
                 item.houseNumber,
                 item.openingSchedule?.let {

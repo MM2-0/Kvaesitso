@@ -9,11 +9,14 @@ import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.locations.getOpeningSchedule
+import de.mm20.launcher2.plugin.PluginApi
+import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.serialization.Json
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.Dispatchers
@@ -137,6 +140,14 @@ internal class PluginLocationProvider(
     }
 
     private fun fromCursor(cursor: Cursor): List<Location>? {
+        val config = getPluginConfig()
+
+        if (config == null) {
+            Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
+            cursor.close()
+            return null
+        }
+
         val idIdx =
             cursor.getColumnIndex(LocationPluginContract.LocationColumns.Id)
                 .takeIf { it != -1 } ?: return null
@@ -179,13 +190,11 @@ internal class PluginLocationProvider(
                     latitude = cursor.getDouble(latitudeIdx),
                     longitude = cursor.getDouble(longitudeIdx),
                     fixMeUrl = fixMeUrlIdx?.let { cursor.getString(it) },
-                    category = categoryIdy?.runCatching {
-                        LocationCategory.valueOf(
-                            cursor.getString(
-                                this
-                            )
+                    category = categoryIdy?.let {
+                        LocationCategory.valueOfOrNull(
+                            cursor.getString(it)
                         )
-                    }?.getOrNull(),
+                    },
                     street = streetIdx?.let { cursor.getString(it) },
                     houseNumber = houseNumberIdx?.let { cursor.getString(it) },
                     openingSchedule = openingScheduleIdx?.let {
@@ -204,9 +213,14 @@ internal class PluginLocationProvider(
                     authority = pluginAuthority,
                     updatedSelf = null,
                     timestamp = System.currentTimeMillis(),
+                    storageStrategy = config.storageStrategy,
                 )
             )
         }
         return results
+    }
+
+    private fun getPluginConfig(): SearchPluginConfig? {
+        return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 }

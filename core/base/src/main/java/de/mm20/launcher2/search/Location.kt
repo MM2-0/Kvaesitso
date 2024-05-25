@@ -11,6 +11,7 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import java.time.LocalDateTime
@@ -173,85 +174,6 @@ interface Location : SavableSearchable {
             this.latitude = latitude
             this.longitude = longitude
         })
-}
-
-// https://taginfo.openstreetmap.org/tags
-// 'amenity', 'shop', 'sport' of which the most important
-enum class LocationCategory {
-    RESTAURANT,
-    FAST_FOOD,
-    BAR,
-    CAFE,
-    HOTEL,
-    SUPERMARKET,
-    OTHER,
-    SCHOOL,
-    PARKING,
-    FUEL,
-    TOILETS,
-    PHARMACY,
-    HOSPITAL,
-    POST_OFFICE,
-    PUB,
-    GRAVE_YARD,
-    DOCTORS,
-    POLICE,
-    DENTIST,
-    LIBRARY,
-    COLLEGE,
-    ICE_CREAM,
-    THEATRE,
-    PUBLIC_BUILDING,
-    CINEMA,
-    NIGHTCLUB,
-    BIERGARTEN,
-    CLINIC,
-    UNIVERSITY,
-    DEPARTMENT_STORE,
-    CLOTHES,
-    CONVENIENCE,
-    HAIRDRESSER,
-    CAR_REPAIR,
-    BEAUTY,
-    BOOKS,
-    BAKERY,
-    CAR,
-    MOBILE_PHONE,
-    FURNITURE,
-    ALCOHOL,
-    FLORIST,
-    HARDWARE,
-    ELECTRONICS,
-    SHOES,
-    MALL,
-    OPTICIAN,
-    JEWELRY,
-    GIFT,
-    BICYCLE,
-    LAUNDRY,
-    COMPUTER,
-    TOBACCO,
-    WINE,
-    PHOTO,
-    COFFEE_SHOP,
-    BANK,
-    SOCCER,
-    BASKETBALL,
-    TENNIS,
-    FITNESS,
-    TRAM_STOP,
-    RAILWAY_STATION,
-    RAILWAY_STOP,
-    BUS_STATION,
-    ATM,
-    ART,
-    KIOSK,
-    BUS_STOP,
-    MUSEUM,
-    PARCEL_LOCKER,
-    CHEMIST,
-    TRAVEL_AGENCY,
-    FITNESS_CENTRE
 }
 
 fun OpeningSchedule.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {

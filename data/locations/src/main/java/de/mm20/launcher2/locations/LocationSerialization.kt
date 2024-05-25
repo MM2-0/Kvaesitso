@@ -1,34 +1,52 @@
 package de.mm20.launcher2.locations
 
 import android.content.Context
-import android.graphics.Color
-import de.mm20.launcher2.ktx.jsonObjectOf
 import de.mm20.launcher2.locations.providers.PluginLocation
 import de.mm20.launcher2.locations.providers.PluginLocationProvider
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocationProvider
 import de.mm20.launcher2.plugin.PluginRepository
-import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
+import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LineType
+import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.serialization.Json
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.serialization.json.addJsonObject
-import kotlinx.serialization.json.buildJsonArray
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
-import kotlin.time.Duration.Companion.days
+
+@Serializable
+internal data class SerializedLocation(
+    val id: String? = null,
+    val lat: Double? = null,
+    val lon: Double? = null,
+    val category: LocationCategory? = null,
+    val label: String? = null,
+    val street: String? = null,
+    val houseNumber: String? = null,
+    val websiteUrl: String? = null,
+    val phoneNumber: String? = null,
+    val userRating: Float? = null,
+    val openingSchedule: OpeningSchedule? = null,
+    val timestamp: Long? = null,
+    val departures: List<Departure>? = null,
+    val fixMeUrl: String? = null,
+    val authority: String? = null,
+    val storageStrategy: StorageStrategy? = null,
+)
 
 internal fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
     fun getOpeningHours(array: JSONArray): ImmutableList<OpeningHours> {
@@ -62,42 +80,27 @@ internal fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
     )
 }
 
-internal abstract class BaseLocationSerializer : SearchableSerializer {
-    protected fun serializeBase(searchable: SavableSearchable): JSONObject {
-        searchable as Location
-        return jsonObjectOf(
-            "lat" to searchable.latitude,
-            "lon" to searchable.longitude,
-            "category" to searchable.category?.name,
-            "label" to searchable.label,
-            "street" to searchable.street,
-            "houseNumber" to searchable.houseNumber,
-            "websiteUrl" to searchable.websiteUrl,
-            "phoneNumber" to searchable.phoneNumber,
-            "userRating" to searchable.userRating,
-            "openingSchedule" to searchable.openingSchedule?.let {
-                jsonObjectOf(
-                    "isTwentyFourSeven" to it.isTwentyFourSeven,
-                    "openingHours" to JSONArray(it.openingHours.map {
-                        jsonObjectOf(
-                            "day" to it.dayOfWeek.value,
-                            "openingTime" to it.startTime.toSecondOfDay() * 1000L,
-                            "duration" to it.duration.toMillis(),
-                        )
-                    })
-                )
-            },
-        )
-    }
-}
-
-internal class OsmLocationSerializer : BaseLocationSerializer() {
+internal class OsmLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as OsmLocation
-        return super.serializeBase(searchable).apply {
-            put("id", searchable.id)
-            put("timestamp", searchable.timestamp)
-        }.toString()
+        return Json.Lenient.encodeToString(
+            SerializedLocation(
+                id = searchable.id.toString(),
+                lat = searchable.latitude,
+                lon = searchable.longitude,
+                category = searchable.category,
+                label = searchable.label,
+                street = searchable.street,
+                houseNumber = searchable.houseNumber,
+                websiteUrl = searchable.websiteUrl,
+                phoneNumber = searchable.phoneNumber,
+                userRating = searchable.userRating,
+                openingSchedule = searchable.openingSchedule,
+                timestamp = searchable.timestamp,
+                departures = searchable.departures,
+                fixMeUrl = searchable.fixMeUrl,
+            )
+        )
     }
 
     override val typePrefix: String
@@ -107,52 +110,65 @@ internal class OsmLocationSerializer : BaseLocationSerializer() {
 internal class OsmLocationDeserializer(
     private val osmProvider: OsmLocationProvider,
 ) : SearchableDeserializer {
-    override suspend fun deserialize(serialized: String): SavableSearchable {
-        val json = JSONObject(serialized)
-        val id = json.getLong("id")
+    override suspend fun deserialize(serialized: String): SavableSearchable? {
+        val json = Json.Lenient.decodeFromString<SerializedLocation>(serialized)
+        val id = json.id?.toLongOrNull() ?: return null
 
         return OsmLocation(
             id = id,
-            latitude = json.getDouble("lat"),
-            longitude = json.getDouble("lon"),
-            category = json.getString("category").runCatching { LocationCategory.valueOf(this) }
-                .getOrNull(),
-            label = json.getString("label"),
-            street = json.optString("street").takeIf { it.isNotBlank() },
-            houseNumber = json.optString("houseNumber").takeIf { it.isNotBlank() },
-            openingSchedule = json.optJSONObject("openingSchedule")?.let { getOpeningSchedule(it) },
-            websiteUrl = json.optString("websiteUrl").takeIf { it.isNotBlank() },
-            phoneNumber = json.optString("phoneNumber").takeIf { it.isNotBlank() },
-            timestamp = json.optLong("timestamp"),
-            updatedSelf = { osmProvider.update(id) },
-            userRating = json.optDouble("userRating", -1.0).takeUnless { -1.0 == it }?.toFloat()
+            latitude = json.lat ?: return null,
+            longitude = json.lon ?: return null,
+            category = json.category,
+            label = json.label ?: return null,
+            street = json.street,
+            houseNumber = json.houseNumber,
+            websiteUrl = json.websiteUrl,
+            phoneNumber = json.phoneNumber,
+            userRating = json.userRating,
+            openingSchedule = json.openingSchedule,
+            timestamp = json.timestamp ?: return null,
+            updatedSelf = {
+                osmProvider.update(id)
+            }
         )
     }
 }
 
-internal class PluginLocationSerializer : BaseLocationSerializer() {
+internal class PluginLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as PluginLocation
-        return super.serializeBase(searchable).apply {
-            put("id", searchable.id)
-            put("authority", searchable.authority)
-            put("timestamp", searchable.timestamp)
-            put("fixMeUrl", searchable.fixMeUrl)
-            put("departures", searchable.departures?.let {
-                buildJsonArray {
-                    it.map {
-                        addJsonObject {
-                            put("time", it.time.toSecondOfDay() * 1000L)
-                            it.delay?.let { put("delay", it) }
-                            put("line", it.line)
-                            it.lastStop?.let { put("lastStop", it) }
-                            it.type?.let { put("type", it.name) }
-                            it.lineColor?.let { put("lineColor", it.toArgb()) }
-                        }
-                    }
-                }
-            })
-        }.toString()
+        return when (searchable.storageStrategy) {
+            StorageStrategy.StoreReference -> Json.Lenient.encodeToString(
+                SerializedLocation(
+                    id = searchable.id,
+                    authority = searchable.authority,
+                    storageStrategy = StorageStrategy.StoreReference,
+                )
+            )
+
+            else -> {
+                Json.Lenient.encodeToString(
+                    SerializedLocation(
+                        id = searchable.id,
+                        lat = searchable.latitude,
+                        lon = searchable.longitude,
+                        category = searchable.category,
+                        label = searchable.label,
+                        street = searchable.street,
+                        houseNumber = searchable.houseNumber,
+                        websiteUrl = searchable.websiteUrl,
+                        phoneNumber = searchable.phoneNumber,
+                        userRating = searchable.userRating,
+                        openingSchedule = searchable.openingSchedule,
+                        timestamp = searchable.timestamp,
+                        departures = searchable.departures,
+                        fixMeUrl = searchable.fixMeUrl,
+                        authority = searchable.authority,
+                        storageStrategy = searchable.storageStrategy,
+                    )
+                )
+            }
+        }
     }
 
     override val typePrefix: String
@@ -164,50 +180,47 @@ internal class PluginLocationDeserializer(
     private val pluginRepository: PluginRepository,
 ) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
-        val json = JSONObject(serialized)
-        val authority = json.getString("authority")
+        val json = Json.Lenient.decodeFromString<SerializedLocation>(serialized)
+        val authority = json.authority ?: return null
+        val id = json.id ?: return null
+        val strategy = json.storageStrategy ?: StorageStrategy.StoreCopy
 
         val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
         if (!plugin.enabled) return null
 
-        val id = json.getString("id")
-        val timestamp = json.getLong("timestamp")
-
-        return PluginLocation(
-            id = id,
-            timestamp = timestamp,
-            authority = authority,
-            fixMeUrl = json.optString("fixMeUrl").takeIf { it.isNotBlank() },
-            latitude = json.getDouble("lat"),
-            longitude = json.getDouble("lon"),
-            category = json.getString("category").runCatching { LocationCategory.valueOf(this) }
-                .getOrNull(),
-            label = json.getString("label"),
-            street = json.optString("street").takeIf { it.isNotBlank() },
-            houseNumber = json.optString("houseNumber").takeIf { it.isNotBlank() },
-            openingSchedule = json.optJSONObject("openingSchedule")?.let { getOpeningSchedule(it) },
-            websiteUrl = json.optString("websiteUrl").takeIf { it.isNotBlank() },
-            phoneNumber = json.optString("phoneNumber").takeIf { it.isNotBlank() },
-            updatedSelf = { PluginLocationProvider(context, authority).update(id) },
-            userRating = json.optDouble("userRating").takeUnless { it.isNaN() }?.toFloat(),
-            departures = if (System.currentTimeMillis() - timestamp > 1.days.inWholeMilliseconds) null else {
-                val arr = json.optJSONArray("departures")
-                (0 until (arr?.length() ?: 0)).map { arr!!.getJSONObject(it) }
-                    .mapNotNull {
-                        Departure(
-                            time = it.getLong("time").let { LocalTime.ofSecondOfDay(it / 1000L) },
-                            delay = it.optLong("delay").takeIf { it > 0 }
-                                ?.let { Duration.ofMillis(it) },
-                            line = it.getString("line"),
-                            lastStop = it.optString("lastStop").takeIf { it.isNotBlank() },
-                            type = it.optString("type").takeIf { it.isNotBlank() }
-                                ?.runCatching { LineType.valueOf(this.uppercase()) }?.getOrNull(),
-                            lineColor = it.runCatching { getInt("lineColor") }
-                                .getOrNull()
-                                ?.let { Color.valueOf(it) }
-                        )
-                    }
+        return when (strategy) {
+            StorageStrategy.StoreReference -> {
+                val result = PluginLocationProvider(context, authority).update(id)
+                if (result is UpdateResult.Success) {
+                    result.result
+                } else {
+                    null
+                }
             }
-        )
+
+            else -> {
+                PluginLocation(
+                    id = id,
+                    latitude = json.lat ?: return null,
+                    longitude = json.lon ?: return null,
+                    category = json.category,
+                    label = json.label ?: return null,
+                    street = json.street,
+                    houseNumber = json.houseNumber,
+                    websiteUrl = json.websiteUrl,
+                    phoneNumber = json.phoneNumber,
+                    userRating = json.userRating,
+                    openingSchedule = json.openingSchedule,
+                    timestamp = json.timestamp ?: return null,
+                    departures = json.departures,
+                    fixMeUrl = json.fixMeUrl,
+                    authority = authority,
+                    storageStrategy = strategy,
+                    updatedSelf = if (json.storageStrategy == StorageStrategy.Deferred) {
+                        { PluginLocationProvider(context, authority).update(id) }
+                    } else null
+                )
+            }
+        }
     }
 }

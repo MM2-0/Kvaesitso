@@ -1,9 +1,13 @@
 package de.mm20.launcher2.plugin.config
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
 /**
  * Defines how the launcher should store search results from a plugin (i.e. when the search result is
  * added to favorites).
  */
+@Serializable
 enum class StorageStrategy {
     /**
      * The launcher only stores the ID and the plugin provider for the search result. To restore the
@@ -13,6 +17,7 @@ enum class StorageStrategy {
      * particular, the plugin provider must be able to restore a search result without any network
      * requests.
      */
+    @SerialName("ref")
     StoreReference,
 
     /**
@@ -21,6 +26,7 @@ enum class StorageStrategy {
      * Use this strategy if your plugin needs to perform network requests to retrieve search
      * results and if you don't want to implement a cache for search results.
      */
+    @SerialName("copy")
     StoreCopy,
 
     /**
@@ -29,5 +35,6 @@ enum class StorageStrategy {
      * detail view. This allows the plugin provider to update the search result at a later point in
      * time, without the time constraints of [StoreReference].
      */
+    @SerialName("deferred")
     Deferred,
 }

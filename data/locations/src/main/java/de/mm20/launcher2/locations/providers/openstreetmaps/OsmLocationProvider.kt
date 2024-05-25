@@ -7,8 +7,8 @@ import de.mm20.launcher2.locations.providers.AndroidLocation
 import de.mm20.launcher2.locations.providers.LocationProvider
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.location.LocationCategory
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope

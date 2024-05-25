@@ -9,7 +9,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 
 object ColorSerializer: KSerializer<Color> {
-    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor("Color", PrimitiveKind.INT)
+    override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(javaClass.canonicalName!!, PrimitiveKind.INT)
 
     override fun deserialize(decoder: Decoder): Color {
         return Color.valueOf(decoder.decodeInt())

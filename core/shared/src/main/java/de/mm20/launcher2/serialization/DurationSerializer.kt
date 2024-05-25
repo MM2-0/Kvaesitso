@@ -8,7 +8,7 @@ import kotlinx.serialization.encoding.Encoder
 import java.time.Duration
 
 object DurationSerializer: KSerializer<Duration> {
-    override val descriptor = PrimitiveSerialDescriptor("Duration", PrimitiveKind.LONG)
+    override val descriptor = PrimitiveSerialDescriptor(javaClass.canonicalName!!, PrimitiveKind.LONG)
 
     override fun serialize(encoder: Encoder, value: Duration) {
         encoder.encodeLong(value.toMillis())

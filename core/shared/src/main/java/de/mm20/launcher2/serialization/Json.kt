@@ -1,11 +1,12 @@
 package de.mm20.launcher2.serialization
 
 /**
- * Default JSON serializer configurations
+ * Default Json serializer configurations
  */
 object Json {
     /**
-     * A very lenient JSON serializer that allows unknown keys, null values, and coerces input values.
+     * A Json serializer configuration that aims to be as forgiving as possible.
+     * Suitable for external data sources, and legacy data that may not be fully compliant with the current schema.
      */
     val Lenient = kotlinx.serialization.json.Json {
         ignoreUnknownKeys = true

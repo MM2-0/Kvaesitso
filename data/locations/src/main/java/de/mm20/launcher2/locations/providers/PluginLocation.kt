@@ -3,12 +3,13 @@ package de.mm20.launcher2.locations.providers
 import android.content.Context
 import android.graphics.drawable.Drawable
 import de.mm20.launcher2.locations.PluginLocationSerializer
+import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -31,6 +32,7 @@ data class PluginLocation(
     override val labelOverride: String? = null,
     val authority: String,
     val id: String,
+    val storageStrategy: StorageStrategy,
 ) : Location, UpdatableSearchable<Location> {
     override val key: String
         get() = "$domain://$authority:$id"

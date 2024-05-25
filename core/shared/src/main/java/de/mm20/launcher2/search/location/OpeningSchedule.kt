@@ -2,15 +2,17 @@ package de.mm20.launcher2.search.location
 
 import de.mm20.launcher2.serialization.DurationSerializer
 import de.mm20.launcher2.serialization.LocalTimeSerializer
-import kotlinx.collections.immutable.ImmutableList
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonNames
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
 
 @Serializable
 data class OpeningHours(
+    @JsonNames("day")
     val dayOfWeek: DayOfWeek,
+    @JsonNames("openingTime")
     @Serializable(with = LocalTimeSerializer::class)
     val startTime: LocalTime,
     @Serializable(with = DurationSerializer::class)
@@ -22,5 +24,5 @@ data class OpeningHours(
 @Serializable
 data class OpeningSchedule(
     val isTwentyFourSeven: Boolean,
-    val openingHours: ImmutableList<OpeningHours>
+    val openingHours: List<OpeningHours>
 )
