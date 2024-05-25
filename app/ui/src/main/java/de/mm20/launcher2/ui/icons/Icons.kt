@@ -1100,3 +1100,36 @@ val Icons.Rounded.HumidityPercentage
             close()
         }
     }
+
+val Icons.Rounded.CableCar
+    get() = materialIcon("Icons.Rounded.CableCar") {
+        materialPath {
+            moveTo(21f, 4.5f)
+            lineTo(3f, 7.5f)
+            verticalLineTo(9f)
+            lineTo(10.999512f, 7.6669922f)
+            verticalLineTo(10.000488f)
+            horizontalLineTo(6f)
+            curveToRelative(-1.1079945f, 0f, -1.9995117f, 0.891517f, -1.9995117f, 1.999512f)
+            verticalLineToRelative(6f)
+            curveToRelative(0f, 1.107995f, 0.8915172f, 1.999512f, 1.9995117f, 1.999512f)
+            horizontalLineToRelative(12f)
+            curveToRelative(1.107995f, 0f, 1.999512f, -0.891517f, 1.999512f, -1.999512f)
+            verticalLineToRelative(-6f)
+            curveToRelative(0f, -1.107995f, -0.891517f, -1.999512f, -1.999512f, -1.999512f)
+            horizontalLineTo(13.000488f)
+            verticalLineTo(7.3330078f)
+            lineTo(21f, 6f)
+            close()
+            moveTo(6f, 12f)
+            horizontalLineToRelative(4.999512f)
+            verticalLineToRelative(3f)
+            horizontalLineTo(6f)
+            close()
+            moveToRelative(7.000488f, 0f)
+            horizontalLineTo(18f)
+            verticalLineToRelative(3f)
+            horizontalLineToRelative(-4.999512f)
+            close()
+        }
+    }

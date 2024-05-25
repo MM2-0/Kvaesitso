@@ -31,5 +31,12 @@ data class Departure(
 )
 
 enum class LineType {
-    BUS, STREETCAR, SUBWAY, TRAIN, FERRY
+    BUS,
+    TRAM,
+    SUBWAY,
+    COMMUTER_RAIL,
+    TRAIN,
+    HIGH_SPEED_RAIL,
+    FERRY,
+    CABLE_CAR,
 }

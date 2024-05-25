@@ -45,6 +45,8 @@ import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
+import androidx.compose.material.icons.rounded.DirectionsRailway
+import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.Navigation
@@ -101,7 +103,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import blend.Blend.harmonize
 import de.mm20.launcher2.i18n.R
-import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
@@ -110,13 +111,13 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
-import de.mm20.launcher2.ui.BuildConfig
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
 import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
+import de.mm20.launcher2.ui.icons.CableCar
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -132,17 +133,13 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.Duration
-import java.time.Instant
 import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
-
-import android.graphics.Color as AndroidColor
 
 @Composable
 fun LocationItem(
@@ -1012,10 +1009,13 @@ fun Departure.LineIcon(
         Icon(
             imageVector = when (type) {
                 LineType.BUS -> Icons.Rounded.DirectionsBus
-                LineType.STREETCAR -> Icons.Rounded.Tram
-                LineType.SUBWAY -> Icons.Rounded.Subway
+                LineType.TRAM -> Icons.Rounded.Tram
+                LineType.SUBWAY -> Icons.Rounded.DirectionsTransit
+                LineType.COMMUTER_RAIL -> Icons.Rounded.DirectionsRailway
                 LineType.TRAIN -> Icons.Rounded.Train
+                LineType.HIGH_SPEED_RAIL -> Icons.Rounded.Train
                 LineType.FERRY -> Icons.Rounded.DirectionsBoat
+                LineType.CABLE_CAR -> Icons.Rounded.CableCar
                 null -> Icons.Rounded.Commute
             },
             contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
