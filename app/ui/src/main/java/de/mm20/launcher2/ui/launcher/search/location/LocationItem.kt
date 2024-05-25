@@ -103,11 +103,11 @@ import blend.Blend.harmonize
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.ktx.or
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.Departure
-import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.isOpen
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.BuildConfig

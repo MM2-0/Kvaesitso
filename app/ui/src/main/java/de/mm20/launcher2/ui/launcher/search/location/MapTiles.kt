@@ -61,12 +61,12 @@ import coil.request.CachePolicy
 import coil.request.ImageRequest
 import de.mm20.launcher2.ktx.PI
 import de.mm20.launcher2.ktx.tryStartActivity
-import de.mm20.launcher2.search.Departure
-import de.mm20.launcher2.search.LineType
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.LocationCategory
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.ktx.DegreesConverter
