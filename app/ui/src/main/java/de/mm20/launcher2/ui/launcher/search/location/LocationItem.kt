@@ -132,8 +132,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.Duration
+import java.time.Instant
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
@@ -372,24 +374,10 @@ fun LocationItem(
                     }
 
                     val openingSchedule = location.openingSchedule
-                    // remember?
-                    val departures = location.departures.or { debugDepartures() }
-                        ?.sortedBy { it.time }
-                        ?.let {
-                            val morningDepartures =
-                                it.filter { LocalTime.MIDNIGHT <= it.time && it.time <= LocalTime.NOON }
-                            val afternoonDepartures =
-                                it.filter { LocalTime.NOON < it.time && it.time < LocalTime.MIDNIGHT }
-
-                            val now = LocalTime.now()
-                            val isAfternoon = LocalTime.NOON < now && now < LocalTime.MIDNIGHT
-
-                            if (isAfternoon) {
-                                afternoonDepartures + morningDepartures
-                            } else {
-                                morningDepartures + afternoonDepartures
-                            }
-                        }
+                    val departures = remember(location.departures) {
+                        location.departures
+                            ?.sortedBy { it.time }
+                    }
                     if (departures != null) {
                         var showDepartureList by remember(departures) {
                             mutableStateOf(false)
@@ -990,22 +978,6 @@ private val LocationCategory.labelRes
         LocationCategory.TRAVEL_AGENCY -> R.string.poi_category_travel_agency
         LocationCategory.FITNESS_CENTRE -> R.string.poi_category_fitness_center
     }
-
-fun debugDepartures(): List<Departure>? = if (BuildConfig.DEBUG) {
-    listOf(LocalTime.NOON, LocalTime.MIDNIGHT + Duration.ofMinutes(12)).flatMap { time ->
-        listOf(null, Duration.ofMinutes(10)).flatMap { delay ->
-            listOf("line", "verylonglinename").flatMap { line ->
-                listOf("lastStop", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.").flatMap { stop ->
-                    LineType.entries.flatMap { type ->
-                        listOf(null, AndroidColor.RED, AndroidColor.GREEN, AndroidColor.BLUE).map { color ->
-                            Departure(time, delay, line, stop, type, color?.let { AndroidColor.valueOf(it) })
-                        }
-                    }
-                }
-            }
-        }
-    }
-} else null
 
 @Composable
 fun Departure.LineIcon(

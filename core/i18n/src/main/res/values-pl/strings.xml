@@ -757,7 +757,7 @@
     <string name="preference_default_filter_summary">Dostosuj domyślny filtr wyszukiwania</string>
     <string name="preference_filter_bar">Pokaż pasek filtrów</string>
     <string name="preference_filter_bar_summary">Pokaż szybkie filtry nad klawiaturą</string>
-    <string name="location_closes">Zamyka się za</string>
+    <string name="location_closes">Zamyka się za %1$s</string>
     <string name="location_closes_other_day">Zamknięcie %1$s, %2$s</string>
     <string name="location_opens">Otwórz o %1$s</string>
     <string name="location_opens_other_day">Otwórz %1$s, %2$s</string>
