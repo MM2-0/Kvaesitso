@@ -6,8 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.PluginType
+import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
+import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import de.mm20.launcher2.serialization.Json
 import kotlinx.serialization.encodeToString
@@ -15,9 +17,9 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.time.format.DateTimeFormatter
 
-private val LocalTimeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-
-abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Location>() {
+abstract class LocationPluginProvider(
+    private val config: SearchPluginConfig,
+) : QueryPluginProvider<LocationQuery, Location>() {
 
     private val json = Json.Lenient
 
@@ -133,5 +135,9 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 },
             )
         )
+    }
+
+    final override fun getPluginConfig(): Bundle {
+        return config.toBundle()
     }
 }
