@@ -14,6 +14,7 @@ import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningSchedule
@@ -176,6 +177,9 @@ internal class PluginLocationProvider(
         val departuresIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Departures)
             .takeIf { it != -1 }
 
+        val attributionIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Attribution)
+            .takeIf { it != -1 }
+
         val results = mutableListOf<Location>()
         while (cursor.moveToNext()) {
             val id = cursor.getString(idIdx)
@@ -207,6 +211,11 @@ internal class PluginLocationProvider(
                     departures = departuresIdx?.let {
                         cursor.getStringOrNull(it)?.let {
                             json.decodeFromStringOrNull<List<Departure>>(it)
+                        }
+                    },
+                    attribution = attributionIdx?.let {
+                        cursor.getStringOrNull(it)?.let {
+                            json.decodeFromStringOrNull<Attribution>(it)
                         }
                     },
                     authority = pluginAuthority,

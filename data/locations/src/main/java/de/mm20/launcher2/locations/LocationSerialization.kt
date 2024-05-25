@@ -12,6 +12,7 @@ import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
@@ -44,6 +45,7 @@ internal data class SerializedLocation(
     val timestamp: Long? = null,
     val departures: List<Departure>? = null,
     val fixMeUrl: String? = null,
+    val attribution: Attribution? = null,
     val authority: String? = null,
     val storageStrategy: StorageStrategy? = null,
 )
@@ -210,6 +212,7 @@ internal class PluginLocationDeserializer(
                     timestamp = json.timestamp ?: return null,
                     departures = json.departures,
                     fixMeUrl = json.fixMeUrl,
+                    attribution = json.attribution,
                     authority = authority,
                     storageStrategy = strategy,
                     updatedSelf = if (json.storageStrategy == StorageStrategy.Deferred) {

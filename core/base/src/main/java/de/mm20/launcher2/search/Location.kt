@@ -11,6 +11,7 @@ import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
@@ -36,6 +37,9 @@ interface Location : SavableSearchable {
 
     val openingSchedule: OpeningSchedule?
     val departures: List<Departure>?
+
+    val attribution: Attribution?
+        get() = null
 
     override val preferDetailsOverLaunch: Boolean
         get() = true

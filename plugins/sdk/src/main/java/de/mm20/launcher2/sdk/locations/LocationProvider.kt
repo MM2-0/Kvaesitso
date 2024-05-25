@@ -101,6 +101,7 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 LocationPluginContract.LocationColumns.PhoneNumber,
                 LocationPluginContract.LocationColumns.UserRating,
                 LocationPluginContract.LocationColumns.Departures,
+                LocationPluginContract.LocationColumns.Attribution,
             ),
             capacity,
         )
@@ -125,6 +126,9 @@ abstract class LocationPluginProvider : QueryPluginProvider<LocationQuery, Locat
                 item.phoneNumber,
                 item.userRating,
                 item.departures?.let {
+                    json.encodeToString(it)
+                },
+                item.attribution?.let {
                     json.encodeToString(it)
                 },
             )

@@ -115,5 +115,11 @@ abstract class LocationPluginContract {
          * Type: String? (JSON)
          */
         const val Departures = "departures"
+
+        /**
+         * Attribution information for location data.
+         * Type: String? (JSON)
+         */
+        const val Attribution = "attribution"
     }
 }

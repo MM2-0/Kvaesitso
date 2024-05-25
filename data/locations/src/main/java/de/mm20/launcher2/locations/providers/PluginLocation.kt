@@ -9,6 +9,7 @@ import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningSchedule
@@ -28,6 +29,7 @@ data class PluginLocation(
     override val departures: List<Departure>?,
     override val label: String,
     override val timestamp: Long,
+    override val attribution: Attribution?,
     override val updatedSelf: (suspend () -> UpdateResult<Location>)?,
     override val labelOverride: String? = null,
     val authority: String,
