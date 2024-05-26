@@ -96,6 +96,7 @@ abstract class LocationPluginProvider(
                 LocationPluginContract.LocationColumns.Latitude,
                 LocationPluginContract.LocationColumns.Longitude,
                 LocationPluginContract.LocationColumns.FixMeUrl,
+                LocationPluginContract.LocationColumns.Icon,
                 LocationPluginContract.LocationColumns.Category,
                 LocationPluginContract.LocationColumns.Address,
                 LocationPluginContract.LocationColumns.OpeningSchedule,
@@ -117,7 +118,8 @@ abstract class LocationPluginProvider(
                 item.latitude,
                 item.longitude,
                 item.fixMeUrl,
-                item.category?.name,
+                item.icon?.name,
+                item.category,
                 item.address?.let {
                     json.encodeToString(it)
                 },

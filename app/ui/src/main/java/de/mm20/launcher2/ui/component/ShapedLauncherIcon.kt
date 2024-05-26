@@ -8,14 +8,9 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.graphics.RectF
 import android.graphics.drawable.AdaptiveIconDrawable
-import android.util.Log
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -67,17 +63,14 @@ import de.mm20.launcher2.badges.Badge
 import de.mm20.launcher2.icons.ClockLayer
 import de.mm20.launcher2.icons.ClockSublayer
 import de.mm20.launcher2.icons.ClockSublayerRole
-import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.DynamicLauncherIcon
 import de.mm20.launcher2.icons.LauncherIcon
-import de.mm20.launcher2.icons.LauncherIconLayer
 import de.mm20.launcher2.icons.LauncherIconRenderSettings
-import de.mm20.launcher2.icons.StaticIconLayer
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.TextLayer
 import de.mm20.launcher2.icons.TintedClockLayer
-import de.mm20.launcher2.icons.TintedIconLayer
 import de.mm20.launcher2.icons.TransparentLayer
+import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.ktx.drawWithColorFilter
 import de.mm20.launcher2.preferences.IconShape
 import de.mm20.launcher2.ui.base.LocalTime
@@ -85,10 +78,8 @@ import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.coroutines.launch
 import palettes.TonalPalette
 import java.time.Instant
-import java.time.LocalDate
 import java.time.ZoneId
 import kotlin.math.abs
 import kotlin.math.pow
@@ -220,6 +211,17 @@ fun ShapedLauncherIcon(
                         )
                     }
 
+                    is VectorLayer -> {
+                        Icon(
+                            imageVector = fg.vector, contentDescription = null,
+                            tint = if (fg.color == 0) {
+                                Color(renderSettings.fgThemeColor)
+                            } else {
+                                Color(getTone(fg.color, renderSettings.fgTone))
+                            },
+                        )
+                    }
+
                     else -> {}
                 }
             } else {
@@ -303,98 +305,6 @@ fun ShapedLauncherIcon(
     }
 }
 
-@Composable
-private fun IconLayer(
-    layer: LauncherIconLayer,
-    size: Dp,
-    colorTone: Int,
-    defaultTintColor: Color
-) {
-    when (layer) {
-        is ClockLayer -> {
-            ClockLayer(
-                layer.sublayers,
-                scale = layer.scale,
-                defaultSecond = layer.defaultSecond,
-                defaultMinute = layer.defaultMinute,
-                defaultHour = layer.defaultHour,
-                tintColor = null
-            )
-        }
-
-        is TintedClockLayer -> {
-            ClockLayer(
-                layer.sublayers,
-                scale = layer.scale,
-                defaultSecond = layer.defaultSecond,
-                defaultMinute = layer.defaultMinute,
-                defaultHour = layer.defaultHour,
-                tintColor = if (layer.color == 0) defaultTintColor
-                else Color(getTone(layer.color, colorTone))
-            )
-
-        }
-
-        is ColorLayer -> {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(
-                        if (layer.color == 0) {
-                            defaultTintColor
-                        } else {
-                            Color(getTone(layer.color, colorTone))
-                        }
-                    )
-            )
-        }
-
-        is StaticIconLayer -> {
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                withTransform({
-                    this.scale(layer.scale)
-                }) {
-                    drawIntoCanvas {
-                        layer.icon.bounds = this.size.toRect().toAndroidRect()
-                        layer.icon.draw(it.nativeCanvas)
-                    }
-                }
-            }
-        }
-
-        is TextLayer -> {
-            Text(
-                text = layer.text,
-                style = MaterialTheme.typography.headlineSmall.copy(
-                    fontSize = 20.sp * (size / 48.dp)
-                ),
-                color = if (layer.color == 0) {
-                    defaultTintColor
-                } else {
-                    Color(getTone(layer.color, colorTone))
-                },
-            )
-        }
-
-        is TintedIconLayer -> {
-            val color =
-                if (layer.color == 0) defaultTintColor.toArgb()
-                else getTone(layer.color, colorTone)
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                drawIntoCanvas {
-                    layer.icon.bounds = this.size.toRect().toAndroidRect()
-                    layer.icon.drawWithColorFilter(
-                        it.nativeCanvas,
-                        PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
-                    )
-                }
-            }
-        }
-
-        is TransparentLayer -> {}
-    }
-}
-
 private fun getTone(argb: Int, tone: Int): Int {
     return TonalPalette
         .fromInt(argb)
@@ -430,8 +340,13 @@ private fun ClockLayer(
                         sublayer.drawable.level = (((hour - defaultHour + 12) % 12) * 60
                                 + ((minute) % 60))
                     }
-                    ClockSublayerRole.Minute -> sublayer.drawable.level = ((minute - defaultMinute + 60) % 60)
-                    ClockSublayerRole.Second -> sublayer.drawable.level = (((second - defaultSecond + 60) % 60) * 10)
+
+                    ClockSublayerRole.Minute -> sublayer.drawable.level =
+                        ((minute - defaultMinute + 60) % 60)
+
+                    ClockSublayerRole.Second -> sublayer.drawable.level =
+                        (((second - defaultSecond + 60) % 60) * 10)
+
                     else -> {}
                 }
                 drawIntoCanvas {

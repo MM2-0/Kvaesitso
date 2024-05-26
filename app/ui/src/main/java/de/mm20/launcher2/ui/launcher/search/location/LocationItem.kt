@@ -53,7 +53,6 @@ import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
-import androidx.compose.material.icons.rounded.Subway
 import androidx.compose.material.icons.rounded.Train
 import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.Visibility
@@ -108,7 +107,6 @@ import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
-import de.mm20.launcher2.search.location.LocationCategory
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
@@ -117,7 +115,7 @@ import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.ui.icons.CableCar
+import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
@@ -223,11 +221,7 @@ fun LocationItem(
                         if (category != null || formattedDistance != null) {
                             Text(
                                 when {
-                                    category != null && formattedDistance != null -> "${
-                                        stringResource(
-                                            category.labelRes
-                                        )
-                                    } • ${formattedDistance}"
+                                    category != null && formattedDistance != null -> "$category • $formattedDistance"
 
                                     category != null -> category.toString()
                                     formattedDistance != null -> formattedDistance
@@ -326,11 +320,7 @@ fun LocationItem(
                             if (category != null || formattedDistance != null) {
                                 Text(
                                     when {
-                                        category != null && formattedDistance != null -> "${
-                                            stringResource(
-                                                category.labelRes
-                                            )
-                                        } • ${formattedDistance}"
+                                        category != null && formattedDistance != null -> "$category • $formattedDistance"
 
                                         category != null -> category.toString()
                                         formattedDistance != null -> formattedDistance
@@ -897,84 +887,6 @@ private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
             now.dayOfWeek < it.dayOfWeek || now.dayOfWeek == it.dayOfWeek && now.toLocalTime() < it.startTime
         } ?: sortedSchedule.first()
 }
-
-private val LocationCategory.labelRes
-    get() = when (this) {
-        LocationCategory.ART -> R.string.poi_category_art
-        LocationCategory.BANK -> R.string.poi_category_bank
-        LocationCategory.BAR -> R.string.poi_category_bar
-        LocationCategory.BEAUTY -> R.string.poi_category_beauty
-        LocationCategory.BICYCLE -> R.string.poi_category_bicycle
-        LocationCategory.RESTAURANT -> R.string.poi_category_restaurant
-        LocationCategory.FAST_FOOD -> R.string.poi_category_fast_food
-        LocationCategory.CAFE -> R.string.poi_category_coffee_shop
-        LocationCategory.HOTEL -> R.string.poi_category_hotel
-        LocationCategory.SUPERMARKET -> R.string.poi_category_supermarket
-        LocationCategory.OTHER -> R.string.poi_category_other
-        LocationCategory.SCHOOL -> R.string.poi_category_school
-        LocationCategory.PARKING -> R.string.poi_category_parking
-        LocationCategory.FUEL -> R.string.poi_category_fuel
-        LocationCategory.TOILETS -> R.string.poi_category_toilets
-        LocationCategory.PHARMACY -> R.string.poi_category_pharmacy
-        LocationCategory.HOSPITAL -> R.string.poi_category_hospital
-        LocationCategory.POST_OFFICE -> R.string.poi_category_post_office
-        LocationCategory.PUB -> R.string.poi_category_pub
-        LocationCategory.GRAVE_YARD -> R.string.poi_category_grave_yard
-        LocationCategory.DOCTORS -> R.string.poi_category_doctors
-        LocationCategory.POLICE -> R.string.poi_category_police
-        LocationCategory.DENTIST -> R.string.poi_category_dentist
-        LocationCategory.LIBRARY -> R.string.poi_category_library
-        LocationCategory.COLLEGE -> R.string.poi_category_college
-        LocationCategory.ICE_CREAM -> R.string.poi_category_ice_cream
-        LocationCategory.THEATRE -> R.string.poi_category_theater
-        LocationCategory.PUBLIC_BUILDING -> R.string.poi_category_public_building
-        LocationCategory.CINEMA -> R.string.poi_category_cinema
-        LocationCategory.NIGHTCLUB -> R.string.poi_category_nightclub
-        LocationCategory.BIERGARTEN -> R.string.poi_category_biergarten
-        LocationCategory.CLINIC -> R.string.poi_category_clinic
-        LocationCategory.UNIVERSITY -> R.string.poi_category_university
-        LocationCategory.DEPARTMENT_STORE -> R.string.poi_category_department_store
-        LocationCategory.CLOTHES -> R.string.poi_category_clothes
-        LocationCategory.CONVENIENCE -> R.string.poi_category_convenience
-        LocationCategory.HAIRDRESSER -> R.string.poi_category_hairdresser
-        LocationCategory.CAR_REPAIR -> R.string.poi_category_car_repair
-        LocationCategory.BOOKS -> R.string.poi_category_books
-        LocationCategory.BAKERY -> R.string.poi_category_bakery
-        LocationCategory.CAR -> R.string.poi_category_car
-        LocationCategory.MOBILE_PHONE -> R.string.poi_category_mobile_phone
-        LocationCategory.FURNITURE -> R.string.poi_category_furniture
-        LocationCategory.ALCOHOL -> R.string.poi_category_alcohol
-        LocationCategory.FLORIST -> R.string.poi_category_florist
-        LocationCategory.HARDWARE -> R.string.poi_category_hardware
-        LocationCategory.ELECTRONICS -> R.string.poi_category_electronics
-        LocationCategory.SHOES -> R.string.poi_category_shoes
-        LocationCategory.MALL -> R.string.poi_category_mall
-        LocationCategory.OPTICIAN -> R.string.poi_category_optician
-        LocationCategory.JEWELRY -> R.string.poi_category_jewelry
-        LocationCategory.GIFT -> R.string.poi_category_gift
-        LocationCategory.LAUNDRY -> R.string.poi_category_laundry
-        LocationCategory.COMPUTER -> R.string.poi_category_computer
-        LocationCategory.TOBACCO -> R.string.poi_category_tobacco
-        LocationCategory.WINE -> R.string.poi_category_wine
-        LocationCategory.PHOTO -> R.string.poi_category_photo
-        LocationCategory.COFFEE_SHOP -> R.string.poi_category_coffee_shop
-        LocationCategory.SOCCER -> R.string.poi_category_soccer
-        LocationCategory.BASKETBALL -> R.string.poi_category_basketball
-        LocationCategory.TENNIS -> R.string.poi_category_tennis
-        LocationCategory.FITNESS -> R.string.poi_category_fitness
-        LocationCategory.TRAM_STOP -> R.string.poi_category_tram_stop
-        LocationCategory.RAILWAY_STATION -> R.string.poi_category_railway_station
-        LocationCategory.RAILWAY_STOP -> R.string.poi_category_railway_stop
-        LocationCategory.BUS_STATION -> R.string.poi_category_bus_station
-        LocationCategory.ATM -> R.string.poi_category_atm
-        LocationCategory.KIOSK -> R.string.poi_category_kiosk
-        LocationCategory.BUS_STOP -> R.string.poi_category_bus_stop
-        LocationCategory.MUSEUM -> R.string.poi_category_museum
-        LocationCategory.PARCEL_LOCKER -> R.string.poi_category_parcel_locker
-        LocationCategory.CHEMIST -> R.string.poi_category_chemist
-        LocationCategory.TRAVEL_AGENCY -> R.string.poi_category_travel_agency
-        LocationCategory.FITNESS_CENTRE -> R.string.poi_category_fitness_center
-    }
 
 @Composable
 fun Departure.LineIcon(

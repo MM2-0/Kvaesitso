@@ -8,9 +8,9 @@ pluginSdk = "1.2.0-SNAPSHOT"
 gradle = "8.1.2"
 android-gradle-plugin = "8.2.2"
 protobuf-gradle-plugin = "0.9.4"
-ksp-gradle-plugin = "1.9.24-1.0.20"
+ksp-gradle-plugin = "2.0.0-1.0.21"
 
-kotlin = "1.9.24"
+kotlin = "2.0.0"
 kotlinx-coroutines = "1.8.0"
 kotlinx-immutable = "0.3.5"
 kotlinx-serialization = "1.6.3"
@@ -147,4 +147,5 @@ protobuf = { id = "com.google.protobuf", version.ref = "protobuf-gradle-plugin" 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp-gradle-plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 dokka = { id = "org.jetbrains.dokka", version = "1.9.20" }

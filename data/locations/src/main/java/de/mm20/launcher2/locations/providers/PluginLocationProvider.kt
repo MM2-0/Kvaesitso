@@ -18,7 +18,7 @@ import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.serialization.Json
 import kotlinx.coroutines.Dispatchers
@@ -161,7 +161,9 @@ internal class PluginLocationProvider(
             .takeIf { it != -1 } ?: return null
         val fixMeUrlIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.FixMeUrl)
             .takeIf { it != -1 }
-        val categoryIdy = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Category)
+        val iconIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Icon)
+            .takeIf { it != -1 }
+        val categoryIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Category)
             .takeIf { it != -1 }
         val addressIdx =
             cursor.getColumnIndex(LocationPluginContract.LocationColumns.Address)
@@ -192,10 +194,13 @@ internal class PluginLocationProvider(
                     latitude = cursor.getDoubleOrNull(latitudeIdx) ?: continue,
                     longitude = cursor.getDoubleOrNull(longitudeIdx) ?: continue,
                     fixMeUrl = fixMeUrlIdx?.let { cursor.getStringOrNull(it) },
-                    category = categoryIdy?.let {
+                    icon = iconIdx?.let {
                         cursor.getStringOrNull(it)?.let {
-                            LocationCategory.valueOfOrNull(it)
+                            LocationIcon.valueOfOrNull(it)
                         }
+                    },
+                    category = categoryIdx?.let {
+                        cursor.getStringOrNull(it)
                     },
                     address = addressIdx?.let {
                         cursor.getStringOrNull(it)?.let {

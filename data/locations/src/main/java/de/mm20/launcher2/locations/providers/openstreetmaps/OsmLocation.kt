@@ -9,7 +9,7 @@ import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.toImmutableList
@@ -25,7 +25,8 @@ import kotlin.math.min
 internal data class OsmLocation(
     internal val id: Long,
     override val label: String,
-    override val category: LocationCategory?,
+    override val icon: LocationIcon?,
+    override val category: String?,
     override val latitude: Double,
     override val longitude: Double,
     override val address: Address?,
@@ -74,23 +75,14 @@ internal data class OsmLocation(
             OsmLocation(
                 id = it.id,
                 label = it.tags["name"] ?: it.tags["brand"] ?: return@mapNotNull null,
+                icon = null,
                 category = it.tags.firstNotNullOfOrNull { (tag, value) ->
                     if (tag.lowercase() in categoryTags) {
                         value
                             .split(' ', ',', '.', ';') // in case there are multiple
-                            .firstNotNullOfOrNull { value ->
-                                runCatching {
-                                    LocationCategory.valueOf(value.uppercase(Locale.ROOT))
-                                }.orRunCatching {
-                                    LocationCategory.valueOf(
-                                        "${tag}_${value}".uppercase(
-                                            Locale.ROOT
-                                        )
-                                    )
-                                }.getOrNull()
-                            }
+                            .firstOrNull()
                     } else null
-                } ?: LocationCategory.OTHER,
+                },
                 latitude = it.lat ?: it.center?.lat ?: return@mapNotNull null,
                 longitude = it.lon ?: it.center?.lon ?: return@mapNotNull null,
                 address = null,

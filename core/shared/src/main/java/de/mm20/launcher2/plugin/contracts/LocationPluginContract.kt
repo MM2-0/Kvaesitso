@@ -75,8 +75,14 @@ abstract class LocationPluginContract {
         const val FixMeUrl = "fix_me_url"
 
         /**
+         * Icon of location.
+         * Type: String? (enum LocationIcon)
+         */
+        const val Icon = "icon"
+
+        /**
          * Location category.
-         * Type: String? (LocationCategory enum value)
+         * Type: String?
          */
         const val Category = "category"
 

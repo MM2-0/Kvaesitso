@@ -1,4 +1,4 @@
-package de.mm20.launcher2.ui.icons
+package de.mm20.launcher2.icons
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon

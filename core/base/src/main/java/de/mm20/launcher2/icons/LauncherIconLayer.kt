@@ -1,6 +1,7 @@
 package de.mm20.launcher2.icons
 
 import android.graphics.drawable.Drawable
+import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed interface LauncherIconLayer
 
@@ -50,6 +51,11 @@ data class TintedClockLayer(
 
 data class TextLayer(
     val text: String,
+    val color: Int = 0,
+) : LauncherIconLayer
+
+data class VectorLayer(
+    val vector: ImageVector,
     val color: Int = 0,
 ) : LauncherIconLayer
 

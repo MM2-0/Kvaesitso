@@ -8,7 +8,6 @@ import de.mm20.launcher2.locations.providers.LocationProvider
 import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
-import de.mm20.launcher2.search.location.LocationCategory
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
@@ -150,7 +149,7 @@ internal class OsmLocationProvider(
         return result
             .asSequence()
             .filter {
-                !hideUncategorized || (it.category != null && it.category != LocationCategory.OTHER)
+                !hideUncategorized || (it.category != null)
             }
             .groupBy {
                 it.label.lowercase()

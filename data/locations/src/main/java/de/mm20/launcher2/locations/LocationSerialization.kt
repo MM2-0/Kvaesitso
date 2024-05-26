@@ -14,7 +14,7 @@ import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.serialization.Json
@@ -35,7 +35,8 @@ internal data class SerializedLocation(
     val id: String? = null,
     val lat: Double? = null,
     val lon: Double? = null,
-    val category: LocationCategory? = null,
+    val icon: LocationIcon? = null,
+    val category: String? = null,
     val label: String? = null,
     val address: Address? = null,
     val websiteUrl: String? = null,
@@ -90,6 +91,7 @@ internal class OsmLocationSerializer : SearchableSerializer {
                 id = searchable.id.toString(),
                 lat = searchable.latitude,
                 lon = searchable.longitude,
+                icon = searchable.icon,
                 category = searchable.category,
                 label = searchable.label,
                 address = searchable.address,
@@ -119,6 +121,7 @@ internal class OsmLocationDeserializer(
             id = id,
             latitude = json.lat ?: return null,
             longitude = json.lon ?: return null,
+            icon = json.icon,
             category = json.category,
             label = json.label ?: return null,
             address = json.address,
@@ -152,6 +155,7 @@ internal class PluginLocationSerializer : SearchableSerializer {
                         id = searchable.id,
                         lat = searchable.latitude,
                         lon = searchable.longitude,
+                        icon = searchable.icon,
                         category = searchable.category,
                         label = searchable.label,
                         address = searchable.address,
@@ -202,6 +206,7 @@ internal class PluginLocationDeserializer(
                     id = id,
                     latitude = json.lat ?: return null,
                     longitude = json.lon ?: return null,
+                    icon = json.icon,
                     category = json.category,
                     label = json.label ?: return null,
                     address = json.address,

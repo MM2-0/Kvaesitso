@@ -23,8 +23,14 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import de.mm20.launcher2.icons.WeatherCloud
+import de.mm20.launcher2.icons.WeatherFog
+import de.mm20.launcher2.icons.WeatherHailAnimatable
+import de.mm20.launcher2.icons.WeatherLightRainAnimatable
+import de.mm20.launcher2.icons.WeatherRainAnimatable
+import de.mm20.launcher2.icons.WeatherSleetRainAnimatable
+import de.mm20.launcher2.icons.WeatherSleetSnowAnimatable
 import de.mm20.launcher2.ui.R
-import de.mm20.launcher2.ui.icons.*
 import kotlin.math.PI
 import kotlin.math.sin
 

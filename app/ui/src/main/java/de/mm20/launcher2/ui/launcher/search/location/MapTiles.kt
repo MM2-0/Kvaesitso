@@ -67,7 +67,7 @@ import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
-import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.ktx.DegreesConverter
@@ -462,7 +462,8 @@ private object MockLocation : Location {
     override val latitude = 52.5162700
     override val longitude = 13.3777021
 
-    override var category: LocationCategory? = LocationCategory.OTHER
+    override val icon: LocationIcon? = null
+    override var category: String? = "Landmark"
 
     override val address: Address = Address(
         address = "Pariser Platz 1",

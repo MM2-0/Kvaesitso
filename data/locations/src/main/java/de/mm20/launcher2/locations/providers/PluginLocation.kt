@@ -11,7 +11,7 @@ import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LocationCategory
+import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,7 +20,8 @@ data class PluginLocation(
     override val latitude: Double,
     override val longitude: Double,
     override val fixMeUrl: String?,
-    override val category: LocationCategory?,
+    override val icon: LocationIcon?,
+    override val category: String?,
     override val address: Address?,
     override val openingSchedule: OpeningSchedule?,
     override val websiteUrl: String?,
