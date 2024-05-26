@@ -74,12 +74,15 @@ internal fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
         return hours.toPersistentList()
     }
 
-    return OpeningSchedule(
-        isTwentyFourSeven = json.optBoolean("isTwentyFourSeven"),
-        openingHours = json.optJSONArray("openingHours")?.let {
-            getOpeningHours(it)
-        } ?: persistentListOf()
-    )
+    return if (json.optBoolean("isTwentyFourSeven")) {
+        OpeningSchedule.TwentyFourSeven
+    } else {
+        OpeningSchedule.Hours(
+            openingHours = json.optJSONArray("openingHours")?.let {
+                getOpeningHours(it)
+            } ?: persistentListOf()
+        )
+    }
 }
 
 internal class OsmLocationSerializer : SearchableSerializer {

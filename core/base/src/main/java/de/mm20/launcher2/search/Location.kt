@@ -181,8 +181,9 @@ interface Location : SavableSearchable {
         })
 }
 
-fun OpeningSchedule.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {
-    return isTwentyFourSeven || openingHours.any { it.isOpen(date) }
+fun OpeningSchedule.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean = when (this) {
+    is OpeningSchedule.TwentyFourSeven -> true
+    is OpeningSchedule.Hours -> openingHours.any { it.isOpen(date) }
 }
 
 fun OpeningHours.isOpen(date: LocalDateTime = LocalDateTime.now()): Boolean {

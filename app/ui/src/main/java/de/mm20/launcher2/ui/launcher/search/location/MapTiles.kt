@@ -472,7 +472,7 @@ private object MockLocation : Location {
     )
 
     override val openingSchedule: OpeningSchedule =
-        OpeningSchedule(true, emptyList<OpeningHours>().toImmutableList())
+        OpeningSchedule.TwentyFourSeven
 
     override val websiteUrl: String = "https://en.wikipedia.org/wiki/Brandenburg_Gate"
 
