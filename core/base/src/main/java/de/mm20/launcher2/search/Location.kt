@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Attractions
+import androidx.compose.material.icons.rounded.BakeryDining
 import androidx.compose.material.icons.rounded.Bed
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.CarRental
@@ -70,11 +71,15 @@ import androidx.compose.material.icons.rounded.TheaterComedy
 import androidx.compose.material.icons.rounded.Theaters
 import androidx.compose.material.icons.rounded.Train
 import androidx.compose.material.icons.rounded.Tram
+import androidx.compose.material.icons.rounded.Wc
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.icons.ColorLayer
+import de.mm20.launcher2.icons.Dentistry
+import de.mm20.launcher2.icons.Eyeglasses
 import de.mm20.launcher2.icons.StaticLauncherIcon
+import de.mm20.launcher2.icons.Stethoscope
 import de.mm20.launcher2.icons.VectorLayer
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.location.Address
@@ -178,9 +183,14 @@ interface Location : SavableSearchable {
             LocationIcon.ShoppingMall -> Icons.Rounded.LocalMall to R.color.deeppurple
             LocationIcon.LiquorStore -> Icons.Rounded.Liquor to R.color.deeppurple
             LocationIcon.PetStore -> Icons.Rounded.Pets to R.color.deeppurple
+            LocationIcon.Bakery -> Icons.Rounded.BakeryDining to R.color.deeppurple
+            LocationIcon.Optometrist -> Icons.Rounded.Eyeglasses to R.color.deeppurple
+            LocationIcon.Pharmacy -> Icons.Rounded.LocalPharmacy to R.color.deeppurple
             // red: health
             LocationIcon.Hospital -> Icons.Rounded.LocalHospital to R.color.red
-            LocationIcon.Pharmacy -> Icons.Rounded.LocalPharmacy to R.color.red
+            LocationIcon.Clinic -> Icons.Rounded.LocalHospital to R.color.red
+            LocationIcon.Dentist -> Icons.Rounded.Dentistry to R.color.red
+            LocationIcon.Physician -> Icons.Rounded.Stethoscope to R.color.red
             // light green: nature
             LocationIcon.Park -> Icons.Rounded.Park to R.color.lightgreen
             LocationIcon.Forest -> Icons.Rounded.Forest to R.color.lightgreen
@@ -199,6 +209,7 @@ interface Location : SavableSearchable {
             LocationIcon.School -> Icons.Rounded.School to R.color.grey
             LocationIcon.University -> Icons.Rounded.School to R.color.grey
             LocationIcon.Bank -> Icons.Rounded.AttachMoney to R.color.grey
+            LocationIcon.PublicBathroom -> Icons.Rounded.Wc to R.color.grey
 
             null -> Icons.Rounded.Place to R.color.bluegrey
         }

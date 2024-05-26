@@ -53,9 +53,14 @@ enum class LocationIcon {
     PetStore,
     ShoppingMall,
     Supermarket,
-
-    Hospital,
+    Bakery,
+    Optometrist,
     Pharmacy,
+
+    Physician,
+    Dentist,
+    Hospital,
+    Clinic,
 
     Park,
     Forest,
@@ -73,7 +78,8 @@ enum class LocationIcon {
     Bank,
     Library,
     School,
-    University;
+    University,
+    PublicBathroom;
 
     companion object {
         fun valueOfOrNull(string: String): LocationIcon? {
