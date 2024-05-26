@@ -469,7 +469,7 @@ fun LocationItem(
                                 }
                             }
                         }
-                    } else if (openingSchedule != null && (openingSchedule.isTwentyFourSeven || openingSchedule.openingHours.isNotEmpty())) {
+                    } else if (openingSchedule is OpeningSchedule.TwentyFourSeven || (openingSchedule is OpeningSchedule.Hours && openingSchedule.openingHours.isNotEmpty())) {
                         var showOpeningSchedule by remember(openingSchedule) {
                             mutableStateOf(false)
                         }
@@ -479,7 +479,7 @@ fun LocationItem(
                                 .padding(start = 12.dp, end = 12.dp, top = 12.dp),
                             shape = MaterialTheme.shapes.small,
                             onClick = {
-                                if (!openingSchedule.isTwentyFourSeven) {
+                                if (openingSchedule !is OpeningSchedule.TwentyFourSeven) {
                                     showOpeningSchedule = !showOpeningSchedule
                                 }
                             }
@@ -492,78 +492,81 @@ fun LocationItem(
                                             .padding(12.dp),
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        if (openingSchedule.isTwentyFourSeven) {
-                                            Text(
-                                                text = stringResource(R.string.location_open_24_7),
-                                                style = MaterialTheme.typography.labelMedium,
-                                            )
-                                        } else {
-                                            val text = remember(openingSchedule) {
-                                                val currentOpeningTime =
-                                                    openingSchedule.getCurrentOpeningHours()
-                                                val timeFormat =
-                                                    DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
-                                                return@remember if (currentOpeningTime != null) {
-                                                    val isSameDay =
-                                                        currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                    val formattedTime =
-                                                        timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
-                                                    val closingTime = if (isSameDay) {
-                                                        context.getString(
-                                                            R.string.location_closes,
-                                                            formattedTime
-                                                        )
-                                                    } else {
-                                                        val dow =
-                                                            currentOpeningTime.dayOfWeek.getDisplayName(
-                                                                TextStyle.SHORT,
-                                                                Locale.getDefault()
-                                                            )
-                                                        context.getString(
-                                                            R.string.location_closes_other_day,
-                                                            dow,
-                                                            formattedTime
-                                                        )
-                                                    }
-                                                    "${context.getString(R.string.location_open)} • $closingTime"
-                                                } else {
-                                                    val nextOpeningTime =
-                                                        openingSchedule.getNextOpeningHours()
-                                                    val isSameDay =
-                                                        nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
-                                                    val formattedTime =
-                                                        timeFormat.format(nextOpeningTime.startTime)
-                                                    val openingTime = if (isSameDay) {
-                                                        context.getString(
-                                                            R.string.location_opens,
-                                                            formattedTime
-                                                        )
-                                                    } else {
-                                                        val dow =
-                                                            nextOpeningTime.dayOfWeek.getDisplayName(
-                                                                TextStyle.SHORT,
-                                                                Locale.getDefault()
-                                                            )
-                                                        context.getString(
-                                                            R.string.location_opens_other_day,
-                                                            dow,
-                                                            formattedTime
-                                                        )
-                                                    }
-                                                    "${context.getString(R.string.location_closed)} • $openingTime"
-                                                }
+                                        when (openingSchedule) {
+                                            is OpeningSchedule.TwentyFourSeven -> {
+                                                Text(
+                                                    text = stringResource(R.string.location_open_24_7),
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                )
                                             }
+                                            is OpeningSchedule.Hours -> {
+                                                val text = remember(openingSchedule) {
+                                                    val currentOpeningTime =
+                                                        openingSchedule.getCurrentOpeningHours()
+                                                    val timeFormat =
+                                                        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                                                    return@remember if (currentOpeningTime != null) {
+                                                        val isSameDay =
+                                                            currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                        val formattedTime =
+                                                            timeFormat.format(currentOpeningTime.startTime + currentOpeningTime.duration)
+                                                        val closingTime = if (isSameDay) {
+                                                            context.getString(
+                                                                R.string.location_closes,
+                                                                formattedTime
+                                                            )
+                                                        } else {
+                                                            val dow =
+                                                                currentOpeningTime.dayOfWeek.getDisplayName(
+                                                                    TextStyle.SHORT,
+                                                                    Locale.getDefault()
+                                                                )
+                                                            context.getString(
+                                                                R.string.location_closes_other_day,
+                                                                dow,
+                                                                formattedTime
+                                                            )
+                                                        }
+                                                        "${context.getString(R.string.location_open)} • $closingTime"
+                                                    } else {
+                                                        val nextOpeningTime =
+                                                            openingSchedule.getNextOpeningHours()
+                                                        val isSameDay =
+                                                            nextOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
+                                                        val formattedTime =
+                                                            timeFormat.format(nextOpeningTime.startTime)
+                                                        val openingTime = if (isSameDay) {
+                                                            context.getString(
+                                                                R.string.location_opens,
+                                                                formattedTime
+                                                            )
+                                                        } else {
+                                                            val dow =
+                                                                nextOpeningTime.dayOfWeek.getDisplayName(
+                                                                    TextStyle.SHORT,
+                                                                    Locale.getDefault()
+                                                                )
+                                                            context.getString(
+                                                                R.string.location_opens_other_day,
+                                                                dow,
+                                                                formattedTime
+                                                            )
+                                                        }
+                                                        "${context.getString(R.string.location_closed)} • $openingTime"
+                                                    }
+                                                }
 
-                                            Text(
-                                                text = text,
-                                                style = MaterialTheme.typography.labelMedium,
-                                                modifier = Modifier.weight(1f)
-                                            )
+                                                Text(
+                                                    text = text,
+                                                    style = MaterialTheme.typography.labelMedium,
+                                                    modifier = Modifier.weight(1f)
+                                                )
 
-                                            Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                                Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
+                                            }
                                         }
                                     }
-                                } else {
+                                } else if (openingSchedule is OpeningSchedule.Hours) {
                                     Column(
                                         modifier = Modifier.padding(vertical = 6.dp)
                                     ) {
@@ -866,11 +869,11 @@ private fun buildAddress(
     return if (summary.isEmpty()) null else summary.toString()
 }
 
-private fun OpeningSchedule.getCurrentOpeningHours(): OpeningHours? {
+private fun OpeningSchedule.Hours.getCurrentOpeningHours(): OpeningHours? {
     return openingHours.find { it.isOpen() }
 }
 
-private fun OpeningSchedule.getNextOpeningHours(): OpeningHours {
+private fun OpeningSchedule.Hours.getNextOpeningHours(): OpeningHours {
     val now = LocalDateTime.now()
     val sortedSchedule = this
         .openingHours

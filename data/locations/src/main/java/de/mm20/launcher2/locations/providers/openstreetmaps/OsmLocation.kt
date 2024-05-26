@@ -146,10 +146,7 @@ internal fun parseOpeningSchedule(it: String?): OpeningSchedule? {
         it.split(',', ';', ' ').mapNotNull { if (it.isBlank()) null else it.trim() }
 
     if (blocks.first() == "24/7")
-        return OpeningSchedule(
-            isTwentyFourSeven = true,
-            openingHours = twentyFourSeven
-        )
+        return OpeningSchedule.TwentyFourSeven
 
     fun dayOfWeekFromString(it: String): DayOfWeek? = when (it.lowercase()) {
         "mo" -> DayOfWeek.MONDAY
@@ -276,8 +273,9 @@ internal fun parseOpeningSchedule(it: String?): OpeningSchedule? {
         blocks = blocks.subList(nextGroupIndex, blocks.size)
     }
 
-    return OpeningSchedule(
-        isTwentyFourSeven = allDay && everyDay,
-        openingHours.toImmutableList()
-    )
+    return if (allDay && everyDay) {
+        OpeningSchedule.TwentyFourSeven
+    } else {
+        OpeningSchedule.Hours(openingHours)
+    }
 }

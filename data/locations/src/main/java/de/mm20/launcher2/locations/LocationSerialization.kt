@@ -51,38 +51,6 @@ internal data class SerializedLocation(
     val storageStrategy: StorageStrategy? = null,
 )
 
-internal fun getOpeningSchedule(json: JSONObject): OpeningSchedule {
-    fun getOpeningHours(array: JSONArray): ImmutableList<OpeningHours> {
-        val hours = mutableListOf<OpeningHours>()
-
-        for (i in 0 until array.length()) {
-            val json = array.getJSONObject(i)
-            val dayOfWeek =
-                DayOfWeek.of(json.optInt("day").takeIf { it in 1..7 } ?: continue)
-            val openingTimeMillis =
-                json.optLong("openingTime", -1).takeIf { it >= 0 } ?: continue
-            val durationMillis = json.optLong("duration", -1).takeIf { it >= 0 } ?: continue
-
-            hours.add(
-                OpeningHours(
-                    dayOfWeek = dayOfWeek,
-                    startTime = LocalTime.ofSecondOfDay(openingTimeMillis / 1000L),
-                    duration = Duration.ofMillis(durationMillis)
-                )
-            )
-        }
-
-        return hours.toPersistentList()
-    }
-
-    return OpeningSchedule(
-        isTwentyFourSeven = json.optBoolean("isTwentyFourSeven"),
-        openingHours = json.optJSONArray("openingHours")?.let {
-            getOpeningHours(it)
-        } ?: persistentListOf()
-    )
-}
-
 internal class OsmLocationSerializer : SearchableSerializer {
     override fun serialize(searchable: SavableSearchable): String {
         searchable as OsmLocation
