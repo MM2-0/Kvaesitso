@@ -5,6 +5,8 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
+import androidx.core.database.getDoubleOrNull
+import androidx.core.database.getFloatOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.decodeFromStringOrNull
@@ -186,14 +188,14 @@ internal class PluginLocationProvider(
             results.add(
                 PluginLocation(
                     id = id,
-                    label = cursor.getString(labelIdx),
-                    latitude = cursor.getDouble(latitudeIdx),
-                    longitude = cursor.getDouble(longitudeIdx),
-                    fixMeUrl = fixMeUrlIdx?.let { cursor.getString(it) },
+                    label = cursor.getStringOrNull(labelIdx) ?: continue,
+                    latitude = cursor.getDoubleOrNull(latitudeIdx) ?: continue,
+                    longitude = cursor.getDoubleOrNull(longitudeIdx) ?: continue,
+                    fixMeUrl = fixMeUrlIdx?.let { cursor.getStringOrNull(it) },
                     category = categoryIdy?.let {
-                        LocationCategory.valueOfOrNull(
-                            cursor.getString(it)
-                        )
+                        cursor.getStringOrNull(it)?.let {
+                            LocationCategory.valueOfOrNull(it)
+                        }
                     },
                     address = addressIdx?.let {
                         cursor.getStringOrNull(it)?.let {
@@ -205,9 +207,9 @@ internal class PluginLocationProvider(
                             json.decodeFromStringOrNull<OpeningSchedule>(it)
                         }
                     },
-                    websiteUrl = websiteUrlIdx?.let { cursor.getString(it) },
-                    phoneNumber = phoneNumberIdx?.let { cursor.getString(it) },
-                    userRating = userRatingIdx?.let { cursor.getFloat(it) },
+                    websiteUrl = websiteUrlIdx?.let { cursor.getStringOrNull(it) },
+                    phoneNumber = phoneNumberIdx?.let { cursor.getStringOrNull(it) },
+                    userRating = userRatingIdx?.let { cursor.getFloatOrNull(it) },
                     departures = departuresIdx?.let {
                         cursor.getStringOrNull(it)?.let {
                             json.decodeFromStringOrNull<List<Departure>>(it)
