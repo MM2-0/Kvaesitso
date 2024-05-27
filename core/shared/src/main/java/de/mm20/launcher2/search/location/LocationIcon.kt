@@ -15,6 +15,11 @@ enum class LocationIcon {
     CableCar,
     Airport,
     Boat,
+    Taxi,
+    Moped,
+    Bike,
+    Motorcycle,
+    ElectricScooter,
 
     ArtGallery,
     Museum,
@@ -62,6 +67,7 @@ enum class LocationIcon {
     HairSalon,
     Laundromat,
 
+    Sports,
     FitnessCenter,
     Soccer,
     Basketball,
@@ -98,12 +104,14 @@ enum class LocationIcon {
     Park,
     Forest,
 
+    Monument,
     Church,
     Mosque,
     Synagogue,
     BuddhistTemple,
     HinduTemple,
 
+    GovernmentBuilding,
     Police,
     FireDepartment,
     Courthouse,

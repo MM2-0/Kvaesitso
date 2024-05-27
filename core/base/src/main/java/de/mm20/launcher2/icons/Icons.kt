@@ -1136,22 +1136,6 @@ private val _CableCar = materialIcon("Icons.Rounded.CableCar") {
 val Icons.Rounded.CableCar
     get() = _CableCar
 
-/**
- * For icons that were imported from Material Symbols (they have a 960x960 viewport in their original SVG file).
- */
-private fun materialSymbol(
-    name: String,
-    autoMirror: Boolean = false,
-    block: ImageVector.Builder.() -> ImageVector.Builder
-): ImageVector = ImageVector.Builder(
-    name = name,
-    defaultWidth = 24.dp,
-    defaultHeight = 24.dp,
-    viewportWidth = 960f,
-    viewportHeight = 960f,
-    autoMirror = autoMirror
-).block().build()
-
 
 private val _Stethoscope = materialIcon("Icons.Rounded.Stethoscope") {
     materialPath {
@@ -1325,3 +1309,29 @@ private val _Eyeglasses = materialIcon("Icons.Rounded.Eyeglasses") {
 
 val Icons.Rounded.Eyeglasses
     get() = _Eyeglasses
+
+private val _Monument = materialIcon("Icons.Rounded.Monument") {
+    materialPath {
+        moveTo(12f, 1.9995117f)
+        lineTo(10.000488f, 4.0004883f)
+        lineTo(10.000488f, 16.000488f)
+        lineTo(9f, 16.000488f)
+        curveTo(8.4460012f, 16.000488f, 7.9995117f, 16.445512f, 7.9995117f, 16.999512f)
+        lineTo(7.9995117f, 19.999512f)
+        lineTo(7.0004883f, 19.999512f)
+        curveTo(6.4464888f, 19.999512f, 6f, 20.446001f, 6f, 21f)
+        curveTo(6f, 21.553999f, 6.4464888f, 22.000488f, 7.0004883f, 22.000488f)
+        lineTo(16.999512f, 22.000488f)
+        curveTo(17.553511f, 22.000488f, 18f, 21.553999f, 18f, 21f)
+        curveTo(18f, 20.446001f, 17.553511f, 19.999512f, 16.999512f, 19.999512f)
+        lineTo(16.000488f, 19.999512f)
+        lineTo(16.000488f, 16.999512f)
+        curveTo(16.000488f, 16.445512f, 15.553998f, 16.000488f, 15f, 16.000488f)
+        lineTo(13.999512f, 16.000488f)
+        lineTo(13.999512f, 4.0004883f)
+        lineTo(12f, 1.9995117f)
+        close()
+    }
+}
+val Icons.Rounded.Monument
+    get() = _Monument

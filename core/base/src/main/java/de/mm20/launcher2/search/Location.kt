@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Attractions
 import androidx.compose.material.icons.rounded.BakeryDining
@@ -19,11 +20,13 @@ import androidx.compose.material.icons.rounded.Checkroom
 import androidx.compose.material.icons.rounded.Church
 import androidx.compose.material.icons.rounded.ContentCut
 import androidx.compose.material.icons.rounded.Diamond
+import androidx.compose.material.icons.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.DirectionsCar
 import androidx.compose.material.icons.rounded.Discount
 import androidx.compose.material.icons.rounded.DownhillSkiing
+import androidx.compose.material.icons.rounded.ElectricScooter
 import androidx.compose.material.icons.rounded.EvStation
 import androidx.compose.material.icons.rounded.Fastfood
 import androidx.compose.material.icons.rounded.Festival
@@ -55,7 +58,9 @@ import androidx.compose.material.icons.rounded.LocalPizza
 import androidx.compose.material.icons.rounded.LocalPolice
 import androidx.compose.material.icons.rounded.LocalPostOffice
 import androidx.compose.material.icons.rounded.LunchDining
+import androidx.compose.material.icons.rounded.Moped
 import androidx.compose.material.icons.rounded.Mosque
+import androidx.compose.material.icons.rounded.Motorcycle
 import androidx.compose.material.icons.rounded.Museum
 import androidx.compose.material.icons.rounded.MusicNote
 import androidx.compose.material.icons.rounded.Newspaper
@@ -75,6 +80,7 @@ import androidx.compose.material.icons.rounded.ShoppingBag
 import androidx.compose.material.icons.rounded.Skateboarding
 import androidx.compose.material.icons.rounded.Snowboarding
 import androidx.compose.material.icons.rounded.SoupKitchen
+import androidx.compose.material.icons.rounded.Sports
 import androidx.compose.material.icons.rounded.SportsBaseball
 import androidx.compose.material.icons.rounded.SportsBasketball
 import androidx.compose.material.icons.rounded.SportsCricket
@@ -106,6 +112,7 @@ import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.Dentistry
 import de.mm20.launcher2.icons.Eyeglasses
+import de.mm20.launcher2.icons.Monument
 import de.mm20.launcher2.icons.StaticLauncherIcon
 import de.mm20.launcher2.icons.Stethoscope
 import de.mm20.launcher2.icons.VectorLayer
@@ -172,6 +179,10 @@ interface Location : SavableSearchable {
             LocationIcon.CableCar -> Icons.Rounded.CableCar to R.color.blue
             LocationIcon.Airport -> Icons.Rounded.Flight to R.color.blue
             LocationIcon.Boat -> Icons.Rounded.DirectionsBoat to R.color.blue
+            LocationIcon.Moped -> Icons.Rounded.Moped to R.color.blue
+            LocationIcon.Bike -> Icons.AutoMirrored.Rounded.DirectionsBike to R.color.blue
+            LocationIcon.Motorcycle -> Icons.Rounded.Motorcycle to R.color.blue
+            LocationIcon.ElectricScooter -> Icons.Rounded.ElectricScooter to R.color.blue
 
             // cyan: art, culture, entertainment
             LocationIcon.ArtGallery -> Icons.Rounded.Palette to R.color.cyan
@@ -220,6 +231,7 @@ interface Location : SavableSearchable {
             LocationIcon.HairSalon -> Icons.Rounded.ContentCut to R.color.indigo
             LocationIcon.Laundromat -> Icons.Rounded.LocalLaundryService to R.color.indigo
             // purple: sports and recreation
+            LocationIcon.Sports -> Icons.Rounded.Sports to R.color.purple
             LocationIcon.FitnessCenter -> Icons.Rounded.FitnessCenter to R.color.purple
             LocationIcon.Soccer -> Icons.Rounded.SportsSoccer to R.color.purple
             LocationIcon.Basketball -> Icons.Rounded.SportsBasketball to R.color.purple
@@ -256,6 +268,7 @@ interface Location : SavableSearchable {
             LocationIcon.Park -> Icons.Rounded.Park to R.color.lightgreen
             LocationIcon.Forest -> Icons.Rounded.Forest to R.color.lightgreen
             // brown: places of worship and remembrance
+            LocationIcon.Monument -> Icons.Rounded.Monument to R.color.brown
             LocationIcon.Church -> Icons.Rounded.Church to R.color.brown
             LocationIcon.Mosque -> Icons.Rounded.Mosque to R.color.brown
             LocationIcon.Synagogue -> Icons.Rounded.Synagogue to R.color.brown
