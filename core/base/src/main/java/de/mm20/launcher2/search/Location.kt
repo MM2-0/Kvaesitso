@@ -83,6 +83,7 @@ import androidx.compose.material.icons.rounded.Skateboarding
 import androidx.compose.material.icons.rounded.Snowboarding
 import androidx.compose.material.icons.rounded.SoupKitchen
 import androidx.compose.material.icons.rounded.Sports
+import androidx.compose.material.icons.rounded.SportsBar
 import androidx.compose.material.icons.rounded.SportsBaseball
 import androidx.compose.material.icons.rounded.SportsBasketball
 import androidx.compose.material.icons.rounded.SportsCricket
@@ -213,6 +214,7 @@ interface Location : SavableSearchable {
             LocationIcon.Bar -> Icons.Rounded.LocalBar to R.color.orange
             LocationIcon.Brunch -> Icons.Rounded.BrunchDining to R.color.orange
             LocationIcon.Breakfast -> Icons.Rounded.BreakfastDining to R.color.orange
+            LocationIcon.Pub -> Icons.Rounded.SportsBar to R.color.orange
             // indigo: business and shopping
             LocationIcon.Shopping -> Icons.Rounded.ShoppingBag to R.color.indigo
             LocationIcon.Supermarket -> Icons.Rounded.LocalGroceryStore to R.color.indigo

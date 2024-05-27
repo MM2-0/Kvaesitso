@@ -46,6 +46,7 @@ enum class LocationIcon {
     Bar,
     Brunch,
     Breakfast,
+    Pub,
 
     Shopping,
     Florist,
