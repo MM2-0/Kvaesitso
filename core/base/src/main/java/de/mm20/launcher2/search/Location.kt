@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.DirectionsBike
+import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Attractions
 import androidx.compose.material.icons.rounded.BakeryDining
@@ -57,6 +58,7 @@ import androidx.compose.material.icons.rounded.LocalPharmacy
 import androidx.compose.material.icons.rounded.LocalPizza
 import androidx.compose.material.icons.rounded.LocalPolice
 import androidx.compose.material.icons.rounded.LocalPostOffice
+import androidx.compose.material.icons.rounded.LocalTaxi
 import androidx.compose.material.icons.rounded.LunchDining
 import androidx.compose.material.icons.rounded.Moped
 import androidx.compose.material.icons.rounded.Mosque
@@ -183,6 +185,7 @@ interface Location : SavableSearchable {
             LocationIcon.Bike -> Icons.AutoMirrored.Rounded.DirectionsBike to R.color.blue
             LocationIcon.Motorcycle -> Icons.Rounded.Motorcycle to R.color.blue
             LocationIcon.ElectricScooter -> Icons.Rounded.ElectricScooter to R.color.blue
+            LocationIcon.Taxi -> Icons.Rounded.LocalTaxi to R.color.blue
 
             // cyan: art, culture, entertainment
             LocationIcon.ArtGallery -> Icons.Rounded.Palette to R.color.cyan
@@ -275,6 +278,7 @@ interface Location : SavableSearchable {
             LocationIcon.HinduTemple -> Icons.Rounded.TempleHindu to R.color.brown
             LocationIcon.BuddhistTemple -> Icons.Rounded.TempleBuddhist to R.color.brown
             // bluegrey: public services
+            LocationIcon.GovernmentBuilding -> Icons.Rounded.AccountBalance to R.color.bluegrey
             LocationIcon.Police -> Icons.Rounded.LocalPolice to R.color.bluegrey
             LocationIcon.FireDepartment -> Icons.Rounded.LocalFireDepartment to R.color.bluegrey
             LocationIcon.Courthouse -> Icons.Rounded.Gavel to R.color.bluegrey
