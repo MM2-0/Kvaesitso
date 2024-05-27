@@ -181,8 +181,9 @@ internal class PluginLocationProvider(
         val departuresIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Departures)
             .takeIf { it != -1 }
 
-        val attributionIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Attribution)
-            .takeIf { it != -1 }
+        val attributionIdx =
+            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Attribution)
+                .takeIf { it != -1 }
 
         val results = mutableListOf<Location>()
         while (cursor.moveToNext()) {

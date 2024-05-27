@@ -1,14 +1,13 @@
 package de.mm20.launcher2.serialization
 
-import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.PolymorphicSerializer
-import kotlinx.serialization.builtins.ListSerializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonDecoder
 import kotlinx.serialization.json.JsonPrimitive
+import kotlinx.serialization.json.decodeFromJsonElement
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 
@@ -37,11 +36,8 @@ object OpeningScheduleSerializer : KSerializer<OpeningSchedule> {
         if ("openingHours" in jsonElement.jsonObject.keys &&
             /* backwards compatibility */ !jsonElement.jsonObject["openingHours"]!!.jsonArray.isEmpty()
         ) {
-            return OpeningSchedule.Hours(
-                decoder.json.decodeFromJsonElement(
-                    ListSerializer(OpeningHours.serializer()),
-                    jsonElement.jsonObject["openingHours"]!!
-                )
+            return decoder.json.decodeFromJsonElement<OpeningSchedule.Hours>(
+                jsonElement
             )
         }
 
