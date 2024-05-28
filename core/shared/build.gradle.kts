@@ -101,12 +101,16 @@ publishing {
     }
     repositories {
         mavenLocal()
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/MM2-0/Kvaesitso")
-            credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+        val ghUser = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+        if (ghUser == "MM2-0") {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/MM2-0/Kvaesitso")
+                credentials {
+                    username =
+                        project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                    password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+                }
             }
         }
     }
