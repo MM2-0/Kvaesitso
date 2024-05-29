@@ -82,6 +82,11 @@ fun PluginSettingsScreen(pluginId: String) {
         minActiveState = Lifecycle.State.RESUMED
     )
 
+    val locationPlugins by viewModel.locationPlugins.collectAsStateWithLifecycle(
+        emptyList(),
+        minActiveState = Lifecycle.State.RESUMED
+    )
+
     val weatherPlugins by viewModel.weatherPlugins.collectAsStateWithLifecycle(
         emptyList(),
         minActiveState = Lifecycle.State.RESUMED
@@ -95,6 +100,10 @@ fun PluginSettingsScreen(pluginId: String) {
         }
 
     val enabledFileSearchPlugins by viewModel.enabledFileSearchPlugins.collectAsStateWithLifecycle(
+        null
+    )
+
+    val enabledLocationSearchPlugins by viewModel.enabledLocationSearchPlugins.collectAsStateWithLifecycle(
         null
     )
 
@@ -342,6 +351,56 @@ fun PluginSettingsScreen(pluginId: String) {
                                 value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
                                 onValueChanged = {
                                     viewModel.setFileSearchPluginEnabled(
+                                        plugin.plugin.authority,
+                                        it
+                                    )
+                                },
+                                iconPadding = false,
+                            )
+                        }
+                    }
+                }
+                if (locationPlugins.isNotEmpty()) {
+                    PreferenceCategory(
+                        stringResource(R.string.plugin_type_locationsearch),
+                        iconPadding = false,
+                    ) {
+                        for (plugin in locationPlugins) {
+                            val state = plugin.state
+                            if (state is PluginState.SetupRequired) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
+                                    icon = Icons.Rounded.Info,
+                                    primaryAction = {
+                                        TextButton(onClick = {
+                                            try {
+                                                state.setupActivity.sendWithBackgroundPermission()
+                                            } catch (e: PendingIntent.CanceledException) {
+                                                CrashReporter.logException(e)
+                                            }
+                                        }) {
+                                            Text(stringResource(R.string.plugin_action_setup))
+                                        }
+                                    }
+                                )
+                            } else if (state is PluginState.Error) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = stringResource(R.string.plugin_state_error),
+                                    icon = Icons.Rounded.Error,
+                                    color = MaterialTheme.colorScheme.errorContainer,
+                                )
+                            }
+                            SwitchPreference(
+                                title = plugin.plugin.label,
+                                enabled = enabledLocationSearchPlugins != null && state is PluginState.Ready,
+                                summary = (state as? PluginState.Ready)?.text
+                                    ?: (state as? PluginState.SetupRequired)?.message
+                                    ?: plugin.plugin.description,
+                                value = enabledLocationSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                onValueChanged = {
+                                    viewModel.setLocationSearchPluginEnabled(
                                         plugin.plugin.authority,
                                         it
                                     )
