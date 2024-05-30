@@ -8,29 +8,18 @@ import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
+import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import de.mm20.launcher2.serialization.Json
 import kotlinx.serialization.encodeToString
-import org.json.JSONArray
-import org.json.JSONObject
-import java.time.format.DateTimeFormatter
 
 abstract class LocationPluginProvider(
     private val config: SearchPluginConfig,
 ) : QueryPluginProvider<LocationQuery, Location>() {
 
     private val json = Json.Lenient
-
-    /**
-     * Search for a location.
-     * @param query Data to use in the query
-     */
-    abstract override suspend fun search(
-        query: LocationQuery,
-        allowNetwork: Boolean
-    ): List<Location>
 
     /**
      * Get a location
@@ -65,11 +54,12 @@ abstract class LocationPluginProvider(
                 val network =
                     uri.getQueryParameter(LocationPluginContract.SearchParams.AllowNetwork)
                         ?.toBoolean() ?: false
+                val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
                 launchWithCancellationSignal(cancellationSignal) {
                     search(
                         LocationQuery(
                             query, userLat, userLon, radius
-                        ), network
+                        ), network, lang
                     )
                 }
             }
