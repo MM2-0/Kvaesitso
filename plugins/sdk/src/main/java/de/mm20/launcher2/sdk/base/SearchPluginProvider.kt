@@ -20,7 +20,7 @@ abstract class SearchPluginProvider<T>(
      * Search for items matching the given query
      * @param query The query to search for
      */
-    abstract override suspend fun search(query: String, allowNetwork: Boolean): List<T>
+    abstract override suspend fun search(query: String, allowNetwork: Boolean, lang: String?): List<T>
 
     /**
      * Get an item by its id.
@@ -45,7 +45,8 @@ abstract class SearchPluginProvider<T>(
                 val allowNetwork =
                     uri.getQueryParameter(SearchPluginContract.Paths.AllowNetworkParam)?.toBoolean()
                         ?: false
-                val results = search(query, allowNetwork, cancellationSignal)
+                val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
+                val results = search(query, allowNetwork, lang, cancellationSignal)
                 val cursor = createCursor(results.size)
                 for (result in results) {
                     writeToCursor(cursor, result)
@@ -73,10 +74,11 @@ abstract class SearchPluginProvider<T>(
     private fun search(
         query: String,
         allowNetwork: Boolean,
+        lang: String?,
         cancellationSignal: CancellationSignal?
     ): List<T> {
         return launchWithCancellationSignal(cancellationSignal) {
-            search(query, allowNetwork)
+            search(query, allowNetwork, lang)
         }
     }
 

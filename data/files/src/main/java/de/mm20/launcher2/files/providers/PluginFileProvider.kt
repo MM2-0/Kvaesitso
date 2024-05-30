@@ -28,12 +28,14 @@ class PluginFileProvider(
     private val pluginAuthority: String,
 ) : FileProvider {
     override suspend fun search(query: String, allowNetwork: Boolean): List<File> = withContext(Dispatchers.IO) {
+        val lang = context.resources.configuration.locales.get(0).language
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
             .path(SearchPluginContract.Paths.Search)
             .appendQueryParameter(SearchPluginContract.Paths.QueryParam, query)
             .appendQueryParameter(SearchPluginContract.Paths.AllowNetworkParam, allowNetwork.toString())
+            .appendQueryParameter(SearchPluginContract.Paths.LangParam, lang)
             .build()
         val cancellationSignal = CancellationSignal()
 

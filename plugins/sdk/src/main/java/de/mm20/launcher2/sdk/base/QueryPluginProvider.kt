@@ -7,7 +7,7 @@ import android.net.Uri
 
 abstract class QueryPluginProvider<TQuery, TResult> : BasePluginProvider() {
 
-    abstract suspend fun search(query: TQuery, allowNetwork: Boolean): List<TResult>
+    abstract suspend fun search(query: TQuery, allowNetwork: Boolean, lang: String?): List<TResult>
 
     abstract suspend fun get(id: String): TResult?
 

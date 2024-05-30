@@ -6,5 +6,6 @@ abstract class SearchPluginContract {
         const val Root = "root"
         const val QueryParam = "query"
         const val AllowNetworkParam = "network"
+        const val LangParam = "lang"
     }
 }

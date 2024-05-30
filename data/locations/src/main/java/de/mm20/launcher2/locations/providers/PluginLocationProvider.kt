@@ -13,6 +13,7 @@ import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
+import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.search.location.Address
@@ -41,6 +42,7 @@ internal class PluginLocationProvider(
         searchRadiusMeters: Int,
         hideUncategorized: Boolean
     ): List<Location> = withContext(Dispatchers.IO) {
+        val lang = context.resources.configuration.locales.get(0).language
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
@@ -61,6 +63,10 @@ internal class PluginLocationProvider(
             .appendQueryParameter(
                 LocationPluginContract.SearchParams.SearchRadius,
                 searchRadiusMeters.toString()
+            )
+            .appendQueryParameter(
+                SearchPluginContract.Paths.LangParam,
+                lang
             )
             .build()
         val cancellationSignal = CancellationSignal()
