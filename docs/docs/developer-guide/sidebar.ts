@@ -90,6 +90,16 @@ export const DeveloperGuideSidebar: DefaultTheme.SidebarItem[] = [
         link: '/reference/index.html',
         target: '_blank',
       },
+      {
+        text: 'Migrations',
+        items: [
+          {
+            text: 'Migrate to plugin SDK v2.x',
+            link: '/docs/developer-guide/plugins/migrations/v2',
+          },
+          ,
+        ],
+      },
     ],
   },
 ]
