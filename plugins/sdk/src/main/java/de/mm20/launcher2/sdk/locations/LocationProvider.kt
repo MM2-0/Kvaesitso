@@ -1,84 +1,24 @@
 package de.mm20.launcher2.sdk.locations
 
-import android.database.Cursor
 import android.database.MatrixCursor
-import android.net.Uri
-import android.os.Bundle
-import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.PluginType
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
-import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
-import de.mm20.launcher2.sdk.config.toBundle
-import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import de.mm20.launcher2.serialization.Json
 import kotlinx.serialization.encodeToString
 
-abstract class LocationPluginProvider(
-    private val config: SearchPluginConfig,
-) : QueryPluginProvider<LocationQuery, Location>() {
+abstract class LocationProvider(
+    config: QueryPluginConfig,
+) : QueryPluginProvider<LocationQuery, Location>(config) {
 
     private val json = Json.Lenient
-
-    /**
-     * Get a location
-     * @param id Provider-specific unique ID
-     */
-    abstract override suspend fun get(id: String): Location?
 
     final override fun getPluginType(): PluginType {
         return PluginType.LocationSearch
     }
 
-    override fun query(
-        uri: Uri,
-        projection: Array<out String>?,
-        queryArgs: Bundle?,
-        cancellationSignal: CancellationSignal?
-    ): Cursor? {
-        val context = context ?: return null
-        checkPermissionOrThrow(context)
-        val results = when (uri.pathSegments.first()) {
-            LocationPluginContract.Paths.Search -> {
-                val query =
-                    uri.getQueryParameter(LocationPluginContract.SearchParams.Query) ?: return null
-                val userLat =
-                    uri.getQueryParameter(LocationPluginContract.SearchParams.UserLatitude)
-                        ?.toDoubleOrNull() ?: return null
-                val userLon =
-                    uri.getQueryParameter(LocationPluginContract.SearchParams.UserLongitude)
-                        ?.toDoubleOrNull() ?: return null
-                val radius = uri.getQueryParameter(LocationPluginContract.SearchParams.SearchRadius)
-                    ?.toLong() ?: return null
-                val network =
-                    uri.getQueryParameter(LocationPluginContract.SearchParams.AllowNetwork)
-                        ?.toBoolean() ?: false
-                val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
-                launchWithCancellationSignal(cancellationSignal) {
-                    search(
-                        LocationQuery(
-                            query, userLat, userLon, radius
-                        ), network, lang
-                    )
-                }
-            }
-
-            LocationPluginContract.Paths.Get -> {
-                val id = uri.getQueryParameter(LocationPluginContract.GetParams.Id) ?: return null
-                launchWithCancellationSignal(cancellationSignal) {
-                    get(id)
-                }?.let { listOf(it) } ?: emptyList()
-            }
-
-            else -> throw UnsupportedOperationException("This operation is not supported")
-        }
-        val cursor = createCursor(results.size)
-        results.forEach { writeToCursor(cursor, it) }
-        return cursor
-    }
-
-    private fun createCursor(capacity: Int): MatrixCursor {
+    override fun createCursor(capacity: Int): MatrixCursor {
         return MatrixCursor(
             arrayOf(
                 LocationPluginContract.LocationColumns.Id,
@@ -100,7 +40,7 @@ abstract class LocationPluginProvider(
         )
     }
 
-    private fun writeToCursor(cursor: MatrixCursor, item: Location) {
+    override fun writeToCursor(cursor: MatrixCursor, item: Location) {
         cursor.addRow(
             arrayOf(
                 item.id,
@@ -127,9 +67,5 @@ abstract class LocationPluginProvider(
                 },
             )
         )
-    }
-
-    final override fun getPluginConfig(): Bundle {
-        return config.toBundle()
     }
 }

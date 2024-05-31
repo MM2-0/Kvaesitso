@@ -11,7 +11,7 @@ import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.plugin.PluginApi
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.Location
@@ -242,7 +242,7 @@ internal class PluginLocationProvider(
         return results
     }
 
-    private fun getPluginConfig(): SearchPluginConfig? {
+    private fun getPluginConfig(): QueryPluginConfig? {
         return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 }

@@ -11,9 +11,8 @@ import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.PluginApi
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
-import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
@@ -68,7 +67,7 @@ class PluginFileProvider(
         }
     }
 
-    private fun getPluginConfig(): SearchPluginConfig? {
+    private fun getPluginConfig(): QueryPluginConfig? {
         return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 

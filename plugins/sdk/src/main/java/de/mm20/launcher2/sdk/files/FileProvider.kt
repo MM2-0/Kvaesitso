@@ -2,13 +2,13 @@ package de.mm20.launcher2.sdk.files
 
 import android.database.MatrixCursor
 import de.mm20.launcher2.plugin.PluginType
-import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract
-import de.mm20.launcher2.sdk.base.SearchPluginProvider
+import de.mm20.launcher2.sdk.base.StringPluginProvider
 
 abstract class FileProvider(
-    config: SearchPluginConfig,
-) : SearchPluginProvider<File>(config) {
+    config: QueryPluginConfig,
+) : StringPluginProvider<File>(config) {
 
     final override fun getPluginType(): PluginType {
         return PluginType.FileSearch

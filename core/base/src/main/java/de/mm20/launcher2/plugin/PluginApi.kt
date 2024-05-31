@@ -4,6 +4,7 @@ import android.content.ContentResolver
 import android.net.Uri
 import android.util.Log
 import de.mm20.launcher2.plugin.config.SearchPluginConfig
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.PluginContract
 
@@ -11,7 +12,7 @@ class PluginApi(
     private val pluginAuthority: String,
     private val contentResolver: ContentResolver,
 ) {
-    fun getSearchPluginConfig(): SearchPluginConfig? {
+    fun getSearchPluginConfig(): QueryPluginConfig? {
         val configBundle = try {
             contentResolver.call(
                 Uri.Builder()

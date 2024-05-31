@@ -4,12 +4,36 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
+import android.os.Bundle
+import android.os.CancellationSignal
+import de.mm20.launcher2.plugin.config.QueryPluginConfig
+import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.sdk.config.toBundle
+import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
+import kotlinx.coroutines.runBlocking
 
-abstract class QueryPluginProvider<TQuery, TResult> : BasePluginProvider() {
+data class SearchParams(
+    val allowNetwork: Boolean,
+    val lang: String?,
+)
 
-    abstract suspend fun search(query: TQuery, allowNetwork: Boolean, lang: String?): List<TResult>
+data class GetParams(
+    val lang: String?,
+)
 
-    abstract suspend fun get(id: String): TResult?
+abstract class QueryPluginProvider<TQuery, TResult>(
+    private val config: QueryPluginConfig,
+) : BasePluginProvider() {
+
+    abstract suspend fun search(query: TQuery, params: SearchParams): List<TResult>
+
+    /**
+     * Get an item by its id.
+     * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference` or `Deferred`
+     */
+    open suspend fun get(id: String, params: GetParams): TResult? = null
+
+    internal abstract fun getQuery(uri: Uri): TQuery?
 
     override fun onCreate(): Boolean = true
 
@@ -20,6 +44,44 @@ abstract class QueryPluginProvider<TQuery, TResult> : BasePluginProvider() {
         selectionArgs: Array<out String>?,
         sortOrder: String?
     ): Cursor? = query(uri, projection, null, null)
+
+    override fun query(
+        uri: Uri,
+        projection: Array<out String>?,
+        queryArgs: Bundle?,
+        cancellationSignal: CancellationSignal?
+    ): Cursor? {
+        val context = context ?: return null
+        checkPermissionOrThrow(context)
+        when {
+            uri.pathSegments.size == 1 && uri.pathSegments.first() == SearchPluginContract.Paths.Search -> {
+                val query = getQuery(uri) ?: return null
+                val params = getSearchParams(uri)
+                val results = search(query, params, cancellationSignal)
+                val cursor = createCursor(results.size)
+                for (result in results) {
+                    writeToCursor(cursor, result)
+                }
+                return cursor
+            }
+
+            uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
+                val id = uri.pathSegments[1]
+                val params = getGetParams(uri)
+                val result = runBlocking {
+                    get(id, params)
+                }
+                return if (result != null) {
+                    val cursor = createCursor(1)
+                    writeToCursor(cursor, result)
+                    cursor
+                } else {
+                    createCursor(0)
+                }
+            }
+        }
+        return null
+    }
 
     override fun getType(uri: Uri): String? =
         throw UnsupportedOperationException("This operation is not supported")
@@ -37,4 +99,38 @@ abstract class QueryPluginProvider<TQuery, TResult> : BasePluginProvider() {
         selectionArgs: Array<out String>?
     ): Int = throw UnsupportedOperationException("This operation is not supported")
 
+    private fun search(
+        query: TQuery,
+        params: SearchParams,
+        cancellationSignal: CancellationSignal?
+    ): List<TResult> {
+        return launchWithCancellationSignal(cancellationSignal) {
+            search(query, params)
+        }
+    }
+
+    private fun getGetParams(uri: Uri): GetParams {
+        val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
+        return GetParams(
+            lang = lang,
+        )
+    }
+
+    private fun getSearchParams(uri: Uri): SearchParams {
+        val allowNetwork =
+            uri.getQueryParameter(SearchPluginContract.Paths.AllowNetworkParam)?.toBoolean()
+                ?: false
+        val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
+        return SearchParams(
+            allowNetwork = allowNetwork,
+            lang = lang,
+        )
+    }
+
+    internal abstract fun createCursor(capacity: Int): MatrixCursor
+    internal abstract fun writeToCursor(cursor: MatrixCursor, item: TResult)
+
+    final override fun getPluginConfig(): Bundle {
+        return config.toBundle()
+    }
 }
