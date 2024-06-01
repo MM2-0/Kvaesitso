@@ -2,64 +2,63 @@ package de.mm20.launcher2.plugin.contracts
 
 abstract class FilePluginContract {
 
-    object FileColumns {
+    object FileColumns: Columns() {
         /**
          * The unique ID of the file.
          * Type: String
          */
-        const val Id = "id"
+        val Id = column<String>("id")
 
         /**
          * The display name of the file.
          * Type: String
          */
-        const val DisplayName = "display_name"
+        val DisplayName = column<String>("display_name")
 
         /**
          * The MIME type of the file. This is used to determine how to open the file. Make sure that
          * this is either a common MIME type or that your app can handle this MIME type.
          * Type: String?
          */
-        const val MimeType = "mime_type"
+        val MimeType = column<String>("mime_type")
 
         /**
          * The size of the file in bytes.
          * Type: Long?
          */
-        const val Size = "size"
+        val Size = column<Long>("size")
 
         /**
          * The display path of the file.
          * Type: String?
          */
-        const val Path = "path"
+        val Path = column<String>("path")
 
         /**
          * The URI to view the file.
          * Type: String?
          */
-        const val ContentUri = "uri"
+        val ContentUri = column<String>("uri")
 
-        const val ThumbnailUri = "thumbnail_uri"
+        val ThumbnailUri = column<String>("thumbnail_uri")
 
         /**
          * Whether the file is a directory.
          * Type: Int
          */
-        const val IsDirectory = "is_directory"
+        val IsDirectory = column<Boolean>("is_directory")
 
-        const val Owner = "owner"
+        val Owner = column<String>("owner")
 
-        const val MetaTitle = "meta_title"
-        const val MetaArtist = "meta_artist"
-        const val MetaAlbum = "meta_album"
-        const val MetaDuration = "meta_duration"
-        const val MetaYear = "meta_year"
-        const val MetaWidth = "meta_width"
-        const val MetaHeight = "meta_height"
-        const val MetaLocation = "meta_location"
-        const val MetaAppName = "meta_app_name"
-        const val MetaAppPackageName = "meta_app_package_name"
-        const val MetaAppMinSdkVersion = "meta_app_min_sdk_version"
+        val MetaTitle = column<String>("meta_title")
+        val MetaArtist = column<String>("meta_artist")
+        val MetaAlbum = column<String>("meta_album")
+        val MetaDuration = column<Long>("meta_duration")
+        val MetaYear = column<Int>("meta_year")
+        val MetaWidth = column<Int>("meta_width")
+        val MetaHeight = column<Int>("meta_height")
+        val MetaLocation = column<String>("meta_location")
+        val MetaAppName = column<String>("meta_app_name")
+        val MetaAppPackageName = column<String>("meta_app_package_name")
     }
 }

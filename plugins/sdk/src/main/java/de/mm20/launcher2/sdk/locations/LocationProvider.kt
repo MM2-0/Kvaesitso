@@ -1,10 +1,13 @@
 package de.mm20.launcher2.sdk.locations
 
+import android.database.Cursor
 import android.database.MatrixCursor
 import android.net.Uri
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
+import de.mm20.launcher2.plugin.contracts.LocationPluginContract.LocationColumns
+import de.mm20.launcher2.plugin.contracts.cursorOf
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
 import de.mm20.launcher2.serialization.Json
 import kotlinx.serialization.encodeToString
@@ -19,55 +22,23 @@ abstract class LocationProvider(
         return PluginType.LocationSearch
     }
 
-    override fun createCursor(capacity: Int): MatrixCursor {
-        return MatrixCursor(
-            arrayOf(
-                LocationPluginContract.LocationColumns.Id,
-                LocationPluginContract.LocationColumns.Label,
-                LocationPluginContract.LocationColumns.Latitude,
-                LocationPluginContract.LocationColumns.Longitude,
-                LocationPluginContract.LocationColumns.FixMeUrl,
-                LocationPluginContract.LocationColumns.Icon,
-                LocationPluginContract.LocationColumns.Category,
-                LocationPluginContract.LocationColumns.Address,
-                LocationPluginContract.LocationColumns.OpeningSchedule,
-                LocationPluginContract.LocationColumns.WebsiteUrl,
-                LocationPluginContract.LocationColumns.PhoneNumber,
-                LocationPluginContract.LocationColumns.UserRating,
-                LocationPluginContract.LocationColumns.Departures,
-                LocationPluginContract.LocationColumns.Attribution,
-            ),
-            capacity,
-        )
-    }
-
-    override fun writeToCursor(cursor: MatrixCursor, item: Location) {
-        cursor.addRow(
-            arrayOf(
-                item.id,
-                item.label,
-                item.latitude,
-                item.longitude,
-                item.fixMeUrl,
-                item.icon?.name,
-                item.category,
-                item.address?.let {
-                    json.encodeToString(it)
-                },
-                item.openingSchedule?.let {
-                    json.encodeToString(it)
-                },
-                item.websiteUrl,
-                item.phoneNumber,
-                item.userRating,
-                item.departures?.let {
-                    json.encodeToString(it)
-                },
-                item.attribution?.let {
-                    json.encodeToString(it)
-                },
-            )
-        )
+    override fun List<Location>.toCursor(): Cursor {
+        return cursorOf(LocationColumns, this) {
+            LocationColumns.Id.set(it.id)
+            LocationColumns.Label.set(it.label)
+            LocationColumns.Latitude.set(it.latitude)
+            LocationColumns.Longitude.set(it.longitude)
+            LocationColumns.FixMeUrl.set(it.fixMeUrl)
+            LocationColumns.Icon.set(it.icon?.name)
+            LocationColumns.Category.set(it.category)
+            LocationColumns.Address.set(it.address)
+            LocationColumns.OpeningSchedule.set(it.openingSchedule)
+            LocationColumns.WebsiteUrl.set(it.websiteUrl)
+            LocationColumns.PhoneNumber.set(it.phoneNumber)
+            LocationColumns.UserRating.set(it.userRating)
+            LocationColumns.Departures.set(it.departures)
+            LocationColumns.Attribution.set(it.attribution)
+        }
     }
 
     override fun getQuery(uri: Uri): LocationQuery? {

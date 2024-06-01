@@ -1,10 +1,17 @@
 package de.mm20.launcher2.plugin.contracts
 
+import de.mm20.launcher2.search.location.Address
+import de.mm20.launcher2.search.location.Attribution
+import de.mm20.launcher2.search.location.Departure
+import de.mm20.launcher2.search.location.LocationIcon
+import de.mm20.launcher2.search.location.OpeningSchedule
+
 abstract class LocationPluginContract {
     object Paths {
         const val Search = "search"
         const val Get = "get"
     }
+
     object SearchParams {
         /**
          * Search query.
@@ -36,6 +43,7 @@ abstract class LocationPluginContract {
          */
         const val AllowNetwork = "network"
     }
+
     object GetParams {
         /**
          * Unique identifier of location to look up.
@@ -43,89 +51,90 @@ abstract class LocationPluginContract {
          */
         const val Id = "id"
     }
-    object LocationColumns {
+
+    object LocationColumns : Columns() {
         /**
          * Unique identifier of location.
          * Type: String
          */
-        const val Id = "id"
+        val Id = column<String>("id")
 
         /**
          * Display name of location.
          * Type: String
          */
-        const val Label = "label"
+        val Label = column<String>("label")
 
         /**
          * Latitude of location in degrees.
          * Type: Double
          */
-        const val Latitude = "latitude"
+        val Latitude = column<Double>("latitude")
 
         /**
          * Longitude of location in degrees.
          * Type: Double
          */
-        const val Longitude = "longitude"
+        val Longitude = column<Double>("longitude")
 
         /**
          * Url for users to report / fix incorrect data.
          * Type: String?
          */
-        const val FixMeUrl = "fix_me_url"
+        val FixMeUrl = column<String>("fix_me_url")
 
         /**
          * Icon of location.
          * Type: String? (enum LocationIcon)
          */
-        const val Icon = "icon"
+        val Icon = column<LocationIcon>("icon")
 
         /**
          * Location category.
          * Type: String?
          */
-        const val Category = "category"
+        val Category = column<String>("category")
 
         /**
          * Street name of location.
          * Type: String? (JSON)
          */
-        const val Address = "street"
+        val Address = column<Address>("address")
 
         /**
          * Opening schedule of location, encoded as JSON.
          * Type: String? (JSON)
          */
-        const val OpeningSchedule = "opening_schedule"
+        val OpeningSchedule = column<OpeningSchedule>("opening_schedule")
 
         /**
          * Website URL of location.
          * Type: String?
          */
-        const val WebsiteUrl = "website_url"
+        val WebsiteUrl = column<String>("website_url")
 
         /**
          * Phone number of location.
          * Type: String?
          */
-        const val PhoneNumber = "phone_number"
+        val PhoneNumber = column<String>("phone_number")
 
         /**
          * User rating of location, from 0.0 (worst) to 1.0 (best)
          * Type: Float?
          */
-        const val UserRating = "user_rating"
+        val UserRating = column<Float>("user_rating")
 
         /**
          * Public transport departures originating from this location, encoded as JSON.
          * Type: String? (JSON)
          */
-        const val Departures = "departures"
+        val Departures = column<List<Departure>>("departures")
 
         /**
          * Attribution information for location data.
          * Type: String? (JSON)
          */
-        const val Attribution = "attribution"
+        val Attribution = column<Attribution>("attribution")
     }
 }

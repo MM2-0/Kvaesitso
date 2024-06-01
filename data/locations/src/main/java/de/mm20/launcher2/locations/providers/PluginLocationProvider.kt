@@ -5,22 +5,15 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.CancellationSignal
 import android.util.Log
-import androidx.core.database.getDoubleOrNull
-import androidx.core.database.getFloatOrNull
-import androidx.core.database.getStringOrNull
 import de.mm20.launcher2.crashreporter.CrashReporter
-import de.mm20.launcher2.ktx.decodeFromStringOrNull
 import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
+import de.mm20.launcher2.plugin.contracts.LocationPluginContract.LocationColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.plugin.contracts.withColumns
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
-import de.mm20.launcher2.search.location.Address
-import de.mm20.launcher2.search.location.Attribution
-import de.mm20.launcher2.search.location.Departure
-import de.mm20.launcher2.search.location.LocationIcon
-import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.serialization.Json
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -155,90 +148,35 @@ internal class PluginLocationProvider(
             return null
         }
 
-        val idIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Id)
-                .takeIf { it != -1 } ?: return null
-        val labelIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Label)
-                .takeIf { it != -1 } ?: return null
-        val latitudeIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Latitude)
-            .takeIf { it != -1 } ?: return null
-        val longitudeIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Longitude)
-            .takeIf { it != -1 } ?: return null
-        val fixMeUrlIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.FixMeUrl)
-            .takeIf { it != -1 }
-        val iconIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Icon)
-            .takeIf { it != -1 }
-        val categoryIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Category)
-            .takeIf { it != -1 }
-        val addressIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Address)
-                .takeIf { it != -1 }
-        val openingScheduleIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.OpeningSchedule)
-                .takeIf { it != -1 }
-        val websiteUrlIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.WebsiteUrl)
-            .takeIf { it != -1 }
-        val phoneNumberIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.PhoneNumber)
-                .takeIf { it != -1 }
-        val userRatingIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.UserRating)
-            .takeIf { it != -1 }
-        val departuresIdx = cursor.getColumnIndex(LocationPluginContract.LocationColumns.Departures)
-            .takeIf { it != -1 }
-
-        val attributionIdx =
-            cursor.getColumnIndex(LocationPluginContract.LocationColumns.Attribution)
-                .takeIf { it != -1 }
-
         val results = mutableListOf<Location>()
-        while (cursor.moveToNext()) {
-            val id = cursor.getString(idIdx)
-            results.add(
-                PluginLocation(
-                    id = id,
-                    label = cursor.getStringOrNull(labelIdx) ?: continue,
-                    latitude = cursor.getDoubleOrNull(latitudeIdx) ?: continue,
-                    longitude = cursor.getDoubleOrNull(longitudeIdx) ?: continue,
-                    fixMeUrl = fixMeUrlIdx?.let { cursor.getStringOrNull(it) },
-                    icon = iconIdx?.let {
-                        cursor.getStringOrNull(it)?.let {
-                            LocationIcon.valueOfOrNull(it)
-                        }
-                    },
-                    category = categoryIdx?.let {
-                        cursor.getStringOrNull(it)
-                    },
-                    address = addressIdx?.let {
-                        cursor.getStringOrNull(it)?.let {
-                            json.decodeFromStringOrNull<Address>(it)
-                        }
-                    },
-                    openingSchedule = openingScheduleIdx?.let {
-                        cursor.getStringOrNull(it)?.let {
-                            json.decodeFromStringOrNull<OpeningSchedule>(it)
-                        }
-                    },
-                    websiteUrl = websiteUrlIdx?.let { cursor.getStringOrNull(it) },
-                    phoneNumber = phoneNumberIdx?.let { cursor.getStringOrNull(it) },
-                    userRating = userRatingIdx?.let { cursor.getFloatOrNull(it) },
-                    departures = departuresIdx?.let {
-                        cursor.getStringOrNull(it)?.let {
-                            json.decodeFromStringOrNull<List<Departure>>(it)
-                        }
-                    },
-                    attribution = attributionIdx?.let {
-                        cursor.getStringOrNull(it)?.let {
-                            json.decodeFromStringOrNull<Attribution>(it)
-                        }
-                    },
-                    authority = pluginAuthority,
-                    updatedSelf = null,
-                    timestamp = System.currentTimeMillis(),
-                    storageStrategy = config.storageStrategy,
+        cursor.withColumns(LocationColumns) {
+            while (cursor.moveToNext()) {
+                val id = cursor[LocationColumns.Id] ?: continue
+                results.add(
+                    PluginLocation(
+                        id = id,
+                        label = cursor[LocationColumns.Label] ?: continue,
+                        latitude = cursor[LocationColumns.Latitude] ?: continue,
+                        longitude = cursor[LocationColumns.Longitude] ?: continue,
+                        fixMeUrl = cursor[LocationColumns.FixMeUrl],
+                        icon = cursor[LocationColumns.Icon],
+                        category = cursor[LocationColumns.Category],
+                        address = cursor[LocationColumns.Address],
+                        openingSchedule = cursor[LocationColumns.OpeningSchedule],
+                        websiteUrl = cursor[LocationColumns.WebsiteUrl],
+                        phoneNumber = cursor[LocationColumns.PhoneNumber],
+                        userRating = cursor[LocationColumns.UserRating],
+                        departures = cursor[LocationColumns.Departures],
+                        attribution = cursor[LocationColumns.Attribution],
+                        authority = pluginAuthority,
+                        updatedSelf = null,
+                        timestamp = System.currentTimeMillis(),
+                        storageStrategy = config.storageStrategy,
+                    )
                 )
-            )
+            }
         }
+
         return results
     }
 

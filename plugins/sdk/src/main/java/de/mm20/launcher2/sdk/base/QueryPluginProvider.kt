@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.plugin.contracts.cursorOf
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.runBlocking
@@ -58,11 +59,7 @@ abstract class QueryPluginProvider<TQuery, TResult>(
                 val query = getQuery(uri) ?: return null
                 val params = getSearchParams(uri)
                 val results = search(query, params, cancellationSignal)
-                val cursor = createCursor(results.size)
-                for (result in results) {
-                    writeToCursor(cursor, result)
-                }
-                return cursor
+                return results.toCursor()
             }
 
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
@@ -72,11 +69,9 @@ abstract class QueryPluginProvider<TQuery, TResult>(
                     get(id, params)
                 }
                 return if (result != null) {
-                    val cursor = createCursor(1)
-                    writeToCursor(cursor, result)
-                    cursor
+                    return listOf(result).toCursor()
                 } else {
-                    createCursor(0)
+                    emptyList<TResult>().toCursor()
                 }
             }
         }
@@ -127,8 +122,7 @@ abstract class QueryPluginProvider<TQuery, TResult>(
         )
     }
 
-    internal abstract fun createCursor(capacity: Int): MatrixCursor
-    internal abstract fun writeToCursor(cursor: MatrixCursor, item: TResult)
+    internal abstract fun List<TResult>.toCursor(): Cursor
 
     final override fun getPluginConfig(): Bundle {
         return config.toBundle()
