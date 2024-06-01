@@ -24,20 +24,20 @@ abstract class LocationProvider(
 
     override fun List<Location>.toCursor(): Cursor {
         return cursorOf(LocationColumns, this) {
-            LocationColumns.Id.set(it.id)
-            LocationColumns.Label.set(it.label)
-            LocationColumns.Latitude.set(it.latitude)
-            LocationColumns.Longitude.set(it.longitude)
-            LocationColumns.FixMeUrl.set(it.fixMeUrl)
-            LocationColumns.Icon.set(it.icon)
-            LocationColumns.Category.set(it.category)
-            LocationColumns.Address.set(it.address)
-            LocationColumns.OpeningSchedule.set(it.openingSchedule)
-            LocationColumns.WebsiteUrl.set(it.websiteUrl)
-            LocationColumns.PhoneNumber.set(it.phoneNumber)
-            LocationColumns.UserRating.set(it.userRating)
-            LocationColumns.Departures.set(it.departures)
-            LocationColumns.Attribution.set(it.attribution)
+            put(LocationColumns.Id, it.id)
+            put(LocationColumns.Label, it.label)
+            put(LocationColumns.Latitude, it.latitude)
+            put(LocationColumns.Longitude, it.longitude)
+            put(LocationColumns.FixMeUrl, it.fixMeUrl)
+            put(LocationColumns.Icon, it.icon)
+            put(LocationColumns.Category, it.category)
+            put(LocationColumns.Address, it.address)
+            put(LocationColumns.OpeningSchedule, it.openingSchedule)
+            put(LocationColumns.WebsiteUrl, it.websiteUrl)
+            put(LocationColumns.PhoneNumber, it.phoneNumber)
+            put(LocationColumns.UserRating, it.userRating)
+            put(LocationColumns.Departures, it.departures)
+            put(LocationColumns.Attribution, it.attribution)
         }
     }
 

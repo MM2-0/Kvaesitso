@@ -23,16 +23,16 @@ fun <T> cursorOf(
 }
 
 interface RowBuilderScope {
-    fun <T : Any> Column<T>.set(v: T?)
+    fun <T : Any> put(column: Column<T>, value: T?)
 }
 
 internal class RowBuilderScopeImpl(
     private val columnIndices: Map<String, Int>,
     internal val values: Array<Any?>
 ) : RowBuilderScope {
-    override fun <T : Any> Column<T>.set(v: T?) {
-        v ?: return
-        val index = columnIndices[name] ?: return
-        values[index] = this.write(v)
+    override fun <T : Any> put(column: Column<T>, value: T?) {
+        value ?: return
+        val index = columnIndices[column.name] ?: return
+        values[index] = column.write(value)
     }
 }

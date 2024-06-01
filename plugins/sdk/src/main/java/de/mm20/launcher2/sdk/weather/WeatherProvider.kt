@@ -11,6 +11,9 @@ import android.util.Log
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
+import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.ForecastColumns
+import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.LocationColumns
+import de.mm20.launcher2.plugin.contracts.cursorOf
 import de.mm20.launcher2.sdk.base.BasePluginProvider
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.ktx.formatToString
@@ -71,7 +74,26 @@ abstract class WeatherProvider(
                 val forecasts = launchWithCancellationSignal(cancellationSignal) {
                     getWeatherData(lat, lon, id, name, lang)
                 } ?: return null
-                return createForecastCursor(forecasts)
+                return cursorOf(ForecastColumns, forecasts) {
+                    put(ForecastColumns.Timestamp, it.timestamp)
+                    put(ForecastColumns.CreatedAt, it.createdAt)
+                    put(ForecastColumns.Temperature, it.temperature.kelvin)
+                    put(ForecastColumns.TemperatureMin, it.minTemp?.kelvin)
+                    put(ForecastColumns.TemperatureMax, it.maxTemp?.kelvin)
+                    put(ForecastColumns.Pressure, it.pressure?.hPa)
+                    put(ForecastColumns.Humidity, it.humidity)
+                    put(ForecastColumns.WindSpeed, it.windSpeed?.metersPerSecond)
+                    put(ForecastColumns.WindDirection, it.windDirection)
+                    put(ForecastColumns.Precipitation, it.precipitation?.mm)
+                    put(ForecastColumns.RainProbability, it.rainProbability)
+                    put(ForecastColumns.Clouds, it.clouds)
+                    put(ForecastColumns.Location, it.location)
+                    put(ForecastColumns.Provider, it.provider)
+                    put(ForecastColumns.ProviderUrl, it.providerUrl)
+                    put(ForecastColumns.Night, it.night)
+                    put(ForecastColumns.Icon, it.icon)
+                    put(ForecastColumns.Condition, it.condition)
+                }
             }
 
             uri.pathSegments.size == 1 && uri.pathSegments.first() == WeatherPluginContract.Paths.Locations -> {
@@ -85,7 +107,16 @@ abstract class WeatherProvider(
                 ) {
                     findLocations(query, lang)
                 }
-                return createLocationsCursor(locations)
+                return cursorOf(LocationColumns, locations) {
+                    if (it is WeatherLocation.Id) {
+                        put(LocationColumns.Id, it.id)
+                        put(LocationColumns.Name, it.name)
+                    } else if (it is WeatherLocation.LatLon) {
+                        put(LocationColumns.Lat, it.lat)
+                        put(LocationColumns.Lon, it.lon)
+                        put(LocationColumns.Name, it.name)
+                    }
+                }
             }
         }
         return null
@@ -113,90 +144,6 @@ abstract class WeatherProvider(
         return null
     }
 
-    private fun createForecastCursor(forecasts: List<Forecast>): Cursor {
-        val cursor = MatrixCursor(
-            arrayOf(
-                WeatherPluginContract.ForecastColumns.Timestamp,
-                WeatherPluginContract.ForecastColumns.CreatedAt,
-                WeatherPluginContract.ForecastColumns.Temperature,
-                WeatherPluginContract.ForecastColumns.TemperatureMin,
-                WeatherPluginContract.ForecastColumns.TemperatureMax,
-                WeatherPluginContract.ForecastColumns.Pressure,
-                WeatherPluginContract.ForecastColumns.Humidity,
-                WeatherPluginContract.ForecastColumns.WindSpeed,
-                WeatherPluginContract.ForecastColumns.WindDirection,
-                WeatherPluginContract.ForecastColumns.Precipitation,
-                WeatherPluginContract.ForecastColumns.RainProbability,
-                WeatherPluginContract.ForecastColumns.Clouds,
-                WeatherPluginContract.ForecastColumns.Location,
-                WeatherPluginContract.ForecastColumns.Provider,
-                WeatherPluginContract.ForecastColumns.ProviderUrl,
-                WeatherPluginContract.ForecastColumns.Night,
-                WeatherPluginContract.ForecastColumns.Icon,
-                WeatherPluginContract.ForecastColumns.Condition,
-            ),
-            forecasts.size,
-        )
-        for (forecast in forecasts) {
-            cursor.addRow(
-                arrayOf(
-                    forecast.timestamp,
-                    forecast.createdAt,
-                    forecast.temperature.kelvin,
-                    forecast.minTemp?.kelvin,
-                    forecast.maxTemp?.kelvin,
-                    forecast.pressure?.hPa,
-                    forecast.humidity,
-                    forecast.windSpeed?.metersPerSecond,
-                    forecast.windDirection,
-                    forecast.precipitation?.mm,
-                    forecast.rainProbability,
-                    forecast.clouds,
-                    forecast.location,
-                    forecast.provider,
-                    forecast.providerUrl,
-                    if (forecast.night) 1 else 0,
-                    forecast.icon.name,
-                    forecast.condition,
-                )
-            )
-        }
-        return cursor
-    }
-
-    fun createLocationsCursor(locations: List<WeatherLocation>): Cursor {
-        val cursor = MatrixCursor(
-            arrayOf(
-                WeatherPluginContract.LocationColumns.Id,
-                WeatherPluginContract.LocationColumns.Lat,
-                WeatherPluginContract.LocationColumns.Lon,
-                WeatherPluginContract.LocationColumns.Name,
-            ),
-            locations.size,
-        )
-        for (location in locations) {
-            if (location is WeatherLocation.Id) {
-                cursor.addRow(
-                    arrayOf(
-                        location.id,
-                        null,
-                        null,
-                        location.name,
-                    )
-                )
-            } else if (location is WeatherLocation.LatLon) {
-                cursor.addRow(
-                    arrayOf(
-                        null,
-                        location.lat,
-                        location.lon,
-                        location.name,
-                    )
-                )
-            }
-        }
-        return cursor
-    }
 
     override fun insert(uri: Uri, values: ContentValues?): Uri? {
         throw UnsupportedOperationException("This operation is not supported")

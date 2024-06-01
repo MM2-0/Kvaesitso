@@ -14,6 +14,9 @@ import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.PluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
+import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.ForecastColumns
+import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.LocationColumns
+import de.mm20.launcher2.plugin.contracts.withColumns
 import de.mm20.launcher2.preferences.weather.WeatherLocation
 import de.mm20.launcher2.weather.Forecast
 import de.mm20.launcher2.weather.WeatherProvider
@@ -107,99 +110,30 @@ internal class PluginWeatherProvider(
         return cursor.use {
             val results = mutableListOf<Forecast>()
 
-            val timestampIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Timestamp)
-                    .takeIf { it >= 0 } ?: return null
-            val createdAtIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.CreatedAt)
-                    .takeIf { it >= 0 } ?: return null
-            val temperatureIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Temperature)
-                    .takeIf { it >= 0 } ?: return null
-            val conditionIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Condition)
-                    .takeIf { it >= 0 } ?: return null
-            val iconIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Icon).takeIf { it >= 0 }
-                    ?: return null
+            cursor.withColumns(ForecastColumns) {
 
-            val locationIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Location)
-                    .takeIf { it >= 0 }
-                    ?: return null
-
-            val providerIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Provider)
-                    .takeIf { it >= 0 }
-                    ?: return null
-
-            val providerUrlIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.ProviderUrl)
-                    .takeIf { it >= 0 }
-
-            val precipitationIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Precipitation)
-                    .takeIf { it >= 0 }
-
-            val precipProbabilityIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.RainProbability)
-                    .takeIf { it >= 0 }
-
-            val cloudsIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Clouds)
-                    .takeIf { it >= 0 }
-
-            val humidityIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Humidity)
-                    .takeIf { it >= 0 }
-
-            val windSpeedIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.WindSpeed)
-                    .takeIf { it >= 0 }
-
-            val windDirectionIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.WindDirection)
-                    .takeIf { it >= 0 }
-
-            val pressureIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Pressure)
-                    .takeIf { it >= 0 }
-
-            val nightIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.Night)
-                    .takeIf { it >= 0 }
-
-            val minTempIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.TemperatureMin)
-                    .takeIf { it >= 0 }
-
-            val maxTempIndex =
-                cursor.getColumnIndex(WeatherPluginContract.ForecastColumns.TemperatureMax)
-                    .takeIf { it >= 0 }
-
-
-
-            while (cursor.moveToNext()) {
-                results += Forecast(
-                    timestamp = cursor.getLongOrNull(timestampIndex) ?: continue,
-                    temperature = cursor.getDoubleOrNull(temperatureIndex) ?: continue,
-                    updateTime = cursor.getLongOrNull(createdAtIndex) ?: continue,
-                    condition = cursor.getStringOrNull(conditionIndex) ?: continue,
-                    icon = getIcon(cursor.getStringOrNull(iconIndex) ?: continue),
-                    location = cursor.getStringOrNull(locationIndex) ?: continue,
-                    provider = cursor.getStringOrNull(providerIndex) ?: continue,
-                    providerUrl = providerUrlIndex?.let { cursor.getStringOrNull(it) } ?: "",
-                    clouds = cloudsIndex?.let { cursor.getIntOrNull(it) },
-                    humidity = humidityIndex?.let { cursor.getDoubleOrNull(it) },
-                    precipitation = precipitationIndex?.let { cursor.getDoubleOrNull(it) },
-                    precipProbability = precipProbabilityIndex?.let { cursor.getIntOrNull(it) },
-                    windSpeed = windSpeedIndex?.let { cursor.getDoubleOrNull(it) },
-                    windDirection = windDirectionIndex?.let { cursor.getDoubleOrNull(it) },
-                    pressure = pressureIndex?.let { cursor.getDoubleOrNull(it) },
-                    night = nightIndex?.let { cursor.getIntOrNull(it) } == 1,
-                    minTemp = minTempIndex?.let { cursor.getDoubleOrNull(it) },
-                    maxTemp = maxTempIndex?.let { cursor.getDoubleOrNull(it) },
-                )
+                while (cursor.moveToNext()) {
+                    results += Forecast(
+                        timestamp = cursor[ForecastColumns.Timestamp] ?: continue,
+                        temperature = cursor[ForecastColumns.Temperature] ?: continue,
+                        updateTime = cursor[ForecastColumns.CreatedAt] ?: continue,
+                        condition = cursor[ForecastColumns.Condition] ?: continue,
+                        icon = getIcon(cursor[ForecastColumns.Icon]?.name ?: continue),
+                        location = cursor[ForecastColumns.Location] ?: continue,
+                        provider = cursor[ForecastColumns.Provider] ?: continue,
+                        providerUrl = cursor[ForecastColumns.ProviderUrl] ?: "",
+                        clouds = cursor[ForecastColumns.Clouds],
+                        humidity = cursor[ForecastColumns.Humidity]?.toDouble(),
+                        precipitation = cursor[ForecastColumns.Precipitation],
+                        precipProbability = cursor[ForecastColumns.RainProbability],
+                        windSpeed = cursor[ForecastColumns.WindSpeed],
+                        windDirection = cursor[ForecastColumns.WindDirection],
+                        pressure = cursor[ForecastColumns.Pressure],
+                        night = cursor[ForecastColumns.Night] ?: false,
+                        minTemp = cursor[ForecastColumns.TemperatureMin],
+                        maxTemp =  cursor[ForecastColumns.TemperatureMax],
+                    )
+                }
             }
             results
         }
@@ -278,29 +212,18 @@ internal class PluginWeatherProvider(
         return cursor.use {
             val results = mutableListOf<WeatherLocation>()
 
-            val nameIndex =
-                cursor.getColumnIndex(WeatherPluginContract.LocationColumns.Name)
-                    .takeIf { it >= 0 } ?: return emptyList()
-            val latIndex =
-                cursor.getColumnIndex(WeatherPluginContract.LocationColumns.Lat)
-                    .takeIf { it >= 0 }
-            val lonIndex =
-                cursor.getColumnIndex(WeatherPluginContract.LocationColumns.Lon)
-                    .takeIf { it >= 0 }
-            val locationIdIndex =
-                cursor.getColumnIndex(WeatherPluginContract.LocationColumns.Id)
-                    .takeIf { it >= 0 }
+            cursor.withColumns(LocationColumns) {
+                while (cursor.moveToNext()) {
+                    val lat = cursor[LocationColumns.Lat]
+                    val lon = cursor[LocationColumns.Lon]
+                    val locationId = cursor[LocationColumns.Id]
+                    val name = cursor[LocationColumns.Name] ?: continue
 
-            while (cursor.moveToNext()) {
-                val lat = latIndex?.let { cursor.getDoubleOrNull(it) }
-                val lon = lonIndex?.let { cursor.getDoubleOrNull(it) }
-                val locationId = locationIdIndex?.let { cursor.getStringOrNull(it) }
-                val name = cursor.getStringOrNull(nameIndex) ?: continue
-
-                if (lat != null && lon != null) {
-                    results += WeatherLocation.LatLon(lat = lat, lon = lon, name = name)
-                } else if (locationId != null) {
-                    results += WeatherLocation.Id(locationId = locationId, name = name)
+                    if (lat != null && lon != null) {
+                        results += WeatherLocation.LatLon(lat = lat, lon = lon, name = name)
+                    } else if (locationId != null) {
+                        results += WeatherLocation.Id(locationId = locationId, name = name)
+                    }
                 }
             }
             results
