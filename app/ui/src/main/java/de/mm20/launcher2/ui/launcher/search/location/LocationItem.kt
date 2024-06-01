@@ -5,8 +5,6 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.SharedTransitionLayout
-import androidx.compose.animation.core.EaseOut
-import androidx.compose.animation.core.EaseOutBounce
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
@@ -20,7 +18,6 @@ import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -33,6 +30,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -66,7 +66,6 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -75,9 +74,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
@@ -87,7 +84,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
@@ -102,6 +98,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import blend.Blend.harmonize
 import de.mm20.launcher2.i18n.R
+import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
@@ -109,30 +106,28 @@ import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
+import de.mm20.launcher2.ui.base.LocalTime
 import de.mm20.launcher2.ui.component.DefaultToolbarAction
 import de.mm20.launcher2.ui.component.MarqueeText
 import de.mm20.launcher2.ui.component.RatingBar
 import de.mm20.launcher2.ui.component.ShapedLauncherIcon
 import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
-import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
 import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
-import de.mm20.launcher2.ui.locals.LocalCardStyle
 import de.mm20.launcher2.ui.locals.LocalFavoritesEnabled
 import de.mm20.launcher2.ui.locals.LocalGridSettings
 import de.mm20.launcher2.ui.locals.LocalSnackbarHostState
 import de.mm20.launcher2.ui.modifier.scale
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
 import java.time.Duration
 import java.time.LocalDateTime
-import java.time.LocalTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
@@ -366,39 +361,41 @@ fun LocationItem(
                             ?.sortedBy { it.time }
                     }
                     if (departures != null) {
-                        var showDepartureList by remember(departures) {
-                            mutableStateOf(false)
+                        val time = LocalTime.current
+                        val nextDeparture = remember(time) {
+                            departures.firstOrNull {
+                                it.time.plus(it.delay ?: Duration.ZERO).isAfter(ZonedDateTime.now())
+                            }
                         }
-                        OutlinedCard(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 12.dp, end = 12.dp, top = 12.dp),
-                            shape = MaterialTheme.shapes.small,
-                            onClick = { showDepartureList = !showDepartureList }
-                        ) {
-                            val listState = rememberLazyListState()
+                        if (nextDeparture != null) {
+                            var showDepartureList by remember(departures) {
+                                mutableStateOf(false)
+                            }
+                            OutlinedCard(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 12.dp, end = 12.dp, top = 12.dp),
+                                shape = MaterialTheme.shapes.small,
+                                onClick = { showDepartureList = !showDepartureList }
+                            ) {
+                                val listState = rememberLazyListState()
 
-                            AnimatedContent(showDepartureList) { showList ->
-                                if (!showList) {
-                                    val nextDeparture = departures.first()
-                                    Row(
-                                        Modifier.padding(12.dp).fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween,
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        Row(horizontalArrangement = Arrangement.Start) {
+                                AnimatedContent(showDepartureList) { showList ->
+                                    if (!showList) {
+                                        Row(
+                                            Modifier
+                                                .padding(12.dp)
+                                                .fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween,
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
                                             nextDeparture.LineIcon(Modifier.padding(end = 8.dp))
                                             val lastStop = nextDeparture.lastStop
                                             if (lastStop != null) {
-                                                Text(
-                                                    text = "to",
-                                                    style = MaterialTheme.typography.labelSmall,
-                                                    fontWeight = FontWeight.Light,
-                                                    modifier = Modifier.padding(end = 8.dp)
-                                                )
                                                 MarqueeText(
+                                                    modifier = Modifier.weight(1f),
                                                     text = lastStop,
-                                                    style = MaterialTheme.typography.labelSmall,
+                                                    style = MaterialTheme.typography.labelMedium,
                                                     iterations = Int.MAX_VALUE,
                                                     delayMillis = 0,
                                                     velocity = 20.dp,
@@ -406,70 +403,54 @@ fun LocationItem(
                                                     fadeRight = 5.dp,
                                                 )
                                             }
-                                        }
-                                        Row(
-                                            horizontalArrangement = Arrangement.End,
-                                            verticalAlignment = Alignment.CenterVertically
-                                        ) {
-                                            val timeLeft = Duration.between(
-                                                LocalTime.now(),
-                                                nextDeparture.time + (nextDeparture.delay ?: Duration.ZERO)
-                                            ).toMinutes()
+
+                                            val formattedTime = remember(time) {
+                                                val timeLeft = Duration.between(
+                                                    java.time.LocalTime.now(),
+                                                    nextDeparture.time + (nextDeparture.delay
+                                                        ?: Duration.ZERO)
+                                                ).toMinutes()
+                                                "in $timeLeft min"
+                                            }
+
                                             Text(
-                                                text = "in",
-                                                style = MaterialTheme.typography.labelSmall,
-                                                fontWeight = FontWeight.Light,
-                                                modifier = Modifier.padding(end = 8.dp)
-                                            )
-                                            Text(
-                                                text = "$timeLeft min",
+                                                text = formattedTime,
                                                 style = MaterialTheme.typography.labelSmall,
                                                 modifier = Modifier.padding(end = 12.dp)
                                             )
                                             Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
                                         }
-                                    }
-                                } else {
-                                    LaunchedEffect(Unit) {
-                                        delay(500)
-                                        val canScroll = listState.layoutInfo.visibleItemsInfo.size < departures.size
-                                        if (canScroll) {
-                                            val delayMs = 250
-                                            val deltaPixels = 20f
-                                            listState.animateScrollBy(
-                                                deltaPixels,
-                                                tween(durationMillis = delayMs, easing = EaseOut)
-                                            )
-                                            delay(delayMs.toLong())
-                                            listState.animateScrollBy(
-                                                -deltaPixels,
-                                                tween(easing = EaseOutBounce)
-                                            )
-                                        }
-                                    }
-
-                                    LazyColumn(
-                                        state = listState,
-                                        modifier = modifier
-                                            .heightIn(max = 192.dp)
-                                            .padding(12.dp)
-                                            .fillMaxWidth()
-                                            .pointerInput(Unit) { detectDragGestures { _,_ -> } },
-                                        verticalArrangement = Arrangement.spacedBy(8.dp),
-                                    ) {
-                                        itemsIndexed(departures, key = { idx, _ -> idx }) { idx, it ->
-                                            it.LazyColumnPart(Modifier
+                                    } else {
+                                        LazyColumn(
+                                            state = listState,
+                                            modifier = modifier
+                                                .heightIn(max = 192.dp)
+                                                .padding(12.dp)
                                                 .fillMaxWidth()
-                                                .graphicsLayer {
-                                                    alpha = listState.layoutInfo.blendIntoViewScale(idx)
-                                                }
-                                            )
+                                                .pointerInput(Unit) { detectDragGestures { _, _ -> } },
+                                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                                        ) {
+                                            itemsIndexed(
+                                                departures,
+                                                key = { idx, _ -> idx }) { idx, it ->
+                                                it.LazyColumnPart(
+                                                    Modifier
+                                                        .fillMaxWidth()
+                                                        .graphicsLayer {
+                                                            alpha =
+                                                                listState.layoutInfo.blendIntoViewScale(
+                                                                    idx
+                                                                )
+                                                        }
+                                                )
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
-                    } else if (openingSchedule is OpeningSchedule.TwentyFourSeven || (openingSchedule is OpeningSchedule.Hours && openingSchedule.openingHours.isNotEmpty())) {
+                    }
+                    if (openingSchedule is OpeningSchedule.TwentyFourSeven || (openingSchedule is OpeningSchedule.Hours && openingSchedule.openingHours.isNotEmpty())) {
                         var showOpeningSchedule by remember(openingSchedule) {
                             mutableStateOf(false)
                         }
@@ -499,12 +480,15 @@ fun LocationItem(
                                                     style = MaterialTheme.typography.labelMedium,
                                                 )
                                             }
+
                                             is OpeningSchedule.Hours -> {
                                                 val text = remember(openingSchedule) {
                                                     val currentOpeningTime =
                                                         openingSchedule.getCurrentOpeningHours()
                                                     val timeFormat =
-                                                        DateTimeFormatter.ofLocalizedTime(FormatStyle.SHORT)
+                                                        DateTimeFormatter.ofLocalizedTime(
+                                                            FormatStyle.SHORT
+                                                        )
                                                     return@remember if (currentOpeningTime != null) {
                                                         val isSameDay =
                                                             currentOpeningTime.dayOfWeek == LocalDateTime.now().dayOfWeek
@@ -896,12 +880,11 @@ fun Departure.LineIcon(
     modifier: Modifier
 ) {
     val primaryArgb = MaterialTheme.colorScheme.primary.toArgb()
-    val cardStyle = LocalCardStyle.current
     val (lineBg, lineFg) = if (lineColor != null) {
         val bg = Color(
             harmonize(lineColor!!.toArgb(), primaryArgb)
         )
-        val fg =  Color(
+        val fg = Color(
             harmonize(
                 if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
                 primaryArgb
@@ -914,12 +897,13 @@ fun Departure.LineIcon(
 
     Row(
         modifier = modifier
-            .drawBehind {
-                drawRoundRect(
-                    color = lineBg,
-                    cornerRadius = CornerRadius(cardStyle.cornerRadius.toFloat())
-                )
-            }
+            .wrapContentWidth(Alignment.Start)
+            .background(
+                lineBg,
+                MaterialTheme.shapes.small
+            )
+            .padding(top = 4.dp, bottom = 4.dp, start = 4.dp, end = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = when (type) {
@@ -936,10 +920,9 @@ fun Departure.LineIcon(
             contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
             tint = lineFg,
             modifier = Modifier
-                .padding(horizontal = 4.dp)
+                .padding(end = 2.dp)
                 .size(16.dp),
-
-        )
+            )
         MarqueeText(
             text = line,
             style = MaterialTheme.typography.labelSmall,
@@ -952,7 +935,8 @@ fun Departure.LineIcon(
             spacing = MarqueeSpacing(10.dp),
             velocity = 20.dp,
             modifier = Modifier
-                .width(35.dp)
+                .wrapContentSize()
+                .width(24.dp)
         )
     }
 }
@@ -975,8 +959,7 @@ fun Departure.LazyColumnPart(
             if (lastStop != null) {
                 MarqueeText(
                     text = lastStop!!,
-                    style = MaterialTheme.typography.labelSmall,
-                    fontWeight = FontWeight.Light,
+                    style = MaterialTheme.typography.labelMedium,
                     iterations = Int.MAX_VALUE,
                     delayMillis = 0,
                     velocity = 20.dp,
