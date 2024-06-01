@@ -119,11 +119,14 @@ abstract class LocationPluginContract {
          */
         val PhoneNumber = column<String>("phone_number")
 
+        val EmailAddress = column<String>("email_address")
+
         /**
          * User rating of location, from 0.0 (worst) to 1.0 (best)
          * Type: Float?
          */
         val UserRating = column<Float>("user_rating")
+        val UserRatingCount = column<Int>("user_rating_count")
 
         /**
          * Public transport departures originating from this location, encoded as JSON.

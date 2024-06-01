@@ -143,8 +143,10 @@ interface Location : SavableSearchable {
 
     val websiteUrl: String?
     val phoneNumber: String?
+    val emailAddress: String?
 
     val userRating: Float?
+    val userRatingCount: Int?
 
     val openingSchedule: OpeningSchedule?
     val departures: List<Departure>?

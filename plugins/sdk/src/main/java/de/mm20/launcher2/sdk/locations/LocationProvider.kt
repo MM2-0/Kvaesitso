@@ -35,7 +35,9 @@ abstract class LocationProvider(
             put(LocationColumns.OpeningSchedule, it.openingSchedule)
             put(LocationColumns.WebsiteUrl, it.websiteUrl)
             put(LocationColumns.PhoneNumber, it.phoneNumber)
+            put(LocationColumns.EmailAddress, it.emailAddress)
             put(LocationColumns.UserRating, it.userRating)
+            put(LocationColumns.UserRatingCount, it.userRatingCount)
             put(LocationColumns.Departures, it.departures)
             put(LocationColumns.Attribution, it.attribution)
         }

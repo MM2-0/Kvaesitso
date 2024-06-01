@@ -33,6 +33,7 @@ internal data class OsmLocation(
     override val openingSchedule: OpeningSchedule?,
     override val websiteUrl: String?,
     override val phoneNumber: String?,
+    override val emailAddress: String? = null,
     override val labelOverride: String? = null,
     override val timestamp: Long,
     override var updatedSelf: (suspend () -> UpdateResult<Location>)? = null,
@@ -45,6 +46,7 @@ internal data class OsmLocation(
     override val fixMeUrl: String
         get() = FIXMEURL
 
+    override val userRatingCount: Int? = null
     override val departures: List<Departure>? = null
 
     override fun overrideLabel(label: String): OsmLocation {
@@ -89,6 +91,7 @@ internal data class OsmLocation(
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
                 phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
+                emailAddress = it.tags["email"] ?: it.tags["contact:email"],
                 timestamp = System.currentTimeMillis(),
                 userRating = it.tags["stars"]?.runCatching { this.toInt() }?.getOrNull()
                     ?.let { min(it, 5) / 5.0f }
