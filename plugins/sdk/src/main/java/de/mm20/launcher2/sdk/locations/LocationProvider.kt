@@ -1,6 +1,7 @@
 package de.mm20.launcher2.sdk.locations
 
 import android.database.MatrixCursor
+import android.net.Uri
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
@@ -66,6 +67,19 @@ abstract class LocationProvider(
                     json.encodeToString(it)
                 },
             )
+        )
+    }
+
+    override fun getQuery(uri: Uri): LocationQuery? {
+        val query = uri.getQueryParameter(LocationPluginContract.SearchParams.Query) ?: return null
+        val searchRadius = uri.getQueryParameter(LocationPluginContract.SearchParams.SearchRadius)?.toLongOrNull() ?: return null
+        val lat = uri.getQueryParameter(LocationPluginContract.SearchParams.UserLatitude)?.toDoubleOrNull() ?: return null
+        val lon = uri.getQueryParameter(LocationPluginContract.SearchParams.UserLongitude)?.toDoubleOrNull() ?: return null
+        return LocationQuery(
+            query = query,
+            userLatitude = lat,
+            userLongitude = lon,
+            searchRadius = searchRadius,
         )
     }
 }
