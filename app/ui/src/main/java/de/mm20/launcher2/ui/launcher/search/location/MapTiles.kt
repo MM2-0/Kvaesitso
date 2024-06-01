@@ -479,6 +479,8 @@ private object MockLocation : Location {
 
     override val phoneNumber: String = "+49 1234567"
 
+    override val emailAddress: String = "abc@de.fg"
+
     override fun overrideLabel(label: String): SavableSearchable = TODO()
 
     override fun launch(context: Context, options: Bundle?): Boolean =
@@ -504,4 +506,6 @@ private object MockLocation : Location {
 
     override val userRating: Float
         get() = 0.9f
+
+    override val userRatingCount: Int  = 553
 }

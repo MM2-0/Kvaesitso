@@ -15,20 +15,11 @@ import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LocationIcon
-import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.serialization.Json
-import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
-import org.json.JSONArray
-import org.json.JSONObject
-import java.time.DayOfWeek
-import java.time.Duration
-import java.time.LocalTime
 
 @Serializable
 internal data class SerializedLocation(
@@ -41,7 +32,9 @@ internal data class SerializedLocation(
     val address: Address? = null,
     val websiteUrl: String? = null,
     val phoneNumber: String? = null,
+    val emailAddress: String? = null,
     val userRating: Float? = null,
+    val userRatingCount: Int? = null,
     val openingSchedule: OpeningSchedule? = null,
     val timestamp: Long? = null,
     val departures: List<Departure>? = null,
@@ -65,7 +58,9 @@ internal class OsmLocationSerializer : SearchableSerializer {
                 address = searchable.address,
                 websiteUrl = searchable.websiteUrl,
                 phoneNumber = searchable.phoneNumber,
+                emailAddress = searchable.emailAddress,
                 userRating = searchable.userRating,
+                userRatingCount = searchable.userRatingCount,
                 openingSchedule = searchable.openingSchedule,
                 timestamp = searchable.timestamp,
                 departures = searchable.departures,
@@ -95,6 +90,7 @@ internal class OsmLocationDeserializer(
             address = json.address,
             websiteUrl = json.websiteUrl,
             phoneNumber = json.phoneNumber,
+            emailAddress = json.emailAddress,
             userRating = json.userRating,
             openingSchedule = json.openingSchedule,
             timestamp = json.timestamp ?: return null,
@@ -129,7 +125,9 @@ internal class PluginLocationSerializer : SearchableSerializer {
                         address = searchable.address,
                         websiteUrl = searchable.websiteUrl,
                         phoneNumber = searchable.phoneNumber,
+                        emailAddress = searchable.emailAddress,
                         userRating = searchable.userRating,
+                        userRatingCount = searchable.userRatingCount,
                         openingSchedule = searchable.openingSchedule,
                         timestamp = searchable.timestamp,
                         departures = searchable.departures,
@@ -180,7 +178,9 @@ internal class PluginLocationDeserializer(
                     address = json.address,
                     websiteUrl = json.websiteUrl,
                     phoneNumber = json.phoneNumber,
+                    emailAddress = json.emailAddress,
                     userRating = json.userRating,
+                    userRatingCount = json.userRatingCount,
                     openingSchedule = json.openingSchedule,
                     timestamp = json.timestamp ?: return null,
                     departures = json.departures,
