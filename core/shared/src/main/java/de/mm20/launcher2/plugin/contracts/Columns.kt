@@ -41,10 +41,10 @@ internal class ColumnsScopeImpl(
                         val enumConstants = column.type.java.enumConstants
                         return enumConstants?.find { it.toString() == value } as T
                     }
-                    Json.Lenient.decodeFromString(
+                    return Json.Lenient.decodeFromString(
                         serializer(column.type.java),
                         cursor.getString(index)
-                    )
+                    ) as T
                 }
             }
         } catch (e: Exception) {
