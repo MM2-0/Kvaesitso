@@ -29,7 +29,7 @@ abstract class LocationProvider(
             LocationColumns.Latitude.set(it.latitude)
             LocationColumns.Longitude.set(it.longitude)
             LocationColumns.FixMeUrl.set(it.fixMeUrl)
-            LocationColumns.Icon.set(it.icon?.name)
+            LocationColumns.Icon.set(it.icon)
             LocationColumns.Category.set(it.category)
             LocationColumns.Address.set(it.address)
             LocationColumns.OpeningSchedule.set(it.openingSchedule)
