@@ -7,6 +7,7 @@ enum class LocationIcon {
     CarWash,
     ChargingStation,
     GasStation,
+    GenericTransit,
     Parking,
     Bus,
     Tram,
