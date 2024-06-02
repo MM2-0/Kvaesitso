@@ -310,159 +310,164 @@ fun PluginSettingsScreen(pluginId: String) {
                 )
             }
             AnimatedVisibility(pluginPackage?.enabled == true && hasPermission == true) {
-                if (filePlugins.isNotEmpty()) {
-                    PreferenceCategory(
-                        stringResource(R.string.plugin_type_filesearch),
-                        iconPadding = false,
-                    ) {
-                        for (plugin in filePlugins) {
-                            val state = plugin.state
-                            if (state is PluginState.SetupRequired) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
-                                    icon = Icons.Rounded.Info,
-                                    primaryAction = {
-                                        TextButton(onClick = {
-                                            try {
-                                                state.setupActivity.sendWithBackgroundPermission()
-                                            } catch (e: PendingIntent.CanceledException) {
-                                                CrashReporter.logException(e)
+                Column {
+                    if (filePlugins.isNotEmpty()) {
+                        PreferenceCategory(
+                            stringResource(R.string.plugin_type_filesearch),
+                            iconPadding = false,
+                        ) {
+                            for (plugin in filePlugins) {
+                                val state = plugin.state
+                                if (state is PluginState.SetupRequired) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = state.message
+                                            ?: stringResource(R.string.plugin_state_setup_required),
+                                        icon = Icons.Rounded.Info,
+                                        primaryAction = {
+                                            TextButton(onClick = {
+                                                try {
+                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                } catch (e: PendingIntent.CanceledException) {
+                                                    CrashReporter.logException(e)
+                                                }
+                                            }) {
+                                                Text(stringResource(R.string.plugin_action_setup))
                                             }
-                                        }) {
-                                            Text(stringResource(R.string.plugin_action_setup))
                                         }
-                                    }
-                                )
-                            } else if (state is PluginState.Error) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = stringResource(R.string.plugin_state_error),
-                                    icon = Icons.Rounded.Error,
-                                    color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                } else if (state is PluginState.Error) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = stringResource(R.string.plugin_state_error),
+                                        icon = Icons.Rounded.Error,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                }
+                                SwitchPreference(
+                                    title = plugin.plugin.label,
+                                    enabled = enabledFileSearchPlugins != null && state is PluginState.Ready,
+                                    summary = (state as? PluginState.Ready)?.text
+                                        ?: (state as? PluginState.SetupRequired)?.message
+                                        ?: plugin.plugin.description,
+                                    value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                    onValueChanged = {
+                                        viewModel.setFileSearchPluginEnabled(
+                                            plugin.plugin.authority,
+                                            it
+                                        )
+                                    },
+                                    iconPadding = false,
                                 )
                             }
-                            SwitchPreference(
-                                title = plugin.plugin.label,
-                                enabled = enabledFileSearchPlugins != null && state is PluginState.Ready,
-                                summary = (state as? PluginState.Ready)?.text
-                                    ?: (state as? PluginState.SetupRequired)?.message
-                                    ?: plugin.plugin.description,
-                                value = enabledFileSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
-                                onValueChanged = {
-                                    viewModel.setFileSearchPluginEnabled(
-                                        plugin.plugin.authority,
-                                        it
-                                    )
-                                },
-                                iconPadding = false,
-                            )
                         }
                     }
-                }
-                if (locationPlugins.isNotEmpty()) {
-                    PreferenceCategory(
-                        stringResource(R.string.plugin_type_locationsearch),
-                        iconPadding = false,
-                    ) {
-                        for (plugin in locationPlugins) {
-                            val state = plugin.state
-                            if (state is PluginState.SetupRequired) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
-                                    icon = Icons.Rounded.Info,
-                                    primaryAction = {
-                                        TextButton(onClick = {
-                                            try {
-                                                state.setupActivity.sendWithBackgroundPermission()
-                                            } catch (e: PendingIntent.CanceledException) {
-                                                CrashReporter.logException(e)
+                    if (locationPlugins.isNotEmpty()) {
+                        PreferenceCategory(
+                            stringResource(R.string.plugin_type_locationsearch),
+                            iconPadding = false,
+                        ) {
+                            for (plugin in locationPlugins) {
+                                val state = plugin.state
+                                if (state is PluginState.SetupRequired) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = state.message
+                                            ?: stringResource(R.string.plugin_state_setup_required),
+                                        icon = Icons.Rounded.Info,
+                                        primaryAction = {
+                                            TextButton(onClick = {
+                                                try {
+                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                } catch (e: PendingIntent.CanceledException) {
+                                                    CrashReporter.logException(e)
+                                                }
+                                            }) {
+                                                Text(stringResource(R.string.plugin_action_setup))
                                             }
-                                        }) {
-                                            Text(stringResource(R.string.plugin_action_setup))
                                         }
-                                    }
-                                )
-                            } else if (state is PluginState.Error) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = stringResource(R.string.plugin_state_error),
-                                    icon = Icons.Rounded.Error,
-                                    color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                } else if (state is PluginState.Error) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = stringResource(R.string.plugin_state_error),
+                                        icon = Icons.Rounded.Error,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                }
+                                SwitchPreference(
+                                    title = plugin.plugin.label,
+                                    enabled = enabledLocationSearchPlugins != null && state is PluginState.Ready,
+                                    summary = (state as? PluginState.Ready)?.text
+                                        ?: (state as? PluginState.SetupRequired)?.message
+                                        ?: plugin.plugin.description,
+                                    value = enabledLocationSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                    onValueChanged = {
+                                        viewModel.setLocationSearchPluginEnabled(
+                                            plugin.plugin.authority,
+                                            it
+                                        )
+                                    },
+                                    iconPadding = false,
                                 )
                             }
-                            SwitchPreference(
-                                title = plugin.plugin.label,
-                                enabled = enabledLocationSearchPlugins != null && state is PluginState.Ready,
-                                summary = (state as? PluginState.Ready)?.text
-                                    ?: (state as? PluginState.SetupRequired)?.message
-                                    ?: plugin.plugin.description,
-                                value = enabledLocationSearchPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
-                                onValueChanged = {
-                                    viewModel.setLocationSearchPluginEnabled(
-                                        plugin.plugin.authority,
-                                        it
-                                    )
-                                },
-                                iconPadding = false,
-                            )
                         }
                     }
-                }
-                if (weatherPlugins.isNotEmpty()) {
-                    PreferenceCategory(
-                        stringResource(R.string.plugin_type_weather),
-                        iconPadding = false,
-                    ) {
-                        for (plugin in weatherPlugins) {
-                            val state = plugin.state
-                            if (state is PluginState.SetupRequired) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = state.message ?: stringResource(R.string.plugin_state_setup_required),
-                                    icon = Icons.Rounded.Info,
-                                    primaryAction = {
-                                        TextButton(onClick = {
-                                            try {
-                                                state.setupActivity.sendWithBackgroundPermission()
-                                            } catch (e: PendingIntent.CanceledException) {
-                                                CrashReporter.logException(e)
+                    if (weatherPlugins.isNotEmpty()) {
+                        PreferenceCategory(
+                            stringResource(R.string.plugin_type_weather),
+                            iconPadding = false,
+                        ) {
+                            for (plugin in weatherPlugins) {
+                                val state = plugin.state
+                                if (state is PluginState.SetupRequired) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = state.message
+                                            ?: stringResource(R.string.plugin_state_setup_required),
+                                        icon = Icons.Rounded.Info,
+                                        primaryAction = {
+                                            TextButton(onClick = {
+                                                try {
+                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                } catch (e: PendingIntent.CanceledException) {
+                                                    CrashReporter.logException(e)
+                                                }
+                                            }) {
+                                                Text(stringResource(R.string.plugin_action_setup))
                                             }
-                                        }) {
-                                            Text(stringResource(R.string.plugin_action_setup))
                                         }
+                                    )
+                                } else if (state is PluginState.Error) {
+                                    Banner(
+                                        modifier = Modifier.padding(16.dp),
+                                        text = stringResource(R.string.plugin_state_error),
+                                        icon = Icons.Rounded.Error,
+                                        color = MaterialTheme.colorScheme.errorContainer,
+                                    )
+                                }
+                                Preference(
+                                    title = plugin.plugin.label,
+                                    enabled = state is PluginState.Ready && weatherProviderId != plugin.plugin.authority,
+                                    iconPadding = false,
+                                    summary = if (weatherProviderId != plugin.plugin.authority) {
+                                        stringResource(R.string.plugin_weather_provider_enable)
+                                    } else {
+                                        stringResource(R.string.plugin_weather_provider_enabled)
+                                    },
+                                    onClick = {
+                                        viewModel.setWeatherProvider(plugin.plugin.authority)
                                     }
-                                )
-                            } else if (state is PluginState.Error) {
-                                Banner(
-                                    modifier = Modifier.padding(16.dp),
-                                    text = stringResource(R.string.plugin_state_error),
-                                    icon = Icons.Rounded.Error,
-                                    color = MaterialTheme.colorScheme.errorContainer,
                                 )
                             }
                             Preference(
-                                title = plugin.plugin.label,
-                                enabled = state is PluginState.Ready && weatherProviderId != plugin.plugin.authority,
-                                iconPadding = false,
-                                summary = if (weatherProviderId != plugin.plugin.authority) {
-                                    stringResource(R.string.plugin_weather_provider_enable)
-                                } else {
-                                    stringResource(R.string.plugin_weather_provider_enabled)
-                                },
+                                title = stringResource(R.string.widget_config_weather_integration_settings),
+                                icon = Icons.AutoMirrored.Rounded.OpenInNew,
                                 onClick = {
-                                    viewModel.setWeatherProvider(plugin.plugin.authority)
+                                    navController?.navigate("settings/integrations/weather")
                                 }
                             )
                         }
-                        Preference(
-                            title = stringResource(R.string.widget_config_weather_integration_settings),
-                            icon = Icons.AutoMirrored.Rounded.OpenInNew,
-                            onClick = {
-                                navController?.navigate("settings/integrations/weather")
-                            }
-                        )
                     }
                 }
             }
