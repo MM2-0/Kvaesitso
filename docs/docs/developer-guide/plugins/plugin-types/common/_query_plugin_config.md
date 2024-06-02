@@ -14,7 +14,7 @@ Search plugins have the following configuration properties:
       this search result in its own internal database. The result can be restored without querying
       the plugin again. This strategy is very easy to implement. The downside is, that results
       cannot be updated at a later point in time.
-    - **`StorageStrategy.Deferred`** (default): The launcher stores all relevant information in its
-      own internal database, like [StoreCopy]. A fresh copy is fetched from the plugin provider when
+    - **`StorageStrategy.Deferred`** : The launcher stores all relevant information in its
+      own internal database, like `StoreCopy`. A fresh copy is fetched from the plugin provider when
       the user opens the search result's detail view. This allows the plugin provider to update the
-      search result at a later point in time, without the time constraints of [StoreReference].
+      search result at a later point in time, without the time constraints of `StoreReference`.

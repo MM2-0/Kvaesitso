@@ -6,35 +6,30 @@ class:
 
 ```kt
 class MyFileSearchPlugin : FileProvider(
-    SearchPluginConfig()
+    QueryPluginConfig()
 )
 
 ```
 
 In the super constructor call, pass
-a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-search-plugin-config/index.html" target="_blank">`SearchPluginConfig`</a>
+a <a href="/reference/core/shared/de.mm20.launcher2.plugin.config/-query-plugin-config/index.html" target="_blank">`QueryPluginConfig`</a>
 object.
 
 ## Plugin config
 
-<!--@include: ./common/_search_plugin_config.md-->
+<!--@include: ./common/_query_plugin_config.md-->
 
 ## Search files
 
 To implement file search, override
 
 ```kt
-suspend fun search(query: String, allowNetwork: Boolean): List<File>
+suspend fun search(query: String, params: SearchParams): List<File>
 ```
 
 - `query` is the search term
-- `allowNetwork` is a flag that indicates whether the user has enabled online search for this query.
-  Plugins are generally advised to respect this request. This flag exists mainly for privacy
-  reasons: the majority of searches target offline results (like apps, or contacts). Sending every
-  single search request to external servers is overkill and can be a privacy issue. (Besides, it's
-  not very nice to overload servers with unnecessary requests.) To reduce the amount of data that is
-  leaked to external servers, users can control, whether a search should include online results or
-  not.
+
+<!--@include: ./common/_search_params.md-->
 
 `search` returns a list of `File`s. The list can be empty if no results were found.
 
@@ -66,12 +61,16 @@ If you have set `config.storageStrategy` to `StorageStrategy.StoreReference`
 or `StorageStrategy.Deferred`, you must override
 
 ```kt
-suspend fun get(id: String): File?
+suspend fun get(id: String, params: GetParams): File?
 ```
 
 This method is used to lookup a file by its `id`. If the file is no longer available, it should
 return `null`. In this case, the launcher will remove it from its database. If the file is
 temporarily unavailable, an exception should be thrown.
+
+- `id` is the ID of the file that is being requested
+
+<!--@include: ./common/_get_params.md-->
 
 ## Plugin state
 
