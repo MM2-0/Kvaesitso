@@ -27,7 +27,7 @@ data class Departure(
      */
     val line: String,
     val lastStop: String?,
-    val type: LineType?,
+    val type: LineType? = null,
     @Serializable(with = ColorSerializer::class)
     val lineColor: Color?,
 )
