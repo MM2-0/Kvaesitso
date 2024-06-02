@@ -29,7 +29,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -92,6 +92,7 @@ import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.roundToIntRect
 import androidx.compose.ui.unit.times
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -422,6 +423,9 @@ fun LocationItem(
                                             Icon(Icons.AutoMirrored.Rounded.NavigateNext, null)
                                         }
                                     } else {
+                                        val longestLine = remember(departures) {
+                                            departures.maxOfOrNull { it.line.length }
+                                        }
                                         LazyColumn(
                                             state = listState,
                                             modifier = modifier
@@ -435,6 +439,7 @@ fun LocationItem(
                                                 departures,
                                                 key = { idx, _ -> idx }) { idx, it ->
                                                 it.LazyColumnPart(
+                                                    lineWidth = longestLine,
                                                     Modifier
                                                         .fillMaxWidth()
                                                         .graphicsLayer {
@@ -924,7 +929,7 @@ fun Departure.LineIcon(
             modifier = Modifier
                 .padding(end = 2.dp)
                 .size(16.dp),
-            )
+        )
         MarqueeText(
             text = line,
             style = MaterialTheme.typography.labelSmall,
@@ -938,13 +943,14 @@ fun Departure.LineIcon(
             velocity = 20.dp,
             modifier = Modifier
                 .wrapContentSize()
-                .width(24.dp)
+                .widthIn(max = 34.dp)
         )
     }
 }
 
 @Composable
 fun Departure.LazyColumnPart(
+    lineWidth: Int?,
     modifier: Modifier
 ) {
     Row(
@@ -957,7 +963,14 @@ fun Departure.LazyColumnPart(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth(0.8f)
         ) {
-            LineIcon(Modifier.padding(end = 8.dp))
+            LineIcon(
+                Modifier
+                    .padding(end = 8.dp)
+                    .widthIn(
+                        min = if (lineWidth == null) 0.dp
+                        else max(64.dp, lineWidth * 8.dp)
+                    )
+            )
             if (lastStop != null) {
                 MarqueeText(
                     text = lastStop!!,
