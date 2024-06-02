@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.DirectionsCar
+import androidx.compose.material.icons.rounded.DirectionsTransit
 import androidx.compose.material.icons.rounded.Discount
 import androidx.compose.material.icons.rounded.DownhillSkiing
 import androidx.compose.material.icons.rounded.ElectricScooter
@@ -189,6 +190,7 @@ interface Location : SavableSearchable {
             LocationIcon.Motorcycle -> Icons.Rounded.Motorcycle to R.color.blue
             LocationIcon.ElectricScooter -> Icons.Rounded.ElectricScooter to R.color.blue
             LocationIcon.Taxi -> Icons.Rounded.LocalTaxi to R.color.blue
+            LocationIcon.GenericTransit -> Icons.Rounded.DirectionsTransit to R.color.blue
 
             // cyan: art, culture, entertainment
             LocationIcon.ArtGallery -> Icons.Rounded.Palette to R.color.cyan
