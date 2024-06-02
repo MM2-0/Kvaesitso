@@ -1,8 +1,10 @@
 package de.mm20.launcher2.serialization
 
+import android.util.Log
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.PolymorphicSerializer
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.json.JsonDecoder
@@ -36,9 +38,14 @@ object OpeningScheduleSerializer : KSerializer<OpeningSchedule> {
         if ("openingHours" in jsonElement.jsonObject.keys &&
             /* backwards compatibility */ !jsonElement.jsonObject["openingHours"]!!.jsonArray.isEmpty()
         ) {
-            return decoder.json.decodeFromJsonElement<OpeningSchedule.Hours>(
-                jsonElement
-            )
+            return try {
+                decoder.json.decodeFromJsonElement<OpeningSchedule.Hours>(
+                    jsonElement
+                )
+            } catch (e: SerializationException) {
+                Log.e("MM20", "Failed to deserialize OpeningSchedule.Hours", e)
+                return OpeningSchedule.Hours(openingHours = emptyList())
+            }
         }
 
         // fallback in case we receive data which was serialized before introducing OpeningScheduleSerializer.
