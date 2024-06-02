@@ -68,7 +68,6 @@ import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.LocationIcon
-import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import de.mm20.launcher2.ui.ktx.DegreesConverter
 import de.mm20.launcher2.ui.ktx.contrast
@@ -76,14 +75,12 @@ import de.mm20.launcher2.ui.ktx.hue
 import de.mm20.launcher2.ui.ktx.hueRotate
 import de.mm20.launcher2.ui.ktx.invert
 import de.mm20.launcher2.ui.locals.LocalDarkTheme
-import kotlinx.collections.immutable.toImmutableList
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.GlobalContext
 import org.koin.core.context.startKoin
 import java.time.Duration
-import java.time.LocalTime
 import java.time.ZonedDateTime
 import kotlin.math.PI
 import kotlin.math.ceil
@@ -499,7 +496,7 @@ private object MockLocation : Location {
             Duration.ofMinutes(1),
             "B2",
             "heaven",
-            LineType.BUS,
+            LineType.Bus,
             android.graphics.Color.valueOf(0xFAFAFAFA)
         )
     )

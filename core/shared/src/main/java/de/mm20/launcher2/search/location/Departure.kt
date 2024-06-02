@@ -17,6 +17,8 @@ data class Departure(
     val time: ZonedDateTime,
     /**
      * The delay of the departure.
+     * `Duration.ZERO` if the departure is on time,
+     * `null` if no real-time data is available.
      */
     @Serializable(with = DurationSerializer::class)
     val delay: Duration?,
@@ -31,12 +33,15 @@ data class Departure(
 )
 
 enum class LineType {
-    BUS,
-    TRAM,
-    SUBWAY,
-    COMMUTER_RAIL,
-    TRAIN,
-    HIGH_SPEED_RAIL,
-    FERRY,
-    CABLE_CAR,
+    Bus,
+    Tram,
+    Subway,
+    CommuterTrain,
+    RegionalTrain,
+    Train,
+    HighSpeedTrain,
+    Boat,
+    Monorail,
+    CableCar,
+    Airplane,
 }

@@ -30,7 +30,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,6 +40,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material.icons.automirrored.rounded.NavigateNext
 import androidx.compose.material.icons.automirrored.rounded.OpenInNew
+import androidx.compose.material.icons.rounded.AirplanemodeActive
 import androidx.compose.material.icons.rounded.BugReport
 import androidx.compose.material.icons.rounded.Commute
 import androidx.compose.material.icons.rounded.DirectionsBoat
@@ -53,6 +53,7 @@ import androidx.compose.material.icons.rounded.Navigation
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.material.icons.rounded.StarOutline
+import androidx.compose.material.icons.rounded.Subway
 import androidx.compose.material.icons.rounded.Train
 import androidx.compose.material.icons.rounded.Tram
 import androidx.compose.material.icons.rounded.Visibility
@@ -907,14 +908,15 @@ fun Departure.LineIcon(
     ) {
         Icon(
             imageVector = when (type) {
-                LineType.BUS -> Icons.Rounded.DirectionsBus
-                LineType.TRAM -> Icons.Rounded.Tram
-                LineType.SUBWAY -> Icons.Rounded.DirectionsTransit
-                LineType.COMMUTER_RAIL -> Icons.Rounded.DirectionsRailway
-                LineType.TRAIN -> Icons.Rounded.Train
-                LineType.HIGH_SPEED_RAIL -> Icons.Rounded.Train
-                LineType.FERRY -> Icons.Rounded.DirectionsBoat
-                LineType.CABLE_CAR -> Icons.Rounded.CableCar
+                LineType.Bus -> Icons.Rounded.DirectionsBus
+                LineType.Tram -> Icons.Rounded.Tram
+                LineType.Subway -> Icons.Rounded.Subway
+                LineType.Monorail -> Icons.Rounded.DirectionsTransit
+                LineType.CommuterTrain -> Icons.Rounded.DirectionsRailway
+                LineType.Train, LineType.RegionalTrain, LineType.HighSpeedTrain -> Icons.Rounded.Train
+                LineType.Boat -> Icons.Rounded.DirectionsBoat
+                LineType.CableCar -> Icons.Rounded.CableCar
+                LineType.Airplane -> Icons.Rounded.AirplanemodeActive
                 null -> Icons.Rounded.Commute
             },
             contentDescription = type?.name, // TODO localize (maybe) with ?.let{ stringResource("departure_line_type_$it") }
