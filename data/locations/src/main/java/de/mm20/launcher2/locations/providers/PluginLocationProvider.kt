@@ -98,8 +98,8 @@ internal class PluginLocationProvider(
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
-            .path(LocationPluginContract.Paths.Get)
-            .appendQueryParameter(LocationPluginContract.GetParams.Id, id)
+            .path(SearchPluginContract.Paths.Root)
+            .appendPath(id)
             .build()
 
         val cancellationSignal = CancellationSignal()
