@@ -186,30 +186,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                 pluginPackage?.label ?: "",
                                 style = MaterialTheme.typography.titleLarge
                             )
-                            if (pluginPackage?.isOfficial == true) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier
-                                        .padding(top = 4.dp)
-                                        .background(
-                                            MaterialTheme.colorScheme.secondary,
-                                            shape = MaterialTheme.shapes.medium,
-                                        )
-                                        .padding(4.dp)
-                                ) {
-                                    Text(
-                                        stringResource(R.string.plugin_badge_official),
-                                        modifier = Modifier.padding(horizontal = 4.dp),
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = MaterialTheme.colorScheme.onSecondary,
-                                    )
-                                    Icon(
-                                        Icons.Rounded.Verified, null,
-                                        modifier = Modifier.size(16.dp),
-                                        tint = MaterialTheme.colorScheme.onSecondary,
-                                    )
-                                }
-                            } else if (pluginPackage?.author != null) {
+                            if (pluginPackage?.author != null) {
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
@@ -220,6 +197,15 @@ fun PluginSettingsScreen(pluginId: String) {
                                         style = MaterialTheme.typography.labelMedium,
                                         color = MaterialTheme.colorScheme.secondary,
                                     )
+                                    if (pluginPackage?.isVerified == true) {
+                                        Icon(
+                                            Icons.Rounded.Verified, null,
+                                            modifier = Modifier
+                                                .padding(start = 4.dp)
+                                                .size(16.dp),
+                                            tint = MaterialTheme.colorScheme.secondary,
+                                        )
+                                    }
                                 }
                             }
                         }
