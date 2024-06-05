@@ -2,18 +2,18 @@
 <resources>
     <string name="menu_share_store_link">%1$s link</string>
     <string name="menu_uninstall">Verwijderen</string>
-    <string name="menu_favorites_pin">Voeg toe aan favorieten</string>
-    <string name="menu_favorites_unpin">Verwijder uit favorieten</string>
+    <string name="menu_favorites_pin">Toevoegen aan favorieten</string>
+    <string name="menu_favorites_unpin">Verwijderen uit favorieten</string>
     <string name="menu_back">Terug</string>
-    <string name="menu_app_info">Applicatieinfo</string>
-    <string name="menu_launch">Start</string>
+    <string name="menu_app_info">App-info</string>
+    <string name="menu_launch">Starten</string>
     <string name="menu_customize">Aanpassen</string>
     <string name="menu_hide">Verbergen</string>
     <string name="menu_unhide">Niet verbergen</string>
     <string name="action_undo">Ongedaan maken</string>
     <string name="menu_delete">Verwijderen</string>
-    <string name="menu_contacts_open_externally">Openen in contactenapp</string>
-    <string name="menu_calendar_open_externally">Openen in kalenderapp</string>
+    <string name="menu_contacts_open_externally">Openen in contacten-app</string>
+    <string name="menu_calendar_open_externally">Openen in kalender-app</string>
     <string name="search_bar_placeholder">Zoeken</string>
     <string name="app_info_version">Versie %1$s</string>
     <string name="settings">Instellingen</string>
@@ -42,7 +42,7 @@
     <string name="file_meta_type">Type: %1$s</string>
     <string name="file_meta_dimensions">Afmetingen: %1$s</string>
     <string name="file_meta_app_name">Applicatienaam: %1$s</string>
-    <string name="file_meta_app_min_sdk">Min SDK versie: %1$s</string>
+    <string name="file_meta_app_min_sdk">Min SDK-versie: %1$s</string>
     <string name="file_meta_owner">Eigenaar: %1$s</string>
     <string name="file_meta_location">Locatie: %1$s</string>
     <string name="file_type_directory">Map</string>
@@ -63,7 +63,7 @@
     <string name="file_type_generic">%1$s bestand</string>
     <string name="alert_delete_file">Het bestand %1$s wordt definitief verwijderd. Doorgaan\?</string>
     <string name="alert_delete_shortcut">De snelkoppeling %1$s wordt definitief verwijderd. Doorgaan\?</string>
-    <string name="error_activity_not_found">Kon %1$s niet openen</string>
+    <string name="error_activity_not_found">Kan %1$s niet openen</string>
     <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="default_websearch_2_name">YouTube</string>
     <string name="default_websearch_3_name">Google Play</string>
@@ -85,7 +85,7 @@
     <string name="installation_in_progress">Aan het installeren...(%1$s)</string>
     <string name="easter_egg_1">Er zijn hier geen paaseieren, tenzij je ze zelf hebt meegebracht.</string>
     <string name="easter_egg_3">Ik ga het niet meer herhalen: hier zijn geen paaseieren verstopt</string>
-    <string name="easter_egg_text">Zucht, je hebt me gevonden. Proficiat. Was het het waard\?</string>
+    <string name="easter_egg_text">Nu, je hebt me gevonden. Proficiat. Was het het waard?</string>
     <string name="close">Sluiten</string>
     <string name="save">Opslaan</string>
     <string name="turn_off">Uitzetten</string>
@@ -124,7 +124,7 @@
     <string name="file_meta_app_version">Versie: %1$s</string>
     <string name="widget_add_external">Meer</string>
     <string name="file_meta_app_pkgname">Pakketnaam: %1$s</string>
-    <string name="easter_egg_2">Stop alsjeblieft, dit is tijdverlies</string>
+    <string name="easter_egg_2">Stop alsjeblieft, dit is tijdverspilling</string>
     <string name="file_type_source_code">Broncodebestand</string>
     <string name="edit_favorites_dialog_unpinned">Niet vastgezet - regelmatig gebruikt</string>
     <string name="file_type_drawing">Tekening</string>
@@ -157,7 +157,7 @@
     <string name="weather_condition_heavysleetshowersandthunder">Zware buien van smeltende sneeuw en donder</string>
     <string name="weather_condition_lightssleetshowersandthunder">Lichte smeltende sneeuw en donder</string>
     <string name="weather_condition_heavysleetshowers">Zware buien van smeltende sneeuw</string>
-    <string name="weather_condition_thunder">Onweersbui</string>
+    <string name="weather_condition_thunder">Onweer</string>
     <string name="weather_condition_rainshowersandthunder">Regenbuien en donder</string>
     <string name="weather_condition_clearsky">Heldere lucht</string>
     <string name="weather_condition_rain">Regen</string>
@@ -793,4 +793,25 @@
     <string name="preference_location_managed_summary">De locatie voor deze provider wordt beheerd door de app van de plug-in</string>
     <string name="preference_customize_filter_bar">Filterbalk aanpassen</string>
     <string name="preference_customize_filter_bar_summary">Aanpassen welke items getoond worden in de filterbalk</string>
+    <string name="preference_plugin_enable">Plug-in activeren</string>
+    <string name="widget_pick_widget">Widget kiezen</string>
+    <string name="length_unit">Eenheid van lengte</string>
+    <string name="preference_search_locations_summary">Zoek in de omgeving naar winkels en andere plaatsen</string>
+    <string name="preference_search_locations_radius">Zoek-radius</string>
+    <string name="preference_search_locations_show_map">Kaart</string>
+    <string name="widget_config_appwidget_resize">Grootte aanpassen</string>
+    <string name="preference_search_location_custom_overpass_url">Overpass-URL</string>
+    <string name="preference_search_locations_hide_uncategorized">Ongecategoriseerde plaatsen verbergen</string>
+    <string name="preference_search_locations_hide_uncategorized_summary">Alleen resultaten met welomschreven categorieën, zoals cafés of restaurants weergeven</string>
+    <string name="preference_search_locations_show_map_summary">Kaartvoorbeeld voor plaatsen weergeven</string>
+    <string name="preference_search_locations_theme_map">Kaart-thema</string>
+    <string name="search_action_share">Delen</string>
+    <string name="poi_category_railway_stop">Treinstation</string>
+    <string name="preference_search_locations_show_position_on_map_summary">Eigen locatie op de kaart weergeven</string>
+    <string name="weather_condition_thunderstorm">Onweersbui</string>
+    <string name="weather_condition_haze">Heiig</string>
+    <string name="preference_search_locations_theme_map_summary">Kleurenschema van de launcher op de kaart toepassen</string>
+    <string name="preference_search_locations_show_position_on_map">Eigen positie weergeven</string>
+    <string name="imperial">Brits-Amerikaans</string>
+    <string name="metric">Metrisch</string>
 </resources>
