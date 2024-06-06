@@ -16,7 +16,7 @@
     <string name="menu_calendar_open_externally">เปิดในแอปปฏิทิน</string>
     <string name="app_info_version">เวอร์ชั่น %1$s</string>
     <string name="help">ช่วยเหลือ</string>
-    <string name="wallpaper">วอลเปเปอร์</string>
+    <string name="wallpaper">ภาพพื้นหลัง</string>
     <string name="wind_north_east">ตะวันออกเฉียงเหนือ</string>
     <string name="wind_east_north_east">ตะวันออกค่อนไปทางเหนือ</string>
     <string name="wind_east">ตะวันออก</string>
@@ -147,7 +147,7 @@
     <string name="preference_custom_colors_a1">สีหลัก</string>
     <string name="preference_custom_colors_a3">สีรองขั้นที่สาม</string>
     <string name="preference_custom_colors_n1">สีกลางหลัก</string>
-    <string name="preference_custom_colors_error">สีข้อผิดพลาด</string>
+    <string name="preference_custom_colors_error">ข้อผิดพลาด</string>
     <string name="preference_custom_colors_corepalette">จานสี</string>
     <string name="preference_custom_colors_advanced_mode">โหมดขั้นสูง</string>
     <string name="preference_custom_colors_simple_mode">โหมดง่าย</string>
@@ -190,7 +190,7 @@
     <string name="preference_icon_shape_circle">วงกลม</string>
     <string name="preference_icon_shape_teardrop">หยดน้ำ</string>
     <string name="preference_icon_shape_hexagon">หกเหลี่ยม</string>
-    <string name="preference_screen_integrations">การเชื่อมโยง</string>
+    <string name="preference_screen_integrations">การเชื่อมต่อ</string>
     <string name="preference_theme_system">ทำตามระบบ</string>
     <string name="preference_icon_pack_summary_empty">ไม่ได้ติดตั้งชุดไอคอนใด</string>
     <string name="preference_status_bar_icons">ไอคอนบนแถบสถานะ</string>
@@ -206,11 +206,11 @@
     <string name="preference_signin_user">ลงชื่อเข้าใช้เป็น %1$s</string>
     <string name="preference_signin_logout">ออกจากระบบ</string>
     <string name="preference_summary_not_logged_in">คุณยังไม่ได้ลงชื่อเข้าใช้</string>
-    <string name="preference_category_wallpaper">วอลเปเปอร์</string>
-    <string name="preference_blur_wallpaper_summary">ใช้เอฟเฟกต์ทำให้วอลเปเปอร์ดูมัว</string>
-    <string name="preference_blur_wallpaper">ปรับวอลเปเปอร์ให้ดูมัว</string>
+    <string name="preference_category_wallpaper">ภาพพื้นหลัง</string>
+    <string name="preference_blur_wallpaper_summary">ใช้เอฟเฟกต์ทำให้ภาพพื้นหลังดูมัว</string>
+    <string name="preference_blur_wallpaper">ปรับภาพพื้นหลังให้ดูมัว</string>
     <string name="preference_blur_wallpaper_unsupported">ไม่รองรับบนอุปกรณ์นี้</string>
-    <string name="preference_wallpaper_summary">เลือกวอลเปเปอร์</string>
+    <string name="preference_wallpaper_summary">เลือกภาพพื้นหลัง</string>
     <string name="preference_category_badges">แบดจ์</string>
     <string name="preference_suspended_badges_summary">แสดงแบดจ์สำหรับแอปที่ถูกพักการใช้งาน</string>
     <string name="preference_suspended_badges">แอปที่ถูกพักการใช้งาน</string>
@@ -375,7 +375,7 @@
     <string name="widget_config_appwidget_borderless">ไม่มีขอบ</string>
     <string name="widget_config_appwidget_configure">ปรับแต่งวิดเจ็ต</string>
     <string name="widget_config_appwidget_resize_hint">ลากเพื่อปรับขนาด</string>
-    <string name="widget_config_music_integration_settings">การตั้งค่าการเชื่อมโยงวิดเจ็ตดนตรี</string>
+    <string name="widget_config_music_integration_settings">การตั้งค่าการเชื่อมต่อกับวิดเจ็ตดนตรี</string>
     <string name="note_widget_link_file">ลิงก์ไปยังไฟล์</string>
     <string name="note_widget_linked_file_summary">ลิงก์ไปที่ไฟล์ %1$s แล้ว</string>
     <string name="note_widget_action_unlink_file">เลิกลิงก์</string>
@@ -515,9 +515,9 @@
     <string name="weather_condition_lightrainandthunder">ฝนตกปรอยๆและท้องฟ้าคำราม</string>
     <string name="preference_screen_integrations_summary">จัดการบัญชีและบริการที่เชื่อมต่อ</string>
     <string name="weather_condition_heavysnowshowers">หิมะตกหนักเป็นหย่อมๆ</string>
-    <string name="preference_dim_wallpaper">ปรับวอลเปเปอร์ให้มืดลง</string>
+    <string name="preference_dim_wallpaper">ปรับภาพพื้นหลังให้มืดลง</string>
     <string name="weather_condition_heavyrainshowers">ฝนตกหนักเป็นหย่อมๆ</string>
-    <string name="preference_dim_wallpaper_summary">ปรับวอลเปเปอร์ให้มืดลงเมื่อใช้ธีมมืด</string>
+    <string name="preference_dim_wallpaper_summary">ปรับภาพพื้นหลังให้มืดลงเมื่อใช้ธีมมืด</string>
     <string name="weather_condition_sleetandthunder">ฝนน้ำแข็งและท้องฟ้าคำราม</string>
     <string name="preference_notification_badges">แบดจ์การแจ้งเตือน</string>
     <string name="weather_condition_lightssnowshowersandthunder">หิมะตกปรอยๆเป็นหย่อมๆและท้องฟ้าคำราม</string>
@@ -564,7 +564,7 @@
     <string name="preference_screen_homescreen">หน้าจอหลัก</string>
     <string name="missing_permission_notification_badges">คุณต้องอนุญาตให้แอปเข้าถึงการแจ้งเตือนเพื่อการแสดงแบดจ์การแจ้งเตือน</string>
     <string name="preference_search_contacts_summary">ค้นหารายชื่อผู้ติดต่อบนอุปกรณ์เครื่องนี้</string>
-    <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา วอลเปเปอร์ แถบระบบ</string>
+    <string name="preference_screen_homescreen_summary">นาฬิกา แถบค้นหา ภาพพื้นหลัง แถบระบบ</string>
     <string name="missing_permission_calendar_search">คุณต้องอนุญาตให้แอปเข้าถึงปฏิทินเพื่อค้นหาในปฏิทินของคุณ</string>
     <string name="preference_search_calendar_summary">ค้นหานัดหมายและกิจกรรมที่กำลังมาถึง</string>
     <string name="preference_weather_integration">สภาพอากาศ</string>
@@ -633,7 +633,7 @@
     <string name="preference_search_result_ordering_weight_factor">ความเร็วในการเปลี่ยนแปลงลำดับ</string>
     <string name="widget_config_appwidget_height">ความสูง</string>
     <string name="widget_config_appwidget_background">การ์ดพื้นหลัง</string>
-    <string name="widget_config_weather_integration_settings">การตั้งค่าการเชื่อมโยงวิดเจ็ตสภาพอากาศ</string>
+    <string name="widget_config_weather_integration_settings">การตั้งค่าการเชื่อมต่อกับวิดเจ็ตสภาพอากาศ</string>
     <string name="widget_config_calendar_no_calendars">ไม่มีปฏิทิน</string>
     <string name="app_widget_loading_failed">ไม่สามารถโหลดวิดเจ็ตของแอปได้</string>
     <string name="note_widget_link_file_summary">ทำให้เนื้อหาของวิดเจ็ตนี้ตรงกับไฟล์</string>
