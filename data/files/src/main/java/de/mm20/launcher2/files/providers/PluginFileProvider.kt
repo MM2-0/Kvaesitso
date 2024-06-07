@@ -11,7 +11,7 @@ import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
-import de.mm20.launcher2.plugin.contracts.withColumns
+import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import kotlinx.collections.immutable.toPersistentMap

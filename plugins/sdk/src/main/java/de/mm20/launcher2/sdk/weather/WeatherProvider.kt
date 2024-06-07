@@ -2,7 +2,6 @@ package de.mm20.launcher2.sdk.weather
 
 import android.content.ContentValues
 import android.database.Cursor
-import android.database.MatrixCursor
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
@@ -13,7 +12,7 @@ import de.mm20.launcher2.plugin.config.WeatherPluginConfig
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.ForecastColumns
 import de.mm20.launcher2.plugin.contracts.WeatherPluginContract.LocationColumns
-import de.mm20.launcher2.plugin.contracts.cursorOf
+import de.mm20.launcher2.plugin.data.buildCursor
 import de.mm20.launcher2.sdk.base.BasePluginProvider
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.ktx.formatToString
@@ -74,7 +73,7 @@ abstract class WeatherProvider(
                 val forecasts = launchWithCancellationSignal(cancellationSignal) {
                     getWeatherData(lat, lon, id, name, lang)
                 } ?: return null
-                return cursorOf(ForecastColumns, forecasts) {
+                return buildCursor(ForecastColumns, forecasts) {
                     put(ForecastColumns.Timestamp, it.timestamp)
                     put(ForecastColumns.CreatedAt, it.createdAt)
                     put(ForecastColumns.Temperature, it.temperature.kelvin)
@@ -107,7 +106,7 @@ abstract class WeatherProvider(
                 ) {
                     findLocations(query, lang)
                 }
-                return cursorOf(LocationColumns, locations) {
+                return buildCursor(LocationColumns, locations) {
                     if (it is WeatherLocation.Id) {
                         put(LocationColumns.Id, it.id)
                         put(LocationColumns.Name, it.name)

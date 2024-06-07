@@ -1,16 +1,14 @@
 package de.mm20.launcher2.sdk.locations
 
 import android.database.Cursor
-import android.database.MatrixCursor
 import android.net.Uri
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract.LocationColumns
-import de.mm20.launcher2.plugin.contracts.cursorOf
+import de.mm20.launcher2.plugin.data.buildCursor
 import de.mm20.launcher2.sdk.base.QueryPluginProvider
 import de.mm20.launcher2.serialization.Json
-import kotlinx.serialization.encodeToString
 
 abstract class LocationProvider(
     config: QueryPluginConfig,
@@ -23,7 +21,7 @@ abstract class LocationProvider(
     }
 
     override fun List<Location>.toCursor(): Cursor {
-        return cursorOf(LocationColumns, this) {
+        return buildCursor(LocationColumns, this) {
             put(LocationColumns.Id, it.id)
             put(LocationColumns.Label, it.label)
             put(LocationColumns.Latitude, it.latitude)

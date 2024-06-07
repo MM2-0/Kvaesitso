@@ -1,46 +1,15 @@
 package de.mm20.launcher2.plugin.contracts
 
 import android.database.Cursor
+import android.database.MatrixCursor
+import android.os.Bundle
 import android.util.Log
+import de.mm20.launcher2.plugin.data.RowBuilderScope
 import de.mm20.launcher2.serialization.Json
 import kotlinx.serialization.encodeToString
 
 abstract class Columns {
     internal val columns = mutableSetOf<String>()
-}
-
-interface ColumnsScope {
-    operator fun <T : Any> Cursor.get(column: Column<T>): T?
-    operator fun Cursor.contains(column: Column<*>): Boolean
-}
-
-internal class ColumnsScopeImpl(
-    private val columnIndices: Map<String, Int>,
-    private val cursor: Cursor
-) : ColumnsScope {
-    override operator fun <T : Any> Cursor.get(column: Column<T>): T? {
-        val index = columnIndices[column.name] ?: return null
-        if (index == -1) return null
-        if (cursor.isNull(index)) return null
-        try {
-            return column.read(cursor, index)
-        } catch (e: Exception) {
-            Log.e("MM20", "Failed to get column value", e)
-        }
-        return null
-    }
-
-    override fun Cursor.contains(column: Column<*>): Boolean {
-        return columnIndices.containsKey(column.name)
-    }
-}
-
-fun Cursor.withColumns(columns: Columns, block: ColumnsScope.() -> Unit) {
-    val scope = ColumnsScopeImpl(
-        columns.columns.associateWith { name -> getColumnIndex(name) },
-        this
-    )
-    scope.block()
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -76,19 +45,32 @@ internal inline fun <reified T : Any> Columns.column(name: String): Column<T> {
 
 sealed interface Column<T> {
     val name: String
-    fun read(cursor: Cursor, index: Int): T?
-    fun write(value: T?): Any?
+    fun Cursor.readAtIndex(index: Int): T?
+    fun RowBuilderScope.toCursorValue(value: T?): Any? {
+        return value
+    }
+
+    fun Bundle.put(value: T?)
+    fun Bundle.get(): T?
 }
 
 internal class IntColumn(
     override val name: String
 ) : Column<Int> {
-    override fun read(cursor: Cursor, index: Int): Int {
-        return cursor.getInt(index)
+    override fun Cursor.readAtIndex(index: Int): Int {
+        return getInt(index)
     }
 
-    override fun write(value: Int?): Any? {
-        return value
+    override fun Bundle.put(value: Int?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putInt(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Int? {
+        return if (containsKey(name)) getInt(name) else null
     }
 }
 
@@ -96,73 +78,125 @@ internal class IntColumn(
 internal class LongColumn(
     override val name: String
 ) : Column<Long> {
-    override fun read(cursor: Cursor, index: Int): Long {
-        return cursor.getLong(index)
+    override fun Cursor.readAtIndex(index: Int): Long {
+        return getLong(index)
     }
 
-    override fun write(value: Long?): Any? {
-        return value
+    override fun Bundle.put(value: Long?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putLong(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Long? {
+        return if (containsKey(name)) getLong(name) else null
     }
 }
 
 internal class DoubleColumn(
     override val name: String
 ) : Column<Double> {
-    override fun read(cursor: Cursor, index: Int): Double {
-        return cursor.getDouble(index)
+    override fun Cursor.readAtIndex(index: Int): Double {
+        return getDouble(index)
     }
 
-    override fun write(value: Double?): Any? {
-        return value
+    override fun Bundle.put(value: Double?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putDouble(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Double? {
+        return if (containsKey(name)) getDouble(name) else null
     }
 }
 
 internal class FloatColumn(
     override val name: String
 ) : Column<Float> {
-    override fun read(cursor: Cursor, index: Int): Float {
-        return cursor.getFloat(index)
+    override fun Cursor.readAtIndex(index: Int): Float {
+        return getFloat(index)
     }
 
-    override fun write(value: Float?): Any? {
-        return value
+    override fun Bundle.put(value: Float?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putFloat(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Float? {
+        return if (containsKey(name)) getFloat(name) else null
     }
 }
 
 internal class StringColumn(
     override val name: String
 ) : Column<String> {
-    override fun read(cursor: Cursor, index: Int): String {
-        return cursor.getString(index)
+    override fun Cursor.readAtIndex(index: Int): String? {
+        return getString(index)
     }
 
-    override fun write(value: String?): Any? {
-        return value
+    override fun Bundle.put(value: String?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putString(name, value)
+        }
+    }
+
+    override fun Bundle.get(): String? {
+        return if (containsKey(name)) getString(name) else null
     }
 }
 
 internal class ShortColumn(
     override val name: String
 ) : Column<Short> {
-    override fun read(cursor: Cursor, index: Int): Short {
-        return cursor.getShort(index)
+    override fun Cursor.readAtIndex(index: Int): Short {
+        return getShort(index)
     }
 
-    override fun write(value: Short?): Any? {
-        return value
+    override fun Bundle.put(value: Short?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putShort(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Short? {
+        return if (containsKey(name)) getShort(name) else null
     }
 }
 
 internal class BooleanColumn(
     override val name: String
 ) : Column<Boolean> {
-    override fun read(cursor: Cursor, index: Int): Boolean {
-        return cursor.getInt(index) != 0
+    override fun Cursor.readAtIndex(index: Int): Boolean {
+        return getInt(index) != 0
     }
 
-    override fun write(value: Boolean?): Any? {
+    override fun RowBuilderScope.toCursorValue(value: Boolean?): Any? {
         value ?: return null
-        return if (value == true) 1 else 0
+        return if (value) 1 else 0
+    }
+
+    override fun Bundle.put(value: Boolean?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putBoolean(name, value)
+        }
+    }
+
+    override fun Bundle.get(): Boolean? {
+        return if (containsKey(name)) getBoolean(name) else null
     }
 }
 
@@ -170,12 +204,21 @@ internal class BooleanColumn(
 internal class BlobColumn(
     override val name: String
 ) : Column<ByteArray> {
-    override fun read(cursor: Cursor, index: Int): ByteArray {
-        return cursor.getBlob(index)
+
+    override fun Cursor.readAtIndex(index: Int): ByteArray? {
+        return getBlob(index)
     }
 
-    override fun write(value: ByteArray?): Any? {
-        return value
+    override fun Bundle.put(value: ByteArray?) {
+        if (value == null) {
+            remove(name)
+        } else {
+            putByteArray(name, value)
+        }
+    }
+
+    override fun Bundle.get(): ByteArray? {
+        return if (containsKey(name)) getByteArray(name) else null
     }
 }
 
@@ -184,8 +227,8 @@ internal class SerializableColumn<T>(
     val serialize: (T) -> String,
     val deserialize: (String) -> T
 ) : Column<T> {
-    override fun read(cursor: Cursor, index: Int): T? {
-        val string = cursor.getString(index)
+    override fun Cursor.readAtIndex(index: Int): T? {
+        val string = getString(index)
         try {
             return deserialize(string)
         } catch (e: Exception) {
@@ -194,7 +237,36 @@ internal class SerializableColumn<T>(
         }
     }
 
-    override fun write(value: T?): Any? {
-        return serialize(value ?: return null)
+    override fun RowBuilderScope.toCursorValue(value: T?): Any? {
+        return try {
+            serialize(value ?: return null)
+        } catch (e: Exception) {
+            Log.e("MM20", "Failed to write column value", e)
+            null
+        }
+    }
+
+    override fun Bundle.put(value: T?) {
+        val serialized = try {
+            value?.let(serialize)
+        } catch (e: Exception) {
+            Log.e("MM20", "Failed to serialize column value", e)
+            null
+        }
+        if (serialized == null) {
+            remove(name)
+        } else {
+            putString(name, serialized)
+        }
+    }
+
+    override fun Bundle.get(): T? {
+        val string = getString(name) ?: return null
+        return try {
+            deserialize(string)
+        } catch (e: Exception) {
+            Log.e("MM20", "Failed to deserialize column value", e)
+            null
+        }
     }
 }

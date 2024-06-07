@@ -4,7 +4,7 @@ import android.database.Cursor
 import de.mm20.launcher2.plugin.PluginType
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
-import de.mm20.launcher2.plugin.contracts.cursorOf
+import de.mm20.launcher2.plugin.data.buildCursor
 import de.mm20.launcher2.sdk.base.StringPluginProvider
 
 abstract class FileProvider(
@@ -16,7 +16,7 @@ abstract class FileProvider(
     }
 
     override fun List<File>.toCursor(): Cursor {
-        return cursorOf(FileColumns, this) {
+        return buildCursor(FileColumns, this) {
             put(FileColumns.Id, it.id)
             put(FileColumns.DisplayName, it.displayName)
             put(FileColumns.MimeType, it.mimeType)

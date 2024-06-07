@@ -2,13 +2,11 @@ package de.mm20.launcher2.sdk.base
 
 import android.content.ContentValues
 import android.database.Cursor
-import android.database.MatrixCursor
 import android.net.Uri
 import android.os.Bundle
 import android.os.CancellationSignal
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
-import de.mm20.launcher2.plugin.contracts.cursorOf
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
 import kotlinx.coroutines.runBlocking

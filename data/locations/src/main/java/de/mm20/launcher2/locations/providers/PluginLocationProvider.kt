@@ -11,7 +11,7 @@ import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract.LocationColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
-import de.mm20.launcher2.plugin.contracts.withColumns
+import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.UpdateResult
 import de.mm20.launcher2.serialization.Json
