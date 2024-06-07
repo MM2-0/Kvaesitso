@@ -12,7 +12,7 @@ abstract class LocationPluginContract {
         const val Get = "get"
     }
 
-    object SearchParams {
+    object Params {
         /**
          * Search query.
          * Type: String

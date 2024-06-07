@@ -1,7 +1,6 @@
 package de.mm20.launcher2.plugin.contracts
 
 import android.database.Cursor
-import android.database.MatrixCursor
 import android.os.Bundle
 import android.util.Log
 import de.mm20.launcher2.plugin.data.RowBuilderScope
@@ -69,8 +68,8 @@ internal class IntColumn(
         }
     }
 
-    override fun Bundle.get(): Int? {
-        return if (containsKey(name)) getInt(name) else null
+    override fun Bundle.get(): Int {
+        return getInt(name)
     }
 }
 
@@ -90,8 +89,8 @@ internal class LongColumn(
         }
     }
 
-    override fun Bundle.get(): Long? {
-        return if (containsKey(name)) getLong(name) else null
+    override fun Bundle.get(): Long {
+        return getLong(name)
     }
 }
 
@@ -110,8 +109,8 @@ internal class DoubleColumn(
         }
     }
 
-    override fun Bundle.get(): Double? {
-        return if (containsKey(name)) getDouble(name) else null
+    override fun Bundle.get(): Double {
+        return getDouble(name)
     }
 }
 
@@ -130,8 +129,8 @@ internal class FloatColumn(
         }
     }
 
-    override fun Bundle.get(): Float? {
-        return if (containsKey(name)) getFloat(name) else null
+    override fun Bundle.get(): Float {
+        return getFloat(name)
     }
 }
 
@@ -151,7 +150,7 @@ internal class StringColumn(
     }
 
     override fun Bundle.get(): String? {
-        return if (containsKey(name)) getString(name) else null
+        return getString(name)
     }
 }
 
@@ -170,8 +169,8 @@ internal class ShortColumn(
         }
     }
 
-    override fun Bundle.get(): Short? {
-        return if (containsKey(name)) getShort(name) else null
+    override fun Bundle.get(): Short {
+        return getShort(name)
     }
 }
 
@@ -196,7 +195,7 @@ internal class BooleanColumn(
     }
 
     override fun Bundle.get(): Boolean? {
-        return if (containsKey(name)) getBoolean(name) else null
+        return getBoolean(name)
     }
 }
 
@@ -218,7 +217,7 @@ internal class BlobColumn(
     }
 
     override fun Bundle.get(): ByteArray? {
-        return if (containsKey(name)) getByteArray(name) else null
+        return getByteArray(name)
     }
 }
 

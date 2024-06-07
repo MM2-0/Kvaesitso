@@ -28,13 +28,4 @@ enum class StorageStrategy {
      */
     @SerialName("copy")
     StoreCopy,
-
-    /**
-     * The launcher stores all relevant information in its own internal database, like [StoreCopy].
-     * A fresh copy is fetched from the plugin provider when the user opens the search result's
-     * detail view. This allows the plugin provider to update the search result at a later point in
-     * time, without the time constraints of [StoreReference].
-     */
-    @SerialName("deferred")
-    Deferred,
 }

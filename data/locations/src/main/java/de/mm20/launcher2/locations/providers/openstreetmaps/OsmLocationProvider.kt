@@ -1,6 +1,5 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
-import android.content.Context
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.locations.providers.AndroidLocation
@@ -30,7 +29,6 @@ private val Scope = CoroutineScope(Job() + Dispatchers.IO)
 private val HttpClient = OkHttpClient()
 
 internal class OsmLocationProvider(
-    context: Context,
     settings: LocationSearchSettings,
 ) : LocationProvider<Long> {
 
@@ -51,7 +49,7 @@ internal class OsmLocationProvider(
     }.stateIn(Scope, SharingStarted.Eagerly, null)
 
 
-    override suspend fun update(
+    suspend fun update(
         id: Long
     ): UpdateResult<Location> = overpassApi.first()?.runCatching {
         this.search(
@@ -97,19 +95,12 @@ internal class OsmLocationProvider(
 
     override suspend fun search(
         query: String,
-        userLocation: AndroidLocation?,
+        userLocation: AndroidLocation,
         allowNetwork: Boolean,
-        hasLocationPermission: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean,
     ): List<Location> {
-        // values higher than 2 might block searches for "dm"
-        // (Drogerie Markt, a problem specific to germany, but probably also relevant for other countries)
-        if (!allowNetwork ||
-            !hasLocationPermission ||
-            userLocation == null ||
-            query.length < 2
-        ) {
+        if (!allowNetwork || query.length < 2) {
             return emptyList()
         }
 

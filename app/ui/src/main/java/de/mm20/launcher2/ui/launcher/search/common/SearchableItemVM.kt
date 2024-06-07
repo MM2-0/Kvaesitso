@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
+import androidx.customview.view.AbsSavedState
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -196,7 +197,7 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             if (!shouldRetryUpdate && !isOutOfDate && !hasOutOfDateDepartures) return
 
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = with(updatedSelf()) {
+                this@SearchableItemVM.searchable.value = with(updatedSelf(searchable)) {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true

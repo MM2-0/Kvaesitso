@@ -24,6 +24,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
 import kotlinx.collections.immutable.persistentMapOf
 import kotlinx.collections.immutable.toImmutableMap
 import kotlinx.coroutines.flow.firstOrNull
@@ -347,84 +348,47 @@ internal class PluginFileDeserializer(
     private val pluginRepository: PluginRepository,
 ) : SearchableDeserializer {
     override suspend fun deserialize(serialized: String): SavableSearchable? {
-        val jsonObject = JSONObject(serialized)
+        val obj = JSONObject(serialized)
 
-        return when (jsonObject.optString("strategy", "copy")) {
-            "ref" -> {
-                getByRef(jsonObject)
-            }
-
-            "deferred" -> {
-                getDeferred(jsonObject)
-            }
-
-            else -> {
-                getByCopy(jsonObject)
-            }
-        }
-    }
-
-    private suspend fun getByRef(obj: JSONObject): File? {
+        val authority = obj.getString("authority")
+        val id = obj.getString("id")
+        val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
+        if (!plugin.enabled) return null
+        val provider = PluginFileProvider(context, authority)
         try {
-            val authority = obj.getString("authority")
-            val id = obj.getString("id")
-            val plugin = pluginRepository.get(authority).firstOrNull() ?: return null
-            if (!plugin.enabled) return null
-            val provider = PluginFileProvider(context, authority)
-            return provider.getFile(id)
-        } catch (e: Exception) {
-            CrashReporter.logException(e)
-            return null
-        }
-    }
+            return when (obj.optString("strategy", "copy")) {
+                "ref" -> {
+                    provider.get(id).getOrNull()
+                }
 
-    private fun getDeferred(obj: JSONObject): File? {
-        val cached = getByCopy(obj) ?: return null
-        val timestamp = obj.optLong("timestamp", 0L)
-        return DeferredFile(
-            cachedFile = cached as PluginFile,
-            timestamp = timestamp,
-            updatedSelf = {
-                val plugin = pluginRepository.get(cached.authority).firstOrNull()
-                    ?: return@DeferredFile UpdateResult.PermanentlyUnavailable()
-                if (!plugin.enabled) return@DeferredFile UpdateResult.PermanentlyUnavailable()
-                val provider = PluginFileProvider(context, cached.authority)
-                try {
-                    val file = provider.getFile(cached.id)
-                    if (file == null) {
-                        UpdateResult.PermanentlyUnavailable()
-                    } else {
-                        UpdateResult.Success(file)
-                    }
-                } catch (e: Exception) {
-                    CrashReporter.logException(e)
-                    UpdateResult.TemporarilyUnavailable(e)
+                else -> {
+                    val uri = obj.getString("uri")
+                    val thumbnailUri = obj.optString("thumbnailUri")
+                    val file =  PluginFile(
+                        id = obj.getString("id"),
+                        path = obj.getString("path"),
+                        mimeType = obj.getString("mimeType"),
+                        size = obj.optLong("size", 0L),
+                        metaData = persistentMapOf(),
+                        label = obj.getString("label"),
+                        uri = Uri.parse(uri),
+                        thumbnailUri = thumbnailUri.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) },
+                        storageStrategy = StorageStrategy.StoreCopy,
+                        isDirectory = obj.optBoolean("isDirectory", false),
+                        authority = obj.getString("authority"),
+                    )
+                    return DeferredFile(
+                        cachedFile = file,
+                        timestamp = obj.optLong("timestamp", 0L),
+                        updatedSelf = {
+                            if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
+                            else provider.refresh(it).asUpdateResult()
+                        }
+                    )
                 }
             }
-        )
-    }
-
-    private fun getByCopy(obj: JSONObject): File? {
-        try {
-            val uri = obj.getString("uri")
-            val thumbnailUri = obj.optString("thumbnailUri")
-            return PluginFile(
-                id = obj.getString("id"),
-                path = obj.getString("path"),
-                mimeType = obj.getString("mimeType"),
-                size = obj.optLong("size", 0L),
-                metaData = persistentMapOf(),
-                label = obj.getString("label"),
-                uri = Uri.parse(uri),
-                thumbnailUri = thumbnailUri.takeIf { it.isNotEmpty() }?.let { Uri.parse(it) },
-                storageStrategy = StorageStrategy.StoreCopy,
-                isDirectory = obj.optBoolean("isDirectory", false),
-                authority = obj.getString("authority"),
-            )
         } catch (e: JSONException) {
-            CrashReporter.logException(e)
             return null
         }
     }
-
 }

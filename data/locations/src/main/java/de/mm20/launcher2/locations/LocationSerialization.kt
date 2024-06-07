@@ -11,6 +11,7 @@ import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableDeserializer
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
 import de.mm20.launcher2.search.location.Address
 import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
@@ -159,12 +160,7 @@ internal class PluginLocationDeserializer(
 
         return when (strategy) {
             StorageStrategy.StoreReference -> {
-                val result = PluginLocationProvider(context, authority).update(id)
-                if (result is UpdateResult.Success) {
-                    result.result
-                } else {
-                    null
-                }
+                PluginLocationProvider(context, authority).get(id).getOrNull()
             }
 
             else -> {
@@ -188,9 +184,10 @@ internal class PluginLocationDeserializer(
                     attribution = json.attribution,
                     authority = authority,
                     storageStrategy = strategy,
-                    updatedSelf = if (json.storageStrategy == StorageStrategy.Deferred) {
-                        { PluginLocationProvider(context, authority).update(id) }
-                    } else null
+                    updatedSelf = {
+                        if (it !is PluginLocation) UpdateResult.TemporarilyUnavailable()
+                        else PluginLocationProvider(context, authority).refresh(it).asUpdateResult()
+                    }
                 )
             }
         }

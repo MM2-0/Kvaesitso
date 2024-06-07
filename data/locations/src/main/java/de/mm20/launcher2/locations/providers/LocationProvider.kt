@@ -8,14 +8,9 @@ internal typealias AndroidLocation = android.location.Location
 internal interface LocationProvider<TId> {
     suspend fun search(
         query: String,
-        userLocation: AndroidLocation?,
+        userLocation: AndroidLocation,
         allowNetwork: Boolean,
-        hasLocationPermission: Boolean,
         searchRadiusMeters: Int,
         hideUncategorized: Boolean
     ): List<Location>
-
-    suspend fun update(
-        id: TId
-    ): UpdateResult<Location>
 }

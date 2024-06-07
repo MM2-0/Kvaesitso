@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import de.mm20.launcher2.locations.PluginLocationSerializer
 import de.mm20.launcher2.plugin.config.StorageStrategy
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
@@ -33,7 +34,7 @@ data class PluginLocation(
     override val label: String,
     override val timestamp: Long,
     override val attribution: Attribution?,
-    override val updatedSelf: (suspend () -> UpdateResult<Location>)?,
+    override val updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)?,
     override val labelOverride: String? = null,
     val authority: String,
     val id: String,

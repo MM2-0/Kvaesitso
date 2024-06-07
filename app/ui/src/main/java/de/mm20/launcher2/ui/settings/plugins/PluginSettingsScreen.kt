@@ -313,7 +313,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                    state.setupActivity.sendWithBackgroundPermission(context)
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }
@@ -364,7 +364,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                    state.setupActivity.sendWithBackgroundPermission(context)
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }
@@ -415,7 +415,7 @@ fun PluginSettingsScreen(pluginId: String) {
                                         primaryAction = {
                                             TextButton(onClick = {
                                                 try {
-                                                    state.setupActivity.sendWithBackgroundPermission()
+                                                    state.setupActivity.sendWithBackgroundPermission(context)
                                                 } catch (e: PendingIntent.CanceledException) {
                                                     CrashReporter.logException(e)
                                                 }

@@ -20,6 +20,16 @@ data class GetParams(
     val lang: String?,
 )
 
+/**
+ * Parameters that are passed to the [refresh] method.
+ */
+data class RefreshParams(
+    /**
+     * The current language of the launcher.
+     */
+    val lang: String?,
+)
+
 abstract class QueryPluginProvider<TQuery, TResult>(
     private val config: QueryPluginConfig,
 ) : BasePluginProvider() {
@@ -31,6 +41,8 @@ abstract class QueryPluginProvider<TQuery, TResult>(
      * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference` or `Deferred`
      */
     open suspend fun get(id: String, params: GetParams): TResult? = null
+
+    open suspend fun refresh(item: TResult, params: RefreshParams): TResult? = item
 
     internal abstract fun getQuery(uri: Uri): TQuery?
 
@@ -63,6 +75,10 @@ abstract class QueryPluginProvider<TQuery, TResult>(
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
                 val id = uri.pathSegments[1]
                 val params = getGetParams(uri)
+                if (queryArgs != null) {
+                    val oldItem = queryArgs.toResult() ?: return null
+                    refresh(oldItem, RefreshParams(params.lang), cancellationSignal)
+                }
                 val result = runBlocking {
                     get(id, params)
                 }
@@ -102,8 +118,18 @@ abstract class QueryPluginProvider<TQuery, TResult>(
         }
     }
 
+    private fun refresh(
+        item: TResult,
+        params: RefreshParams,
+        cancellationSignal: CancellationSignal?
+    ): TResult? {
+        return launchWithCancellationSignal(cancellationSignal) {
+            refresh(item, params)
+        }
+    }
+
     private fun getGetParams(uri: Uri): GetParams {
-        val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
+        val lang = uri.getQueryParameter(SearchPluginContract.Params.Lang)
         return GetParams(
             lang = lang,
         )
@@ -111,16 +137,25 @@ abstract class QueryPluginProvider<TQuery, TResult>(
 
     private fun getSearchParams(uri: Uri): SearchParams {
         val allowNetwork =
-            uri.getQueryParameter(SearchPluginContract.Paths.AllowNetworkParam)?.toBoolean()
+            uri.getQueryParameter(SearchPluginContract.Params.AllowNetwork)?.toBoolean()
                 ?: false
-        val lang = uri.getQueryParameter(SearchPluginContract.Paths.LangParam)
+        val lang = uri.getQueryParameter(SearchPluginContract.Params.Lang)
         return SearchParams(
             allowNetwork = allowNetwork,
             lang = lang,
         )
     }
 
+    private fun getRefreshParams(uri: Uri): RefreshParams {
+        val lang = uri.getQueryParameter(SearchPluginContract.Params.Lang)
+        return RefreshParams(
+            lang = lang,
+        )
+    }
+
     internal abstract fun List<TResult>.toCursor(): Cursor
+
+    internal abstract fun Bundle.toResult(): TResult?
 
     final override fun getPluginConfig(): Bundle {
         return config.toBundle()

@@ -4,6 +4,7 @@ import android.util.Log
 import de.mm20.launcher2.ktx.orRunCatching
 import de.mm20.launcher2.locations.OsmLocationSerializer
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.SearchableSerializer
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
@@ -36,7 +37,7 @@ internal data class OsmLocation(
     override val emailAddress: String? = null,
     override val labelOverride: String? = null,
     override val timestamp: Long,
-    override var updatedSelf: (suspend () -> UpdateResult<Location>)? = null,
+    override var updatedSelf: (suspend (SavableSearchable) -> UpdateResult<Location>)? = null,
     override val userRating: Float?
 ) : Location, UpdatableSearchable<Location> {
 

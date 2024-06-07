@@ -2,7 +2,7 @@ package de.mm20.launcher2.plugin.config
 
 import android.os.Bundle
 
-fun SearchPluginConfig(bundle: Bundle): QueryPluginConfig? {
+fun QueryPluginConfig(bundle: Bundle): QueryPluginConfig {
     return QueryPluginConfig(
         storageStrategy = valueOfOrElse(
             bundle.getString(

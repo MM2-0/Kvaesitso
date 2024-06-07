@@ -3,103 +3,37 @@ package de.mm20.launcher2.files.providers
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import android.os.CancellationSignal
+import android.os.Bundle
 import android.text.format.DateUtils
 import android.util.Log
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.PluginApi
+import de.mm20.launcher2.plugin.QueryPluginApi
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.FilePluginContract.FileColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
+import de.mm20.launcher2.plugin.data.set
 import de.mm20.launcher2.plugin.data.withColumns
-import de.mm20.launcher2.search.File
 import de.mm20.launcher2.search.FileMetaType
 import kotlinx.collections.immutable.toPersistentMap
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.suspendCancellableCoroutine
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.resume
 
 class PluginFileProvider(
     private val context: Context,
     private val pluginAuthority: String,
-) : FileProvider {
-    override suspend fun search(query: String, allowNetwork: Boolean): List<File> =
-        withContext(Dispatchers.IO) {
-            val lang = context.resources.configuration.locales.get(0).language
-            val uri = Uri.Builder()
-                .scheme("content")
-                .authority(pluginAuthority)
-                .path(SearchPluginContract.Paths.Search)
-                .appendQueryParameter(SearchPluginContract.Paths.QueryParam, query)
-                .appendQueryParameter(
-                    SearchPluginContract.Paths.AllowNetworkParam,
-                    allowNetwork.toString()
-                )
-                .appendQueryParameter(SearchPluginContract.Paths.LangParam, lang)
-                .build()
-            val cancellationSignal = CancellationSignal()
+) : QueryPluginApi<String, PluginFile>(
+    context, pluginAuthority
+), FileProvider {
 
-            return@withContext suspendCancellableCoroutine {
-                it.invokeOnCancellation {
-                    cancellationSignal.cancel()
-                }
-                val cursor = try {
-                    context.contentResolver.query(
-                        uri,
-                        null,
-                        null,
-                        cancellationSignal
-                    )
-                } catch (e: Exception) {
-                    Log.e("MM20", "Plugin ${pluginAuthority} threw exception")
-                    CrashReporter.logException(e)
-                    it.resume(emptyList())
-                    return@suspendCancellableCoroutine
-                }
-
-                if (cursor == null) {
-                    Log.e("MM20", "Plugin ${pluginAuthority} returned null cursor")
-                    it.resume(emptyList())
-                    return@suspendCancellableCoroutine
-                }
-
-                val results = fromCursor(cursor) ?: emptyList()
-                it.resume(results)
-            }
-        }
+    override fun PluginFile.getId(): String {
+        return id
+    }
 
     private fun getPluginConfig(): QueryPluginConfig? {
         return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }
 
-    suspend fun getFile(id: String): File? {
-        val uri = Uri.Builder()
-            .scheme("content")
-            .authority(pluginAuthority)
-            .path(SearchPluginContract.Paths.Root)
-            .appendPath(id)
-            .build()
-        val cancellationSignal = CancellationSignal()
-
-        return suspendCancellableCoroutine {
-            it.invokeOnCancellation {
-                cancellationSignal.cancel()
-            }
-            val cursor = context.contentResolver.query(
-                uri,
-                null,
-                null,
-                cancellationSignal
-            ) ?: return@suspendCancellableCoroutine it.resume(null)
-
-            val results = fromCursor(cursor)
-            it.resume(results?.firstOrNull())
-        }
-    }
-
-    private fun fromCursor(cursor: Cursor): List<File>? {
+    override fun Cursor.getData(): List<PluginFile>? {
         val config = getPluginConfig()
+        val cursor = this
 
         if (config == null) {
             Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
@@ -107,7 +41,7 @@ class PluginFileProvider(
             return null
         }
 
-        val results = mutableListOf<File>()
+        val results = mutableListOf<PluginFile>()
         cursor.withColumns(FileColumns) {
             while (cursor.moveToNext()) {
                 results.add(
@@ -162,5 +96,38 @@ class PluginFileProvider(
         }
         cursor.close()
         return results
+    }
+
+    override fun PluginFile.toBundle(): Bundle {
+        return Bundle().apply {
+            set(FileColumns.Id, id)
+            set(FileColumns.Path, path)
+            set(FileColumns.MimeType, mimeType)
+            set(FileColumns.Size, size)
+            set(FileColumns.MetaTitle, metaData[FileMetaType.Title])
+            set(FileColumns.MetaArtist, metaData[FileMetaType.Artist])
+            set(FileColumns.MetaAlbum, metaData[FileMetaType.Album])
+            set(FileColumns.MetaDuration, metaData[FileMetaType.Duration]?.toLong())
+            set(FileColumns.MetaYear, metaData[FileMetaType.Year]?.toInt())
+            set(
+                FileColumns.MetaWidth,
+                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(0)?.toInt()
+            )
+            set(
+                FileColumns.MetaHeight,
+                metaData[FileMetaType.Dimensions]?.split("x")?.getOrNull(1)?.toInt()
+            )
+            set(FileColumns.MetaLocation, metaData[FileMetaType.Location])
+            set(FileColumns.MetaAppName, metaData[FileMetaType.AppName])
+            set(FileColumns.MetaAppPackageName, metaData[FileMetaType.AppPackageName])
+            set(FileColumns.Owner, metaData[FileMetaType.Owner])
+            set(FileColumns.DisplayName, label)
+            set(FileColumns.ThumbnailUri, thumbnailUri?.toString())
+            set(FileColumns.IsDirectory, isDirectory)
+        }
+    }
+
+    override fun Uri.Builder.appendQueryParameters(query: String): Uri.Builder = apply {
+        appendQueryParameter(SearchPluginContract.Params.Query, query)
     }
 }
