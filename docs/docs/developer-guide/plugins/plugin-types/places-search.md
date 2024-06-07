@@ -79,18 +79,36 @@ A `Location` has the following properties:
     - `attribution`: Attribution that should be shown alongside the search result (read the data
       provider's terms of service to find out if this is required).
 
+## Refresh a place
+
+If you have set `config.storageStrategy` to `StorageStrategy.StoreCopy`, the launcher will
+periodically try to refresh the stored copy. This happens for example when a user long-presses a
+place to view its details. To update the place, you can override
+
+```kt
+suspend fun refresh(item: Location, params: RefreshParams): Location?
+```
+
+The stored place will be replaced with the return value of this method. If the place is no longer
+available, it should return `null`. In this case, the launcher will remove it from its database. If
+the place is temporarily unavailable, an exception should be thrown.
+
+- `item` is the version that the launcher has currently stored
+
+<!--@include: ./common/_refresh_params.md-->
+
+The default implementation returns `item` without any changes.
+
 ## Get a place
 
-If you have set `config.storageStrategy` to `StorageStrategy.StoreReference`
-or `StorageStrategy.Deferred`, you must override
+If you have set `config.storageStrategy` to `StorageStrategy.StoreReference`, you must override
 
 ```kt
 suspend fun get(id: String, params: GetParams): Location?
 ```
 
 This method is used to lookup a place by its `id`. If the place is no longer available, it should
-return `null`. In this case, the launcher will remove it from its database. If the place is
-temporarily unavailable, an exception should be thrown.
+return `null`. In this case, the launcher will remove it from its database.
 
 - `id` is the ID of the place that is being requested
 
