@@ -38,10 +38,17 @@ abstract class QueryPluginProvider<TQuery, TResult>(
 
     /**
      * Get an item by its id.
-     * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference` or `Deferred`
+     * This only needs to be implemented if `config.storageStrategy` is set to `StoreReference`
      */
     open suspend fun get(id: String, params: GetParams): TResult? = null
 
+    /**
+     * Request an updated copy of the item.
+     * This is called when `config.storageStrategy` is set to `StoreCopy` and the launcher wants to refresh the item.
+     * By default, this method returns the same item.
+     * @param item the old item that should be refreshed
+     * @param params the parameters that should be used to refresh the item
+     */
     open suspend fun refresh(item: TResult, params: RefreshParams): TResult? = item
 
     internal abstract fun getQuery(uri: Uri): TQuery?
@@ -74,13 +81,13 @@ abstract class QueryPluginProvider<TQuery, TResult>(
 
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
                 val id = uri.pathSegments[1]
-                val params = getGetParams(uri)
-                if (queryArgs != null) {
+                val result = if (queryArgs != null) {
                     val oldItem = queryArgs.toResult() ?: return null
-                    refresh(oldItem, RefreshParams(params.lang), cancellationSignal)
-                }
-                val result = runBlocking {
-                    get(id, params)
+                    val params = getRefreshParams(uri)
+                    refresh(oldItem, params, cancellationSignal)
+                } else {
+                    val params = getGetParams(uri)
+                    get(id, params, cancellationSignal)
                 }
                 return if (result != null) {
                     return listOf(result).toCursor()
@@ -125,6 +132,16 @@ abstract class QueryPluginProvider<TQuery, TResult>(
     ): TResult? {
         return launchWithCancellationSignal(cancellationSignal) {
             refresh(item, params)
+        }
+    }
+
+    private fun get(
+        id: String,
+        params: GetParams,
+        cancellationSignal: CancellationSignal?
+    ): TResult? {
+        return launchWithCancellationSignal(cancellationSignal) {
+            get(id, params)
         }
     }
 
