@@ -135,6 +135,7 @@ import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
 import kotlin.math.pow
+import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun LocationItem(
@@ -412,7 +413,7 @@ fun LocationItem(
                                                     nextDeparture.time + (nextDeparture.delay
                                                         ?: Duration.ZERO)
                                                 ).toMinutes()
-                                                "in $timeLeft min"
+                                                if (timeLeft < 1) "now" else "in $timeLeft min"
                                             }
 
                                             Text(
