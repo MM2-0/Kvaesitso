@@ -14,6 +14,8 @@ import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.plugin.data.set
 import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.FileMetaType
+import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
 import kotlinx.collections.immutable.toPersistentMap
 
 class PluginFileProvider(
@@ -42,6 +44,7 @@ class PluginFileProvider(
         }
 
         val results = mutableListOf<PluginFile>()
+        val timestamp = System.currentTimeMillis()
         cursor.withColumns(FileColumns) {
             while (cursor.moveToNext()) {
                 results.add(
@@ -90,6 +93,11 @@ class PluginFileProvider(
                         storageStrategy = config.storageStrategy,
                         isDirectory = cursor[FileColumns.IsDirectory] ?: false,
                         authority = pluginAuthority,
+                        timestamp = timestamp,
+                        updatedSelf = {
+                            if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
+                            else refresh(it, timestamp).asUpdateResult()
+                        }
                     )
                 )
             }

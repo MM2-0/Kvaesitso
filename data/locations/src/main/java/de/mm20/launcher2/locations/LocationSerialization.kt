@@ -166,6 +166,7 @@ internal class PluginLocationDeserializer(
             }
 
             else -> {
+                val timestamp = json.timestamp ?: 0
                 PluginLocation(
                     id = id,
                     latitude = json.lat ?: return null,
@@ -180,16 +181,15 @@ internal class PluginLocationDeserializer(
                     userRating = json.userRating,
                     userRatingCount = json.userRatingCount,
                     openingSchedule = json.openingSchedule,
-                    timestamp = json.timestamp ?: return null,
+                    timestamp = timestamp,
                     departures = json.departures,
                     fixMeUrl = json.fixMeUrl,
                     attribution = json.attribution,
                     authority = authority,
                     storageStrategy = strategy,
                     updatedSelf = {
-                        Log.d("MM20", "Starting refresh $it")
                         if (it !is PluginLocation) UpdateResult.TemporarilyUnavailable()
-                        else PluginLocationProvider(context, authority).refresh(it).asUpdateResult()
+                        else PluginLocationProvider(context, authority).refresh(it, timestamp).asUpdateResult()
                     }
                 )
             }

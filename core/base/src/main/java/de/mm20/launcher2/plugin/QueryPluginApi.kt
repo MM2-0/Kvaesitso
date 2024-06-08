@@ -132,13 +132,14 @@ abstract class QueryPluginApi<TQuery, TResult>(
         }
     }
 
-    suspend fun refresh(item: TResult): Result<TResult?> = withContext(Dispatchers.IO) {
+    suspend fun refresh(item: TResult, lastUpdate: Long): Result<TResult?> = withContext(Dispatchers.IO) {
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
             .path(SearchPluginContract.Paths.Root)
             .appendPath(item.getId())
             .appendQueryParameter(SearchPluginContract.Params.Lang, getLanguage())
+            .appendQueryParameter(SearchPluginContract.Params.UpdatedAt, lastUpdate.toString())
             .build()
 
         val cancellationSignal = CancellationSignal()

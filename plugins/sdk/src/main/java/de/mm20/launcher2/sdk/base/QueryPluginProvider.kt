@@ -28,6 +28,10 @@ data class RefreshParams(
      * The current language of the launcher.
      */
     val lang: String?,
+    /**
+     * The time (in unixtime millis) when the item was last refreshed.
+     */
+    val lastUpdated: Long,
 )
 
 abstract class QueryPluginProvider<TQuery, TResult>(
@@ -165,8 +169,11 @@ abstract class QueryPluginProvider<TQuery, TResult>(
 
     private fun getRefreshParams(uri: Uri): RefreshParams {
         val lang = uri.getQueryParameter(SearchPluginContract.Params.Lang)
+        val lastUpdated =
+            uri.getQueryParameter(SearchPluginContract.Params.UpdatedAt)?.toLongOrNull() ?: 0L
         return RefreshParams(
             lang = lang,
+            lastUpdated = lastUpdated,
         )
     }
 

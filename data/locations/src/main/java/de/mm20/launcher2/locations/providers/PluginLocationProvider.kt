@@ -5,18 +5,18 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.QueryPluginApi
-import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract
 import de.mm20.launcher2.plugin.contracts.LocationPluginContract.LocationColumns
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.plugin.data.set
 import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.Location
+import de.mm20.launcher2.search.UpdateResult
+import de.mm20.launcher2.search.asUpdateResult
 
 internal class PluginLocationProvider(
-    private val context: Context,
+    context: Context,
     private val pluginAuthority: String
 ) : QueryPluginApi<Triple<String, AndroidLocation, Int>, PluginLocation>(
     context,
@@ -66,6 +66,7 @@ internal class PluginLocationProvider(
         }
 
         val results = mutableListOf<PluginLocation>()
+        val timestamp = System.currentTimeMillis()
         cursor.withColumns(LocationColumns) {
             while (cursor.moveToNext()) {
                 val id = cursor[LocationColumns.Id] ?: continue
@@ -88,8 +89,11 @@ internal class PluginLocationProvider(
                         departures = cursor[LocationColumns.Departures],
                         attribution = cursor[LocationColumns.Attribution],
                         authority = pluginAuthority,
-                        updatedSelf = null,
-                        timestamp = System.currentTimeMillis(),
+                        updatedSelf = {
+                            if (it !is PluginLocation) UpdateResult.TemporarilyUnavailable()
+                            else refresh(it, timestamp).asUpdateResult()
+                        },
+                        timestamp = timestamp,
                         storageStrategy = config.storageStrategy,
                     )
                 )

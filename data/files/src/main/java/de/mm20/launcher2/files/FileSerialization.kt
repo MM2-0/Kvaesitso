@@ -333,7 +333,8 @@ internal class PluginFileSerializer : SearchableSerializer {
                 "thumbnailUri" to searchable.thumbnailUri?.toString(),
                 "isDirectory" to searchable.isDirectory,
                 "authority" to searchable.authority,
-                "strategy" to if (searchable.storageStrategy == StorageStrategy.StoreCopy) "copy" else "deferred",
+                "timestamp" to searchable.timestamp,
+                "strategy" to "copy",
             ).toString()
         }
     }
@@ -364,6 +365,7 @@ internal class PluginFileDeserializer(
                 else -> {
                     val uri = obj.getString("uri")
                     val thumbnailUri = obj.optString("thumbnailUri")
+                    val timestamp = obj.optLong("timestamp", 0L)
                     val file =  PluginFile(
                         id = obj.getString("id"),
                         path = obj.getString("path"),
@@ -376,15 +378,13 @@ internal class PluginFileDeserializer(
                         storageStrategy = StorageStrategy.StoreCopy,
                         isDirectory = obj.optBoolean("isDirectory", false),
                         authority = obj.getString("authority"),
-                    )
-                    return DeferredFile(
-                        cachedFile = file,
-                        timestamp = obj.optLong("timestamp", 0L),
+                        timestamp = timestamp,
                         updatedSelf = {
                             if (it !is PluginFile) UpdateResult.TemporarilyUnavailable()
-                            else provider.refresh(it).asUpdateResult()
+                            else provider.refresh(it, timestamp).asUpdateResult()
                         }
                     )
+                    return file
                 }
             }
         } catch (e: JSONException) {
