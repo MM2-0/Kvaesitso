@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Attribution(
-    val text: String?,
+    val text: String? = null,
     @Serializable(with = UriSerializer::class)
-    val iconUrl: Uri?,
-    val url: String?,
+    val iconUrl: Uri? = null,
+    val url: String? = null,
 )
