@@ -48,6 +48,8 @@ enum class LocationIcon {
     Brunch,
     Breakfast,
     Pub,
+    JapaneseCuisine,
+    AsianCuisine,
 
     Shopping,
     Florist,
@@ -112,6 +114,7 @@ enum class LocationIcon {
     Synagogue,
     BuddhistTemple,
     HinduTemple,
+    Candle,
 
     GovernmentBuilding,
     Police,

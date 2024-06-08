@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Attractions
 import androidx.compose.material.icons.rounded.BakeryDining
 import androidx.compose.material.icons.rounded.Bed
+import androidx.compose.material.icons.rounded.Bento
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.BreakfastDining
 import androidx.compose.material.icons.rounded.BrunchDining
@@ -21,7 +22,6 @@ import androidx.compose.material.icons.rounded.Checkroom
 import androidx.compose.material.icons.rounded.Church
 import androidx.compose.material.icons.rounded.ContentCut
 import androidx.compose.material.icons.rounded.Diamond
-import androidx.compose.material.icons.rounded.DirectionsBike
 import androidx.compose.material.icons.rounded.DirectionsBoat
 import androidx.compose.material.icons.rounded.DirectionsBus
 import androidx.compose.material.icons.rounded.DirectionsCar
@@ -103,6 +103,7 @@ import androidx.compose.material.icons.rounded.Stadium
 import androidx.compose.material.icons.rounded.Subway
 import androidx.compose.material.icons.rounded.Surfing
 import androidx.compose.material.icons.rounded.Synagogue
+import androidx.compose.material.icons.rounded.TakeoutDining
 import androidx.compose.material.icons.rounded.TempleBuddhist
 import androidx.compose.material.icons.rounded.TempleHindu
 import androidx.compose.material.icons.rounded.TheaterComedy
@@ -113,6 +114,7 @@ import androidx.compose.material.icons.rounded.Wc
 import androidx.core.content.ContextCompat
 import de.mm20.launcher2.base.R
 import de.mm20.launcher2.icons.CableCar
+import de.mm20.launcher2.icons.Candle
 import de.mm20.launcher2.icons.ColorLayer
 import de.mm20.launcher2.icons.Dentistry
 import de.mm20.launcher2.icons.Eyeglasses
@@ -219,6 +221,8 @@ interface Location : SavableSearchable {
             LocationIcon.Brunch -> Icons.Rounded.BrunchDining to R.color.orange
             LocationIcon.Breakfast -> Icons.Rounded.BreakfastDining to R.color.orange
             LocationIcon.Pub -> Icons.Rounded.SportsBar to R.color.orange
+            LocationIcon.JapaneseCuisine -> Icons.Rounded.Bento to R.color.orange
+            LocationIcon.AsianCuisine -> Icons.Rounded.TakeoutDining to R.color.orange
             // indigo: business and shopping
             LocationIcon.Shopping -> Icons.Rounded.ShoppingBag to R.color.indigo
             LocationIcon.Supermarket -> Icons.Rounded.LocalGroceryStore to R.color.indigo
@@ -283,6 +287,7 @@ interface Location : SavableSearchable {
             LocationIcon.Synagogue -> Icons.Rounded.Synagogue to R.color.brown
             LocationIcon.HinduTemple -> Icons.Rounded.TempleHindu to R.color.brown
             LocationIcon.BuddhistTemple -> Icons.Rounded.TempleBuddhist to R.color.brown
+            LocationIcon.Candle -> Icons.Rounded.Candle to R.color.brown
             // bluegrey: public services
             LocationIcon.GovernmentBuilding -> Icons.Rounded.AccountBalance to R.color.bluegrey
             LocationIcon.Police -> Icons.Rounded.LocalPolice to R.color.bluegrey

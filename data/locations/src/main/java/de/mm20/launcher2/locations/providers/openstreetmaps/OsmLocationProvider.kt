@@ -1,5 +1,6 @@
 package de.mm20.launcher2.locations.providers.openstreetmaps
 
+import android.content.Context
 import android.util.Log
 import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.locations.providers.AndroidLocation
@@ -29,7 +30,8 @@ private val Scope = CoroutineScope(Job() + Dispatchers.IO)
 private val HttpClient = OkHttpClient()
 
 internal class OsmLocationProvider(
-    settings: LocationSearchSettings,
+    private val context: Context,
+    settings: LocationSearchSettings
 ) : LocationProvider<Long> {
 
     private val overpassApi = settings.overpassUrl.map {
@@ -57,7 +59,7 @@ internal class OsmLocationProvider(
                 id = id
             )
         ).let {
-            OsmLocation.fromOverpassResponse(it)
+            OsmLocation.fromOverpassResponse(it, context)
         }.first().apply {
             updatedSelf = { update(id) }
         }
@@ -133,7 +135,7 @@ internal class OsmLocationProvider(
             Scope.async { searchByTag("brand") },
         ).flatMap {
             it?.let {
-                OsmLocation.fromOverpassResponse(it)
+                OsmLocation.fromOverpassResponse(it, context)
             } ?: emptyList()
         }
 

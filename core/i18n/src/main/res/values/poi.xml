@@ -5,4 +5,49 @@
          Licensed under the MIT License
          All strings must match the original strings from OsmAnd, in order for automatic translation to work
     -->
+    <string name="poi_category_church">Church</string>
+    <string name="poi_category_mosque">Mosque</string>
+    <string name="poi_category_buddhist_temple">Buddhist temple</string>
+    <string name="poi_category_hindu_temple">Hindu temple</string>
+    <string name="poi_category_synagogue">Synagogue</string>
+    <string name="poi_category_pizza_restaurant">Pizza restaurant</string>
+    <string name="poi_category_burger_restaurant">Burger restaurant</string>
+    <string name="poi_category_place_of_worship">Place of worship</string>
+    <string name="poi_category_chinese_restaurant">Chinese restaurant</string>
+    <string name="poi_category_japanese_restaurant">Japanese restaurant</string>
+    <string name="poi_category_kebab_restaurant">Kebab restaurant</string>
+    <string name="poi_category_asian_restaurant">Asian restaurant</string>
+    <string name="poi_category_ramen_restaurant">Ramen restaurant</string>
+    <string name="poi_category_soup_restaurant">Soup restaurant</string>
+    <string name="poi_category_brunch_restaurant">Brunch restaurant</string>
+    <string name="poi_category_breakfast_restaurant">Breakfast restaurant</string>
+    <string name="poi_category_car_wash">Car wash</string>
+    <string name="poi_category_charging_station">Charging station</string>
+    <string name="poi_category_motorcycle_rental">Motorcycle rental</string>
+    <string name="poi_category_gallery">Gallery</string>
+    <string name="poi_category_amusement_park">Amusement park</string>
+    <string name="poi_category_concert_hall">Concert hall</string>
+    <string name="poi_category_stadium">Stadium</string>
+    <string name="poi_category_casino">Casino</string>
+    <string name="poi_category_shopping_center">Shopping center</string>
+    <string name="poi_category_discount_store">Discount store</string>
+    <string name="poi_category_pet">Pet store</string>
+    <string name="poi_category_shopping">Shopping</string>
+    <string name="poi_category_swimming">Swimming pool</string>
+    <string name="poi_category_martial_arts">Martial arts</string>
+    <string name="poi_category_golf">Golf</string>
+    <string name="poi_category_gymnastics">Gymnastics</string>
+    <string name="poi_category_ice_hockey">Ice hockey</string>
+    <string name="poi_category_baseball">Baseball</string>
+    <string name="poi_category_american_football">American football</string>
+    <string name="poi_category_handball">Handball</string>
+    <string name="poi_category_volleyball">Volleyball</string>
+    <string name="poi_category_skiing">Skiing</string>
+    <string name="poi_category_cricket">Cricket</string>
+    <string name="poi_category_park">Park</string>
+    <string name="poi_category_monument">Monument</string>
+    <string name="poi_category_government_building">Government building</string>
+    <string name="poi_category_fire_station">Fire station</string>
+    <string name="poi_category_courthouse">Courthouse</string>
+
 </resources>

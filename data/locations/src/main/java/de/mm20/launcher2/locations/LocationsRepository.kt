@@ -37,7 +37,7 @@ internal class LocationsRepository(
 
             val providers = it.map {
                 when (it) {
-                    "openstreetmaps" -> OsmLocationProvider(settings)
+                    "openstreetmaps" -> OsmLocationProvider(context, settings)
                     else -> PluginLocationProvider(context, it)
                 }
             }
