@@ -189,12 +189,9 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             val updatedSelf = searchable.updatedSelf ?: return
             val sinceTimestamp = System.currentTimeMillis() - searchable.timestamp
 
-            val isOutOfDate = 1.hours.inWholeMilliseconds < sinceTimestamp
-            val hasOutOfDateDepartures =
-                (searchable as? Location)?.departures.isNullOrEmpty().not()
-                        && 5.minutes.inWholeMilliseconds < sinceTimestamp
+            val isOutOfDate = 1.minutes.inWholeMilliseconds < sinceTimestamp
 
-            if (!shouldRetryUpdate && !isOutOfDate && !hasOutOfDateDepartures) return
+            if (!shouldRetryUpdate && !isOutOfDate) return
 
             viewModelScope.launch {
                 this@SearchableItemVM.searchable.value = with(updatedSelf(searchable)) {
