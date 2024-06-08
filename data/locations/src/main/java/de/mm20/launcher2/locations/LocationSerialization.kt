@@ -129,6 +129,7 @@ internal class PluginLocationSerializer : SearchableSerializer {
                         emailAddress = searchable.emailAddress,
                         userRating = searchable.userRating,
                         userRatingCount = searchable.userRatingCount,
+                        attribution = searchable.attribution,
                         openingSchedule = searchable.openingSchedule,
                         timestamp = searchable.timestamp,
                         departures = searchable.departures,

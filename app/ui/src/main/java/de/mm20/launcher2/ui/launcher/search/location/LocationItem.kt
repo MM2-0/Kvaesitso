@@ -25,9 +25,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentSize
@@ -99,6 +101,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import blend.Blend.harmonize
+import coil.compose.AsyncImage
 import de.mm20.launcher2.i18n.R
 import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ktx.tryStartActivity
@@ -117,7 +120,6 @@ import de.mm20.launcher2.ui.component.Toolbar
 import de.mm20.launcher2.ui.component.ToolbarAction
 import de.mm20.launcher2.ui.ktx.blendIntoViewScale
 import de.mm20.launcher2.ui.ktx.metersToLocalizedString
-import de.mm20.launcher2.ui.ktx.toPixels
 import de.mm20.launcher2.ui.launcher.search.common.SearchableItemVM
 import de.mm20.launcher2.ui.launcher.search.listItemViewModel
 import de.mm20.launcher2.ui.launcher.sheets.LocalBottomSheetManager
@@ -145,7 +147,6 @@ fun LocationItem(
 ) {
     val context = LocalContext.current
     val viewModel: SearchableItemVM = listItemViewModel(key = "search-${location.key}")
-    val iconSize = LocalGridSettings.current.iconSize.dp.toPixels()
 
     val userLocation by remember {
         viewModel.devicePoseProvider.getLocation()
@@ -443,7 +444,10 @@ fun LocationItem(
                                                     Modifier
                                                         .fillMaxWidth()
                                                         .graphicsLayer {
-                                                            alpha = listState.layoutInfo.blendIntoViewScale(idx)
+                                                            alpha =
+                                                                listState.layoutInfo.blendIntoViewScale(
+                                                                    idx
+                                                                )
                                                         }
                                                 )
                                             }
@@ -668,6 +672,52 @@ fun LocationItem(
                                     )
                                 }
                             )
+                        }
+                    }
+
+                    val attribution = location.attribution
+                    if (attribution != null) {
+                        Row(
+                            modifier = Modifier
+                                .align(Alignment.End)
+                                .padding(top = 12.dp, end = 12.dp, start = 12.dp)
+                                .clickable(
+                                    enabled = attribution.url != null
+                                ) {
+                                    context.tryStartActivity(
+                                        Intent(
+                                            Intent.ACTION_VIEW, Uri.parse(attribution.url)
+                                        )
+                                    )
+                                },
+                            verticalAlignment = Alignment.CenterVertically,
+                        ) {
+                            when {
+                                attribution.text != null && attribution.iconUrl != null -> {
+                                    Text(
+                                        text = attribution.text!!,
+                                        style = MaterialTheme.typography.labelSmall,
+                                    )
+                                    AsyncImage(
+                                        model = attribution.iconUrl!!,
+                                        contentDescription = null,
+                                        modifier = Modifier.padding(start = 4.dp).requiredHeight(16.dp),
+                                    )
+                                }
+                                attribution.text != null -> {
+                                    Text(
+                                        text = attribution.text!!,
+                                        style = MaterialTheme.typography.labelSmall,
+                                    )
+                                }
+                                attribution.iconUrl != null -> {
+                                    AsyncImage(
+                                        model = attribution.iconUrl!!,
+                                        contentDescription = null,
+                                        modifier = Modifier.requiredHeight(16.dp),
+                                    )
+                                }
+                            }
                         }
                     }
 
