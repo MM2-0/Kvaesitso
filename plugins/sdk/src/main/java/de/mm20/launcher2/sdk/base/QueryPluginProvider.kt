@@ -9,7 +9,6 @@ import de.mm20.launcher2.plugin.config.QueryPluginConfig
 import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.sdk.config.toBundle
 import de.mm20.launcher2.sdk.utils.launchWithCancellationSignal
-import kotlinx.coroutines.runBlocking
 
 data class SearchParams(
     val allowNetwork: Boolean,
@@ -85,18 +84,27 @@ abstract class QueryPluginProvider<TQuery, TResult>(
 
             uri.pathSegments.size == 2 && uri.pathSegments.first() == SearchPluginContract.Paths.Root -> {
                 val id = uri.pathSegments[1]
-                val result = if (queryArgs != null) {
-                    val oldItem = queryArgs.toResult() ?: return null
-                    val params = getRefreshParams(uri)
-                    refresh(oldItem, params, cancellationSignal)
-                } else {
-                    val params = getGetParams(uri)
-                    get(id, params, cancellationSignal)
-                }
+                val params = getGetParams(uri)
+                val result = get(id, params, cancellationSignal)
                 return if (result != null) {
-                    return listOf(result).toCursor()
+                    listOf(result).toCursor()
                 } else {
                     emptyList<TResult>().toCursor()
+                }
+            }
+
+            uri.pathSegments.size == 1 && uri.pathSegments.first() == SearchPluginContract.Paths.Refresh -> {
+                val oldItem = queryArgs?.toResult() ?: return null
+                val params = getRefreshParams(uri)
+                val newItem = refresh(oldItem, params, cancellationSignal)
+                return if (newItem == null) {
+                    emptyList<TResult>().toCursor()
+                } else {
+                    listOf(newItem).toCursor().apply {
+                        extras = Bundle().apply {
+                            putBoolean(SearchPluginContract.Extras.NotUpdated, newItem === oldItem)
+                        }
+                    }
                 }
             }
         }

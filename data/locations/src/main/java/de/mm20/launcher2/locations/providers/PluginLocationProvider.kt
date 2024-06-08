@@ -23,10 +23,6 @@ internal class PluginLocationProvider(
     pluginAuthority
 ), LocationProvider<String> {
 
-    override fun PluginLocation.getId(): String {
-        return id
-    }
-
     override suspend fun search(
         query: String,
         userLocation: AndroidLocation,

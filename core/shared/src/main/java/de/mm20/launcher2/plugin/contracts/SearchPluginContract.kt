@@ -4,6 +4,7 @@ abstract class SearchPluginContract {
     object Paths {
         const val Search = "search"
         const val Root = "root"
+        const val Refresh = "refresh"
         @Deprecated("Use Paths.Query instead")
         const val QueryParam = Params.Query
         @Deprecated("Use Params.AllowNetwork instead")
@@ -16,5 +17,8 @@ abstract class SearchPluginContract {
         const val Lang = "lang"
         const val UpdatedAt = "updatedAt"
         const val Query = "query"
+    }
+    object Extras {
+        const val NotUpdated = "notUpdated"
     }
 }

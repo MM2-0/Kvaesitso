@@ -15,12 +15,12 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.resume
 
+private class NotUpdated : Exception("Not updated")
+
 abstract class QueryPluginApi<TQuery, TResult>(
     private val context: Context,
     private val pluginAuthority: String,
 ) {
-    protected abstract fun TResult.getId(): String
-
     private fun getLanguage() = context.resources.configuration.locales[0].language
 
     fun getConfig(): QueryPluginConfig? {
@@ -136,8 +136,7 @@ abstract class QueryPluginApi<TQuery, TResult>(
         val uri = Uri.Builder()
             .scheme("content")
             .authority(pluginAuthority)
-            .path(SearchPluginContract.Paths.Root)
-            .appendPath(item.getId())
+            .path(SearchPluginContract.Paths.Refresh)
             .appendQueryParameter(SearchPluginContract.Params.Lang, getLanguage())
             .appendQueryParameter(SearchPluginContract.Params.UpdatedAt, lastUpdate.toString())
             .build()
@@ -163,7 +162,12 @@ abstract class QueryPluginApi<TQuery, TResult>(
 
             if (cursor == null) {
                 Log.e("MM20", "Plugin $pluginAuthority returned null cursor")
-                it.resume(Result.success(null))
+                it.resume(Result.failure(IllegalArgumentException()))
+                return@suspendCancellableCoroutine
+            }
+
+            if (cursor.extras?.getBoolean(SearchPluginContract.Extras.NotUpdated) == true) {
+                it.resume(Result.failure(NotUpdated()))
                 return@suspendCancellableCoroutine
             }
 

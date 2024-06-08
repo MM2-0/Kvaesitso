@@ -25,10 +25,6 @@ class PluginFileProvider(
     context, pluginAuthority
 ), FileProvider {
 
-    override fun PluginFile.getId(): String {
-        return id
-    }
-
     private fun getPluginConfig(): QueryPluginConfig? {
         return PluginApi(pluginAuthority, context.contentResolver).getSearchPluginConfig()
     }

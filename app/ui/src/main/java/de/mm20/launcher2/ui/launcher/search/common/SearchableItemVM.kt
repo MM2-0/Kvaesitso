@@ -194,19 +194,17 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
             if (!shouldRetryUpdate && !isOutOfDate) return
 
             viewModelScope.launch {
-                this@SearchableItemVM.searchable.value = with(updatedSelf(searchable)) {
+                with(updatedSelf(searchable)) {
                     when (this) {
                         is UpdateResult.Success -> {
                             isUpToDate.value = true
                             shouldRetryUpdate = false
                             favoritesService.upsert(this.result)
-                            this.result
                         }
 
                         is UpdateResult.TemporarilyUnavailable -> {
                             isUpToDate.value = false
                             shouldRetryUpdate = true
-                            return@launch
                         }
 
                         is UpdateResult.PermanentlyUnavailable -> {
@@ -219,7 +217,6 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
                                 Toast.LENGTH_LONG
                             ).show()
                             Log.d("requestUpdatedSearchable", "PermanentlyUnavailable", this.cause)
-                            null
                         }
                     }
                 }

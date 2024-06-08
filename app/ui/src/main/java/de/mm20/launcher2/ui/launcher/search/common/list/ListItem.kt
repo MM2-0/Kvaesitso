@@ -69,8 +69,6 @@ fun ListItem(
         )
     )
 
-    val item = viewModel.searchable.collectAsState().value ?: item
-
     var bounds by remember { mutableStateOf(Rect.Zero) }
     Box(
         modifier = modifier
