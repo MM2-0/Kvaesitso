@@ -1,6 +1,7 @@
 package de.mm20.launcher2.locations
 
 import android.content.Context
+import android.util.Log
 import de.mm20.launcher2.locations.providers.PluginLocation
 import de.mm20.launcher2.locations.providers.PluginLocationProvider
 import de.mm20.launcher2.locations.providers.openstreetmaps.OsmLocation
@@ -186,6 +187,7 @@ internal class PluginLocationDeserializer(
                     authority = authority,
                     storageStrategy = strategy,
                     updatedSelf = {
+                        Log.d("MM20", "Starting refresh $it")
                         if (it !is PluginLocation) UpdateResult.TemporarilyUnavailable()
                         else PluginLocationProvider(context, authority).refresh(it).asUpdateResult()
                     }

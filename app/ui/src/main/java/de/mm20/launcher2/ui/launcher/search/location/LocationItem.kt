@@ -25,7 +25,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -107,6 +106,7 @@ import de.mm20.launcher2.icons.CableCar
 import de.mm20.launcher2.ktx.tryStartActivity
 import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.isOpen
+import de.mm20.launcher2.search.location.Attribution
 import de.mm20.launcher2.search.location.Departure
 import de.mm20.launcher2.search.location.LineType
 import de.mm20.launcher2.search.location.OpeningHours
@@ -297,7 +297,7 @@ fun LocationItem(
                             end = 12.dp,
                             bottom = 4.dp
                         ),
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.Top,
                     ) {
                         Column(
                             modifier = Modifier.weight(1f),
@@ -334,27 +334,73 @@ fun LocationItem(
                                         )
                                 )
                             }
-                            if (!showMap && location.userRating != null) {
+                            if (location.userRating != null) {
                                 RatingBar(
                                     location.userRating!!,
-                                    modifier = Modifier.padding(top = 4.dp)
+                                    modifier = Modifier
+                                        .padding(top = 6.dp)
+                                        .offset(-2.dp)
                                 )
                             }
+
+                            if (!showMap) {
+                                val attribution = location.attribution
+                                if (attribution != null) {
+                                    Attribution(
+                                        attribution,
+                                        reverse = true,
+                                        modifier = Modifier
+                                            .padding(
+                                                top = 16.dp,
+                                                bottom = 0.dp,
+                                            )
+                                            .clickable(
+                                                enabled = attribution.url != null
+                                            ) {
+                                                context.tryStartActivity(
+                                                    Intent(
+                                                        Intent.ACTION_VIEW,
+                                                        Uri.parse(attribution.url)
+                                                    )
+                                                )
+                                            }
+                                    )
+                                }
+                            }
                         }
-                        if (showMap && location.userRating != null) {
-                            RatingBar(location.userRating!!)
-                        }
+
                         if (!showMap) {
                             Compass(
                                 targetHeading = targetHeading,
                                 modifier = Modifier
-                                    .align(Alignment.Top)
                                     .sharedBounds(
                                         rememberSharedContentState("compass"),
                                         this@AnimatedContent
                                     ),
                                 size = 56.dp,
                             )
+                        } else {
+                            val attribution = location.attribution
+                            if (attribution != null) {
+                                Attribution(
+                                    attribution,
+                                    modifier = Modifier
+                                        .padding(
+                                            top = 4.dp,
+                                            bottom = 4.dp,
+                                            start = 12.dp)
+                                        .clickable(
+                                            enabled = attribution.url != null
+                                        ) {
+                                            context.tryStartActivity(
+                                                Intent(
+                                                    Intent.ACTION_VIEW,
+                                                    Uri.parse(attribution.url)
+                                                )
+                                            )
+                                        }
+                                )
+                            }
                         }
                     }
 
@@ -672,52 +718,6 @@ fun LocationItem(
                                     )
                                 }
                             )
-                        }
-                    }
-
-                    val attribution = location.attribution
-                    if (attribution != null) {
-                        Row(
-                            modifier = Modifier
-                                .align(Alignment.End)
-                                .padding(top = 12.dp, end = 12.dp, start = 12.dp)
-                                .clickable(
-                                    enabled = attribution.url != null
-                                ) {
-                                    context.tryStartActivity(
-                                        Intent(
-                                            Intent.ACTION_VIEW, Uri.parse(attribution.url)
-                                        )
-                                    )
-                                },
-                            verticalAlignment = Alignment.CenterVertically,
-                        ) {
-                            when {
-                                attribution.text != null && attribution.iconUrl != null -> {
-                                    Text(
-                                        text = attribution.text!!,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                    AsyncImage(
-                                        model = attribution.iconUrl!!,
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(start = 4.dp).requiredHeight(16.dp),
-                                    )
-                                }
-                                attribution.text != null -> {
-                                    Text(
-                                        text = attribution.text!!,
-                                        style = MaterialTheme.typography.labelSmall,
-                                    )
-                                }
-                                attribution.iconUrl != null -> {
-                                    AsyncImage(
-                                        model = attribution.iconUrl!!,
-                                        contentDescription = null,
-                                        modifier = Modifier.requiredHeight(16.dp),
-                                    )
-                                }
-                            }
                         }
                     }
 
@@ -1062,6 +1062,44 @@ fun Departure.LazyColumnPart(
                     fontSize = TextUnit(2f, TextUnitType.Em),
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun Attribution(
+    attribution: Attribution,
+    modifier: Modifier = Modifier,
+    reverse: Boolean = false,
+) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        if (attribution.text != null && !reverse) {
+            Text(
+                text = attribution.text!!,
+                style = MaterialTheme.typography.labelSmall,
+            )
+        }
+
+        if (attribution.iconUrl != null) {
+            AsyncImage(
+                modifier = Modifier
+                    .padding(
+                        start = if (reverse) 0.dp else 8.dp,
+                        end = if (reverse) 8.dp else 0.dp
+                    )
+                    .requiredHeight(16.dp),
+                model = attribution.iconUrl!!,
+                contentDescription = null,
+            )
+        }
+        if (attribution.text != null && reverse) {
+            Text(
+                text = attribution.text!!,
+                style = MaterialTheme.typography.labelSmall,
+            )
         }
     }
 }

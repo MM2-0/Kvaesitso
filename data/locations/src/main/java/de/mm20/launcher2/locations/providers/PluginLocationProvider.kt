@@ -4,9 +4,7 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
-import android.os.CancellationSignal
 import android.util.Log
-import de.mm20.launcher2.crashreporter.CrashReporter
 import de.mm20.launcher2.plugin.PluginApi
 import de.mm20.launcher2.plugin.QueryPluginApi
 import de.mm20.launcher2.plugin.config.QueryPluginConfig
@@ -16,7 +14,6 @@ import de.mm20.launcher2.plugin.contracts.SearchPluginContract
 import de.mm20.launcher2.plugin.data.set
 import de.mm20.launcher2.plugin.data.withColumns
 import de.mm20.launcher2.search.Location
-import de.mm20.launcher2.search.UpdateResult
 
 internal class PluginLocationProvider(
     private val context: Context,
@@ -58,57 +55,8 @@ internal class PluginLocationProvider(
         }
     }
 
-    private fun fromCursor(cursor: Cursor): List<Location>? {
-        val config = getPluginConfig()
-
-        if (config == null) {
-            Log.e("MM20", "Plugin ${pluginAuthority} returned null config")
-            cursor.close()
-            return null
-        }
-
-        val results = mutableListOf<Location>()
-        cursor.withColumns(LocationColumns) {
-            while (cursor.moveToNext()) {
-                val id = cursor[LocationColumns.Id] ?: continue
-                results.add(
-                    PluginLocation(
-                        id = id,
-                        label = cursor[LocationColumns.Label] ?: continue,
-                        latitude = cursor[LocationColumns.Latitude] ?: continue,
-                        longitude = cursor[LocationColumns.Longitude] ?: continue,
-                        fixMeUrl = cursor[LocationColumns.FixMeUrl],
-                        icon = cursor[LocationColumns.Icon],
-                        category = cursor[LocationColumns.Category],
-                        address = cursor[LocationColumns.Address],
-                        openingSchedule = cursor[LocationColumns.OpeningSchedule],
-                        websiteUrl = cursor[LocationColumns.WebsiteUrl],
-                        phoneNumber = cursor[LocationColumns.PhoneNumber],
-                        emailAddress = cursor[LocationColumns.EmailAddress],
-                        userRating = cursor[LocationColumns.UserRating],
-                        userRatingCount = cursor[LocationColumns.UserRatingCount],
-                        departures = cursor[LocationColumns.Departures],
-                        attribution = cursor[LocationColumns.Attribution],
-                        authority = pluginAuthority,
-                        updatedSelf = null,
-                        timestamp = System.currentTimeMillis(),
-                        storageStrategy = config.storageStrategy,
-                    )
-                )
-            }
-        }
-
-        return results
-    }
-
-    private fun getPluginConfig(): QueryPluginConfig? {
-        return PluginApi(pluginAuthority, context.contentResolver).getConfig()?.let {
-            QueryPluginConfig(it)
-        }
-    }
-
     override fun Cursor.getData(): List<PluginLocation>? {
-        val config = getPluginConfig()
+        val config = getConfig()
         val cursor = this
 
         if (config == null) {
