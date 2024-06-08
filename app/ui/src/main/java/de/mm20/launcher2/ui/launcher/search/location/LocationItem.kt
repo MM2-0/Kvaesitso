@@ -134,9 +134,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
-import kotlin.math.min
 import kotlin.math.pow
-import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun LocationItem(
@@ -445,11 +443,7 @@ fun LocationItem(
                                                     Modifier
                                                         .fillMaxWidth()
                                                         .graphicsLayer {
-                                                            val hasDeparted = ZonedDateTime.now().isAfter(it.time.plus(it.delay ?: Duration.ZERO))
-                                                            alpha = min(
-                                                                if (hasDeparted) 0.85f else 1.0f,
-                                                                listState.layoutInfo.blendIntoViewScale(idx)
-                                                            )
+                                                            alpha = listState.layoutInfo.blendIntoViewScale(idx)
                                                         }
                                                 )
                                             }
@@ -888,20 +882,29 @@ private fun OpeningSchedule.Hours.getNextOpeningHours(): OpeningHours {
 fun Departure.LineIcon(
     modifier: Modifier
 ) {
-    val primaryArgb = MaterialTheme.colorScheme.primary.toArgb()
-    val (lineBg, lineFg) = if (lineColor != null) {
+    val harmonizeArgb = MaterialTheme.colorScheme.primary.toArgb()
+    var (lineBg, lineFg) = if (lineColor != null) {
         val bg = Color(
-            harmonize(lineColor!!.toArgb(), primaryArgb)
+            harmonize(lineColor!!.toArgb(), harmonizeArgb)
         )
         val fg = Color(
             harmonize(
                 if (0.5f < bg.luminance()) Color.Black.toArgb() else Color.White.toArgb(),
-                primaryArgb
+                harmonizeArgb
             )
         )
         bg to fg
     } else {
         MaterialTheme.colorScheme.primaryContainer to MaterialTheme.colorScheme.onPrimaryContainer
+    }
+
+    val hasDeparted = ZonedDateTime.now().isAfter(time + (delay ?: Duration.ZERO))
+
+    if (hasDeparted) {
+        val hsv = FloatArray(3)
+        android.graphics.Color.colorToHSV(lineBg.toArgb(), hsv)
+        val (h, s, v) = hsv
+        lineBg = Color.hsv(h, s / 2f, v, lineBg.alpha)
     }
 
     Row(
