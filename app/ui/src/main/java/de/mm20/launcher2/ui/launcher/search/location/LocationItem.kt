@@ -134,6 +134,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.format.TextStyle
 import java.util.Locale
+import kotlin.math.min
 import kotlin.math.pow
 import kotlin.time.Duration.Companion.minutes
 
@@ -444,10 +445,11 @@ fun LocationItem(
                                                     Modifier
                                                         .fillMaxWidth()
                                                         .graphicsLayer {
-                                                            alpha =
-                                                                listState.layoutInfo.blendIntoViewScale(
-                                                                    idx
-                                                                )
+                                                            val hasDeparted = ZonedDateTime.now().isAfter(it.time.plus(it.delay ?: Duration.ZERO))
+                                                            alpha = min(
+                                                                if (hasDeparted) 0.85f else 1.0f,
+                                                                listState.layoutInfo.blendIntoViewScale(idx)
+                                                            )
                                                         }
                                                 )
                                             }
