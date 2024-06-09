@@ -15,12 +15,16 @@ import de.mm20.launcher2.search.location.LocationIcon
 import de.mm20.launcher2.search.location.OpeningHours
 import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
+import org.woheller69.AndroidAddressFormatter.AndroidAddressFormatter
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.time.format.DateTimeParseException
 import java.time.format.ResolverStyle
+import java.util.Locale
 import kotlin.math.min
 
 internal data class OsmLocation(
@@ -63,6 +67,8 @@ internal data class OsmLocation(
         internal const val DOMAIN = "osm"
         internal const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
 
+        internal val addressFormatter = AndroidAddressFormatter(false, false, false)
+
         fun fromOverpassResponse(
             result: OverpassResponse,
             context: Context
@@ -77,7 +83,7 @@ internal data class OsmLocation(
                 category = category,
                 latitude = it.lat ?: it.center?.lat ?: return@mapNotNull null,
                 longitude = it.lon ?: it.center?.lon ?: return@mapNotNull null,
-                address = null,
+                address = it.tags.toAddress(),
                 openingSchedule = it.tags["opening_hours"]?.let { ot -> parseOpeningSchedule(ot) },
                 websiteUrl = it.tags["website"] ?: it.tags["contact:website"],
                 phoneNumber = it.tags["phone"] ?: it.tags["contact:phone"],
@@ -104,6 +110,48 @@ private fun <A, B> Map<String, String>.matchAnyTag(
     scope.block()
     return this[key]?.split(' ', ',', '.', ';')?.map { it.trim() }
         ?.firstNotNullOfOrNull { scope[it] }
+}
+
+private fun Map<String, String>.firstOfAlso(vararg strs: String, also: (String) -> Unit): String? {
+    for (str in strs) {
+        if (str in this) {
+            also(str)
+            return this[str]
+        }
+    }
+    return null
+}
+
+private fun Map<String, String>.toAddress(): Address? {
+    val formatAddrKeys = this.keys.filter { it.contains("addr") }.toMutableSet()
+    if (formatAddrKeys.isEmpty()) return null
+
+    val addr = Address(
+        city = firstOfAlso("addr:city") { formatAddrKeys.remove(it) },
+        state = firstOfAlso("addr:state", "addr:province") { formatAddrKeys.remove(it) },
+        postalCode = firstOfAlso("addr:postcode") { formatAddrKeys.remove(it) },
+        country = firstOfAlso("addr:country") { formatAddrKeys.remove(it) },
+    )
+
+    val formattedRest = buildJsonObject {
+        formatAddrKeys.mapNotNull {
+            val (_, subkey) = it.split(':', limit = 2).takeIf { it.size == 2 }
+                ?: return@mapNotNull null
+            put(subkey, this@toAddress[it])
+        }
+    }.takeIf { it.isNotEmpty() }?.toString()?.runCatching {
+        OsmLocation.addressFormatter.format(
+            this,
+            this@toAddress["addr:country"] ?: Locale.getDefault().country
+        )
+    }?.getOrNull() ?: return addr
+
+    val lines = formattedRest.lines().filter { it.isNotBlank() }
+    return addr.copy(
+        address = lines.getOrNull(0),
+        address2 = lines.getOrNull(1),
+        address3 = lines.getOrNull(2),
+    )
 }
 
 private fun Map<String, String>.categorize(context: Context): Pair<String, LocationIcon?> {
@@ -228,6 +276,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String, Locat
                         "skiing" with (R.string.poi_category_skiing to LocationIcon.Skiing)
                         "cricket" with (R.string.poi_category_cricket to LocationIcon.Cricket)
                     }
+
                     "park" -> R.string.poi_category_park to LocationIcon.Park
                     else -> null
                 }
