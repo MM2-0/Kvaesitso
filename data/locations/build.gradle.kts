@@ -50,6 +50,8 @@ dependencies {
 
     implementation(libs.androidx.appcompat)
 
+    implementation(libs.addressformatter)
+
     implementation(project(":core:preferences"))
     implementation(project(":core:base"))
     implementation(project(":core:ktx"))

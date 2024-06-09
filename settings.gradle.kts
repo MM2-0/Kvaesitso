@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter() // For tinypinyin
+        maven { setUrl("https://jitpack.io") }
     }
 }
 
