@@ -49,5 +49,6 @@
     <string name="poi_category_government_building">Government building</string>
     <string name="poi_category_fire_station">Fire station</string>
     <string name="poi_category_courthouse">Courthouse</string>
+    <string name="poi_category_townhall">Townhall</string>
 
 </resources>

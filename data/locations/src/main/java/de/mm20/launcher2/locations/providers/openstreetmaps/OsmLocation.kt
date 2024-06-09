@@ -241,6 +241,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String, Locat
                     "school" -> R.string.poi_category_school to LocationIcon.School
                     "university" -> R.string.poi_category_university to LocationIcon.University
                     "toilets" -> R.string.poi_category_toilets to LocationIcon.PublicBathroom
+                    "townhall" -> R.string.poi_category_townhall to LocationIcon.GovernmentBuilding
 
                     else -> null
                 }
