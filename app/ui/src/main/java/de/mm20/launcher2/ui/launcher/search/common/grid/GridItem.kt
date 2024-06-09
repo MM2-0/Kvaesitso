@@ -91,7 +91,7 @@ fun GridItem(
 
     val context = LocalContext.current
 
-    var showPopup by remember(item.key) { mutableStateOf(false) }
+    val showPopup = viewModel.shopPopup.value
     var bounds by remember { mutableStateOf(Rect.Zero) }
 
     val launchOnPress = !item.preferDetailsOverLaunch
@@ -106,12 +106,12 @@ fun GridItem(
             .combinedClickable(
                 onClick = {
                     if (!launchOnPress || !viewModel.launch(context, bounds)) {
-                        showPopup = true
+                        viewModel.openPopup()
                     }
                 },
                 onLongClick = {
                     hapticFeedback.performHapticFeedback(HapticFeedbackType.LongPress)
-                    showPopup = true
+                    viewModel.openPopup()
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
@@ -186,20 +186,30 @@ fun GridItem(
         }
 
         if (showPopup) {
-            ItemPopup(origin = bounds, searchable = item, onDismissRequest = { showPopup = false })
+            ItemPopup(
+                origin = bounds,
+                searchable = item,
+                onDismissRequest = { viewModel.dismissPopup() },
+                skipAnimation = viewModel.hasPopupAnimationPlayed
+            )
         }
     }
 }
 
 @Composable
-fun ItemPopup(origin: Rect, searchable: Searchable, onDismissRequest: () -> Unit) {
+fun ItemPopup(
+    origin: Rect,
+    searchable: Searchable,
+    onDismissRequest: () -> Unit,
+    skipAnimation: Boolean = false
+) {
     val show = remember {
-        MutableTransitionState(false).apply {
+        MutableTransitionState(skipAnimation).apply {
             targetState = true
         }
     }
     val animationProgress = remember {
-        Animatable(0f).apply {
+        Animatable(if (skipAnimation) 1f else 0f).apply {
             updateBounds(0f, 1f)
         }
     }
