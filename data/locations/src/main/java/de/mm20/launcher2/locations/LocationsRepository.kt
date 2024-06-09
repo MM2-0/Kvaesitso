@@ -12,10 +12,21 @@ import de.mm20.launcher2.search.SearchableRepository
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.combineTransform
+import kotlinx.coroutines.flow.coroutineContext
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.newCoroutineContext
+import kotlinx.coroutines.supervisorScope
 
 internal class LocationsRepository(
     private val context: Context,
@@ -27,52 +38,48 @@ internal class LocationsRepository(
     override fun search(
         query: String,
         allowNetwork: Boolean
-    ): Flow<ImmutableList<Location>> = channelFlow {
+    ): Flow<ImmutableList<Location>> {
         if (query.isBlank()) {
-            send(persistentListOf())
-            return@channelFlow
+            return flowOf(persistentListOf())
         }
 
-        settings.enabledProviders.collectLatest {
+        val hasPermission = permissionsManager.hasPermission(PermissionGroup.Location)
 
-            val providers = it.map {
+        return combineTransform(settings.data, hasPermission) { settingsData, permission ->
+            emit(persistentListOf())
+            if (!permission || settingsData.providers.isEmpty()) {
+                return@combineTransform
+            }
+
+            val userLocation = poseProvider.getLocation().firstOrNull()
+                ?: poseProvider.lastLocation
+                ?: return@combineTransform
+
+            val providers = settingsData.providers.map {
                 when (it) {
                     "openstreetmaps" -> OsmLocationProvider(context, settings)
                     else -> PluginLocationProvider(context, it)
                 }
             }
 
-            if (providers.isEmpty()) {
-                send(persistentListOf())
-                return@collectLatest
-            }
+            supervisorScope {
+                val result = MutableStateFlow(persistentListOf<Location>())
 
-            settings.searchRadius.collectLatest { searchRadius ->
-                settings.hideUncategorized.collectLatest { hideUncategorized ->
-                    permissionsManager.hasPermission(PermissionGroup.Location)
-                        .collectLatest { locationPermission ->
-
-                            val userLocation =
-                                (if (!locationPermission) null else poseProvider.getLocation()
-                                    .firstOrNull()
-                                    ?: poseProvider.lastLocation)
-                                    ?: return@collectLatest
-
-                            val results = mutableListOf<Location>()
-                            for (provider in providers) {
-                                results.addAll(
-                                    provider.search(
-                                        query,
-                                        userLocation,
-                                        allowNetwork,
-                                        searchRadius,
-                                        hideUncategorized
-                                    )
-                                )
-                                send(results.toImmutableList())
-                            }
+                for (provider in providers) {
+                    launch {
+                        val r = provider.search(
+                            query,
+                            userLocation,
+                            allowNetwork,
+                            settingsData.searchRadius,
+                            settingsData.hideUncategorized
+                        )
+                        result.update {
+                            (it + r).toPersistentList()
                         }
+                    }
                 }
+                emitAll(result)
             }
         }
     }
