@@ -10,7 +10,6 @@ android {
     }
     defaultConfig {
         minSdk libs.versions.minSdk.get().toInteger()
-        // targetSdkVersion 34
         versionCode 10
         versionName "1.0"
     }
@@ -24,9 +23,8 @@ android {
 }
 
 dependencies {
-    // implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.11.3'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.11.3'
-    implementation 'com.google.guava:guava:30.0-android'
-    implementation 'com.github.spullara.mustache.java:compiler:0.9.7'
+    implementation libs.jackson.core
+    implementation libs.jackson.dataformat.yaml
+    implementation libs.guava
+    implementation libs.compiler
 }
