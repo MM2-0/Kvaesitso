@@ -17,7 +17,7 @@ import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import org.woheller69.AndroidAddressFormatter.AndroidAddressFormatter
+import de.mm20.launcher2.addressformatter.OsmAddressFormatter
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime
@@ -67,7 +67,12 @@ internal data class OsmLocation(
         internal const val DOMAIN = "osm"
         internal const val FIXMEURL = "https://www.openstreetmap.org/fixthemap"
 
-        internal val addressFormatter = AndroidAddressFormatter(false, false, false)
+        internal val addressFormatter =
+            OsmAddressFormatter(
+                false,
+                false,
+                false
+            )
 
         fun fromOverpassResponse(
             result: OverpassResponse,
@@ -94,22 +99,6 @@ internal data class OsmLocation(
             )
         }
     }
-}
-
-private class MatchAnyReceiverScope<T, A, B> {
-    private val pairs = mutableMapOf<T, Pair<A, B>>()
-    operator fun get(key: T): Pair<A, B>? = pairs[key]
-    infix fun T.with(pair: Pair<A, B>) = pairs.put(this, pair)
-}
-
-private fun <A, B> Map<String, String>.matchAnyTag(
-    key: String,
-    block: MatchAnyReceiverScope<String, A, B>.() -> Unit
-): Pair<A, B>? {
-    val scope = MatchAnyReceiverScope<String, A, B>()
-    scope.block()
-    return this[key]?.split(' ', ',', '.', ';')?.map { it.trim() }
-        ?.firstNotNullOfOrNull { scope[it] }
 }
 
 private fun Map<String, String>.firstOfAlso(vararg strs: String, also: (String) -> Unit): String? {
@@ -152,6 +141,22 @@ private fun Map<String, String>.toAddress(): Address? {
         address2 = lines.getOrNull(1),
         address3 = lines.getOrNull(2),
     )
+}
+
+private class MatchAnyReceiverScope<T, A, B> {
+    private val pairs = mutableMapOf<T, Pair<A, B>>()
+    operator fun get(key: T): Pair<A, B>? = pairs[key]
+    infix fun T.with(pair: Pair<A, B>) = pairs.put(this, pair)
+}
+
+private fun <A, B> Map<String, String>.matchAnyTag(
+    key: String,
+    block: MatchAnyReceiverScope<String, A, B>.() -> Unit
+): Pair<A, B>? {
+    val scope = MatchAnyReceiverScope<String, A, B>()
+    scope.block()
+    return this[key]?.split(' ', ',', '.', ';')?.map { it.trim() }
+        ?.firstNotNullOfOrNull { scope[it] }
 }
 
 private fun Map<String, String>.categorize(context: Context): Pair<String, LocationIcon?> {

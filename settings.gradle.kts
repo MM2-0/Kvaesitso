@@ -11,7 +11,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         jcenter() // For tinypinyin
-        maven { setUrl("https://jitpack.io") }
     }
 }
 
@@ -60,6 +59,7 @@ include(":libs:nextcloud")
 include(":libs:owncloud")
 include(":libs:webdav")
 include(":libs:g-services")
+include(":libs:address-formatter")
 include(":services:global-actions")
 include(":services:widgets")
 include(":services:favorites")
