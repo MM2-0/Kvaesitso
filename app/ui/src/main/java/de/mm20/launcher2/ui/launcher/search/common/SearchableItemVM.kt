@@ -4,9 +4,9 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.geometry.Rect
 import androidx.core.app.ActivityOptionsCompat
+import androidx.customview.view.AbsSavedState
 import de.mm20.launcher2.appshortcuts.AppShortcutRepository
 import de.mm20.launcher2.badges.BadgeService
 import de.mm20.launcher2.devicepose.DevicePoseProvider
@@ -20,6 +20,7 @@ import de.mm20.launcher2.preferences.search.LocationSearchSettings
 import de.mm20.launcher2.search.AppShortcut
 import de.mm20.launcher2.search.Application
 import de.mm20.launcher2.search.File
+import de.mm20.launcher2.search.Location
 import de.mm20.launcher2.search.SavableSearchable
 import de.mm20.launcher2.search.UpdatableSearchable
 import de.mm20.launcher2.search.UpdateResult
@@ -40,6 +41,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.minutes
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -237,21 +239,4 @@ class SearchableItemVM : ListItemViewModel(), KoinComponent {
 
     val mapTileServerUrl = locationSearchSettings.tileServer
         .stateIn(viewModelScope, SharingStarted.Lazily, "")
-
-
-    var hasPopupAnimationPlayed = false
-        get() {
-            val oldValue = field
-            field = true
-            return oldValue
-        }
-    val shopPopup = mutableStateOf(false)
-    fun openPopup() {
-        hasPopupAnimationPlayed = false
-        shopPopup.value = true
-    }
-    fun dismissPopup() {
-        hasPopupAnimationPlayed = false
-        shopPopup.value = false
-    }
 }
