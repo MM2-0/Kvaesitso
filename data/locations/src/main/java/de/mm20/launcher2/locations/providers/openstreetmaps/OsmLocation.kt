@@ -116,7 +116,7 @@ private fun Map<String, String>.toAddress(): Address? {
     if (formatAddrKeys.isEmpty()) return null
 
     val addr = Address(
-        city = firstOfAlso("addr:city") { formatAddrKeys.remove(it) },
+        city = firstOfAlso("addr:city", "addr:suburb", "addr:hamlet") { formatAddrKeys.remove(it) },
         state = firstOfAlso("addr:state", "addr:province") { formatAddrKeys.remove(it) },
         postalCode = firstOfAlso("addr:postcode") { formatAddrKeys.remove(it) },
         country = firstOfAlso("addr:country") { formatAddrKeys.remove(it) },
