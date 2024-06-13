@@ -1,4 +1,4 @@
-package org.woheller69;
+package org.woheller69.AndroidAddressFormatter;
 
 import java.util.Map;
 import java.util.HashMap;

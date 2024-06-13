@@ -17,7 +17,7 @@ import de.mm20.launcher2.search.location.OpeningSchedule
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
-import org.woheller69.OsmAddressFormatter
+import org.woheller69.AndroidAddressFormatter.OsmAddressFormatter
 import java.time.DayOfWeek
 import java.time.Duration
 import java.time.LocalTime

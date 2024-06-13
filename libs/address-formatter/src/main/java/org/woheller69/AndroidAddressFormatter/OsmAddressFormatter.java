@@ -1,4 +1,4 @@
-package org.woheller69;
+package org.woheller69.AndroidAddressFormatter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
