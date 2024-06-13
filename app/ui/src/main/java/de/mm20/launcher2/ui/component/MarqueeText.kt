@@ -1,11 +1,8 @@
 package de.mm20.launcher2.ui.component
 
-import androidx.compose.foundation.DefaultMarqueeDelayMillis
-import androidx.compose.foundation.DefaultMarqueeIterations
-import androidx.compose.foundation.DefaultMarqueeSpacing
-import androidx.compose.foundation.DefaultMarqueeVelocity
 import androidx.compose.foundation.MarqueeAnimationMode
 import androidx.compose.foundation.MarqueeAnimationMode.Companion.Immediately
+import androidx.compose.foundation.MarqueeDefaults
 import androidx.compose.foundation.MarqueeSpacing
 import androidx.compose.foundation.basicMarquee
 import androidx.compose.material3.LocalTextStyle
@@ -48,12 +45,12 @@ fun MarqueeText(
     textAlign: TextAlign? = null,
     lineHeight: TextUnit = TextUnit.Unspecified,
     style: TextStyle = LocalTextStyle.current,
-    iterations: Int = DefaultMarqueeIterations,
+    iterations: Int = MarqueeDefaults.Iterations,
     animationMode: MarqueeAnimationMode = Immediately,
-    delayMillis: Int = DefaultMarqueeDelayMillis,
-    initialDelayMillis: Int = if (animationMode == Immediately) delayMillis else 0,
-    spacing: MarqueeSpacing = DefaultMarqueeSpacing,
-    velocity: Dp = DefaultMarqueeVelocity,
+    repeatDelayMillis: Int = MarqueeDefaults.RepeatDelayMillis,
+    initialDelayMillis: Int = if (animationMode == Immediately) repeatDelayMillis else 0,
+    spacing: MarqueeSpacing = MarqueeDefaults.Spacing,
+    velocity: Dp = MarqueeDefaults.Velocity,
     fadeLeft: Dp? = null,
     fadeRight: Dp? = null,
 ) {
@@ -97,7 +94,7 @@ fun MarqueeText(
                 iterations = iterations,
                 initialDelayMillis = initialDelayMillis,
                 spacing = spacing,
-                delayMillis = delayMillis,
+                repeatDelayMillis = repeatDelayMillis,
                 velocity = velocity
             )
     )
