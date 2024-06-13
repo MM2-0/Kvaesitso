@@ -1,4 +1,4 @@
-package de.mm20.launcher2.addressformatter;
+package org.woheller69;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
