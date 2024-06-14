@@ -1,6 +1,7 @@
 package de.mm20.launcher2.ui.launcher.search.common.grid
 
 import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -30,10 +31,12 @@ fun SearchResultGrid(
     highlightedItem: SavableSearchable? = null,
     transitionKey: Any? = items
 ) {
-    SharedTransitionScope {
+    SharedTransitionLayout(
+        modifier = modifier,
+    ) {
         AnimatedContent(
             items to transitionKey,
-            modifier = it then modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp),
             transitionSpec = {
