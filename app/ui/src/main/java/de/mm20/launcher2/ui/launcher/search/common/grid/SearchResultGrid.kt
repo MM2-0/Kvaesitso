@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import de.mm20.launcher2.search.SavableSearchable
@@ -26,18 +27,20 @@ fun SearchResultGrid(
     showLabels: Boolean = LocalGridSettings.current.showLabels,
     columns: Int = LocalGridSettings.current.columnCount,
     reverse: Boolean = false,
-    highlightedItem: SavableSearchable? = null
+    highlightedItem: SavableSearchable? = null,
+    transitionKey: Any? = items
 ) {
     SharedTransitionScope {
         AnimatedContent(
-            items,
+            items to transitionKey,
             modifier = it then modifier
                 .fillMaxWidth()
                 .padding(4.dp),
             transitionSpec = {
                 fadeIn() togetherWith fadeOut()
-            }
-        ) { items ->
+            },
+            contentKey = { it.second }
+        ) { (items, _) ->
             Column(
                 verticalArrangement = if (reverse) Arrangement.BottomReversed else Arrangement.Top
             ) {
@@ -46,18 +49,20 @@ fun SearchResultGrid(
                         for (j in 0 until columns) {
                             val item = items.getOrNull(i * columns + j)
                             if (item != null) {
-                                GridItem(
-                                    modifier = Modifier
-                                        .sharedElement(
-                                            rememberSharedContentState(item.key),
-                                            this@AnimatedContent,
-                                        )
-                                        .weight(1f)
-                                        .padding(4.dp),
-                                    item = item,
-                                    showLabels = showLabels,
-                                    highlight = item.key == highlightedItem?.key
-                                )
+                                key(item.key) {
+                                    GridItem(
+                                        modifier = Modifier
+                                            .sharedElement(
+                                                rememberSharedContentState(item.key),
+                                                this@AnimatedContent,
+                                            )
+                                            .weight(1f)
+                                            .padding(4.dp),
+                                        item = item,
+                                        showLabels = showLabels,
+                                        highlight = item.key == highlightedItem?.key
+                                    )
+                                }
                             } else {
                                 Spacer(modifier = Modifier.weight(1f))
                             }
