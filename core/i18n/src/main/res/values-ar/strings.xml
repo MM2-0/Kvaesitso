@@ -34,7 +34,6 @@
     <string name="wind_west_north_west">غرب الشمال الغربى</string>
     <string name="wind_north_west">الشمال الغربى</string>
     <string name="wind_north_north_west">شمال الشمال الغربى</string>
-    <string name="precipitation_none">لا هطول للأمطار</string>
     <string name="wikipedia_url">https://en.wikipedia.org</string>
     <string name="wikipedia_source">من الويكيبيديا</string>
     <string name="file_meta_title">العنوان: %1$s</string>
@@ -66,8 +65,6 @@
     <string name="file_type_launcherbackup">%1$s نسخة احتياطية</string>
     <string name="alert_delete_file">سوف يتم مسح الملف %1$s نهائيا. هل تريد المتابعة؟</string>
     <string name="alert_delete_shortcut">سوف يتم مسح الأختصار %1$s نهائيا. هل تريد المتابعة؟</string>
-    <string name="error_activity_not_found">فشل فى فتح الملف %1$s</string>
-    <string name="default_websearch_1_name">Google</string>
     <string name="default_websearch_2_url">https://www.youtube.com/results\?search_query=${1}</string>
     <string name="menu_app_info">معلومات التطبيق</string>
     <string name="file_type_music">ملف موسيقة</string>
@@ -81,22 +78,14 @@
     <string name="alert_delete_directory">سوف يتم مسح المسار %1$s و كل محتوياته نهائيا. هل تريد المتابعة؟</string>
     <string name="file_meta_type">النوع: %1$s</string>
     <string name="file_meta_app_version">الإصدار: %1$s</string>
-    <string name="default_websearch_1_url">https://google.com/search\?q=${1}</string>
     <string name="file_meta_location">المكان: %1$s</string>
     <string name="default_websearch_2_name">اليوتيوب</string>
     <string name="default_websearch_3_name">Google Play</string>
     <string name="default_websearch_3_url">https://play.google.com/store/search\?q=${1}</string>
-    <string name="websearch_dialog_create_title">إضافة بحث الويب</string>
-    <string name="websearch_dialog_edit_title">تعديل بحث الويب</string>
-    <string name="websearch_dialog_name">الإسم</string>
-    <string name="websearch_dialog_url_description">\'${1}\' سيتم استبداله بمصطلح البحث الفعلي.</string>
     <string name="websearch_dialog_url_error">العنصر النائب \'${1}\' مفقود في عنوان URL هذا</string>
-    <string name="websearch_dialog_url">رابط URL</string>
     <string name="websearch_dialog_replace_icon">استبدال الأيقونة</string>
     <string name="websearch_dialog_delete_icon">حذف الايقونة</string>
     <string name="websearch_dialog_custom_icon">أيقونة مخصصة</string>
-    <string name="websearch_dialog_import_url">الاستيراد من عنوان URL</string>
-    <string name="websearch_dialog_import_error">لا يمكن استيراد عنوان URL المحدد تلقائيا. يمكنك تجربة عنوان URL مختلف أو إدخال البيانات المطلوبة يدويا.</string>
     <string name="websearch_dialog_advanced">إعدادات متقدمة</string>
     <string name="websearch_dialog_query_encoding">ترميز الاستعلام</string>
     <string name="websearch_dialog_query_encoding_url">ترميز النسبة المئوية</string>
@@ -110,7 +99,6 @@
     <string name="widget_name_notes">ملاحظة</string>
     <string name="widget_name_unknown">أداة تطبيق غير معروفة</string>
     <string name="widget_add_widget">إضافة أدوات</string>
-    <string name="widget_add_external">المزيد</string>
     <string name="notes_widget_placeholder">اكتب ملاحظة…</string>
     <string name="notes_widget_action_new">ملاحظة جديدة</string>
     <string name="notes_widget_action_save">‌حفظ</string>
@@ -118,7 +106,6 @@
     <string name="notes_widget_action_dismiss">استبعاد</string>
     <string name="notes_widget_dismissed">ملاحظة تم ‏رفضه</string>
     <string name="shortcut_summary">بواسطة %1$s</string>
-    <string name="installation_in_progress">التثبيت قيد التقدم... (%1$s)</string>
     <string name="easter_egg_1">لا يوجد بيض عيد الفصح هنا ، إلا إذا أحضرته معك.</string>
     <string name="easter_egg_text">حسنا ، لقد وجدتني. مبروك. هل كان يستحق كل هذا العناء؟</string>
     <string name="edit">تعديل</string>
@@ -130,10 +117,7 @@
     <string name="skip">تخطي</string>
     <string name="action_next">التالي</string>
     <string name="turn_off">إيقاف التشغيل</string>
-    <string name="action_continue">متابعة</string>
     <string name="widget_action_remove">إزالة</string>
-    <string name="widget_action_settings">إعدادات</string>
-    <string name="widget_action_adjust_height">ضبط الارتفاع</string>
     <string name="theme_color_scheme_custom_color">مخصص</string>
     <string name="menu_item_edit_favs">تعديل المضلة</string>
     <string name="edit_favorites_dialog_tags">علامات</string>
@@ -171,8 +155,6 @@
     <string name="login_flow_continue">متابعة</string>
     <string name="disclaimer">اخلاء المسؤولية</string>
     <string name="show_all">عرض الكل</string>
-    <string name="calendar_widget_open_app">فتح تطبيق التقويم</string>
-    <string name="calendar_widget_new_event">حدث جديد</string>
     <string name="calendar_widget_no_events">لا توجد أحداث اليوم</string>
     <string name="music_widget_no_data">لم يتم تشغيل أي وسائط حتى الآن</string>
     <string name="music_widget_default_title">%1$s يتم تشغيل الوسائط</string>
@@ -188,7 +170,6 @@
     <string name="weather_condition_snowandthunder">ثلج ورعد</string>
     <string name="weather_condition_snow">ثلج</string>
     <string name="weather_condition_heavysleetshowers">زحات متجمدة غزيرة</string>
-    <string name="weather_condition_thunder">عاصفه رعديه</string>
     <string name="weather_condition_hail">برد</string>
     <string name="weather_condition_rain">مطر</string>
     <string name="weather_condition_sleetandthunder">صقيع ورعد</string>
@@ -224,8 +205,5 @@
     <string name="weather_condition_heavyrainandthunder">أمطار غزيرة ورعد</string>
     <string name="weather_condition_wind">ريح</string>
     <string name="weather_condition_unknown">مجهول</string>
-    <string name="weather_widget_show_details">اظهر التفاصيل</string>
     <string name="weather_condition_snowshowersandthunder">زخات ثلجية ورعد</string>
-    <string name="weather_details_humidity">الرطوبة: %1$s</string>
-    <string name="weather_widget_hide_details">إظهار التفاصيل</string>
 </resources>
