@@ -287,7 +287,7 @@ interface Location : SavableSearchable {
             LocationIcon.Synagogue -> Icons.Rounded.Synagogue to R.color.brown
             LocationIcon.HinduTemple -> Icons.Rounded.TempleHindu to R.color.brown
             LocationIcon.BuddhistTemple -> Icons.Rounded.TempleBuddhist to R.color.brown
-            LocationIcon.Candle -> Icons.Rounded.Candle to R.color.brown
+            LocationIcon.PlaceOfWorship -> Icons.Rounded.Candle to R.color.brown
             // bluegrey: public services
             LocationIcon.GovernmentBuilding -> Icons.Rounded.AccountBalance to R.color.bluegrey
             LocationIcon.Police -> Icons.Rounded.LocalPolice to R.color.bluegrey

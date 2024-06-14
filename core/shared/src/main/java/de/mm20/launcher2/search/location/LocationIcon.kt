@@ -114,7 +114,7 @@ enum class LocationIcon {
     Synagogue,
     BuddhistTemple,
     HinduTemple,
-    Candle,
+    PlaceOfWorship,
 
     GovernmentBuilding,
     Police,

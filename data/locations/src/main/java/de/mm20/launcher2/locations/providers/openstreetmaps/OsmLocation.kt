@@ -196,7 +196,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String?, Loca
                         "buddhist" with (R.string.poi_category_buddhist_temple to LocationIcon.BuddhistTemple)
                         "hindu" with (R.string.poi_category_hindu_temple to LocationIcon.HinduTemple)
                         "jewish" with (R.string.poi_category_synagogue to LocationIcon.Synagogue)
-                    } ?: (R.string.poi_category_place_of_worship to LocationIcon.Candle)
+                    } ?: (R.string.poi_category_place_of_worship to LocationIcon.PlaceOfWorship)
 
                     "fast_food" -> R.string.poi_category_fast_food to LocationIcon.FastFood
                     "cafe" -> R.string.poi_category_cafe to LocationIcon.Cafe
