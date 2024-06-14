@@ -1,6 +1,8 @@
 package de.mm20.launcher2.ui.settings.locations
 
 import android.app.PendingIntent
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
@@ -65,50 +67,47 @@ fun LocationsSettingsScreen() {
                         viewModel.setOsmLocations(it)
                     }
                 )
-                for (plugin in plugins) {
-                    val state = plugin.state
-                    if (state is PluginState.SetupRequired) {
-                        Banner(
-                            modifier = Modifier.padding(16.dp),
-                            text = state.message
-                                ?: stringResource(id = R.string.plugin_state_setup_required),
-                            icon = Icons.Rounded.ErrorOutline,
-                            primaryAction = {
-                                TextButton(onClick = {
-                                    try {
-                                        state.setupActivity.send()
-                                    } catch (e: PendingIntent.CanceledException) {
-                                        CrashReporter.logException(e)
+                AnimatedVisibility(plugins.isNotEmpty()) {
+                    Column {
+                        for (plugin in plugins) {
+                            val state = plugin.state
+                            if (state is PluginState.SetupRequired) {
+                                Banner(
+                                    modifier = Modifier.padding(16.dp),
+                                    text = state.message
+                                        ?: stringResource(id = R.string.plugin_state_setup_required),
+                                    icon = Icons.Rounded.ErrorOutline,
+                                    primaryAction = {
+                                        TextButton(onClick = {
+                                            try {
+                                                state.setupActivity.send()
+                                            } catch (e: PendingIntent.CanceledException) {
+                                                CrashReporter.logException(e)
+                                            }
+                                        }) {
+                                            Text(stringResource(id = R.string.plugin_action_setup))
+                                        }
                                     }
-                                }) {
-                                    Text(stringResource(id = R.string.plugin_action_setup))
-                                }
+                                )
                             }
-                        )
+                            SwitchPreference(
+                                title = plugin.plugin.label,
+                                enabled = enabledPlugins != null && state is PluginState.Ready,
+                                summary = (state as? PluginState.Ready)?.text
+                                    ?: (state as? PluginState.SetupRequired)?.message
+                                    ?: plugin.plugin.description,
+                                value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
+                                onValueChanged = {
+                                    viewModel.setPluginEnabled(plugin.plugin.authority, it)
+                                },
+                            )
+                        }
                     }
-                    SwitchPreference(
-                        title = plugin.plugin.label,
-                        enabled = enabledPlugins != null && state is PluginState.Ready,
-                        summary = (state as? PluginState.Ready)?.text
-                            ?: (state as? PluginState.SetupRequired)?.message
-                            ?: plugin.plugin.description,
-                        value = enabledPlugins?.contains(plugin.plugin.authority) == true && state is PluginState.Ready,
-                        onValueChanged = {
-                            viewModel.setPluginEnabled(plugin.plugin.authority, it)
-                        },
-                    )
                 }
             }
         }
         item {
             PreferenceCategory {
-                if (5000 < radius) {
-                    Banner(
-                        modifier = Modifier.padding(16.dp),
-                        icon = Icons.Rounded.WarningAmber,
-                        text = stringResource(R.string.preference_search_locations_radius_large_radius_warning)
-                    )
-                }
                 ListPreference(
                     title = stringResource(R.string.length_unit),
                     items = listOf(
@@ -121,6 +120,13 @@ fun LocationsSettingsScreen() {
                         viewModel.setImperialUnits(it)
                     }
                 )
+                AnimatedVisibility(5000 < radius) {
+                    Banner(
+                        modifier = Modifier.padding(16.dp),
+                        icon = Icons.Rounded.WarningAmber,
+                        text = stringResource(R.string.preference_search_locations_radius_large_radius_warning)
+                    )
+                }
                 SliderPreference(
                     title = stringResource(R.string.preference_search_locations_radius),
                     value = radius,
