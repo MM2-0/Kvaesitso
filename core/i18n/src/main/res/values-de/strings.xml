@@ -813,4 +813,7 @@
     <string name="poi_category_basketball">Basketball</string>
     <string name="weather_condition_haze">Dunst</string>
     <string name="weather_condition_thunderstorm">Gewitter</string>
+    <string name="preference_search_osm_locations">OpenStreetMap</string>
+    <string name="preference_search_osm_locations_summary">OpenStreetMap nach Geschäften und anderen Orten in der lokalen Umgebung durchsuchen</string>
+    <string name="plugin_type_locationsearch">Ortssuche</string>
 </resources>
