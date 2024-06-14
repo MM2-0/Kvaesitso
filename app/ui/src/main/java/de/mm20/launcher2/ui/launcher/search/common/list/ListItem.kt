@@ -123,8 +123,7 @@ fun ListItem(
                                 enabled = !showDetails,
                                 onClick = { onShowDetails(true) },
                                 onLongClick = { onShowDetails(true) }
-                            )
-                            .padding(top = 4.dp, end = 4.dp, bottom = 4.dp),
+                            ),
                         calendar = item,
                         showDetails = showDetails,
                         onBack = { onShowDetails(false) }
