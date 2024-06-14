@@ -159,7 +159,7 @@ private fun <A, B> Map<String, String>.matchAnyTag(
         ?.firstNotNullOfOrNull { scope[it] }
 }
 
-private fun Map<String, String>.categorize(context: Context): Pair<String, LocationIcon?> {
+private fun Map<String, String>.categorize(context: Context): Pair<String?, LocationIcon?> {
     val category = this.firstNotNullOfOrNull { (tag, value) ->
         val values = value.split(' ', ',', '.', ';').map { it.trim() }.toSet()
         when (tag.lowercase()) {
@@ -305,7 +305,7 @@ private fun Map<String, String>.categorize(context: Context): Pair<String, Locat
             else -> null
         }
     }
-    val (rid, icon) = category ?: (R.string.poi_category_other to null)
+    val (rid, icon) = category ?: return null to null
     return context.resources.getString(rid) to icon
 }
 
