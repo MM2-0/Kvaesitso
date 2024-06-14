@@ -43,7 +43,7 @@ class AlarmPartProvider : PartProvider {
                 send(0)
             } else {
                 time.collectLatest {
-                    if (alarm > it + 15 * 60 * 1000) {
+                    if (alarm > it + 12 * 60 * 60 * 1000) {
                         send(0)
                     } else {
                         send(60)

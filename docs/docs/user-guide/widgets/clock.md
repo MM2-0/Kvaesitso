@@ -32,5 +32,5 @@ Base components, you can only enable one of them at a time:
 Additionally, these conditional components are available:
 
 - **Media**: show media controls, only when there are active media sessions
-- **Alarm**: show the remaining time to the next alarm, only if there is an alarm scheduled to ring within the next 15 minutes
+- **Alarm**: show the remaining time to the next alarm, only if there is an alarm scheduled to ring within the next 12 hours
 - **Battery**: shows the current battery level and remaining charging time, only if battery is charging or battery level is less than 15%
