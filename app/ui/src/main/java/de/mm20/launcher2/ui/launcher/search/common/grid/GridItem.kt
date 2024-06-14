@@ -8,9 +8,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.ime
@@ -115,8 +117,9 @@ fun GridItem(
                 },
                 indication = null,
                 interactionSource = remember { MutableInteractionSource() },
-            ),
-        horizontalAlignment = Alignment.CenterHorizontally
+            ) then if (!showLabels) Modifier.aspectRatio(1f) else Modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
         val badge by viewModel.badge.collectAsStateWithLifecycle()
         val icon by viewModel.icon.collectAsStateWithLifecycle()
